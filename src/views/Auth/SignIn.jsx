@@ -60,11 +60,13 @@ function SignIn() {
       if (!user.length) {
         document.getElementById("user")?.focus();
         setUserHelperText("Debes introducir un usuario");
+        setLoading(false);
         return;
       }
       if (!password.length) {
         document.getElementById("password")?.focus();
         setPasswordHelperText("Debes introducir tu contraseña");
+        setLoading(false);
         return;
       }
       setLoading(true);
@@ -88,12 +90,12 @@ function SignIn() {
     <main className="w-full min-h-screen flex items-center justify-center">
       <ModeButton className="top-1 right-1 primary" />
       <div
-        className={`pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center dark:bg-dark-drawer-background bg-light-background-placeholder backdrop-blur-sm transition-all duration-100 ${
+        className={`bg-light-background-opacity dark:bg-dark-background-opacity pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-sm transition-all duration-100 ${
           loading ? "opacity-100" : "opacity-0"
         }`}
       >
         <Loading
-          className={`bg-white transition-all duration-300 !h-[100px] ${
+          className={`dark:bg-dark-background  transition-all duration-300 !h-[100px] ${
             loading ? "scale-y-100" : "scale-y-0"
           }`}
         />
@@ -120,7 +122,7 @@ function SignIn() {
         />
         <InputControl
           id="password"
-          className="input border-none submit !pl-8 w-full"
+          className="!pl-10 w-full"
           value={password}
           onChange={handlePassword}
           type={!showPassword ? "password" : "text"}

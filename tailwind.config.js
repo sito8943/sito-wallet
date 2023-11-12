@@ -19,6 +19,8 @@ export default {
     colors: {
       "light-background": "#fbfbfb",
       "dark-background": "#1b1b1b",
+      "light-background-opacity": "#fbfbfb99",
+      "dark-background-opacity": "#1b1b1b99",
     },
     extend: {},
     minHeight: {
