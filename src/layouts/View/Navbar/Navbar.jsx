@@ -9,7 +9,7 @@ function Navbar() {
 
   const onScroll = useCallback(() => {
     const top = window.pageYOffset || document.documentElement.scrollTop;
-    if (top > 30) setTransparency(false);
+    if (top > 10) setTransparency(false);
     else setTransparency(true);
   }, [setTransparency]);
 
