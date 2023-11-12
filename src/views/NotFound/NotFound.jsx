@@ -4,9 +4,13 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSadTear } from "@fortawesome/free-regular-svg-icons";
 
+// components
+import ModeButton from "../../components/ModeButton/ModeButton";
+
 function NotFound() {
   return (
     <main className="w-full h-screen flex items-center justify-center flex-col gap-5">
+      <ModeButton className="top-1 right-1 primary" />
       <FontAwesomeIcon
         icon={faSadTear}
         className="dark:text-white text-7xl appear"
