@@ -59,7 +59,7 @@ function SignIn() {
 
       if (!user.length) {
         document.getElementById("user")?.focus();
-        setUserHelperText("Debes introducir un usuario");
+        setUserHelperText("Debes introducir un correo electrónico");
         setLoading(false);
         return;
       }
