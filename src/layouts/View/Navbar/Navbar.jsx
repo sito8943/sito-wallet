@@ -23,10 +23,10 @@ function Navbar() {
 
   return (
     <header
-      className={`${
+      className={`fixed top-3 left-[50%] -translate-x-[50%] transition-all duration-300 ease-in-out ${
         transparency
-          ? "p-7"
-          : "w-[90%] fixed top-3 left-[50%] -translate-x-[50%]"
+          ? "w-[99%]"
+          : "w-[90%]"
       }`}
     >
       <div
@@ -34,7 +34,7 @@ function Navbar() {
           transparency
             ? ""
             : "bg-light-background-opacity dark:bg-dark-background-opacity"
-        } transition-all duration-300 ease-in-out`}
+        }`}
       >
         <Link to="/" className="flex gap-2 items-center">
           LOGO
