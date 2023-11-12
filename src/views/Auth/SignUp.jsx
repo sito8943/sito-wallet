@@ -30,7 +30,7 @@ import { register } from "../../services/auth";
 // import logo from "../../assets/images/logo.png";
 
 function SignUp() {
-  const { setNotificationState } = useNotification();
+  const { setNotification } = useNotification();
 
   const [email, setEmail] = useState("");
   const [emailHelperText, setEmailHelperText] = useState("");
@@ -89,10 +89,10 @@ function SignUp() {
           },
         });
         navigate("/");
-      } else setNotificationState({ type: "error", message: error.message });
+      } else setNotification({ type: "error", message: error.message });
       setLoading(false);
     },
-    [email, password, rPassword, setNotificationState, navigate, setUserState]
+    [email, password, rPassword, setNotification, navigate, setUserState]
   );
 
   return (

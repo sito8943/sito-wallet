@@ -27,7 +27,7 @@ import { login } from "../../services/auth";
 // import logo from "../../assets/images/logo.png";
 
 function SignIn() {
-  const { setNotificationState } = useNotification();
+  const { setNotification } = useNotification();
 
   const [user, setUser] = useState("");
   const [userHelperText, setUserHelperText] = useState("");
@@ -73,7 +73,7 @@ function SignIn() {
       const response = await login(user, password, remember);
       const { data, error } = response;
       if (error && error !== null)
-        setNotificationState({ type: "error", message: error.message });
+        setNotification({ type: "error", message: error.message });
       else {
         setUserState({
           type: "logged-in",
@@ -83,12 +83,12 @@ function SignIn() {
       }
       setLoading(false);
     },
-    [user, password, setNotificationState, navigate, remember, setUserState]
+    [user, password, setNotification, navigate, remember, setUserState]
   );
 
   return (
     <main className="w-full min-h-screen flex items-center justify-center">
-      <ModeButton className="top-1 right-1 icon-button primary" />
+      <ModeButton className="top-1 right-1 primary" />
       <div
         className={`pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center dark:bg-dark-drawer-background bg-light-background-placeholder backdrop-blur-sm transition-all duration-100 ${
           loading ? "opacity-100" : "opacity-0"

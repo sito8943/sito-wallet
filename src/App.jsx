@@ -22,21 +22,27 @@ import Home from "./views/Home/Home";
 import NotFound from "./views/NotFound/NotFound";
 
 function App() {
-  const { userState, setUserState } = useUser();
-  const { setNotificationState } = useNotification();
+  const { setUserState } = useUser();
+  const { setNotification } = useNotification();
 
   const [loading, setLoading] = useState(true);
 
   const fetch = async () => {
-    const { data, error } = await validateUser();
-    if (error && error !== null)
-      setNotificationState({ type: "error", message: error.message });
-    else setUserState({ type: "logged-in", user: data.user });
+    try {
+      const { data, error } = await validateUser();
+      if (error && error !== null)
+        setNotification({ type: "error", message: error.message });
+      else setUserState({ type: "logged-in", user: data.user });
+    } catch (err) {
+      console.error(err);
+    }
+
     setLoading(false);
   };
 
   useEffect(() => {
     fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -50,13 +56,9 @@ function App() {
                 <Route index element={<SignIn />} />
                 <Route path="/auth/sign-up" element={<SignUp />} />
               </Route>
-              {userState.user ? (
-                <Route path="/" element={<View />}>
-                  <Route index element={<Home />} />
-                </Route>
-              ) : (
-                <></>
-              )}
+              <Route path="/" element={<View />}>
+                <Route index element={<Home />} />
+              </Route>
 
               <Route exact path="/sign-out" element={<SignOut />} />
               <Route path="/*" element={<NotFound />} />

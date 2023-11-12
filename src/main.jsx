@@ -12,6 +12,12 @@ import App from "./App.jsx";
 
 // app styles
 import "./index.css";
+// Import css files
+import "tippy.js/dist/tippy.css"; // optional
+
+// fonts
+import "@fontsource/poppins";
+import "@fontsource/roboto";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
