@@ -47,13 +47,20 @@ function Home() {
     return days;
   }, []);
 
+  const currentCurrency = useMemo(() => {
+    return "CUP";
+  }, []);
+
   return (
     <div className="min-h-screen p-10 pt-20 mt-20">
       <div className="flex flex-col gap-3">
-        <h2 className="text-8xl secondary">
-          <span className="">$</span>
-          {countLeft}
-        </h2>
+        <div className="flex w-full items-end justify-between">
+          <h2 className="text-8xl secondary">
+            <span className="">$</span>
+            {countLeft}
+          </h2>
+          <p className="secondary text-3xl">{currentCurrency}</p>
+        </div>
         <hr className="w-full secondary border-4" />
         <p>
           Quedan en {currentMonth}. Por {leftDays} días
