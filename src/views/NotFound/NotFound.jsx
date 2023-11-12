@@ -18,7 +18,7 @@ function NotFound() {
         name="go-home"
         aria-label="click para ir al inicio"
         to="/"
-        className="secondary button submit appear"
+        className="primary button submit appear"
       >
         Ir al inicio
       </Link>

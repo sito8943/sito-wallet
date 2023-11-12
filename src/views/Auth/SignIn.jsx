@@ -8,7 +8,6 @@ import {
   InputControl,
   IconButton,
   Button,
-  Switcher,
 } from "@sito/ui";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,6 +25,9 @@ import { login } from "../../services/auth";
 // images
 // import logo from "../../assets/images/logo.png";
 
+// styles
+import "./styles.css";
+
 function SignIn() {
   const { setNotification } = useNotification();
 
@@ -33,10 +35,6 @@ function SignIn() {
   const [userHelperText, setUserHelperText] = useState("");
 
   const handleUser = (e) => setUser(e.target.value);
-
-  const [remember, setRemember] = useState(false);
-
-  const handleRemember = () => setRemember((oldValue) => !oldValue);
 
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -70,7 +68,7 @@ function SignIn() {
         return;
       }
       setLoading(true);
-      const response = await login(user, password, remember);
+      const response = await login(user, password);
       const { data, error } = response;
       if (error && error !== null)
         setNotification({ type: "error", message: error.message });
@@ -83,7 +81,7 @@ function SignIn() {
       }
       setLoading(false);
     },
-    [user, password, setNotification, navigate, remember, setUserState]
+    [user, password, setNotification, navigate, setUserState]
   );
 
   return (
@@ -100,26 +98,21 @@ function SignIn() {
           }`}
         />
       </div>
-      <form
-        onSubmit={onSubmit}
-        className="rounded-sm appear relative bg-light-background dark:bg-dark-background2 p-10 min-w-[440px] flex flex-col gap-3 shadow-xl shadow-dark-[black]"
-      >
-        <div className="flex gap-2 items-center">
+      <form onSubmit={onSubmit} className="form appear">
+        <div className="flex gap-2 items-start flex-col">
           {/* <img src={logo} alt="stick notes logo" className="w-10 h-10" /> */}
           LOGO
-          <h1 className="text-sdark dark:text-secondary uppercase">
-            Sito Notas
-          </h1>
+          <h1 className="primary uppercase text-4xl">Sito Wallet</h1>
         </div>
         <InputControl
           id="user"
           label="Correo electrónico"
-          className="input border-none submit !pl-8 w-full"
+          className="!pl-8 w-full"
           value={user}
           onChange={handleUser}
           leftComponent={
             <FontAwesomeIcon
-              className="absolute text-secondary top-[50%] -translate-y-[50%] left-3"
+              className="absolute primary top-[50%] -translate-y-[50%] left-3"
               icon={faUser}
             />
           }
@@ -138,25 +131,15 @@ function SignIn() {
               name="toggle-see-password"
               onClick={toggleShowPassword}
               icon={showPassword ? faLockOpen : faLock}
-              className="absolute text-secondary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
+              className="absolute primary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
               aria-label="click para alternar ver/ocultar contraseña"
             />
           }
           helperText={passwordHelperText}
         />
-        <Switcher
-          id="remember"
-          value={remember}
-          onChange={handleRemember}
-          label="Recordarme"
-          className="dark:text-white"
-        />
         <p className="dark:text-white">
           ¿No tienes cuenta?{" "}
-          <Link
-            to="/auth/sign-up"
-            className="underline hover:text-sdark dark:hover:text-secondary"
-          >
+          <Link to="/auth/sign-up" className="underline primary">
             Registrarme
           </Link>
         </p>
@@ -165,7 +148,7 @@ function SignIn() {
             name="login"
             type="submit"
             aria-label="Click para entrar"
-            className="secondary submit"
+            className="primary submit"
           >
             Siguiente
           </Button>

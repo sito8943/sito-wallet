@@ -41,7 +41,8 @@ function App() {
   };
 
   useEffect(() => {
-    fetch();
+    // fetch();
+    setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

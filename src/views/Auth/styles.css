@@ -1,0 +1,12 @@
+.form {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  min-width: 440px;
+  @apply bg-light-background dark:bg-dark-background relative p-10 flex flex-col gap-3;
+}
+
+@media (max-width: 500px) {
+  .form {
+    min-width: auto;
+    width: 100%;
+  }
+}

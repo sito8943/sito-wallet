@@ -108,9 +108,7 @@ function SignUp() {
           <div className="flex gap-2 items-center">
             {/* <img src={logo} alt="stick notes logo" className="w-10 h-10" /> */}
             LOGO
-            <h1 className="text-sdark dark:text-secondary uppercase">
-              Sito Notas
-            </h1>
+            <h1 className="text-sdark primary uppercase">Sito Wallet</h1>
           </div>
           <InputControl
             id="email"
@@ -121,7 +119,7 @@ function SignUp() {
             type="email"
             leftComponent={
               <FontAwesomeIcon
-                className="absolute text-secondary top-[50%] -translate-y-[50%] left-3"
+                className="absolute primary top-[50%] -translate-y-[50%] left-3"
                 icon={faEnvelope}
               />
             }
@@ -141,7 +139,7 @@ function SignUp() {
                 name="toggle-see-password"
                 onClick={toggleShowPassword}
                 icon={showPassword ? faLockOpen : faLock}
-                className="absolute text-secondary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
+                className="absolute primary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
                 aria-label="click para alternar ver/ocultar contraseña"
               />
             }
@@ -161,7 +159,7 @@ function SignUp() {
                 name="toggle-see-r-password"
                 onClick={toggleShowRPassword}
                 icon={showRPassword ? faLockOpen : faLock}
-                className="absolute text-secondary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
+                className="absolute primary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
                 aria-label="click para alternar ver/ocultar repetir contraseña"
               />
             }
@@ -171,7 +169,7 @@ function SignUp() {
             ¿Ya tienes cuenta?{" "}
             <Link
               to="/auth/"
-              className="underline hover:text-sdark dark:hover:text-secondary"
+              className="underline hover:text-sdark dark:hover:primary"
             >
               Iniciar sesión
             </Link>
@@ -181,7 +179,7 @@ function SignUp() {
               name="login"
               type="submit"
               aria-label="Click para entrar"
-              className="secondary submit"
+              className="primary submit"
             >
               Siguiente
             </Button>
