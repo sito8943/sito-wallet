@@ -13,11 +13,8 @@ function SignOut() {
   const { setUserState } = useUser();
 
   const signOut = async () => {
-    try {
-      await signOutUser();
-    } catch (err) {
-      console.error(err);
-    }
+    const error = await signOutUser();
+    if (error && error !== null) console.error(error);
     setUserState({ type: "logged-out" });
   };
 
