@@ -23,20 +23,23 @@ function Navbar() {
 
   return (
     <header
-      className={`fixed top-3 left-[50%] -translate-x-[50%] transition-all duration-300 ease-in-out ${
-        transparency ? "w-[99%]" : "w-[90%]"
+      className={`fixed top-3 left-[50%] -translate-x-[50%] transition-all  duration-300 ease-in-out ${
+        transparency ? "w-[99%]" : "w-[90%] xs:w-[95%]"
       }`}
     >
       <div
-        className={`flex w-full justify-between backdrop-blur-md p-3 rounded-[100px] ${
-          transparency ? "" : "bg-light-alter dark:bg-dark-alter"
-        }`}
+        className={`relative backdrop-blur-[8px] rounded-[100px] flex w-full justify-between py-3 px-5 xs:px-3 `}
       >
-        <Link to="/" className="flex gap-2 items-center">
+        <div
+          className={` absolute w-full h-full top-0 left-0 rounded-[100px] opacity-70 ${
+            transparency ? "" : "bg-light-alter dark:bg-dark-alter"
+          }`}
+        ></div>
+        <Link to="/" className="z-10 flex gap-2 items-center">
           LOGO
           <h1 className="primary uppercase text-xl">Sito Wallet</h1>
         </Link>
-        <nav>
+        <nav className="z-10">
           <Link to="/profile">
             <img
               src={noPhoto}
