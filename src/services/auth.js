@@ -30,10 +30,38 @@ export const register = async (email, password) => {
  * @returns The response from the server.
  */
 export const login = async (user, password) => {
+  const now = new Date();
   const { data, error } = await supabase.auth.signInWithPassword({
     email: user,
     password: md5(password),
   });
+  // fetching bills and walletLogs of the current day
+  const responseBills = await supabase
+    .from("bills")
+    .select("*")
+    .eq("owner", data.user.id)
+    .eq("day", now.getDate())
+    .eq("month", now.getMonth())
+    .eq("year", now.getFullYear());
+  data.user.bills = responseBills.data ?? [];
+  if (responseBills.error && responseBills.error !== null)
+    console.error(responseBills.error);
+  const responseWalletLogs = await supabase
+    .from("walletLogs")
+    .select("*")
+    .eq("owner", data.user.id)
+    .eq("day", now.getDate())
+    .eq("month", now.getMonth())
+    .eq("year", now.getFullYear());
+  if (responseWalletLogs.data.length) {
+    data.user.spent = responseWalletLogs.data[0].spent;
+    data.user.initial = responseWalletLogs.data[0].initial;
+  } else {
+    data.user.spent = 0;
+    data.user.initial = 0;
+  }
+  if (responseWalletLogs.error && responseWalletLogs.error !== null)
+    console.error(responseBills.error);
   return { data, error };
 };
 

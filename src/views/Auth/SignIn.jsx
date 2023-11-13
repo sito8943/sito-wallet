@@ -116,7 +116,7 @@ function SignIn() {
         <InputControl
           id="user"
           label="Correo electrónico"
-          className="!pl-8 w-full"
+          className="sign-in-input"
           value={user}
           onChange={handleUser}
           leftComponent={
@@ -129,7 +129,7 @@ function SignIn() {
         />
         <InputControl
           id="password"
-          className="!pl-10 w-full"
+          className="sign-in-input"
           value={password}
           onChange={handlePassword}
           type={!showPassword ? "password" : "text"}
