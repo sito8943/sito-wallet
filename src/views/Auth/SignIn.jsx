@@ -22,6 +22,9 @@ import ModeButton from "../../components/ModeButton/ModeButton";
 // services
 import { login } from "../../services/auth";
 
+// auth
+import { saveUser } from "../../utils/auth";
+
 // images
 // import logo from "../../assets/images/logo.png";
 
@@ -79,6 +82,7 @@ function SignIn() {
           type: "logged-in",
           user: data.user,
         });
+        saveUser(data.user);
         navigate("/");
       }
       setLoading(false);
@@ -90,17 +94,20 @@ function SignIn() {
     <main className="w-full min-h-screen flex items-center justify-center">
       <ModeButton className="top-1 right-1 primary" />
       <div
-        className={`bg-light-background-opacity dark:bg-dark-background-opacity pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-sm transition-all duration-100 ${
+        className={`bg-light-alter dark:bg-dark-alter pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-sm transition-all duration-100 ${
           loading ? "opacity-100" : "opacity-0"
         }`}
       >
         <Loading
-          className={`dark:bg-dark-background  transition-all duration-300 !h-[100px] ${
-            loading ? "scale-y-100" : "scale-y-0"
+          className={`dark:bg-dark-background transition-all duration-300  ${
+            loading ? "!h-[100px]" : "!h-[0px]"
           }`}
         />
       </div>
-      <form onSubmit={onSubmit} className="form appear">
+      <form
+        onSubmit={onSubmit}
+        className="form bg-light-alter dark:bg-dark-alter appear"
+      >
         <div className="flex gap-2 items-start flex-col">
           {/* <img src={logo} alt="stick notes logo" className="w-10 h-10" /> */}
           LOGO

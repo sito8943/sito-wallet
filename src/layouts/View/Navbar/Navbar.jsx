@@ -24,16 +24,12 @@ function Navbar() {
   return (
     <header
       className={`fixed top-3 left-[50%] -translate-x-[50%] transition-all duration-300 ease-in-out ${
-        transparency
-          ? "w-[99%]"
-          : "w-[90%]"
+        transparency ? "w-[99%]" : "w-[90%]"
       }`}
     >
       <div
         className={`flex w-full justify-between backdrop-blur-md p-3 rounded-[100px] ${
-          transparency
-            ? ""
-            : "bg-light-background-opacity dark:bg-dark-background-opacity"
+          transparency ? "" : "bg-light-alter dark:bg-dark-alter"
         }`}
       >
         <Link to="/" className="flex gap-2 items-center">

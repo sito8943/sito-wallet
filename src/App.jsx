@@ -14,6 +14,9 @@ import { validateUser } from "./services/auth";
 // context
 import { useUser } from "./providers/UserProvider";
 
+// auth cache
+import { getUser } from "./utils/auth";
+
 // views
 import SignIn from "./views/Auth/SignIn";
 import SignOut from "./views/Auth/SignOut";
@@ -23,7 +26,6 @@ import NotFound from "./views/NotFound/NotFound";
 
 function App() {
   const { setUserState } = useUser();
-  const { setNotification } = useNotification();
 
   const [loading, setLoading] = useState(true);
 
@@ -31,7 +33,7 @@ function App() {
     try {
       const { data, error } = await validateUser();
       if (error && error !== null)
-        setNotification({ type: "error", message: error.message });
+        setUserState({ type: "logged-in", user: getUser() });
       else setUserState({ type: "logged-in", user: data.user });
     } catch (err) {
       console.error(err);

@@ -508,10 +508,10 @@
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.11.0.tgz#e0e45ac3fff9d8a126916f166809825537e9f955"
   integrity sha512-BHdhcWgeiudl91HvVa2wxqZjSHbheSgIiDvxrF1VjFzBzpTtuDPkOdOi3Iqvc08kXtFkLjhbS+ML9aM8mJS+wQ==
 
-"@sito/ui@^0.0.46":
-  version "0.0.46"
-  resolved "https://registry.yarnpkg.com/@sito/ui/-/ui-0.0.46.tgz#05cb247d7797c72ead50c7d705e2b8d6e775f159"
-  integrity sha512-/nfXhadHm4HumXCyvYH3/zuGGrBZ3Wjs25nm/03kaKWqHgpKXW4k60hRN986ZAfCqZEppsSvvdervpjDlF9mBQ==
+"@sito/ui@^0.0.52":
+  version "0.0.52"
+  resolved "https://registry.yarnpkg.com/@sito/ui/-/ui-0.0.52.tgz#701e610ae1c43ce156041a35d3a5827c42602fbe"
+  integrity sha512-oysFMF9V/S/Vb7mqcJHjgegbdkLULHCIzPC+xZaaxzdVNT2i15Ty75wK0o0pqZV2j3vP1AKkHYBB2C1/2pTe5w==
   dependencies:
     react "^18.2.0"
     react-dom "^18.2.0"

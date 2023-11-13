@@ -47,22 +47,28 @@ function Home() {
     return days;
   }, []);
 
+  const severity = useMemo(() => {
+    return "good";
+  }, [countLeft]);
+
   const currentCurrency = useMemo(() => {
     return "CUP";
   }, []);
 
   return (
-    <div className="min-h-screen p-10 pt-20 mt-20">
+    <div className="min-h-screen p-10 xs:p-3 pt-20 mt-20">
       <div className="flex flex-col gap-3">
         <div className="flex w-full items-end justify-between">
-          <h2 className="text-8xl secondary">
-            <span className="">$</span>
+          <h2 className="text-8xl md:text-7xl xs:text-4xl text-primary-300">
+            <span className="text-primary-default">$</span>
             {countLeft}
           </h2>
-          <p className="secondary text-3xl">{currentCurrency}</p>
+          <p className="primary text-3xl xs:text-xl text-primary-default">
+            {currentCurrency}
+          </p>
         </div>
-        <hr className="w-full secondary border-4" />
-        <p>
+        <hr className="w-full border-4 text-primary-default" />
+        <p className="text-primary-default text-xl">
           Quedan en {currentMonth}. Por {leftDays} días
         </p>
       </div>

@@ -103,7 +103,7 @@ function SignUp() {
       ) : (
         <form
           onSubmit={onSubmit}
-          className="rounded-sm appear relative bg-light-background dark:bg-dark-background2 p-10 min-w-[440px] flex flex-col gap-3 shadow-xl shadow-dark-[black]"
+          className="rounded-sm appear relative bg-light dark:bg-dark p-10 min-w-[440px] flex flex-col gap-3 shadow-xl shadow-dark-[black]"
         >
           <div className="flex gap-2 items-center">
             {/* <img src={logo} alt="stick notes logo" className="w-10 h-10" /> */}
