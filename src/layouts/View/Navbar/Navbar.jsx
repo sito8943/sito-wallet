@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWallet } from "@fortawesome/free-solid-svg-icons";
+
 // images
 import noPhoto from "../../../assets/images/no-photo.webp";
 
@@ -35,9 +38,9 @@ function Navbar() {
             transparency ? "" : "bg-light-alter dark:bg-dark-alter"
           }`}
         ></div>
-        <Link to="/" className="z-10 flex gap-2 items-center">
-          LOGO
-          <h1 className="primary uppercase text-xl">Sito Wallet</h1>
+        <Link to="/" className="z-10 flex gap-2 items-center primary">
+          <FontAwesomeIcon icon={faWallet} className="text-xl" />
+          <h1 className="uppercase text-xl">Sito Wallet</h1>
         </Link>
         <nav className="z-10">
           <Link to="/profile">

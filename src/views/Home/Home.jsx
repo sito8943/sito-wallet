@@ -1,4 +1,13 @@
-import { useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
+import { v4 } from "uuid";
+import { sortBy } from "some-javascript-utils/array";
+
+import {
+  faAdd,
+  faSortAmountDown,
+  faSortAmountUp,
+} from "@fortawesome/free-solid-svg-icons";
+
 // @sito/ui
 import { IconButton, ToTop } from "@sito/ui";
 
@@ -7,21 +16,19 @@ import { useUser } from "../../providers/UserProvider";
 
 // components
 import Bill from "./Bill/Bill";
-import {
-  faAdd,
-  faFilter,
-  faSort,
-  faSortAmountUp,
-} from "@fortawesome/free-solid-svg-icons";
 
 function Home() {
   const { userState } = useUser();
 
+  const [asc, setAsc] = useState(false);
+  const [bills, setBills] = useState(userState.user?.bills ?? []);
+  const [spent, setSpent] = useState(userState.user?.spent ?? 0);
+  const [initial, setInitial] = useState(userState.user?.initial ?? 1);
+
   const countLeft = useMemo(() => {
-    if (userState.user.spent && userState.user.initial)
-      return userState.user.initial - userState.user.spent;
+    if (spent && initial) return initial - spent;
     return 7500.69;
-  }, [userState]);
+  }, [initial, spent]);
 
   const currentMonth = useMemo(() => {
     const months = [
@@ -57,24 +64,31 @@ function Home() {
   }, []);
 
   const severity = useMemo(() => {
-    if (userState.user) {
-      const percentOfSpent = (countLeft * 100) / userState.user.spent;
+    if (spent > 0) {
+      const percentOfSpent = (countLeft * 100) / spent;
       if (percentOfSpent > 99) return "text-info";
       else if (percentOfSpent > 50) return "text-success";
       else if (percentOfSpent > 40) return "text-warning";
       else return "text-error";
     }
     return "text-success";
-  }, [countLeft, userState]);
+  }, [countLeft, spent]);
+
+  const handleBillDescription = useCallback((bill) => {}, [bills]);
+  const handleBillSpent = useCallback((bill = {}), [bills]);
 
   const printBills = useMemo(() => {
-    if (userState.user)
-      return userState.user.bills.map((bill) => (
+    if (bills)
+      return sortBy(bills, "spent", asc).map((bill) => (
         <li key={bill.id}>
-          <Bill />
+          <Bill
+            {...bill}
+            onChangeDescription={handleBillDescription}
+            onChangeSpent={handleBillSpent}
+          />
         </li>
       ));
-  }, [userState]);
+  }, [bills, asc, handleBillDescription, handleBillSpent]);
 
   const currentCurrency = useMemo(() => {
     return "CUP";
@@ -93,24 +107,37 @@ function Home() {
           </p>
         </div>
         <hr className="w-full border-4 text-primary-default" />
-        <p className="text-primary-default text-xl">
+        <p className="text-primary-default text-xl xs:text-[16px]">
           Quedan en {currentMonth}. Por {leftDays} días
         </p>
       </div>
       <div className="flex flex-col gap-3">
         <div className="w-full flex items-center justify-between">
-          <h3 className="text-3xl">Gastos en el día</h3>
+          <h3 className="text-3xl xs:text-xl">Gastos en el día</h3>
           <div className="flex gap-3 items-center">
             <IconButton
               name="filter"
               aria-label="Filtrar gastos"
-              onClick={() => console.log("filtro")}
-              icon={faSortAmountUp}
+              onClick={() => setAsc((asc) => !asc)}
+              icon={asc ? faSortAmountUp : faSortAmountDown}
             />
             <IconButton
               aria-label="Agregar gasto"
               name="add-bill"
-              onClick={() => console.log("add")}
+              onClick={() =>
+                setBills([
+                  ...bills,
+                  {
+                    id: v4(),
+                    description: "Nuevo gasto",
+                    spent: 0,
+                    created_at: new Date().getTime(),
+                    year: new Date().getFullYear(),
+                    month: currentMonth,
+                    day: new Date().getDate(),
+                  },
+                ])
+              }
               icon={faAdd}
             />
           </div>
