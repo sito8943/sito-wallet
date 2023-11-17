@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { v4 } from "uuid";
 import { sortBy } from "some-javascript-utils/array";
 
@@ -14,17 +14,46 @@ import { IconButton, ToTop } from "@sito/ui";
 // providers
 import { useUser } from "../../providers/UserProvider";
 
+// services
+import {
+  fetchCurrentDay,
+  fetchCurrentBills,
+  initDay,
+} from "../../services/wallet";
+
 // components
 import Bill from "./Bill/Bill";
 import Counter from "./Counter/Counter";
 
 function Home() {
-  const { userState } = useUser();
+  const { userState, setUserState } = useUser();
 
   const [asc, setAsc] = useState(false);
   const [bills, setBills] = useState(userState.user?.bills ?? []);
   const [spent, setSpent] = useState(userState.user?.spent ?? 0);
   const [initial, setInitial] = useState(userState.user?.initial ?? 1);
+
+  const init = async () => {
+    const { data, error } = await fetchCurrentDay();
+    if (error && error !== null) return console.error(error.message);
+    const { initial, spent } = data;
+    const responseBills = await fetchCurrentBills();
+    if (responseBills.error && responseBills.error !== null)
+      return console.error(responseBills.error.message);
+    setUserState({ type: "init-day", initial, spent, bills: responseBills });
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
+  useEffect(() => {
+    if (!userState.user.bills) userState.user.bills = [];
+    if (!userState.user.spent) userState.user.spent = 0;
+    if (!userState.user.initial) userState.user.initial = 1;
+    const { error } = initDay();
+    if (error && error !== null) console.error(error);
+  }, [userState]);
 
   const countLeft = useMemo(() => {
     if (spent && initial) return initial - spent;
@@ -95,11 +124,10 @@ function Home() {
     return "CUP";
   }, []);
 
-  const [counterValue, setCounterValue] = useState(countLeft);
-
-  const handleCounterUpdate = (increment) => {
-    const delta = (Math.floor(Math.random() * 100) + 1) * 0.99;
-    setCounterValue(increment ? counterValue + delta : counterValue - delta);
+  const onWalletChange = (e) => {
+    const { target } = e;
+    const value = target.innerText;
+    setInitial(Number(value));
   };
 
   return (
@@ -108,7 +136,13 @@ function Home() {
         <div className="flex w-full items-end justify-between">
           <h2 className={`text-8xl md:text-7xl xs:text-4xl ${severity} flex`}>
             <span className="text-primary-default opacity-40">$</span>
-            <Counter number={counterValue} />
+            <Counter
+              number={countLeft}
+              containerProps={{
+                contentEditable: true,
+                onInput: onWalletChange,
+              }}
+            />
           </h2>
           <p className="primary text-3xl xs:text-xl text-primary-default">
             {currentCurrency}
