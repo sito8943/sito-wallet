@@ -16,6 +16,7 @@ import { useUser } from "../../providers/UserProvider";
 
 // components
 import Bill from "./Bill/Bill";
+import Counter from "./Counter/Counter";
 
 function Home() {
   const { userState } = useUser();
@@ -75,12 +76,12 @@ function Home() {
   }, [countLeft, spent]);
 
   const handleBillDescription = useCallback((bill) => {}, [bills]);
-  const handleBillSpent = useCallback((bill = {}), [bills]);
+  const handleBillSpent = useCallback((bill) => {}, [bills]);
 
   const printBills = useMemo(() => {
     if (bills)
       return sortBy(bills, "spent", asc).map((bill) => (
-        <li key={bill.id}>
+        <li key={bill.id} className="appear">
           <Bill
             {...bill}
             onChangeDescription={handleBillDescription}
@@ -94,13 +95,20 @@ function Home() {
     return "CUP";
   }, []);
 
+  const [counterValue, setCounterValue] = useState(countLeft);
+
+  const handleCounterUpdate = (increment) => {
+    const delta = (Math.floor(Math.random() * 100) + 1) * 0.99;
+    setCounterValue(increment ? counterValue + delta : counterValue - delta);
+  };
+
   return (
     <div className="min-h-screen p-10 sm:p-3 pt-20 mt-20 flex flex-col gap-10">
       <div className="flex flex-col gap-3">
         <div className="flex w-full items-end justify-between">
-          <h2 className={`text-8xl md:text-7xl xs:text-4xl ${severity}`}>
-            <span className="text-primary-default">$</span>
-            {countLeft}
+          <h2 className={`text-8xl md:text-7xl xs:text-4xl ${severity} flex`}>
+            <span className="text-primary-default opacity-40">$</span>
+            <Counter number={counterValue} />
           </h2>
           <p className="primary text-3xl xs:text-xl text-primary-default">
             {currentCurrency}
