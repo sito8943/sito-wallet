@@ -26,7 +26,7 @@ function Navbar() {
 
   return (
     <header
-      className={`fixed top-3 left-[50%] -translate-x-[50%] transition-all  duration-300 ease-in-out ${
+      className={`z-50 fixed top-3 left-[50%] -translate-x-[50%] transition-all  duration-300 ease-in-out ${
         transparency ? "w-[99%]" : "w-[90%] xs:w-[95%]"
       }`}
     >

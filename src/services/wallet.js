@@ -10,6 +10,9 @@ export const fetchCurrentBills = async () => {
     .eq("day", now.getDate());
 };
 
+export const addBill = async (bill) =>
+  await supabase.from("bills").insert({ ...bill });
+
 export const fetchCurrentDay = async () => {
   const now = new Date();
   return await supabase

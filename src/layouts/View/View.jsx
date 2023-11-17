@@ -13,7 +13,6 @@ function View() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(userState);
     if (!userState.user) navigate("/auth");
   }, [navigate, userState]);
 

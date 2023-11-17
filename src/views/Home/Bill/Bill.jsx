@@ -1,6 +1,7 @@
+import { memo } from "react";
 import PropTypes from "prop-types";
 
-function Bill({ id, description, spent, onChangeDescription, onChangeSpent }) {
+function Bill({ description, spent, onChangeDescription, onChangeSpent }) {
   return (
     <div className="flex w-full justify-between items-center pr-4 py-2">
       <p className="text-xl" contentEditable onChange={onChangeDescription}>
@@ -21,4 +22,17 @@ Bill.propTypes = {
   onChangeSpent: PropTypes.func,
 };
 
-export default Bill;
+const BillMemo = memo(
+  (props) => <Bill {...props} />,
+  (oldProps, newProps) => {
+    return (
+      oldProps.id === newProps.id &&
+      oldProps.description === newProps.description &&
+      oldProps.spent === newProps.spent
+    );
+  }
+);
+
+BillMemo.displayName = "Bill";
+
+export default BillMemo;

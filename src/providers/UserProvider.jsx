@@ -12,6 +12,7 @@ const userReducer = (userState, action) => {
   switch (type) {
     case "init-day": {
       const { initial, spent, bills } = action;
+      console.log("provider", bills);
       return { ...userState, initial, spent, bills };
     }
     case "logged-out":
