@@ -4,11 +4,11 @@ import { useState } from "react";
 import { Loading, ToTop } from "@sito/ui";
 
 // sections
+import Bills from "./sections/Bills";
 import Header from "./sections/Header";
 
 // styles
 import "./styles.css";
-import Bills from "./sections/Bills";
 
 function Home() {
   const [sync, setSync] = useState(false);
