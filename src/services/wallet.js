@@ -46,14 +46,18 @@ export const updateLog = async (log, date = undefined) => {
     .eq("day", now.getDate());
 };
 
-export const initDay = async () => {
-  const now = new Date();
+export const initDay = async (
+  initial = undefined,
+  spent = undefined,
+  date = undefined
+) => {
+  const now = date ?? new Date();
   return await supabase.from("walletLogs").insert({
     created_at: now.getTime(),
     year: now.getFullYear(),
     month: now.getMonth(),
     day: now.getDate(),
-    spent: 0,
-    initial: 1,
+    spent: spent ?? 0,
+    initial: initial ?? 1,
   });
 };
