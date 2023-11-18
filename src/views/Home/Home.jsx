@@ -57,7 +57,11 @@ function Home() {
   const debouncedInitial = useDebounce(initial, 500);
 
   useEffect(() => {
-    if (debouncedInitial !== null && !isNaN(debouncedInitial)) {
+    if (
+      debouncedInitial !== null &&
+      !isNaN(debouncedInitial) &&
+      debouncedInitial !== 1
+    ) {
       setSync(true);
       updateLog({ initial: debouncedInitial }).then(({ error }) => {
         if (error && error !== null) console.error(error.message);
@@ -109,11 +113,12 @@ function Home() {
 
   useEffect(() => {
     init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const countLeft = useMemo(() => {
     if (initial) return initial - spent;
-    return 7500.69;
+    return 1;
   }, [initial, spent]);
 
   const currentMonth = useMemo(() => {
@@ -192,6 +197,7 @@ function Home() {
 
   useEffect(() => {
     if (Object.keys(toUpdate).length) updateLocalBill(toUpdate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toUpdate]);
 
   const printBills = useMemo(() => {
@@ -202,22 +208,26 @@ function Home() {
         </li>
       ));
     }
+
     if (bills)
-      return sortBy(bills, "spent", asc).map((bill) => (
-        <li key={bill.id} className="appear">
-          <Bill
-            {...bill}
-            onChangeDescription={(value) => {
-              setSync(true);
-              handleBillDescription({ value, id: bill.id });
-            }}
-            onChangeSpent={(value) => {
-              setSync(true);
-              handleBillSpent({ value, id: bill.id });
-            }}
-          />
-        </li>
-      ));
+      return sortBy(bills, "spent", asc).map((bill) => {
+        setSpent((spent) => spent + bill.spent);
+        return (
+          <li key={bill.id} className="appear">
+            <Bill
+              {...bill}
+              onChangeDescription={(value) => {
+                setSync(true);
+                handleBillDescription({ value, id: bill.id });
+              }}
+              onChangeSpent={(value) => {
+                setSync(true);
+                handleBillSpent({ value, id: bill.id });
+              }}
+            />
+          </li>
+        );
+      });
     return <></>;
   }, [loadingBills, bills, asc, handleBillDescription, handleBillSpent]);
 
@@ -261,9 +271,9 @@ function Home() {
           {!loadingMoney ? (
             <>
               <h2
-                className={`text-8xl md:text-7xl xs:text-4xl ${severity} flex`}
+                className={`text-8xl md:text-7xl xs:text-5xl ${severity} flex`}
               >
-                <span className="text-primary-default opacity-40">$</span>
+                <span className="text-primary-default opacity-40 mr-2">$</span>
                 <Counter
                   number={countLeft}
                   containerProps={{
