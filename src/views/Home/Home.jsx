@@ -2,14 +2,11 @@ import { useState, useMemo, useCallback, useEffect } from "react";
 import { v4 } from "uuid";
 import { sortBy } from "some-javascript-utils/array";
 import { useDebounce } from "use-lodash-debounce";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   faAdd,
   faSortAmountDown,
   faSortAmountUp,
-  faCheckCircle,
-  faCircleExclamation,
-  faWarning,
 } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
@@ -260,23 +257,8 @@ function Home() {
     else setBills([...bills, newBill]);
   };
 
-  const severityIcon = useMemo(() => {
-    switch (severity) {
-      case "text-warning":
-        return faWarning;
-      case "text-error":
-        return faCircleExclamation;
-      default:
-        return faCheckCircle;
-    }
-  }, [severity]);
-
   return (
-    <div className="min-h-screen p-10 sm:p-3 pt-20 mt-20 flex flex-col gap-10">
-      <FontAwesomeIcon
-        icon={severityIcon}
-        className={`absolute text-[300px] sm:text-[200px] xs:text-[150px] top-20 right-20 sm:right-10 xs:right-5 ${severity} opacity-10 rotate-12`}
-      />
+    <div className="p-10 sm:p-3 pt-20 mt-20 flex flex-col gap-10">
       <div
         className={`w-10 h-10 fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
           sync ? "scale-100" : "scale-0"
@@ -285,11 +267,11 @@ function Home() {
         <Loading className="sync" strokeWidth="8" />
       </div>
       <div className="flex flex-col gap-3">
-        <div className="flex w-full items-end gap-1">
+        <div className="flex w-full items-end justify-between">
           {!loadingMoney ? (
             <>
               <h2
-                className={`text-8xl md:text-7xl xs:text-5xl ${severity} flex`}
+                className={`text-8xl md:text-7xl sm:text-6xl xs:text-5xl ${severity} flex`}
               >
                 <span className="text-primary-default opacity-40 mr-2">$</span>
                 <Counter
@@ -308,7 +290,7 @@ function Home() {
             <div className="w-full h-[72px] skeleton-box" />
           )}
         </div>
-        {/* <hr className="w-full border-2 text-primary-default" /> */}
+        <hr className="w-full border-2 text-primary-default" />
         {!loadingMoney ? (
           <p className="text-primary-default text-xl xs:text-[16px]">
             Quedan en {currentMonth}. Por {leftDays} días
