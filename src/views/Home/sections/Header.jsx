@@ -6,7 +6,13 @@ import PropTypes from "prop-types";
 import { useUser } from "../../../providers/UserProvider";
 
 // services
-import { fetchFirstLog, fetchLog, updateLog } from "../../../services/wallet";
+import {
+  fetchBills,
+  fetchFirstLog,
+  fetchLog,
+  initDay,
+  updateLog,
+} from "../../../services/wallet";
 
 // components
 import Counter from "../components/Counter/Counter";
@@ -119,12 +125,46 @@ function Header({ setSync }) {
       const { initial, spent } = data[0];
       setInitial(initial);
       setSpent(spent);
-      console.log(initial, spent);
       setUserState({
         type: "init-day-log",
         initial,
         spent,
       });
+    } else {
+      // fetching previous day
+      let now = new Date();
+      let previousResponse = undefined;
+      if (now.getDate() - 1 > 0) {
+        now = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+        previousResponse = await fetchLog(now);
+      } else {
+        const d = new Date(now.getFullYear(), now.getMonth() - 1, 0); // fetching the last day of previous month
+        now = new Date(now.getFullYear(), now.getMonth() - 1, d.getDate());
+        previousResponse = await fetchLog(now);
+      }
+      // updating spent
+
+      let toInit = undefined;
+      if (previousResponse) {
+        if (previousResponse.error && previousResponse.error !== null) {
+          console.error(bills.error.message);
+          setLoadingMoney(false);
+        }
+        const [previous] = previousResponse.data;
+        const bills = await fetchBills(now);
+        if (bills.error && bills.error !== null) {
+          console.error(bills.error.message);
+          setLoadingMoney(false);
+        }
+        bills.data.forEach((bill) => {
+          previous.spent += bill.spent;
+        });
+        toInit = previous.initial - previous.spent;
+        await updateLog(previous, now);
+      }
+      // creating new day with previous money
+      await initDay(toInit);
+      setUserState({ type: "init-day-log", initial: 1, spent: 0 });
     }
     setLoadingMoney(false);
   };
