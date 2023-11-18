@@ -17,7 +17,7 @@ export const fetchBills = async (date = undefined) => {
     .eq("day", now.getDate());
 };
 
-export const fetchDay = async (date = undefined) => {
+export const fetchLog = async (date = undefined) => {
   const now = date ?? new Date();
   return await supabase
     .from("walletLogs")

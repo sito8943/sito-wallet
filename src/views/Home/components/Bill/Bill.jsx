@@ -1,13 +1,15 @@
 import { memo } from "react";
 import PropTypes from "prop-types";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+
+// @sito/ui
+import { IconButton } from "@sito/ui";
 
 // @emotion/css
 import { css } from "@emotion/css";
 
 // components
-import DebouncedInput from "../../../components/DebouncedInput/DebouncedInput";
-import { IconButton } from "@sito/ui";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import DebouncedInput from "../../../../components/DebouncedInput/DebouncedInput";
 
 function Bill({
   description,
