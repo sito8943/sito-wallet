@@ -8,7 +8,7 @@ import { faWallet } from "@fortawesome/free-solid-svg-icons";
 import noPhoto from "../../../assets/images/no-photo.webp";
 
 // styles
-import styles from "./styles.css";
+import "./styles.css";
 
 function Navbar() {
   const [transparency, setTransparency] = useState(true);
