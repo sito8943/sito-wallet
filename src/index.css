@@ -12,3 +12,7 @@ h3 {
   font-family: "Poppins", sans-serif;
   font-weight: 900;
 }
+
+.sync .loader {
+  width: 30px;
+}

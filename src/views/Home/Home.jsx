@@ -1,7 +1,7 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { v4 } from "uuid";
 import { sortBy } from "some-javascript-utils/array";
-
+import { useDebounce } from "use-lodash-debounce";
 import {
   faAdd,
   faSortAmountDown,
@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
-import { IconButton, ToTop } from "@sito/ui";
+import { IconButton, Loading, ToTop } from "@sito/ui";
 
 // providers
 import { useUser } from "../../providers/UserProvider";
@@ -20,6 +20,7 @@ import {
   fetchCurrentDay,
   fetchCurrentBills,
   initDay,
+  updateBill,
 } from "../../services/wallet";
 
 // components
@@ -135,16 +136,52 @@ function Home() {
     return "text-success";
   }, [countLeft, spent]);
 
-  const handleBillDescription = useCallback((bill) => {}, [bills]);
-  const handleBillSpent = useCallback((bill) => {}, [bills]);
+  const [sync, setSync] = useState(false);
+  const [toUpdate, setToUpdate] = useState({});
+  const debounced = useDebounce(toUpdate, 500);
+
+  const handleBillDescription = useCallback(
+    (bill) => setToUpdate({ ...bill, description: true }),
+    []
+  );
+
+  const handleBillSpent = useCallback(
+    (bill) => setToUpdate({ ...bill, spent: true }),
+    []
+  );
+
+  const updateLocalBill = async (bill) => {
+    setSync(true);
+
+    const index = bills.findIndex((b) => b.id === bill.id);
+    if (index >= 0) {
+      if (bill.description) bills[index].description = bill.value;
+      if (bill.spent) bills[index].spent = bill.value;
+      delete bill.value;
+      const { error } = await updateBill(bills[index]);
+      if (error && error !== null) {
+        setSync(false);
+        return console.error(error.message);
+      }
+      setBills([...bills]);
+    }
+
+    setSync(false);
+  };
+
+  useEffect(() => {
+    console.log(debounced);
+    if (Object.keys(debounced).length) updateLocalBill(debounced);
+  }, [debounced]);
 
   const printBills = useMemo(() => {
-    if (loadingBills)
-      return [1, 2, 3, 4, 6, 7, 8, 8].map((item) => (
+    if (loadingBills) {
+      return [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
         <li key={item}>
           <div className="w-full h-[44px] skeleton-box" />
         </li>
       ));
+    }
     if (bills)
       return sortBy(bills, "spent", asc).map((bill) => (
         <li key={bill.id} className="appear">
@@ -189,6 +226,13 @@ function Home() {
 
   return (
     <div className="min-h-screen p-10 sm:p-3 pt-20 mt-20 flex flex-col gap-10">
+      <div
+        className={`w-10 h-10 fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
+          sync ? "scale-100" : "scale-0"
+        } pointer-events-none`}
+      >
+        <Loading className="sync" strokeWidth="8" />
+      </div>
       <div className="flex flex-col gap-3">
         <div className="flex w-full items-end justify-between">
           {!loadingMoney ? (

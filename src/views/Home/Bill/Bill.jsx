@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 function Bill({ description, spent, onChangeDescription, onChangeSpent }) {
   return (
     <div className="flex w-full justify-between items-center pr-4 py-2">
-      <p className="text-xl" contentEditable onChange={onChangeDescription}>
+      <p className="text-xl flex-1" contentEditable onInput={onChangeDescription}>
         {description}
       </p>
-      <p className="font-bold" contentEditable onChange={onChangeSpent}>
+      <p className="font-bold" contentEditable onInput={onChangeSpent}>
         $ {spent}
       </p>
     </div>
@@ -28,7 +28,9 @@ const BillMemo = memo(
     return (
       oldProps.id === newProps.id &&
       oldProps.description === newProps.description &&
-      oldProps.spent === newProps.spent
+      oldProps.spent === newProps.spent &&
+      oldProps.onChangeDescription === newProps.onChangeDescription &&
+      oldProps.onChangeSpent === newProps.onChangeSpent
     );
   }
 );
