@@ -17,10 +17,12 @@ import { useUser } from "../../providers/UserProvider";
 // services
 import {
   addBill as addRemoteBill,
-  fetchCurrentDay,
-  fetchCurrentBills,
+  fetchDay,
+  fetchBills,
   initDay,
   updateBill,
+  fetchFirstLog,
+  updateLog,
 } from "../../services/wallet";
 
 // components
@@ -37,15 +39,37 @@ function Home() {
   const [loadingBills, setLoadingBills] = useState(true);
 
   const [asc, setAsc] = useState(false);
+  const [monthInitial, setMonthInitial] = useState(1);
+
+  useEffect(() => {
+    fetchFirstLog().then(({ data, error }) => {
+      if (error && error !== null) console.error(error.message);
+      else {
+        const [first] = data;
+        if (first) setMonthInitial(first.initial);
+      }
+    });
+  }, []);
 
   const [bills, setBills] = useState([]);
   const [spent, setSpent] = useState(0);
   const [initial, setInitial] = useState(1);
+  const debouncedInitial = useDebounce(initial, 500);
+
+  useEffect(() => {
+    if (debouncedInitial !== null && !isNaN(debouncedInitial)) {
+      setSync(true);
+      updateLog({ initial: debouncedInitial }).then(({ error }) => {
+        if (error && error !== null) console.error(error.message);
+        setSync(false);
+      });
+    }
+  }, [debouncedInitial]);
 
   const init = async () => {
     setLoadingMoney(true);
     setLoadingBills(true);
-    const { data, error } = await fetchCurrentDay();
+    const { data, error } = await fetchDay();
     if (error && error !== null) {
       setLoadingMoney(false);
       setLoadingBills(false);
@@ -63,7 +87,7 @@ function Home() {
     } else {
       const { initial, spent } = data[0];
       setLoadingMoney(false);
-      const responseBills = await fetchCurrentBills();
+      const responseBills = await fetchBills();
       if (responseBills.error && responseBills.error !== null) {
         setLoadingBills(false);
         return console.error(responseBills.error.message);
@@ -88,7 +112,7 @@ function Home() {
   }, []);
 
   const countLeft = useMemo(() => {
-    if (spent && initial) return initial - spent;
+    if (initial) return initial - spent;
     return 7500.69;
   }, [initial, spent]);
 
@@ -126,19 +150,18 @@ function Home() {
   }, []);
 
   const severity = useMemo(() => {
-    if (spent > 0) {
-      const percentOfSpent = (countLeft * 100) / spent;
+    if (countLeft > 0 && monthInitial > 0) {
+      const percentOfSpent = (countLeft * 100) / monthInitial;
       if (percentOfSpent > 99) return "text-info";
       else if (percentOfSpent > 50) return "text-success";
       else if (percentOfSpent > 40) return "text-warning";
       else return "text-error";
     }
     return "text-success";
-  }, [countLeft, spent]);
+  }, [countLeft, monthInitial]);
 
   const [sync, setSync] = useState(false);
   const [toUpdate, setToUpdate] = useState({});
-  const debounced = useDebounce(toUpdate, 500);
 
   const handleBillDescription = useCallback(
     (bill) => setToUpdate({ ...bill, description: true }),
@@ -151,8 +174,6 @@ function Home() {
   );
 
   const updateLocalBill = async (bill) => {
-    setSync(true);
-
     const index = bills.findIndex((b) => b.id === bill.id);
     if (index >= 0) {
       if (bill.description) bills[index].description = bill.value;
@@ -170,9 +191,8 @@ function Home() {
   };
 
   useEffect(() => {
-    console.log(debounced);
-    if (Object.keys(debounced).length) updateLocalBill(debounced);
-  }, [debounced]);
+    if (Object.keys(toUpdate).length) updateLocalBill(toUpdate);
+  }, [toUpdate]);
 
   const printBills = useMemo(() => {
     if (loadingBills) {
@@ -187,12 +207,14 @@ function Home() {
         <li key={bill.id} className="appear">
           <Bill
             {...bill}
-            onChangeDescription={(e) =>
-              handleBillDescription({ value: e.target.innerText, id: bill.id })
-            }
-            onChangeSpent={(e) =>
-              handleBillSpent({ value: e.target.innerText, id: bill.id })
-            }
+            onChangeDescription={(value) => {
+              setSync(true);
+              handleBillDescription({ value, id: bill.id });
+            }}
+            onChangeSpent={(value) => {
+              setSync(true);
+              handleBillSpent({ value, id: bill.id });
+            }}
           />
         </li>
       ));
@@ -204,9 +226,10 @@ function Home() {
   }, []);
 
   const onWalletChange = (e) => {
+    setSync(true);
     const { target } = e;
     const value = target.innerText;
-    setInitial(Number(value));
+    setInitial(Number(value.replaceAll(",", "")));
   };
 
   const addBill = async () => {
@@ -257,7 +280,7 @@ function Home() {
             <div className="w-full h-[72px] skeleton-box" />
           )}
         </div>
-        <hr className="w-full border-4 text-primary-default" />
+        <hr className="w-full border-2 text-primary-default" />
         {!loadingMoney ? (
           <p className="text-primary-default text-xl xs:text-[16px]">
             Quedan en {currentMonth}. Por {leftDays} días

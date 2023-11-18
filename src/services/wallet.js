@@ -1,9 +1,26 @@
 import supabase from "../db/connection";
 
-export const fetchCurrentBills = async () => {
-  const now = new Date();
+export const fetchFirstLog = async () =>
+  await supabase
+    .from("walletLogs")
+    .select()
+    .gte("initial", 1)
+    .order("created_at");
+
+export const fetchBills = async (date = undefined) => {
+  const now = date ?? new Date();
   return await supabase
     .from("bills")
+    .select()
+    .eq("year", now.getFullYear())
+    .eq("month", now.getMonth())
+    .eq("day", now.getDate());
+};
+
+export const fetchDay = async (date = undefined) => {
+  const now = date ?? new Date();
+  return await supabase
+    .from("walletLogs")
     .select()
     .eq("year", now.getFullYear())
     .eq("month", now.getMonth())
@@ -19,11 +36,11 @@ export const updateBill = async (bill) =>
     .update({ ...bill })
     .eq("id", bill.id);
 
-export const fetchCurrentDay = async () => {
-  const now = new Date();
+export const updateLog = async (log, date = undefined) => {
+  const now = date ?? new Date();
   return await supabase
     .from("walletLogs")
-    .select()
+    .update({ ...log })
     .eq("year", now.getFullYear())
     .eq("month", now.getMonth())
     .eq("day", now.getDate());

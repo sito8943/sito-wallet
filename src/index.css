@@ -16,3 +16,12 @@ h3 {
 .sync .loader {
   width: 30px;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  margin-left: 20px;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}

@@ -1,15 +1,30 @@
 import { memo } from "react";
 import PropTypes from "prop-types";
 
+// @emotion/css
+import { css } from "@emotion/css";
+
+// components
+import DebouncedInput from "../../../components/DebouncedInput/DebouncedInput";
+
 function Bill({ description, spent, onChangeDescription, onChangeSpent }) {
   return (
-    <div className="flex w-full justify-between items-center pr-4 py-2">
-      <p className="text-xl flex-1" contentEditable onInput={onChangeDescription}>
-        {description}
-      </p>
-      <p className="font-bold" contentEditable onInput={onChangeSpent}>
-        $ {spent}
-      </p>
+    <div className="flex w-full justify-between items-center pr-[10px] py-2">
+      <DebouncedInput
+        className="text-lg flex-1"
+        initialValue={description}
+        onDebounceTrigger={onChangeDescription}
+      />
+      <div className="font-bold flex">
+        $
+        <DebouncedInput
+          className={`text-right ml-1 ${css({ width: String(spent).length + "ch" })}`}
+          initialValue={spent}
+          type="number"
+          onInput={(e) => (e.target.style.width = e.target.value.length + "ch")}
+          onDebounceTrigger={onChangeSpent}
+        />
+      </div>
     </div>
   );
 }
