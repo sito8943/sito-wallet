@@ -14,17 +14,26 @@ import DebouncedInput from "../../../../components/DebouncedInput/DebouncedInput
 function Bill({
   description,
   spent,
+  created_at,
   onChangeDescription,
   onChangeSpent,
   onDelete,
 }) {
   return (
     <div className="flex w-full justify-between items-center py-2">
-      <DebouncedInput
-        className="text-lg flex-1"
-        initialValue={description}
-        onDebounceTrigger={onChangeDescription}
-      />
+      <div className="flex flex-col justify-start items-start flex-1">
+        <DebouncedInput
+          className="text-lg"
+          initialValue={description}
+          onDebounceTrigger={onChangeDescription}
+        />
+        <p className="text-sm">
+          {new Date(created_at).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </p>
+      </div>
       <div className="font-bold flex items-center gap-5">
         <div className="flex items-center">
           $
@@ -48,6 +57,7 @@ function Bill({
 
 Bill.propTypes = {
   id: PropTypes.string,
+  created_at: PropTypes.number,
   description: PropTypes.string,
   onChangeDescription: PropTypes.func,
   spent: PropTypes.number,
