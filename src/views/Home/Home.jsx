@@ -2,10 +2,14 @@ import { useState, useMemo, useCallback, useEffect } from "react";
 import { v4 } from "uuid";
 import { sortBy } from "some-javascript-utils/array";
 import { useDebounce } from "use-lodash-debounce";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,
   faSortAmountDown,
   faSortAmountUp,
+  faCheckCircle,
+  faCircleExclamation,
+  faWarning,
 } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
@@ -157,8 +161,8 @@ function Home() {
   const severity = useMemo(() => {
     if (countLeft > 0 && monthInitial > 0) {
       const percentOfSpent = (countLeft * 100) / monthInitial;
-      if (percentOfSpent > 99) return "text-info";
-      else if (percentOfSpent > 50) return "text-success";
+
+      if (percentOfSpent > 50) return "text-success";
       else if (percentOfSpent > 40) return "text-warning";
       else return "text-error";
     }
@@ -211,7 +215,6 @@ function Home() {
 
     if (bills)
       return sortBy(bills, "spent", asc).map((bill) => {
-        setSpent((spent) => spent + bill.spent);
         return (
           <li key={bill.id} className="appear">
             <Bill
@@ -257,8 +260,23 @@ function Home() {
     else setBills([...bills, newBill]);
   };
 
+  const severityIcon = useMemo(() => {
+    switch (severity) {
+      case "text-warning":
+        return faWarning;
+      case "text-error":
+        return faCircleExclamation;
+      default:
+        return faCheckCircle;
+    }
+  }, [severity]);
+
   return (
     <div className="min-h-screen p-10 sm:p-3 pt-20 mt-20 flex flex-col gap-10">
+      <FontAwesomeIcon
+        icon={severityIcon}
+        className={`absolute text-[300px] sm:text-[200px] xs:text-[150px] top-20 right-20 sm:right-10 xs:right-5 ${severity} opacity-10 rotate-12`}
+      />
       <div
         className={`w-10 h-10 fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
           sync ? "scale-100" : "scale-0"
@@ -267,7 +285,7 @@ function Home() {
         <Loading className="sync" strokeWidth="8" />
       </div>
       <div className="flex flex-col gap-3">
-        <div className="flex w-full items-end justify-between">
+        <div className="flex w-full items-end gap-1">
           {!loadingMoney ? (
             <>
               <h2
@@ -290,7 +308,7 @@ function Home() {
             <div className="w-full h-[72px] skeleton-box" />
           )}
         </div>
-        <hr className="w-full border-2 text-primary-default" />
+        {/* <hr className="w-full border-2 text-primary-default" /> */}
         {!loadingMoney ? (
           <p className="text-primary-default text-xl xs:text-[16px]">
             Quedan en {currentMonth}. Por {leftDays} días

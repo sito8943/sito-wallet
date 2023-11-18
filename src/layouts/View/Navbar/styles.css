@@ -1,0 +1,9 @@
+.navbar {
+  width: calc(100% - 40px);
+}
+
+@media (max-width: 639px) {
+  .navbar {
+    width: calc(100% - 12px);
+  }
+}

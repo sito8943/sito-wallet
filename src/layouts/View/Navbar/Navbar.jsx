@@ -7,6 +7,9 @@ import { faWallet } from "@fortawesome/free-solid-svg-icons";
 // images
 import noPhoto from "../../../assets/images/no-photo.webp";
 
+// styles
+import styles from "./styles.css";
+
 function Navbar() {
   const [transparency, setTransparency] = useState(true);
 
@@ -27,14 +30,14 @@ function Navbar() {
   return (
     <header
       className={`z-50 fixed top-3 left-[50%] -translate-x-[50%] transition-all  duration-300 ease-in-out ${
-        transparency ? "w-[99%]" : "w-[90%] xs:w-[95%]"
+        transparency ? "w-[99%]" : "navbar"
       }`}
     >
       <div
         className={`relative backdrop-blur-[8px] rounded-[100px] flex w-full justify-between py-3 px-5 xs:px-3 `}
       >
         <div
-          className={` absolute w-full h-full top-0 left-0 rounded-[100px] opacity-70 ${
+          className={` absolute w-full h-full top-0 left-0 rounded-[100px] opacity-90 ${
             transparency ? "" : "bg-light-alter dark:bg-dark-alter"
           }`}
         ></div>
