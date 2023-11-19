@@ -6,6 +6,11 @@
   font-family: "Roboto", sans-serif;
 }
 
+.viewport {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
 h1,
 h2,
 h3 {

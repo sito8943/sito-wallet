@@ -115,7 +115,7 @@ function SignUp() {
   );
 
   return (
-    <main className="w-full min-h-screen flex items-center justify-center">
+    <main className="w-full viewport flex items-center justify-center">
       <ModeButton className="top-1 right-1 icon-button primary" />
       <div
         className={`bg-light-alter dark:bg-dark-alter pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-sm transition-all duration-100 ${
