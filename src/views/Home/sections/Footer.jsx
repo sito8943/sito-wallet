@@ -10,10 +10,10 @@ function Footer() {
         <p className="text-light-default capitalize">
           {userState.user?.email.split("@")[0]}
         </p>
-        <p className="text-[gray] capitalize">
+        <p className="text-[#bbb] capitalize">
           {userState.user?.country ?? "CU"}
         </p>
-        <p className="text-[gray] capitalize">{userState.user?.phone}</p>
+        <p className="text-[#bbb] capitalize">{userState.user?.phone}</p>
       </div>
     </footer>
   );
