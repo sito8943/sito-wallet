@@ -21,12 +21,10 @@ import ModeButton from "../../components/ModeButton/ModeButton";
 
 // services
 import { login } from "../../services/auth";
+import { createWalletUser, fetchUserData } from "../../services/user";
 
 // auth
 import { saveUser } from "../../utils/auth";
-
-// images
-// import logo from "../../assets/images/logo.png";
 
 // styles
 import "./styles.css";
@@ -78,9 +76,17 @@ function SignIn() {
       if (error && error !== null)
         setNotification({ type: "error", message: error.message });
       else {
+        const userData = await fetchUserData(data.user.id);
+        if (userData.error && userData.error !== null) {
+          setNotification({ type: "error", message: userData.error.message });
+          setLoading(false);
+        }
+        if (!data.length) await createWalletUser(data.user.id);
         setUserState({
           type: "logged-in",
           user: data.user,
+          photo: userData[0]?.photo ?? {},
+          cash: userData[0]?.cash ?? 0,
         });
         saveUser(data.user);
         navigate("/");
