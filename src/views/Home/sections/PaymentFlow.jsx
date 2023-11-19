@@ -66,7 +66,7 @@ function PaymentFlow() {
       }
       if (data.length) setInitial(data[0].initial);
     });
-  }, []);
+  }, [userState]);
 
   return (
     <section className="h-[490px] flex flex-col">
