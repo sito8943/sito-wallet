@@ -113,7 +113,7 @@ function SignIn() {
         }`}
       >
         <Loading
-          className={`dark:bg-dark-background transition-all duration-300  ${
+          className={`dark:bg-dark-alter transition-all duration-300  ${
             loading ? "!h-[100px]" : "!h-[0px]"
           }`}
         />
