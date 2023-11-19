@@ -54,7 +54,7 @@ function Navbar() {
             alt="user-photo"
             className="rounded-full w-10 h-10 object-contain"
           />
-          <h1 className="capitalize text-xl">{userState.user?.email.split("@")[0]}</h1>
+          <h1 className="capitalize text-xl">{userState.user?.email?.split("@")[0]}</h1>
         </Link>
         <nav className="z-10 flex">
           <Link to="/sign-out">
