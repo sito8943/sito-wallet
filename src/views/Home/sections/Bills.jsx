@@ -1,4 +1,5 @@
-import { useMemo, useEffect, useState, useCallback } from "react";
+import { useRef, useMemo, useEffect, useState, useCallback } from "react";
+import { useInViewport } from "react-in-viewport";
 import { v4 } from "uuid";
 import PropTypes from "prop-types";
 import { sortBy } from "some-javascript-utils/array";
@@ -24,11 +25,15 @@ import { useUser } from "../../../providers/UserProvider";
 
 // components
 import Bill from "../components/Bill/Bill";
+import { scrollTo } from "some-javascript-utils/browser";
 
 function Bills({ setSync }) {
   const { setUserState } = useUser();
 
   const [loadingBills, setLoadingBills] = useState(true);
+
+  const addButton = useRef();
+  const { inViewport } = useInViewport(addButton);
 
   const [asc, setAsc] = useState(false);
 
@@ -131,6 +136,7 @@ function Bills({ setSync }) {
     const { error } = await addRemoteBill(newBill);
     if (error && error !== null) console.error(error.message);
     else setBills([...bills, newBill]);
+    return newBill.id;
   };
 
   const init = async () => {
@@ -180,6 +186,7 @@ function Bills({ setSync }) {
             icon={asc ? faSortAmountUp : faSortAmountDown}
           />
           <IconButton
+            ref={addButton}
             aria-label="Agregar gasto"
             tooltip="Agregar gasto"
             name="add-bill"
@@ -189,6 +196,23 @@ function Bills({ setSync }) {
         </div>
       </div>
       <ul>{printBills}</ul>
+      <IconButton
+        aria-label="Agregar gasto"
+        tooltip="Agregar gasto"
+        name="floating-add-bill"
+        onClick={async () => {
+          const id = await addBill();
+          setTimeout(
+            () => scrollTo(document.getElementById(id).offsetTop),
+            200
+          );
+        }}
+        color="secondary submit"
+        icon={faAdd}
+        className={`aGrow fixed bottom-5 right-5 ${
+          inViewport ? "scale-0 pointer-events-none" : "scale-100"
+        } transition duration-300 ease-in-out`}
+      />
     </section>
   );
 }

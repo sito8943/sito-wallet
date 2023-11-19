@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // @sito/ui
-import { Loading, ToTop } from "@sito/ui";
+import { Loading } from "@sito/ui";
 
 // sections
 import Bills from "./sections/Bills";
@@ -31,7 +31,6 @@ function Home() {
 
         <Wallet />
         <PaymentFlow />
-        <ToTop color="secondary" />
       </div>
       <Footer />
     </main>
