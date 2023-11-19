@@ -35,6 +35,7 @@ export const login = async (user, password) => {
     email: user,
     password: md5(password),
   });
+  if (error && error !== null) return { error };
   // fetching bills and walletLogs of the current day
   const responseBills = await supabase
     .from("bills")
