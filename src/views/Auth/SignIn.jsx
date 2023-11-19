@@ -88,7 +88,11 @@ function SignIn() {
           photo: userData[0]?.photo ?? {},
           cash: userData[0]?.cash ?? 0,
         });
-        saveUser(data.user);
+        saveUser({
+          user: data.user,
+          photo: userData[0]?.photo ?? {},
+          cash: userData[0]?.photo ?? {},
+        });
         navigate("/");
       }
       setLoading(false);

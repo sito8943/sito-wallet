@@ -21,8 +21,8 @@ const userReducer = (userState, action) => {
     case "logged-out":
       return {};
     case "logged-in": {
-      const { user } = action;
-      return { user };
+      const { user, photo, cash } = action;
+      return { user, photo, cash };
     }
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
