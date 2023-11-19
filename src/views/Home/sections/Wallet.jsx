@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useDebounce } from "use-lodash-debounce";
 import { Link } from "react-router-dom";
 
-import { faAdd, faArrows, faRefresh } from "@fortawesome/free-solid-svg-icons";
+// @emotion/css
+import { css } from "@emotion/css";
+
+import { faAdd, faRefresh } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
 import { IconButton } from "@sito/ui";
@@ -18,6 +21,7 @@ function Wallet() {
       <p className="font-bold text-xl">
         <DebouncedInput
           initialValue={wallet}
+          className={css({ background: "none" })}
           onDebounceTrigger={() => console.log("wallet")}
         />
       </p>
