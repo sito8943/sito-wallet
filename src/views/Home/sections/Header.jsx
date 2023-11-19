@@ -17,6 +17,9 @@ import {
 // components
 import Counter from "../components/Counter/Counter";
 
+// styles
+import "./styles.css";
+
 function Header({ setSync }) {
   const { userState, setUserState } = useUser();
 
@@ -95,11 +98,11 @@ function Header({ setSync }) {
     if (countLeft > 0 && monthInitial > 0) {
       const percentOfSpent = (countLeft * 100) / monthInitial;
 
-      if (percentOfSpent > 50) return "text-success";
-      else if (percentOfSpent > 40) return "text-warning";
-      else return "text-error";
+      if (percentOfSpent > 50) return "good";
+      else if (percentOfSpent > 40) return "alert";
+      else return "bad";
     }
-    return "text-success";
+    return "good";
   }, [countLeft, monthInitial]);
 
   const currentCurrency = useMemo(() => {
@@ -199,6 +202,7 @@ function Header({ setSync }) {
               <span className="text-primary-default opacity-40 mr-2">$</span>
               <Counter
                 number={countLeft}
+                className={severity}
                 containerProps={{
                   contentEditable: true,
                   onInput: onWalletChange,
