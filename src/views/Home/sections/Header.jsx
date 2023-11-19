@@ -54,7 +54,6 @@ function Header({ setSync }) {
   const [spent, setSpent] = useState(0);
 
   const countLeft = useMemo(() => {
-    console.log(initial, spent);
     if (initial) return initial - spent;
     return 1;
   }, [initial, spent]);
@@ -122,7 +121,6 @@ function Header({ setSync }) {
       setLoadingMoney(false);
       return console.error(error.message);
     }
-
     if (data.length) {
       const { initial, spent } = data[0];
       setInitial(initial);
