@@ -184,7 +184,7 @@ function Header({ setSync }) {
     if (userState.bills) {
       let newSpent = 0;
       userState.bills.forEach((bill) => {
-        newSpent += bill.spent;
+        newSpent += Number(bill.spent);
       });
       setSpent(newSpent);
     }
