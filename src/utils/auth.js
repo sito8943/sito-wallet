@@ -24,3 +24,9 @@ export const getUser = () => decrypt(localStorage.getItem(config.user));
  * @returns removes user
  */
 export const logoutUser = () => localStorage.removeItem(config.user);
+
+/**
+ *
+ * @returns if an user is cached
+ */
+export const cachedUser = () => localStorage.getItem(config.user) !== null;

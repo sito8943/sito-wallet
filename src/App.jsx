@@ -6,7 +6,7 @@ import Auth from "./layouts/Auth";
 import View from "./layouts/View/View";
 
 // @sito/ui
-import { Handler, Loading, Notification, useNotification } from "@sito/ui";
+import { Handler, Loading, Notification } from "@sito/ui";
 
 // services
 import { validateUser } from "./services/auth";
@@ -15,7 +15,7 @@ import { validateUser } from "./services/auth";
 import { useUser } from "./providers/UserProvider";
 
 // auth cache
-import { getUser } from "./utils/auth";
+import { cachedUser, getUser } from "./utils/auth";
 
 // views
 import SignIn from "./views/Auth/SignIn";
@@ -32,7 +32,7 @@ function App() {
   const fetch = async () => {
     try {
       const { data, error } = await validateUser();
-      if (error && error !== null)
+      if (error && error !== null && cachedUser())
         setUserState({ type: "logged-in", user: getUser() });
       else setUserState({ type: "logged-in", user: data.user });
     } catch (err) {
