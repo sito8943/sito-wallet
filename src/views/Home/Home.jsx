@@ -6,12 +6,12 @@ import { Loading } from "@sito/ui";
 // sections
 import Bills from "./sections/Bills";
 import Header from "./sections/Header";
-
-// styles
-import "./styles.css";
 import Wallet from "./sections/Wallet";
 import Footer from "./sections/Footer";
 import PaymentFlow from "./sections/PaymentFlow";
+
+// styles
+import "./styles.css";
 
 function Home() {
   const [sync, setSync] = useState(false);
