@@ -1,4 +1,5 @@
 import supabase from "../db/connection";
+import { getUser } from "../utils/auth";
 
 export const fetchFirstLog = async () =>
   await supabase
@@ -14,11 +15,12 @@ export const fetchBills = async (
   day = undefined
 ) => {
   const now = date ?? new Date();
-  const query = supabase.from("bills").select();
+  const query = supabase.from("bills").select().eq("owner", getUser().user.id);
 
   if (year !== null) query.eq("year", year ?? now.getFullYear());
   if (month !== null) query.eq("month", month ?? now.getMonth());
   if (day !== null) query.eq("day", day ?? now.getDate());
+
   return await query;
 };
 
@@ -27,6 +29,7 @@ export const fetchLog = async (date = undefined) => {
   return await supabase
     .from("walletLogs")
     .select()
+    .eq("owner", getUser().user.id)
     .eq("year", now.getFullYear())
     .eq("month", now.getMonth())
     .eq("day", now.getDate());
