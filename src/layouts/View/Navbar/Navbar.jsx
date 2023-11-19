@@ -1,8 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWallet } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+
+// @sito/ui
+import { IconButton } from "@sito/ui";
+
+// providers
+import { useUser } from "../../../providers/UserProvider";
 
 // images
 import noPhoto from "../../../assets/images/no-photo.webp";
@@ -11,6 +16,8 @@ import noPhoto from "../../../assets/images/no-photo.webp";
 import "./styles.css";
 
 function Navbar() {
+  const { userState } = useUser();
+
   const [transparency, setTransparency] = useState(true);
 
   const onScroll = useCallback(() => {
@@ -42,16 +49,16 @@ function Navbar() {
           }`}
         ></div>
         <Link to="/" className="z-10 flex gap-2 items-center primary">
-          <FontAwesomeIcon icon={faWallet} className="text-xl" />
-          <h1 className="uppercase text-xl">Sito Wallet</h1>
+          <img
+            src={noPhoto}
+            alt="user-photo"
+            className="rounded-full w-10 h-10 object-contain"
+          />
+          <h1 className="capitalize text-xl">{userState.user?.email.split("@")[0]}</h1>
         </Link>
-        <nav className="z-10">
-          <Link to="/profile">
-            <img
-              src={noPhoto}
-              alt="user-photo"
-              className="rounded-full w-10 h-10 object-contain"
-            />
+        <nav className="z-10 flex">
+          <Link to="/auth/sign-out">
+            <IconButton icon={faArrowRightFromBracket} />
           </Link>
         </nav>
       </div>
