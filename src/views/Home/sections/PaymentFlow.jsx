@@ -69,7 +69,7 @@ function PaymentFlow() {
   }, []);
 
   return (
-    <section className="h-[470px] flex flex-col">
+    <section className="h-[490px] flex flex-col">
       <h3 className="text-3xl xs:text-xl">Fluido de pago</h3>
       <div className="flex w-full h-full" ref={myRef}>
         <PaymentFlowBar
