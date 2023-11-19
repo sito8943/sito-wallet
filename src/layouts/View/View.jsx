@@ -4,9 +4,11 @@ import { Outlet, useNavigate } from "react-router-dom";
 // @sito/ui
 import { Handler } from "@sito/ui";
 
+// providers
+import { useUser } from "../../providers/UserProvider";
+
 // components
 import Navbar from "./Navbar/Navbar";
-import { useUser } from "../../providers/UserProvider";
 
 function View() {
   const { userState } = useUser();
