@@ -18,7 +18,7 @@ import {
 import Counter from "../components/Counter/Counter";
 
 function Header({ setSync }) {
-  const { setUserState } = useUser();
+  const { userState, setUserState } = useUser();
 
   const [loadingMoney, setLoadingMoney] = useState(true);
 
@@ -54,6 +54,7 @@ function Header({ setSync }) {
   const [spent, setSpent] = useState(0);
 
   const countLeft = useMemo(() => {
+    console.log(initial, spent);
     if (initial) return initial - spent;
     return 1;
   }, [initial, spent]);
@@ -165,7 +166,8 @@ function Header({ setSync }) {
         await updateLog(previous, now);
       }
       // creating new day with previous money
-      await initDay(toInit);
+      if (localStorage.getItem("initializing") !== `${new Date().getDate()}`)
+        await initDay(toInit);
       setInitial(toInit);
       setUserState({ type: "init-day-log", initial: toInit, spent: 0 });
     }
@@ -173,11 +175,20 @@ function Header({ setSync }) {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("initializing") !== `${new Date().getDate()}`)
-      init();
+    init();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setSync]);
+
+  useEffect(() => {
+    if (userState.bills) {
+      let newSpent = 0;
+      userState.bills.forEach((bill) => {
+        newSpent += bill.spent;
+      });
+      setSpent(newSpent);
+    }
+  }, [userState]);
 
   return (
     <div className="flex flex-col gap-3">

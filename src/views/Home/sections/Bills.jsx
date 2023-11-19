@@ -14,6 +14,7 @@ import { IconButton } from "@sito/ui";
 // services
 import {
   addBill as addRemoteBill,
+  deleteBill,
   updateBill,
   fetchBills,
 } from "../../../services/wallet";
@@ -47,6 +48,7 @@ function Bills({ setSync }) {
         return console.error(error.message);
       }
       setBills([...bills]);
+      setUserState({ type: "init-day-bills", bills: [...bills] });
     }
 
     setSync(false);
@@ -89,6 +91,18 @@ function Bills({ setSync }) {
               onChangeSpent={(value) => {
                 setSync(true);
                 handleBillSpent({ value, id: bill.id });
+              }}
+              onDelete={async () => {
+                setSync(true);
+                const { error } = await deleteBill(bill.id);
+                const newBills = [...bills];
+                newBills.splice(
+                  newBills.findIndex((billR) => billR.id === bill.id),
+                  1
+                );
+                setBills(newBills);
+                if (error && error !== null) console.error(error.message);
+                setSync(false);
               }}
             />
           </li>
@@ -139,7 +153,6 @@ function Bills({ setSync }) {
       }
       // setting
       setBills(responseBills.data);
-
       setUserState({
         type: "init-day-bills",
         bills: responseBills.data,

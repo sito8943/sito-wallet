@@ -62,3 +62,6 @@ export const initDay = async (
     initial: initial ?? 1,
   });
 };
+
+export const deleteBill = async (id) =>
+  await supabase.from("bills").delete().eq("id", id);
