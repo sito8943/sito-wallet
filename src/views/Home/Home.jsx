@@ -11,6 +11,7 @@ import Header from "./sections/Header";
 import "./styles.css";
 import Wallet from "./sections/Wallet";
 import Footer from "./sections/Footer";
+import PaymentFlow from "./sections/PaymentFlow";
 
 function Home() {
   const [sync, setSync] = useState(false);
@@ -28,8 +29,9 @@ function Home() {
         <Header setSync={setSync} />
         <Bills setSync={setSync} />
 
-        <ToTop />
         <Wallet />
+        <PaymentFlow />
+        <ToTop />
       </div>
       <Footer />
     </main>
