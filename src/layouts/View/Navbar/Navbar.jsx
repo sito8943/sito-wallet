@@ -57,7 +57,7 @@ function Navbar() {
           <h1 className="capitalize text-xl">{userState.user?.email.split("@")[0]}</h1>
         </Link>
         <nav className="z-10 flex">
-          <Link to="/auth/sign-out">
+          <Link to="/sign-out">
             <IconButton icon={faArrowRightFromBracket} />
           </Link>
         </nav>
