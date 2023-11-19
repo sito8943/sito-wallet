@@ -25,9 +25,16 @@ import ModeButton from "../../components/ModeButton/ModeButton";
 
 // services
 import { register } from "../../services/auth";
+import { createWalletUser } from "../../services/user";
+
+// auth
+import { saveUser } from "../../utils/auth";
 
 // images
 // import logo from "../../assets/images/logo.png";
+
+// styles
+import "./styles.css";
 
 function SignUp() {
   const { setNotification } = useNotification();
@@ -57,6 +64,7 @@ function SignUp() {
   const { setUserState } = useUser();
 
   const [loading, setLoading] = useState(false);
+  const [goToVerify, setGoToVerify] = useState(false);
 
   const onSubmit = useCallback(
     async (e) => {
@@ -82,13 +90,22 @@ function SignUp() {
       const response = await register(email, password);
       const { data, error } = response;
       if (!error || error === null) {
-        setUserState({
-          type: "logged-in",
-          user: {
-            ...data.user,
-          },
-        });
-        navigate("/");
+        const walletUser = await createWalletUser(data.user.id);
+        if (walletUser.error && walletUser.user !== null) {
+          console.error(walletUser.error.message);
+          setGoToVerify(true);
+        } else {
+          setUserState({
+            type: "logged-in",
+            user: {
+              ...data.user,
+            },
+            photo: {},
+            cash: 0,
+          });
+          saveUser({ user: data.user, photo: {}, cash: 0 });
+          navigate("/");
+        }
       } else setNotification({ type: "error", message: error.message });
       setLoading(false);
     },
@@ -98,22 +115,43 @@ function SignUp() {
   return (
     <main className="w-full min-h-screen flex items-center justify-center">
       <ModeButton className="top-1 right-1 icon-button primary" />
-      {loading ? (
-        <Loading className="fixed-loading" />
+      <div
+        className={`bg-light-alter dark:bg-dark-alter pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-sm transition-all duration-100 ${
+          loading ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <Loading
+          className={`dark:bg-dark-background transition-all duration-300  ${
+            loading ? "!h-[100px]" : "!h-[0px]"
+          }`}
+        />
+      </div>
+      {goToVerify ? (
+        <div className="form bg-light-alter dark:bg-dark-alter appear items-center">
+          <h1 className="text-success text-center text-4xl">Registrado correctamente</h1>
+          <p className="text-center">
+            Gracias por registrarte. Por favor, valida tu dirección de correo
+            electrónico haciendo clic en el enlace de confirmación que acabamos
+            de enviar a tu dirección.
+          </p>
+          <Link to="/">
+            <Button className="submit primary">Iniciar Sesión</Button>
+          </Link>
+        </div>
       ) : (
         <form
           onSubmit={onSubmit}
-          className="rounded-sm appear relative bg-light dark:bg-dark p-10 min-w-[440px] flex flex-col gap-3 shadow-xl shadow-dark-[black]"
+          className="form bg-light-alter dark:bg-dark-alter appear"
         >
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-start flex-col">
             {/* <img src={logo} alt="stick notes logo" className="w-10 h-10" /> */}
             LOGO
-            <h1 className="text-sdark primary uppercase">Sito Wallet</h1>
+            <h1 className="primary uppercase text-4xl">Sito Wallet</h1>
           </div>
           <InputControl
             id="email"
-            className="input border-none submit !pl-8 w-full"
             label="Email"
+            className="sign-in-input"
             value={email}
             onChange={handleEmail}
             type="email"
@@ -127,7 +165,7 @@ function SignUp() {
           />
           <InputControl
             id="password"
-            className="input border-none submit !pl-8 w-full"
+            className="sign-in-input"
             label="Contraseña"
             maxLength={25}
             value={password}
@@ -147,7 +185,7 @@ function SignUp() {
           />
           <InputControl
             id="rPassword"
-            className="input border-none submit !pl-8 w-full"
+            className="sign-in-input"
             label="Repetir Contraseña"
             maxLength={25}
             value={rPassword}
