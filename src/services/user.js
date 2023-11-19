@@ -9,6 +9,6 @@ export const createWalletUser = async (userId) =>
     .insert({
       id: userId,
       photo: {},
-      created_at: new Date().getDate(),
+      created_at: new Date().getTime(),
       cash: 0,
     });
