@@ -28,6 +28,7 @@ import { saveUser } from "../../utils/auth";
 
 // styles
 import "./styles.css";
+import { showError } from "../../lang/es";
 
 function SignIn() {
   const { setNotification } = useNotification();
@@ -74,11 +75,14 @@ function SignIn() {
       const response = await login(user, password);
       const { data, error } = response;
       if (error && error !== null)
-        setNotification({ type: "error", message: error.message });
+        setNotification({ type: "error", message: showError(error.message) });
       else {
         const userData = await fetchUserData(data.user.id);
         if (userData.error && userData.error !== null) {
-          setNotification({ type: "error", message: userData.error.message });
+          setNotification({
+            type: "error",
+            message: showError(userData.error.message),
+          });
           setLoading(false);
         }
         if (!data.length) await createWalletUser(data.user.id);

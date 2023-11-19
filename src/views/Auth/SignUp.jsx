@@ -35,6 +35,7 @@ import { saveUser } from "../../utils/auth";
 
 // styles
 import "./styles.css";
+import { showError } from "../../lang/es";
 
 function SignUp() {
   const { setNotification } = useNotification();
@@ -106,7 +107,8 @@ function SignUp() {
           saveUser({ user: data.user, photo: {}, cash: 0 });
           navigate("/");
         }
-      } else setNotification({ type: "error", message: error.message });
+      } else
+        setNotification({ type: "error", message: showError(error.message) });
       setLoading(false);
     },
     [email, password, rPassword, setNotification, navigate, setUserState]
@@ -128,7 +130,9 @@ function SignUp() {
       </div>
       {goToVerify ? (
         <div className="form bg-light-alter dark:bg-dark-alter appear items-center">
-          <h1 className="text-success text-center text-4xl">Registrado correctamente</h1>
+          <h1 className="text-success text-center text-4xl">
+            Registrado correctamente
+          </h1>
           <p className="text-center">
             Gracias por registrarte. Por favor, valida tu dirección de correo
             electrónico haciendo clic en el enlace de confirmación que acabamos
