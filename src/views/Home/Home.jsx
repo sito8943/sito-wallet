@@ -24,14 +24,14 @@ function Home() {
             sync ? "scale-100" : "scale-0"
           } pointer-events-none`}
         >
-          <Loading className="sync" strokeWidth="8" />
+          <Loading className="sync rounded-full" strokeWidth="8" />
         </div>
         <Header setSync={setSync} />
         <Bills setSync={setSync} />
 
         <Wallet />
         <PaymentFlow />
-        <ToTop />
+        <ToTop color="secondary" />
       </div>
       <Footer />
     </main>

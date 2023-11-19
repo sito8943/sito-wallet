@@ -168,7 +168,7 @@ function Bills({ setSync }) {
   }, []);
 
   return (
-    <section className="flex flex-col gap-3 flex-1 max-h-screen">
+    <section className="flex flex-col gap-3">
       <div className="w-full flex items-center justify-between">
         <h3 className="text-3xl xs:text-xl">Gastos en el día</h3>
         <div className="flex gap-3 items-center">

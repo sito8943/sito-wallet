@@ -29,12 +29,12 @@ function Navbar() {
 
   return (
     <header
-      className={`z-50 fixed top-3 left-[50%] -translate-x-[50%] transition-all  duration-300 ease-in-out ${
+      className={`z-50 fixed top-3 left-[50%] -translate-x-[50%] transition-all duration-300 ease-in-out ${
         transparency ? "w-[99%]" : "navbar"
       }`}
     >
       <div
-        className={`relative backdrop-blur-[8px] rounded-[100px] flex w-full justify-between py-3 px-5 xs:px-3 `}
+        className={`relative backdrop-blur-[6px] rounded-[100px] flex w-full justify-between py-3 px-5 xs:px-3 `}
       >
         <div
           className={` absolute w-full h-full top-0 left-0 rounded-[100px] opacity-90 ${

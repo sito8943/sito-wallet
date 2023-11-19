@@ -7,14 +7,19 @@ export const fetchFirstLog = async () =>
     .gte("initial", 1)
     .order("created_at");
 
-export const fetchBills = async (date = undefined) => {
+export const fetchBills = async (
+  date = undefined,
+  year = undefined,
+  month = undefined,
+  day = undefined
+) => {
   const now = date ?? new Date();
-  return await supabase
-    .from("bills")
-    .select()
-    .eq("year", now.getFullYear())
-    .eq("month", now.getMonth())
-    .eq("day", now.getDate());
+  const query = supabase.from("bills").select();
+
+  if (year !== null) query.eq("year", year ?? now.getFullYear());
+  if (month !== null) query.eq("month", month ?? now.getMonth());
+  if (day !== null) query.eq("day", day ?? now.getDate());
+  return await query;
 };
 
 export const fetchLog = async (date = undefined) => {

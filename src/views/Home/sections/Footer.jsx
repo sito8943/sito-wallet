@@ -5,7 +5,7 @@ function Footer() {
   const { userState } = useUser();
 
   return (
-    <footer className="bg-primary-default w-full p-10 sm:p-3">
+    <footer className="bg-primary-default w-full p-10 sm:px-3">
       <div className="flex gap-2 justify-start items-start flex-wrap">
         <p className="text-light-default capitalize">
           {userState.user?.email.split("@")[0]}
