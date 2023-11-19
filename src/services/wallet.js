@@ -5,6 +5,7 @@ export const fetchFirstLog = async () =>
   await supabase
     .from("walletLogs")
     .select()
+    .eq("owner", getUser().user.id)
     .gte("initial", 1)
     .order("created_at");
 
