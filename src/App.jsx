@@ -1,5 +1,6 @@
 import { Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import loadable from "@loadable/component";
 
 // layouts
 import Auth from "./layouts/Auth";
@@ -18,11 +19,11 @@ import { useUser } from "./providers/UserProvider";
 import { cachedUser, getUser } from "./utils/auth";
 
 // views
-import SignIn from "./views/Auth/SignIn";
-import SignOut from "./views/Auth/SignOut";
-import SignUp from "./views/Auth/SignUp";
-import Home from "./views/Home/Home";
-import NotFound from "./views/NotFound/NotFound";
+const SignIn = loadable(() => import("./views/Auth/SignIn"));
+const SignOut = loadable(() => import("./views/Auth/SignOut"));
+const SignUp = loadable(() => import("./views/Auth/SignUp"));
+const Home = loadable(() => import("./views/Home/Home"));
+const NotFound = loadable(() => import("./views/NotFound/NotFound"));
 
 function App() {
   const { setUserState } = useUser();
