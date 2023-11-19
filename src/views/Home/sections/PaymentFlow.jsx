@@ -78,8 +78,8 @@ function PaymentFlow() {
           number={totalSpent}
           show={inViewport}
           label={"Gastos"}
-          color="bg-primary-300"
-          labelColor="text-primary-300"
+          color="bg-primary-300 dark:bg-primary-default"
+          labelColor="text-primary-300 dark:text-primary-default"
           showHeight={400}
         />
         <PaymentFlowBar
@@ -98,8 +98,8 @@ function PaymentFlow() {
           number={userState.cash ?? 0}
           show={inViewport}
           label={"Efectivo"}
-          labelColor="text-ternary-300"
-          color="bg-ternary-300"
+          color="bg-ternary-300 dark:bg-ternary-200"
+          labelColor="text-ternary-300 dark:text-ternary-200"
           showHeight={200}
         />
       </div>
