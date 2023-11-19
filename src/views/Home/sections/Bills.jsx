@@ -209,7 +209,7 @@ function Bills({ setSync }) {
         }}
         color="secondary submit"
         icon={faAdd}
-        className={`aGrow fixed bottom-5 right-5 ${
+        className={`aGrow fixed bottom-3 right-3 ${
           inViewport ? "scale-0 pointer-events-none" : "scale-100"
         } transition duration-300 ease-in-out`}
       />
