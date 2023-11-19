@@ -168,18 +168,20 @@ function Bills({ setSync }) {
   }, []);
 
   return (
-    <div className="flex flex-col gap-3">
+    <section className="flex flex-col gap-3 flex-1">
       <div className="w-full flex items-center justify-between">
         <h3 className="text-3xl xs:text-xl">Gastos en el día</h3>
         <div className="flex gap-3 items-center">
           <IconButton
             name="filter"
-            aria-label="Filtrar gastos"
+            tooltip="Ordenar gastos"
+            aria-label="Ordenar gastos"
             onClick={() => setAsc((asc) => !asc)}
             icon={asc ? faSortAmountUp : faSortAmountDown}
           />
           <IconButton
             aria-label="Agregar gasto"
+            tooltip="Agregar gasto"
             name="add-bill"
             onClick={addBill}
             icon={faAdd}
@@ -187,7 +189,7 @@ function Bills({ setSync }) {
         </div>
       </div>
       <ul>{printBills}</ul>
-    </div>
+    </section>
   );
 }
 

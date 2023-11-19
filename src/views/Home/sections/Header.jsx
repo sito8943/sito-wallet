@@ -191,7 +191,7 @@ function Header({ setSync }) {
   }, [userState]);
 
   return (
-    <div className="flex flex-col gap-3">
+    <section className="flex flex-col gap-3">
       <div className="flex w-full items-end justify-between">
         {!loadingMoney ? (
           <>
@@ -223,7 +223,7 @@ function Header({ setSync }) {
       ) : (
         <div className="w-full h-[28px] skeleton-box" />
       )}
-    </div>
+    </section>
   );
 }
 
