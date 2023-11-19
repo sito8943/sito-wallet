@@ -1,6 +1,7 @@
 .form {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   min-width: 440px;
+  max-width: 600px;
   @apply relative p-10 flex flex-col gap-3;
 }
 
