@@ -1,4 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+// @emotion/css
+import { css } from "@emotion/css";
+
 import PropTypes from "prop-types";
 
 export default function PaymentFlowBar({
@@ -15,7 +19,7 @@ export default function PaymentFlowBar({
     <div id={id} className={`flex-col flex w-full items-end justify-end`}>
       <div
         className={`spent ${color} w-full text-light-default flex flex-col justify-between p-3 animation ${
-          show ? `h-[${showHeight}px]` : "h-[0px]"
+          show ? `${css({ height: `${showHeight}px` })}` : "h-[0px]"
         }`}
       >
         <div className="w-full flex justify-end">
