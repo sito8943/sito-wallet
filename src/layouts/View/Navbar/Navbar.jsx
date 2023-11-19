@@ -1,10 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRightFromBracket,
+  faMoon,
+  faSun,
+} from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
-import { IconButton } from "@sito/ui";
+import { IconButton, useMode } from "@sito/ui";
 
 // providers
 import { useUser } from "../../../providers/UserProvider";
@@ -17,6 +21,7 @@ import "./styles.css";
 
 function Navbar() {
   const { userState } = useUser();
+  const { toggleMode, mode } = useMode();
 
   const [transparency, setTransparency] = useState(true);
 
@@ -54,12 +59,21 @@ function Navbar() {
             alt="user-photo"
             className="rounded-full w-10 h-10 object-contain"
           />
-          <h1 className="capitalize text-xl">{userState.user?.email?.split("@")[0]}</h1>
+          <h1 className="capitalize text-xl">
+            {userState.user?.email?.split("@")[0]}
+          </h1>
         </Link>
         <nav className="z-10 flex">
           <Link to="/sign-out">
             <IconButton icon={faArrowRightFromBracket} />
           </Link>
+          <IconButton
+            onClick={() => toggleMode()}
+            tooltip="Alternar tema (Claro/Oscuro)"
+            name="toggle-theme"
+            aria-label="Click para cambiar el tema"
+            icon={mode === "dark" ? faSun : faMoon}
+          />
         </nav>
       </div>
     </header>
