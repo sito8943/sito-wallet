@@ -7,8 +7,12 @@ import { Loading } from "@sito/ui";
 // contexts
 import { useUser } from "../../providers/UserProvider";
 
+// utils
+import { logoutUser } from "../../utils/auth";
+
 // services
 import { signOutUser } from "../../services/auth";
+
 
 function SignOut() {
   const navigate = useNavigate();
@@ -17,6 +21,7 @@ function SignOut() {
   const signOut = async () => {
     const error = await signOutUser();
     if (error && error !== null) console.error(error);
+    logoutUser();
     setUserState({ type: "logged-out" });
     navigate("/auth");
   };
