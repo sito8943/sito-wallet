@@ -114,6 +114,7 @@ function Header({ setSync }) {
   };
 
   const init = async () => {
+    localStorage.setItem("initializing", `${new Date().getDate()}`);
     setLoadingMoney(true);
     const { data, error } = await fetchLog();
     if (error && error !== null) {
@@ -156,6 +157,7 @@ function Header({ setSync }) {
           console.error(bills.error.message);
           setLoadingMoney(false);
         }
+        previous.spent = 0;
         bills.data.forEach((bill) => {
           previous.spent += bill.spent;
         });
@@ -164,15 +166,18 @@ function Header({ setSync }) {
       }
       // creating new day with previous money
       await initDay(toInit);
-      setUserState({ type: "init-day-log", initial: 1, spent: 0 });
+      setInitial(toInit);
+      setUserState({ type: "init-day-log", initial: toInit, spent: 0 });
     }
     setLoadingMoney(false);
   };
 
   useEffect(() => {
-    init();
+    if (localStorage.getItem("initializing") !== `${new Date().getDate()}`)
+      init();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setSync]);
 
   return (
     <div className="flex flex-col gap-3">

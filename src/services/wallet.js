@@ -52,6 +52,7 @@ export const initDay = async (
   date = undefined
 ) => {
   const now = date ?? new Date();
+
   return await supabase.from("walletLogs").insert({
     created_at: now.getTime(),
     year: now.getFullYear(),
