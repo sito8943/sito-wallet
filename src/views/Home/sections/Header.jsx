@@ -147,7 +147,7 @@ function Header({ setSync }) {
       // updating spent
 
       let toInit = undefined;
-      if (previousResponse) {
+      if (previousResponse && previousResponse.data?.length) {
         if (previousResponse.error && previousResponse.error !== null) {
           console.error(bills.error.message);
           setLoadingMoney(false);
