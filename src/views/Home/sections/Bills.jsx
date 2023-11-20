@@ -3,8 +3,10 @@ import { useInViewport } from "react-in-viewport";
 import { v4 } from "uuid";
 import PropTypes from "prop-types";
 import { sortBy } from "some-javascript-utils/array";
+import { scrollTo } from "some-javascript-utils/browser";
 import {
   faAdd,
+  faSmile,
   faSortAmountDown,
   faSortAmountUp,
 } from "@fortawesome/free-solid-svg-icons";
@@ -25,7 +27,7 @@ import { useUser } from "../../../providers/UserProvider";
 
 // components
 import Bill from "../components/Bill/Bill";
-import { scrollTo } from "some-javascript-utils/browser";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Bills({ setSync }) {
   const { setUserState } = useUser();
@@ -53,7 +55,7 @@ function Bills({ setSync }) {
         return console.error(error.message);
       }
       setBills([...bills]);
-      setUserState({ type: "init-day-bills", bills: [...bills] });
+      setUserState({ type: "init-bills", bills: [...bills] });
     }
 
     setSync(false);
@@ -83,7 +85,7 @@ function Bills({ setSync }) {
       ));
     }
 
-    if (bills)
+    if (bills && bills.length)
       return sortBy(bills, "spent", asc).map((bill) => {
         return (
           <li key={bill.id} className="appear">
@@ -113,7 +115,13 @@ function Bills({ setSync }) {
           </li>
         );
       });
-    return <></>;
+    return (
+      <li>
+        <p className="text-secondary-400 dark:text-secondary-default">
+          ¿Ningún balance? Vamos bien <FontAwesomeIcon className="ternary" icon={faSmile} />
+        </p>
+      </li>
+    );
   }, [
     setSync,
     loadingBills,
@@ -148,7 +156,7 @@ function Bills({ setSync }) {
     }
     if (!data.length) {
       setUserState({
-        type: "init-day-bills",
+        type: "init-bills",
         bills: [],
       });
     } else {
@@ -160,7 +168,7 @@ function Bills({ setSync }) {
       // setting
       setBills(responseBills.data);
       setUserState({
-        type: "init-day-bills",
+        type: "init-bills",
         bills: responseBills.data,
       });
     }
