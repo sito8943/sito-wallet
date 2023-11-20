@@ -53,7 +53,7 @@ function Navbar() {
             transparency ? "" : "bg-light-alter dark:bg-dark-alter"
           }`}
         ></div>
-        <Link to="/" className="z-10 flex gap-2 items-center primary">
+        <Link to="/settings" className="z-10 flex gap-2 items-center primary">
           <img
             src={noPhoto}
             alt="user-photo"
@@ -64,16 +64,16 @@ function Navbar() {
           </h1>
         </Link>
         <nav className="z-10 flex">
-          <Link to="/sign-out">
-            <IconButton icon={faArrowRightFromBracket} />
-          </Link>
           <IconButton
             onClick={() => toggleMode()}
             tooltip="Alternar tema (Claro/Oscuro)"
             name="toggle-theme"
             aria-label="Click para cambiar el tema"
             icon={mode === "dark" ? faSun : faMoon}
-          />
+          />{" "}
+          <Link to="/sign-out">
+            <IconButton icon={faArrowRightFromBracket} />
+          </Link>
         </nav>
       </div>
     </header>
