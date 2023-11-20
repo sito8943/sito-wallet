@@ -10,9 +10,6 @@ import Wallet from "./sections/Wallet";
 import Footer from "./sections/Footer";
 import PaymentFlow from "./sections/PaymentFlow";
 
-// styles
-import "./styles.css";
-
 function Home() {
   const [sync, setSync] = useState(false);
 
