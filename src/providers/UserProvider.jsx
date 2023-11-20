@@ -10,13 +10,17 @@ const UserContext = createContext();
 const userReducer = (userState, action) => {
   const { type } = action;
   switch (type) {
-    case "init-day-log": {
+    case "init-log": {
       const { initial, spent } = action;
       return { ...userState, initial, spent };
     }
-    case "init-day-bills": {
+    case "init-bills": {
       const { bills } = action;
       return { ...userState, bills };
+    }
+    case "init-balances": {
+      const { balances } = action;
+      return { ...userState, balances };
     }
     case "logged-out":
       return {};
