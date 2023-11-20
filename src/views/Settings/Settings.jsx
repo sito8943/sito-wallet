@@ -24,7 +24,7 @@ function Settings() {
           Configuración
         </h2>
         <Password />
-        <BalanceTypes />
+        <BalanceTypes setSync={setSync} />
         <Accounts />
       </div>
     </main>
