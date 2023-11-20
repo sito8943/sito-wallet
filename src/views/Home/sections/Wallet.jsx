@@ -26,9 +26,19 @@ function Wallet() {
         />
       </p>
       <div className="flex gap-3">
-        <IconButton icon={faRefresh} tooltip="Cambiar de cuenta" />
-        <Link>
-          <IconButton icon={faAdd} tooltip="Crear una nueva cuenta" />
+        <IconButton
+          icon={faRefresh}
+          tooltip="Cambiar de cuenta"
+          aria-label="Cambiar de cuenta"
+          name="change-account"
+        />
+        <Link name="create-new-account" aria-label="Crear nueva cuenta">
+          <IconButton
+            icon={faAdd}
+            tooltip="Crear una nueva cuenta"
+            aria-label="Crear nueva cuenta"
+            name="create-new-account"
+          />
         </Link>
       </div>
     </section>

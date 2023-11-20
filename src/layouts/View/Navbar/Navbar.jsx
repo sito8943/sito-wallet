@@ -72,7 +72,12 @@ function Navbar() {
             icon={mode === "dark" ? faSun : faMoon}
           />{" "}
           <Link to="/sign-out">
-            <IconButton icon={faArrowRightFromBracket} />
+            <IconButton
+              tooltip="Cerrar sesión"
+              name="logout"
+              aria-label="Cerrar sesión"
+              icon={faArrowRightFromBracket}
+            />
           </Link>
         </nav>
       </div>

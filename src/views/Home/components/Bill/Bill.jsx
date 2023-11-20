@@ -11,7 +11,7 @@ import { css } from "@emotion/css";
 // components
 import DebouncedInput from "../../../../components/DebouncedInput/DebouncedInput";
 
-function Bill({
+function Balance({
   id,
   description,
   spent,
@@ -51,13 +51,19 @@ function Bill({
             onDebounceTrigger={onChangeSpent}
           />
         </div>
-        <IconButton onClick={onDelete} icon={faTrash} />
+        <IconButton
+          tooltip="Eliminar balance"
+          aria-label="Eliminar balance"
+          name="delete-balance"
+          onClick={onDelete}
+          icon={faTrash}
+        />
       </div>
     </div>
   );
 }
 
-Bill.propTypes = {
+Balance.propTypes = {
   id: PropTypes.string,
   created_at: PropTypes.number,
   description: PropTypes.string,
@@ -67,8 +73,8 @@ Bill.propTypes = {
   onDelete: PropTypes.func,
 };
 
-const BillMemo = memo(
-  (props) => <Bill {...props} />,
+const BalanceMemo = memo(
+  (props) => <Balance {...props} />,
   (oldProps, newProps) => {
     return (
       oldProps.id === newProps.id &&
@@ -81,6 +87,6 @@ const BillMemo = memo(
   }
 );
 
-BillMemo.displayName = "Bill";
+BalanceMemo.displayName = "Balance";
 
-export default BillMemo;
+export default BalanceMemo;
