@@ -118,7 +118,8 @@ function Bills({ setSync }) {
     return (
       <li>
         <p className="text-secondary-400 dark:text-secondary-default">
-          ¿Ningún balance? Vamos bien <FontAwesomeIcon className="ternary" icon={faSmile} />
+          ¿Ningún balance? Vamos bien{" "}
+          <FontAwesomeIcon className="ternary" icon={faSmile} />
         </p>
       </li>
     );
