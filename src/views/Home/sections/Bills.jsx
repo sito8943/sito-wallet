@@ -176,7 +176,7 @@ function Bills({ setSync }) {
   return (
     <section className="flex flex-col gap-3">
       <div className="w-full flex items-center justify-between">
-        <h3 className="text-3xl xs:text-xl">Gastos en el día</h3>
+        <h3 className="text-3xl xs:text-xl">Balance actual</h3>
         <div className="flex gap-3 items-center">
           <IconButton
             name="filter"
