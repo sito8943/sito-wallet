@@ -129,7 +129,7 @@ function Header({ setSync }) {
       setInitial(initial);
       setSpent(spent);
       setUserState({
-        type: "init-day-log",
+        type: "init-log",
         initial,
         spent,
       });
@@ -170,7 +170,7 @@ function Header({ setSync }) {
       if (localStorage.getItem("initializing") !== `${new Date().getDate()}`)
         await initDay(toInit);
       setInitial(toInit);
-      setUserState({ type: "init-day-log", initial: toInit, spent: 0 });
+      setUserState({ type: "init-log", initial: toInit, spent: 0 });
     }
     setLoadingMoney(false);
   };
