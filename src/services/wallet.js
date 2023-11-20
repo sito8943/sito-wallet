@@ -37,7 +37,7 @@ export const fetchLog = async (date = undefined) => {
 };
 
 export const fetchBalances = async (id = undefined) => {
-  const query = await supabase
+  const query = supabase
     .from("walletBalances")
     .select()
     .eq("owner", getUser().user.id);
@@ -50,7 +50,7 @@ export const addBill = async (bill) =>
   await supabase.from("bills").insert({ ...bill });
 
 export const addBalance = async (balance) =>
-  await supabase.from("balance").insert({ ...balance });
+  await supabase.from("walletBalances").insert({ ...balance });
 
 export const updateBill = async (bill) =>
   await supabase
@@ -60,7 +60,7 @@ export const updateBill = async (bill) =>
 
 export const updateBalance = async (balance) =>
   await supabase
-    .from("bills")
+    .from("walletBalances")
     .update({ ...balance })
     .eq("id", balance.id);
 
@@ -95,4 +95,4 @@ export const deleteBill = async (id) =>
   await supabase.from("bills").delete().eq("id", id);
 
 export const deleteBalance = async (id) =>
-  await supabase.from("balance").delete().eq("id", id);
+  await supabase.from("walletBalance").delete().eq("id", id);
