@@ -75,6 +75,9 @@ export const signOutUser = async () => {
   return error;
 };
 
+export const updatePassword = async (password) =>
+  await supabase.auth.updateUser({ password: md5(password) });
+
 /**
  * Sends a POST request to the API with the email address of the user who wants to reset their
  * password
