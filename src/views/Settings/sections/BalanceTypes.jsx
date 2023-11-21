@@ -72,7 +72,6 @@ function BalanceTypes({ setSync }) {
   );
 
   const printBalances = useMemo(() => {
-    console.log(loadingBalances, "loading");
     if (loadingBalances) {
       return [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
         <li key={item}>
@@ -129,9 +128,6 @@ function BalanceTypes({ setSync }) {
       description: "Nuevo balance",
       bill: true,
       created_at: new Date().getTime(),
-      year: new Date().getFullYear(),
-      month: new Date().getMonth(),
-      day: new Date().getDate(),
     };
     const { error } = await addRemoteBalance(newBalance);
     if (error && error !== null) console.error(error.message);
@@ -141,23 +137,35 @@ function BalanceTypes({ setSync }) {
 
   const init = async () => {
     setLoadingBalances(true);
-    console.log("init?")
+
     const { data, error } = await fetchBalances();
     if (error && error !== null) {
       setLoadingBalances(false);
       return console.error(error.message);
     }
-    if (!data.length) {
+    if (!data.length && localStorage.getItem("basic-balance") === null) {
+      const basicBalance = {
+        id: v4(),
+        created_at: new Date().getTime(),
+        description: "Gastos básicos",
+        bill: true,
+      };
+      localStorage.setItem("basic-balance", "Gastos básicos");
+      const insertBasic = await addRemoteBalance(basicBalance);
+      if (insertBasic.error && insertBasic.error !== null)
+        console.error(insertBasic.error.message);
       setUserState({
         type: "init-balances",
-        balances: [],
+        balances: [basicBalance],
       });
+      setBalances([basicBalance]);
     } else {
       const responseBalances = await fetchBalances();
       if (responseBalances.error && responseBalances.error !== null) {
         setLoadingBalances(false);
         return console.error(responseBalances.error.message);
       }
+      console.log(responseBalances);
       // setting
       setBalances(responseBalances.data);
       setUserState({
@@ -173,6 +181,8 @@ function BalanceTypes({ setSync }) {
     init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log(balances);
 
   return (
     <section>
