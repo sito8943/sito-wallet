@@ -26,13 +26,14 @@ function Balance({
 }) {
   return (
     <div id={id} className="flex w-full justify-between items-center py-2">
-      <div className="flex flex-col justify-start items-start flex-1">
-        <DebouncedInput
-          className={`text-lg ${css({ background: "none" })}`}
-          initialValue={description}
-          onDebounceTrigger={onChangeDescription}
-        />
-      </div>
+      <DebouncedInput
+        className={`text-lg ${css({
+          background: "none",
+          maxWidth: "calc(100vw - 92px)",
+        })} flex-1`}
+        initialValue={description}
+        onDebounceTrigger={onChangeDescription}
+      />
       <div className="font-bold flex items-center gap-3">
         <IconButton
           name="toggle-bill"

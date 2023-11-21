@@ -24,7 +24,10 @@ function Balance({
     <div id={id} className="flex w-full justify-between items-center py-2">
       <div className="flex flex-col justify-start items-start flex-1">
         <DebouncedInput
-          className={`text-lg ${css({ background: "none" })}`}
+          className={`text-lg ${css({
+            background: "none",
+            maxWidth: "calc(100vw - 92px)",
+          })}`}
           initialValue={description}
           onDebounceTrigger={onChangeDescription}
         />
@@ -40,6 +43,7 @@ function Balance({
           $
           <DebouncedInput
             className={`text-right ml-1 ${css({
+              maxWidth: "42px",
               width: String(spent).length + "ch",
               background: "none",
             })}`}
