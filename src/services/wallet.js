@@ -16,7 +16,10 @@ export const fetchBills = async (
   day = undefined
 ) => {
   const now = date ?? new Date();
-  const query = supabase.from("bills").select().eq("owner", getUser().user.id);
+  const query = supabase
+    .from("bills")
+    .select("*, walletBalances(*)")
+    .eq("owner", getUser().user.id);
 
   if (year !== null) query.eq("year", year ?? now.getFullYear());
   if (month !== null) query.eq("month", month ?? now.getMonth());
@@ -47,7 +50,10 @@ export const fetchBalances = async (id = undefined) => {
 };
 
 export const addBill = async (bill) =>
-  await supabase.from("bills").insert({ ...bill });
+  await supabase
+    .from("bills")
+    .insert({ ...bill })
+    .select("*,walletBalances(*)");
 
 export const addBalance = async (balance) =>
   await supabase.from("walletBalances").insert({ ...balance });
@@ -56,7 +62,8 @@ export const updateBill = async (bill) =>
   await supabase
     .from("bills")
     .update({ ...bill })
-    .eq("id", bill.id);
+    .eq("id", bill.id)
+    .select("*, walletBalances(*)");
 
 export const updateBalance = async (balance) =>
   await supabase
