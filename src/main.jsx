@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 
 // @sito/ui
@@ -20,15 +19,13 @@ import "@fontsource/poppins";
 import "@fontsource/roboto";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <StyleProvider>
-      <ModeProvider>
-        <NotificationProvider>
-          <UserProvider>
-            <App />
-          </UserProvider>
-        </NotificationProvider>
-      </ModeProvider>
-    </StyleProvider>
-  </React.StrictMode>
+  <StyleProvider>
+    <ModeProvider>
+      <NotificationProvider>
+        <UserProvider>
+          <App />
+        </UserProvider>
+      </NotificationProvider>
+    </ModeProvider>
+  </StyleProvider>
 );
