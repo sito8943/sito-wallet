@@ -20,7 +20,6 @@ function Balance({
   id,
   description,
   bill,
-  created_at,
   onChangeDescription,
   onChangeBill,
   onDelete,
@@ -33,14 +32,8 @@ function Balance({
           initialValue={description}
           onDebounceTrigger={onChangeDescription}
         />
-        <p className="text-sm">
-          {new Date(created_at).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </p>
       </div>
-      <div className="font-bold flex items-center gap-5">
+      <div className="font-bold flex items-center gap-3">
         <IconButton
           name="toggle-bill"
           tooltip="Alternar entre gasto e ingreo"
