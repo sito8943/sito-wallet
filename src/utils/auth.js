@@ -23,7 +23,11 @@ export const getUser = () => decrypt(localStorage.getItem(config.user));
  *
  * @returns removes user
  */
-export const logoutUser = () => localStorage.removeItem(config.user);
+export const logoutUser = () => {
+  localStorage.removeItem("initializing");
+  localStorage.removeItem("basic-balance");
+  return localStorage.removeItem(config.user);
+};
 
 /**
  *
