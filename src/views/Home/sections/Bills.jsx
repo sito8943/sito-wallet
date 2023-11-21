@@ -34,13 +34,6 @@ import Bill from "../components/Bill/Bill";
 function Bills({ setSync }) {
   const { userState, setUserState } = useUser();
 
-  useEffect(() => {
-    console.log("cambio bills");
-  }, [userState.bills]);
-  useEffect(() => {
-    console.log("cambio userState");
-  }, [userState]);
-
   const [loadingBills, setLoadingBills] = useState(true);
 
   const addButton = useRef();
@@ -73,7 +66,6 @@ function Bills({ setSync }) {
         return console.error(error.message);
       }
       if (data.length) bills[index] = data[0];
-      console.log("llamada update local");
       setUserState({ type: "init-bills", bills: [...bills] });
     }
 
@@ -99,33 +91,6 @@ function Bills({ setSync }) {
     (bill) => setToUpdate({ ...bill, balanceType: true }),
     []
   );
-
-  /* const printBills = useMemo(() => {
-    console.log("bills print");
-    const bills = userState.bills;
-    if (loadingBills) {
-      return;
-    }
-
-    if (bills && bills.length) return;
-    return (
-      <li>
-        <p className="text-secondary-400 dark:text-secondary-default">
-          ¿Ningún balance? Vamos bien{" "}
-          <FontAwesomeIcon className="ternary" icon={faSmile} />
-        </p>
-      </li>
-    );
-  }, [
-    setSync,
-    loadingBills,
-    userState.bills,
-    setUserState,
-    asc,
-    handleBillDescription,
-    handleBillSpent,
-    handleBillBalanceType,
-  ]); */
 
   const addBill = async () => {
     const bills = [...userState.bills];
@@ -153,7 +118,7 @@ function Bills({ setSync }) {
       setLoadingBills(false);
       return console.error(error.message);
     }
-    console.log("llamada init");
+
     if (!data.length) {
       setUserState({
         type: "init-bills",
@@ -165,7 +130,7 @@ function Bills({ setSync }) {
         setLoadingBills(false);
         return console.error(responseBills.error.message);
       }
-      console.log("llamada init alt");
+
       // setting
       setUserState({
         type: "init-bills",
@@ -266,7 +231,7 @@ function Bills({ setSync }) {
                       }}
                       onChangeBalanceType={(value) => {
                         setSync(true);
-                        console.log(value);
+
                         handleBillBalanceType({ value, id: bill.id });
                       }}
                       onDelete={async () => {
