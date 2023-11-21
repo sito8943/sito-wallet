@@ -4,6 +4,7 @@ import { v4 } from "uuid";
 import PropTypes from "prop-types";
 import { sortBy } from "some-javascript-utils/array";
 import { scrollTo } from "some-javascript-utils/browser";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,
   faSmile,
@@ -20,6 +21,9 @@ import {
   deleteBill,
   updateBill,
   fetchBills,
+  fetchBalances,
+  addBalance,
+  updateBalance,
 } from "../../../services/wallet";
 
 // providers
@@ -27,7 +31,6 @@ import { useUser } from "../../../providers/UserProvider";
 
 // components
 import Bill from "../components/Bill/Bill";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Bills({ setSync }) {
   const { userState, setUserState } = useUser();
@@ -177,9 +180,46 @@ function Bills({ setSync }) {
         bills: responseBills.data,
       });
     }
-
     setLoadingBills(false);
   };
+
+  const initBalancesType = async () => {
+    if (!userState.balances) {
+      const remoteBalances = await fetchBalances();
+      if (remoteBalances.error && remoteBalances.error !== null)
+        return console.error(remoteBalances.error.message);
+
+      if (
+        !remoteBalances.length &&
+        localStorage.getItem("basic-balance") === null
+      ) {
+        localStorage.setItem("basic-balance", "Gastos básicos");
+        const newBalance = {
+          id: v4(),
+          description: "Gastos básicos",
+          bill: true,
+          created_at: new Date().getTime(),
+        };
+        const { error } = await addBalance(newBalance);
+        if (error && error !== null) console.error(error.message);
+        else
+          setUserState({
+            type: "init-balances",
+            balances: [...userState.balances, newBalance],
+          });
+      } else {
+        // setting
+        setUserState({
+          type: "init-balances",
+          balances: remoteBalances.data,
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (!userState.balances) initBalancesType();
+  }, [userState.balances]);
 
   useEffect(() => {
     init();
