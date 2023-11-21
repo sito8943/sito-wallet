@@ -52,7 +52,7 @@ function PaymentFlow() {
     return initial - totalSpent;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalSpent]);
+  }, [totalSpent, initial]);
 
   useEffect(() => {
     fetchAllBills();
