@@ -66,6 +66,7 @@ function PaymentFlow() {
         return 0;
       }
       if (data.length) setInitial(data[0].initial);
+      console.log("no?");
     });
   }, [userState]);
 
