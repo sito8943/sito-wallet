@@ -12,15 +12,23 @@ const userReducer = (userState, action) => {
   switch (type) {
     case "init-log": {
       const { initial, spent } = action;
-      return { ...userState, initial, spent };
+      userState.initial = initial;
+      userState.spent = spent;
+      return userState;
     }
     case "init-bills": {
+      const { bills } = action;
+      userState.bills = bills;
+      return userState;
+    }
+    case "add-bill": {
       const { bills } = action;
       return { ...userState, bills };
     }
     case "init-balances": {
       const { balances } = action;
-      return { ...userState, balances };
+      userState.balances = balances;
+      return userState;
     }
     case "logged-out":
       return {};
