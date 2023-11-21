@@ -1,0 +1,7 @@
+.dialog {
+  height: 100vh;
+  height: 100svh;
+  transition: all 400ms ease-in-out;
+  @apply top-0 left-0 fixed w-full flex items-center
+    justify-center z-50 backdrop-blur-sm bg-[#fbfbfbcc] dark:bg-[#222cc];
+}
