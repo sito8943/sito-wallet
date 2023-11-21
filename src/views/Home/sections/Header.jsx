@@ -2,6 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-lodash-debounce";
 import PropTypes from "prop-types";
 
+// @sito/ui
+import { InputControl, Button } from "@sito/ui";
+
 // providers
 import { useUser } from "../../../providers/UserProvider";
 
@@ -15,12 +18,16 @@ import {
 } from "../../../services/wallet";
 
 // components
+import Dialog from "../../../components/Dialog/Dialog";
 import Counter from "../components/Counter/Counter";
 
 // styles
 import "./styles.css";
 
 function Header({ setSync }) {
+  const [showDialog, setShowDialog] = useState(false);
+  const hideDialog = () => setShowDialog(false);
+
   const { userState, setUserState } = useUser();
 
   const [loadingMoney, setLoadingMoney] = useState(true);
@@ -54,7 +61,16 @@ function Header({ setSync }) {
     });
   }, []);
 
-  const [spent, setSpent] = useState(0);
+  const spent = useMemo(() => {
+    if (userState.bills) {
+      let newSpent = 0;
+      userState.bills.forEach((bill) => {
+        newSpent += Number(bill.spent);
+      });
+      return newSpent;
+    }
+    return 0;
+  }, [userState.bills]);
 
   const countLeft = useMemo(() => {
     if (initial) return initial - spent;
@@ -109,29 +125,20 @@ function Header({ setSync }) {
     return "CUP";
   }, []);
 
-  const onWalletChange = (e) => {
-    setSync(true);
-    const { target } = e;
-    const value = target.innerText;
-    setInitial(Number(value.replaceAll(",", "")));
-  };
-
   const init = async () => {
-    localStorage.setItem("initializing", `${new Date().getDate()}`);
     setLoadingMoney(true);
     const { data, error } = await fetchLog();
+
     if (error && error !== null) {
       setLoadingMoney(false);
       return console.error(error.message);
     }
     if (data.length) {
-      const { initial, spent } = data[0];
+      const { initial } = data[0];
       setInitial(initial);
-      setSpent(spent);
       setUserState({
         type: "init-log",
         initial,
-        spent,
       });
     } else {
       // fetching previous day
@@ -146,8 +153,7 @@ function Header({ setSync }) {
         previousResponse = await fetchLog(now);
       }
       // updating spent
-
-      let toInit = undefined;
+      let toInit = 1;
       if (previousResponse && previousResponse.data?.length) {
         if (previousResponse.error && previousResponse.error !== null) {
           console.error(bills.error.message);
@@ -159,20 +165,30 @@ function Header({ setSync }) {
           console.error(bills.error.message);
           setLoadingMoney(false);
         }
-        previous.spent = 0;
+        let previousSpent = 0;
         bills.data.forEach((bill) => {
-          previous.spent += bill.spent;
+          previousSpent += bill.spent;
         });
-        toInit = previous.initial - previous.spent;
-        await updateLog(previous, now);
-      }
+        toInit = previous.initial - previousSpent;
+      } else setShowDialog(true);
       // creating new day with previous money
-      if (localStorage.getItem("initializing") !== `${new Date().getDate()}`)
-        await initDay(toInit);
+      if (localStorage.getItem("initializing") !== `${new Date().getDate()}`) {
+        localStorage.setItem("initializing", `${new Date().getDate()}`);
+        const response = await initDay(toInit);
+        if (response.error && response.error !== null)
+          console.error(response.error.message);
+      }
       setInitial(toInit);
-      setUserState({ type: "init-log", initial: toInit, spent: 0 });
+      setUserState({ type: "init-log", initial: toInit });
     }
     setLoadingMoney(false);
+  };
+
+  const onSubmitDialog = async (e) => {
+    e.preventDefault();
+    const { error } = await updateLog({ initial });
+    console.error(error?.message);
+    hideDialog();
   };
 
   useEffect(() => {
@@ -181,18 +197,26 @@ function Header({ setSync }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setSync]);
 
-  useEffect(() => {
-    if (userState.bills) {
-      let newSpent = 0;
-      userState.bills.forEach((bill) => {
-        newSpent += Number(bill.spent);
-      });
-      setSpent(newSpent);
-    }
-  }, [userState]);
-
   return (
     <section className="flex flex-col gap-3">
+      <Dialog visible={showDialog} onClose={hideDialog} canBeClosed={false}>
+        <form
+          onSubmit={onSubmitDialog}
+          className="bg-light-default dark:bg-dark-default p-5 rounded-sm flex flex-col items-start justify-start gap-4"
+        >
+          <InputControl
+            id="initial"
+            label="Cantidad inicial de este mes"
+            value={initial}
+            type="number"
+            className="text-right"
+            onChange={(e) => setInitial(e.target.value)}
+          />
+          <Button type="submit" className="submit primary">
+            Aceptar
+          </Button>
+        </form>
+      </Dialog>
       <div className="flex w-full items-end justify-between">
         {!loadingMoney ? (
           <>
