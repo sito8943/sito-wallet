@@ -23,7 +23,6 @@ import {
   fetchBills,
   fetchBalances,
   addBalance,
-  updateBalance,
 } from "../../../services/wallet";
 
 // providers
@@ -198,7 +197,7 @@ function Bills({ setSync }) {
         else
           setUserState({
             type: "init-balances",
-            balances: [...userState.balances, newBalance],
+            balances: [...(userState.balances ?? []), newBalance],
           });
       } else {
         // setting
@@ -212,6 +211,7 @@ function Bills({ setSync }) {
 
   useEffect(() => {
     if (!userState.balances) initBalancesType();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userState.balances]);
 
   useEffect(() => {
