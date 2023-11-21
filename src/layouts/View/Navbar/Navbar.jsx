@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import {
   faArrowRightFromBracket,
+  faGear,
   faMoon,
   faSun,
 } from "@fortawesome/free-solid-svg-icons";
@@ -53,7 +54,12 @@ function Navbar() {
             transparency ? "" : "bg-light-alter dark:bg-dark-alter"
           }`}
         ></div>
-        <Link to="/settings" className="z-10 flex gap-2 items-center primary">
+        <Link
+          aria-label="Ir al inicio"
+          name="go-home"
+          to="/"
+          className="z-10 flex gap-2 items-center primary"
+        >
           <img
             src={noPhoto}
             alt="user-photo"
@@ -71,7 +77,19 @@ function Navbar() {
             aria-label="Click para cambiar el tema"
             icon={mode === "dark" ? faSun : faMoon}
           />{" "}
-          <Link to="/sign-out">
+          <Link
+            to="/settings"
+            name="toggle-theme"
+            aria-label="Ir a la configuración"
+          >
+            <IconButton
+              tooltip="Ir a la configuración"
+              name="toggle-theme"
+              aria-label="Ir a la configuración"
+              icon={faGear}
+            />
+          </Link>
+          <Link to="/sign-out" name="logout" aria-label="Cerrar sesión">
             <IconButton
               tooltip="Cerrar sesión"
               name="logout"
