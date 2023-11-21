@@ -11,36 +11,61 @@ import { css } from "@emotion/css";
 // components
 import DebouncedInput from "../../../../components/DebouncedInput/DebouncedInput";
 
+// providers
+import { useUser } from "../../../../providers/UserProvider";
+
 function Balance({
   id,
+  walletBalances,
   description,
   spent,
   created_at,
+  balanceType,
+  onChangeBalanceType,
   onChangeDescription,
   onChangeSpent,
   onDelete,
 }) {
+  const { userState } = useUser();
+
   return (
     <div id={id} className="flex w-full justify-between items-center py-2">
       <div className="flex flex-col justify-start items-start flex-1">
         <DebouncedInput
-          className={`text-lg ${css({
+          className={`text-lg xs:text-base w-full ${css({
             background: "none",
             maxWidth: "calc(100vw - 92px)",
           })}`}
           initialValue={description}
           onDebounceTrigger={onChangeDescription}
         />
-        <p className="text-sm">
-          {new Date(created_at).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </p>
+        <div className="flex gap-2">
+          <p className={`text-sm ${css({ lineHeight: "inherit" })}`}>
+            {new Date(created_at).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </p>
+          <select
+            value={balanceType}
+            onChange={(e) => onChangeBalanceType(e.target.value)}
+            className={`text-sm ${css({ background: "none" })}`}
+          >
+            {userState.balances?.map((balance) => (
+              <option key={balance.id} value={balance.id}>
+                {balance.description}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <div className="font-bold flex items-center gap-5">
-        <div className="flex items-center">
-          $
+        <div
+          className={`flex items-center ${
+            walletBalances.bill ? "primary" : "secondary"
+          }`}
+        >
+          {walletBalances.bill ? "-" : "+"} $
           <DebouncedInput
             className={`text-right ml-1 ${css({
               maxWidth: "42px",
@@ -69,10 +94,14 @@ function Balance({
 
 Balance.propTypes = {
   id: PropTypes.string,
+  walletBalances: PropTypes.object,
   created_at: PropTypes.number,
+  balanceType: PropTypes.string,
   description: PropTypes.string,
-  onChangeDescription: PropTypes.func,
+
   spent: PropTypes.number,
+  onChangeBalanceType: PropTypes.func,
+  onChangeDescription: PropTypes.func,
   onChangeSpent: PropTypes.func,
   onDelete: PropTypes.func,
 };
@@ -82,8 +111,10 @@ const BalanceMemo = memo(
   (oldProps, newProps) => {
     return (
       oldProps.id === newProps.id &&
+      oldProps.balanceType === newProps.balanceType &&
       oldProps.description === newProps.description &&
       oldProps.spent === newProps.spent &&
+      oldProps.onChangeBalanceType === newProps.onChangeBalanceType &&
       oldProps.onChangeDescription === newProps.onChangeDescription &&
       oldProps.onChangeSpent === newProps.onChangeSpent &&
       oldProps.onDelete === newProps.onDelete
