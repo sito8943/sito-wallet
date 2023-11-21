@@ -30,7 +30,7 @@ import Bill from "../components/Bill/Bill";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Bills({ setSync }) {
-  const { setUserState } = useUser();
+  const { userState, setUserState } = useUser();
 
   const [loadingBills, setLoadingBills] = useState(true);
 
@@ -39,11 +39,10 @@ function Bills({ setSync }) {
 
   const [asc, setAsc] = useState(false);
 
-  const [bills, setBills] = useState([]);
-
   const [toUpdate, setToUpdate] = useState({});
 
   const updateLocalBill = async (bill) => {
+    const bills = userState.bills;
     const index = bills.findIndex((b) => b.id === bill.id);
     if (index >= 0) {
       if (bill.description) bills[index].description = bill.value;
@@ -54,7 +53,7 @@ function Bills({ setSync }) {
         setSync(false);
         return console.error(error.message);
       }
-      setBills([...bills]);
+
       setUserState({ type: "init-bills", bills: [...bills] });
     }
 
@@ -77,6 +76,7 @@ function Bills({ setSync }) {
   );
 
   const printBills = useMemo(() => {
+    const bills = userState.bills;
     if (loadingBills) {
       return [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
         <li key={item}>
@@ -107,7 +107,7 @@ function Bills({ setSync }) {
                   newBills.findIndex((billR) => billR.id === bill.id),
                   1
                 );
-                setBills(newBills);
+                setUserState({ type: "init-bills", bills: newBills });
                 if (error && error !== null) console.error(error.message);
                 setSync(false);
               }}
@@ -126,7 +126,8 @@ function Bills({ setSync }) {
   }, [
     setSync,
     loadingBills,
-    bills,
+    userState,
+    setUserState,
     asc,
     handleBillDescription,
     handleBillSpent,
@@ -144,7 +145,11 @@ function Bills({ setSync }) {
     };
     const { error } = await addRemoteBill(newBill);
     if (error && error !== null) console.error(error.message);
-    else setBills([...bills, newBill]);
+    else
+      setUserState({
+        type: "init-bills",
+        bills: [...userState.bills, newBill],
+      });
     return newBill.id;
   };
 
@@ -167,7 +172,6 @@ function Bills({ setSync }) {
         return console.error(responseBills.error.message);
       }
       // setting
-      setBills(responseBills.data);
       setUserState({
         type: "init-bills",
         bills: responseBills.data,
