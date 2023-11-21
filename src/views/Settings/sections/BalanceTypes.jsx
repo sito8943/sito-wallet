@@ -1,5 +1,4 @@
-import { useRef, useMemo, useState, useEffect, useCallback } from "react";
-import { useInViewport } from "react-in-viewport";
+import { useMemo, useState, useEffect, useCallback } from "react";
 import { v4 } from "uuid";
 import { sortBy } from "some-javascript-utils/array";
 import PropTypes from "prop-types";
@@ -34,11 +33,10 @@ function BalanceTypes({ setSync }) {
 
   const [asc, setAsc] = useState(false);
 
-  const [balances, setBalances] = useState([]);
-
   const [toUpdate, setToUpdate] = useState({});
 
   const updateLocalBalance = async (balance) => {
+    const balances = [...userState.balances];
     const index = balances.findIndex((b) => b.id === balance.id);
     if (index >= 0) {
       if (balance.description) balances[index].description = balance.value;
@@ -49,8 +47,8 @@ function BalanceTypes({ setSync }) {
         setSync(false);
         return console.error(error.message);
       }
-      setBalances([...balances]);
-      setUserState({ type: "init-balances", balances: [...balances] });
+
+      setUserState({ type: "init-balances", balances });
     }
 
     setSync(false);
@@ -72,6 +70,7 @@ function BalanceTypes({ setSync }) {
   );
 
   const printBalances = useMemo(() => {
+    const balances = userState.balances;
     if (loadingBalances) {
       return [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
         <li key={item}>
@@ -81,7 +80,7 @@ function BalanceTypes({ setSync }) {
     }
 
     if (balances)
-      return sortBy(balances, "bill", asc).map((balance) => {
+      return sortBy(balances, "description", asc).map((balance) => {
         return (
           <li key={balance.id} className="appear">
             <Balance
@@ -104,7 +103,7 @@ function BalanceTypes({ setSync }) {
                   ),
                   1
                 );
-                setBalances(newBalances);
+                setUserState({ type: "init-balances", balances: newBalances });
                 if (error && error !== null) console.error(error.message);
                 setSync(false);
               }}
@@ -116,10 +115,11 @@ function BalanceTypes({ setSync }) {
   }, [
     setSync,
     loadingBalances,
-    balances,
+    userState.balances,
     asc,
     handleBalanceDescription,
     handleBalanceBill,
+    setUserState,
   ]);
 
   const addBalance = async () => {
@@ -131,7 +131,11 @@ function BalanceTypes({ setSync }) {
     };
     const { error } = await addRemoteBalance(newBalance);
     if (error && error !== null) console.error(error.message);
-    else setBalances([...balances, newBalance]);
+    else
+      setUserState({
+        type: "init-balances",
+        balances: [...userState.balances, newBalance],
+      });
     return newBalance.id;
   };
 
@@ -158,16 +162,13 @@ function BalanceTypes({ setSync }) {
         type: "init-balances",
         balances: [basicBalance],
       });
-      setBalances([basicBalance]);
     } else {
       const responseBalances = await fetchBalances();
       if (responseBalances.error && responseBalances.error !== null) {
         setLoadingBalances(false);
         return console.error(responseBalances.error.message);
       }
-      console.log(responseBalances);
       // setting
-      setBalances(responseBalances.data);
       setUserState({
         type: "init-balances",
         balances: responseBalances.data,
@@ -181,8 +182,6 @@ function BalanceTypes({ setSync }) {
     init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(balances);
 
   return (
     <section>
