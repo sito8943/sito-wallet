@@ -200,14 +200,7 @@ function Header({ setSync }) {
               className={`text-8xl md:text-7xl sm:text-6xl xs:text-5xl ${severity} flex`}
             >
               <span className="text-primary-default opacity-40 mr-2">$</span>
-              <Counter
-                number={countLeft}
-                className={severity}
-                containerProps={{
-                  contentEditable: true,
-                  onInput: onWalletChange,
-                }}
-              />
+              <Counter number={countLeft} className={severity} />
             </h2>
             <p className="primary text-3xl xs:text-xl text-primary-default">
               {currentCurrency}
