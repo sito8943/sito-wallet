@@ -163,15 +163,10 @@ function BalanceTypes({ setSync }) {
         balances: [basicBalance],
       });
     } else {
-      const responseBalances = await fetchBalances();
-      if (responseBalances.error && responseBalances.error !== null) {
-        setLoadingBalances(false);
-        return console.error(responseBalances.error.message);
-      }
       // setting
       setUserState({
         type: "init-balances",
-        balances: responseBalances.data,
+        balances: data,
       });
     }
 
