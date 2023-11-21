@@ -54,13 +54,10 @@ export const login = async (user, password) => {
     .eq("day", now.getDate())
     .eq("month", now.getMonth())
     .eq("year", now.getFullYear());
-  if (responseWalletLogs.data.length) {
-    data.user.spent = responseWalletLogs.data[0].spent;
+  if (responseWalletLogs.data.length)
     data.user.initial = responseWalletLogs.data[0].initial;
-  } else {
-    data.user.spent = 0;
-    data.user.initial = 0;
-  }
+  else data.user.initial = 0;
+
   if (responseWalletLogs.error && responseWalletLogs.error !== null)
     console.error(responseBills.error);
   return { data, error };
