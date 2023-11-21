@@ -16,7 +16,7 @@ import { validateUser } from "./services/auth";
 import { useUser } from "./providers/UserProvider";
 
 // auth cache
-import { cachedUser, getUser } from "./utils/auth";
+import { cachedUser, getUser, saveUser } from "./utils/auth";
 
 // views
 const SignIn = loadable(() => import("./views/Auth/SignIn"));
@@ -36,7 +36,10 @@ function App() {
       const { data, error } = await validateUser();
       if (error && error !== null && cachedUser())
         setUserState({ type: "logged-in", user: getUser() });
-      else setUserState({ type: "logged-in", user: data.user });
+      else {
+        saveUser({ user: data.user });
+        setUserState({ type: "logged-in", user: data.user });
+      }
     } catch (err) {
       console.error(err);
     }

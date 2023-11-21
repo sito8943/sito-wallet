@@ -76,6 +76,7 @@ export const updateLog = async (log, date = undefined) => {
   return await supabase
     .from("walletLogs")
     .update({ ...log })
+    .eq("owner", getUser().user.id)
     .eq("year", now.getFullYear())
     .eq("month", now.getMonth())
     .eq("day", now.getDate());
