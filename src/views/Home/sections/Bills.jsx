@@ -1,4 +1,4 @@
-import { useRef, useMemo, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { useInViewport } from "react-in-viewport";
 import { v4 } from "uuid";
 import PropTypes from "prop-types";
@@ -35,6 +35,13 @@ import Bill from "../components/Bill/Bill";
 function Bills({ setSync }) {
   const { userState, setUserState } = useUser();
 
+  useEffect(() => {
+    console.log("cambio bills");
+  }, [userState.bills]);
+  useEffect(() => {
+    console.log("cambio userState");
+  }, [userState]);
+
   const [loadingBills, setLoadingBills] = useState(true);
 
   const addButton = useRef();
@@ -48,15 +55,26 @@ function Bills({ setSync }) {
     const bills = userState.bills;
     const index = bills.findIndex((b) => b.id === bill.id);
     if (index >= 0) {
-      if (bill.description) bills[index].description = bill.value;
-      if (bill.spent) bills[index].spent = bill.value;
+      if (bill.description) {
+        bill.description = bill.value;
+        bills[index].description = bill.value;
+      }
+      if (bill.spent) {
+        bill.spent = bill.value;
+        bills[index].spent = bill.value;
+      }
+      if (bill.balanceType) {
+        bill.balanceType = bill.value;
+        bills[index].balanceType = bill.value;
+      }
       delete bill.value;
-      const { error } = await updateBill(bills[index]);
+      const { data, error } = await updateBill(bill);
       if (error && error !== null) {
         setSync(false);
         return console.error(error.message);
       }
-
+      if (data.length) bills[index] = data[0];
+      console.log("llamada update local");
       setUserState({ type: "init-bills", bills: [...bills] });
     }
 
@@ -78,46 +96,19 @@ function Bills({ setSync }) {
     []
   );
 
-  const printBills = useMemo(() => {
+  const handleBillBalanceType = useCallback(
+    (bill) => setToUpdate({ ...bill, balanceType: true }),
+    []
+  );
+
+  /* const printBills = useMemo(() => {
+    console.log("bills print");
     const bills = userState.bills;
     if (loadingBills) {
-      return [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-        <li key={item}>
-          <div className="w-full h-[44px] skeleton-box" />
-        </li>
-      ));
+      return;
     }
 
-    if (bills && bills.length)
-      return sortBy(bills, "spent", asc).map((bill) => {
-        return (
-          <li key={bill.id} className="appear">
-            <Bill
-              {...bill}
-              onChangeDescription={(value) => {
-                setSync(true);
-                handleBillDescription({ value, id: bill.id });
-              }}
-              onChangeSpent={(value) => {
-                setSync(true);
-                handleBillSpent({ value, id: bill.id });
-              }}
-              onDelete={async () => {
-                setSync(true);
-                const { error } = await deleteBill(bill.id);
-                const newBills = [...bills];
-                newBills.splice(
-                  newBills.findIndex((billR) => billR.id === bill.id),
-                  1
-                );
-                setUserState({ type: "init-bills", bills: newBills });
-                if (error && error !== null) console.error(error.message);
-                setSync(false);
-              }}
-            />
-          </li>
-        );
-      });
+    if (bills && bills.length) return;
     return (
       <li>
         <p className="text-secondary-400 dark:text-secondary-default">
@@ -129,14 +120,16 @@ function Bills({ setSync }) {
   }, [
     setSync,
     loadingBills,
-    userState,
+    userState.bills,
     setUserState,
     asc,
     handleBillDescription,
     handleBillSpent,
-  ]);
+    handleBillBalanceType,
+  ]); */
 
   const addBill = async () => {
+    const bills = [...userState.bills];
     const newBill = {
       id: v4(),
       description: "Nuevo gasto",
@@ -145,14 +138,12 @@ function Bills({ setSync }) {
       year: new Date().getFullYear(),
       month: new Date().getMonth(),
       day: new Date().getDate(),
+      balanceType: userState.balances[0].id,
     };
-    const { error } = await addRemoteBill(newBill);
+    const { data, error } = await addRemoteBill(newBill);
     if (error && error !== null) console.error(error.message);
-    else
-      setUserState({
-        type: "init-bills",
-        bills: [...userState.bills, newBill],
-      });
+    else if (data.length) bills.push(data[0]);
+    setUserState({ type: "add-bill", bills });
     return newBill.id;
   };
 
@@ -163,6 +154,7 @@ function Bills({ setSync }) {
       setLoadingBills(false);
       return console.error(error.message);
     }
+    console.log("llamada init");
     if (!data.length) {
       setUserState({
         type: "init-bills",
@@ -174,6 +166,7 @@ function Bills({ setSync }) {
         setLoadingBills(false);
         return console.error(responseBills.error.message);
       }
+      console.log("llamada init alt");
       // setting
       setUserState({
         type: "init-bills",
@@ -248,7 +241,62 @@ function Bills({ setSync }) {
           />
         </div>
       </div>
-      <ul>{printBills}</ul>
+      <ul>
+        {loadingBills ? (
+          [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+            <li key={item}>
+              <div className="w-full h-[44px] skeleton-box" />
+            </li>
+          ))
+        ) : (
+          <>
+            {userState.bills && userState.bills.length ? (
+              sortBy(userState.bills ?? [], "spent", !asc).map((bill) => {
+                return (
+                  <li key={bill.id} className="appear">
+                    <Bill
+                      {...bill}
+                      onChangeDescription={(value) => {
+                        setSync(true);
+                        handleBillDescription({ value, id: bill.id });
+                      }}
+                      onChangeSpent={(value) => {
+                        setSync(true);
+                        handleBillSpent({ value, id: bill.id });
+                      }}
+                      onChangeBalanceType={(value) => {
+                        setSync(true);
+                        console.log(value);
+                        handleBillBalanceType({ value, id: bill.id });
+                      }}
+                      onDelete={async () => {
+                        setSync(true);
+                        const { error } = await deleteBill(bill.id);
+                        const newBills = [...userState.bills];
+                        newBills.splice(
+                          newBills.findIndex((billR) => billR.id === bill.id),
+                          1
+                        );
+                        setUserState({ type: "init-bills", bills: newBills });
+                        if (error && error !== null)
+                          console.error(error.message);
+                        setSync(false);
+                      }}
+                    />
+                  </li>
+                );
+              })
+            ) : (
+              <li>
+                <p className="text-secondary-400 dark:text-secondary-default">
+                  ¿Ningún balance? Vamos bien{" "}
+                  <FontAwesomeIcon className="ternary" icon={faSmile} />
+                </p>
+              </li>
+            )}
+          </>
+        )}
+      </ul>
       <IconButton
         aria-label="Agregar gasto"
         tooltip="Agregar gasto"
