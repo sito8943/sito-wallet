@@ -65,7 +65,7 @@ function BalanceTypes({ setSync }) {
   );
 
   const handleBalanceBill = useCallback(
-    (balance) => setToUpdate({ ...balance, spent: true }),
+    (balance) => setToUpdate({ ...balance, bill: true }),
     []
   );
 
@@ -89,9 +89,9 @@ function BalanceTypes({ setSync }) {
                 setSync(true);
                 handleBalanceDescription({ value, id: balance.id });
               }}
-              onChangeSpent={(value) => {
+              onChangeBill={() => {
                 setSync(true);
-                handleBalanceBill({ value, id: balance.id });
+                handleBalanceBill({ value: !balance.bill, id: balance.id });
               }}
               onDelete={async () => {
                 setSync(true);
