@@ -60,12 +60,20 @@ function Bills({ setSync }) {
         bills[index].balanceType = bill.value;
       }
       delete bill.value;
-      const { data, error } = await updateBill(bill);
-      if (error && error !== null) {
-        setSync(false);
-        return console.error(error.message);
+      if (!userState.cached) {
+        const { data, error } = await updateBill(bill);
+        if (error && error !== null) {
+          setSync(false);
+          return console.error(error.message);
+        }
+        if (data.length) bills[index] = data[0];
+      } else {
+        // loading local walletBalance
+        if (userState.balances)
+          bill[index].walletBalances = userState.balances.find(
+            (balance) => balance.id === bills[index].balanceType
+          );
       }
-      if (data.length) bills[index] = data[0];
       setUserState({ type: "init-bills", bills: [...bills] });
     }
 
@@ -104,38 +112,37 @@ function Bills({ setSync }) {
       day: new Date().getDate(),
       balanceType: userState.balances[0].id,
     };
-    const { data, error } = await addRemoteBill(newBill);
-    if (error && error !== null) console.error(error.message);
-    else if (data.length) bills.push(data[0]);
+    if (!userState.cached) {
+      const { data, error } = await addRemoteBill(newBill);
+      if (error && error !== null) console.error(error.message);
+      else if (data.length) bills.push(data[0]);
+    } else {
+      if (userState.balances) {
+        newBill.walletBalances = userState.balances.find(
+          (balance) => balance.id === newBill.balanceType
+        );
+        bills.push(newBill);
+      }
+    }
     setUserState({ type: "add-bill", bills });
     return newBill.id;
   };
 
   const init = async () => {
     setLoadingBills(true);
-    const { data, error } = await fetchBills();
-    if (error && error !== null) {
-      setLoadingBills(false);
-      return console.error(error.message);
-    }
-
-    if (!data.length) {
-      setUserState({
-        type: "init-bills",
-        bills: [],
-      });
-    } else {
-      const responseBills = await fetchBills();
-      if (responseBills.error && responseBills.error !== null) {
+    if (!userState.cached) {
+      const { data, error } = await fetchBills();
+      if (error && error !== null) {
         setLoadingBills(false);
-        return console.error(responseBills.error.message);
+        return console.error(error.message);
       }
 
-      // setting
-      setUserState({
-        type: "init-bills",
-        bills: responseBills.data,
-      });
+      if (!data.length) {
+        setUserState({
+          type: "init-bills",
+          bills: [],
+        });
+      }
     }
     setLoadingBills(false);
   };
@@ -157,13 +164,14 @@ function Bills({ setSync }) {
           bill: true,
           created_at: new Date().getTime(),
         };
-        const { error } = await addBalance(newBalance);
-        if (error && error !== null) console.error(error.message);
-        else
-          setUserState({
-            type: "init-balances",
-            balances: [...(userState.balances ?? []), newBalance],
-          });
+        if (!userState.cached) {
+          const { error } = await addBalance(newBalance);
+          if (error && error !== null) console.error(error.message);
+        }
+        setUserState({
+          type: "init-balances",
+          balances: [...(userState.balances ?? []), newBalance],
+        });
       } else {
         // setting
         setUserState({
@@ -216,41 +224,62 @@ function Bills({ setSync }) {
         ) : (
           <>
             {userState.bills && userState.bills.length ? (
-              sortBy(userState.bills ?? [], "spent", !asc).map((bill) => {
-                return (
-                  <li key={bill.id} className="appear">
-                    <Bill
-                      {...bill}
-                      onChangeDescription={(value) => {
-                        setSync(true);
-                        handleBillDescription({ value, id: bill.id });
-                      }}
-                      onChangeSpent={(value) => {
-                        setSync(true);
-                        handleBillSpent({ value, id: bill.id });
-                      }}
-                      onChangeBalanceType={(value) => {
-                        setSync(true);
+              sortBy(userState.bills ?? [], "spent", !asc)
+                .filter((bill) => !bill.deleted)
+                .map((bill) => {
+                  return (
+                    <li key={bill.id} className="appear">
+                      <Bill
+                        {...bill}
+                        onChangeDescription={(value) => {
+                          setSync(true);
+                          handleBillDescription({ value, id: bill.id });
+                        }}
+                        onChangeSpent={(value) => {
+                          setSync(true);
+                          handleBillSpent({ value, id: bill.id });
+                        }}
+                        onChangeBalanceType={(value) => {
+                          setSync(true);
 
-                        handleBillBalanceType({ value, id: bill.id });
-                      }}
-                      onDelete={async () => {
-                        setSync(true);
-                        const { error } = await deleteBill(bill.id);
-                        const newBills = [...userState.bills];
-                        newBills.splice(
-                          newBills.findIndex((billR) => billR.id === bill.id),
-                          1
-                        );
-                        setUserState({ type: "init-bills", bills: newBills });
-                        if (error && error !== null)
-                          console.error(error.message);
-                        setSync(false);
-                      }}
-                    />
-                  </li>
-                );
-              })
+                          handleBillBalanceType({ value, id: bill.id });
+                        }}
+                        onDelete={async () => {
+                          setSync(true);
+                          if (!userState.cached) {
+                            const { error } = await deleteBill(bill.id);
+
+                            const newBills = [...userState.bills];
+                            newBills.splice(
+                              newBills.findIndex(
+                                (billR) => billR.id === bill.id
+                              ),
+                              1
+                            );
+                            setUserState({
+                              type: "init-bills",
+                              bills: newBills,
+                            });
+                            if (error && error !== null)
+                              console.error(error.message);
+                          } else {
+                            const newBills = [...userState.bills];
+                            newBills[
+                              newBills.findIndex(
+                                (billR) => billR.id === bill.id
+                              )
+                            ].deleted = true;
+                            setUserState({
+                              type: "init-bills",
+                              bills: newBills,
+                            });
+                          }
+                          setSync(false);
+                        }}
+                      />
+                    </li>
+                  );
+                })
             ) : (
               <li>
                 <p className="text-secondary-400 dark:text-secondary-default">
