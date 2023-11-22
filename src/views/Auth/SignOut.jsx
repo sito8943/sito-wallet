@@ -13,7 +13,6 @@ import { logoutUser } from "../../utils/auth";
 // services
 import { signOutUser } from "../../services/auth";
 
-
 function SignOut() {
   const navigate = useNavigate();
   const { setUserState } = useUser();
@@ -31,7 +30,9 @@ function SignOut() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <Loading className="w-full h-screen" />;
+  return (
+    <Loading className="w-full h-screen bg-light-alter dark:bg-dark-alter" />
+  );
 }
 
 export default SignOut;

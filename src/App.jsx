@@ -74,7 +74,7 @@ function App() {
             </Routes>
           </BrowserRouter>
         ) : (
-          <Loading className="w-full h-screen fixed top-0 left-0 z-40" />
+          <Loading className="w-full h-screen fixed top-0 left-0 z-40 bg-light-alter dark:bg-dark-alter" />
         )}
       </Handler>
     </Suspense>
