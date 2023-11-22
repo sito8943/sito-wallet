@@ -34,10 +34,11 @@ function App() {
   const fetch = async () => {
     try {
       const { data, error } = await validateUser();
+      console.log(cachedUser(), getUser(), error);
       if (error && error !== null && cachedUser())
         setUserState({ type: "logged-in", user: getUser(), cached: true });
       else {
-        saveUser({ user: data.user });
+        saveUser({ ...getUser(), user: data.user, cached: false });
         setUserState({ type: "logged-in", user: data.user });
       }
     } catch (err) {

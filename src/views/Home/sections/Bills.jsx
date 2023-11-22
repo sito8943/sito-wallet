@@ -132,6 +132,7 @@ function Bills({ setSync }) {
     setLoadingBills(true);
     if (!userState.cached) {
       const { data, error } = await fetchBills();
+
       if (error && error !== null) {
         setLoadingBills(false);
         return console.error(error.message);
@@ -142,7 +143,11 @@ function Bills({ setSync }) {
           type: "init-bills",
           bills: [],
         });
-      }
+      } else
+        setUserState({
+          type: "init-bills",
+          bills: data,
+        });
     }
     setLoadingBills(false);
   };
@@ -154,7 +159,7 @@ function Bills({ setSync }) {
         return console.error(remoteBalances.error.message);
 
       if (
-        !remoteBalances.length &&
+        !remoteBalances.data.length &&
         localStorage.getItem("basic-balance") === null
       ) {
         localStorage.setItem("basic-balance", "Gastos básicos");
