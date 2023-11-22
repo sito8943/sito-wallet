@@ -42,12 +42,14 @@ function BalanceTypes({ setSync }) {
       if (balance.description) balances[index].description = balance.value;
       if (balance.bill) balances[index].bill = balance.value;
       delete balance.value;
-      const { error } = await updateBalance(balances[index]);
-      if (error && error !== null) {
-        setSync(false);
-        return console.error(error.message);
+      if (!userState.cached) {
+        const { data, error } = await updateBalance(balances[index]);
+        if (error && error !== null) {
+          setSync(false);
+          return console.error(error.message);
+        }
+        if (data.length) balances[index] = data[0];
       }
-
       setUserState({ type: "init-balances", balances });
     }
 
@@ -95,16 +97,29 @@ function BalanceTypes({ setSync }) {
               }}
               onDelete={async () => {
                 setSync(true);
-                const { error } = await deleteBalance(balance.id);
                 const newBalances = [...balances];
-                newBalances.splice(
-                  newBalances.findIndex(
-                    (balanceR) => balanceR.id === balance.id
-                  ),
-                  1
-                );
-                setUserState({ type: "init-balances", balances: newBalances });
-                if (error && error !== null) console.error(error.message);
+                if (!userState.cached) {
+                  const { error } = await deleteBalance(balance.id);
+
+                  newBalances.splice(
+                    newBalances.findIndex(
+                      (balanceR) => balanceR.id === balance.id
+                    ),
+                    1
+                  );
+
+                  if (error && error !== null) console.error(error.message);
+                } else {
+                  newBalances[
+                    newBalances.findIndex(
+                      (balanceR) => balanceR.id === balance.id
+                    )
+                  ].deleted = true;
+                }
+                setUserState({
+                  type: "init-balances",
+                  balances: newBalances,
+                });
                 setSync(false);
               }}
             />
@@ -115,6 +130,7 @@ function BalanceTypes({ setSync }) {
   }, [
     setSync,
     loadingBalances,
+    userState.cached,
     userState.balances,
     asc,
     handleBalanceDescription,
@@ -129,45 +145,47 @@ function BalanceTypes({ setSync }) {
       bill: true,
       created_at: new Date().getTime(),
     };
-    const { error } = await addRemoteBalance(newBalance);
-    if (error && error !== null) console.error(error.message);
-    else
-      setUserState({
-        type: "init-balances",
-        balances: [...userState.balances, newBalance],
-      });
+    if (!userState.cached) {
+      const { error } = await addRemoteBalance(newBalance);
+      if (error && error !== null) console.error(error.message);
+    }
+    setUserState({
+      type: "init-balances",
+      balances: [...userState.balances, newBalance],
+    });
     return newBalance.id;
   };
 
   const init = async () => {
     setLoadingBalances(true);
-
-    const { data, error } = await fetchBalances();
-    if (error && error !== null) {
-      setLoadingBalances(false);
-      return console.error(error.message);
-    }
-    if (!data.length && localStorage.getItem("basic-balance") === null) {
-      const basicBalance = {
-        id: v4(),
-        created_at: new Date().getTime(),
-        description: "Gastos básicos",
-        bill: true,
-      };
-      localStorage.setItem("basic-balance", "Gastos básicos");
-      const insertBasic = await addRemoteBalance(basicBalance);
-      if (insertBasic.error && insertBasic.error !== null)
-        console.error(insertBasic.error.message);
-      setUserState({
-        type: "init-balances",
-        balances: [basicBalance],
-      });
-    } else {
-      // setting
-      setUserState({
-        type: "init-balances",
-        balances: data,
-      });
+    if (!userState.cached) {
+      const { data, error } = await fetchBalances();
+      if (error && error !== null) {
+        setLoadingBalances(false);
+        return console.error(error.message);
+      }
+      if (!data.length && localStorage.getItem("basic-balance") === null) {
+        const basicBalance = {
+          id: v4(),
+          created_at: new Date().getTime(),
+          description: "Gastos básicos",
+          bill: true,
+        };
+        localStorage.setItem("basic-balance", "Gastos básicos");
+        const insertBasic = await addRemoteBalance(basicBalance);
+        if (insertBasic.error && insertBasic.error !== null)
+          console.error(insertBasic.error.message);
+        setUserState({
+          type: "init-balances",
+          balances: [basicBalance],
+        });
+      } else {
+        // setting
+        setUserState({
+          type: "init-balances",
+          balances: data,
+        });
+      }
     }
 
     setLoadingBalances(false);

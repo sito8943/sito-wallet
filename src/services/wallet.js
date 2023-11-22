@@ -69,7 +69,8 @@ export const updateBalance = async (balance) =>
   await supabase
     .from("walletBalances")
     .update({ ...balance })
-    .eq("id", balance.id);
+    .eq("id", balance.id)
+    .select();
 
 export const updateLog = async (log, date = undefined) => {
   const now = date ?? new Date();

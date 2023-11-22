@@ -246,34 +246,30 @@ function Bills({ setSync }) {
                         }}
                         onDelete={async () => {
                           setSync(true);
+                          const newBills = [...userState.bills];
                           if (!userState.cached) {
                             const { error } = await deleteBill(bill.id);
 
-                            const newBills = [...userState.bills];
                             newBills.splice(
                               newBills.findIndex(
                                 (billR) => billR.id === bill.id
                               ),
                               1
                             );
-                            setUserState({
-                              type: "init-bills",
-                              bills: newBills,
-                            });
+
                             if (error && error !== null)
                               console.error(error.message);
-                          } else {
-                            const newBills = [...userState.bills];
+                          } else
                             newBills[
                               newBills.findIndex(
                                 (billR) => billR.id === bill.id
                               )
                             ].deleted = true;
-                            setUserState({
-                              type: "init-bills",
-                              bills: newBills,
-                            });
-                          }
+
+                          setUserState({
+                            type: "init-bills",
+                            bills: newBills,
+                          });
                           setSync(false);
                         }}
                       />

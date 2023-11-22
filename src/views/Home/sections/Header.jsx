@@ -127,59 +127,63 @@ function Header({ setSync }) {
 
   const init = async () => {
     setLoadingMoney(true);
-    const { data, error } = await fetchLog();
+    if (!userState.cached) {
+      const { data, error } = await fetchLog();
 
-    if (error && error !== null) {
-      setLoadingMoney(false);
-      return console.error(error.message);
-    }
-    if (data.length) {
-      const { initial } = data[0];
-      setInitial(initial);
-      setUserState({
-        type: "init-log",
-        initial,
-      });
-    } else {
-      // fetching previous day
-      let now = new Date();
-      let previousResponse = undefined;
-      if (now.getDate() - 1 > 0) {
-        now = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
-        previousResponse = await fetchLog(now);
-      } else {
-        const d = new Date(now.getFullYear(), now.getMonth() - 1, 0); // fetching the last day of previous month
-        now = new Date(now.getFullYear(), now.getMonth() - 1, d.getDate());
-        previousResponse = await fetchLog(now);
+      if (error && error !== null) {
+        setLoadingMoney(false);
+        return console.error(error.message);
       }
-      // updating spent
-      let toInit = 1;
-      if (previousResponse && previousResponse.data?.length) {
-        if (previousResponse.error && previousResponse.error !== null) {
-          console.error(bills.error.message);
-          setLoadingMoney(false);
-        }
-        const [previous] = previousResponse.data;
-        const bills = await fetchBills(now);
-        if (bills.error && bills.error !== null) {
-          console.error(bills.error.message);
-          setLoadingMoney(false);
-        }
-        let previousSpent = 0;
-        bills.data.forEach((bill) => {
-          previousSpent += bill.spent;
+      if (data.length) {
+        const { initial } = data[0];
+        setInitial(initial);
+        setUserState({
+          type: "init-log",
+          initial,
         });
-        toInit = previous.initial - previousSpent;
-      } else setShowDialog(true);
-      // creating new day with previous money
-      if (localStorage.getItem("initializing") !== `${new Date().getDate()}`) {
-        localStorage.setItem("initializing", `${new Date().getDate()}`);
-        const response = await initDay(toInit);
-        if (response.error && response.error !== null)
-          console.error(response.error.message);
+      } else {
+        // fetching previous day
+        let now = new Date();
+        let previousResponse = undefined;
+        if (now.getDate() - 1 > 0) {
+          now = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+          previousResponse = await fetchLog(now);
+        } else {
+          const d = new Date(now.getFullYear(), now.getMonth() - 1, 0); // fetching the last day of previous month
+          now = new Date(now.getFullYear(), now.getMonth() - 1, d.getDate());
+          previousResponse = await fetchLog(now);
+        }
+        // updating spent
+        let toInit = 1;
+        if (previousResponse && previousResponse.data?.length) {
+          if (previousResponse.error && previousResponse.error !== null) {
+            console.error(bills.error.message);
+            setLoadingMoney(false);
+          }
+          const [previous] = previousResponse.data;
+          const bills = await fetchBills(now);
+          if (bills.error && bills.error !== null) {
+            console.error(bills.error.message);
+            setLoadingMoney(false);
+          }
+          let previousSpent = 0;
+          bills.data.forEach((bill) => {
+            previousSpent += bill.spent;
+          });
+          toInit = previous.initial - previousSpent;
+        } else setShowDialog(true);
+        // creating new day with previous money
+        if (
+          localStorage.getItem("initializing") !== `${new Date().getDate()}`
+        ) {
+          localStorage.setItem("initializing", `${new Date().getDate()}`);
+          const response = await initDay(toInit);
+          if (response.error && response.error !== null)
+            console.error(response.error.message);
+        }
+        setInitial(toInit);
+        setUserState({ type: "init-log", initial: toInit });
       }
-      setInitial(toInit);
-      setUserState({ type: "init-log", initial: toInit });
     }
     setLoadingMoney(false);
   };
