@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @emotion/css
@@ -15,11 +16,19 @@ export default function PaymentFlowBar({
   color,
   showHeight,
 }) {
+  const barCss = useMemo(
+    () =>
+      css({
+        height: `${showHeight}px`,
+      }),
+    [showHeight]
+  );
+
   return (
     <div id={id} className={`flex-col flex w-full items-end justify-end`}>
       <div
         className={`spent ${color} w-full text-light-default flex flex-col justify-between p-3 animation ${
-          show ? `${css({ height: `${showHeight}px` })}` : "h-[0px]"
+          show ? `${barCss}` : "h-[0px]"
         }`}
       >
         <div className="w-full flex justify-end">

@@ -15,6 +15,7 @@ import { IconButton } from "@sito/ui";
 
 // components
 import DebouncedInput from "../../../../components/DebouncedInput/DebouncedInput";
+import { useMemo } from "react";
 
 function Balance({
   id,
@@ -24,13 +25,18 @@ function Balance({
   onChangeBill,
   onDelete,
 }) {
+  const descriptionCss = useMemo(
+    () =>
+      css({
+        maxWidth: "calc(100vw - 92px)",
+      }),
+    []
+  );
+
   return (
     <div id={id} className="flex w-full justify-between items-center py-2">
       <DebouncedInput
-        className={`text-lg ${css({
-          background: "none",
-          maxWidth: "calc(100vw - 92px)",
-        })} flex-1`}
+        className={`text-lg no-bg ${descriptionCss} flex-1`}
         initialValue={description}
         onDebounceTrigger={onChangeDescription}
       />

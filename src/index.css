@@ -6,6 +6,10 @@
   font-family: "Roboto", sans-serif;
 }
 
+.no-bg {
+  background: none !important;
+}
+
 .skeleton-box {
   display: inline-block;
   position: relative;

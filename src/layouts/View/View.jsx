@@ -1,6 +1,9 @@
 import { Fragment, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
+// @emotion/css
+import { css } from "@emotion/css";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,7 +15,6 @@ import { useUser } from "../../providers/UserProvider";
 
 // components
 import Navbar from "./Navbar/Navbar";
-import { css } from "@emotion/css";
 
 function View() {
   const { userState } = useUser();

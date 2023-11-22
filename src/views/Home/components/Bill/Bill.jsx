@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import PropTypes from "prop-types";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
@@ -28,14 +28,29 @@ function Balance({
 }) {
   const { userState } = useUser();
 
+  const nameCss = useMemo(
+    () =>
+      css({
+        background: "none",
+        maxWidth: "calc(100vw - 92px)",
+      }),
+    []
+  );
+  const spentCss = useMemo(
+    () =>
+      css({
+        maxWidth: "100px",
+        width: String(spent).length + "ch",
+        background: "none",
+      }),
+    [spent]
+  );
+
   return (
     <div id={id} className="flex w-full justify-between items-center py-2">
       <div className="flex flex-col justify-start items-start flex-1">
         <DebouncedInput
-          className={`text-lg xs:text-base w-full ${css({
-            background: "none",
-            maxWidth: "calc(100vw - 92px)",
-          })}`}
+          className={`text-lg xs:text-base w-full ${nameCss}`}
           initialValue={description}
           onDebounceTrigger={onChangeDescription}
         />
@@ -49,7 +64,7 @@ function Balance({
           <select
             value={balanceType}
             onChange={(e) => onChangeBalanceType(e.target.value)}
-            className={`text-sm ${css({ background: "none" })}`}
+            className={`text-sm no-bg`}
           >
             {userState.balances?.map((balance) => (
               <option key={balance.id} value={balance.id}>
@@ -69,11 +84,7 @@ function Balance({
             {walletBalances.bill ? "-" : "+"} $
           </p>
           <DebouncedInput
-            className={`text-right xs:text-sm ml-1 xs:ml-0 ${css({
-              maxWidth: "100px",
-              width: String(spent).length + "ch",
-              background: "none",
-            })}`}
+            className={`text-right xs:text-sm ml-1 xs:ml-0 ${spentCss}`}
             initialValue={spent}
             type="number"
             onInput={(e) =>
