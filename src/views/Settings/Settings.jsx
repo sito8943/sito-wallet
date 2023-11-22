@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
-import { Loading } from "@sito/ui";
+import { IconButton, Loading } from "@sito/ui";
 
 // sections
 import Password from "./sections/Password";
@@ -20,9 +23,19 @@ function Settings() {
         >
           <Loading className="sync rounded-full" strokeWidth="8" />
         </div>
-        <h2 className="text-6xl md:text-5xl sm:text-4xl xs:text-3xl">
-          Configuración
-        </h2>
+        <div className="flex items-center">
+          <Link to="/" name="link-go-back" aria-label="Ir al inicio">
+            <IconButton
+              tooltip="Ir al inicio"
+              name="go-back"
+              aria-label="Ir al inicio"
+              icon={faChevronLeft}
+            />
+          </Link>
+          <h2 className="text-6xl md:text-5xl sm:text-4xl xs:text-3xl">
+            Configuración
+          </h2>
+        </div>
         <Password />
         <BalanceTypes setSync={setSync} />
         <Accounts />
