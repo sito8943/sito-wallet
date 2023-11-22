@@ -1,11 +1,11 @@
 import supabase from "../db/connection";
 
 export const fetchUserData = async (userId) =>
-  await supabase.from("walletUser").select().eq("id", userId);
+  await supabase.from("settingsUser").select().eq("id", userId);
 
-export const createWalletUser = async (userId) =>
+export const createSettingsUser = async (userId) =>
   await supabase
-    .from("walletUser")
+    .from("settingsUser")
     .insert({
       id: userId,
       photo: {},

@@ -21,7 +21,7 @@ import ModeButton from "../../components/ModeButton/ModeButton";
 
 // services
 import { login } from "../../services/auth";
-import { createWalletUser, fetchUserData } from "../../services/user";
+import { createSettingsUser, fetchUserData } from "../../services/user";
 
 // auth
 import { saveUser } from "../../utils/auth";
@@ -85,7 +85,7 @@ function SignIn() {
           });
           setLoading(false);
         }
-        if (!data.length) await createWalletUser(data.user.id);
+        if (!data.length) await createSettingsUser(data.user.id);
         setUserState({
           type: "logged-in",
           user: data.user,

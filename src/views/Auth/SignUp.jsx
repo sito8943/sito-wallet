@@ -25,7 +25,7 @@ import ModeButton from "../../components/ModeButton/ModeButton";
 
 // services
 import { register } from "../../services/auth";
-import { createWalletUser } from "../../services/user";
+import { createSettingsUser } from "../../services/user";
 
 // auth
 import { saveUser } from "../../utils/auth";
@@ -93,9 +93,9 @@ function SignUp() {
       const response = await register(email, password);
       const { data, error } = response;
       if (!error || error === null) {
-        const walletUser = await createWalletUser(data.user.id);
-        if (walletUser.error && walletUser.user !== null) {
-          console.error(walletUser.error.message);
+        const settingsUser = await createSettingsUser(data.user.id);
+        if (settingsUser.error && settingsUser.user !== null) {
+          console.error(settingsUser.error.message);
           setGoToVerify(true);
         } else {
           setUserState({
