@@ -78,7 +78,7 @@ function PaymentFlow() {
           number={totalSpent}
           show={inViewport}
           label={"Gastos"}
-          color="bg-primary-300 dark:bg-primary-default"
+          color="bg-primary-default dark:bg-primary-200"
           labelColor="text-primary-300 dark:text-primary-default"
           showHeight={400}
         />
@@ -88,7 +88,7 @@ function PaymentFlow() {
           number={digital}
           show={inViewport}
           label={"Digital"}
-          color="bg-secondary-300"
+          color="bg-secondary-200"
           labelColor="text-secondary-300"
           showHeight={300}
         />
@@ -98,7 +98,7 @@ function PaymentFlow() {
           number={userState.cash ?? 0}
           show={inViewport}
           label={"Efectivo"}
-          color="bg-ternary-300 dark:bg-ternary-200"
+          color="bg-ternary-default dark:bg-ternary-200"
           labelColor="text-ternary-300 dark:text-ternary-200"
           showHeight={200}
         />
