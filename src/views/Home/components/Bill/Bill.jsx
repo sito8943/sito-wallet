@@ -39,8 +39,8 @@ function Balance({
           initialValue={description}
           onDebounceTrigger={onChangeDescription}
         />
-        <div className="flex gap-2">
-          <p className={`text-sm ${css({ lineHeight: "inherit" })}`}>
+        <div className="flex gap-2 items-center">
+          <p className={`text-sm xs:text-xs`}>
             {new Date(created_at).toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
@@ -65,10 +65,12 @@ function Balance({
             walletBalances.bill ? "primary" : "secondary"
           }`}
         >
-          {walletBalances.bill ? "-" : "+"} $
+          <p className="text-right xs:text-sm">
+            {walletBalances.bill ? "-" : "+"} $
+          </p>
           <DebouncedInput
-            className={`text-right ml-1 ${css({
-              maxWidth: "42px",
+            className={`text-right xs:text-sm ml-1 xs:ml-0 ${css({
+              maxWidth: "100px",
               width: String(spent).length + "ch",
               background: "none",
             })}`}
