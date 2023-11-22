@@ -60,13 +60,11 @@ function PaymentFlow() {
 
   useEffect(() => {
     fetchFirstLog().then(({ data, error }) => {
-      console.log(data, error);
       if (error && error !== null) {
         console.error(error.message);
         return 0;
       }
       if (data.length) setInitial(data[0].initial);
-      console.log("no?");
     });
   }, [userState]);
 
