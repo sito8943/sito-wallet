@@ -74,6 +74,7 @@ function SignIn() {
       setLoading(true);
       const response = await login(user, password);
       const { data, error } = response;
+
       if (error && error !== null)
         setNotification({ type: "error", message: showError(error.message) });
       else {
