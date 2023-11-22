@@ -85,17 +85,17 @@ function SignIn() {
           });
           setLoading(false);
         }
-        if (!data.length) await createSettingsUser(data.user.id);
+        if (!userData.data.length) await createSettingsUser(data.user.id);
         setUserState({
           type: "logged-in",
           user: data.user,
-          photo: userData[0]?.photo ?? {},
-          cash: userData[0]?.cash ?? 0,
+          photo: userData.data[0]?.photo ?? {},
+          cash: userData.data[0]?.cash ?? 0,
         });
         saveUser({
           user: data.user,
-          photo: userData[0]?.photo ?? {},
-          cash: userData[0]?.photo ?? {},
+          photo: userData.data[0]?.photo ?? {},
+          cash: userData.data[0]?.photo ?? {},
         });
         navigate("/");
       }
