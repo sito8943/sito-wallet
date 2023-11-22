@@ -25,8 +25,7 @@ function Home() {
         </div>
         <Header setSync={setSync} />
         <Bills setSync={setSync} />
-
-        <Wallet />
+        <Wallet setSync={setSync} />
         <PaymentFlow />
       </div>
       <Footer />

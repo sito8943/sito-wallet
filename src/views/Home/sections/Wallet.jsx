@@ -10,7 +10,7 @@ import { IconButton } from "@sito/ui";
 // components
 import DebouncedInput from "../../../components/DebouncedInput/DebouncedInput";
 
-function Wallet() {
+function Wallet({ setSync }) {
   const [wallet, setWallet] = useState("Mi Cuenta");
 
   return (
