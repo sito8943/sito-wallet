@@ -5,6 +5,8 @@ import { createContext, useReducer, useContext } from "react";
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
+import { saveUser } from "../utils/auth";
+
 const UserContext = createContext();
 
 const userReducer = (userState, action) => {
@@ -13,27 +15,31 @@ const userReducer = (userState, action) => {
     case "init-log": {
       const { initial } = action;
       userState.initial = initial;
+      saveUser(userState);
       return userState;
     }
     case "init-bills": {
       const { bills } = action;
       userState.bills = bills;
+      saveUser(userState);
       return userState;
     }
     case "add-bill": {
       const { bills } = action;
+      saveUser({ ...userState, bills });
       return { ...userState, bills };
     }
     case "init-balances": {
       const { balances } = action;
       userState.balances = balances;
+      saveUser(userState);
       return userState;
     }
     case "logged-out":
       return {};
     case "logged-in": {
-      const { user, photo, cash } = action;
-      return { user, photo, cash };
+      const { user, photo, cash, cached } = action;
+      return { user, photo, cash, cached };
     }
     default:
       throw new Error(`Unhandled action type: ${action.type}`);

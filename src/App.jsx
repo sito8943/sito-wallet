@@ -35,7 +35,7 @@ function App() {
     try {
       const { data, error } = await validateUser();
       if (error && error !== null && cachedUser())
-        setUserState({ type: "logged-in", user: getUser() });
+        setUserState({ type: "logged-in", user: getUser(), cached: true });
       else {
         saveUser({ user: data.user });
         setUserState({ type: "logged-in", user: data.user });
