@@ -93,9 +93,9 @@ function SignUp() {
       const response = await register(email, password);
       const { data, error } = response;
       if (!error || error === null) {
-        const settingsUser = await createSettingsUser(data.user.id);
-        if (settingsUser.error && settingsUser.user !== null) {
-          console.error(settingsUser.error.message);
+        const settingUser = await createSettingsUser(data.user.id);
+        if (settingUser.error && settingUser.user !== null) {
+          console.error(settingUser.error.message);
           setGoToVerify(true);
         } else {
           setUserState({
