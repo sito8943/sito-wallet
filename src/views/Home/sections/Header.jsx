@@ -32,7 +32,7 @@ function Header({ setSync }) {
 
   const [loadingMoney, setLoadingMoney] = useState(true);
 
-  const [initial, setInitial] = useState(1);
+  const [initial, setInitial] = useState(userState.initial ?? 1);
   const debouncedInitial = useDebounce(initial, 500);
 
   useEffect(() => {
@@ -187,6 +187,7 @@ function Header({ setSync }) {
   const onSubmitDialog = async (e) => {
     e.preventDefault();
     const { error } = await updateLog({ initial });
+    setUserState({ type: "init-log", initial });
     console.error(error?.message);
     hideDialog();
   };
