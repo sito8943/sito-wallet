@@ -33,9 +33,11 @@ import { saveUser } from "../../utils/auth";
 // images
 // import logo from "../../assets/images/logo.png";
 
+// lang
+import { showError } from "../../lang/es";
+
 // styles
 import "./styles.css";
-import { showError } from "../../lang/es";
 
 function SignUp() {
   const { setNotification } = useNotification();
