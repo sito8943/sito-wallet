@@ -226,7 +226,7 @@ function Header({ setSync }) {
         {!loadingMoney ? (
           <>
             <h2
-              className={`text-8xl md:text-7xl sm:text-6xl xs:text-5xl ${severity} flex`}
+              className={`text-8xl md:text-7xl sm:text-6xl xs:text-4xl ${severity} flex`}
             >
               <span className="text-primary-default opacity-40 mr-2">$</span>
               <Counter number={countLeft} className={severity} />
