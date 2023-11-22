@@ -16,7 +16,7 @@ import { validateUser } from "./services/auth";
 import { useUser } from "./providers/UserProvider";
 
 // auth cache
-import { cachedUser, getUser, saveUser } from "./utils/auth";
+import { cachedUser, getUser, logoutUser, saveUser } from "./utils/auth";
 
 // views
 const SignIn = loadable(() => import("./views/Auth/SignIn"));
@@ -34,7 +34,6 @@ function App() {
   const fetch = async () => {
     try {
       const { data, error } = await validateUser();
-      console.log(cachedUser(), getUser(), error);
       if (error && error !== null && cachedUser())
         setUserState({ type: "logged-in", user: getUser(), cached: true });
       else {
@@ -42,6 +41,7 @@ function App() {
         setUserState({ type: "logged-in", user: data.user });
       }
     } catch (err) {
+      logoutUser();
       console.error(err);
     }
 
