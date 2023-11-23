@@ -66,7 +66,8 @@ function Header({ setSync }) {
     if (userState.bills) {
       let newSpent = 0;
       userState.bills.forEach((bill) => {
-        newSpent += Number(bill.spent);
+        if (bill.walletBalances.bill) newSpent += Number(bill.spent);
+        else newSpent -= Number(bill.spent);
       });
       return newSpent;
     }
@@ -129,7 +130,9 @@ function Header({ setSync }) {
   const init = async () => {
     setLoadingMoney(true);
     if (!userState.cached) {
-      const { data, error } = await fetchLog();
+      const { data, error } = await fetchLog({
+        account: userState.account?.id,
+      });
 
       if (error && error !== null) {
         setLoadingMoney(false);
@@ -148,11 +151,17 @@ function Header({ setSync }) {
         let previousResponse = undefined;
         if (now.getDate() - 1 > 0) {
           now = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
-          previousResponse = await fetchLog(now);
+          previousResponse = await fetchLog({
+            date: now,
+            account: userState.account?.id,
+          });
         } else {
           const d = new Date(now.getFullYear(), now.getMonth() - 1, 0); // fetching the last day of previous month
           now = new Date(now.getFullYear(), now.getMonth() - 1, d.getDate());
-          previousResponse = await fetchLog(now);
+          previousResponse = await fetchLog({
+            date: now,
+            account: userState.account?.id,
+          });
         }
         // updating spent
         let toInit = 1;
@@ -162,7 +171,10 @@ function Header({ setSync }) {
             setLoadingMoney(false);
           }
           const [previous] = previousResponse.data;
-          const bills = await fetchBills(now);
+          const bills = await fetchBills({
+            date: now,
+            account: userState.account?.id,
+          });
           if (bills.error && bills.error !== null) {
             console.error(bills.error.message);
             setLoadingMoney(false);
@@ -178,7 +190,7 @@ function Header({ setSync }) {
           localStorage.getItem("initializing") !== `${new Date().getDate()}`
         ) {
           localStorage.setItem("initializing", `${new Date().getDate()}`);
-          const response = await initDay(toInit);
+          const response = await initDay(userState.account?.id, toInit);
           if (response.error && response.error !== null)
             console.error(response.error.message);
         }

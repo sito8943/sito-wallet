@@ -12,34 +12,36 @@ export const fetchFirstLog = async (account) =>
     .gte("initial", 1)
     .order("created_at");
 
-export const fetchBills = async (
-  date = undefined,
-  year = undefined,
-  month = undefined,
-  day = undefined
-) => {
-  const now = date ?? new Date();
+export const fetchBills = async (options) => {
+  const now = options.date ?? new Date();
   const query = supabase
     .from("bills")
     .select("*, walletBalances(*)")
     .eq("owner", getUser().user.id);
-
-  if (year !== null) query.eq("year", year ?? now.getFullYear());
-  if (month !== null) query.eq("month", month ?? now.getMonth());
-  if (day !== null) query.eq("day", day ?? now.getDate());
+  if (options.account) query.eq("account", options.account);
+  if (options.year !== null)
+    query.eq("year", options.year ?? now.getFullYear());
+  if (options.month !== null)
+    query.eq("month", options.month ?? now.getMonth());
+  if (options.day !== null) query.eq("day", options.day ?? now.getDate());
 
   return await query;
 };
 
-export const fetchLog = async (date = undefined) => {
-  const now = date ?? new Date();
-  return await supabase
+export const fetchLog = async (options) => {
+  const now = options.date ?? new Date();
+  const query = supabase
     .from("walletLogs")
     .select()
-    .eq("owner", getUser().user.id)
-    .eq("year", now.getFullYear())
-    .eq("month", now.getMonth())
-    .eq("day", now.getDate());
+    .eq("owner", getUser().user.id);
+  if (options.account) query.eq("account", options.account);
+  if (options.year !== null)
+    query.eq("year", options.year ?? now.getFullYear());
+  if (options.month !== null)
+    query.eq("month", options.month ?? now.getMonth());
+  if (options.day !== null) query.eq("day", options.day ?? now.getDate());
+
+  return await query;
 };
 
 export const fetchBalances = async (id = undefined) => {
@@ -86,7 +88,11 @@ export const updateLog = async (log, date = undefined) => {
     .eq("day", now.getDate());
 };
 
-export const initDay = async (initial = undefined, date = undefined) => {
+export const initDay = async (
+  account,
+  initial = undefined,
+  date = undefined
+) => {
   const now = date ?? new Date();
 
   return await supabase.from("walletLogs").insert({
@@ -95,6 +101,7 @@ export const initDay = async (initial = undefined, date = undefined) => {
     month: now.getMonth(),
     day: now.getDate(),
     initial: initial ?? 1,
+    account,
   });
 };
 

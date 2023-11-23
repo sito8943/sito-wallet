@@ -111,6 +111,7 @@ function Bills({ setSync }) {
       month: new Date().getMonth(),
       day: new Date().getDate(),
       balanceType: userState.balances[0].id,
+      account: userState.account?.id,
     };
     if (!userState.cached) {
       const { data, error } = await addRemoteBill(newBill);
@@ -131,7 +132,9 @@ function Bills({ setSync }) {
   const init = async () => {
     setLoadingBills(true);
     if (!userState.cached) {
-      const { data, error } = await fetchBills();
+      const { data, error } = await fetchBills({
+        account: userState.account?.id,
+      });
 
       if (error && error !== null) {
         setLoadingBills(false);
@@ -168,6 +171,7 @@ function Bills({ setSync }) {
           description: "Gastos básicos",
           bill: true,
           created_at: new Date().getTime(),
+          account: userState.account?.id,
         };
         if (!userState.cached) {
           const { error } = await addBalance(newBalance);

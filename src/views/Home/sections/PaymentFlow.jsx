@@ -26,12 +26,12 @@ function PaymentFlow() {
 
   const fetchAllBills = async () => {
     const now = new Date();
-    const { data, error } = await fetchBills(
-      undefined,
-      now.getFullYear(),
-      now.getMonth(),
-      null
-    );
+    const { data, error } = await fetchBills({
+      account: userState.account?.id,
+      year: now.getFullYear(),
+      month: now.getMonth(),
+      day: null,
+    });
     if (error && error !== null) console.error(error.message);
     else setAllBills(data);
   };
