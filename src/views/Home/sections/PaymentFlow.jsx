@@ -78,6 +78,14 @@ function PaymentFlow() {
       });
   }, [userState.account]);
 
+  console.log((totalSpent * 100) / initial);
+  console.log((incoming * 100) / initial);
+  console.log((digital * 100) / initial);
+
+  const fetchPercentOf = (result, total = 450) => {
+    return (total * result) / 100;
+  };
+
   return (
     <section className="h-[490px] flex flex-col">
       <h3 className="text-3xl xs:text-xl">Flujo mensual</h3>
@@ -90,7 +98,7 @@ function PaymentFlow() {
           label={"Gastos"}
           color="bg-primary-default dark:bg-primary-200"
           labelColor="text-primary-300 dark:text-primary-default"
-          showHeight={400}
+          showHeight={fetchPercentOf((totalSpent * 100) / initial)}
         />
         <PaymentFlowBar
           id="incoming"
@@ -100,7 +108,7 @@ function PaymentFlow() {
           label={"Ingresos"}
           color="bg-secondary-200"
           labelColor="text-secondary-300"
-          showHeight={300}
+          showHeight={fetchPercentOf((incoming * 100) / initial)}
         />
         <PaymentFlowBar
           id="digital"
@@ -110,7 +118,7 @@ function PaymentFlow() {
           label={"Digital"}
           color="bg-ternary-200"
           labelColor="text-ternary-300"
-          showHeight={300}
+          showHeight={fetchPercentOf((digital * 100) / initial)}
         />
       </div>
     </section>
