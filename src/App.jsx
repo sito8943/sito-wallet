@@ -62,14 +62,31 @@ function App() {
               });
               return;
             }
+            // fetch last account
+            let lastAccount = undefined;
+            const account = await fetchAccounts({
+              sort: ["updated_at"],
+              user: data.user.id,
+            });
+            if (account.error && account.error !== null) {
+              setNotification({
+                type: "error",
+                message: showError(account.error.message),
+              });
+              setLoading(false);
+              logoutUser();
+              return;
+            } else lastAccount = account.data[0];
             setUserState({
               type: "logged-in",
               user: data.user,
               photo: data.photo ?? {},
+              account: lastAccount,
             });
             saveUser({
               user: data.user,
               photo: data.photo ?? {},
+              account: lastAccount,
             });
           } else logoutUser();
         } else
@@ -90,14 +107,17 @@ function App() {
           logoutUser();
           return;
         } else lastAccount = account.data[0];
-        console.log(lastAccount);
         saveUser({
           ...getUser(),
           user: data.user,
           account: lastAccount,
+        });
+        setUserState({
+          type: "logged-in",
+          user: data.user,
+          account: lastAccount,
           cached: false,
         });
-        setUserState({ type: "logged-in", user: data.user });
       }
     } catch (err) {
       logoutUser();
