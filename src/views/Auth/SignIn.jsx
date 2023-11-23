@@ -82,6 +82,7 @@ function SignIn() {
         setNotification({ type: "error", message: showError(error.message) });
       else {
         const userData = await fetchUserData(data.user.id);
+
         if (userData.error && userData.error !== null) {
           setNotification({
             type: "error",

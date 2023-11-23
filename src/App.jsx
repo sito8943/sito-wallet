@@ -26,6 +26,7 @@ import {
 
 // lang
 import { showError } from "./lang/es";
+import { fetchAccounts } from "./services/account";
 
 // views
 const SignIn = loadable(() => import("./views/Auth/SignIn"));
@@ -74,7 +75,28 @@ function App() {
         } else
           setUserState({ type: "logged-in", user: getUser(), cached: true });
       } else {
-        saveUser({ ...getUser(), user: data.user, cached: false });
+        // fetch last account
+        let lastAccount = undefined;
+        const account = await fetchAccounts({
+          sort: ["updated_at"],
+          user: data.user.id,
+        });
+        if (account.error && account.error !== null) {
+          setNotification({
+            type: "error",
+            message: showError(account.error.message),
+          });
+          setLoading(false);
+          logoutUser();
+          return;
+        } else lastAccount = account.data[0];
+        console.log(lastAccount);
+        saveUser({
+          ...getUser(),
+          user: data.user,
+          account: lastAccount,
+          cached: false,
+        });
         setUserState({ type: "logged-in", user: data.user });
       }
     } catch (err) {

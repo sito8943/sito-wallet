@@ -1,4 +1,6 @@
 import supabase from "../db/connection";
+
+// auth utils
 import { getUser } from "../utils/auth";
 
 export const fetchFirstLog = async () =>
