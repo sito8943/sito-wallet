@@ -111,7 +111,7 @@ function SignIn() {
     <main className="w-full viewport flex items-center justify-center">
       <ModeButton className="top-1 right-1 primary" />
       <div
-        className={`bg-light-alter dark:bg-dark-alter pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-sm transition-all duration-100 ${
+        className={`bg-light-alter dark:bg-dark-alter pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-[1rem] transition-all duration-100 ${
           loading ? "opacity-100" : "opacity-0"
         }`}
       >

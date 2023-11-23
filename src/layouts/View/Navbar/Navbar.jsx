@@ -47,7 +47,7 @@ function Navbar() {
       }`}
     >
       <div
-        className={`relative backdrop-blur-[6px] rounded-[100px] flex w-full justify-between py-3 px-5 xs:px-3 `}
+        className={`relative backdrop-blur-[1rem] rounded-[100px] flex w-full justify-between py-3 px-5 xs:px-3 `}
       >
         <div
           className={` absolute w-full h-full top-0 left-0 rounded-[100px] opacity-90 ${
