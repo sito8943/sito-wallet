@@ -1,11 +1,7 @@
 import { useRef, useMemo, useEffect, useState } from "react";
 import { useInViewport } from "react-in-viewport";
 
-import {
-  faCreditCard,
-  faDollar,
-  faWallet,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCreditCard, faDollar } from "@fortawesome/free-solid-svg-icons";
 
 // providers
 import { useUser } from "../../../providers/UserProvider";
@@ -91,16 +87,6 @@ function PaymentFlow() {
           color="bg-secondary-200"
           labelColor="text-secondary-300"
           showHeight={300}
-        />
-        <PaymentFlowBar
-          id="cash"
-          icon={faWallet}
-          number={userState.cash ?? 0}
-          show={inViewport}
-          label={"Efectivo"}
-          color="bg-ternary-default dark:bg-ternary-200"
-          labelColor="text-ternary-300 dark:text-ternary-200"
-          showHeight={200}
         />
       </div>
     </section>

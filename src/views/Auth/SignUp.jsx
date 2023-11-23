@@ -104,9 +104,8 @@ function SignUp() {
               ...data.user,
             },
             photo: {},
-            cash: 0,
           });
-          saveUser({ user: data.user, photo: {}, cash: 0 });
+          saveUser({ user: data.user, photo: {} });
           navigate("/");
         }
       } else

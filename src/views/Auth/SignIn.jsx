@@ -94,12 +94,10 @@ function SignIn() {
           type: "logged-in",
           user: data.user,
           photo: userData.data[0]?.photo ?? {},
-          cash: userData.data[0]?.cash ?? 0,
         });
         saveUser({
           user: data.user,
           photo: userData.data[0]?.photo ?? {},
-          cash: userData.data[0]?.photo ?? {},
         });
         navigate("/");
       }
