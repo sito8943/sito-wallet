@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDebounce } from "use-lodash-debounce";
 import { Link } from "react-router-dom";
 
@@ -10,8 +10,12 @@ import { IconButton } from "@sito/ui";
 // components
 import DebouncedInput from "../../../components/DebouncedInput/DebouncedInput";
 
+// providers
+import { useUser } from "../../../providers/UserProvider";
+
 function Wallet({ setSync }) {
-  const [wallet, setWallet] = useState("Mi Cuenta");
+  const { userState } = useUser();
+  const [wallet, setWallet] = useState(userState.account?.name ?? "Mi Cuenta");
 
   return (
     <section className="flex justify-between items-center w-full">
