@@ -1,7 +1,12 @@
 import { useRef, useMemo, useEffect, useState } from "react";
 import { useInViewport } from "react-in-viewport";
 
-import { faCreditCard, faDollar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowTrendDown,
+  faArrowTrendUp,
+  faCreditCard,
+  faDollar,
+} from "@fortawesome/free-solid-svg-icons";
 
 // providers
 import { useUser } from "../../../providers/UserProvider";
@@ -36,10 +41,18 @@ function PaymentFlow() {
     else setAllBills(data);
   };
 
+  const incoming = useMemo(() => {
+    let income = 0;
+    allBills.forEach((bill) => {
+      if (!bill.walletBalances.bill) income += Number(bill.spent);
+    });
+    return income;
+  }, [allBills]);
+
   const totalSpent = useMemo(() => {
     let spent = 0;
     allBills.forEach((bill) => {
-      spent += Number(bill.spent);
+      if (bill.walletBalances.bill) spent += Number(bill.spent);
     });
     return spent;
   }, [allBills]);
@@ -71,7 +84,7 @@ function PaymentFlow() {
       <div className="flex w-full h-full" ref={myRef}>
         <PaymentFlowBar
           id="spent"
-          icon={faDollar}
+          icon={faArrowTrendDown}
           number={totalSpent}
           show={inViewport}
           label={"Gastos"}
@@ -80,13 +93,23 @@ function PaymentFlow() {
           showHeight={400}
         />
         <PaymentFlowBar
+          id="incoming"
+          icon={faArrowTrendUp}
+          number={incoming}
+          show={inViewport}
+          label={"Ingresos"}
+          color="bg-secondary-200"
+          labelColor="text-secondary-300"
+          showHeight={300}
+        />
+        <PaymentFlowBar
           id="digital"
           icon={faCreditCard}
           number={digital}
           show={inViewport}
           label={"Digital"}
-          color="bg-secondary-200"
-          labelColor="text-secondary-300"
+          color="bg-ternary-200"
+          labelColor="text-ternary-300"
           showHeight={300}
         />
       </div>
