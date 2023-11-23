@@ -58,10 +58,10 @@ function PaymentFlow() {
   }, [allBills]);
 
   const digital = useMemo(() => {
-    return initial - totalSpent;
+    return initial - totalSpent + incoming;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalSpent, initial]);
+  }, [totalSpent, initial, incoming]);
 
   useEffect(() => {
     fetchAllBills();
@@ -78,12 +78,10 @@ function PaymentFlow() {
       });
   }, [userState.account]);
 
-  console.log((totalSpent * 100) / initial);
-  console.log((incoming * 100) / initial);
-  console.log((digital * 100) / initial);
-
   const fetchPercentOf = (result, total = 450) => {
-    return (total * result) / 100;
+    let resultR = (total * result) / 100;
+    if (resultR < 80) resultR += 80;
+    return resultR;
   };
 
   return (

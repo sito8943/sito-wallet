@@ -28,7 +28,7 @@ export default function PaymentFlowBar({
     <div id={id} className={`flex-col flex w-full items-end justify-end`}>
       <div
         className={`spent ${color} w-full text-light-default flex flex-col justify-between p-3 animation ${
-          show ? `${barCss}` : "h-[0px]"
+          show ? `${barCss}` : "h-[80px]"
         }`}
       >
         <div className="w-full flex justify-end">
