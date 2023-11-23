@@ -52,14 +52,15 @@ function Header({ setSync }) {
   const [monthInitial, setMonthInitial] = useState(1);
 
   useEffect(() => {
-    fetchFirstLog().then(({ data, error }) => {
-      if (error && error !== null) console.error(error.message);
-      else {
-        const [first] = data;
-        if (first) setMonthInitial(first.initial);
-      }
-    });
-  }, []);
+    if (userState.account)
+      fetchFirstLog(userState.account?.id).then(({ data, error }) => {
+        if (error && error !== null) console.error(error.message);
+        else {
+          const [first] = data;
+          if (first) setMonthInitial(first.initial);
+        }
+      });
+  }, [userState.account]);
 
   const spent = useMemo(() => {
     if (userState.bills) {

@@ -3,11 +3,12 @@ import supabase from "../db/connection";
 // auth utils
 import { getUser } from "../utils/auth";
 
-export const fetchFirstLog = async () =>
+export const fetchFirstLog = async (account) =>
   await supabase
     .from("walletLogs")
     .select()
     .eq("owner", getUser().user.id)
+    .eq("account", account)
     .gte("initial", 1)
     .order("created_at");
 

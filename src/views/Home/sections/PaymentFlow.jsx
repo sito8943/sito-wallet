@@ -55,14 +55,15 @@ function PaymentFlow() {
   }, [userState]);
 
   useEffect(() => {
-    fetchFirstLog().then(({ data, error }) => {
-      if (error && error !== null) {
-        console.error(error.message);
-        return 0;
-      }
-      if (data.length) setInitial(data[0].initial);
-    });
-  }, [userState]);
+    if (userState.account)
+      fetchFirstLog(userState.account.id).then(({ data, error }) => {
+        if (error && error !== null) {
+          console.error(error.message);
+          return 0;
+        }
+        if (data.length) setInitial(data[0].initial);
+      });
+  }, [userState.account]);
 
   return (
     <section className="h-[490px] flex flex-col">

@@ -77,6 +77,7 @@ function App() {
               logoutUser();
               return;
             } else lastAccount = account.data[0];
+
             setUserState({
               type: "logged-in",
               user: data.user,
