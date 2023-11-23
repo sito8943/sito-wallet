@@ -2,6 +2,10 @@
   width: calc(100% - 40px);
 }
 
+.blur-background {
+  @apply bg-[rgba(234,234,234,.3)] dark:bg-[rgba(68,68,68,.47)];
+}
+
 @media (max-width: 639px) {
   .navbar {
     width: calc(100% - 12px);

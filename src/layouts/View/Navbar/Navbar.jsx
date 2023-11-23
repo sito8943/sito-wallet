@@ -51,7 +51,7 @@ function Navbar() {
       >
         <div
           className={` absolute w-full h-full top-0 left-0 rounded-[100px] opacity-90 ${
-            transparency ? "" : "bg-light-alter dark:bg-dark-alter"
+            transparency ? "" : "blur-background"
           }`}
         ></div>
         <Link
