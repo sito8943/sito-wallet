@@ -7,6 +7,16 @@ import { encrypt, decrypt } from "./crypto";
 
 /**
  *
+ * @param {string} value
+ * @returns
+ */
+export const saveRemember = (value) =>
+  localStorage.setItem(config.remember, value);
+
+export const remember = () => localStorage.getItem(config.remember);
+
+/**
+ *
  * @param {object} data
  * @returns saved encrypted user
  */
@@ -26,6 +36,7 @@ export const getUser = () => decrypt(localStorage.getItem(config.user));
 export const logoutUser = () => {
   localStorage.removeItem("initializing");
   localStorage.removeItem("basic-balance");
+  localStorage.removeItem(config.remember);
   return localStorage.removeItem(config.user);
 };
 

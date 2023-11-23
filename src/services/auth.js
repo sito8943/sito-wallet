@@ -5,6 +5,12 @@ import md5 from "md5";
 // db
 import supabase from "../db/connection";
 
+// auth
+import { saveRemember } from "../utils/auth";
+
+// manager
+import { createSettingsUser, fetchUserData } from "./user";
+
 export const validateUser = async () => {
   return await supabase.auth.getUser();
 };
@@ -27,14 +33,32 @@ export const register = async (email, password) => {
  * Takes a user object and sends it to the backend to be authenticated
  * @param {string} user - the user name
  * @param {string} password - the user password
+ * @param {boolean} remember - if the user wants to be remembered
  * @returns The response from the server.
  */
-export const login = async (user, password) => {
+export const login = async (user, password, remember) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email: user,
     password: md5(password),
   });
   if (error && error !== null) return { error };
+  if (remember) saveRemember(md5(password));
+  return { data, error };
+};
+
+export const refresh = async (user, password) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: user,
+    password,
+  });
+  if (error && error !== null) return { error };
+  else {
+    const userData = await fetchUserData(data.user.id);
+    if (userData.error && userData.error !== null)
+      console.error(userData.error.message);
+    if (!userData.data.length) await createSettingsUser(data.user.id);
+    data.photo = userData.data[0].photo;
+  }
   return { data, error };
 };
 

@@ -7,16 +7,25 @@ import Auth from "./layouts/Auth";
 import View from "./layouts/View/View";
 
 // @sito/ui
-import { Handler, Loading, Notification } from "@sito/ui";
+import { Handler, Loading, Notification, useNotification } from "@sito/ui";
 
 // services
-import { validateUser } from "./services/auth";
+import { refresh, validateUser } from "./services/auth";
 
 // context
 import { useUser } from "./providers/UserProvider";
 
 // auth cache
-import { cachedUser, getUser, logoutUser, saveUser } from "./utils/auth";
+import {
+  cachedUser,
+  getUser,
+  logoutUser,
+  remember,
+  saveUser,
+} from "./utils/auth";
+
+// lang
+import { showError } from "./lang/es";
 
 // views
 const SignIn = loadable(() => import("./views/Auth/SignIn"));
@@ -28,15 +37,43 @@ const Settings = loadable(() => import("./views/Settings/Settings"));
 
 function App() {
   const { setUserState } = useUser();
+  const { setNotification } = useNotification();
 
   const [loading, setLoading] = useState(true);
 
   const fetch = async () => {
     try {
       const { data, error } = await validateUser();
-      if (error && error !== null && cachedUser())
-        setUserState({ type: "logged-in", user: getUser(), cached: true });
-      else {
+      if (error && error !== null && cachedUser()) {
+        if (error.message === "invalid claim: missing sub claim") {
+          const rememberValue = remember();
+          if (rememberValue !== null) {
+            const response = await refresh(
+              getUser().user.email,
+              rememberValue()
+            );
+            const { data, error } = response;
+            if (error && error !== null) {
+              logoutUser();
+              setNotification({
+                type: "error",
+                message: showError(error.message),
+              });
+              return;
+            }
+            setUserState({
+              type: "logged-in",
+              user: data.user,
+              photo: data.photo ?? {},
+            });
+            saveUser({
+              user: data.user,
+              photo: data.photo ?? {},
+            });
+          } else logoutUser();
+        } else
+          setUserState({ type: "logged-in", user: getUser(), cached: true });
+      } else {
         saveUser({ ...getUser(), user: data.user, cached: false });
         setUserState({ type: "logged-in", user: data.user });
       }

@@ -8,6 +8,7 @@ import {
   InputControl,
   IconButton,
   Button,
+  Switcher,
 } from "@sito/ui";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -52,6 +53,8 @@ function SignIn() {
 
   const [loading, setLoading] = useState(false);
 
+  const [remember, setRemember] = useState(true);
+
   const onSubmit = useCallback(
     async (e) => {
       e.preventDefault();
@@ -72,7 +75,7 @@ function SignIn() {
         return;
       }
       setLoading(true);
-      const response = await login(user, password);
+      const response = await login(user, password, remember);
       const { data, error } = response;
 
       if (error && error !== null)
@@ -102,7 +105,7 @@ function SignIn() {
       }
       setLoading(false);
     },
-    [user, password, setNotification, navigate, setUserState]
+    [user, password, remember, setNotification, setUserState, navigate]
   );
 
   return (
@@ -160,6 +163,11 @@ function SignIn() {
             />
           }
           helperText={passwordHelperText}
+        />
+        <Switcher
+          checked={remember}
+          label="Recordarme"
+          onChange={(e) => setRemember(e.target.checked)}
         />
         <p className="dark:text-white">
           ¿No tienes cuenta?{" "}
