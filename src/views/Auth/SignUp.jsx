@@ -162,7 +162,7 @@ function SignUp() {
             type="email"
             leftComponent={
               <FontAwesomeIcon
-                className="absolute primary top-[50%] -translate-y-[50%] left-3"
+                className="primary"
                 icon={faEnvelope}
               />
             }
@@ -170,7 +170,7 @@ function SignUp() {
           />
           <InputControl
             id="password"
-            className="sign-in-input"
+            className="sign-in-input !pl-0"
             label="Contraseña"
             maxLength={25}
             value={password}
@@ -182,7 +182,7 @@ function SignUp() {
                 name="toggle-see-password"
                 onClick={toggleShowPassword}
                 icon={showPassword ? faLockOpen : faLock}
-                className="absolute primary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
+                className="primary -ml-3"
                 aria-label="click para alternar ver/ocultar contraseña"
               />
             }
@@ -190,7 +190,7 @@ function SignUp() {
           />
           <InputControl
             id="rPassword"
-            className="sign-in-input"
+            className="sign-in-input !pl-0"
             label="Repetir Contraseña"
             maxLength={25}
             value={rPassword}
@@ -202,7 +202,7 @@ function SignUp() {
                 name="toggle-see-r-password"
                 onClick={toggleShowRPassword}
                 icon={showRPassword ? faLockOpen : faLock}
-                className="absolute primary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
+                className="primary -ml-3"
                 aria-label="click para alternar ver/ocultar repetir contraseña"
               />
             }
