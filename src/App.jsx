@@ -45,20 +45,20 @@ function App() {
   const fetch = async () => {
     try {
       const { data, error } = await validateUser();
-      if (error && error !== null && cachedUser()) {
-        if (error.message === "invalid claim: missing sub claim") {
+      if (error && error !== null) {
+        if (
+          error.message === "invalid claim: missing sub claim" &&
+          cachedUser()
+        ) {
           const rememberValue = remember();
           if (rememberValue !== null) {
-            const response = await refresh(
-              getUser().user.email,
-              rememberValue()
-            );
-            const { data, error } = response;
-            if (error && error !== null) {
+            const response = await refresh(getUser().user.email, rememberValue);
+            console.log(response);
+            if (response.error && response.error !== null) {
               logoutUser();
               setNotification({
                 type: "error",
-                message: showError(error.message),
+                message: showError(response.error.message),
               });
               return;
             }
@@ -66,7 +66,7 @@ function App() {
             let lastAccount = undefined;
             const account = await fetchAccounts({
               sort: ["updated_at"],
-              user: data.user.id,
+              user: response.data.user.id,
             });
             if (account.error && account.error !== null) {
               setNotification({
@@ -80,18 +80,19 @@ function App() {
 
             setUserState({
               type: "logged-in",
-              user: data.user,
-              photo: data.photo ?? {},
+              user: response.data.user,
+              photo: response.data.photo ?? {},
               account: lastAccount,
             });
             saveUser({
-              user: data.user,
-              photo: data.photo ?? {},
+              user: response.data.user,
+              photo: response.data.photo ?? {},
               account: lastAccount,
             });
           } else logoutUser();
-        } else
+        } else if (cachedUser())
           setUserState({ type: "logged-in", user: getUser(), cached: true });
+        else logoutUser();
       } else {
         // fetch last account
         let lastAccount = undefined;
