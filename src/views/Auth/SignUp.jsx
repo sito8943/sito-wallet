@@ -120,12 +120,12 @@ function SignUp() {
       <ModeButton className="top-1 right-1 icon-button primary" />
       <div
         className={`bg-light-alter dark:bg-dark-alter pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-[1rem] transition-all duration-100 ${
-          !loading ? "opacity-100" : "opacity-0"
+          loading ? "opacity-100" : "opacity-0"
         }`}
       >
         <Loading
           className={`dark:bg-dark-alter  transition-all duration-300  ${
-            !loading ? "!h-[100px]" : "!h-[0px]"
+            loading ? "!h-[100px]" : "!h-[0px]"
           }`}
         />
       </div>
