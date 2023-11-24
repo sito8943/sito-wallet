@@ -1421,10 +1421,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@sito/ui@^0.0.55":
-  version "0.0.55"
-  resolved "https://registry.yarnpkg.com/@sito/ui/-/ui-0.0.55.tgz#bde54725b4f67cb3f958307fb94a2e2c6732e251"
-  integrity sha512-q3d1hmGFaFUtZ5az/K2+6pUsnGKeZQ0c1hKBVagCoCSWVUwzIGlZvbkO9aneVb7nV/CI9vxh6WojP72tnrCsRg==
+"@sito/ui@^0.0.56":
+  version "0.0.56"
+  resolved "https://registry.yarnpkg.com/@sito/ui/-/ui-0.0.56.tgz#e7b824ade511f7ecbedec39e9bfb18b4e6453159"
+  integrity sha512-FNs/DE2ktlnHpzAcTrTh3E7pt8Ts3kx90t/p4ik+3Mz7N9ITZfSjNmcBIipEfX/2J8s9HKJZY2y8JDOQMPUAdA==
   dependencies:
     react "^18.2.0"
     react-dom "^18.2.0"
