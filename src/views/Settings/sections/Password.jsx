@@ -66,7 +66,7 @@ function Password() {
         <h3 className="text-xl">Seguridad</h3>
         <InputControl
           id="password"
-          className="!pl-10 w-full"
+          className="!pl-0 w-full"
           label="Contraseña"
           maxLength={25}
           value={password}
@@ -79,7 +79,7 @@ function Password() {
               name="toggle-see-password"
               onClick={toggleShowPassword}
               icon={showPassword ? faLockOpen : faLock}
-              className="absolute primary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
+              className="primary -ml-3"
               aria-label="click para alternar ver/ocultar contraseña"
             />
           }
@@ -100,7 +100,7 @@ function Password() {
               name="toggle-see-r-password"
               onClick={toggleShowRPassword}
               icon={showRPassword ? faLockOpen : faLock}
-              className="absolute primary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
+              className="primary -ml-3"
               aria-label="click para alternar ver/ocultar repetir contraseña"
             />
           }
