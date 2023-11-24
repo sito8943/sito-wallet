@@ -30,6 +30,7 @@ import { saveUser } from "../../utils/auth";
 // styles
 import "./styles.css";
 import { showError } from "../../lang/es";
+import { createAccount, fetchAccounts } from "../../services/account";
 
 function SignIn() {
   const { setNotification } = useNotification();
@@ -82,7 +83,6 @@ function SignIn() {
         setNotification({ type: "error", message: showError(error.message) });
       else {
         const userData = await fetchUserData(data.user.id);
-
         if (userData.error && userData.error !== null) {
           setNotification({
             type: "error",
@@ -91,14 +91,27 @@ function SignIn() {
           setLoading(false);
         }
         if (!userData.data.length) await createSettingsUser(data.user.id);
+        // fetching account
+        const fetchAccount = await fetchAccounts({ user: data.user.id });
+        if (fetchAccount.error && fetchAccount.error !== null) {
+          setNotification({
+            type: "error",
+            message: showError(fetchAccount.error.message),
+          });
+          setLoading(false);
+        }
+        if (!fetchAccount.data.length)
+          fetchAccount.data = await createAccount({ user: data.user.id });
         setUserState({
           type: "logged-in",
           user: data.user,
           photo: userData.data[0]?.photo ?? {},
+          account: fetchAccount.data[0],
         });
         saveUser({
           user: data.user,
           photo: userData.data[0]?.photo ?? {},
+          account: fetchAccount.data[0],
         });
         navigate("/");
       }
@@ -136,12 +149,7 @@ function SignIn() {
           className="sign-in-input"
           value={user}
           onChange={handleUser}
-          leftComponent={
-            <FontAwesomeIcon
-              className="primary"
-              icon={faUser}
-            />
-          }
+          leftComponent={<FontAwesomeIcon className="primary" icon={faUser} />}
           helperText={userHelperText}
         />
         <InputControl
