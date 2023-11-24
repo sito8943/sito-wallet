@@ -5,8 +5,9 @@
   @apply relative p-10 flex flex-col gap-3;
 }
 
+.form .sub,
 .sign-in-input {
-  @apply !pl-10 w-full !bg-light-default dark:!bg-dark-default;
+  @apply w-full !bg-light-default dark:!bg-dark-default;
 }
 
 @media (max-width: 500px) {
