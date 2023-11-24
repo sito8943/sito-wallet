@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-lodash-debounce";
 import PropTypes from "prop-types";
+import { v4 } from "uuid";
 
 // @sito/ui
 import { InputControl, Button } from "@sito/ui";
@@ -10,6 +11,7 @@ import { useUser } from "../../../providers/UserProvider";
 
 // services
 import {
+  addLog,
   fetchBills,
   fetchFirstLog,
   fetchLog,
@@ -146,56 +148,93 @@ function Header({ setSync }) {
           initial,
         });
       } else {
-        // fetching previous day
-        let now = new Date();
-        let previousResponse = undefined;
-        if (now.getDate() - 1 > 0) {
-          now = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
-          previousResponse = await fetchLog({
-            date: now,
-            account: userState.account?.id,
-          });
-        } else {
-          const d = new Date(now.getFullYear(), now.getMonth() - 1, 0); // fetching the last day of previous month
-          now = new Date(now.getFullYear(), now.getMonth() - 1, d.getDate());
-          previousResponse = await fetchLog({
-            date: now,
-            account: userState.account?.id,
-          });
-        }
+        // fetching and creating previous days
         // updating spent
         let toInit = 1;
-        if (previousResponse && previousResponse.data?.length) {
+        let lastInitial = 1;
+        const missingDays = [];
+        let now = new Date();
+        let previousResponse = undefined;
+        while (!previousResponse || !previousResponse.data?.length) {
+          if (now.getDate() - 1 > 0)
+            now = new Date(
+              now.getFullYear(),
+              now.getMonth(),
+              now.getDate() - 1
+            );
+          else {
+            const d = new Date(now.getFullYear(), now.getMonth() - 1, 0); // fetching the last day of previous month
+            now = new Date(now.getFullYear(), now.getMonth() - 1, d.getDate());
+          }
+          previousResponse = await fetchLog({
+            date: now,
+            account: userState.account?.id,
+          });
           if (previousResponse.error && previousResponse.error !== null) {
-            console.error(bills.error.message);
+            console.error(previousResponse.error.message);
             setLoadingMoney(false);
           }
-          const [previous] = previousResponse.data;
+          if (!previousResponse.data?.length) {
+            const newLogId = v4();
+            await addLog({
+              id: newLogId,
+              created_at: new Date().getTime(),
+              year: now.getFullYear(),
+              month: now.getMonth(),
+              day: now.getDate(),
+              account: userState.account?.id,
+            });
+            missingDays.push({ id: newLogId, date: now });
+          } else {
+            // found the last day
+            lastInitial = previousResponse.data[0].initial;
+            // calculating the spent
+            const bills = await fetchBills({
+              date: now,
+              account: userState.account?.id,
+            });
+            if (bills.error && bills.error !== null) {
+              console.error(bills.error.message);
+              setLoadingMoney(false);
+            }
+            bills.data.forEach((bill) => {
+              if (bill.walletBalances.bill) lastInitial -= bill.spent;
+              else lastInitial += bill.spent;
+            });
+          }
+        }
+
+        // setting all missing days
+        for (const missingLog of missingDays) {
+          const { id, date } = missingLog;
+          // calculating the spent
           const bills = await fetchBills({
-            date: now,
+            date,
             account: userState.account?.id,
           });
           if (bills.error && bills.error !== null) {
             console.error(bills.error.message);
             setLoadingMoney(false);
           }
-          let previousSpent = 0;
           bills.data.forEach((bill) => {
-            previousSpent += bill.spent;
+            if (bill.walletBalances.bill) lastInitial -= bill.spent;
+            else lastInitial += bill.spent;
           });
-          toInit = previous.initial - previousSpent;
-        } else setShowDialog(true);
+          await updateLog({ id, initial: lastInitial }, date);
+        }
+
+        if (lastInitial === 1) setShowDialog(true);
         // creating new day with previous money
         if (
           localStorage.getItem("initializing") !== `${new Date().getDate()}`
         ) {
           localStorage.setItem("initializing", `${new Date().getDate()}`);
-          const response = await initDay(userState.account?.id, toInit);
+          const response = await initDay(userState.account?.id, lastInitial);
           if (response.error && response.error !== null)
             console.error(response.error.message);
         }
-        setInitial(toInit);
-        setUserState({ type: "init-log", initial: toInit });
+        setInitial(lastInitial);
+        setUserState({ type: "init-log", initial: lastInitial });
       }
     }
     setLoadingMoney(false);

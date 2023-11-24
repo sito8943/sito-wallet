@@ -61,7 +61,16 @@ export const addBill = async (bill) =>
     .select("*,walletBalances(*)");
 
 export const addBalance = async (balance) =>
-  await supabase.from("walletBalances").insert({ ...balance });
+  await supabase
+    .from("walletBalances")
+    .insert({ ...balance })
+    .select();
+
+export const addLog = async (log) =>
+  await supabase
+    .from("walletLogs")
+    .insert({ ...log })
+    .select();
 
 export const updateBill = async (bill) =>
   await supabase
