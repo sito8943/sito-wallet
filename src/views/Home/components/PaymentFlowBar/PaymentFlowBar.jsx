@@ -24,6 +24,8 @@ export default function PaymentFlowBar({
     [showHeight]
   );
 
+
+
   return (
     <div id={id} className={`flex-col flex w-full items-end justify-end`}>
       <div

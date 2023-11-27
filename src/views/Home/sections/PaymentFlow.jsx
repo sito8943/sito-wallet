@@ -5,7 +5,6 @@ import {
   faArrowTrendDown,
   faArrowTrendUp,
   faCreditCard,
-  faDollar,
 } from "@fortawesome/free-solid-svg-icons";
 
 // providers
@@ -65,7 +64,7 @@ function PaymentFlow() {
 
   useEffect(() => {
     fetchAllBills();
-  }, [userState]);
+  }, [userState, userState.bills]);
 
   useEffect(() => {
     if (userState.account)
@@ -81,6 +80,7 @@ function PaymentFlow() {
   const fetchPercentOf = (result, total = 450) => {
     let resultR = (total * result) / 100;
     if (resultR < 80) resultR += 80;
+    if (resultR >= 400) resultR = 400;
     return resultR;
   };
 

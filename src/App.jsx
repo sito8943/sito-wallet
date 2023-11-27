@@ -53,7 +53,6 @@ function App() {
           const rememberValue = remember();
           if (rememberValue !== null) {
             const response = await refresh(getUser().user.email, rememberValue);
-            console.log(response);
             if (response.error && response.error !== null) {
               logoutUser();
               setNotification({
