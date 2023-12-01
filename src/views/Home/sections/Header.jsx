@@ -56,6 +56,7 @@ function Header({ setSync }) {
   useEffect(() => {
     if (userState.account)
       fetchFirstLog(userState.account?.id).then(({ data, error }) => {
+        console.log(data);
         if (error && error !== null) console.error(error.message);
         else {
           const [first] = data;
