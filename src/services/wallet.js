@@ -9,6 +9,7 @@ export const fetchFirstLog = async (account) =>
     .select()
     .eq("owner", getUser().user.id)
     .eq("account", account)
+    .eq("month", new Date().getMonth())
     .gte("initial", 1)
     .order("created_at");
 

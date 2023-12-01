@@ -115,6 +115,18 @@ function Header({ setSync }) {
     return days;
   }, []);
 
+  const textDays = useMemo(() => {
+    switch (true) {
+      case leftDays === 1:
+        return "día";
+      case leftDays < 1: {
+        return 0;
+      }
+      default:
+        return "días";
+    }
+  }, [leftDays]);
+
   const severity = useMemo(() => {
     if (countLeft > 0 && monthInitial > 0) {
       const percentOfSpent = (countLeft * 100) / monthInitial;
@@ -314,7 +326,7 @@ function Header({ setSync }) {
       <hr className="w-full border-2 text-primary-default" />
       {!loadingMoney ? (
         <p className="text-primary-default text-xl xs:text-[16px]">
-          Quedan en {currentMonth}. Por {leftDays} días
+          Quedan en {currentMonth}. Por {leftDays} {textDays}
         </p>
       ) : (
         <div className="w-full h-[28px] skeleton-box" />
