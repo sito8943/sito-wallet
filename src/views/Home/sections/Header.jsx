@@ -120,6 +120,7 @@ function Header({ setSync }) {
       case leftDays === 1:
         return "día";
       case leftDays < 1: {
+
         return 0;
       }
       default:
