@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { v4 } from "uuid";
 
 // @sito/ui
-import { InputControl, Button } from "@sito/ui";
+import { InputControl, Button, Switcher } from "@sito/ui";
 
 // providers
 import { useUser } from "../../../providers/UserProvider";
@@ -129,6 +129,9 @@ function Header({ setSync }) {
     return "CUP";
   }, []);
 
+  const [lastSavings, setLastSavings] = useState(true);
+  const [lastSavingValue, setLastSavingValue] = useState(0);
+
   const init = async () => {
     setLoadingMoney(true);
     if (!userState.cached) {
@@ -150,7 +153,6 @@ function Header({ setSync }) {
       } else {
         // fetching and creating previous days
         // updating spent
-        let toInit = 1;
         let lastInitial = 1;
         const missingDays = [];
         let now = new Date();
@@ -163,13 +165,14 @@ function Header({ setSync }) {
               now.getDate() - 1
             );
           else {
-            const d = new Date(now.getFullYear(), now.getMonth() - 1, 0); // fetching the last day of previous month
+            const d = new Date(now.getFullYear(), now.getMonth(), 0); // fetching the last day of previous month
             now = new Date(now.getFullYear(), now.getMonth() - 1, d.getDate());
           }
           previousResponse = await fetchLog({
             date: now,
             account: userState.account?.id,
           });
+          console.log(previousResponse);
           if (previousResponse.error && previousResponse.error !== null) {
             console.error(previousResponse.error.message);
             setLoadingMoney(false);
@@ -187,7 +190,7 @@ function Header({ setSync }) {
             missingDays.push({ id: newLogId, date: now });
           } else {
             // found the last day
-            lastInitial = previousResponse.data[0].initial;
+            let value = previousResponse.data[0].initial;
             // calculating the spent
             const bills = await fetchBills({
               date: now,
@@ -198,9 +201,13 @@ function Header({ setSync }) {
               setLoadingMoney(false);
             }
             bills.data.forEach((bill) => {
-              if (bill.walletBalances.bill) lastInitial -= bill.spent;
-              else lastInitial += bill.spent;
+              if (bill.walletBalances.bill) value -= bill.spent;
+              else value += bill.spent;
             });
+            // the last day month is the same of current day
+            if (previousResponse.data[0].month !== new Date().getMonth())
+              setLastSavingValue(value);
+            else lastInitial = value;
           }
         }
 
@@ -222,7 +229,7 @@ function Header({ setSync }) {
           });
           await updateLog({ id, initial: lastInitial }, date);
         }
-
+        console.log("last", lastInitial, lastSavingValue);
         if (lastInitial === 1) setShowDialog(true);
         // creating new day with previous money
         if (
@@ -242,8 +249,14 @@ function Header({ setSync }) {
 
   const onSubmitDialog = async (e) => {
     e.preventDefault();
-    const { error } = await updateLog({ initial });
-    setUserState({ type: "init-log", initial });
+    const { error } = await updateLog({
+      initial: lastSavings ? lastSavingValue : initial,
+    });
+    setUserState({
+      type: "init-log",
+      initial: lastSavings ? lastSavingValue : initial,
+    });
+    if (lastSavings) setInitial(lastSavingValue);
     console.error(error?.message);
     hideDialog();
   };
@@ -264,10 +277,16 @@ function Header({ setSync }) {
           <InputControl
             id="initial"
             label="Cantidad inicial de este mes"
-            value={initial}
+            value={lastSavings ? lastSavingValue : initial}
             type="number"
-            className="text-right"
+            disabled={lastSavings}
+            className="text-right disabled:text-primary-default"
             onChange={(e) => setInitial(e.target.value)}
+          />
+          <Switcher
+            value={lastSavings}
+            onChange={() => setLastSavings((lastSavings) => !lastSavings)}
+            label="Tomar del mes anterior"
           />
           <Button type="submit" className="submit primary">
             Aceptar
