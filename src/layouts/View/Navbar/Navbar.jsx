@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   faArrowRightFromBracket,
@@ -76,26 +77,21 @@ function Navbar() {
             name="toggle-theme"
             aria-label="Click para cambiar el tema"
             icon={mode === "dark" ? faSun : faMoon}
-          />{" "}
+          />
           <Link
             to="/settings"
             name="toggle-theme"
             aria-label="Ir a la configuración"
           >
-            <IconButton
-              tooltip="Ir a la configuración"
-              name="toggle-theme"
-              aria-label="Ir a la configuración"
-              icon={faGear}
-            />
+            <FontAwesomeIcon icon={faGear} />
           </Link>
-          <Link to="/sign-out" name="logout" aria-label="Cerrar sesión">
-            <IconButton
-              tooltip="Cerrar sesión"
-              name="logout"
-              aria-label="Cerrar sesión"
-              icon={faArrowRightFromBracket}
-            />
+          <Link
+            to="/sign-out"
+            name="logout"
+            aria-label="Cerrar sesión"
+            className="button icon-button primary"
+          >
+            <FontAwesomeIcon icon={faArrowRightFromBracket} />
           </Link>
         </nav>
       </div>
