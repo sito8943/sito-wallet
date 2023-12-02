@@ -118,13 +118,24 @@ function Header({ setSync }) {
   const textDays = useMemo(() => {
     switch (true) {
       case leftDays === 1:
-        return "día";
+        return `${leftDays} día`;
       case leftDays < 1: {
+        const now = new Date();
 
-        return 0;
+        const endOfDay = new Date(now);
+        endOfDay.setHours(23, 59, 59, 999);
+
+        const difference = endOfDay - now;
+
+        const hoursLeft = Math.floor(difference / (1000 * 60 * 60));
+        const minutesLeft = Math.floor(
+          (difference % (1000 * 60 * 60)) / (1000 * 60)
+        );
+
+        return `${hoursLeft} horas y ${minutesLeft} minutos restantes`;
       }
       default:
-        return "días";
+        return `${leftDays} días`;
     }
   }, [leftDays]);
 
@@ -327,7 +338,7 @@ function Header({ setSync }) {
       <hr className="w-full border-2 text-primary-default" />
       {!loadingMoney ? (
         <p className="text-primary-default text-xl xs:text-[16px]">
-          Quedan en {currentMonth}. Por {leftDays} {textDays}
+          Quedan en {currentMonth}. Por {textDays}
         </p>
       ) : (
         <div className="w-full h-[28px] skeleton-box" />
