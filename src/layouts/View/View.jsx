@@ -15,6 +15,7 @@ import { useUser } from "../../providers/UserProvider";
 
 // components
 import Navbar from "./Navbar/Navbar";
+import Footer from "./Footer/Footer";
 
 function View() {
   const { userState } = useUser();
@@ -44,6 +45,7 @@ function View() {
           </p>
         </div>
       </div>
+      <Footer />
     </Fragment>
   );
 }

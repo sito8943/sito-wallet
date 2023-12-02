@@ -7,7 +7,6 @@ import { Loading } from "@sito/ui";
 import Bills from "./sections/Bills";
 import Header from "./sections/Header";
 import Wallet from "./sections/Wallet";
-import Footer from "./sections/Footer";
 import PaymentFlow from "./sections/PaymentFlow";
 
 function Home() {
@@ -28,7 +27,6 @@ function Home() {
         <Wallet setSync={setSync} />
         <PaymentFlow />
       </div>
-      <Footer />
     </main>
   );
 }
