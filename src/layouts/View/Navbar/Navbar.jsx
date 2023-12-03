@@ -82,6 +82,7 @@ function Navbar() {
             to="/settings"
             name="toggle-theme"
             aria-label="Ir a la configuración"
+            className="button icon-button primary"
           >
             <FontAwesomeIcon icon={faGear} />
           </Link>

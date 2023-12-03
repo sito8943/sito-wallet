@@ -305,7 +305,7 @@ function Header({ setSync }) {
             value={lastSavings ? lastSavingValue : initial}
             type="number"
             disabled={lastSavings}
-            className="text-right disabled:text-primary-default"
+            className="text-right disabled:text-primary-400"
             onChange={(e) => setInitial(e.target.value)}
           />
           <Switcher
@@ -324,10 +324,10 @@ function Header({ setSync }) {
             <h2
               className={`text-8xl md:text-7xl sm:text-6xl xs:text-4xl ${severity} flex`}
             >
-              <span className="text-primary-default opacity-40 mr-2">$</span>
+              <span className="text-primary-400 opacity-40 mr-2">$</span>
               <Counter number={countLeft} className={severity} />
             </h2>
-            <p className="primary text-3xl xs:text-xl text-primary-default">
+            <p className="primary text-3xl xs:text-xl text-primary-400">
               {currentCurrency}
             </p>
           </>
@@ -335,9 +335,9 @@ function Header({ setSync }) {
           <div className="w-full h-[72px] skeleton-box" />
         )}
       </div>
-      <hr className="w-full border-2 text-primary-default" />
+      <hr className="w-full border-2 text-primary-400" />
       {!loadingMoney ? (
-        <p className="text-primary-default text-xl xs:text-[16px]">
+        <p className="text-primary-400 text-xl xs:text-[16px]">
           Quedan en {currentMonth}. Por {textDays}
         </p>
       ) : (

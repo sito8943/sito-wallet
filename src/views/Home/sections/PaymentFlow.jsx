@@ -94,8 +94,8 @@ function PaymentFlow() {
           number={totalSpent}
           show={inViewport}
           label={"Gastos"}
-          color="bg-primary-default dark:bg-primary-200"
-          labelColor="text-primary-300 dark:text-primary-default"
+          color="bg-primary-400 dark:bg-primary-600"
+          labelColor="text-primary-400"
           showHeight={fetchPercentOf((totalSpent * 100) / initial)}
         />
         <PaymentFlowBar
@@ -104,8 +104,8 @@ function PaymentFlow() {
           number={incoming}
           show={inViewport}
           label={"Ingresos"}
-          color="bg-secondary-200"
-          labelColor="text-secondary-300"
+          color="bg-secondary-600 dark:bg-secondary-600"
+          labelColor="text-secondary-600"
           showHeight={fetchPercentOf((incoming * 100) / initial)}
         />
         <PaymentFlowBar
@@ -114,8 +114,8 @@ function PaymentFlow() {
           number={digital}
           show={inViewport}
           label={"Digital"}
-          color="bg-ternary-200"
-          labelColor="text-ternary-300"
+          color="bg-ternary-600"
+          labelColor="text-ternary-600"
           showHeight={fetchPercentOf((digital * 100) / initial)}
         />
       </div>

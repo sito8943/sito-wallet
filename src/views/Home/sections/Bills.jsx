@@ -287,7 +287,7 @@ function Bills({ setSync }) {
                 })
             ) : (
               <li>
-                <p className="text-secondary-400 dark:text-secondary-default">
+                <p className="text-secondary-600 dark:text-secondary-600">
                   ¿Ningún balance? Vamos bien{" "}
                   <FontAwesomeIcon className="ternary" icon={faSmile} />
                 </p>

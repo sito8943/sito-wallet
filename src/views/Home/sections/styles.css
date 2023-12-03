@@ -14,5 +14,5 @@
 
 .bad,
 .bad span {
-  @apply !text-error dark:!text-primary-default;
+  @apply !text-error dark:!text-primary-400;
 }
