@@ -130,7 +130,7 @@ function SignUp() {
         />
       </div>
       {goToVerify ? (
-        <div className="form bg-light-alter dark:bg-dark-alter appear items-center">
+        <div className="form bg-light-dark dark:bg-dark-dark appear items-center">
           <h1 className="text-success text-center text-4xl">
             Registrado correctamente
           </h1>
@@ -139,8 +139,13 @@ function SignUp() {
             electrónico haciendo clic en el enlace de confirmación que acabamos
             de enviar a tu dirección.
           </p>
-          <Link to="/">
-            <Button className="submit primary">Iniciar Sesión</Button>
+          <Link
+            to="/auth"
+            name="sign-in"
+            aria-label="Iniciar sesión"
+            className="filled primary button"
+          >
+            Iniciar Sesión
           </Link>
         </div>
       ) : (
@@ -214,7 +219,7 @@ function SignUp() {
           </p>
           <div className="w-full flex gap-5 justify-end items-center">
             <Button
-              name="login"
+              name="sign-up"
               type="submit"
               color="primary"
               shape="filled"
