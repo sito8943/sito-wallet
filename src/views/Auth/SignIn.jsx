@@ -23,14 +23,16 @@ import ModeButton from "../../components/ModeButton/ModeButton";
 // services
 import { login } from "../../services/auth";
 import { createSettingsUser, fetchUserData } from "../../services/user";
+import { createAccount, fetchAccounts } from "../../services/account";
 
 // auth
 import { saveUser } from "../../utils/auth";
 
+// lang
+import { showError } from "../../lang/es";
+
 // styles
 import "./styles.css";
-import { showError } from "../../lang/es";
-import { createAccount, fetchAccounts } from "../../services/account";
 
 function SignIn() {
   const { setNotification } = useNotification();
@@ -122,21 +124,21 @@ function SignIn() {
 
   return (
     <main className="w-full viewport flex items-center justify-center">
-      <ModeButton className="top-1 right-1 primary" />
+      <ModeButton color="primary" className="top-1 right-1" />
       <div
-        className={`bg-light-alter dark:bg-dark-alter pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-[1rem] transition-all duration-100 ${
-          loading ? "opacity-100" : "opacity-0"
+        className={`bg-light-dark dark:bg-dark-dark fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-[1rem] transition-all duration-100 ${
+          loading ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
         <Loading
-          className={`dark:bg-dark-alter transition-all duration-300  ${
+          className={`bg-light-default dark:bg-dark-default transition-all duration-300  ${
             loading ? "!h-[100px]" : "!h-[0px]"
           }`}
         />
       </div>
       <form
         onSubmit={onSubmit}
-        className="form bg-light-alter dark:bg-dark-alter appear"
+        className="form bg-light-dark dark:bg-dark-dark appear"
       >
         <div className="flex gap-2 items-start flex-col">
           {/* <img src={logo} alt="stick notes logo" className="w-10 h-10" /> */}
@@ -149,12 +151,16 @@ function SignIn() {
           className="sign-in-input"
           value={user}
           onChange={handleUser}
-          leftComponent={<FontAwesomeIcon className="primary" icon={faUser} />}
+          leftComponent={
+            <div className="icon-button button -ml-3">
+              <FontAwesomeIcon className="primary" icon={faUser} />
+            </div>
+          }
           helperText={userHelperText}
         />
         <InputControl
           id="password"
-          className="sign-in-input !pl-0"
+          className="sign-in-input "
           value={password}
           onChange={handlePassword}
           type={!showPassword ? "password" : "text"}
@@ -165,7 +171,7 @@ function SignIn() {
               name="toggle-see-password"
               onClick={toggleShowPassword}
               icon={showPassword ? faLockOpen : faLock}
-              className="primary -ml-3"
+              className="-ml-3"
               aria-label="click para alternar ver/ocultar contraseña"
             />
           }
@@ -173,8 +179,11 @@ function SignIn() {
         />
         <Switcher
           checked={remember}
+          value={remember}
           label="Recordarme"
-          onChange={(e) => setRemember(e.target.checked)}
+          activeColor="primary"
+          inactiveColor="basics"
+          onChange={() => setRemember((remember) => !remember)}
         />
         <p className="dark:text-white">
           ¿No tienes cuenta?{" "}
@@ -186,10 +195,11 @@ function SignIn() {
           <Button
             name="login"
             type="submit"
+            color="primary"
+            shape="filled"
             aria-label="Click para entrar"
-            className="primary submit"
           >
-            Siguiente
+            Entrar
           </Button>
         </div>
       </form>

@@ -3,7 +3,7 @@
 }
 
 .blur-background {
-  @apply bg-[rgba(234,234,234,.7)] dark:bg-[rgba(34,35,51,.7)];
+  @apply bg-[rgba(247,247,247,.7)] dark:bg-[rgba(48,48,48,.7)];
 }
 
 @media (max-width: 639px) {

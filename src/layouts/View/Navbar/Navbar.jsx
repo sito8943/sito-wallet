@@ -72,6 +72,7 @@ function Navbar() {
         </Link>
         <nav className="z-10 flex">
           <IconButton
+            color="primary"
             onClick={() => toggleMode()}
             tooltip="Alternar tema (Claro/Oscuro)"
             name="toggle-theme"
@@ -82,7 +83,7 @@ function Navbar() {
             to="/settings"
             name="toggle-theme"
             aria-label="Ir a la configuración"
-            className="button icon-button primary"
+            className="primary button icon-button "
           >
             <FontAwesomeIcon icon={faGear} />
           </Link>

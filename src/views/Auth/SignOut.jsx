@@ -31,7 +31,7 @@ function SignOut() {
   }, []);
 
   return (
-    <Loading className="w-full h-screen bg-light-alter dark:bg-dark-alter" />
+    <Loading className="w-full h-screen bg-light-dark dark:bg-dark-dark" />
   );
 }
 

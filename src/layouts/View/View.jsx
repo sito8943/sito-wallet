@@ -1,5 +1,6 @@
-import { Fragment, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { scrollTo } from "some-javascript-utils/browser";
 
 // @emotion/css
 import { css } from "@emotion/css";
@@ -20,19 +21,28 @@ import Footer from "./Footer/Footer";
 function View() {
   const { userState } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (!userState.user) navigate("/auth");
   }, [navigate, userState]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      scrollTo(0, 0);
+    }, [200]);
+  }, [location.pathname]);
+
   return (
-    <Fragment>
+    <div>
       <Navbar />
-      <Handler>
-        <Outlet />
-      </Handler>
+      <div className="viewport">
+        <Handler>
+          <Outlet />
+        </Handler>
+      </div>
       <div
-        className={`bg-primary-400 fixed w-full bottom-0 left-0 z-40 grid ${css(
+        className={`secondary filled fixed w-full bottom-0 left-0 z-[1] grid ${css(
           {
             gridTemplateRows: userState.cached ? "1fr" : "0fr",
             transition: "grid-template-rows 400ms ease-in-out",
@@ -40,13 +50,13 @@ function View() {
         )}`}
       >
         <div className="overflow-hidden">
-          <p className="text-light-default text-center p-2 ">
+          <p className="text-center p-2">
             No hay conexión <FontAwesomeIcon icon={faExclamationCircle} />
           </p>
         </div>
       </div>
       <Footer />
-    </Fragment>
+    </div>
   );
 }
 

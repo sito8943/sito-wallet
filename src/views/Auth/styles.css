@@ -1,13 +1,8 @@
 .form {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 10px 0px #00000052;
   min-width: 440px;
   max-width: 600px;
   @apply relative p-10 flex flex-col gap-3;
-}
-
-.form .sub,
-.sign-in-input {
-  @apply w-full !bg-light-default dark:!bg-dark-default;
 }
 
 @media (max-width: 500px) {

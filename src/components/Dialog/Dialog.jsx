@@ -24,7 +24,9 @@ function Dialog({ visible, onClose, children, canBeClosed }) {
         <IconButton
           onClick={onClose}
           icon={faClose}
-          className="primary top-1 right-1 fixed"
+          color="primary"
+          shape="filled"
+          className="top-1 right-1"
         />
       ) : null}
       {visible ? children : null}

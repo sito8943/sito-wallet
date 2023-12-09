@@ -10,8 +10,8 @@ function Auth() {
   const { userState } = useUser();
 
   useEffect(() => {
-    if (userState.user) navigate("/");
-  }, [userState, navigate]);
+    if (userState.user) navigate("/auth/");
+  }, [navigate, userState]);
 
   return <Outlet />;
 }

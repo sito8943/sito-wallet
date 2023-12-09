@@ -117,14 +117,14 @@ function SignUp() {
 
   return (
     <main className="w-full viewport flex items-center justify-center">
-      <ModeButton className="top-1 right-1 icon-button primary" />
+      <ModeButton color="primary" className="top-1 right-1" />
       <div
-        className={`bg-light-alter dark:bg-dark-alter pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-[1rem] transition-all duration-100 ${
-          loading ? "opacity-100" : "opacity-0"
+        className={`bg-light-dark dark:bg-dark-dark fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-[1rem] transition-all duration-100 ${
+          loading ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
         <Loading
-          className={`dark:bg-dark-alter  transition-all duration-300  ${
+          className={`bg-light-default dark:bg-dark-default transition-all duration-300  ${
             loading ? "!h-[100px]" : "!h-[0px]"
           }`}
         />
@@ -146,7 +146,7 @@ function SignUp() {
       ) : (
         <form
           onSubmit={onSubmit}
-          className="form bg-light-alter dark:bg-dark-alter appear"
+          className="form bg-light-dark dark:bg-dark-dark appear"
         >
           <div className="flex gap-2 items-start flex-col">
             {/* <img src={logo} alt="stick notes logo" className="w-10 h-10" /> */}
@@ -155,22 +155,21 @@ function SignUp() {
           </div>
           <InputControl
             id="email"
-            label="Email"
+            label="Correo electrónico"
             className="sign-in-input"
             value={email}
             onChange={handleEmail}
             type="email"
             leftComponent={
-              <FontAwesomeIcon
-                className="primary"
-                icon={faEnvelope}
-              />
+              <div className="icon-button button -ml-3">
+                <FontAwesomeIcon className="primary" icon={faEnvelope} />
+              </div>
             }
             helperText={emailHelperText}
           />
           <InputControl
             id="password"
-            className="sign-in-input !pl-0"
+            className="sign-in-input"
             label="Contraseña"
             maxLength={25}
             value={password}
@@ -182,7 +181,7 @@ function SignUp() {
                 name="toggle-see-password"
                 onClick={toggleShowPassword}
                 icon={showPassword ? faLockOpen : faLock}
-                className="primary -ml-3"
+                className="-ml-3"
                 aria-label="click para alternar ver/ocultar contraseña"
               />
             }
@@ -190,7 +189,7 @@ function SignUp() {
           />
           <InputControl
             id="rPassword"
-            className="sign-in-input !pl-0"
+            className="sign-in-input"
             label="Repetir Contraseña"
             maxLength={25}
             value={rPassword}
@@ -202,27 +201,24 @@ function SignUp() {
                 name="toggle-see-r-password"
                 onClick={toggleShowRPassword}
                 icon={showRPassword ? faLockOpen : faLock}
-                className="primary -ml-3"
+                className="-ml-3"
                 aria-label="click para alternar ver/ocultar repetir contraseña"
               />
             }
           />
-
-          <p className="dark:text-white">
+          <p>
             ¿Ya tienes cuenta?{" "}
-            <Link
-              to="/auth/"
-              className="underline hover:text-sdark dark:hover:primary"
-            >
-              Iniciar sesión
+            <Link to="/auth/sign-up" className="underline primary">
+              Iniciar Sesión
             </Link>
           </p>
           <div className="w-full flex gap-5 justify-end items-center">
             <Button
               name="login"
               type="submit"
+              color="primary"
+              shape="filled"
               aria-label="Click para entrar"
-              className="primary submit"
             >
               Siguiente
             </Button>
