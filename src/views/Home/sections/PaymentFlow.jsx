@@ -78,7 +78,7 @@ function PaymentFlow() {
   }, [userState.account]);
 
   const fetchPercentOf = (result, total = 450) => {
-    let resultR = (total * result) / 100;
+    let resultR = (100 * result) / total;
     if (resultR < 80) resultR += 80;
     if (resultR >= 400) resultR = 400;
     return resultR;
@@ -94,9 +94,11 @@ function PaymentFlow() {
           number={totalSpent}
           show={inViewport}
           label={"Gastos"}
-          color="bg-primary-400 dark:bg-primary-600"
-          labelColor="text-primary-400"
-          showHeight={fetchPercentOf((totalSpent * 100) / initial)}
+          color="error filled"
+          showHeight={fetchPercentOf(
+            totalSpent,
+            initial + totalSpent + incoming
+          )}
         />
         <PaymentFlowBar
           id="incoming"
@@ -104,9 +106,8 @@ function PaymentFlow() {
           number={incoming}
           show={inViewport}
           label={"Ingresos"}
-          color="bg-secondary-600 dark:bg-secondary-600"
-          labelColor="text-secondary-600"
-          showHeight={fetchPercentOf((incoming * 100) / initial)}
+          color="success filled"
+          showHeight={fetchPercentOf(incoming, initial + totalSpent + incoming)}
         />
         <PaymentFlowBar
           id="digital"
@@ -114,9 +115,8 @@ function PaymentFlow() {
           number={digital}
           show={inViewport}
           label={"Digital"}
-          color="bg-ternary-600"
-          labelColor="text-ternary-600"
-          showHeight={fetchPercentOf((digital * 100) / initial)}
+          color="info filled"
+          showHeight={fetchPercentOf(digital, initial + totalSpent + incoming)}
         />
       </div>
     </section>
