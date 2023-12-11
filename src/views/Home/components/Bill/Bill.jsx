@@ -77,7 +77,7 @@ function Balance({
       <div className="font-bold flex items-center gap-5">
         <div
           className={`flex items-center ${
-            walletBalances.bill ? "primary" : "secondary"
+            walletBalances.bill ? "error" : "success"
           }`}
         >
           <p className="text-right xs:text-sm">
