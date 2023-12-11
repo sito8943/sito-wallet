@@ -20,6 +20,7 @@
     "@fortawesome/free-solid-svg-icons": "6.3.0",
     "@fortawesome/react-fontawesome": "0.2.0",
     "@loadable/component": "5.15.3",
+    "@sito/ui": "0.0.172",
     "@supabase/supabase-js": "2.38.4",
     "@tippyjs/react": "4.2.6",
     "crypto-js": "4.2.0",
