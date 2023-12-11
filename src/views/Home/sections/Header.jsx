@@ -26,9 +26,6 @@ import {
 import Dialog from "../../../components/Dialog/Dialog";
 import Counter from "../components/Counter/Counter";
 
-// styles
-import "./styles.css";
-
 function Header({ setSync }) {
   const { colors } = useStyle();
 
