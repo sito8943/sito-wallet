@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-// @sito/ui
-import { Loading } from "@sito/ui";
+// components
+import Syncing from "../../components/Syncing/Syncing";
 
 // sections
 import Bills from "./sections/Bills";
@@ -20,7 +20,7 @@ function Home() {
             sync ? "scale-100" : "scale-0"
           } pointer-events-none`}
         >
-          <Loading className="sync rounded-full" strokeWidth="8" />
+          <Syncing />
         </div>
         <Header setSync={setSync} />
         <Bills setSync={setSync} />
