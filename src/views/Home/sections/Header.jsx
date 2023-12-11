@@ -3,8 +3,11 @@ import { useDebounce } from "use-lodash-debounce";
 import PropTypes from "prop-types";
 import { v4 } from "uuid";
 
+// @emotion/css
+import { css } from "@emotion/css";
+
 // @sito/ui
-import { InputControl, Button, Switcher } from "@sito/ui";
+import { InputControl, Button, Switcher, useStyle } from "@sito/ui";
 
 // providers
 import { useUser } from "../../../providers/UserProvider";
@@ -27,6 +30,8 @@ import Counter from "../components/Counter/Counter";
 import "./styles.css";
 
 function Header({ setSync }) {
+  const { colors } = useStyle();
+
   const [showDialog, setShowDialog] = useState(false);
   const hideDialog = () => setShowDialog(false);
 
@@ -56,7 +61,6 @@ function Header({ setSync }) {
   useEffect(() => {
     if (userState.account)
       fetchFirstLog(userState.account?.id).then(({ data, error }) => {
-        console.log(data);
         if (error && error !== null) console.error(error.message);
         else {
           const [first] = data;
@@ -140,15 +144,18 @@ function Header({ setSync }) {
   }, [leftDays]);
 
   const severity = useMemo(() => {
+    let color = "success";
     if (countLeft > 0 && monthInitial > 0) {
       const percentOfSpent = (countLeft * 100) / monthInitial;
 
-      if (percentOfSpent > 50) return "good";
-      else if (percentOfSpent > 40) return "alert";
-      else return "bad";
+      if (percentOfSpent > 50) color = "success";
+      else if (percentOfSpent > 40) color = "warning";
+      else color = "bad";
     }
-    return "good";
-  }, [countLeft, monthInitial]);
+    return css({
+      color: colors[color] ? colors[color].default : colors.primary.default,
+    });
+  }, [countLeft, monthInitial, colors]);
 
   const currentCurrency = useMemo(() => {
     return "CUP";
@@ -254,7 +261,6 @@ function Header({ setSync }) {
           });
           await updateLog({ id, initial: lastInitial }, date);
         }
-        console.log("last", lastInitial, lastSavingValue);
         if (lastInitial === 1) setShowDialog(true);
         // creating new day with previous money
         if (
@@ -305,7 +311,7 @@ function Header({ setSync }) {
             value={lastSavings ? lastSavingValue : initial}
             type="number"
             disabled={lastSavings}
-            className="text-right disabled:text-primary-400"
+            className="text-right primary"
             onChange={(e) => setInitial(e.target.value)}
           />
           <Switcher
@@ -313,7 +319,7 @@ function Header({ setSync }) {
             onChange={() => setLastSavings((lastSavings) => !lastSavings)}
             label="Tomar del mes anterior"
           />
-          <Button type="submit" className="submit primary">
+          <Button type="submit" shape="filled" color="primary">
             Aceptar
           </Button>
         </form>
@@ -324,20 +330,18 @@ function Header({ setSync }) {
             <h2
               className={`text-8xl md:text-7xl sm:text-6xl xs:text-4xl ${severity} flex`}
             >
-              <span className="text-primary-400 opacity-40 mr-2">$</span>
+              <span className={`${severity} opacity-40 mr-2`}>$</span>
               <Counter number={countLeft} className={severity} />
             </h2>
-            <p className="primary text-3xl xs:text-xl text-primary-400">
-              {currentCurrency}
-            </p>
+            <p className="text-3xl xs:text-xl primary">{currentCurrency}</p>
           </>
         ) : (
           <div className="w-full h-[72px] skeleton-box" />
         )}
       </div>
-      <hr className="w-full border-2 text-primary-400" />
+      <hr className="w-full border-2" />
       {!loadingMoney ? (
-        <p className="text-primary-400 text-xl xs:text-[16px]">
+        <p className="text-xl xs:text-[16px]">
           Quedan en {currentMonth}. Por {textDays}
         </p>
       ) : (

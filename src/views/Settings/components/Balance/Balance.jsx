@@ -46,7 +46,7 @@ function Balance({
           tooltip="Alternar entre gasto e ingreo"
           aria-label="Alternar entre gasto e ingreo"
           onClick={() => onChangeBill()}
-          className={`${!bill ? "secondary" : "primary"}`}
+          className={`${!bill ? "success" : "error"}`}
           icon={bill ? faArrowTrendDown : faArrowTrendUp}
         />
         <IconButton

@@ -66,7 +66,7 @@ function Password() {
         <h3 className="text-xl">Seguridad</h3>
         <InputControl
           id="password"
-          className="!pl-0 w-full"
+          className="w-full"
           label="Contraseña"
           maxLength={25}
           value={password}
@@ -79,7 +79,7 @@ function Password() {
               name="toggle-see-password"
               onClick={toggleShowPassword}
               icon={showPassword ? faLockOpen : faLock}
-              className="primary -ml-3"
+              className="-ml-3"
               aria-label="click para alternar ver/ocultar contraseña"
             />
           }
@@ -87,7 +87,7 @@ function Password() {
         />
         <InputControl
           id="rPassword"
-          className="!pl-10 w-full"
+          className="w-full"
           label="Repetir Contraseña"
           maxLength={25}
           value={rPassword}
@@ -100,17 +100,18 @@ function Password() {
               name="toggle-see-r-password"
               onClick={toggleShowRPassword}
               icon={showRPassword ? faLockOpen : faLock}
-              className="primary -ml-3"
+              className="-ml-3"
               aria-label="click para alternar ver/ocultar repetir contraseña"
             />
           }
         />
         <Button
           type="submit"
-          className="primary submit button-loading"
+          shape="filled"
+          className="button-loading"
           disabled={loading}
         >
-          {loading ? <Loading color="secondary" strokeWidth="8" /> : "Guardar"}
+          {loading ? <Loading color="basics" strokeWidth="8" /> : "Guardar"}
         </Button>
       </form>
     </section>

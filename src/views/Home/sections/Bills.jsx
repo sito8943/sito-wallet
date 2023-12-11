@@ -215,6 +215,8 @@ function Bills({ setSync }) {
           />
           <IconButton
             ref={addButton}
+            color="secondary"
+            shape="filled"
             aria-label="Agregar gasto"
             tooltip="Agregar gasto"
             name="add-bill"
@@ -287,9 +289,8 @@ function Bills({ setSync }) {
                 })
             ) : (
               <li>
-                <p className="text-secondary-600 dark:text-secondary-600">
-                  ¿Ningún balance? Vamos bien{" "}
-                  <FontAwesomeIcon className="ternary" icon={faSmile} />
+                <p className="">
+                  ¿Ningún balance? Vamos bien <FontAwesomeIcon icon={faSmile} />
                 </p>
               </li>
             )}
@@ -307,7 +308,8 @@ function Bills({ setSync }) {
             200
           );
         }}
-        color="secondary submit"
+        color="secondary"
+        shape="filled"
         icon={faAdd}
         className={`aGrow fixed bottom-3 right-3 ${
           inViewport ? "scale-0 pointer-events-none" : "scale-100"
