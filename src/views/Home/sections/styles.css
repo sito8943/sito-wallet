@@ -1,18 +1,3 @@
 .animation {
   transition: height 1000ms ease-in-out;
 }
-
-.good,
-.good span {
-  @apply !text-success dark:!text-success;
-}
-
-.alert,
-.alert span {
-  @apply !text-warning dark:!text-warning;
-}
-
-.bad,
-.bad span {
-  @apply !text-error dark:!text-primary-400;
-}
