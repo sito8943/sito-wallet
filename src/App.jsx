@@ -7,7 +7,7 @@ import Auth from "./layouts/Auth";
 import View from "./layouts/View/View";
 
 // @sito/ui
-import { Handler, Loading, Notification, useNotification } from "@sito/ui";
+import { Handler, SplashScreen, Notification, useNotification } from "@sito/ui";
 
 // services
 import { refresh, validateUser } from "./services/auth";
@@ -42,83 +42,65 @@ function App() {
 
   const [loading, setLoading] = useState(true);
 
-  const fetch = async () => {
+  async function handleUserError(error) {
+    if (error.message === "invalid claim: missing sub claim" && cachedUser()) {
+      const rememberValue = remember();
+      if (rememberValue !== null) {
+        const response = await refresh(getUser().user.email, rememberValue);
+        if (response.error) {
+          handleResponseError(response.error);
+          return;
+        }
+        await handleUserSuccess(response.data);
+      } else {
+        logoutUser();
+      }
+    } else if (cachedUser()) {
+      setUserState({ type: "logged-in", user: getUser(), cached: true });
+    } else {
+      logoutUser();
+    }
+  }
+
+  async function handleUserSuccess(data) {
+    const account = await fetchAccounts({
+      sort: ["updated_at"],
+      user: data.user.id,
+    });
+    if (account.error && account.error !== null) {
+      handleResponseError(account.error);
+      return;
+    }
+    const lastAccount = account.data[0];
+    saveUser({
+      ...getUser(),
+      user: data.user,
+      account: lastAccount,
+    });
+    setUserState({
+      type: "logged-in",
+      user: data.user,
+      account: lastAccount,
+      cached: false,
+    });
+  }
+
+  function handleResponseError(error) {
+    logoutUser();
+    setNotification({
+      type: "error",
+      message: showError(error.message),
+    });
+    setLoading(false);
+  }
+
+  async function fetch() {
     try {
       const { data, error } = await validateUser();
       if (error && error !== null) {
-        if (
-          error.message === "invalid claim: missing sub claim" &&
-          cachedUser()
-        ) {
-          const rememberValue = remember();
-          if (rememberValue !== null) {
-            const response = await refresh(getUser().user.email, rememberValue);
-            if (response.error && response.error !== null) {
-              logoutUser();
-              setNotification({
-                type: "error",
-                message: showError(response.error.message),
-              });
-              return;
-            }
-            // fetch last account
-            let lastAccount = undefined;
-            const account = await fetchAccounts({
-              sort: ["updated_at"],
-              user: response.data.user.id,
-            });
-            if (account.error && account.error !== null) {
-              setNotification({
-                type: "error",
-                message: showError(account.error.message),
-              });
-              setLoading(false);
-              logoutUser();
-              return;
-            } else lastAccount = account.data[0];
-
-            setUserState({
-              type: "logged-in",
-              user: response.data.user,
-              photo: response.data.photo ?? {},
-              account: lastAccount,
-            });
-            saveUser({
-              user: response.data.user,
-              photo: response.data.photo ?? {},
-              account: lastAccount,
-            });
-          } else logoutUser();
-        } else if (cachedUser())
-          setUserState({ type: "logged-in", user: getUser(), cached: true });
-        else logoutUser();
+        await handleUserError(error);
       } else {
-        // fetch last account
-        let lastAccount = undefined;
-        const account = await fetchAccounts({
-          sort: ["updated_at"],
-          user: data.user.id,
-        });
-        if (account.error && account.error !== null) {
-          setNotification({
-            type: "error",
-            message: showError(account.error.message),
-          });
-          setLoading(false);
-          logoutUser();
-          return;
-        } else lastAccount = account.data[0];
-        saveUser({
-          ...getUser(),
-          user: data.user,
-          account: lastAccount,
-        });
-        setUserState({
-          type: "logged-in",
-          user: data.user,
-          account: lastAccount,
-          cached: false,
-        });
+        await handleUserSuccess(data);
       }
     } catch (err) {
       logoutUser();
@@ -126,7 +108,7 @@ function App() {
     }
 
     setLoading(false);
-  };
+  }
 
   useEffect(() => {
     fetch();
@@ -137,6 +119,14 @@ function App() {
     <Suspense>
       <Handler>
         <Notification />
+        <SplashScreen
+          visible={loading}
+          logo={
+            <div>
+              <h1>SITO WALLET</h1>
+            </div>
+          }
+        />
         {!loading ? (
           <BrowserRouter>
             <Routes>
@@ -153,9 +143,7 @@ function App() {
               <Route path="/*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
-        ) : (
-          <Loading className="w-full h-screen bg-light-dark dark:bg-dark-dark" />
-        )}
+        ) : null}
       </Handler>
     </Suspense>
   );
