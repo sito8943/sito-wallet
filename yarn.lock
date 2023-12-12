@@ -1421,15 +1421,6 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@sito/ui@^0.0.172":
-  version "0.0.172"
-  resolved "https://registry.yarnpkg.com/@sito/ui/-/ui-0.0.172.tgz#539710cd195e1899ec222c8e46a17040a497dad8"
-  integrity sha512-M8J1RupZ+gL7dLh0wQPe/xum6PRSZPQuIiTUxeX9eVjsnzE13cBZXNNlLCJlAK12pCJ2Uv3HqIEwZBv6e+0kvw==
-  dependencies:
-    "@emotion/css" "11.11.2"
-    react "18.2.0"
-    react-dom "18.2.0"
-
 "@supabase/functions-js@^2.1.5":
   version "2.1.5"
   resolved "https://registry.npmjs.org/@supabase/functions-js/-/functions-js-2.1.5.tgz"
