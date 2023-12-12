@@ -201,7 +201,6 @@ function Header({ setSync }) {
             date: now,
             account: userState.account?.id,
           });
-          console.log(previousResponse);
           if (previousResponse.error && previousResponse.error !== null) {
             console.error(previousResponse.error.message);
             setLoadingMoney(false);
