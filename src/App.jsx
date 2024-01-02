@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import loadable from "@loadable/component";
+import { useTranslation } from "react-i18next";
 
 // layouts
 import Auth from "./layouts/Auth";
@@ -35,8 +36,11 @@ const SignUp = loadable(() => import("./views/Auth/SignUp"));
 const Home = loadable(() => import("./views/Home/Home"));
 const NotFound = loadable(() => import("./views/NotFound/NotFound"));
 const Settings = loadable(() => import("./views/Settings/Settings"));
+const AllSpent = loadable(() => import("./views/AllSpent/AllSpent"));
 
 function App() {
+  const { t } = useTranslation();
+
   const { setUserState } = useUser();
   const { setNotification } = useNotification();
 
@@ -123,7 +127,7 @@ function App() {
           visible={loading}
           logo={
             <div>
-              <h1>SITO WALLET</h1>
+              <h1 className="uppercase">{t("_accessibility:appName")}</h1>
             </div>
           }
         />
@@ -136,6 +140,7 @@ function App() {
               </Route>
               <Route path="/" element={<View />}>
                 <Route index element={<Home />} />
+                <Route path="/spent" element={<AllSpent />} />
                 <Route path="/settings" element={<Settings />} />
               </Route>
 
