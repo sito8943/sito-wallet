@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect, useCallback } from "react";
 import { v4 } from "uuid";
 import { sortBy } from "some-javascript-utils/array";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 import {
   faAdd,
@@ -27,6 +28,8 @@ import {
 import Balance from "../components/Balance/Balance";
 
 function BalanceTypes({ setSync }) {
+  const { t } = useTranslation();
+
   const { userState, setUserState } = useUser();
 
   const [loadingBalances, setLoadingBalances] = useState(true);
@@ -141,7 +144,7 @@ function BalanceTypes({ setSync }) {
   const addBalance = async () => {
     const newBalance = {
       id: v4(),
-      description: "Nuevo balance",
+      description: t("_accessibility:newValues.balances"),
       bill: true,
       created_at: new Date().getTime(),
     };
@@ -168,10 +171,13 @@ function BalanceTypes({ setSync }) {
         const basicBalance = {
           id: v4(),
           created_at: new Date().getTime(),
-          description: "Gastos básicos",
+          description: t("_accessibility:defaultValues.balanceTypes"),
           bill: true,
         };
-        localStorage.setItem("basic-balance", "Gastos básicos");
+        localStorage.setItem(
+          "basic-balance",
+          t("_accessibility:defaultValues.balanceTypes")
+        );
         const insertBasic = await addRemoteBalance(basicBalance);
         if (insertBasic.error && insertBasic.error !== null)
           console.error(insertBasic.error.message);
@@ -196,21 +202,33 @@ function BalanceTypes({ setSync }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const sortAriaLabel = useMemo(() => {
+    return `${t("_accessibility:ariaLabels.sort")} ${t(
+      `_accessibility:ariaLabels.${asc ? "asc" : "desc"}`
+    )} ${t("_accessibility:types.balanceTypes")}`;
+  }, [asc, t]);
+
   return (
     <section>
       <div className="w-full flex items-center justify-between">
-        <h3 className="text-xl">Mis tipos de balances</h3>
+        <h3 className="text-xl">
+          {t("_pages:settings.sections.balanceTypes.title")}
+        </h3>
         <div className="flex gap-3 items-center">
           <IconButton
             name="filter"
-            tooltip="Ordenar tipos de balance"
-            aria-label="Ordenar tipos de balance"
+            tooltip={sortAriaLabel}
+            aria-label={sortAriaLabel}
             onClick={() => setAsc((asc) => !asc)}
             icon={asc ? faArrowDownAZ : faArrowUpAZ}
           />
           <IconButton
-            aria-label="Agregar tipo de balance"
-            tooltip="Agregar tipo de balance"
+            aria-label={`${t("_accessibility:ariaLabels.add")} ${t(
+              "_accessibility:types.balanceTypes"
+            )}`}
+            tooltip={`${t("_accessibility:ariaLabels.add")} ${t(
+              "_accessibility:types.balanceTypes"
+            )}`}
             name="add-balance"
             onClick={addBalance}
             icon={faAdd}
