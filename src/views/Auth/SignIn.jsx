@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // @sito/ui
 import {
@@ -35,6 +36,8 @@ import { showError } from "../../lang/es";
 import "./styles.css";
 
 function SignIn() {
+  const { t } = useTranslation();
+
   const { setNotification } = useNotification();
 
   const [user, setUser] = useState("");
@@ -143,11 +146,13 @@ function SignIn() {
         <div className="flex gap-2 items-start flex-col">
           {/* <img src={logo} alt="stick notes logo" className="w-10 h-10" /> */}
           LOGO
-          <h1 className="primary uppercase text-4xl">Sito Wallet</h1>
+          <h1 className="primary uppercase text-4xl">
+            {t("_accessibility:appName")}
+          </h1>
         </div>
         <InputControl
           id="user"
-          label="Correo electrónico"
+          label={t("_accessibility:inputs.email.label")}
           className="sign-in-input"
           value={user}
           onChange={handleUser}
@@ -164,7 +169,7 @@ function SignIn() {
           value={password}
           onChange={handlePassword}
           type={!showPassword ? "password" : "text"}
-          label="Contraseña"
+          label={t("_accessibility:inputs.password.label")}
           leftComponent={
             <IconButton
               tabIndex={-1}
@@ -172,7 +177,11 @@ function SignIn() {
               onClick={toggleShowPassword}
               icon={showPassword ? faLockOpen : faLock}
               className="-ml-3"
-              aria-label="click para alternar ver/ocultar contraseña"
+              aria-label={`${t(
+                `_accessibility:inputs.password.${
+                  showPassword ? "showPassword" : "hidePassword"
+                }`
+              )}`}
             />
           }
           helperText={passwordHelperText}
@@ -180,15 +189,22 @@ function SignIn() {
         <Switcher
           checked={remember}
           value={remember}
-          label="Recordarme"
+          label={t("_accessibility:inputs.remember.label")}
           activeColor="primary"
           inactiveColor="basics"
           onChange={() => setRemember((remember) => !remember)}
         />
         <p className="dark:text-white">
-          ¿No tienes cuenta?{" "}
-          <Link to="/auth/sign-up" className="underline primary">
-            Registrarme
+          {t("_pages:auth.toSignUp.label")}{" "}
+          <Link
+            to="/auth/sign-up"
+            name="to-signUp"
+            aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
+              "_pages:routes.signUp"
+            )}`}
+            className="underline primary"
+          >
+            {t("_pages:auth.toSignUp.link")}
           </Link>
         </p>
         <div className="w-full flex gap-5 justify-end items-center">
@@ -199,7 +215,7 @@ function SignIn() {
             shape="filled"
             aria-label="Click para entrar"
           >
-            Entrar
+            {t("_accessibility:buttons.signIn")}
           </Button>
         </div>
       </form>

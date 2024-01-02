@@ -1,6 +1,14 @@
 {
   "routes": {
-    "home": "Inicio"
+    "home": "Inicio",
+    "signIn": "Login",
+    "signUp": "Registrarse"
+  },
+  "auth": {
+    "toSignUp": {
+      "label": "¿No tienes cuenta?",
+      "link": " Registrarme"
+    }
   },
   "settings": {
     "titles": "Configuración",

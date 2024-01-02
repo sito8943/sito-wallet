@@ -10,6 +10,12 @@
     "balanceTypes": "Balance Types"
   },
   "inputs": {
+    "remember": {
+      "label": "Remember"
+    },
+    "email": {
+      "label": "Email"
+    },
     "password": {
       "label": "Password",
       "showPassword": "Show password",
@@ -20,6 +26,7 @@
     "rPassword": "Repeat password"
   },
   "buttons": {
+    "signIn": "Sign In",
     "save": "Save"
   },
   "ariaLabels": {

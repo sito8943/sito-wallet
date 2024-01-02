@@ -1,6 +1,14 @@
 {
   "routes": {
-    "home": "Home"
+    "home": "Home",
+    "signIn": "Login",
+    "signUp": "Sign Up"
+  },
+  "auth": {
+    "toSignUp": {
+      "label": "No registered yet?",
+      "link": " Sign Up"
+    }
   },
   "settings": {
     "title": "Settings",
