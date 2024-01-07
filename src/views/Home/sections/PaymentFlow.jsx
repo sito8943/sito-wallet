@@ -68,6 +68,7 @@ function PaymentFlow() {
 
   useEffect(() => {
     fetchAllBills();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userState, userState.bills]);
 
   useEffect(() => {
@@ -90,7 +91,9 @@ function PaymentFlow() {
 
   return (
     <section className="max-h-[490px] flex flex-col justify-start items-start">
-      <h3 className="text-3xl xs:text-xl">Flujo mensual</h3>
+      <h3 className="text-3xl xs:text-xl">
+        {t("_pages:home.paymentFlow.title")}
+      </h3>
       <Link to="/spent" className="button primary mb-5 !p-0 !bg-[#00000000]">
         {t("_pages:routes.allSpent")}
       </Link>
@@ -100,7 +103,7 @@ function PaymentFlow() {
           icon={faArrowTrendDown}
           number={totalSpent}
           show={inViewport}
-          label={"Gastos"}
+          label={t("_pages:home.paymentFlow.bars.bills")}
           color="error filled"
           showHeight={fetchPercentOf(
             totalSpent,
@@ -112,7 +115,7 @@ function PaymentFlow() {
           icon={faArrowTrendUp}
           number={incoming}
           show={inViewport}
-          label={"Ingresos"}
+          label={t("_pages:home.paymentFlow.bars.incoming")}
           color="success filled"
           showHeight={fetchPercentOf(incoming, initial + totalSpent + incoming)}
         />
@@ -121,7 +124,7 @@ function PaymentFlow() {
           icon={faCreditCard}
           number={digital}
           show={inViewport}
-          label={"Digital"}
+          label={t("_pages:home.paymentFlow.bars.digital")}
           color="info filled"
           showHeight={fetchPercentOf(digital, initial + totalSpent + incoming)}
         />

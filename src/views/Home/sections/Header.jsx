@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-lodash-debounce";
 import PropTypes from "prop-types";
 import { v4 } from "uuid";
+import { useTranslation } from "react-i18next";
 
 // @emotion/css
 import { css } from "@emotion/css";
@@ -28,6 +29,8 @@ import Counter from "../components/Counter/Counter";
 
 function Header({ setSync }) {
   const { colors } = useStyle();
+
+  const { t } = useTranslation();
 
   const [showDialog, setShowDialog] = useState(false);
   const hideDialog = () => setShowDialog(false);
@@ -84,22 +87,7 @@ function Header({ setSync }) {
   }, [initial, spent]);
 
   const currentMonth = useMemo(() => {
-    const months = [
-      "Enero",
-      "Febrero",
-      "Marzo",
-      "Abril",
-      "Mayo",
-      "Junio",
-      "Julio",
-      "Agosto",
-      "Septiembre",
-      "Octubre",
-      "Noviembre",
-      "Diciembre",
-    ];
-    const now = new Date().getMonth();
-    return months[now];
+    return new Date().getMonth();
   }, []);
 
   const leftDays = useMemo(() => {
@@ -303,7 +291,7 @@ function Header({ setSync }) {
         >
           <InputControl
             id="initial"
-            label="Cantidad inicial de este mes"
+            label={t("_pages:dialog.initialCount")}
             value={lastSavings ? lastSavingValue : initial}
             type="number"
             disabled={lastSavings}
@@ -313,10 +301,16 @@ function Header({ setSync }) {
           <Switcher
             value={lastSavings}
             onChange={() => setLastSavings((lastSavings) => !lastSavings)}
-            label="Tomar del mes anterior"
+            label={t("_home.dialog.takeLastMonth")}
           />
-          <Button type="submit" shape="filled" color="primary">
-            Aceptar
+          <Button
+            type="submit"
+            shape="filled"
+            color="primary"
+            aria-label={t("_pages.home.dialog.acceptToStart")}
+            name="set-initial"
+          >
+            {t("_accessibility:buttons.accept")}
           </Button>
         </form>
       </Dialog>
@@ -338,7 +332,9 @@ function Header({ setSync }) {
       <hr className="w-full border-2" />
       {!loadingMoney ? (
         <p className="text-xl xs:text-[16px]">
-          Quedan en {currentMonth}. Por {textDays}
+          {t("_pages:home.header.left")}{" "}
+          {t(`_accessibility:months.${currentMonth}`)}.{" "}
+          {t("_pages:home.header.for")} {textDays}
         </p>
       ) : (
         <div className="w-full h-[28px] skeleton-box" />

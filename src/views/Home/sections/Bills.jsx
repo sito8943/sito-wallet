@@ -2,8 +2,13 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import { useInViewport } from "react-in-viewport";
 import { v4 } from "uuid";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
+
+// some-javascript-utils
 import { sortBy } from "some-javascript-utils/array";
 import { scrollTo } from "some-javascript-utils/browser";
+
+// font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,
@@ -32,6 +37,8 @@ import { useUser } from "../../../providers/UserProvider";
 import Bill from "../components/Bill/Bill";
 
 function Bills({ setSync }) {
+  const { t } = useTranslation();
+
   const { userState, setUserState } = useUser();
 
   const [loadingBills, setLoadingBills] = useState(true);
@@ -165,10 +172,13 @@ function Bills({ setSync }) {
         !remoteBalances.data.length &&
         localStorage.getItem("basic-balance") === null
       ) {
-        localStorage.setItem("basic-balance", "Gastos básicos");
+        localStorage.setItem(
+          "basic-balance",
+          t("_accessibility:defaultValues.balanceTypes")
+        );
         const newBalance = {
           id: v4(),
-          description: "Gastos básicos",
+          description: t("_accessibility:defaultValues.balanceTypes"),
           bill: true,
           created_at: new Date().getTime(),
           account: userState.account?.id,
@@ -204,12 +214,12 @@ function Bills({ setSync }) {
   return (
     <section className="flex flex-col gap-3">
       <div className="w-full flex items-center justify-between">
-        <h3 className="text-3xl xs:text-xl">Balance actual</h3>
+        <h3 className="text-3xl xs:text-xl">{t("_pages:home.bills.title")}</h3>
         <div className="flex gap-3 items-center">
           <IconButton
             name="filter"
-            tooltip="Ordenar gastos"
-            aria-label="Ordenar gastos"
+            tooltip={t("_pages:home.bills.sortBills")}
+            aria-label={t("_pages:home.bills.sortBills")}
             onClick={() => setAsc((asc) => !asc)}
             icon={asc ? faSortAmountUp : faSortAmountDown}
           />
@@ -217,8 +227,8 @@ function Bills({ setSync }) {
             ref={addButton}
             color="secondary"
             shape="filled"
-            aria-label="Agregar gasto"
-            tooltip="Agregar gasto"
+            aria-label={t("_pages.home.bills.addBill")}
+            tooltip={t("_pages.home.bills.addBill")}
             name="add-bill"
             onClick={addBill}
             icon={faAdd}
@@ -290,7 +300,8 @@ function Bills({ setSync }) {
             ) : (
               <li>
                 <p className="">
-                  ¿Ningún balance? Vamos bien <FontAwesomeIcon icon={faSmile} />
+                  {t("_pages:home.bills.noBills")}{" "}
+                  <FontAwesomeIcon icon={faSmile} />
                 </p>
               </li>
             )}
@@ -298,8 +309,8 @@ function Bills({ setSync }) {
         )}
       </ul>
       <IconButton
-        aria-label="Agregar gasto"
-        tooltip="Agregar gasto"
+        aria-label={t("_pages.home.bills.addBill")}
+        tooltip={t("_pages.home.bills.addBill")}
         name="floating-add-bill"
         onClick={async () => {
           const id = await addBill();
