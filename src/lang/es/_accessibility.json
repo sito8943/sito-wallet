@@ -1,5 +1,10 @@
 {
   "appName": "Sito Wallet",
+  "errors": {
+    "emailRequired": "Debes introducir un correo electrónico",
+    "passwordRequired": "Debes introducir una contraseña",
+    "passwordsDoNotMatch": "No coinciden las contraseñas"
+  },
   "months": {
     "0": "Enero",
     "1": "Febrero",
@@ -42,7 +47,8 @@
   "buttons": {
     "accept": "Aceptar",
     "signIn": "Entrar",
-    "save": "Guardar"
+    "save": "Guardar",
+    "next": "Siguiente"
   },
   "ariaLabels": {
     "add": "Agregar",
@@ -50,6 +56,8 @@
     "asc": "Ascendente",
     "desc": "Descendente",
     "goTo": "Ir a la página ",
-    "closeDialog": "Cerrar diálogo"
+    "closeDialog": "Cerrar diálogo",
+    "darkMode": "Modo oscuro",
+    "lightMode": "Modo claro"
   }
 }

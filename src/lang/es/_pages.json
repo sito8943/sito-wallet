@@ -3,6 +3,7 @@
     "home": "Inicio",
     "signIn": "Login",
     "signUp": "Registrarse",
+    "signOut": "Cerrar sesión",
     "settings": "Configuración",
     "allSpent": "Todos los gastos"
   },
@@ -10,9 +11,19 @@
     "title": "Todos los gastos"
   },
   "auth": {
+    "toSignIn": {
+      "label": "¿Ya tienes cuenta?"
+    },
     "toSignUp": {
-      "label": "¿No tienes cuenta?",
-      "link": " Registrarme"
+      "label": "¿No tienes cuenta?"
+    },
+    "signIn": {
+      "signInAriaLabel": "Click para iniciar sesión"
+    },
+    "signUp": {
+      "titleThanksFor": "Registrado correctamente",
+      "thanksFor": "Gracias por registrarte. Por favor, valida tu dirección de correo electrónico haciendo clic en el enlace de confirmación que acabamos de enviar a tu dirección.",
+      "nextAriaLabel": "Click para crear cuenta"
     }
   },
   "home": {

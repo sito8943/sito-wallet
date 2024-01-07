@@ -3,6 +3,7 @@
     "home": "Home",
     "signIn": "Login",
     "signUp": "Sign Up",
+    "signOut": "Sign Out",
     "settings": "Settings",
     "allSpent": "All spent"
   },
@@ -10,9 +11,19 @@
     "title": "All Spent"
   },
   "auth": {
+    "signIn": {
+      "signInAriaLabel": "Click to login"
+    },
+    "toSignIn": {
+      "label": "Already registered?"
+    },
     "toSignUp": {
-      "label": "No registered yet?",
-      "link": " Sign Up"
+      "label": "No registered yet?"
+    },
+    "signUp": {
+      "titleThanksFor": "Registered successfully",
+      "thanksFor": "Thank you for signing up. Please validate your email address by clicking on the confirmation link that we have just sent to your address.",
+      "nextAriaLabel": "Click to create account"
     }
   },
   "home": {
