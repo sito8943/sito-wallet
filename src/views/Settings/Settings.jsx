@@ -30,7 +30,7 @@ function Settings() {
           <Link
             to="/"
             name="to-home"
-            aria-label={`${t("_accessibility:ariaLabels.pageGoTo")} ${t(
+            aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
               "_pages:routes.home"
             )}`}
             className="button icon-button primary"
