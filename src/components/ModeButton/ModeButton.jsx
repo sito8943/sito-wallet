@@ -6,6 +6,7 @@ import { useMode } from "@sito/ui";
 
 // components
 import FAB from "../FAB/FAB";
+import { t } from "i18next";
 
 function ModeButton({ className, color = "secondary" }) {
   const { toggleMode, mode } = useMode();
@@ -13,11 +14,19 @@ function ModeButton({ className, color = "secondary" }) {
   return (
     <FAB
       onClick={() => toggleMode()}
-      tooltip="Alternar tema (Claro/Oscuro)"
+      tooltip={
+        mode === "dark"
+          ? t("_accessibility:ariaLabels.lightMode")
+          : t("_accessibility:ariaLabels.darkMode")
+      }
       name="toggle-theme"
       shape="text"
       color={color}
-      aria-label="Click para cambiar el tema"
+      aria-label={
+        mode === "dark"
+          ? t("_accessibility:ariaLabels.lightMode")
+          : t("_accessibility:ariaLabels.darkMode")
+      }
       icon={mode === "dark" ? faSun : faMoon}
       className={className}
     />
