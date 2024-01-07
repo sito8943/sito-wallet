@@ -1,5 +1,8 @@
 import { memo, useMemo } from "react";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
+
+// font awesome
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
@@ -26,6 +29,8 @@ function Balance({
   onChangeSpent,
   onDelete,
 }) {
+  const { t } = useTranslation();
+
   const { userState } = useUser();
 
   const nameCss = useMemo(
@@ -94,8 +99,8 @@ function Balance({
           />
         </div>
         <IconButton
-          tooltip="Eliminar balance"
-          aria-label="Eliminar balance"
+          tooltip={t("_pages:home.bills.deleteBill")}
+          aria-labe={t("_pages:home.bills.deleteBill")}
           name="delete-balance"
           onClick={onDelete}
           icon={faTrash}
