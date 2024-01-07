@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTranslation } from "react-i18next";
 
 import {
   faArrowRightFromBracket,
@@ -22,6 +23,8 @@ import noPhoto from "../../../assets/images/no-photo.webp";
 import "./styles.css";
 
 function Navbar() {
+  const { t } = useTranslation();
+
   const { userState } = useUser();
   const { toggleMode, mode } = useMode();
 
@@ -56,7 +59,9 @@ function Navbar() {
           }`}
         ></div>
         <Link
-          aria-label="Ir al inicio"
+          aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
+            "_pages:routes.home"
+          )}`}
           name="go-home"
           to="/"
           className="z-10 flex gap-2 items-center primary"
@@ -74,15 +79,25 @@ function Navbar() {
           <IconButton
             color="primary"
             onClick={() => toggleMode()}
-            tooltip="Alternar tema (Claro/Oscuro)"
+            tooltip={
+              mode === "dark"
+                ? t("_accessibility:ariaLabels.lightMode")
+                : t("_accessibility:ariaLabels.darkMode")
+            }
             name="toggle-theme"
-            aria-label="Click para cambiar el tema"
+            aria-label={
+              mode === "dark"
+                ? t("_accessibility:ariaLabels.lightMode")
+                : t("_accessibility:ariaLabels.darkMode")
+            }
             icon={mode === "dark" ? faSun : faMoon}
           />
           <Link
             to="/settings"
             name="toggle-theme"
-            aria-label="Ir a la configuración"
+            aria-label={`${t("_accessibility:ariaLabels.goTO")} ${t(
+              "_pages:routes.settings"
+            )}`}
             className="primary button icon-button "
           >
             <FontAwesomeIcon icon={faGear} />
@@ -90,7 +105,7 @@ function Navbar() {
           <Link
             to="/sign-out"
             name="logout"
-            aria-label="Cerrar sesión"
+            aria-label={t("_pages:routes.signOut")}
             className="button icon-button primary"
           >
             <FontAwesomeIcon icon={faArrowRightFromBracket} />
