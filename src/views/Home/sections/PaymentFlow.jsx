@@ -1,5 +1,7 @@
 import { useRef, useMemo, useEffect, useState } from "react";
 import { useInViewport } from "react-in-viewport";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import {
   faArrowTrendDown,
@@ -20,6 +22,8 @@ import PaymentFlowBar from "../components/PaymentFlowBar/PaymentFlowBar";
 import "./styles.css";
 
 function PaymentFlow() {
+  const { t } = useTranslation();
+
   const { userState } = useUser();
 
   const myRef = useRef();
@@ -85,8 +89,11 @@ function PaymentFlow() {
   };
 
   return (
-    <section className="h-[490px] flex flex-col">
+    <section className="max-h-[490px] flex flex-col justify-start items-start">
       <h3 className="text-3xl xs:text-xl">Flujo mensual</h3>
+      <Link to="/spent" className="button primary mb-5 !p-0 !bg-[#00000000]">
+        {t("_pages:routes.allSpent")}
+      </Link>
       <div className="flex w-full h-full" ref={myRef}>
         <PaymentFlowBar
           id="spent"

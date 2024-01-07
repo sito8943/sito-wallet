@@ -7,7 +7,6 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import Syncing from "../../components/Syncing/Syncing";
-
 // sections
 import Password from "./sections/Password";
 import BalanceTypes from "./sections/BalanceTypes";
