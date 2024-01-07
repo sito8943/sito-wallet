@@ -29,9 +29,10 @@
       }
     },
     "bills": {
-      "title": "Current Bill",
-      "addBill": "Add bill",
-      "sortBills": "Sort bills",
+      "title": "Current Balance",
+      "addBill": "Add balance",
+      "deleteBill": "Delete balance",
+      "sortBills": "Sort balances",
       "noBills": "No balance? We are making progress"
     },
     "dialog": {

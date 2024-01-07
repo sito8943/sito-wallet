@@ -29,8 +29,9 @@
     },
     "bills": {
       "title": "Balance actual",
-      "addBill": "Agregar gasto",
-      "sortBills": "Ordernar gastos",
+      "addBill": "Agregar balance",
+      "deleteBill": "Eliminar balance",
+      "sortBills": "Ordernar balances",
       "noBills": "¿Ningún balance? Vamos bien"
     },
 
