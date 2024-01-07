@@ -1,5 +1,19 @@
 {
   "appName": "Sito Wallet",
+  "months": {
+    "0": "January",
+    "1": "February",
+    "2": "March",
+    "3": "April",
+    "4": "May",
+    "5": "June",
+    "6": "July",
+    "7": "August",
+    "8": "September",
+    "9": "October",
+    "10": "November",
+    "11": "December"
+  },
   "newValues": {
     "balances": "New balance"
   },
@@ -26,6 +40,7 @@
     "rPassword": "Repeat password"
   },
   "buttons": {
+    "accept": "Accept",
     "signIn": "Sign In",
     "save": "Save"
   },
@@ -34,6 +49,7 @@
     "sort": "Sort",
     "asc": "Ascendent",
     "desc": "Descendent",
-    "goTo": "Go to"
+    "goTo": "Go to",
+    "closeDialog": "Close dialog"
   }
 }

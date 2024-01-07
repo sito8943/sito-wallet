@@ -15,6 +15,35 @@
       "link": " Sign Up"
     }
   },
+  "home": {
+    "wallets": {
+      "createNewAccount": "Crear nueva cuenta",
+      "changeAccount": "Change account"
+    },
+    "paymentFlow": {
+      "title": "Monthly flow",
+      "bars": {
+        "bills": "Bills",
+        "digital": "Digital",
+        "incoming": "Incoming"
+      }
+    },
+    "bills": {
+      "title": "Current Bill",
+      "addBill": "Add bill",
+      "sortBills": "Sort bills",
+      "noBills": "No balance? We are making progress"
+    },
+    "dialog": {
+      "initialCount": "Starting amount for this month",
+      "acceptToStart": "Start the month",
+      "takeLastMonth": "Take from the previous month"
+    },
+    "header": {
+      "left": "Left in",
+      "for": "For"
+    }
+  },
   "settings": {
     "title": "Settings",
     "sections": {

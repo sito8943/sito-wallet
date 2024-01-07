@@ -15,6 +15,35 @@
       "link": " Registrarme"
     }
   },
+  "home": {
+    "wallets": {
+      "changeAccount": "Cambar cuenta"
+    },
+    "paymentFlow": {
+      "title": "Flujo mensual",
+      "bars": {
+        "bills": "Gastos",
+        "digital": "Digital",
+        "incoming": "Ingresos"
+      }
+    },
+    "bills": {
+      "title": "Balance actual",
+      "addBill": "Agregar gasto",
+      "sortBills": "Ordernar gastos",
+      "noBills": "¿Ningún balance? Vamos bien"
+    },
+
+    "dialog": {
+      "initialCount": "Cantidad inicial de este mes",
+      "acceptToStart": "Iniciar el mes",
+      "takeLastMonth": "Tomar del mes anterior"
+    },
+    "header": {
+      "left": "Quedan en",
+      "for": "Por"
+    }
+  },
   "settings": {
     "titles": "Configuración",
     "sections": {
