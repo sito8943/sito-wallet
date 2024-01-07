@@ -2,7 +2,12 @@
   "routes": {
     "home": "Home",
     "signIn": "Login",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "settings": "Settings",
+    "allSpent": "All spent"
+  },
+  "allSpent": {
+    "title": "All Spent"
   },
   "auth": {
     "toSignUp": {

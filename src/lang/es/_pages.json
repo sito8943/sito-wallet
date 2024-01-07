@@ -2,7 +2,12 @@
   "routes": {
     "home": "Inicio",
     "signIn": "Login",
-    "signUp": "Registrarse"
+    "signUp": "Registrarse",
+    "settings": "Configuración",
+    "allSpent": "Todos los gastos"
+  },
+  "allSpent": {
+    "title": "Todos los gastos"
   },
   "auth": {
     "toSignUp": {
