@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // @sito/ui
 import {
@@ -40,6 +41,8 @@ import { showError } from "../../lang/es";
 import "./styles.css";
 
 function SignUp() {
+  const { t } = useTranslation();
+
   const { setNotification } = useNotification();
 
   const [email, setEmail] = useState("");
@@ -49,6 +52,7 @@ function SignUp() {
 
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
   const [passwordHelperText, setPasswordHelperText] = useState("");
 
   const handlePassword = (e) => setPassword(e.target.value);
@@ -76,17 +80,17 @@ function SignUp() {
       e.preventDefault();
       if (!email.length) {
         document.getElementById("email")?.focus();
-        setEmailHelperText("Debes introducir un email");
+        setEmailHelperText(t("_accessibility:errors.emailRequired"));
         return;
       }
       if (!password.length) {
         document.getElementById("password")?.focus();
-        setPasswordHelperText("Debes introducir tu contraseña");
+        setPasswordHelperText(t("_accessibility:errors.passwordRequired"));
         return;
       }
       if (password !== rPassword) {
         document.getElementById("password")?.focus();
-        setPasswordHelperText("No coinciden las contraseñas");
+        setPasswordHelperText(t("_accessibility:errors.passwordsDoNotMatch"));
         return;
       }
       setLoading(true);
@@ -112,7 +116,7 @@ function SignUp() {
         setNotification({ type: "error", message: showError(error.message) });
       setLoading(false);
     },
-    [email, password, rPassword, setNotification, navigate, setUserState]
+    [email, password, rPassword, setNotification, t, setUserState, navigate]
   );
 
   return (
@@ -132,20 +136,16 @@ function SignUp() {
       {goToVerify ? (
         <div className="form bg-light-dark dark:bg-dark-dark appear items-center">
           <h1 className="text-success text-center text-4xl">
-            Registrado correctamente
+            {t("_pages:signUp.titleThanksFor")}
           </h1>
-          <p className="text-center">
-            Gracias por registrarte. Por favor, valida tu dirección de correo
-            electrónico haciendo clic en el enlace de confirmación que acabamos
-            de enviar a tu dirección.
-          </p>
+          <p className="text-center">{t("_pages:signUp.thanksFor")}</p>
           <Link
             to="/auth"
             name="sign-in"
-            aria-label="Iniciar sesión"
+            aria-label={t("_pages:routes.signIn")}
             className="filled primary button"
           >
-            Iniciar Sesión
+            {t("_pages:routes.signIn")}
           </Link>
         </div>
       ) : (
@@ -156,11 +156,13 @@ function SignUp() {
           <div className="flex gap-2 items-start flex-col">
             {/* <img src={logo} alt="stick notes logo" className="w-10 h-10" /> */}
             LOGO
-            <h1 className="primary uppercase text-4xl">Sito Wallet</h1>
+            <h1 className="primary uppercase text-4xl">
+              {t("_accessibility:appName")}
+            </h1>
           </div>
           <InputControl
             id="email"
-            label="Correo electrónico"
+            label={t("_accessibility:inputs.email.label")}
             className="sign-in-input"
             value={email}
             onChange={handleEmail}
@@ -175,7 +177,7 @@ function SignUp() {
           <InputControl
             id="password"
             className="sign-in-input"
-            label="Contraseña"
+            label={t("_accessibility:inputs.password.label")}
             maxLength={25}
             value={password}
             onChange={handlePassword}
@@ -187,7 +189,11 @@ function SignUp() {
                 onClick={toggleShowPassword}
                 icon={showPassword ? faLockOpen : faLock}
                 className="-ml-3"
-                aria-label="click para alternar ver/ocultar contraseña"
+                aria-label={`${t(
+                  `_accessibility:inputs.password.${
+                    showPassword ? "showPassword" : "hidePassword"
+                  }`
+                )}`}
               />
             }
             helperText={passwordHelperText}
@@ -195,7 +201,7 @@ function SignUp() {
           <InputControl
             id="rPassword"
             className="sign-in-input"
-            label="Repetir Contraseña"
+            label={t("_accessibility:inputs.rPassword")}
             maxLength={25}
             value={rPassword}
             onChange={handleRPassword}
@@ -207,14 +213,18 @@ function SignUp() {
                 onClick={toggleShowRPassword}
                 icon={showRPassword ? faLockOpen : faLock}
                 className="-ml-3"
-                aria-label="click para alternar ver/ocultar repetir contraseña"
+                aria-label={`${t(
+                  `_accessibility:inputs.password.${
+                    showPassword ? "showPassword" : "hidePassword"
+                  }`
+                )}`}
               />
             }
           />
           <p>
-            ¿Ya tienes cuenta?{" "}
+            {t("_pages:auth.toSignIn.label")}{" "}
             <Link to="/auth/sign-up" className="underline primary">
-              Iniciar Sesión
+              {t("_pages:routes.signIn")}
             </Link>
           </p>
           <div className="w-full flex gap-5 justify-end items-center">
@@ -223,9 +233,9 @@ function SignUp() {
               type="submit"
               color="primary"
               shape="filled"
-              aria-label="Click para entrar"
+              aria-label={t("_pages:auth.signUp.nextAriaLabel")}
             >
-              Siguiente
+              {t("_accessibility:buttons.next")}
             </Button>
           </div>
         </form>

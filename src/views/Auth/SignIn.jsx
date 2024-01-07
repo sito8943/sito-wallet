@@ -70,13 +70,13 @@ function SignIn() {
 
       if (!user.length) {
         document.getElementById("user")?.focus();
-        setUserHelperText("Debes introducir un correo electrónico");
+        setUserHelperText(t("_accessibility:errors.emailRequired"));
         setLoading(false);
         return;
       }
       if (!password.length) {
         document.getElementById("password")?.focus();
-        setPasswordHelperText("Debes introducir tu contraseña");
+        setPasswordHelperText(t("_accessibility:errors.passwordRequired"));
         setLoading(false);
         return;
       }
@@ -122,7 +122,7 @@ function SignIn() {
       }
       setLoading(false);
     },
-    [user, password, remember, setNotification, setUserState, navigate]
+    [user, password, remember, setNotification, t, setUserState, navigate]
   );
 
   return (
@@ -204,7 +204,7 @@ function SignIn() {
             )}`}
             className="underline primary"
           >
-            {t("_pages:auth.toSignUp.link")}
+            {t("_pages:routes.signUp")}
           </Link>
         </p>
         <div className="w-full flex gap-5 justify-end items-center">
@@ -213,7 +213,7 @@ function SignIn() {
             type="submit"
             color="primary"
             shape="filled"
-            aria-label="Click para entrar"
+            aria-label={t("_pages:auth.signIn.signInAriaLabel")}
           >
             {t("_accessibility:buttons.signIn")}
           </Button>
