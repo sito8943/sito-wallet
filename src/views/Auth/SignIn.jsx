@@ -12,8 +12,12 @@ import {
   Switcher,
 } from "@sito/ui";
 
+// font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faLockOpen, faUser } from "@fortawesome/free-solid-svg-icons";
+
+// utils
+import { toCamelCase } from "../../utils/parsers";
 
 // contexts
 import { useUser } from "../../providers/UserProvider";
@@ -28,9 +32,6 @@ import { createAccount, fetchAccounts } from "../../services/account";
 
 // auth
 import { saveUser } from "../../utils/auth";
-
-// lang
-import { showError } from "../../lang/es";
 
 // styles
 import "./styles.css";
@@ -85,13 +86,18 @@ function SignIn() {
       const { data, error } = response;
 
       if (error && error !== null)
-        setNotification({ type: "error", message: showError(error.message) });
+        setNotification({
+          type: "error",
+          message: t(`_accessibility:errors.${toCamelCase(error.message)}`),
+        });
       else {
         const userData = await fetchUserData(data.user.id);
         if (userData.error && userData.error !== null) {
           setNotification({
             type: "error",
-            message: showError(userData.error.message),
+            message: t(
+              `_accessibility:errors.${toCamelCase(userData.error.message)}`
+            ),
           });
           setLoading(false);
         }
@@ -101,7 +107,9 @@ function SignIn() {
         if (fetchAccount.error && fetchAccount.error !== null) {
           setNotification({
             type: "error",
-            message: showError(fetchAccount.error.message),
+            message: t(
+              `_accessibility:errors.${toCamelCase(fetchAccount.error.message)}`
+            ),
           });
           setLoading(false);
         }
