@@ -12,6 +12,7 @@ import { Handler, SplashScreen, Notification, useNotification } from "@sito/ui";
 
 // services
 import { refresh, validateUser } from "./services/auth";
+import { fetchAccounts } from "./services/account";
 
 // context
 import { useUser } from "./providers/UserProvider";
@@ -25,9 +26,8 @@ import {
   saveUser,
 } from "./utils/auth";
 
-// lang
-import { showError } from "./lang/es";
-import { fetchAccounts } from "./services/account";
+// utils
+import { toCamelCase } from "./utils/parsers";
 
 // views
 const SignIn = loadable(() => import("./views/Auth/SignIn"));
@@ -93,7 +93,7 @@ function App() {
     logoutUser();
     setNotification({
       type: "error",
-      message: showError(error.message),
+      message: t(`_accessibility:errors.${toCamelCase(error.message)}`),
     });
     setLoading(false);
   }
