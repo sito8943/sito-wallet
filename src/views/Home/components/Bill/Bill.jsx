@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
-import { IconButton } from "@sito/ui";
+import { IconButton, SelectControl } from "@sito/ui";
 
 // @emotion/css
 import { css } from "@emotion/css";
@@ -66,7 +66,7 @@ function Balance({
               minute: "2-digit",
             })}
           </p>
-          <select
+          <SelectControl
             value={balanceType}
             onChange={(e) => onChangeBalanceType(e.target.value)}
             className={`text-sm no-bg`}
@@ -76,7 +76,7 @@ function Balance({
                 {balance.description}
               </option>
             ))}
-          </select>
+          </SelectControl>
         </div>
       </div>
       <div className="font-bold flex items-center gap-5">
