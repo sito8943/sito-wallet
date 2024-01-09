@@ -90,13 +90,18 @@ function PaymentFlow() {
   };
 
   return (
-    <section className="max-h-[490px] flex flex-col justify-start items-start">
-      <h3 className="text-3xl xs:text-xl">
-        {t("_pages:home.paymentFlow.title")}
-      </h3>
-      <Link to="/spent" className="button primary mb-5 !p-0 !bg-[#00000000]">
-        {t("_pages:routes.allSpent")}
-      </Link>
+    <section className="min-h-[calc(100vh-350px)] max-h-[490px] flex flex-col justify-between items-start">
+      <div className="flex flex-col justify-start items-start">
+        <h3 className="text-3xl xs:text-xl">
+          {t("_pages:home.paymentFlow.title")}
+        </h3>
+        <Link
+          to="/spent"
+          className="button secondary mb-5 !p-0 !bg-[#00000000] cursor-pointer"
+        >
+          {t("_pages:routes.allSpent")}
+        </Link>
+      </div>
       <div className="flex w-full h-full" ref={myRef}>
         <PaymentFlowBar
           id="spent"
