@@ -34,8 +34,8 @@ import { saveUser } from "../../utils/auth";
 // images
 // import logo from "../../assets/images/logo.png";
 
-// lang
-import { showError } from "../../lang/es";
+// utils
+import { toCamelCase } from "../../utils/parsers";
 
 // styles
 import "./styles.css";
@@ -113,7 +113,10 @@ function SignUp() {
           navigate("/");
         }
       } else
-        setNotification({ type: "error", message: showError(error.message) });
+        setNotification({
+          type: "error",
+          message: t(`_accessibility:errors.${toCamelCase(error.message)}`),
+        });
       setLoading(false);
     },
     [email, password, rPassword, setNotification, t, setUserState, navigate]
