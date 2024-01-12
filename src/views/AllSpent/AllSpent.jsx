@@ -2,24 +2,39 @@ import { useMemo, useCallback, useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
+// @emotion/css
+import { css } from "@emotion/css";
+
 // @sito/ui
-import { useNotification, Button } from "@sito/ui";
+import { useNotification, Button, useStyle } from "@sito/ui";
 
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 // utils
-import { toCamelCase } from "../../utils/parsers";
+import {
+  toCamelCase,
+  groupByYearAndMonth,
+  getMaxTotalSpent,
+} from "../../utils/parsers";
 
 // components
 import Syncing from "../../components/Syncing/Syncing";
 
 // services
-import { fetchYears } from "../../services/utils";
+import { fetchYears, fetchSpentByMonthNdYear } from "../../services/utils";
+
+// styles
+import "./styles.css";
 
 export default function AllSpent() {
   const { t } = useTranslation();
+  const { colors } = useStyle();
+
+  const gradientBar = css({
+    backgroundImage: `linear-gradient(0deg, #0093E900 45%, ${colors.secondary.light}78 100%)`,
+  });
 
   const logsRef = useRef(null);
 
@@ -28,24 +43,60 @@ export default function AllSpent() {
   const currentMonth = useMemo(() => new Date().getMonth(), []);
   const currentYear = useMemo(() => new Date().getFullYear(), []);
 
-  const [sync, setSync] = useState(false);
+  const [sync, setSync] = useState(true);
   const [years, setYears] = useState([]);
+  const [columns, setColumns] = useState([]);
+  const [max, setMax] = useState(0);
 
   const localFetchYears = useCallback(async () => {
     const { data, error } = await fetchYears();
-    if (error !== null && error.message) {
+    if (error !== null && error.message)
       setNotification({
         type: "error",
         message: t(`_accessibility:errors.${toCamelCase(error.message)}`),
       });
-    }
+
     const yearsSet = new Set(data.map((t) => t.year));
     setYears(Array.from(yearsSet));
+    setTimeout(() => setSync(false), 300);
+  }, [setNotification, t]);
+
+  const localFetchSpentByMonthNdYear = useCallback(async () => {
+    const { data, error } = await fetchSpentByMonthNdYear();
+    if (error !== null && error.message)
+      setNotification({
+        type: "error",
+        message: t(`_accessibility:errors.${toCamelCase(error.message)}`),
+      });
+    setColumns(groupByYearAndMonth(data));
+    setMax(getMaxTotalSpent(data));
   }, [setNotification, t]);
 
   useEffect(() => {
     localFetchYears();
+    localFetchSpentByMonthNdYear();
   }, []);
+
+  useEffect(() => {
+    if (years.length && !sync)
+      setTimeout(() => {
+        console.log("hola");
+        logsRef?.current?.scroll({
+          top: 0,
+          left:
+            document.getElementById(`${currentYear}-${currentMonth}`)
+              ?.offsetLeft - 15,
+          behavior: "smooth",
+        });
+      }, 500);
+  }, [sync, years, logsRef, currentMonth, currentYear]);
+
+  const fetchPercentOf = (result, total = 450) => {
+    let resultR = (100 * result) / total;
+    if (resultR < 80) resultR += 80;
+    if (resultR >= 400) resultR = 400;
+    return Math.floor(resultR);
+  };
 
   return (
     <main>
@@ -75,22 +126,43 @@ export default function AllSpent() {
       </div>
       <div ref={logsRef} className="logs flex overflow-auto py-3 px-10 sm:px-3">
         {years.map((year) => (
-          <div key={year} className="year-column flex flex-col gap-2">
+          <div key={year} className="year-column flex flex-col gap-2 appear">
             <h3>{year}</h3>
             <div className="months-row flex items-start justify-start">
               {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((month) => (
-                <Button
-                  color={
-                    currentMonth === month && currentYear === year
-                      ? "primary"
-                      : "basics"
-                  }
-                  shape="outlined"
+                <div
                   key={month}
-                  className={`button rounded-none`}
+                  className="flex flex-col gap-2 h-[345px] justify-between"
                 >
-                  {t(`_accessibility:monthsReduced.${month}`)}
-                </Button>
+                  <Button
+                    id={`${year}-${month}`}
+                    color={
+                      currentMonth === month && currentYear === year
+                        ? "primary"
+                        : "basics"
+                    }
+                    shape="outlined"
+                    className={`button rounded-none`}
+                  >
+                    {t(`_accessibility:monthsReduced.${month}`)}
+                  </Button>
+                  <div
+                    className={`animation all-spent-bar flex flex-col items-start justify-between ${css(
+                      {
+                        height: `${
+                          columns[year] && columns[year][month]
+                            ? fetchPercentOf(columns[year][month], max)
+                            : 0
+                        }px`,
+                      }
+                    )} ${gradientBar}`}
+                  >
+                    <div className="top-of-the-bar secondary filled" />
+                    {currentMonth === month && currentYear === year ? (
+                      <div className="bottom-of-the-bar secondary filled" />
+                    ) : null}
+                  </div>
+                </div>
               ))}
             </div>
           </div>

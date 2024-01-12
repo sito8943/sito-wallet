@@ -8,3 +8,6 @@ export const fetchYears = async () =>
     .from("walletLogs")
     .select("year")
     .eq("owner", getUser().user.id);
+
+export const fetchSpentByMonthNdYear = async () =>
+  await supabase.rpc("get_total_spent_by_month_year")
