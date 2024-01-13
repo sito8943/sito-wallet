@@ -36,6 +36,16 @@ export default function AllSpent() {
     backgroundImage: `linear-gradient(0deg, #0093E900 45%, ${colors.secondary.light}78 100%)`,
   });
 
+  const dashedBar = css({
+    background: `repeating-linear-gradient(
+      45deg,
+      ${colors.secondary.default}78 0px,
+      ${colors.secondary.default}78 2px,
+      transparent 2px,
+      transparent 9px
+    )`,
+  });
+
   const logsRef = useRef(null);
 
   const { setNotification } = useNotification();
@@ -147,7 +157,7 @@ export default function AllSpent() {
                     {t(`_accessibility:monthsReduced.${month}`)}
                   </Button>
                   <div
-                    className={`animation all-spent-bar flex flex-col items-start justify-between ${css(
+                    className={`animation relative all-spent-bar flex flex-col items-start justify-between ${css(
                       {
                         height: `${
                           columns[year] && columns[year][month]
@@ -157,10 +167,18 @@ export default function AllSpent() {
                       }
                     )} ${gradientBar}`}
                   >
-                    <div className="top-of-the-bar secondary filled" />
                     {currentMonth === month && currentYear === year ? (
-                      <div className="bottom-of-the-bar secondary filled" />
+                      <div
+                        className={`${dashedBar} absolute top-0 left-0 w-full h-[calc(100%-36px)]`}
+                      ></div>
                     ) : null}
+                    <div className="top-of-the-bar secondary filled" />
+                    <div className="w-full flex flex-col items-center justify-center gap-2">
+                      {currentMonth === month && currentYear === year ? (
+                        <div className="bottom-of-the-bar secondary filled" />
+                      ) : null}
+                      <p className="text-center">{columns[year][month]}</p>
+                    </div>
                   </div>
                 </div>
               ))}
