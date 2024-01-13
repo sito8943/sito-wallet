@@ -119,4 +119,4 @@ export const deleteBill = async (id) =>
   await supabase.from("bills").delete().eq("id", id);
 
 export const deleteBalance = async (id) =>
-  await supabase.from("walletBalance").delete().eq("id", id);
+  await supabase.from("walletBalances").delete().eq("id", id);
