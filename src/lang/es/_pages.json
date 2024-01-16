@@ -8,7 +8,17 @@
     "allSpent": "Todos los gastos"
   },
   "allSpent": {
-    "title": "Todos los gastos"
+    "title": "Todos los gastos",
+    "extraBalances": {
+      "bills": {
+        "id": 0,
+        "description": "Gastos"
+      },
+      "incomings": {
+        "id": 1,
+        "description": "Ingresos"
+      }
+    }
   },
   "auth": {
     "toSignIn": {
