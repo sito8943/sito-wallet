@@ -20,7 +20,6 @@ export function toCamelCase(inputString) {
 export function groupByYearAndMonth(data) {
   const result = {};
 
-
   data.forEach((item) => {
     const { totalspent, month, year } = item;
 
@@ -45,3 +44,28 @@ export function getMaxTotalSpent(data) {
 
   return Math.max(...data.map((item) => item.totalspent));
 }
+
+export const groupBills = (data) => {
+  // Function to group the data by year, month, and day
+  const groupBy = (array, ...props) => {
+    return array.reduce((acc, obj) => {
+      const key = props.map((prop) => obj[prop]).join("-");
+      acc[key] = acc[key] || [];
+      acc[key].push(obj);
+      return acc;
+    }, {});
+  };
+
+  // Group the data by year, then by month, and finally by day
+  const groupedByYear = groupBy(data, "year");
+  for (const year in groupedByYear) {
+    const groupedByMonth = groupBy(groupedByYear[year], "month");
+    for (const month in groupedByMonth) {
+      const groupedByDay = groupBy(groupedByMonth[month], "day");
+      groupedByMonth[month] = groupedByDay;
+    }
+    groupedByYear[year] = groupedByMonth;
+  }
+
+  return groupedByYear;
+};
