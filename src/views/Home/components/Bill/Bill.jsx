@@ -60,7 +60,7 @@ function Balance({
           onDebounceTrigger={onChangeDescription}
         />
         <div className="flex gap-2 items-center">
-          <p className={`text-sm xs:text-xs`}>
+          <p className={`text-sm xs:text-xs min-w-[55px]`}>
             {new Date(created_at).toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
@@ -69,7 +69,7 @@ function Balance({
           <SelectControl
             value={balanceType}
             onChange={(e) => onChangeBalanceType(e.target.value)}
-            className={`text-sm no-bg`}
+            className={`text-sm no-bg !pl-0 !pt-[4px]`}
           >
             {userState.balances?.map((balance) => (
               <option key={balance.id} value={balance.id}>
@@ -100,7 +100,7 @@ function Balance({
         </div>
         <IconButton
           tooltip={t("_pages:home.bills.deleteBill")}
-          aria-labe={t("_pages:home.bills.deleteBill")}
+          aria-label={t("_pages:home.bills.deleteBill")}
           name="delete-balance"
           onClick={onDelete}
           icon={faTrash}
