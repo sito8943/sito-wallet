@@ -5,17 +5,22 @@
     "signUp": "Registrarse",
     "signOut": "Cerrar sesión",
     "settings": "Configuración",
-    "allSpent": "Todos los gastos"
+    "allSpent": "Todos los gastos",
+    "allLogs": "Ver todo el registro"
   },
   "allSpent": {
     "title": "Todos los gastos",
     "extraBalances": {
-      "bills": {
+      "all": {
         "id": 0,
+        "description": "Todos"
+      },
+      "bills": {
+        "id": 1,
         "description": "Gastos"
       },
       "incomings": {
-        "id": 1,
+        "id": 2,
         "description": "Ingresos"
       }
     }

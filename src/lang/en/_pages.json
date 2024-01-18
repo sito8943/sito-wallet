@@ -5,17 +5,22 @@
     "signUp": "Sign Up",
     "signOut": "Sign Out",
     "settings": "Settings",
-    "allSpent": "All spent"
+    "allSpent": "All spent",
+    "allLogs": "All logs"
   },
   "allSpent": {
     "title": "All Spent",
     "extraBalances": {
-      "bills": {
+      "all": {
         "id": 0,
+        "description": "All"
+      },
+      "bills": {
+        "id": 1,
         "description": "Bills"
       },
       "incomings": {
-        "id": 1,
+        "id": 2,
         "description": "Incomings"
       }
     }
