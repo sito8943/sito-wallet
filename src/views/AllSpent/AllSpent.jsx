@@ -38,7 +38,7 @@ export default function AllSpent() {
   const { colors } = useStyle();
 
   const { userState, setUserState } = useUser();
-  const [balanceType, setBalanceType] = useState(0);
+  const [balanceType, setBalanceType] = useState(1);
   const extraBalances = ["bills", "incomings"];
 
   const onChangeBalanceType = (e) => {
