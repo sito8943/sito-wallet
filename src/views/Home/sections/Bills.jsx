@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { useInViewport } from "react-in-viewport";
 import { v4 } from "uuid";
 import PropTypes from "prop-types";
@@ -214,7 +215,17 @@ function Bills({ setSync }) {
   return (
     <section className="flex flex-col gap-3">
       <div className="w-full flex items-center justify-between">
-        <h3 className="text-3xl xs:text-xl">{t("_pages:home.bills.title")}</h3>
+        <div className="flex flex-col justify-start items-start">
+          <h3 className="text-3xl xs:text-xl">
+            {t("_pages:home.bills.title")}
+          </h3>
+          <Link
+            to="/logs"
+            className="button secondary mb-5 !p-0 !bg-[#00000000] cursor-pointer"
+          >
+            {t("_pages:routes.allLogs")}
+          </Link>
+        </div>
         <div className="flex gap-3 items-center">
           <IconButton
             name="filter"
