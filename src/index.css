@@ -6,6 +6,11 @@
   font-family: "Roboto", sans-serif;
 }
 
+.poppins {
+  font-family: "Poppins", sans-serif !important;
+  font-weight: 900 !important;
+}
+
 .no-bg {
   background: none !important;
 }
