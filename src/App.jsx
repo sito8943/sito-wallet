@@ -37,6 +37,7 @@ const Home = loadable(() => import("./views/Home/Home"));
 const NotFound = loadable(() => import("./views/NotFound/NotFound"));
 const Settings = loadable(() => import("./views/Settings/Settings"));
 const AllSpent = loadable(() => import("./views/AllSpent/AllSpent"));
+const AllLogs = loadable(() => import("./views/AllLogs/AllLogs"));
 
 function App() {
   const { t } = useTranslation();
@@ -141,6 +142,7 @@ function App() {
               <Route path="/" element={<View />}>
                 <Route index element={<Home />} />
                 <Route path="/spent" element={<AllSpent />} />
+                <Route path="/logs" element={<AllLogs />} />
                 <Route path="/settings" element={<Settings />} />
               </Route>
 
