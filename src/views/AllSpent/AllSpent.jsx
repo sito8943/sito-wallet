@@ -260,7 +260,7 @@ export default function AllSpent() {
                     </div>
                     <p className="text-center h-[24px]">
                       {columns[year] && columns[year][month]
-                        ? columns[year][month]
+                        ? Math.floor(columns[year][month])
                         : ""}
                     </p>
                   </div>
