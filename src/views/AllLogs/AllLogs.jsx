@@ -1,20 +1,22 @@
-import { useCallback, useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useState, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import { v4 } from "uuid";
+import { sortBy } from "some-javascript-utils/array";
 
 // font awesome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAdd, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
-import { useNotification, SelectControl, IconButton } from "@sito/ui";
+import { useNotification, IconButton } from "@sito/ui";
 
 // providers
 import { useUser } from "../../providers/UserProvider";
 
 // components
 import Syncing from "../../components/Syncing/Syncing";
+
+// utils
+import { groupBills } from "../../utils/parsers";
 
 // services
 import {
@@ -29,7 +31,11 @@ import { fetchLogs } from "../../services/utils";
 
 // components
 import Bill from "../Home/components/Bill/Bill";
-import { groupBills } from "../../utils/parsers";
+
+// styles
+import "./styles.css";
+import Header from "./components/Header";
+import Filters from "./components/Filters";
 
 function AllLogs() {
   const { t } = useTranslation();
@@ -41,13 +47,17 @@ function AllLogs() {
   const { setNotification } = useNotification();
   const [sync, setSync] = useState(true);
 
+  const [showFilter, setShowFilter] = useState(false);
   const [balanceType, setBalanceType] = useState(0);
+  const [years, setYears] = useState([]);
+  const [year, setYear] = useState(-1);
+  const [month, setMonth] = useState(-1);
+  const [searchValue, setSearchValue] = useState("");
 
   const onChangeBalanceType = (e) => {
     console.log(e);
   };
 
-  const extraBalances = ["all", "bills", "incomings"];
   const [logs, setLogs] = useState([]);
 
   const [asc, setAsc] = useState(false);
@@ -93,8 +103,9 @@ function AllLogs() {
 
   const localFetchLogs = async () => {
     const { data, error } = await fetchLogs();
-    console.log(groupBills(data));
-    setLogs(groupBills(data));
+    const grouped = groupBills(data);
+    setLogs(grouped);
+    setYears(Object.keys(grouped));
     setSync(false);
   };
 
@@ -138,9 +149,33 @@ function AllLogs() {
 
   const handleBillBalanceType = useCallback((bill) => {}, []);
 
+  const [orderBy, setOrderBy] = useState(true);
+  const [sticky, setSticky] = useState(true);
+
+  const onScroll = useCallback(() => {
+    const top = window.pageYOffset || document.documentElement.scrollTop;
+    setSticky(top > 200);
+  }, [setSticky]);
+
+  useEffect(() => {
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [onScroll]);
+
+  const sortedLogs = useMemo(() => {
+    let sorted = [];
+    if (!orderBy) sorted = Object.keys(logs);
+    if (orderBy === true) sorted = Object.keys(logs).reverse();
+    //TODO Variables orders
+    return sorted;
+  }, [logs, orderBy]);
+
   return (
     <main>
-      <div className="p-10 sm:p-3 pt-20 mt-20 flex flex-col gap-5 justify-start items-start flex-1">
+      <div className="p-10 sm:p-3 pt-20 mt-20 flex flex-col gap-2 justify-start items-start flex-1">
         <div
           className={`w-10 h-10 fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
             sync ? "scale-100" : "scale-0"
@@ -148,42 +183,23 @@ function AllLogs() {
         >
           <Syncing />
         </div>
-        <div className="flex items-center gap-1">
-          <Link
-            to="/"
-            name="to-home"
-            aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
-              "_pages:routes.home"
-            )}`}
-            className="button icon-button primary"
-          >
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </Link>
-          <div className="flex flex-col items-start justify-start">
-            <h2 className="text-6xl md:text-5xl sm:text-4xl xs:text-3xl">
-              {t("_pages:allSpent.title")}
-            </h2>
-            <SelectControl
-              value={balanceType}
-              onChange={(e) => onChangeBalanceType(e.target.value)}
-              className={`text-sm no-bg !pl-0`}
-            >
-              {extraBalances.map((extra) => (
-                <option
-                  key={t(`_pages:allSpent.extraBalances.${extra}.id`)}
-                  value={t(`_pages:allSpent.extraBalances.${extra}.id`)}
-                >
-                  {t(`_pages:allSpent.extraBalances.${extra}.description`)}
-                </option>
-              ))}
-              {userState.balances?.map((balance) => (
-                <option key={balance.id} value={balance.id}>
-                  {balance.description}
-                </option>
-              ))}
-            </SelectControl>
-          </div>
-        </div>
+
+        <Header
+          showFilter={showFilter}
+          setShowFilter={setShowFilter}
+          balanceType={balanceType}
+          onChangeBalanceType={onChangeBalanceType}
+        />
+        <Filters
+          year={year}
+          years={years}
+          setYear={setYear}
+          month={month}
+          setMonth={setMonth}
+          showFilter={showFilter}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+        />
         <ul className="h-full w-full">
           {sync
             ? [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
@@ -191,7 +207,7 @@ function AllLogs() {
                   <div className="w-full h-[44px] skeleton-box" />
                 </li>
               ))
-            : Object.keys(logs).map((year) => (
+            : sortedLogs.map((year) => (
                 <li key={year} className="appear">
                   <p className="text-4xl poppins">{year}</p>
                   <ul>
@@ -203,7 +219,7 @@ function AllLogs() {
                         <ul>
                           {Object.keys(logs[year][month]).map((day) => (
                             <li key={`${year}-${month}-${day}`}>
-                              <p className="text-2xl ">{day}</p>
+                              <p className="text-2xl ">{t("_accessibility:day")} {day}</p>
                               <ul>
                                 {logs[year][month][day]
                                   .filter((bill) => !bill.deleted)
