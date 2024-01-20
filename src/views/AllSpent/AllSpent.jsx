@@ -3,11 +3,8 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 
-// @emotion/css
-import { css } from "@emotion/css";
-
 // @sito/ui
-import { useNotification, Button, useStyle, SelectControl } from "@sito/ui";
+import { useNotification, Button, SelectControl } from "@sito/ui";
 
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,6 +22,7 @@ import {
 
 // components
 import Syncing from "../../components/Syncing/Syncing";
+import Bar from "./components/Bar";
 
 // services
 import { fetchBalances, addBalance } from "../../services/wallet";
@@ -35,7 +33,6 @@ import "./styles.css";
 
 export default function AllSpent() {
   const { t } = useTranslation();
-  const { colors } = useStyle();
 
   const { userState, setUserState } = useUser();
   const [balanceType, setBalanceType] = useState(1);
@@ -44,20 +41,6 @@ export default function AllSpent() {
   const onChangeBalanceType = (e) => {
     console.log(e);
   };
-
-  const gradientBar = css({
-    backgroundImage: `linear-gradient(0deg, #0093E900 45%, ${colors.secondary.light}78 100%)`,
-  });
-
-  const dashedBar = css({
-    background: `repeating-linear-gradient(
-      45deg,
-      ${colors.secondary.default}78 0px,
-      ${colors.secondary.default}78 2px,
-      transparent 2px,
-      transparent 9px
-    )`,
-  });
 
   const logsRef = useRef(null);
 
@@ -96,6 +79,7 @@ export default function AllSpent() {
       });
     setColumns(groupByYearAndMonth(data));
     setMax(getMaxTotalSpent(data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setNotification, t, balanceType]);
 
   const localFetchBalanceTypes = async () => {
@@ -141,6 +125,7 @@ export default function AllSpent() {
     localFetchYears();
     localFetchSpentByMonthNdYear();
     localFetchBalanceTypes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -155,13 +140,6 @@ export default function AllSpent() {
         });
       }, 500);
   }, [sync, years, logsRef, currentMonth, currentYear]);
-
-  const fetchPercentOf = (result, total = 450) => {
-    let resultR = (100 * result) / total;
-    if (resultR < 80) resultR += 80;
-    if (resultR >= 400) resultR = 400;
-    return Math.floor(resultR);
-  };
 
   return (
     <main>
@@ -234,36 +212,11 @@ export default function AllSpent() {
                   >
                     {t(`_accessibility:monthsReduced.${month}`)}
                   </Button>
-                  <div>
-                    <div
-                      className={`animation ${
-                        columns[year] && columns[year][month] ? "mb-[2px]" : ""
-                      } relative all-spent-bar flex flex-col items-start justify-between ${css(
-                        {
-                          height: `${
-                            columns[year] && columns[year][month]
-                              ? fetchPercentOf(columns[year][month], max)
-                              : 4
-                          }px`,
-                        }
-                      )} ${gradientBar}`}
-                    >
-                      {currentMonth === month && currentYear === year ? (
-                        <div
-                          className={`${dashedBar} absolute top-0 left-0 w-full h-full`}
-                        ></div>
-                      ) : null}
-                      <div className="top-of-the-bar secondary filled" />
-                      {currentMonth === month && currentYear === year ? (
-                        <div className="bottom-of-the-bar secondary filled" />
-                      ) : null}
-                    </div>
-                    <p className="text-center h-[24px]">
-                      {columns[year] && columns[year][month]
-                        ? Math.floor(columns[year][month])
-                        : ""}
-                    </p>
-                  </div>
+                  <Bar
+                    max={max}
+                    active={currentMonth === month && currentYear === year}
+                    value={columns[year] ? columns[year][month] : 0}
+                  />
                 </div>
               ))}
             </div>
