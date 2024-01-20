@@ -24,8 +24,6 @@ export default function PaymentFlowBar({
     [showHeight]
   );
 
-
-
   return (
     <div id={id} className={`flex-col flex w-full items-end justify-end`}>
       <div
@@ -36,7 +34,7 @@ export default function PaymentFlowBar({
         <div className="w-full flex justify-end">
           <FontAwesomeIcon className="text-xl" icon={icon} />
         </div>
-        <p className="text-left">$ {number}</p>
+        <p className="text-left">$ {Math.floor(number)}</p>
       </div>
       <p className={`w-full font-[600] text-left ${labelColor}`}>{label}</p>
     </div>
