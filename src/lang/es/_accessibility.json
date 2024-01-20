@@ -8,6 +8,10 @@
     "failedToFetch": "No hay conexión",
     "invalidLoginCredentials": "Usuario o contraseña incorrecta"
   },
+  "day": "Día",
+  "year": "Año",
+  "month": "Mes",
+  "description": "Descripción",
   "months": {
     "0": "Enero",
     "1": "Febrero",
@@ -43,7 +47,8 @@
     "balanceTypes": "Gastos Básicos"
   },
   "types": {
-    "balanceTypes": "Tipos de balance"
+    "balanceTypes": "Tipos de balance",
+    "balanceType": "Tipo de balance"
   },
   "inputs": {
     "remember": {
