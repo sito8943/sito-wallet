@@ -60,7 +60,7 @@ function Balance({
           onDebounceTrigger={onChangeDescription}
         />
         <div className="flex gap-2 items-center">
-          <p className={`text-sm xs:text-xs min-w-[55px]`}>
+          <p className={`text-sm xs:text-xs min-w-[60px]`}>
             {new Date(created_at).toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
