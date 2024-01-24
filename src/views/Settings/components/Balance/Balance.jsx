@@ -17,6 +17,7 @@ import { IconButton } from "@sito/ui";
 import DebouncedInput from "../../../../components/DebouncedInput/DebouncedInput";
 import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Tippy from "@tippyjs/react";
 
 function Balance({
   id,
@@ -42,23 +43,27 @@ function Balance({
         onDebounceTrigger={onChangeDescription}
       />
       <div className="font-bold flex items-center gap-3">
-        <IconButton
-          name="toggle-bill"
-          tooltip="Alternar entre gasto e ingreo"
-          aria-label="Alternar entre gasto e ingreo"
-          onClick={() => onChangeBill()}
-          className={`${!bill ? "success" : "error"}`}
-          icon={
-            <FontAwesomeIcon icon={bill ? faArrowTrendDown : faArrowTrendUp} />
-          }
-        />
-        <IconButton
-          name="delete-balance"
-          tooltip="Eliminar balance"
-          aria-label="Eliminar balance"
-          onClick={onDelete}
-          icon={<FontAwesomeIcon icon={faTrash} />}
-        />
+        <Tippy content={"Alternar entre gasto e ingreo"}>
+          <IconButton
+            name="toggle-bill"
+            aria-label="Alternar entre gasto e ingreo"
+            onClick={() => onChangeBill()}
+            className={`${!bill ? "success" : "error"}`}
+            icon={
+              <FontAwesomeIcon
+                icon={bill ? faArrowTrendDown : faArrowTrendUp}
+              />
+            }
+          />
+        </Tippy>
+        <Tippy content="Eliminar balance">
+          <IconButton
+            name="delete-balance"
+            aria-label="Eliminar balance"
+            onClick={onDelete}
+            icon={<FontAwesomeIcon icon={faTrash} />}
+          />
+        </Tippy>
       </div>
     </div>
   );

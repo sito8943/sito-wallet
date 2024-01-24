@@ -1,8 +1,10 @@
 import { memo, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import Tippy from "@tippyjs/react";
 
 // font awesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
@@ -16,7 +18,6 @@ import DebouncedInput from "../../../../components/DebouncedInput/DebouncedInput
 
 // providers
 import { useUser } from "../../../../providers/UserProvider";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Balance({
   id,
@@ -103,13 +104,14 @@ function Balance({
             onDebounceTrigger={onChangeSpent}
           />
         </div>
-        <IconButton
-          tooltip={t("_pages:home.bills.deleteBill")}
-          aria-label={t("_pages:home.bills.deleteBill")}
-          name="delete-balance"
-          onClick={onDelete}
-          icon={<FontAwesomeIcon icon={faTrash} />}
-        />
+        <Tippy content={t("_pages:home.bills.deleteBill")}>
+          <IconButton
+            aria-label={t("_pages:home.bills.deleteBill")}
+            name="delete-balance"
+            onClick={onDelete}
+            icon={<FontAwesomeIcon icon={faTrash} />}
+          />
+        </Tippy>
       </div>
     </div>
   );

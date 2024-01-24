@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDebounce } from "use-lodash-debounce";
+import Tippy from "@tippyjs/react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -31,22 +32,25 @@ function Wallet({ setSync }) {
         />
       </p>
       <div className="flex gap-3">
-        <IconButton
-          icon={<FontAwesomeIcon icon={faRefresh} />}
-          tooltip={t("_pages:wallets.changeAccount")}
-          aria-label={t("_pages:wallets.changeAccount")}
-          name="change-account"
-        />
+        <Tippy content={t("_pages:wallets.changeAccount")}>
+          <IconButton
+            icon={<FontAwesomeIcon icon={faRefresh} />}
+            aria-label={t("_pages:wallets.changeAccount")}
+            name="change-account"
+          />
+        </Tippy>
+
         <Link
           name="create-new-account"
           aria-label={t("_pages:home.wallets.createNewAccount")}
         >
-          <IconButton
-            icon={<FontAwesomeIcon icon={faAdd} />}
-            tooltip={t("_pages:home.wallets.createNewAccount")}
-            aria-label={t("_pages:home.wallets.createNewAccount")}
-            name="create-new-account"
-          />
+          <Tippy content={t("_pages:home.wallets.createNewAccount")}>
+            <IconButton
+              icon={<FontAwesomeIcon icon={faAdd} />}
+              aria-label={t("_pages:home.wallets.createNewAccount")}
+              name="create-new-account"
+            />
+          </Tippy>
         </Link>
       </div>
     </section>

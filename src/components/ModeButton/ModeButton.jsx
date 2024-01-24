@@ -1,4 +1,6 @@
 import PropTypes from "prop-types";
+import Tippy from "@tippyjs/react";
+import { useTranslation } from "react-i18next";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
@@ -6,30 +8,34 @@ import { useMode } from "@sito/ui";
 
 // components
 import FAB from "../FAB/FAB";
-import { t } from "i18next";
 
 function ModeButton({ className, color = "secondary" }) {
   const { toggleMode, mode } = useMode();
 
+  const { t } = useTranslation();
+
   return (
-    <FAB
-      onClick={() => toggleMode()}
-      tooltip={
+    <Tippy
+      content={
         mode === "dark"
           ? t("_accessibility:ariaLabels.lightMode")
           : t("_accessibility:ariaLabels.darkMode")
       }
-      name="toggle-theme"
-      shape="text"
-      color={color}
-      aria-label={
-        mode === "dark"
-          ? t("_accessibility:ariaLabels.lightMode")
-          : t("_accessibility:ariaLabels.darkMode")
-      }
-      icon={mode === "dark" ? faSun : faMoon}
-      className={className}
-    />
+    >
+      <FAB
+        onClick={() => toggleMode()}
+        name="toggle-theme"
+        shape="text"
+        color={color}
+        aria-label={
+          mode === "dark"
+            ? t("_accessibility:ariaLabels.lightMode")
+            : t("_accessibility:ariaLabels.darkMode")
+        }
+        icon={mode === "dark" ? faSun : faMoon}
+        className={className}
+      />
+    </Tippy>
   );
 }
 

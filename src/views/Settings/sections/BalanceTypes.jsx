@@ -27,6 +27,7 @@ import {
 
 // components
 import Balance from "../components/Balance/Balance";
+import Tippy from "@tippyjs/react";
 
 function BalanceTypes({ setSync }) {
   const { t } = useTranslation();
@@ -219,24 +220,31 @@ function BalanceTypes({ setSync }) {
           {t("_pages:settings.sections.balanceTypes.title")}
         </h3>
         <div className="flex gap-3 items-center">
-          <IconButton
-            name="filter"
-            tooltip={sortAriaLabel}
-            aria-label={sortAriaLabel}
-            onClick={() => setAsc((asc) => !asc)}
-            icon={<FontAwesomeIcon icon={asc ? faArrowDownAZ : faArrowUpAZ} />}
-          />
-          <IconButton
-            aria-label={`${t("_accessibility:ariaLabels.add")} ${t(
+          <Tippy content={sortAriaLabel}>
+            <IconButton
+              name="filter"
+              aria-label={sortAriaLabel}
+              onClick={() => setAsc((asc) => !asc)}
+              icon={
+                <FontAwesomeIcon icon={asc ? faArrowDownAZ : faArrowUpAZ} />
+              }
+            />
+          </Tippy>
+          <Tippy>
+            {" "}
+            content=
+            {`${t("_accessibility:ariaLabels.add")} ${t(
               "_accessibility:types.balanceTypes"
             )}`}
-            tooltip={`${t("_accessibility:ariaLabels.add")} ${t(
-              "_accessibility:types.balanceTypes"
-            )}`}
-            name="add-balance"
-            onClick={addBalance}
-            icon={<FontAwesomeIcon icon={faAdd} />}
-          />
+            <IconButton
+              aria-label={`${t("_accessibility:ariaLabels.add")} ${t(
+                "_accessibility:types.balanceTypes"
+              )}`}
+              name="add-balance"
+              onClick={addBalance}
+              icon={<FontAwesomeIcon icon={faAdd} />}
+            />
+          </Tippy>
         </div>
       </div>
       <ul>{printBalances}</ul>

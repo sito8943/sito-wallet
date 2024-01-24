@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import Tippy from "@tippyjs/react";
 
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -77,22 +78,25 @@ function Navbar() {
           </h1>
         </Link>
         <nav className="z-10 flex">
-          <IconButton
-            color="primary"
-            onClick={() => toggleMode()}
-            tooltip={
+          <Tippy
+            content={
               mode === "dark"
                 ? t("_accessibility:ariaLabels.lightMode")
                 : t("_accessibility:ariaLabels.darkMode")
             }
-            name="toggle-theme"
-            aria-label={
-              mode === "dark"
-                ? t("_accessibility:ariaLabels.lightMode")
-                : t("_accessibility:ariaLabels.darkMode")
-            }
-            icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
-          />
+          >
+            <IconButton
+              color="primary"
+              onClick={() => toggleMode()}
+              name="toggle-theme"
+              aria-label={
+                mode === "dark"
+                  ? t("_accessibility:ariaLabels.lightMode")
+                  : t("_accessibility:ariaLabels.darkMode")
+              }
+              icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
+            />
+          </Tippy>
           <Link
             to="/settings"
             name="toggle-theme"

@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { v4 } from "uuid";
+import Tippy from "@tippyjs/react";
 import { sortBy } from "some-javascript-utils/array";
 
 // font awesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
@@ -31,12 +33,11 @@ import { fetchLogs } from "../../services/utils";
 
 // components
 import Bill from "../Home/components/Bill/Bill";
+import Header from "./components/Header";
+import Filters from "./components/Filters";
 
 // styles
 import "./styles.css";
-import Header from "./components/Header";
-import Filters from "./components/Filters";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function AllLogs() {
   const { t } = useTranslation();
@@ -297,22 +298,23 @@ function AllLogs() {
         </ul>
       </div>
 
-      <IconButton
-        aria-label={t("_pages.home.bills.addBill")}
-        tooltip={t("_pages.home.bills.addBill")}
-        name="floating-add-bill"
-        onClick={async () => {
-          const id = await addBill();
-          setTimeout(
-            () => scrollTo(document.getElementById(id).offsetTop),
-            200
-          );
-        }}
-        color="secondary"
-        shape="filled"
-        icon={<FontAwesomeIcon icon={faAdd} />}
-        className={`aGrow fixed bottom-3 right-3 scale-100 transition duration-300 ease-in-out`}
-      />
+      <Tippy content={t("_pages.home.bills.addBill")}>
+        <IconButton
+          aria-label={t("_pages.home.bills.addBill")}
+          name="floating-add-bill"
+          onClick={async () => {
+            const id = await addBill();
+            setTimeout(
+              () => scrollTo(document.getElementById(id).offsetTop),
+              200
+            );
+          }}
+          color="secondary"
+          shape="filled"
+          icon={<FontAwesomeIcon icon={faAdd} />}
+          className={`aGrow fixed bottom-3 right-3 scale-100 transition duration-300 ease-in-out`}
+        />
+      </Tippy>
     </main>
   );
 }

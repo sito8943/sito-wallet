@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useInViewport } from "react-in-viewport";
 import { v4 } from "uuid";
 import PropTypes from "prop-types";
+import Tippy from "@tippyjs/react";
 import { useTranslation } from "react-i18next";
 
 // some-javascript-utils
@@ -227,25 +228,29 @@ function Bills({ setSync }) {
           </Link>
         </div>
         <div className="flex gap-3 items-center">
-          <IconButton
-            name="filter"
-            tooltip={t("_pages:home.bills.sortBills")}
-            aria-label={t("_pages:home.bills.sortBills")}
-            onClick={() => setAsc((asc) => !asc)}
-            icon={
-              <FontAwesomeIcon icon={asc ? faSortAmountUp : faSortAmountDown} />
-            }
-          />
-          <IconButton
-            ref={addButton}
-            color="secondary"
-            shape="filled"
-            aria-label={t("_pages.home.bills.addBill")}
-            tooltip={t("_pages.home.bills.addBill")}
-            name="add-bill"
-            onClick={addBill}
-            icon={<FontAwesomeIcon icon={faAdd} />}
-          />
+          <Tippy content={t("_pages:home.bills.sortBills")}>
+            <IconButton
+              name="filter"
+              aria-label={t("_pages:home.bills.sortBills")}
+              onClick={() => setAsc((asc) => !asc)}
+              icon={
+                <FontAwesomeIcon
+                  icon={asc ? faSortAmountUp : faSortAmountDown}
+                />
+              }
+            />
+          </Tippy>
+          <Tippy content={t("_pages.home.bills.addBill")}>
+            <IconButton
+              ref={addButton}
+              color="secondary"
+              shape="filled"
+              aria-label={t("_pages.home.bills.addBill")}
+              name="add-bill"
+              onClick={addBill}
+              icon={<FontAwesomeIcon icon={faAdd} />}
+            />
+          </Tippy>
         </div>
       </div>
       <ul>
@@ -321,24 +326,25 @@ function Bills({ setSync }) {
           </>
         )}
       </ul>
-      <IconButton
-        aria-label={t("_pages.home.bills.addBill")}
-        tooltip={t("_pages.home.bills.addBill")}
-        name="floating-add-bill"
-        onClick={async () => {
-          const id = await addBill();
-          setTimeout(
-            () => scrollTo(document.getElementById(id).offsetTop),
-            200
-          );
-        }}
-        color="secondary"
-        shape="filled"
-        icon={<FontAwesomeIcon icon={faAdd} />}
-        className={`aGrow fixed bottom-3 right-3 ${
-          inViewport ? "scale-0 pointer-events-none" : "scale-100"
-        } transition duration-300 ease-in-out`}
-      />
+      <Tippy content={t("_pages.home.bills.addBill")}>
+        <IconButton
+          aria-label={t("_pages.home.bills.addBill")}
+          name="floating-add-bill"
+          onClick={async () => {
+            const id = await addBill();
+            setTimeout(
+              () => scrollTo(document.getElementById(id).offsetTop),
+              200
+            );
+          }}
+          color="secondary"
+          shape="filled"
+          icon={<FontAwesomeIcon icon={faAdd} />}
+          className={`aGrow fixed bottom-3 right-3 ${
+            inViewport ? "scale-0 pointer-events-none" : "scale-100"
+          } transition duration-300 ease-in-out`}
+        />
+      </Tippy>
     </section>
   );
 }
