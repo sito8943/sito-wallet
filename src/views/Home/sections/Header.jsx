@@ -329,7 +329,7 @@ function Header({ setSync }) {
           <div className="w-full h-[72px] skeleton-box" />
         )}
       </div>
-      <hr className="w-full border-2" />
+      <hr className="w-full border-[1px]" />
       {!loadingMoney ? (
         <p className="text-xl xs:text-[16px]">
           {t("_pages:home.header.left")}{" "}
