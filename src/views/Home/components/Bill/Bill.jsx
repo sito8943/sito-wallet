@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
-import { IconButton, SelectControl } from "@sito/ui";
+import { useStyle, IconButton, SelectControl } from "@sito/ui";
 
 // @emotion/css
 import { css } from "@emotion/css";
@@ -31,6 +31,8 @@ function Balance({
   onDelete,
 }) {
   const { t } = useTranslation();
+
+  const { colors } = useStyle();
 
   const { userState } = useUser();
 
@@ -82,9 +84,11 @@ function Balance({
       </div>
       <div className="font-bold flex items-center gap-5">
         <div
-          className={`flex items-center ${
-            walletBalances.bill ? "error" : "success"
-          }`}
+          className={`flex items-center ${css({
+            color: walletBalances.bill
+              ? colors.error.light
+              : colors.success.default,
+          })}`}
         >
           <p className="text-right xs:text-sm">
             {walletBalances.bill ? "-" : "+"} $
