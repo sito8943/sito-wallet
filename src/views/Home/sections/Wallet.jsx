@@ -26,7 +26,7 @@ function Wallet({ setSync }) {
       <p className="font-bold text-xl">
         <DebouncedInput
           initialValue={wallet}
-          className={"no-bg"}
+          className={"no-bg w-full"}
           onDebounceTrigger={() => console.log("wallet")}
         />
       </p>
