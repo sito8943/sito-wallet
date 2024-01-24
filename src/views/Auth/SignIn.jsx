@@ -183,7 +183,9 @@ function SignIn() {
               tabIndex={-1}
               name="toggle-see-password"
               onClick={toggleShowPassword}
-              icon={showPassword ? faLockOpen : faLock}
+              icon={
+                <FontAwesomeIcon icon={showPassword ? faLockOpen : faLock} />
+              }
               className="-ml-3"
               aria-label={`${t(
                 `_accessibility:inputs.password.${

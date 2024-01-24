@@ -232,7 +232,9 @@ function Bills({ setSync }) {
             tooltip={t("_pages:home.bills.sortBills")}
             aria-label={t("_pages:home.bills.sortBills")}
             onClick={() => setAsc((asc) => !asc)}
-            icon={asc ? faSortAmountUp : faSortAmountDown}
+            icon={
+              <FontAwesomeIcon icon={asc ? faSortAmountUp : faSortAmountDown} />
+            }
           />
           <IconButton
             ref={addButton}
@@ -242,7 +244,7 @@ function Bills({ setSync }) {
             tooltip={t("_pages.home.bills.addBill")}
             name="add-bill"
             onClick={addBill}
-            icon={faAdd}
+            icon={<FontAwesomeIcon icon={faAdd} />}
           />
         </div>
       </div>
@@ -332,7 +334,7 @@ function Bills({ setSync }) {
         }}
         color="secondary"
         shape="filled"
-        icon={faAdd}
+        icon={<FontAwesomeIcon icon={faAdd} />}
         className={`aGrow fixed bottom-3 right-3 ${
           inViewport ? "scale-0 pointer-events-none" : "scale-100"
         } transition duration-300 ease-in-out`}

@@ -66,7 +66,11 @@ function Header({
           </SelectControl>
           <IconButton
             onClick={() => setShowFilter((showFilter) => !showFilter)}
-            icon={showFilter ? faFilterCircleXmark : faFilter}
+            icon={
+              <FontAwesomeIcon
+                icon={showFilter ? faFilterCircleXmark : faFilter}
+              />
+            }
           />
         </div>
       </div>

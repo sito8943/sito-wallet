@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
 // font awesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
@@ -28,7 +29,7 @@ function Dialog({ visible, onClose, children, canBeClosed }) {
       {canBeClosed ? (
         <IconButton
           onClick={onClose}
-          icon={faClose}
+          icon={<FontAwesomeIcon icon={faClose} />}
           color="primary"
           shape="filled"
           name="close-dialog"

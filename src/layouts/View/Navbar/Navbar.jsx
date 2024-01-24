@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
 
+// font awesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRightFromBracket,
   faGear,
@@ -90,7 +91,7 @@ function Navbar() {
                 ? t("_accessibility:ariaLabels.lightMode")
                 : t("_accessibility:ariaLabels.darkMode")
             }
-            icon={mode === "dark" ? faSun : faMoon}
+            icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
           />
           <Link
             to="/settings"

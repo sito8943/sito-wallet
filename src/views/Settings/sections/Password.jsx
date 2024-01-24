@@ -13,6 +13,7 @@ import {
 
 // services
 import { updatePassword } from "../../../services/auth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Password() {
   const { t } = useTranslation();
@@ -68,7 +69,9 @@ function Password() {
         onSubmit={onSubmit}
         className="flex flex-col gap-3 justify-start items-start"
       >
-        <h3 className="text-xl">{t("_pages:settings.sections.security.title")}</h3>
+        <h3 className="text-xl">
+          {t("_pages:settings.sections.security.title")}
+        </h3>
         <InputControl
           id="password"
           className="w-full"
@@ -83,7 +86,9 @@ function Password() {
               tabIndex={-1}
               name="toggle-see-password"
               onClick={toggleShowPassword}
-              icon={showPassword ? faLockOpen : faLock}
+              icon={
+                <FontAwesomeIcon icon={showPassword ? faLockOpen : faLock} />
+              }
               className="-ml-3"
               aria-label={`${t(
                 `_accessibility:inputs.password.${
@@ -108,7 +113,9 @@ function Password() {
               tabIndex={-1}
               name="toggle-see-r-password"
               onClick={toggleShowRPassword}
-              icon={showRPassword ? faLockOpen : faLock}
+              icon={
+                <FontAwesomeIcon icon={showRPassword ? faLockOpen : faLock} />
+              }
               className="-ml-3"
               aria-label={`${t(
                 `_accessibility:inputs.password.${

@@ -16,6 +16,7 @@ import DebouncedInput from "../../../../components/DebouncedInput/DebouncedInput
 
 // providers
 import { useUser } from "../../../../providers/UserProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Balance({
   id,
@@ -103,7 +104,7 @@ function Balance({
           aria-label={t("_pages:home.bills.deleteBill")}
           name="delete-balance"
           onClick={onDelete}
-          icon={faTrash}
+          icon={<FontAwesomeIcon icon={faTrash} />}
         />
       </div>
     </div>

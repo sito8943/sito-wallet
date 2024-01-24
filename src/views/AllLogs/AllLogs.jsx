@@ -36,6 +36,7 @@ import Bill from "../Home/components/Bill/Bill";
 import "./styles.css";
 import Header from "./components/Header";
 import Filters from "./components/Filters";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function AllLogs() {
   const { t } = useTranslation();
@@ -219,7 +220,9 @@ function AllLogs() {
                         <ul>
                           {Object.keys(logs[year][month]).map((day) => (
                             <li key={`${year}-${month}-${day}`}>
-                              <p className="text-2xl ">{t("_accessibility:day")} {day}</p>
+                              <p className="text-2xl ">
+                                {t("_accessibility:day")} {day}
+                              </p>
                               <ul>
                                 {logs[year][month][day]
                                   .filter((bill) => !bill.deleted)
@@ -307,7 +310,7 @@ function AllLogs() {
         }}
         color="secondary"
         shape="filled"
-        icon={faAdd}
+        icon={<FontAwesomeIcon icon={faAdd} />}
         className={`aGrow fixed bottom-3 right-3 scale-100 transition duration-300 ease-in-out`}
       />
     </main>

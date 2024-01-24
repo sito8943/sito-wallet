@@ -16,6 +16,7 @@ import { IconButton } from "@sito/ui";
 // components
 import DebouncedInput from "../../../../components/DebouncedInput/DebouncedInput";
 import { useMemo } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Balance({
   id,
@@ -47,14 +48,16 @@ function Balance({
           aria-label="Alternar entre gasto e ingreo"
           onClick={() => onChangeBill()}
           className={`${!bill ? "success" : "error"}`}
-          icon={bill ? faArrowTrendDown : faArrowTrendUp}
+          icon={
+            <FontAwesomeIcon icon={bill ? faArrowTrendDown : faArrowTrendUp} />
+          }
         />
         <IconButton
           name="delete-balance"
           tooltip="Eliminar balance"
           aria-label="Eliminar balance"
           onClick={onDelete}
-          icon={faTrash}
+          icon={<FontAwesomeIcon icon={faTrash} />}
         />
       </div>
     </div>

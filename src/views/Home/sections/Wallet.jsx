@@ -13,6 +13,7 @@ import DebouncedInput from "../../../components/DebouncedInput/DebouncedInput";
 
 // providers
 import { useUser } from "../../../providers/UserProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Wallet({ setSync }) {
   const { t } = useTranslation();
@@ -31,7 +32,7 @@ function Wallet({ setSync }) {
       </p>
       <div className="flex gap-3">
         <IconButton
-          icon={faRefresh}
+          icon={<FontAwesomeIcon icon={faRefresh} />}
           tooltip={t("_pages:wallets.changeAccount")}
           aria-label={t("_pages:wallets.changeAccount")}
           name="change-account"
@@ -41,7 +42,7 @@ function Wallet({ setSync }) {
           aria-label={t("_pages:home.wallets.createNewAccount")}
         >
           <IconButton
-            icon={faAdd}
+            icon={<FontAwesomeIcon icon={faAdd} />}
             tooltip={t("_pages:home.wallets.createNewAccount")}
             aria-label={t("_pages:home.wallets.createNewAccount")}
             name="create-new-account"

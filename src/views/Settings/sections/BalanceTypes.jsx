@@ -4,6 +4,7 @@ import { sortBy } from "some-javascript-utils/array";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,
   faArrowDownAZ,
@@ -223,7 +224,7 @@ function BalanceTypes({ setSync }) {
             tooltip={sortAriaLabel}
             aria-label={sortAriaLabel}
             onClick={() => setAsc((asc) => !asc)}
-            icon={asc ? faArrowDownAZ : faArrowUpAZ}
+            icon={<FontAwesomeIcon icon={asc ? faArrowDownAZ : faArrowUpAZ} />}
           />
           <IconButton
             aria-label={`${t("_accessibility:ariaLabels.add")} ${t(
@@ -234,7 +235,7 @@ function BalanceTypes({ setSync }) {
             )}`}
             name="add-balance"
             onClick={addBalance}
-            icon={faAdd}
+            icon={<FontAwesomeIcon icon={faAdd} />}
           />
         </div>
       </div>
