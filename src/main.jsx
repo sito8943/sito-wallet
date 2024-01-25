@@ -15,8 +15,8 @@ import "./index.css";
 import "tippy.js/dist/tippy.css"; // optional
 
 // fonts
-import "@fontsource/poppins";
-import "@fontsource/roboto";
+import "@fontsource/poppins/700.css";
+import "@fontsource/roboto/500.css";
 
 // i18
 import "./i18.js";
