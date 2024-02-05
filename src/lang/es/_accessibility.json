@@ -67,6 +67,7 @@
     "rPassword": "Repetir contraseña"
   },
   "buttons": {
+    "toTop": "Ir al tope",
     "accept": "Aceptar",
     "signIn": "Entrar",
     "save": "Guardar",

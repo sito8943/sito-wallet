@@ -67,6 +67,7 @@
     "rPassword": "Repeat password"
   },
   "buttons": {
+    "toTop": "To top",
     "accept": "Accept",
     "signIn": "Sign In",
     "save": "Save",
