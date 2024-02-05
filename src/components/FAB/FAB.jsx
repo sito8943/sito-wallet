@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 // @sito/ui
 import { IconButton } from "@sito/ui";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function FAB(props) {
   const position = useMemo(() => {
@@ -22,7 +23,7 @@ function FAB(props) {
     <IconButton
       {...props}
       className={`fixed ${position} ${props.className}`}
-      icon={props.icon}
+      icon={<FontAwesomeIcon icon={props.icon} />}
     />
   );
 }
