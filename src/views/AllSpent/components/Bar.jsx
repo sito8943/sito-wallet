@@ -12,9 +12,7 @@ function Bar({ value, max, active }) {
 
   const fetchPercentOf = (result, total = 450) => {
     let resultR = (100 * result) / total;
-    if (resultR < 80) resultR += 80;
-    if (resultR >= 400) resultR = 400;
-    return Math.floor(resultR);
+    return Math.floor(resultR + 40);
   };
 
   const styles = useMemo(() => {
