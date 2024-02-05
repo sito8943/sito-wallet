@@ -33,7 +33,7 @@ const userReducer = (userState, action) => {
       const { balances } = action;
       userState.balances = balances;
       saveUser(userState);
-      return userState;
+      return { ...userState };
     }
     case "logged-out":
       return {};
