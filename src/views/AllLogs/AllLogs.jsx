@@ -1,15 +1,16 @@
 import { useCallback, useEffect, useState, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import stringSimilarity from "string-similarity";
 import { v4 } from "uuid";
 import Tippy from "@tippyjs/react";
 import { sortBy } from "some-javascript-utils/array";
 
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAdd } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
-import { useNotification, IconButton } from "@sito/ui";
+import { useNotification, IconButton, Button } from "@sito/ui";
 
 // providers
 import { useUser } from "../../providers/UserProvider";
@@ -38,6 +39,7 @@ import Filters from "./components/Filters";
 
 // styles
 import "./styles.css";
+import { scrollTo } from "some-javascript-utils/browser";
 
 function AllLogs() {
   const { t } = useTranslation();
@@ -50,14 +52,16 @@ function AllLogs() {
   const [sync, setSync] = useState(true);
 
   const [showFilter, setShowFilter] = useState(false);
+  const [billBalances, setBillBalances] = useState([]);
+  const [incomingBalances, setIncomingBalances] = useState([]);
   const [balanceType, setBalanceType] = useState(0);
   const [years, setYears] = useState([]);
   const [year, setYear] = useState(-1);
   const [month, setMonth] = useState(-1);
   const [searchValue, setSearchValue] = useState("");
 
-  const onChangeBalanceType = (e) => {
-    console.log(e);
+  const onChangeBalanceType = (value) => {
+    setBalanceType(value);
   };
 
   const [logs, setLogs] = useState([]);
@@ -94,6 +98,16 @@ function AllLogs() {
           balances: [...(userState.balances ?? []), newBalance],
         });
       } else {
+        setBillBalances(
+          remoteBalances.data
+            .filter((balanceType) => balanceType.bill)
+            .map((balanceType) => balanceType.id)
+        );
+        setIncomingBalances(
+          remoteBalances.data
+            .filter((balanceType) => !balanceType.bill)
+            .map((balanceType) => balanceType.id)
+        );
         // setting
         setUserState({
           type: "init-balances",
@@ -103,13 +117,17 @@ function AllLogs() {
     }
   };
 
-  const localFetchLogs = async () => {
+  const localFetchLogs = useCallback(async () => {
     const { data, error } = await fetchLogs();
+    for (let i = 0; i < data.length; i += 1) {
+      if (billBalances.indexOf(data[i].balanceType) >= 0) data[i].bill = true;
+      else data[i].bill = false;
+    }
     const grouped = groupBills(data);
     setLogs(grouped);
     setYears(Object.keys(grouped));
     setSync(false);
-  };
+  }, [billBalances, incomingBalances]);
 
   const addBill = async () => {
     const bills = [...userState.bills];
@@ -202,7 +220,7 @@ function AllLogs() {
           searchValue={searchValue}
           setSearchValue={setSearchValue}
         />
-        <ul className="h-full w-full">
+        <ul className="h-full w-full appear">
           {sync
             ? [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
                 <li key={item}>
@@ -210,94 +228,132 @@ function AllLogs() {
                 </li>
               ))
             : sortedLogs.map((year) => (
-                <li key={year} className="appear">
+                <li key={year}>
                   <p className="text-4xl poppins">{year}</p>
                   <ul>
-                    {Object.keys(logs[year]).map((month) => (
-                      <li key={`${year}-${month}`}>
-                        <p className="text-3xl my-2">
-                          {t(`_accessibility:months.${month}`)}
-                        </p>
-                        <ul>
-                          {Object.keys(logs[year][month]).map((day) => (
-                            <li key={`${year}-${month}-${day}`}>
-                              <p className="text-2xl ">
-                                {t("_accessibility:day")} {day}
-                              </p>
-                              <ul>
-                                {logs[year][month][day]
-                                  .filter((bill) => !bill.deleted)
-                                  .map((bill) => (
-                                    <li key={bill.id} className="appear">
-                                      <Bill
-                                        {...bill}
-                                        onChangeDescription={(value) => {
-                                          /* setSync(true);
+                    {Object.keys(logs[year])
+                      .reverse()
+                      .map((month) => (
+                        <li key={`${year}-${month}`}>
+                          <p className="text-3xl my-2">
+                            {t(`_accessibility:months.${month}`)}
+                          </p>
+                          <ul>
+                            {Object.keys(logs[year][month])
+                              .reverse()
+                              .map((day) => (
+                                <li key={`${year}-${month}-${day}`}>
+                                  <p className="text-2xl ">
+                                    {t("_accessibility:day")} {day}
+                                  </p>
+                                  <ul>
+                                    {logs[year][month][day]
+                                      .reverse()
+                                      .filter((bill) =>
+                                        searchValue.length
+                                          ? stringSimilarity.compareTwoStrings(
+                                              bill.description.toLowerCase(),
+                                              searchValue.toLowerCase()
+                                            ) > 0.5
+                                          : true
+                                      )
+                                      .filter((bill) => {
+                                        if (!bill.deleted) {
+                                          if (Number(balanceType) === 0)
+                                            return true;
+                                          if (
+                                            Number(balanceType) === 1 &&
+                                            bill.bill
+                                          )
+                                            return true;
+                                          if (
+                                            Number(balanceType) === 2 &&
+                                            !bill.bill
+                                          )
+                                            return true;
+                                          else if (
+                                            balanceType === bill.balanceType
+                                          )
+                                            return true;
+                                        }
+                                        return false;
+                                      })
+                                      .map((bill) => (
+                                        <li key={bill.id}>
+                                          <Bill
+                                            {...bill}
+                                            onChangeDescription={(value) => {
+                                              /* setSync(true);
                                           handleBillDescription({
                                             value,
                                             id: bill.id,
                                           }); */
-                                        }}
-                                        onChangeSpent={(value) => {
-                                          /*  setSync(true);
+                                            }}
+                                            onChangeSpent={(value) => {
+                                              /*  setSync(true);
                                           handleBillSpent({
                                             value,
                                             id: bill.id,
                                           }); */
-                                        }}
-                                        onChangeBalanceType={(value) => {
-                                          /* setSync(true);
+                                            }}
+                                            onChangeBalanceType={(value) => {
+                                              /* setSync(true);
 
                                           handleBillBalanceType({
                                             value,
                                             id: bill.id,
                                           }); */
-                                        }}
-                                        onDelete={async () => {
-                                          /* setSync(true); */
-                                          const newBills = [...userState.bills];
-                                          if (!userState.cached) {
-                                            const { error } = await deleteBill(
-                                              bill.id
-                                            );
+                                            }}
+                                            onDelete={async () => {
+                                              /* setSync(true); */
+                                              const newBills = [
+                                                ...userState.bills,
+                                              ];
+                                              if (!userState.cached) {
+                                                const { error } =
+                                                  await deleteBill(bill.id);
 
-                                            newBills.splice(
-                                              newBills.findIndex(
-                                                (billR) => billR.id === bill.id
-                                              ),
-                                              1
-                                            );
+                                                newBills.splice(
+                                                  newBills.findIndex(
+                                                    (billR) =>
+                                                      billR.id === bill.id
+                                                  ),
+                                                  1
+                                                );
 
-                                            if (error && error !== null)
-                                              console.error(error.message);
-                                          } else
-                                            newBills[
-                                              newBills.findIndex(
-                                                (billR) => billR.id === bill.id
-                                              )
-                                            ].deleted = true;
+                                                if (error && error !== null)
+                                                  console.error(error.message);
+                                              } else
+                                                newBills[
+                                                  newBills.findIndex(
+                                                    (billR) =>
+                                                      billR.id === bill.id
+                                                  )
+                                                ].deleted = true;
 
-                                          setUserState({
-                                            type: "init-bills",
-                                            bills: newBills,
-                                          });
-                                          setSync(false);
-                                        }}
-                                      />
-                                    </li>
-                                  ))}
-                              </ul>
-                            </li>
-                          ))}
-                        </ul>
-                      </li>
-                    ))}
+                                              setUserState({
+                                                type: "init-bills",
+                                                bills: newBills,
+                                              });
+                                              setSync(false);
+                                            }}
+                                          />
+                                        </li>
+                                      ))}
+                                  </ul>
+                                </li>
+                              ))}
+                          </ul>
+                        </li>
+                      ))}
                   </ul>
                 </li>
               ))}
         </ul>
       </div>
-
+      <Button onClick={() => scrollTo(0, 0)} className="w-full rounded-none">
+        <FontAwesomeIcon icon={faChevronUp} />
+      </Button>
       <Tippy content={t("_pages.home.bills.addBill")}>
         <IconButton
           aria-label={t("_pages.home.bills.addBill")}
