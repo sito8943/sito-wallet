@@ -193,6 +193,43 @@ function AllLogs() {
     return sorted;
   }, [logs, orderBy]);
 
+  const applySearchFilter = (bill, searchLoweredValue) =>
+    searchLoweredValue.length
+      ? stringSimilarity.compareTwoStrings(
+          bill.description.toLowerCase(),
+          searchLoweredValue
+        ) > 0.5
+      : true;
+
+  const applyBalanceTypeFilter = useCallback(
+    (bill) => {
+      if (!bill.deleted) {
+        if (Number(balanceType) === 0) return true;
+        if (Number(balanceType) === 1 && bill.bill) return true;
+        if (Number(balanceType) === 2 && !bill.bill) return true;
+        else if (balanceType === bill.balanceType) return true;
+      }
+      return false;
+    },
+    [balanceType]
+  );
+
+  const printLogs = useCallback(
+    (localLogs) => {
+      const searchLoweredValue = searchValue.toLowerCase();
+      const logsToPrint = [];
+      localLogs.forEach((bill) => {
+        if (
+          applySearchFilter(bill, searchLoweredValue) &&
+          applyBalanceTypeFilter(bill)
+        )
+          logsToPrint.push(bill);
+      });
+      return logsToPrint;
+    },
+    [searchValue, applyBalanceTypeFilter]
+  );
+
   return (
     <main>
       <div className="p-10 sm:p-3 pt-20 mt-20 flex flex-col gap-2 justify-start items-start flex-1">
@@ -247,99 +284,70 @@ function AllLogs() {
                                     {t("_accessibility:day")} {day}
                                   </p>
                                   <ul>
-                                    {logs[year][month][day]
-                                      .reverse()
-                                      .filter((bill) =>
-                                        searchValue.length
-                                          ? stringSimilarity.compareTwoStrings(
-                                              bill.description.toLowerCase(),
-                                              searchValue.toLowerCase()
-                                            ) > 0.5
-                                          : true
-                                      )
-                                      .filter((bill) => {
-                                        if (!bill.deleted) {
-                                          if (Number(balanceType) === 0)
-                                            return true;
-                                          if (
-                                            Number(balanceType) === 1 &&
-                                            bill.bill
-                                          )
-                                            return true;
-                                          if (
-                                            Number(balanceType) === 2 &&
-                                            !bill.bill
-                                          )
-                                            return true;
-                                          else if (
-                                            balanceType === bill.balanceType
-                                          )
-                                            return true;
-                                        }
-                                        return false;
-                                      })
-                                      .map((bill) => (
-                                        <li key={bill.id}>
-                                          <Bill
-                                            {...bill}
-                                            onChangeDescription={(value) => {
-                                              /* setSync(true);
+                                    {printLogs(
+                                      logs[year][month][day].reverse()
+                                    ).map((bill) => (
+                                      <li key={bill.id}>
+                                        <Bill
+                                          {...bill}
+                                          onChangeDescription={(value) => {
+                                            /* setSync(true);
                                           handleBillDescription({
                                             value,
                                             id: bill.id,
                                           }); */
-                                            }}
-                                            onChangeSpent={(value) => {
-                                              /*  setSync(true);
+                                          }}
+                                          onChangeSpent={(value) => {
+                                            /*  setSync(true);
                                           handleBillSpent({
                                             value,
                                             id: bill.id,
                                           }); */
-                                            }}
-                                            onChangeBalanceType={(value) => {
-                                              /* setSync(true);
+                                          }}
+                                          onChangeBalanceType={(value) => {
+                                            /* setSync(true);
 
                                           handleBillBalanceType({
                                             value,
                                             id: bill.id,
                                           }); */
-                                            }}
-                                            onDelete={async () => {
-                                              /* setSync(true); */
-                                              const newBills = [
-                                                ...userState.bills,
-                                              ];
-                                              if (!userState.cached) {
-                                                const { error } =
-                                                  await deleteBill(bill.id);
+                                          }}
+                                          onDelete={async () => {
+                                            /* setSync(true); */
+                                            const newBills = [
+                                              ...userState.bills,
+                                            ];
+                                            if (!userState.cached) {
+                                              const { error } =
+                                                await deleteBill(bill.id);
 
-                                                newBills.splice(
-                                                  newBills.findIndex(
-                                                    (billR) =>
-                                                      billR.id === bill.id
-                                                  ),
-                                                  1
-                                                );
+                                              newBills.splice(
+                                                newBills.findIndex(
+                                                  (billR) =>
+                                                    billR.id === bill.id
+                                                ),
+                                                1
+                                              );
 
-                                                if (error && error !== null)
-                                                  console.error(error.message);
-                                              } else
-                                                newBills[
-                                                  newBills.findIndex(
-                                                    (billR) =>
-                                                      billR.id === bill.id
-                                                  )
-                                                ].deleted = true;
+                                              if (error && error !== null)
+                                                console.error(error.message);
+                                            } else
+                                              newBills[
+                                                newBills.findIndex(
+                                                  (billR) =>
+                                                    billR.id === bill.id
+                                                )
+                                              ].deleted = true;
 
-                                              setUserState({
-                                                type: "init-bills",
-                                                bills: newBills,
-                                              });
-                                              setSync(false);
-                                            }}
-                                          />
-                                        </li>
-                                      ))}
+                                            setUserState({
+                                              type: "init-bills",
+                                              bills: newBills,
+                                            });
+                                            setSync(false);
+                                          }}
+                                        />
+                                      </li>
+                                    ))}
                                   </ul>
                                 </li>
                               ))}
