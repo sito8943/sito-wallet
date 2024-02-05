@@ -37,7 +37,7 @@ function Filters({
           }
           value={searchValue}
           className={`text-sm`}
-          onChange={(e) => setSearchValue(e.target.value.toLowerCase())}
+          onChange={(e) => setSearchValue(e.target.value)}
         />
         <div className="flex gap-2">
           <SelectControl
