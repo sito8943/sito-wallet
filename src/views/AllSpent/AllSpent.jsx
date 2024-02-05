@@ -78,6 +78,7 @@ export default function AllSpent() {
         message: t(`_accessibility:errors.${toCamelCase(error.message)}`),
       });
     setColumns(groupByYearAndMonth(data));
+    console.log(getMaxTotalSpent(data));
     setMax(getMaxTotalSpent(data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setNotification, t, balanceType]);
