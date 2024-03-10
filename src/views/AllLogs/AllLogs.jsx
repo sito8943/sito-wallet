@@ -61,7 +61,7 @@ function AllLogs() {
   const [searchValue, setSearchValue] = useState("");
 
   const onChangeBalanceType = (value) => {
-    setBalanceType(value);
+    setBalanceType(Number(value));
   };
 
   const [logs, setLogs] = useState([]);
@@ -204,9 +204,9 @@ function AllLogs() {
   const applyBalanceTypeFilter = useCallback(
     (bill) => {
       if (!bill.deleted) {
-        if (Number(balanceType) === 0) return true;
-        if (Number(balanceType) === 1 && bill.bill) return true;
-        if (Number(balanceType) === 2 && !bill.bill) return true;
+        if (balanceType === 0) return true;
+        if (balanceType === 1 && bill.bill) return true;
+        if (balanceType === 2 && !bill.bill) return true;
         else if (balanceType === bill.balanceType) return true;
       }
       return false;
@@ -225,7 +225,8 @@ function AllLogs() {
         )
           logsToPrint.push(bill);
       });
-      return logsToPrint;
+      if (logsToPrint.length) return logsToPrint;
+      return undefined;
     },
     [searchValue, applyBalanceTypeFilter]
   );
@@ -264,7 +265,7 @@ function AllLogs() {
                   <div className="w-full h-[44px] skeleton-box" />
                 </li>
               ))
-            : sortedLogs.map((year) => (
+            : sortedLogs?.map((year) => (
                 <li key={year}>
                   <p className="text-4xl poppins">{year}</p>
                   <ul>
@@ -286,7 +287,7 @@ function AllLogs() {
                                   <ul>
                                     {printLogs(
                                       logs[year][month][day].reverse()
-                                    ).map((bill) => (
+                                    )?.map((bill) => (
                                       <li key={bill.id}>
                                         <Bill
                                           {...bill}
