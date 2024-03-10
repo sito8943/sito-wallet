@@ -139,9 +139,9 @@ function SignUp() {
       {goToVerify ? (
         <div className="form bg-light-dark dark:bg-dark-dark appear items-center">
           <h1 className="text-success text-center text-4xl">
-            {t("_pages:signUp.titleThanksFor")}
+            {t("_pages:auth.signUp.titleThanksFor")}
           </h1>
-          <p className="text-center">{t("_pages:signUp.thanksFor")}</p>
+          <p className="text-center">{t("_pages:auth.signUp.thanksFor")}</p>
           <Link
             to="/auth"
             name="sign-in"
@@ -240,7 +240,7 @@ function SignUp() {
               type="submit"
               color="primary"
               shape="filled"
-              aria-label={t("_pages:auth.signUp.nextAriaLabel")}
+              aria-label={t("_pages:auth.auth.signUp.nextAriaLabel")}
             >
               {t("_accessibility:buttons.next")}
             </Button>
