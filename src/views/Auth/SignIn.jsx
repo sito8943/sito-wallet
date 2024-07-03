@@ -204,19 +204,6 @@ function SignIn() {
           inactiveColor="basics"
           onChange={() => setRemember((remember) => !remember)}
         />
-        <p className="dark:text-white">
-          {t("_pages:auth.toSignUp.label")}{" "}
-          <Link
-            to="/auth/sign-up"
-            name="to-signUp"
-            aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
-              "_pages:routes.signUp"
-            )}`}
-            className="underline primary"
-          >
-            {t("_pages:routes.signUp")}
-          </Link>
-        </p>
         <div className="w-full flex gap-5 justify-end items-center">
           <Button
             name="login"
