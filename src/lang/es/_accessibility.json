@@ -8,6 +8,14 @@
     "failedToFetch": "No hay conexión",
     "invalidLoginCredentials": "Usuario o contraseña incorrecta"
   },
+  "common": {
+    "day": "día",
+    "days": "días",
+    "hours": "horas",
+    "minutes": "minutos",
+    "left": "restantes",
+    "and": "and"
+  },
   "day": "Día",
   "year": "Año",
   "month": "Mes",

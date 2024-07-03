@@ -107,7 +107,7 @@ function Header({ setSync }) {
   const textDays = useMemo(() => {
     switch (true) {
       case leftDays === 1:
-        return `${leftDays} día`;
+        return `${leftDays} ${t("_accessibility:common.day")}`;
       case leftDays < 1: {
         const now = new Date();
 
@@ -121,12 +121,16 @@ function Header({ setSync }) {
           (difference % (1000 * 60 * 60)) / (1000 * 60)
         );
 
-        return `${hoursLeft} horas y ${minutesLeft} minutos restantes`;
+        return `${hoursLeft} ${t("_accessibility:common.hours")} ${t(
+          "_accessibility:common.and"
+        )} ${minutesLeft} ${t("_accessibility:common.minutes")} ${t(
+          "_accessibility:common.left"
+        )}`;
       }
       default:
-        return `${leftDays} días`;
+        return `${leftDays} ${t("_accessibility:common.days")}`;
     }
-  }, [leftDays]);
+  }, [leftDays, t]);
 
   const severity = useMemo(() => {
     let color = "success";

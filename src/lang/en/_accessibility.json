@@ -8,6 +8,14 @@
     "failedToFetch": "No connected",
     "invalidLoginCredentials": "Wrong user or password"
   },
+  "common": {
+    "day": "day",
+    "days": "days",
+    "hours": "hours",
+    "minutes": "minutes",
+    "left": "left",
+    "and": "and"
+  },
   "day": "Day",
   "year": "Year",
   "month": "Month",

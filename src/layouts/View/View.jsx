@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { scrollTo } from "some-javascript-utils/browser";
+import { useTranslation } from "react-i18next";
 
 // @emotion/css
 import { css } from "@emotion/css";
@@ -22,6 +23,8 @@ function View() {
   const { userState } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!userState.user) navigate("/auth");
@@ -51,7 +54,8 @@ function View() {
       >
         <div className="overflow-hidden">
           <p className="text-center p-2">
-            No hay conexión <FontAwesomeIcon icon={faExclamationCircle} />
+            {t("_accessibility:errors.failedToFetch")}{" "}
+            <FontAwesomeIcon icon={faExclamationCircle} />
           </p>
         </div>
       </div>
