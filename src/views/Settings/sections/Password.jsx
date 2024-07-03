@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+
+// icons
 import { faLock, faLockOpen } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @sito/ui
 import {
@@ -13,7 +16,6 @@ import {
 
 // services
 import { updatePassword } from "../../../services/auth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Password() {
   const { t } = useTranslation();
