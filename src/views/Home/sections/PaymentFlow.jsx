@@ -97,7 +97,7 @@ function PaymentFlow() {
         </h3>
         <Link
           to="/spent"
-          className="button secondary mb-5 !p-0 !bg-[#00000000] cursor-pointer"
+          className="button primary mb-5 !p-0 !bg-[#00000000] cursor-pointer"
         >
           {t("_pages:routes.allSpent")}
         </Link>

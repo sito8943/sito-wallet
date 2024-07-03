@@ -374,7 +374,7 @@ function AllLogs() {
               200
             );
           }}
-          color="secondary"
+          color="primary"
           shape="filled"
           icon={<FontAwesomeIcon icon={faAdd} />}
           className={`aGrow fixed bottom-3 right-3 scale-100 transition duration-300 ease-in-out`}

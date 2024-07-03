@@ -9,7 +9,7 @@ import { useMode } from "@sito/ui";
 // components
 import FAB from "../FAB/FAB";
 
-function ModeButton({ className, color = "secondary" }) {
+function ModeButton({ className, color = "primary" }) {
   const { toggleMode, mode } = useMode();
 
   const { t } = useTranslation();

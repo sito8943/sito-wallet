@@ -222,7 +222,7 @@ function Bills({ setSync }) {
           </h3>
           <Link
             to="/logs"
-            className="button secondary mb-5 !p-0 !bg-[#00000000] cursor-pointer"
+            className="button primary mb-5 !p-0 !bg-[#00000000] cursor-pointer"
           >
             {t("_pages:routes.allLogs")}
           </Link>
@@ -243,7 +243,7 @@ function Bills({ setSync }) {
           <Tippy content={t("_pages:home.bills.addBill")}>
             <IconButton
               ref={addButton}
-              color="secondary"
+              color="primary"
               shape="filled"
               aria-label={t("_pages:home.bills.addBill")}
               name="add-bill"
@@ -337,7 +337,7 @@ function Bills({ setSync }) {
               200
             );
           }}
-          color="secondary"
+          color="primary"
           shape="filled"
           icon={<FontAwesomeIcon icon={faAdd} />}
           className={`aGrow fixed bottom-3 right-3 ${
