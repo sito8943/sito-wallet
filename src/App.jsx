@@ -32,7 +32,6 @@ import { toCamelCase } from "./utils/parsers";
 // views
 const SignIn = loadable(() => import("./views/Auth/SignIn"));
 const SignOut = loadable(() => import("./views/Auth/SignOut"));
-const SignUp = loadable(() => import("./views/Auth/SignUp"));
 const Home = loadable(() => import("./views/Home/Home"));
 const NotFound = loadable(() => import("./views/NotFound/NotFound"));
 const Settings = loadable(() => import("./views/Settings/Settings"));
@@ -137,7 +136,6 @@ function App() {
             <Routes>
               <Route exact path="/auth" element={<Auth />}>
                 <Route index element={<SignIn />} />
-                <Route path="/auth/sign-up" element={<SignUp />} />
               </Route>
               <Route path="/" element={<View />}>
                 <Route index element={<Home />} />
