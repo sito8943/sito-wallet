@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 // @emotion/css
 import { css } from "@emotion/css";
 
+// icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 
