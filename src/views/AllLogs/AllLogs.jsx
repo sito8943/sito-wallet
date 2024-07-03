@@ -363,9 +363,9 @@ function AllLogs() {
       <Button onClick={() => scrollTo(0, 0)} className="w-full rounded-none">
         <FontAwesomeIcon icon={faChevronUp} />
       </Button>
-      <Tippy content={t("_pages.home.bills.addBill")}>
+      <Tippy content={t("_pages:home.bills.addBill")}>
         <IconButton
-          aria-label={t("_pages.home.bills.addBill")}
+          aria-label={t("_pages:home.bills.addBill")}
           name="floating-add-bill"
           onClick={async () => {
             const id = await addBill();

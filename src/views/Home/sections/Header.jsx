@@ -307,7 +307,7 @@ function Header({ setSync }) {
             type="submit"
             shape="filled"
             color="primary"
-            aria-label={t("_pages.home.dialog.acceptToStart")}
+            aria-label={t("_pages:home.dialog.acceptToStart")}
             name="set-initial"
           >
             {t("_accessibility:buttons.accept")}

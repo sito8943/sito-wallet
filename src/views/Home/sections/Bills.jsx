@@ -240,12 +240,12 @@ function Bills({ setSync }) {
               }
             />
           </Tippy>
-          <Tippy content={t("_pages.home.bills.addBill")}>
+          <Tippy content={t("_pages:home.bills.addBill")}>
             <IconButton
               ref={addButton}
               color="secondary"
               shape="filled"
-              aria-label={t("_pages.home.bills.addBill")}
+              aria-label={t("_pages:home.bills.addBill")}
               name="add-bill"
               onClick={addBill}
               icon={<FontAwesomeIcon icon={faAdd} />}
@@ -326,9 +326,9 @@ function Bills({ setSync }) {
           </>
         )}
       </ul>
-      <Tippy content={t("_pages.home.bills.addBill")}>
+      <Tippy content={t("_pages:home.bills.addBill")}>
         <IconButton
-          aria-label={t("_pages.home.bills.addBill")}
+          aria-label={t("_pages:home.bills.addBill")}
           name="floating-add-bill"
           onClick={async () => {
             const id = await addBill();
