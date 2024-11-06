@@ -39,7 +39,6 @@ function BalanceTypes({ setSync }) {
   const [asc, setAsc] = useState(false);
 
   const [toUpdate, setToUpdate] = useState({});
-  const [balanceCreated, setBalanceCreated] = useState(false);
 
   const updateLocalBalance = async (balance) => {
     const balances = [...userState.balances];
@@ -142,7 +141,6 @@ function BalanceTypes({ setSync }) {
     handleBalanceDescription,
     handleBalanceBill,
     setUserState,
-    balanceCreated,
   ]);
 
   const addBalance = async () => {
@@ -160,7 +158,6 @@ function BalanceTypes({ setSync }) {
       type: "init-balances",
       balances: [...userState.balances, newBalance],
     });
-    setBalanceCreated((balanceCreated) => !balanceCreated);
     return newBalance.id;
   };
 
@@ -230,12 +227,11 @@ function BalanceTypes({ setSync }) {
               }
             />
           </Tippy>
-          <Tippy>
-            {" "}
-            content=
-            {`${t("_accessibility:ariaLabels.add")} ${t(
+          <Tippy
+            content={`${t("_accessibility:ariaLabels.add")} ${t(
               "_accessibility:types.balanceTypes"
             )}`}
+          >
             <IconButton
               aria-label={`${t("_accessibility:ariaLabels.add")} ${t(
                 "_accessibility:types.balanceTypes"
