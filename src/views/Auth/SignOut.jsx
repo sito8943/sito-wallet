@@ -1,37 +1,47 @@
+import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
-// @sito/ui
-import { Loading } from "@sito/ui";
+// providers
+import { useAccount } from "../../providers/AccountProvider";
+import { useAppApiClient } from "../../providers/AppApiProvider";
 
-// contexts
-import { useUser } from "../../providers/UserProvider";
+// components
+import { SplashScreen } from "@sito/ui";
 
-// utils
-import { logoutUser } from "../../utils/auth";
-
-// services
-import { signOutUser } from "../../services/auth";
-
+/**
+ * SignOut page
+ * @returns SignOut page component
+ */
 function SignOut() {
-  const navigate = useNavigate();
-  const { setUserState } = useUser();
+  const { t } = useTranslation();
+  const { logoutUser } = useAccount();
 
-  const signOut = async () => {
-    const error = await signOutUser();
-    if (error && error !== null) console.error(error);
+  const appApiClient = useAppApiClient();
+
+  const navigate = useNavigate();
+
+  const logic = useCallback(async () => {
+    await appApiClient.User.logout();
     logoutUser();
-    setUserState({ type: "logged-out" });
-    navigate("/auth");
-  };
+    setTimeout(() => {
+      navigate("/auth");
+    }, 1000);
+  }, [appApiClient.User, logoutUser, navigate]);
 
   useEffect(() => {
-    signOut();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    logic();
+  }, [logic]);
 
   return (
-    <Loading className="w-full h-screen bg-light-dark dark:bg-dark-dark" />
+    <SplashScreen
+      visible
+      logo={
+        <div>
+          <h1 className="uppercase">{t("_accessibility:appName")}</h1>
+        </div>
+      }
+    />
   );
 }
 

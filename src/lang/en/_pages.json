@@ -84,5 +84,8 @@
         "title": "Security"
       }
     }
+  },
+  "notFound": {
+    "title": "Page not found"
   }
 }

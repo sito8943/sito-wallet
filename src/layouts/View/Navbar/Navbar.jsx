@@ -1,25 +1,26 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Tippy from "@tippyjs/react";
 
-// font awesome
+// icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faChevronLeft,
   faArrowRightFromBracket,
-  faGear,
   faMoon,
   faSun,
+  faGear,
 } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
 import { IconButton, useMode } from "@sito/ui";
 
 // providers
-import { useUser } from "../../../providers/UserProvider";
+import { useAccount } from "../../../../providers/AccountProvider";
 
 // images
-import noPhoto from "../../../assets/images/no-photo.webp";
+import noPhoto from "../../../../assets/images/no-photo.webp";
 
 // styles
 import "./styles.css";
@@ -27,8 +28,10 @@ import "./styles.css";
 function Navbar() {
   const { t } = useTranslation();
 
-  const { userState } = useUser();
+  const { account } = useAccount();
   const { toggleMode, mode } = useMode();
+
+  const { id } = useParams();
 
   const [transparency, setTransparency] = useState(true);
 
@@ -56,27 +59,42 @@ function Navbar() {
         className={`relative backdrop-blur-[1rem] rounded-[100px] flex w-full justify-between py-3 px-5 xs:px-3 `}
       >
         <div
-          className={` absolute w-full h-full top-0 left-0 rounded-[100px] opacity-90 ${
+          className={` absolute pointer-events-none w-full h-full top-0 left-0 rounded-[100px] opacity-90 ${
             transparency ? "" : "blur-background"
           }`}
         ></div>
-        <Link
-          aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
-            "_pages:routes.home"
-          )}`}
-          name="go-home"
-          to="/"
-          className="z-10 flex gap-2 items-center primary"
-        >
-          <img
-            src={noPhoto}
-            alt="user-photo"
-            className="rounded-full w-10 h-10 object-contain"
-          />
-          <h1 className="capitalize text-xl">
-            {userState.user?.email?.split("@")[0]}
-          </h1>
-        </Link>
+        <div className="flex gap-3">
+          {id ? (
+            <Link
+              to="/"
+              name="to-home"
+              aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
+                "_pages:routes.home"
+              )}`}
+              className="button icon-button primary"
+            >
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </Link>
+          ) : (
+            <Link
+              aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
+                "_pages:routes.home"
+              )}`}
+              name="go-home"
+              to="/"
+              className="z-10 flex gap-2 items-center primary"
+            >
+              <img
+                src={noPhoto}
+                alt="user-photo"
+                className="rounded-full w-10 h-10 object-contain"
+              />
+              <h1 className="capitalize text-xl">
+                {account.user?.email?.split("@")[0]}
+              </h1>
+            </Link>
+          )}
+        </div>
         <nav className="z-10 flex">
           <Tippy
             content={
@@ -97,24 +115,30 @@ function Navbar() {
               icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
             />
           </Tippy>
-          <Link
-            to="/settings"
-            name="toggle-theme"
-            aria-label={`${t("_accessibility:ariaLabels.goTO")} ${t(
-              "_pages:routes.settings"
-            )}`}
-            className="primary button icon-button "
-          >
-            <FontAwesomeIcon icon={faGear} />
-          </Link>
-          <Link
-            to="/sign-out"
-            name="logout"
-            aria-label={t("_pages:routes.signOut")}
-            className="button icon-button primary"
-          >
-            <FontAwesomeIcon icon={faArrowRightFromBracket} />
-          </Link>
+          {id ? (
+            <></>
+          ) : (
+            <>
+              <Link
+                to="/settings"
+                name="toggle-theme"
+                aria-label={`${t("_accessibility:ariaLabels.goTO")} ${t(
+                  "_pages:routes.settings"
+                )}`}
+                className="primary button icon-button "
+              >
+                <FontAwesomeIcon icon={faGear} />
+              </Link>
+              <Link
+                to="/sign-out"
+                name="logout"
+                aria-label={t("_pages:routes.signOut")}
+                className="button icon-button primary"
+              >
+                <FontAwesomeIcon icon={faArrowRightFromBracket} />
+              </Link>
+            </>
+          )}
         </nav>
       </div>
     </header>

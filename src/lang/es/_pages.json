@@ -84,5 +84,8 @@
         "title": "Seguridad"
       }
     }
+  },
+  "notFound": {
+    "title": "Página no encontrada"
   }
 }

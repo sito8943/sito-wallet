@@ -4,7 +4,9 @@ import ReactDOM from "react-dom/client";
 import { StyleProvider, ModeProvider, NotificationProvider } from "@sito/ui";
 
 // providers
-import { UserProvider } from "./providers/UserProvider.jsx";
+import { AppApiClientProvider } from "./providers/AppApiProvider.jsx";
+import { AccountProvider } from "./providers/AccountProvider.jsx";
+import { CacheProvider } from "./providers/CacheProvider.jsx";
 
 // APP
 import App from "./App.jsx";
@@ -23,12 +25,16 @@ import "./i18.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ModeProvider>
-    <StyleProvider>
-      <NotificationProvider>
-        <UserProvider>
-          <App />
-        </UserProvider>
-      </NotificationProvider>
-    </StyleProvider>
+    <AppApiClientProvider>
+      <AccountProvider>
+        <StyleProvider>
+          <CacheProvider>
+            <NotificationProvider>
+                <App />
+            </NotificationProvider>
+          </CacheProvider>
+        </StyleProvider>
+      </AccountProvider>
+    </AppApiClientProvider>
   </ModeProvider>
 );

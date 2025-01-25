@@ -1,6 +1,7 @@
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { deleteCookie } from "some-javascript-utils/browser";
 import { css } from "@emotion/css";
 
 // @sito/ui
@@ -14,11 +15,13 @@ import {
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faLockOpen, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faLockOpen } from "@fortawesome/free-solid-svg-icons";
 
 // providers
-import { useAccount } from "../../providers/AccountProvider";
 import { useAppApiClient } from "../../providers/AppApiProvider";
+
+// config
+import config from "../../config";
 
 // styles
 import "./styles.css";
@@ -29,21 +32,19 @@ const transition = css({
   transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
 });
 
-function SignIn() {
+/**
+ * UpdatePassword page
+ * @returns UpdatePassword page component
+ */
+function UpdatePassword() {
   const { t } = useTranslation();
 
-  const { logUser } = useAccount();
-
-  const [appear, setAppear] = useState(false);
-
+  const navigate = useNavigate();
   const appApiClient = useAppApiClient();
 
   const { setNotification } = useNotification();
 
-  const [user, setUser] = useState("");
-  const [userHelperText, setUserHelperText] = useState("");
-
-  const handleUser = (e) => setUser(e.target.value);
+  const [appear, setAppear] = useState(false);
 
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -53,59 +54,48 @@ function SignIn() {
 
   const toggleShowPassword = () => setShowPassword((oldValue) => !oldValue);
 
+  const [rPassword, setRPassword] = useState("");
+  const [showRPassword, setRShowPassword] = useState(false);
+
+  const handleRPassword = (e) => setRPassword(e.target.value);
+
+  const toggleRShowPassword = () => setRShowPassword((oldValue) => !oldValue);
+
   const [saving, setSaving] = useState(false);
 
   const onSubmit = useCallback(
     async (e) => {
       e.preventDefault();
       setSaving(true);
-      setUserHelperText("");
       setPasswordHelperText("");
 
-      if (!user.length) {
-        document.getElementById("user")?.focus();
-        setUserHelperText(t("_accessibility:errors.emailRequired"));
-        setSaving(false);
-        return;
-      }
       if (!password.length) {
         document.getElementById("password")?.focus();
         setPasswordHelperText(t("_accessibility:errors.passwordRequired"));
         setSaving(false);
         return;
       }
-
+      if (password !== rPassword) {
+        setSaving(false);
+        // eslint-disable-next-line no-console
+        console.error(t("_accessibility:errors.passwordDoNotMatch"));
+        return setNotification(t("_accessibility:errors.passwordDoNotMatch"));
+      }
       try {
-        const response = await appApiClient.User.login(user, password);
-        const data = await response.json();
-        if (data.status) {
-          if (data.status === 404)
-            setUserHelperText(
-              t(`_accessibility:messages.404`, {
-                model: t("_entities:entities.user"),
-              })
-            );
-          else if (data.status === 401 || data.status === 400)
-            setPasswordHelperText(t("_accessibility:messages.401"));
-          else {
-            const request = await appApiClient.User.fetchUserSettings(
-              data.user.id
-            );
-            const settings = await request.json();
-            if (settings) logUser({ ...data, settings });
-            else logUser({ ...data });
-          }
-        }
-      } catch (error) {
+        await appApiClient.User.updatePassword(password);
+        setNotification(t("_pages:auth.updatePassword.sent"), {}, "good");
+
+        deleteCookie(config.recovering);
+        setTimeout(() => navigate("/sign-out"), 2000);
+      } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
         // set server status to notification
         setNotification(String(e.status));
       }
-
       setSaving(false);
     },
-    [user, password, t, appApiClient.User, logUser, setNotification]
+    [appApiClient.User, navigate, password, rPassword, setNotification, t]
   );
 
   useEffect(() => {
@@ -131,32 +121,17 @@ function SignIn() {
         onSubmit={onSubmit}
         className="form bg-light-dark dark:bg-dark-dark appear"
       >
-        <h2
-          className={`w-full text-2xl md:text-3xl font-bold ${transition} !delay-100 ${
+        <Link
+          to="/auth"
+          className={`flex gap-2 items-start flex-col ${transition} !delay-100 ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
-          {t("_pages:auth.signIn.title")}
-        </h2>
-        <div
-          className={`${transition} !delay-200 ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          <InputControl
-            id="user"
-            label={t("_accessibility:inputs.email.label")}
-            className={`sign-in-input`}
-            value={user}
-            onChange={handleUser}
-            leftComponent={
-              <div className="icon-button button -ml-3">
-                <FontAwesomeIcon className="primary" icon={faUser} />
-              </div>
-            }
-            helperText={userHelperText}
-          />
-        </div>
+          <h2 className={`w-full text-2xl md:text-3xl font-bold`}>
+            {t("_pages:auth.updatePassword.title")}
+          </h2>
+        </Link>
+
         <div
           className={`${transition} !delay-300 ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
@@ -188,15 +163,35 @@ function SignIn() {
             helperText={passwordHelperText}
           />
         </div>
-        <div className="w-full mb-5">
-          <Link
-            to="/auth/recovery"
-            className={`underline text-left ${transition} !delay-[400ms] ${
-              appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-            }`}
-          >
-            {t("_pages:auth.signIn.passwordRecovery")}
-          </Link>
+        <div
+          className={`${transition} !delay-300 ${
+            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+          }`}
+        >
+          <InputControl
+            id="password"
+            className={`sign-in-input`}
+            value={password}
+            onChange={handleRPassword}
+            type={!showPassword ? "password" : "text"}
+            label={t("_accessibility:inputs.rPassword")}
+            leftComponent={
+              <IconButton
+                tabIndex={-1}
+                name="toggle-see-password"
+                onClick={toggleRShowPassword}
+                icon={
+                  <FontAwesomeIcon icon={showRPassword ? faLockOpen : faLock} />
+                }
+                className="-ml-3"
+                aria-label={`${t(
+                  `_accessibility:inputs.rPassword.${
+                    showRPassword ? "showPassword" : "hidePassword"
+                  }`
+                )}`}
+              />
+            }
+          />
         </div>
         <div className="w-full flex gap-5 justify-end items-center">
           <Button
@@ -209,7 +204,7 @@ function SignIn() {
               appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
             }`}
           >
-            {t("_accessibility:buttons.signIn")}
+            {t("_accessibility:buttons.submit")}
           </Button>
         </div>
       </form>
@@ -217,4 +212,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default UpdatePassword;
