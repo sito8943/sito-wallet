@@ -1,0 +1,94 @@
+import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
+
+// providers
+import { useManager } from "providers";
+
+// components
+import { ConfirmationDialog, Error, Page, PrettyGrid } from "components";
+import {
+  AddCurrencyDialog,
+  CurrencyCard,
+  EditCurrencyDialog,
+} from "./components";
+
+// hooks
+import {
+  useDeleteDialog,
+  useCurrenciesList,
+  CurrenciesQueryKeys,
+  useRestoreDialog,
+} from "hooks";
+import { useAddCurrency, useEditCurrency } from "./hooks";
+
+// types
+import { CurrencyDto } from "lib";
+
+export function Currencies() {
+  const { t } = useTranslation();
+
+  const manager = useManager();
+
+  const { data, isLoading, error } = useCurrenciesList({});
+
+  // #region actions
+
+  const deleteCurrency = useDeleteDialog({
+    mutationFn: (data) => manager.Currencies.softDelete(data),
+    ...CurrenciesQueryKeys.all(),
+  });
+
+  const restoreCurrency = useRestoreDialog({
+    mutationFn: (data) => manager.Currencies.restore(data),
+    ...CurrenciesQueryKeys.all(),
+  });
+
+  const addCurrency = useAddCurrency();
+
+  const editCurrency = useEditCurrency();
+
+  // #endregion
+
+  const getActions = useCallback(
+    (record: CurrencyDto) => [
+      deleteCurrency.action(record),
+      restoreCurrency.action(record),
+    ],
+    [deleteCurrency, restoreCurrency]
+  );
+
+  return (
+    <Page
+      title={t("_pages:currencies.title")}
+      isLoading={isLoading}
+      addOptions={{
+        onClick: () => addCurrency.onClick(),
+        disabled: isLoading,
+        tooltip: t("_pages:currencies.add"),
+      }}
+    >
+      {!error ? (
+        <>
+          <PrettyGrid
+            data={data?.items}
+            emptyMessage={t("_pages:currencies.empty")}
+            renderComponent={(account) => (
+              <CurrencyCard
+                actions={getActions(account)}
+                onClick={(id: number) => editCurrency.onClick(id)}
+                {...account}
+              />
+            )}
+          />
+          {/* Dialogs */}
+          <AddCurrencyDialog {...addCurrency} />
+          <EditCurrencyDialog {...editCurrency} />
+          <ConfirmationDialog {...deleteCurrency} />
+          <ConfirmationDialog {...restoreCurrency} />
+        </>
+      ) : (
+        <Error message={error?.message} />
+      )}
+    </Page>
+  );
+}

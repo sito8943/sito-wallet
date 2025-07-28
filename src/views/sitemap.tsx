@@ -4,6 +4,7 @@ import { ViewPageType } from "./types.js";
 export enum PageId {
   Home = "home",
   Accounts = "accounts",
+  Currencies = "currencies",
   NotFound = "not-found",
 }
 
@@ -15,6 +16,10 @@ export const sitemap: ViewPageType[] = [
   {
     key: PageId.Accounts,
     path: "/accounts",
+  },
+  {
+    key: PageId.Currencies,
+    path: "/currencies",
   },
   {
     key: PageId.NotFound,

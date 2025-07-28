@@ -45,6 +45,11 @@ const Accounts = loadable(() =>
     default: module.Accounts,
   }))
 );
+const Currencies = loadable(() =>
+  import("views").then((module) => ({
+    default: module.Currencies,
+  }))
+);
 
 function App() {
   return (
@@ -61,6 +66,7 @@ function App() {
           <Route path="/" element={<View />}>
             <Route index element={<Home />} />
             <Route path="/accounts" element={<Accounts />} />
+            <Route path="/currencies" element={<Currencies />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

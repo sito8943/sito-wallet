@@ -41,6 +41,16 @@
       "editAria": "Click to edit account"
     }
   },
+  "currencies": {
+    "title": "Currencies",
+    "empty": "No currencies to load",
+    "add": "Add a currency",
+    "forms": {
+      "add": "New currency",
+      "edit": "Edit currency",
+      "editAria": "Click to edit currency"
+    }
+  },
   "footer": {
     "copyright": "Sito Account App ©"
   }

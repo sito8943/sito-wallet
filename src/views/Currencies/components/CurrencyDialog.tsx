@@ -1,0 +1,87 @@
+import { useTranslation } from "react-i18next";
+import { Controller } from "react-hook-form";
+
+// @sito/dashboard
+import { TextInput } from "@sito/dashboard";
+
+// components
+import { FormDialog, ParagraphInput } from "components";
+
+// types
+import {
+  AddCurrencyDialogPropsType,
+  CurrencyFormPropsType,
+  EditCurrencyDialogPropsType,
+} from "../types";
+
+// lib
+import { Tables } from "lib";
+
+export function CurrencyForm(props: CurrencyFormPropsType) {
+  const { control, isLoading } = props;
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <Controller
+        control={control}
+        render={({ field }) => <input {...field} type="hidden" />}
+        name="id"
+      />
+      <Controller
+        control={control}
+        rules={{
+          required: `t("_entities:account.name.required")`,
+        }}
+        name="name"
+        disabled={isLoading}
+        render={({ field: { value, ...rest } }) => (
+          <TextInput
+            required
+            maxLength={20}
+            value={value ?? ""}
+            autoComplete={`${Tables.Currencies}-${t(
+              "_entities:account.name.label"
+            )}`}
+            label={t("_entities:account.name.label")}
+            placeholder={t("_entities:account.name.placeholder")}
+            {...rest}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="description"
+        disabled={isLoading}
+        render={({ field: { value, ...rest } }) => (
+          <ParagraphInput
+            maxLength={60}
+            value={value ?? ""}
+            autoComplete={`${Tables.Currencies}-${t(
+              "_entities:account.description.label"
+            )}`}
+            label={t("_entities:account.description.label")}
+            placeholder={t("_entities:account.description.placeholder")}
+            {...rest}
+          />
+        )}
+      />
+    </>
+  );
+}
+
+export function AddCurrencyDialog(props: AddCurrencyDialogPropsType) {
+  return (
+    <FormDialog {...props}>
+      <CurrencyForm {...props} />
+    </FormDialog>
+  );
+}
+
+export function EditCurrencyDialog(props: EditCurrencyDialogPropsType) {
+  return (
+    <FormDialog {...props}>
+      <CurrencyForm {...props} />
+    </FormDialog>
+  );
+}

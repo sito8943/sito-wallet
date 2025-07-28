@@ -1,13 +1,16 @@
 export enum Tables {
   Accounts = "accounts",
+  Currencies = "currencies",
 }
 
 export enum TablesCamelCase {
   Accounts = "accounts",
+  Currencies = "currencies",
 }
 
 export enum EntityName {
   Account = "account",
+  Currency = "currency",
 }
 
 export type APIError = {
