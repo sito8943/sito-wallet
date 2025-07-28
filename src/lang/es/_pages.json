@@ -1,7 +1,7 @@
 {
   "home": {
     "title": "Inicio",
-    "appName": "Inventario"
+    "appName": "Sito Wallet"
   },
   "common": {
     "actions": {
@@ -18,50 +18,17 @@
       }
     }
   },
-  "movements": {
-    "title": "Movimientos",
-    "empty": "No hay movimientos para mostrar",
-    "add": "Agregar un movimiento",
-    "actions": {},
+  "accounts": {
+    "title": "Cuentas",
+    "empty": "No hay cuentas para mostrar",
+    "add": "Agregar una cuenta",
     "forms": {
-      "add": "Nuevo Movimiento",
-      "edit": "Editar Movimiento",
-      "editAria": "Haz clic para editar el movimiento"
-    }
-  },
-  "products": {
-    "title": "Productos",
-    "empty": "No hay productos para mostrar",
-    "add": "Agregar un producto",
-    "actions": {
-      "doMovement": {
-        "notFound": "Producto no encontrado",
-        "notEnoughStock": "Stock insuficiente",
-        "successMessage": "Movimiento realizado exitosamente"
-      }
-    },
-    "forms": {
-      "add": "Nuevo producto",
-      "edit": "Editar producto",
-      "editAria": "Haz clic para editar el producto",
-      "movementLogs": "Registros de movimientos",
-      "doMovement": "Agregar movimiento"
-    }
-  },
-  "categories": {
-    "title": "Categorías",
-    "empty": "No hay categorías para mostrar",
-    "add": "Agregar una categoría",
-    "forms": {
-      "add": "Nueva categoría",
-      "edit": "Editar categoría",
-      "editAria": "Haz clic para editar la categoría"
-    },
-    "errors": {
-      "withProducts": "Esta categoría tiene productos. Por favor elimina los productos primero"
+      "add": "Nueva cuenta",
+      "edit": "Editar cuenta",
+      "editAria": "Haz clic para editar la cuenta"
     }
   },
   "footer": {
-    "copyright": "Sito Wallet App ©"
+    "copyright": "Sito Wallet ©"
   }
 }

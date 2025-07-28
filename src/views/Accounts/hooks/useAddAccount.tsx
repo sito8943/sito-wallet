@@ -4,33 +4,33 @@ import { useTranslation } from "react-i18next";
 import { useManager } from "providers";
 
 // hooks
-import { useFormDialog, WalletsQueryKeys } from "hooks";
+import { useFormDialog, AccountsQueryKeys } from "hooks";
 
 // utils
-import { dtoToForm, emptyWallet, formToDto } from "../utils";
+import { dtoToForm, emptyAccount, formToDto } from "../utils";
 
 // types
-import { AddWalletDto, WalletDto } from "lib";
-import { WalletFormType } from "../types";
+import { AddAccountDto, AccountDto } from "lib";
+import { AccountFormType } from "../types";
 
-export function useAddWallet() {
+export function useAddAccount() {
   const { t } = useTranslation();
 
   const manager = useManager();
 
   const { handleSubmit, ...rest } = useFormDialog<
-    WalletDto,
-    AddWalletDto,
-    WalletDto,
-    WalletFormType
+    AccountDto,
+    AddAccountDto,
+    AccountDto,
+    AccountFormType
   >({
     formToDto,
     dtoToForm,
-    defaultValues: emptyWallet,
-    mutationFn: (data) => manager.Wallets.insert(data),
+    defaultValues: emptyAccount,
+    mutationFn: (data) => manager.Accounts.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:categories.forms.add"),
-    ...WalletsQueryKeys.all(),
+    ...AccountsQueryKeys.all(),
   });
 
   return {

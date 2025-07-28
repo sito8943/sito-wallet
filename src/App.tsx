@@ -19,9 +19,9 @@ const NotFound = loadable(() =>
     default: module.NotFound,
   }))
 );
-const Wallets = loadable(() =>
+const Accounts = loadable(() =>
   import("views").then((module) => ({
-    default: module.Wallets,
+    default: module.Accounts,
   }))
 );
 
@@ -32,7 +32,7 @@ function App() {
         <Routes>
           <Route path="/" element={<View />}>
             <Route index element={<Home />} />
-            <Route path="/wallets" element={<Wallets />} />
+            <Route path="/accounts" element={<Accounts />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

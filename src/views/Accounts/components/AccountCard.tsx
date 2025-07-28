@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 import { ItemCard } from "components";
 
 // types
-import { WalletCardPropsType } from "../types";
+import { AccountCardPropsType } from "../types";
 
-export function WalletCard(props: WalletCardPropsType) {
+export function AccountCard(props: AccountCardPropsType) {
   const { t } = useTranslation();
 
   const { id, onClick, actions, name, description, deleted } = props;

@@ -17,11 +17,11 @@
       "label": "Created At"
     }
   },
-  "wallet": {
+  "account": {
     "name": {
       "label": "Name",
       "placeholder": "Ex: Personal",
-      "unique": "There is a wallet with that name already",
+      "unique": "There is a account with that name already",
       "required": "Name is required"
     },
     "description": {

@@ -1,14 +1,14 @@
-import WalletClient from "./WalletClient";
+import AccountClient from "./AccountClient";
 
 export class Manager {
-  wallets: WalletClient = new WalletClient();
+  accounts: AccountClient = new AccountClient();
 
   constructor() {}
 
   /**
-   * @returns wallets
+   * @returns accounts
    */
-  get Wallets(): WalletClient {
-    return this.wallets;
+  get Accounts(): AccountClient {
+    return this.accounts;
   }
 }

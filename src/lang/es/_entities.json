@@ -17,7 +17,7 @@
       "label": "Fecha de creación"
     }
   },
-  "wallet": {
+  "account": {
     "name": {
       "label": "Nombre",
       "unique": "Ya existe una cuenta con ese nombre",

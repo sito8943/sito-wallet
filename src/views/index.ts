@@ -1,4 +1,4 @@
-export * from "./Wallets";
+export * from "./Accounts";
 export * from "./Home";
 export * from "./NotFound";
 export * from "./sitemap";

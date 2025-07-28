@@ -20,7 +20,7 @@ const LocalCacheProvider = (props: BasicProviderPropTypes) => {
   const { children } = props;
 
   const [data, setData] = useState<FileDataType>({
-    [Tables.Wallets]: [],
+    [Tables.Accounts]: [],
   });
 
   const updateCache = useCallback(

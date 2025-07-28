@@ -7,7 +7,7 @@ import { MenuItemType } from "./types";
 
 export enum MenuKeys {
   Home = "home",
-  Wallets = "wallets",
+  Accounts = "accounts",
   Products = "products",
   Movements = "movements",
 }
@@ -19,8 +19,8 @@ export const menuMap: MenuItemType[] = [
     icon: <FontAwesomeIcon icon={faHome} />,
   },
   {
-    page: MenuKeys.Wallets,
-    path: "/wallets",
+    page: MenuKeys.Accounts,
+    path: "/accounts",
     icon: <FontAwesomeIcon icon={faHome} />,
   },
 ];

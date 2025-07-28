@@ -25,20 +25,17 @@
       }
     }
   },
-  "wallets": {
-    "title": "Wallets",
-    "empty": "No wallets to load",
-    "add": "Add a wallet",
+  "accounts": {
+    "title": "Accounts",
+    "empty": "No accounts to load",
+    "add": "Add a account",
     "forms": {
-      "add": "New wallet",
-      "edit": "Edit wallet",
-      "editAria": "Click to edit wallet"
-    },
-    "errors": {
-      "withProducts": "This wallet has products. Please delete the products first"
+      "add": "New account",
+      "edit": "Edit account",
+      "editAria": "Click to edit account"
     }
   },
   "footer": {
-    "copyright": "Sito Wallet App ©"
+    "copyright": "Sito Account App ©"
   }
 }

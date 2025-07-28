@@ -9,15 +9,15 @@ import { FormDialog, ParagraphInput } from "components";
 
 // types
 import {
-  AddWalletDialogPropsType,
-  WalletFormPropsType,
-  EditWalletDialogPropsType,
+  AddAccountDialogPropsType,
+  AccountFormPropsType,
+  EditAccountDialogPropsType,
 } from "../types";
 
 // lib
 import { Tables } from "lib";
 
-export function WalletForm(props: WalletFormPropsType) {
+export function AccountForm(props: AccountFormPropsType) {
   const { control, isLoading } = props;
   const { t } = useTranslation();
 
@@ -40,7 +40,7 @@ export function WalletForm(props: WalletFormPropsType) {
             required
             maxLength={20}
             value={value ?? ""}
-            autoComplete={`${Tables.Wallets}-${t(
+            autoComplete={`${Tables.Accounts}-${t(
               "_entities:category.name.label"
             )}`}
             label={t("_entities:category.name.label")}
@@ -57,7 +57,7 @@ export function WalletForm(props: WalletFormPropsType) {
           <ParagraphInput
             maxLength={60}
             value={value ?? ""}
-            autoComplete={`${Tables.Wallets}-${t(
+            autoComplete={`${Tables.Accounts}-${t(
               "_entities:category.description.label"
             )}`}
             label={t("_entities:category.description.label")}
@@ -70,18 +70,18 @@ export function WalletForm(props: WalletFormPropsType) {
   );
 }
 
-export function AddWalletDialog(props: AddWalletDialogPropsType) {
+export function AddAccountDialog(props: AddAccountDialogPropsType) {
   return (
     <FormDialog {...props}>
-      <WalletForm {...props} />
+      <AccountForm {...props} />
     </FormDialog>
   );
 }
 
-export function EditWalletDialog(props: EditWalletDialogPropsType) {
+export function EditAccountDialog(props: EditAccountDialogPropsType) {
   return (
     <FormDialog {...props}>
-      <WalletForm {...props} />
+      <AccountForm {...props} />
     </FormDialog>
   );
 }
