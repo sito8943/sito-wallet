@@ -20,7 +20,7 @@ export const useFormDialog = <
   TDto,
   TMutationDto,
   TMutationOutputDto,
-  TFormType extends FieldValues,
+  TFormType extends FieldValues
 >(
   props: UseFormDialogPropsType<
     TDto,
@@ -125,7 +125,7 @@ export const useFormDialog = <
               ({
                 message,
                 type: NotificationEnumType.error,
-              }) as NotificationType
+              } as NotificationType)
           )
         );
       }
