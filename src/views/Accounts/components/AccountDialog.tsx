@@ -3,7 +3,12 @@ import { useTranslation } from "react-i18next";
 import { Controller, useWatch } from "react-hook-form";
 
 // @sito/dashboard
-import { SelectInput, TextInput, Option } from "@sito/dashboard";
+import {
+  SelectInput,
+  TextInput,
+  Option,
+  AutocompleteInput,
+} from "@sito/dashboard";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -37,6 +42,8 @@ export function AccountForm(props: AccountFormPropsType) {
     () => [...(currencies?.data ?? [])] as Option[],
     [currencies.data]
   );
+
+  console.log(currencyOptions);
 
   const typeOptions = useMemo(
     () => [
@@ -102,15 +109,16 @@ export function AccountForm(props: AccountFormPropsType) {
         />
         <Controller
           control={control}
-          name="currencyId"
+          name="currency"
           disabled={isLoading}
           render={({ field: { value, onChange, ...rest } }) => (
-            <SelectInput
+            <AutocompleteInput
               required
               options={currencyOptions}
               value={value}
-              onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
+              onChange={(v) => onChange(v)}
               label={t("_entities:account.currency.label")}
+              multiple={false}
               {...rest}
             />
           )}
