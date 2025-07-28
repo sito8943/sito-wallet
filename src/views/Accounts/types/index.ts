@@ -1,11 +1,14 @@
 import { FieldValues } from "react-hook-form";
 
+// @sito/dashboard
+import { Action } from "@sito/dashboard";
+
 // types
-import { ActionPropsType, FormDialogPropsType } from "components";
+import { FormDialogPropsType } from "components";
 import { AccountDto, ValidationError } from "lib";
 
 export interface AccountCardPropsType extends AccountDto {
-  actions: ActionPropsType[];
+  actions: Action<AccountDto>[];
   onClick: (id: number) => void;
   deleted: boolean;
 }

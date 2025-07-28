@@ -5,7 +5,7 @@ import { AccountType } from "./AccountType";
 export interface AccountDto extends CommonAccountDto, BaseEntityDto {
   name: string;
   description: string;
-  currency: CommonCurrencyDto;
+  currency: CommonCurrencyDto | null;
   type: AccountType;
   /* owner: string; */
 }

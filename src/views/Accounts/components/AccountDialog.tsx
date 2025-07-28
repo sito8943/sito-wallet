@@ -111,7 +111,6 @@ export function AccountForm(props: AccountFormPropsType) {
               value={value}
               onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
               label={t("_entities:account.currency.label")}
-              inputClassName="!pl-7"
               {...rest}
             />
           )}

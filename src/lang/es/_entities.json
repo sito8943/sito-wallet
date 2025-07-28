@@ -51,7 +51,7 @@
       "placeholder": "Selecciona un tipo",
       "required": "El tipo es obligatorio"
     },
-    "currenc": {
+    "currency": {
       "label": "Moneda",
       "placeholder": "Selecciona una moneda",
       "required": "La moneda es obligatoria"

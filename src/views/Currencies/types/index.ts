@@ -1,11 +1,14 @@
 import { FieldValues } from "react-hook-form";
 
+// @sito/dashboard
+import { Action } from "@sito/dashboard";
+
 // types
-import { ActionPropsType, FormDialogPropsType } from "components";
+import { FormDialogPropsType } from "components";
 import { CurrencyDto, ValidationError } from "lib";
 
 export interface CurrencyCardPropsType extends CurrencyDto {
-  actions: ActionPropsType[];
+  actions: Action<CurrencyDto>[];
   onClick: (id: number) => void;
   deleted: boolean;
 }

@@ -6,11 +6,13 @@ export const formToDto = ({
   name,
   description,
   type,
+  currency,
 }: AccountFormType): UpdateAccountDto => ({
   id,
   name,
   description,
   type: type,
+  currencyId: currency?.id ?? 0,
 });
 
 export const dtoToForm = (dto: AccountDto): AccountFormType => ({
@@ -18,6 +20,7 @@ export const dtoToForm = (dto: AccountDto): AccountFormType => ({
   name: dto.name,
   description: dto.description,
   type: dto.type,
+  currency: dto.currency,
 });
 
 export const emptyAccount: AccountFormType = {
@@ -25,4 +28,5 @@ export const emptyAccount: AccountFormType = {
   name: "",
   description: "",
   type: AccountType.Physical,
+  currency: null,
 };
