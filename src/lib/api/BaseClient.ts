@@ -8,6 +8,7 @@ import { Tables } from "./types.ts";
 import {
   BaseCommonEntityDto,
   BaseEntityDto,
+  buildQueryUrl,
   DeleteDto,
   QueryResult,
 } from "lib";
@@ -79,10 +80,11 @@ export default class BaseClient<
    * @param query - Where conditions (key-value)
    * @returns  - Query result
    */
-  async commonGet(query: TFilter): Promise<QueryResult<TCommonDto>> {
-    return await this.api.get<TCommonDto, TFilter>(
+  async commonGet(query: TFilter): Promise<TCommonDto[]> {
+    return await this.api.doQuery<TCommonDto[], TFilter>(
       `${this.table}/common`,
-      query
+      "GET",
+      buildQueryUrl<TFilter>(`${this.table}/common`, query)
     );
   }
 
