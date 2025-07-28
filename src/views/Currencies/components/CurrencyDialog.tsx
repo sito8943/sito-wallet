@@ -31,7 +31,7 @@ export function CurrencyForm(props: CurrencyFormPropsType) {
       <Controller
         control={control}
         rules={{
-          required: `t("_entities:account.name.required")`,
+          required: `t("_entities:base.name.required")`,
         }}
         name="name"
         disabled={isLoading}
@@ -41,10 +41,10 @@ export function CurrencyForm(props: CurrencyFormPropsType) {
             maxLength={20}
             value={value ?? ""}
             autoComplete={`${Tables.Currencies}-${t(
-              "_entities:account.name.label"
+              "_entities:base.name.label"
             )}`}
-            label={t("_entities:account.name.label")}
-            placeholder={t("_entities:account.name.placeholder")}
+            label={t("_entities:base.name.label")}
+            placeholder={t("_entities:currency.name.placeholder")}
             {...rest}
           />
         )}
@@ -58,10 +58,10 @@ export function CurrencyForm(props: CurrencyFormPropsType) {
             maxLength={60}
             value={value ?? ""}
             autoComplete={`${Tables.Currencies}-${t(
-              "_entities:account.description.label"
+              "_entities:base.description.label"
             )}`}
-            label={t("_entities:account.description.label")}
-            placeholder={t("_entities:account.description.placeholder")}
+            label={t("_entities:base.description.label")}
+            placeholder={t("_entities:base.description.placeholder")}
             {...rest}
           />
         )}

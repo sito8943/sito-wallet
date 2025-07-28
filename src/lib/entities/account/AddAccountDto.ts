@@ -5,4 +5,5 @@ export interface AddAccountDto
   name: string;
   description: string;
   type: AccountType;
+  currencyId: number;
 }
