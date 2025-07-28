@@ -29,7 +29,7 @@ export function useAddAccount() {
     defaultValues: emptyAccount,
     mutationFn: (data) => manager.Accounts.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
-    title: t("_pages:categories.forms.add"),
+    title: t("_pages:accounts.forms.add"),
     ...AccountsQueryKeys.all(),
   });
 

@@ -5,28 +5,31 @@ import { ItemCard } from "components";
 
 // types
 import { AccountCardPropsType } from "../types";
+import { Chip } from "@sito/dashboard";
+import { AccountType } from "lib";
 
 export function AccountCard(props: AccountCardPropsType) {
   const { t } = useTranslation();
 
-  const { id, onClick, actions, name, description, deleted } = props;
+  const { id, onClick, actions, name, description, type, deleted } = props;
 
   return (
     <ItemCard
       title={name}
       deleted={deleted}
-      name={t("_pages:categories.forms.edit")}
-      aria-label={t("_pages:categories.forms.editAria")}
+      name={t("_pages:accounts.forms.edit")}
+      aria-label={t("_pages:accounts.forms.editAria")}
       onClick={() => (!deleted ? onClick(id) : {})}
       actions={actions}
     >
       <p
-        className={`${description ? "" : "!text-xs italic"} text-start ${
+        className={`${description ? "" : "!text-xs italic"} text-start mb-2 ${
           deleted ? "!text-secondary" : ""
         }`}
       >
-        {description ? description : t("_entities:category.description.empty")}
+        {description ? description : t("_entities:account.description.empty")}
       </p>
+      <Chip label={String(AccountType[type])} />
     </ItemCard>
   );
 }

@@ -1,8 +1,12 @@
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Controller } from "react-hook-form";
+import { Controller, useWatch } from "react-hook-form";
 
 // @sito/dashboard
-import { TextInput } from "@sito/dashboard";
+import { SelectInput, TextInput } from "@sito/dashboard";
+
+// icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
 import { FormDialog, ParagraphInput } from "components";
@@ -15,11 +19,26 @@ import {
 } from "../types";
 
 // lib
-import { Tables } from "lib";
+import { enumToKeyValueArray, Tables, AccountType } from "lib";
+
+// utils
+import { icons } from "./utils";
 
 export function AccountForm(props: AccountFormPropsType) {
   const { control, isLoading } = props;
   const { t } = useTranslation();
+
+  const typeOptions = useMemo(
+    () => [
+      ...(enumToKeyValueArray(AccountType)?.map(({ key, value }) => ({
+        id: value as number,
+        name: key,
+      })) ?? []),
+    ],
+    []
+  );
+
+  const { type } = useWatch({ control });
 
   return (
     <>
@@ -28,27 +47,50 @@ export function AccountForm(props: AccountFormPropsType) {
         render={({ field }) => <input {...field} type="hidden" />}
         name="id"
       />
-      <Controller
-        control={control}
-        rules={{
-          required: `t("_entities:category.name.required")`,
-        }}
-        name="name"
-        disabled={isLoading}
-        render={({ field: { value, ...rest } }) => (
-          <TextInput
-            required
-            maxLength={20}
-            value={value ?? ""}
-            autoComplete={`${Tables.Accounts}-${t(
-              "_entities:category.name.label"
-            )}`}
-            label={t("_entities:category.name.label")}
-            placeholder={t("_entities:category.name.placeholder")}
-            {...rest}
-          />
-        )}
-      />
+      <div className="flex gap-5">
+        <Controller
+          control={control}
+          rules={{
+            required: `t("_entities:account.name.required")`,
+          }}
+          name="name"
+          disabled={isLoading}
+          render={({ field: { value, ...rest } }) => (
+            <TextInput
+              required
+              maxLength={20}
+              value={value ?? ""}
+              autoComplete={`${Tables.Accounts}-${t(
+                "_entities:account.name.label"
+              )}`}
+              label={t("_entities:account.name.label")}
+              placeholder={t("_entities:account.name.placeholder")}
+              {...rest}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="type"
+          disabled={isLoading}
+          render={({ field: { value, onChange, ...rest } }) => (
+            <SelectInput
+              required
+              options={typeOptions}
+              value={value}
+              onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
+              label={t("_entities:account.type.label")}
+              inputClassName="!pl-7"
+              {...rest}
+            >
+              <FontAwesomeIcon
+                icon={icons[(type ?? 0) as keyof typeof icons]}
+                className="absolute left-2 top-3.5 -translate-y-[50%] text-text text-sm"
+              />
+            </SelectInput>
+          )}
+        />
+      </div>
       <Controller
         control={control}
         name="description"
@@ -58,10 +100,10 @@ export function AccountForm(props: AccountFormPropsType) {
             maxLength={60}
             value={value ?? ""}
             autoComplete={`${Tables.Accounts}-${t(
-              "_entities:category.description.label"
+              "_entities:account.description.label"
             )}`}
-            label={t("_entities:category.description.label")}
-            placeholder={t("_entities:category.description.placeholder")}
+            label={t("_entities:account.description.label")}
+            placeholder={t("_entities:account.description.placeholder")}
             {...rest}
           />
         )}

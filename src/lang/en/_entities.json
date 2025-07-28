@@ -43,6 +43,11 @@
       "label": "Description",
       "empty": "No description",
       "placeholder": "Some description"
+    },
+    "type": {
+      "label": "Type",
+      "placeholder": "Select a type",
+      "required": "Type is required"
     }
   }
 }

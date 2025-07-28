@@ -43,6 +43,11 @@
       "label": "Descripción",
       "empty": "Sin descripción",
       "placeholder": "Alguna descripción"
+    },
+    "type": {
+      "label": "Tipo",
+      "placeholder": "Selecciona un tipo",
+      "required": "El tipo es obligatorio"
     }
   }
 }

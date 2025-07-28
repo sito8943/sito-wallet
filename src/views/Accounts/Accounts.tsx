@@ -27,8 +27,6 @@ export function Accounts() {
 
   const { data, isLoading, error } = useAccountsList({});
 
-  console.log(data);
-
   // #region actions
 
   const deleteAccount = useDeleteDialog({

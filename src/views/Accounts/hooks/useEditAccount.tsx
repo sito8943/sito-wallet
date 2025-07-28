@@ -25,7 +25,7 @@ export function useEditAccount() {
     getFunction: (id) => manager.Accounts.getById(id),
     mutationFn: (data) => manager.Accounts.update(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
-    title: t("_pages:categories.forms.edit"),
+    title: t("_pages:accounts.forms.edit"),
     ...AccountsQueryKeys.all(),
   });
 }
