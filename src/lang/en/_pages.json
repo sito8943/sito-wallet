@@ -1,7 +1,7 @@
 {
   "home": {
     "title": "Home",
-    "appName": "Inventory"
+    "appName": "Sito Wallet"
   },
   "common": {
     "actions": {
@@ -25,50 +25,20 @@
       }
     }
   },
-  "movements": {
-    "title": "Movements",
-    "empty": "No movements to load",
-    "add": "Add a movement",
-    "actions": {},
+  "wallets": {
+    "title": "Wallets",
+    "empty": "No wallets to load",
+    "add": "Add a wallet",
     "forms": {
-      "add": "New Movement",
-      "edit": "Edit Movement",
-      "editAria": "Click to edit movement"
-    }
-  },
-  "products": {
-    "title": "Products",
-    "empty": "No products to load",
-    "add": "Add a product",
-    "actions": {
-      "doMovement": {
-        "notFound": "Product not found",
-        "notEnoughStock": "Not enough stock",
-        "successMessage": "Movement done successful"
-      }
-    },
-    "forms": {
-      "add": "New product",
-      "edit": "Edit product",
-      "editAria": "Click to edit product",
-      "movementLogs": "Movement logs",
-      "doMovement": "Add movement"
-    }
-  },
-  "categories": {
-    "title": "Categories",
-    "empty": "No categories to load",
-    "add": "Add a category",
-    "forms": {
-      "add": "New category",
-      "edit": "Edit category",
-      "editAria": "Click to edit category"
+      "add": "New wallet",
+      "edit": "Edit wallet",
+      "editAria": "Click to edit wallet"
     },
     "errors": {
-      "withProducts": "This category has products. Please delete the products first"
+      "withProducts": "This wallet has products. Please delete the products first"
     }
   },
   "footer": {
-    "copyright": "Inventory App ©"
+    "copyright": "Sito Wallet App ©"
   }
 }
