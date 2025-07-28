@@ -1,5 +1,14 @@
 {
   "base": {
+    "name": {
+      "label": "Nombre",
+      "required": "El nombre es obligatorio"
+    },
+    "description": {
+      "label": "Descripción",
+      "empty": "Sin descripción",
+      "placeholder": "Alguna descripción"
+    },
     "id": {
       "label": "Id"
     },
@@ -34,20 +43,24 @@
   },
   "account": {
     "name": {
-      "label": "Nombre",
       "unique": "Ya existe una cuenta con ese nombre",
-      "placeholder": "Ej: Personal",
-      "required": "El nombre es obligatorio"
-    },
-    "description": {
-      "label": "Descripción",
-      "empty": "Sin descripción",
-      "placeholder": "Alguna descripción"
+      "placeholder": "Ej: Personal"
     },
     "type": {
       "label": "Tipo",
       "placeholder": "Selecciona un tipo",
       "required": "El tipo es obligatorio"
+    },
+    "currenc": {
+      "label": "Moneda",
+      "placeholder": "Selecciona una moneda",
+      "required": "La moneda es obligatoria"
+    }
+  },
+  "currency": {
+    "name": {
+      "unique": "Ya existe una currency con ese nombre",
+      "placeholder": "Ej: CUP"
     }
   }
 }

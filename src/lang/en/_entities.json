@@ -1,10 +1,19 @@
 {
   "base": {
+    "name": {
+      "label": "Name",
+      "required": "Name is required"
+    },
+    "description": {
+      "label": "Description",
+      "empty": "No description",
+      "placeholder": "Some description"
+    },
     "id": {
       "label": "Id"
     },
     "lockedBy": {
-      "label": "Lobked By"
+      "label": "Locked By"
     },
     "deleted": {
       "label": "Deleted",
@@ -34,20 +43,24 @@
   },
   "account": {
     "name": {
-      "label": "Name",
       "placeholder": "Ex: Personal",
-      "unique": "There is a account with that name already",
-      "required": "Name is required"
-    },
-    "description": {
-      "label": "Description",
-      "empty": "No description",
-      "placeholder": "Some description"
+      "unique": "There is a account with that name already"
     },
     "type": {
       "label": "Type",
       "placeholder": "Select a type",
       "required": "Type is required"
+    },
+    "currency": {
+      "label": "Currency",
+      "placeholder": "Select a currency",
+      "required": "Currency is required"
+    }
+  },
+  "currency": {
+    "name": {
+      "unique": "There is a currency with that name already",
+      "placeholder": "Ej: USD"
     }
   }
 }
