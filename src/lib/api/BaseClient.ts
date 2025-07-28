@@ -17,7 +17,7 @@ export default class BaseClient<
   TCommonDto extends BaseCommonEntityDto,
   TAddDto,
   TUpdateDto extends DeleteDto,
-  TFilter,
+  TFilter
 > {
   table: Tables;
   api: APIClient = new APIClient();

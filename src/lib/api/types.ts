@@ -1,13 +1,13 @@
 export enum Tables {
-  Accounts = "accounts",
+  Accounts = "walletAccounts",
 }
 
 export enum TablesCamelCase {
-  Accounts = "accounts",
+  Accounts = "walletAccounts",
 }
 
 export enum EntityName {
-  Account = "account",
+  Account = "walletAccount",
 }
 
 export type APIError = {
