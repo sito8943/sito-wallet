@@ -27,7 +27,7 @@ export function Navbar(props: NavbarPropsType) {
         >
           <FontAwesomeIcon icon={faBars} />
         </button>
-        <h1 className="text-lg text-text pointer-events-none">
+        <h1 className="text-lg text-text pointer-events-none poppins font-bold">
           {t("_pages:home.appName")}
         </h1>
       </div>

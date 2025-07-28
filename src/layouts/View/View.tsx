@@ -16,7 +16,7 @@ export function View() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!account?.email) navigate("/auth/sign-in");
+    /* if (!account?.email) navigate("/auth/sign-in"); */
   }, [account?.email, navigate]);
 
   return (

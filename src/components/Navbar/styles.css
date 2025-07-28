@@ -1,11 +1,7 @@
 @import "../../styles/variables.css";
 
 .header {
-  @apply w-full flex items-center justify-between z-20;
-}
-
-.toolbar .button {
-  @apply flex items-center justify-center w-14 h-10 border-none rounded-none;
+  @apply w-full flex items-center justify-between z-20 px-3;
 }
 
 .toolbar {
@@ -13,5 +9,5 @@
 }
 
 .button.menu {
-  @apply h-10;
+  @apply h-10 w-10 rounded-full !p-0;
 }
