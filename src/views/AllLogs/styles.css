@@ -1,4 +1,0 @@
-.accordion {
-  transition: grid-template-rows 300ms linear;
-  @apply w-full grid;
-}
