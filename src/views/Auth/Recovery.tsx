@@ -20,7 +20,7 @@ import { config } from "../../config";
  * Recovery page
  * @returns Recovery page component
  */
-function Recovery() {
+export function Recovery() {
   const { t } = useTranslation();
 
   const manager = useManager();
@@ -122,5 +122,3 @@ function Recovery() {
     </div>
   );
 }
-
-export default Recovery;

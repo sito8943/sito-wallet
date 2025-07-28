@@ -22,7 +22,7 @@ import { AuthDto, SessionDto } from "lib";
  * Sign Page
  * @returns Sign component
  */
-function SignIn() {
+export function SignIn() {
   const { t } = useTranslation();
 
   const { logUser } = useAuth();
@@ -51,67 +51,69 @@ function SignIn() {
   }, []);
 
   return (
-    <div className="w-full h-screen flex items-start justify-center">
+    <div className="w-full h-screen flex items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-96 max-sm:w-10/12 px-5 pt-10 flex flex-col items-center justify-start"
+        className="bg-base rounded-3xl w-96 max-sm:w-10/12 px-5 py-10 flex flex-col items-center justify-start"
       >
         {/* LOGO */}
         <h1
-          className={`w-full text-2xl md:text-3xl mb-5 transition-all duration-500 ease-in-out delay-200 ${
+          className={`w-full text-2xl md:text-3xl mb-10 transition-all duration-500 ease-in-out delay-200 ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
           {t("_pages:auth.signIn.title")}
         </h1>
-        <div
-          className={`w-full transition-all duration-500 ease-in-out delay-300 ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          <Controller
-            control={control}
-            disabled={isLoading}
-            name="email"
-            render={({ field, fieldState }) => (
-              <TextInput
-                {...field}
-                type="text"
-                name="email"
-                id="email"
-                className={`text-input peer`}
-                label={t("_entities:user.email.label")}
-                required
-                helperText={fieldState.error?.message}
-                state={fieldState.error ? State.error : State.default}
-              />
-            )}
-            rules={{ required: `${t("_entities:user.email.required")}` }}
-          />
-        </div>
-        <div
-          className={`w-full transition-all duration-500 ease-in-out delay-[400ms] ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          <Controller
-            control={control}
-            disabled={isLoading}
-            name="password"
-            render={({ field, fieldState }) => (
-              <PasswordInput
-                {...field}
-                name="password"
-                id="password"
-                className={`text-input peer`}
-                label={t("_entities:user.password.label")}
-                required
-                helperText={fieldState.error?.message}
-                state={fieldState.error ? State.error : State.default}
-              />
-            )}
-            rules={{ required: `${t("_entities:user.password.required")}` }}
-          />
+        <div className="flex flex-col gap-5 w-full">
+          <div
+            className={`w-full transition-all duration-500 ease-in-out delay-300 ${
+              appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+            }`}
+          >
+            <Controller
+              control={control}
+              disabled={isLoading}
+              name="email"
+              render={({ field, fieldState }) => (
+                <TextInput
+                  {...field}
+                  type="text"
+                  name="email"
+                  id="email"
+                  className={`text-input peer`}
+                  label={t("_entities:user.email.label")}
+                  required
+                  helperText={fieldState.error?.message}
+                  state={fieldState.error ? State.error : State.default}
+                />
+              )}
+              rules={{ required: `${t("_entities:user.email.required")}` }}
+            />
+          </div>
+          <div
+            className={`w-full transition-all duration-500 ease-in-out delay-[400ms] ${
+              appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+            }`}
+          >
+            <Controller
+              control={control}
+              disabled={isLoading}
+              name="password"
+              render={({ field, fieldState }) => (
+                <PasswordInput
+                  {...field}
+                  name="password"
+                  id="password"
+                  className={`text-input peer`}
+                  label={t("_entities:user.password.label")}
+                  required
+                  helperText={fieldState.error?.message}
+                  state={fieldState.error ? State.error : State.default}
+                />
+              )}
+              rules={{ required: `${t("_entities:user.password.required")}` }}
+            />
+          </div>
         </div>
         <div className="w-full mb-5">
           <Link
@@ -126,7 +128,7 @@ function SignIn() {
         <button
           type="submit"
           disabled={isLoading}
-          className={`mb-5 self-start duration-500 ease-in-out delay-[600ms] ${
+          className={`self-start duration-500 ease-in-out delay-[600ms] ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           } submit`}
         >
@@ -144,5 +146,3 @@ function SignIn() {
     </div>
   );
 }
-
-export default SignIn;

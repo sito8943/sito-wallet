@@ -1,0 +1,10 @@
+@import "./variables.css";
+
+.submit {
+  @apply bg-primary flex items-center gap-2 justify-center rounded-4xl hover:bg-hover-primary text-white px-4 py-2;
+}
+
+.password-icon {
+    top: 50%;
+    transform: translateY(-50%);
+}

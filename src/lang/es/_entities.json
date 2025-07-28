@@ -17,6 +17,21 @@
       "label": "Fecha de creación"
     }
   },
+  "user": {
+    "email": {
+      "label": "Correo electrónico",
+      "placeholder": "Ex: email@provider.com",
+      "unique": "Ya existe un usuario con ese correo electrónico",
+      "required": "El correo electrónico es obligatorio",
+      "notFound": "Usuario no encontrado"
+    },
+    "password": {
+      "label": "Contraseña",
+      "placeholder": "Ex: ********",
+      "required": "La contraseña es obligatoria",
+      "wrongPassword": "Contraseña incorrecta"
+    }
+  },
   "account": {
     "name": {
       "label": "Nombre",

@@ -1,5 +1,6 @@
 @import "./styles/variables.css";
 @import "./styles/dashboard.css";
+@import "./styles/components.css";
 
 * {
     scroll-behavior: smooth;

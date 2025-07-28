@@ -18,6 +18,12 @@
       }
     }
   },
+  "auth": {
+    "signIn": {
+      "title": "Iniciar sesión",
+      "passwordRecovery": "Recuperar contraseña"
+    }
+  },
   "accounts": {
     "title": "Cuentas",
     "empty": "No hay cuentas para mostrar",

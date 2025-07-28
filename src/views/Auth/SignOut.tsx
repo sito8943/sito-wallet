@@ -2,35 +2,32 @@ import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 // providers
-import { useAccount } from "../../providers/AuthProvider";
-import { useHotelApiClient } from "../../providers/HotelApiProvider";
+import { useAuth, useManager } from "providers";
 
 // components
-import SplashScreen from "../../partials/loading/SplashScreen";
+import { SplashScreen } from "components";
 
 /**
  * SignOut page
  * @returns SignOut page component
  */
-function SignOut() {
-  const hotelApiClient = useHotelApiClient();
-  const { logoutUser } = useAccount();
+export function SignOut() {
+  const manager = useManager();
+  const { logoutUser } = useAuth();
 
   const navigate = useNavigate();
 
   const logic = useCallback(async () => {
-    await hotelApiClient.User.logout();
+    await manager.Auth.logout();
     logoutUser();
     setTimeout(() => {
       navigate("/auth");
     }, 1000);
-  }, [hotelApiClient.User, logoutUser, navigate]);
+  }, [logoutUser, manager.Auth, navigate]);
 
   useEffect(() => {
     logic();
   }, [logic]);
 
-  return <SplashScreen visible />;
+  return <SplashScreen />;
 }
-
-export default SignOut;

@@ -4,26 +4,30 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { deleteCookie } from "some-javascript-utils/browser";
 
+// @sito/dashboard
+import { State, Loading } from "@sito/dashboard";
+
 // components
-import Logo from "../../components/Logo/Logo";
-import Loading from "../../partials/loading/Loading";
-import PasswordInput from "../../components/Forms/PasswordInput";
+import { PasswordInput } from "components";
 
 // providers
-import {}
+import { uesAuth, useManager } from "providers";
+
+// hooks
+import { usePostForm } from "hooks";
 
 // config
-import config from "../../config";
+import { config } from "../../config";
 
 /**
  * UpdatePassword page
  * @returns UpdatePassword page component
  */
-function UpdatePassword() {
+export function UpdatePassword() {
   const { t } = useTranslation();
 
   const navigate = useNavigate();
-  const hotelApiClient = useHotelApiClient();
+  const manager = useManager();
 
   const [appear, setAppear] = useState(false);
   const [passwordError, setPasswordError] = useState("");
@@ -43,7 +47,7 @@ function UpdatePassword() {
       return setNotification(t("_accessibility:errors.passwordDoNotMatch"));
     }
     try {
-      await hotelApiClient.User.updatePassword(d.password);
+      await manager.User.updatePassword(d.password);
       setNotification(t("_pages:auth.updatePassword.sent"), {}, "good");
 
       deleteCookie(config.recovering);
@@ -72,16 +76,22 @@ function UpdatePassword() {
         <Link to="/auth">
           <Logo
             extra={false}
-            className={`my-5 transition-all duration-500 ease-in-out delay-100  ${appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"}`}
+            className={`my-5 transition-all duration-500 ease-in-out delay-100  ${
+              appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+            }`}
           />
         </Link>
         <h1
-          className={`w-full text-2xl md:text-3xl font-bold mb-5 transition-all duration-500 ease-in-out delay-200 ${appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"}`}
+          className={`w-full text-2xl md:text-3xl font-bold mb-5 transition-all duration-500 ease-in-out delay-200 ${
+            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+          }`}
         >
           {t("_pages:auth.updatePassword.title")}
         </h1>
         <div
-          className={`w-full transition-all duration-500 ease-in-out delay-300 ${appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"}`}
+          className={`w-full transition-all duration-500 ease-in-out delay-300 ${
+            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+          }`}
         >
           <Controller
             control={control}
@@ -100,7 +110,9 @@ function UpdatePassword() {
           />
         </div>
         <div
-          className={`w-full transition-all duration-500 ease-in-out delay-[400ms] ${appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"}`}
+          className={`w-full transition-all duration-500 ease-in-out delay-[400ms] ${
+            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+          }`}
         >
           <Controller
             control={control}
@@ -123,7 +135,9 @@ function UpdatePassword() {
         <button
           type="submit"
           disabled={saving}
-          className={`mb-5 self-start duration-500 ease-in-out delay-[500ms] ${appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"} submit`}
+          className={`mb-5 self-start duration-500 ease-in-out delay-[500ms] ${
+            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+          } submit`}
         >
           {saving && (
             <Loading
@@ -139,5 +153,3 @@ function UpdatePassword() {
     </div>
   );
 }
-
-export default UpdatePassword;

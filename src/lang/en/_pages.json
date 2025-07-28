@@ -25,6 +25,12 @@
       }
     }
   },
+  "auth": {
+    "signIn": {
+      "title": "Sign In",
+      "passwordRecovery": "Password recovery"
+    }
+  },
   "accounts": {
     "title": "Accounts",
     "empty": "No accounts to load",
