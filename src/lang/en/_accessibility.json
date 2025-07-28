@@ -1,0 +1,76 @@
+{
+  "buttons": {
+    "ok": "Ok",
+    "back": "Go back",
+    "openMenu": "Open menu",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "closeDialog": "Close dialog",
+    "closeColorDialog": "Close color dialog",
+    "closeOutsideNotification": "Close notification",
+    "closeNotification": "Close notification",
+    "toggleMaximize": "Toggle maximize",
+    "minimize": "Minimize",
+    "closeApp": "Close application",
+    "closeMenu": "Close menu",
+    "deleteChip": "Remove {{value}}",
+    "cleanInput": "Clean input",
+    "retry": "Retry",
+    "workOffline": "Work offline",
+    "filters": "Filters",
+    "applyFilters": "Apply filters",
+    "clear": "Clear"
+  },
+  "labels": {
+    "colorPicker": "Pick a color",
+    "justNow": "Right now",
+    "minute": "Minute",
+    "minutes": "Minutes",
+    "hour": "Hour",
+    "hours": "Hours",
+    "yesterday": "Yesterday",
+    "ago": "Ago",
+    "actions": "Actions"
+  },
+  "tooltips": {
+    "showAsTable": "Mostrar como tabla",
+    "showAsGrid": "Mostrar como grid"
+  },
+  "ariaLabels": {
+    "ok": "Confirm action",
+    "insert": "Insert content",
+    "cancel": "Cancel action",
+    "delete": "Delete item",
+    "restore": "Restore item",
+    "openMenu": "Open menu",
+    "closeDialog": "Close dialog window",
+    "closeColorDialog": "Close color dialog window",
+    "closeNotification": "Dismiss notification",
+    "closeOutsideNotification": "Dismiss outside notification",
+    "toggleMaximize": "Toggle maximize window",
+    "minimize": "Minimize window",
+    "closeApp": "Close the application",
+    "closeMenu": "Close the menu",
+    "deleteChip": "Remove the {{value}}",
+    "cleanInput": "Clean the input value",
+    "retry": "Retry to connect"
+  },
+  "errors": {
+    "unknownError": "An error has occurred"
+  },
+  "messages": {},
+  "components": {
+    "table": {
+      "filters": {
+        "title": "Filtros"
+      },
+      "pageSizes": "Filas por página",
+      "jumpToPage": "Saltar a página",
+      "from": "del",
+      "to": "al",
+      "of": "de",
+      "results": "resultados",
+      "empty": "No hay resultados"
+    }
+  }
+}

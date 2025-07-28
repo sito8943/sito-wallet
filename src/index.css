@@ -1,68 +1,165 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import "./styles/variables.css";
+@import "./styles/dashboard.css";
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+    scroll-behavior: smooth;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+textarea {
+    resize: none;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+.animated {
+    @apply transition duration-300 ease-in-out;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+h1,
+h2,
+th,
+.poppins {
+    font-family: "Poppins", sans-serif;
+}
+
+p,
+a,
+button,
+h3,
+input,
+textarea,
+select,
+td,
+.roboto {
+    font-family: "Roboto", sans-serif;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+    @apply text-sm font-medium;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+input,
+p {
+    @apply text-sm text-text-muted;
+}
+
+.button {
+    @apply flex items-center justify-center gap-2 text-text bg-base hover:bg-base-light px-4 py-1 cursor-pointer rounded-4xl;
+}
+
+.button.close {
+    @apply hover:bg-red-500;
+}
+
+.icon-button {
+    @apply bg-base hover:bg-base-light w-7 h-7 rounded-full flex items-center justify-center;
+}
+
+.action {
+    @apply bg-base hover:bg-base-light w-10 h-10 rounded-full;
+}
+
+.input {
+    @apply text-white bg-base border-border border-2 px-4 py-1 rounded-sm;
+}
+
+.input.error {
+    @apply border-red-500;
+}
+
+.dialog .button {
+    @apply px-4 py-1 rounded-4xl;
+}
+
+.outlined {
+    @apply border-border text-text border-2;
+}
+
+.outlined:hover {
+    @apply bg-border text-text-muted border-2 border-border;
+}
+
+.primary {
+    @apply bg-primary hover:bg-hover-primary text-black;
+}
+
+#root {
+    display: grid;
+    min-height: 100vh;
+    transition: grid-template-rows 500ms ease-in-out;
+    transition-delay: 1s;
+    grid-template-rows:  40px 40px 1fr 40px
+}
+
+main {
+    height: 100%;
+    @apply bg-base-dark grid grid-rows-1;
+}
+
+main h1,
+main h2,
+main h3 {
+    @apply text-text;
+}
+
+.apparition {
+    animation: apparition 300ms ease-in-out;
+}
+
+@keyframes apparition {
+    0% {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.opacity {
+    animation: opacity 300ms ease-in-out;
+}
+
+@keyframes opacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.history {
+    height: calc(100vh - 304px);
+    @apply overflow-auto;
+}
+
+.rotate {
+    animation: rotate 1000ms infinite;
+    --tw-ease: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes rotate {
+    0% {
+        rotate: 0;
+    }
+    100% {
+        rotate: 360deg;
+    }
+}
+
+.chip {
+    @apply rounded-4xl pl-3 pr-3 py-1 flex items-center justify-center gap-2;
+}
+
+.chip.primary {
+    @apply bg-primary text-dark;
+}
+
+.chip.primary p {
+    @apply text-dark font-medium;
+}
+
+.elevated {
+    box-shadow: 0 3px 8px 0 #0000004f;
 }

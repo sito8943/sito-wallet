@@ -1,0 +1,74 @@
+{
+  "home": {
+    "title": "Home",
+    "appName": "Inventory"
+  },
+  "common": {
+    "actions": {
+      "add": {
+        "text": "Add",
+        "successMessage": "Saved successful"
+      },
+      "delete": {
+        "text": "Delete",
+        "successMessage": "Deleted successful",
+        "dialog": {
+          "title": "Are you sure to delete?"
+        }
+      },
+      "restore": {
+        "text": "Restore",
+        "successMessage": "Restored successful",
+        "dialog": {
+          "title": "Are you sure to restore?"
+        }
+      }
+    }
+  },
+  "movements": {
+    "title": "Movements",
+    "empty": "No movements to load",
+    "add": "Add a movement",
+    "actions": {},
+    "forms": {
+      "add": "New Movement",
+      "edit": "Edit Movement",
+      "editAria": "Click to edit movement"
+    }
+  },
+  "products": {
+    "title": "Products",
+    "empty": "No products to load",
+    "add": "Add a product",
+    "actions": {
+      "doMovement": {
+        "notFound": "Product not found",
+        "notEnoughStock": "Not enough stock",
+        "successMessage": "Movement done successful"
+      }
+    },
+    "forms": {
+      "add": "New product",
+      "edit": "Edit product",
+      "editAria": "Click to edit product",
+      "movementLogs": "Movement logs",
+      "doMovement": "Add movement"
+    }
+  },
+  "categories": {
+    "title": "Categories",
+    "empty": "No categories to load",
+    "add": "Add a category",
+    "forms": {
+      "add": "New category",
+      "edit": "Edit category",
+      "editAria": "Click to edit category"
+    },
+    "errors": {
+      "withProducts": "This category has products. Please delete the products first"
+    }
+  },
+  "footer": {
+    "copyright": "Inventory App ©"
+  }
+}

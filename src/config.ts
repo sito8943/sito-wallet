@@ -1,0 +1,33 @@
+const {
+  VITE_API_URL,
+  VITE_THIS_URL,
+  VITE_LANGUAGE,
+  VITE_BASIC_KEY,
+  VITE_ACCEPT_COOKIE,
+  VITE_DECLINE_COOKIE,
+  VITE_REMEMBER,
+  VITE_USER,
+  VITE_VALIDATION_COOKIE,
+  VITE_RECOVERING_COOKIE,
+  VITE_CRYPTO,
+  VITE_SUPABASE_CO,
+  VITE_SUPABASE_ANON,
+  VITE_CACHE,
+} = import.meta.env;
+
+export const config = {
+  apiUrl: VITE_API_URL,
+  thisUrl: VITE_THIS_URL,
+  language: VITE_LANGUAGE,
+  basicKey: VITE_BASIC_KEY,
+  acceptCookie: VITE_ACCEPT_COOKIE,
+  declineCookie: VITE_DECLINE_COOKIE,
+  remember: VITE_REMEMBER,
+  user: VITE_USER,
+  localCache: VITE_CACHE,
+  validationCookie: VITE_VALIDATION_COOKIE,
+  recoveringCookie: VITE_RECOVERING_COOKIE,
+  crypto: VITE_CRYPTO,
+  supabaseCo: VITE_SUPABASE_CO,
+  supabaseAnon: VITE_SUPABASE_ANON,
+};

@@ -1,0 +1,57 @@
+{
+  "buttons": {
+    "ok": "Aceptar",
+    "back": "Atrás",
+    "openMenu": "Abrir menú",
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "closeDialog": "Cerrar diálogo",
+    "closeColorDialog": "Cerrar diálogo de color",
+    "closeOutsideNotification": "Cerrar notificación",
+    "closeNotification": "Cerrar notificación",
+    "toggleMaximize": "Alternar maximizar",
+    "minimize": "Minimizar",
+    "closeApp": "Cerrar aplicación",
+    "closeMenu": "Cerrar menú",
+    "deleteChip": "Eliminar {{value}}",
+    "cleanInput": "Limpiar entrada",
+    "retry": "Reintentar",
+    "filters": "Filtros",
+    "applyFilters": "Aplicar filtros",
+    "clear": "Limpiar"
+  },
+  "labels": {
+    "colorPicker": "Selecciona un color",
+    "justNow": "Justo ahora",
+    "minute": "Minuto",
+    "minutes": "Minutos",
+    "hour": "Hora",
+    "hours": "Horas",
+    "yesterday": "Ayer",
+    "ago": "Hace",
+    "action": "Acciones"
+  },
+  "tooltips": {},
+  "ariaLabels": {
+    "ok": "Confirmar acción",
+    "insert": "Insertar contenido",
+    "cancel": "Cancelar acción",
+    "delete": "Eliminar elemento",
+    "openMenu": "Abrir menú",
+    "closeDialog": "Cerrar ventana de diálogo",
+    "closeColorDialog": "Cerrar ventana de color",
+    "closeNotification": "Descartar notificación",
+    "closeOutsideNotification": "Descartar notificación externa",
+    "toggleMaximize": "Alternar maximizar ventana",
+    "minimize": "Minimizar ventana",
+    "closeApp": "Cerrar la aplicación",
+    "closeMenu": "Cerrar el menú",
+    "deleteChip": "Elimina a {{value}}",
+    "cleanInput": "Limpia los valores de la entrada",
+    "retry": "Reintentar conexión"
+  },
+  "errors": {
+    "unknownError": "Ha ocurrido un error"
+  },
+  "messages": {}
+}

@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+/* @theme {
+    --color-dark: #1b1b1b;
+    --color-background: #272727;
+    --color-drawer-background: #202020;
+    --color-alt-background: #343434;
+    --color-border: #393939;
+    --color-primary: #4cc2ff;
+    --color-bg-primary: #013a55;
+    --color-hover-primary: #48b2e9;
+    --color-secondary: #d27d6b;
+    /** Notification colors **/
+/*    --color-bg-info: #0070ba;
+    --color-info: #fbfbfb;
+    --color-bg-success: #065F46;
+    --color-success: #fbfbfb;
+    --color-bg-warning: #FFA500;
+    --color-warning: #000000;
+    --color-bg-error: #b63d3d;
+    --color-error: #fbfbfb;
+    --breakpoint-xs: 28rem;
+} */
+
+@theme {
+  --color-dark: #1b1b1b;
+  --color-background: #272727;
+  --color-drawer-background: #202020;
+  --color-alt-background: #343434;
+  --color-primary: #4cc2ff;
+  --color-bg-primary: #013a55;
+  --color-hover-primary: #48b2e9;
+  --color-secondary: #d27d6b;
+  /** NEW COLOR **/
+  --color-base-dark: hsl(0 0% 90%);
+  --color-base: hsl(0 0% 95%);
+  --color-base-light: hsl(0 0% 100%);
+  --color-text: #0d0d0d;
+  --color-border: hsl(0 0% 80%);
+  --color-text-muted: hsl(0 0% 30%);
+  /** Notification colors **/
+  --color-bg-info: #0070ba;
+  --color-info: #fbfbfb;
+  --color-bg-success: #065f46;
+  --color-success: #fbfbfb;
+  --color-bg-warning: #ffa500;
+  --color-warning: #000000;
+  --color-bg-error: #b63d3d;
+  --color-error: #fbfbfb;
+  --breakpoint-xs: 28rem;
+}

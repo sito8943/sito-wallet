@@ -1,0 +1,94 @@
+{
+  "base": {
+    "id": {
+      "label": "Id"
+    },
+    "lockedBy": {
+      "label": "Lobked By"
+    },
+    "deleted": {
+      "label": "Deleted",
+      "filter": "Show deleted"
+    },
+    "updatedAt": {
+      "label": "Updated At"
+    },
+    "createdAt": {
+      "label": "Created At"
+    }
+  },
+  "category": {
+    "name": {
+      "label": "Name",
+      "placeholder": "Ex: Drinks",
+      "unique": "There is a category with that name already",
+      "required": "Name is required"
+    },
+    "description": {
+      "label": "Description",
+      "empty": "No description",
+      "placeholder": "Some description"
+    }
+  },
+  "movement": {
+    "name": {
+      "label": "Name",
+      "unique": "There is a movement with that name already",
+      "placeholder": "Ex: Purchases"
+    },
+    "type": {
+      "invalid": "Please select a valid type",
+      "label": "Type",
+      "in": "In",
+      "out": "Out"
+    }
+  },
+  "product": {
+    "name": {
+      "label": "Name",
+      "unique": "There is a product with that name already",
+      "placeholder": "Ex: Pizza",
+      "required": "Name is required"
+    },
+    "description": {
+      "label": "Description",
+      "empty": "No description",
+      "placeholder": "Some description"
+    },
+    "category": {
+      "label": "Category",
+      "invalid": "Please select a valid category"
+    },
+    "cost": {
+      "label": "Cost",
+      "empty": "Free"
+    },
+    "price": {
+      "label": "Price",
+      "empty": "Free"
+    },
+    "stock": {
+      "label": "Stock",
+      "empty": "Out of stock",
+      "units": "units"
+    },
+    "movement": {
+      "label": "Movement",
+      "invalid": "Please select a valid movement"
+    },
+    "count": {
+      "label": "Count",
+      "required": "The count is required"
+    }
+  },
+  "movementLog": {
+    "stock": { "label": "Quantity" },
+    "result": { "label": "Resulting stock" },
+    "createdAt": { "label": "Date" },
+    "movement": { "label": "Movement" },
+    "count": {
+      "label": "Count",
+      "required": "Count is required"
+    }
+  }
+}

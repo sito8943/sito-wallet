@@ -28,6 +28,7 @@
     "react-error-boundary": "^6.0.0",
     "react-hook-form": "^7.61.1",
     "react-i18next": "^15.6.1",
+    "react-router-dom": "^6.28.2",
     "react-tooltip": "^5.29.1",
     "tailwindcss": "^4.1.11"
   },
