@@ -7,7 +7,6 @@ import { UseConfirmationPropsType } from "../forms";
 
 export interface UseDeleteDialogPropsType
   extends UseConfirmationPropsType<number, ValidationError> {
-  onClick: (id?: number) => void;
   queryKey: QueryKey;
 }
 
@@ -17,7 +16,6 @@ export interface UseFormDialogPropsType<
   TMutationOutputDto,
   TFormType extends FieldValues
 > {
-  onClick: (id?: number) => void;
   defaultValues?: DefaultValues<TFormType>;
   getFunction?: (id: number) => Promise<TDto>;
   formToDto: (data: TFormType) => TMutationDto;
