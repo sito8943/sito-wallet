@@ -1,0 +1,45 @@
+@import "./variables.css";
+
+.text-input,
+.text-input-label,
+.select-input-label {
+  @apply !text-text;
+}
+
+.select-input {
+  @apply !text-text;
+}
+
+select > option {
+  color: black !important;
+}
+
+.autocomplete-suggestions-container {
+  @apply border-2 border-border/40 rounded-lg;
+}
+
+.text-input,
+.select-input {
+  @apply border-2 border-border/40 !pl-2 rounded-lg;
+}
+
+.text-input-label,
+.select-input-label {
+  @apply left-2 peer-focus:!left-2;
+}
+
+.text-input-container {
+  @apply mb-4;
+}
+
+.text-input-label,
+.select-input-label,
+.peer:focus ~ .text-input-label,
+.peer:focus ~ .select-input-label {
+  transform: translateY(-30px) scale(0.75);
+  top: 10px;
+}
+
+.text-input-helper-text {
+  @apply text-sm;
+}

@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "./styles/variables.css";
+@import "./styles/dashboard.css";
 
 * {
   font-family: "Roboto", sans-serif;
@@ -22,7 +21,7 @@
   overflow: hidden;
   border-radius: 100px;
   opacity: 0.6;
-  @apply bg-light-light dark:bg-dark-light;
+  @apply bg-base-dark dark:bg-dark;
 }
 
 .skeleton-box::after {

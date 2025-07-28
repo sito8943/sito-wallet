@@ -1,19 +1,34 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
+import path from "path";
 
 const manifestForPlugIn = {
   registerType: "prompt",
   includeAssets: ["favicon.ico", "robots.txt", "maskable-icon.png"],
+  resolve: {
+    alias: {
+      assets: path.resolve(__dirname, "./src/assets"),
+      components: path.resolve(__dirname, "./src/components"),
+      lib: path.resolve(__dirname, "./src/lib"),
+      hooks: path.resolve(__dirname, "./src/hooks"),
+      layouts: path.resolve(__dirname, "./src/layouts"),
+      views: path.resolve(__dirname, "./src/views"),
+      providers: path.resolve(__dirname, "./src/providers"),
+      db: path.resolve(__dirname, "./src/db"),
+      lang: path.resolve(__dirname, "./src/lang"),
+    },
+  },
   manifest: {
     name: "Sito Wallet",
     short_name: "Sito Wallet",
     description: "Aplicación de gestión de cuentas de ahorro de Sito",
     icons: [
       {
-        "src": "favicon.ico",
-        "sizes": "16x16",
-        "type": "image/x-icon"
+        src: "favicon.ico",
+        sizes: "16x16",
+        type: "image/x-icon",
       },
       {
         src: "/android-chrome-192x192.png",
@@ -24,7 +39,6 @@ const manifestForPlugIn = {
         src: "/android-chrome-512x512.png",
         sizes: "512x512",
         type: "image/png",
-
       },
       {
         src: "/apple-touch-icon.png",
@@ -51,5 +65,5 @@ const manifestForPlugIn = {
 };
 
 export default defineConfig({
-  plugins: [react(), VitePWA(manifestForPlugIn)],
+  plugins: [react(), VitePWA(manifestForPlugIn), tailwindcss()],
 });

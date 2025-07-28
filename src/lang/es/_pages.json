@@ -1,4 +1,7 @@
 {
+  "appName": {
+    "name": "Sito Wallet"
+  },
   "routes": {
     "home": "Inicio",
     "signIn": "Login",
