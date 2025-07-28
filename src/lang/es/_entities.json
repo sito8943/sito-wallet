@@ -17,78 +17,17 @@
       "label": "Fecha de creación"
     }
   },
-  "category": {
+  "wallet": {
     "name": {
       "label": "Nombre",
-      "unique": "Ya existe una categoría con ese nombre",
-      "placeholder": "Ej: Bebidas",
+      "unique": "Ya existe una cuenta con ese nombre",
+      "placeholder": "Ej: Personal",
       "required": "El nombre es obligatorio"
     },
     "description": {
       "label": "Descripción",
       "empty": "Sin descripción",
       "placeholder": "Alguna descripción"
-    }
-  },
-  "movement": {
-    "name": {
-      "label": "Nombre",
-      "unique": "Ya existe un movimiento con ese nombre",
-      "placeholder": "Ej: Compras"
-    },
-    "type": {
-      "invalid": "Por favor selecciona un tipo válido",
-      "label": "Tipo",
-      "in": "Entrada",
-      "out": "Salida"
-    }
-  },
-  "product": {
-    "name": {
-      "label": "Nombre",
-      "unique": "Ya existe un producto con ese nombre",
-      "placeholder": "Ej: Pizza",
-      "required": "El nombre es obligatorio"
-    },
-    "description": {
-      "label": "Descripción",
-      "empty": "Sin descripción",
-      "placeholder": "Alguna descripción"
-    },
-    "category": {
-      "label": "Categoría",
-      "invalid": "Por favor selecciona una categoría válida"
-    },
-    "cost": {
-      "label": "Costo",
-      "empty": "Gratis"
-    },
-    "price": {
-      "label": "Precio",
-      "empty": "Gratis"
-    },
-    "stock": {
-      "label": "Inventario",
-      "empty": "Sin existencias",
-      "units": "unidades"
-    },
-    "movement": {
-      "label": "Movimiento",
-      "invalid": "Por favor selecciona un movimiento válido"
-    },
-    "count": {
-      "label": "Cantidad",
-      "required": "La cantidad es obligatoria"
-    }
-  },
-  "movementLog": {
-    "movement": { "label": "Movimiento" },
-    "stock": { "label": "Cantidad" },
-    "result": { "label": "Stock resultante" },
-    "createdAt": { "label": "Fecha" },
-    "count": {
-      "label": "Cantidad",
-      "required": "La cantidad es requerid"
     }
   }
 }
