@@ -1,4 +1,5 @@
 export * from "./NotificationProvider";
 export * from "./ManagerProvider";
-export * from "./LocalCacheProvider.tsx";
-export type * from "./types.ts";
+export * from "./LocalCacheProvider";
+export * from "./AuthProvider";
+export type * from "./types";

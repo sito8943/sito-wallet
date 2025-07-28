@@ -30,7 +30,7 @@ export function NotificationProvider(props: BasicProviderPropTypes) {
     () => [] as NotificationType[]
   );
 
-  const showErrorNotification = (options: NotificationType) =>
+  const showErrorNotification = (options: Partial<NotificationType>) =>
     dispatch({
       type: "set",
       items: [{ ...options, type: NotificationEnumType.error }],
@@ -45,7 +45,7 @@ export function NotificationProvider(props: BasicProviderPropTypes) {
   const showStackNotifications = (notifications: NotificationType[]) =>
     dispatch({ type: "set", items: notifications });
 
-  const showSuccessNotification = (options: NotificationType) =>
+  const showSuccessNotification = (options: Partial<NotificationType>) =>
     dispatch({
       type: "set",
       items: [{ ...options, type: NotificationEnumType.success }],

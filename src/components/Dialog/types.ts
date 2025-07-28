@@ -20,6 +20,6 @@ export interface ConfirmationDialogPropsType extends DialogPropsType {
 
 export interface FormDialogPropsType<
   TFormType extends FieldValues,
-  TError extends Error = Error,
+  TError extends Error = Error
 > extends DialogPropsType,
     Omit<FormContainerPropsType<TFormType, TError>, "children"> {}

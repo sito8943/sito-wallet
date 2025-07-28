@@ -29,7 +29,7 @@ export interface ParagraphInputPropsType
 
 export type FormContainerPropsType<
   TFormType extends FieldValues,
-  TError extends Error = Error,
+  TError extends Error = Error
 > = {
   children: ReactNode;
   control?: Control<TFormType>;
@@ -41,8 +41,12 @@ export type FormContainerPropsType<
   onSubmit: SubmitHandler<TFormType>;
   parseFormError?: (error: TError) => string[];
   releaseFormError?: () => void;
-  onClick: (id?: number) => void;
   /* if the buttons are aligned to the end */
   buttonEnd?: boolean;
   isLoading?: boolean;
 };
+
+export type FormPropsType<
+  TFormType extends FieldValues,
+  TError extends Error = Error
+> = Omit<FormContainerPropsType<TFormType, TError>, "children">;

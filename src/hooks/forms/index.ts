@@ -1,2 +1,3 @@
-export * from "./useConfirmationForm.tsx";
-export type * from "./types.ts";
+export * from "./useConfirmationForm";
+export * from "./usePostForm";
+export type * from "./types";

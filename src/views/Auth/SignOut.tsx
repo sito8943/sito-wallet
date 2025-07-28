@@ -2,7 +2,7 @@ import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 // providers
-import { useAccount } from "../../providers/AccountProvider";
+import { useAccount } from "../../providers/AuthProvider";
 import { useHotelApiClient } from "../../providers/HotelApiProvider";
 
 // components

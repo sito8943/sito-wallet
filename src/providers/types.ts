@@ -1,7 +1,13 @@
 import { ReactNode } from "react";
 
 // lib
-import { BaseEntityDto, Manager, NotificationType, Tables } from "lib";
+import {
+  BaseEntityDto,
+  Manager,
+  NotificationType,
+  SessionDto,
+  Tables,
+} from "lib";
 
 export type BasicProviderPropTypes = {
   children: ReactNode;
@@ -9,6 +15,13 @@ export type BasicProviderPropTypes = {
 
 export type ManagerProviderContextType = {
   client: Manager;
+};
+
+export type AuthProviderContextType = {
+  account: SessionDto;
+  logUser: (data: SessionDto) => void;
+  logoutUser: () => void;
+  logUserFromLocal: () => Promise<void>;
 };
 
 export type LocalCacheProviderContextType = {
@@ -29,8 +42,8 @@ export type FileDataType = {
 export type NotificationContextType = {
   notification: NotificationType[];
   removeNotification: (index?: number) => void;
-  showErrorNotification: (options: NotificationType) => void;
+  showErrorNotification: (options: Partial<NotificationType>) => void;
   showNotification: (options: NotificationType) => void;
-  showSuccessNotification: (options: NotificationType) => void;
+  showSuccessNotification: (options: Partial<NotificationType>) => void;
   showStackNotifications: (notifications: NotificationType[]) => void;
 };

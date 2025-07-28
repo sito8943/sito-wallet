@@ -17,6 +17,21 @@
       "label": "Created At"
     }
   },
+  "user": {
+    "email": {
+      "label": "Email",
+      "placeholder": "Ex: email@provider.com",
+      "unique": "There is a user with that email already",
+      "required": "Email is required",
+      "notFound": "User not found"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Ex: ********",
+      "required": "Password is required",
+      "wrongPassword": "Wrong password"
+    }
+  },
   "account": {
     "name": {
       "label": "Name",
