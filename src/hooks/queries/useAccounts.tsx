@@ -45,7 +45,10 @@ export function useAccountsList(
         const cached = loadCache(Tables.Accounts);
         if (!cached || !Array.isArray(cached))
           throw new Error("No cached accounts available");
-        return { items: cached, total: cached?.length };
+        return {
+          items: cached as unknown as AccountDto,
+          total: cached?.length,
+        } as unknown as QueryResult<AccountDto>;
       }
     },
   });
@@ -60,14 +63,18 @@ export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
     queryFn: async () => {
       try {
         const result = await manager.Accounts.commonGet({ deleted: false });
-        updateCache(Tables.Accounts, result.items);
+        updateCache(Tables.Accounts, result);
         return result;
       } catch (error) {
         console.warn("API failed, loading accounts from cache", error);
-        const cached = (await loadCache(Tables.Accounts)) as CommonAccountDto[];
+        const cached = loadCache(Tables.Accounts) as CommonAccountDto[];
         if (!cached || !Array.isArray(cached))
           throw new Error("No cached accounts available");
-        return cached.map(({ id, name }) => ({ id, name }));
+        return cached.map(({ id, name, updatedAt }) => ({
+          id,
+          name,
+          updatedAt,
+        }));
       }
     },
   });
