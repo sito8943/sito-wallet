@@ -1,1 +1,3 @@
-export type NavbarPropsType = {};
+export type NavbarPropsType = {
+    openDrawer: () => void;
+};

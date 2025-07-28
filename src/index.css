@@ -86,7 +86,7 @@ p {
     min-height: 100vh;
     transition: grid-template-rows 500ms ease-in-out;
     transition-delay: 1s;
-    grid-template-rows:  40px 40px 1fr 40px
+    grid-template-rows: 40px 1fr 40px
 }
 
 main {
@@ -153,11 +153,11 @@ main h3 {
 }
 
 .chip.primary {
-    @apply bg-primary text-dark;
+    @apply bg-primary text-text;
 }
 
 .chip.primary p {
-    @apply text-dark font-medium;
+    @apply text-text font-medium;
 }
 
 .elevated {
