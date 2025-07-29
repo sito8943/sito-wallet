@@ -13,11 +13,16 @@ import { PagePropsType } from "./types.ts";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAdd, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAdd,
+  faArrowLeft,
+  faRotateLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 // lib
 import { BaseEntityDto } from "lib";
 import { GlobalActions } from "hooks";
+import { queryClient } from "providers";
 
 export const Page = <TEntity extends BaseEntityDto>(
   props: PagePropsType<TEntity>
@@ -28,6 +33,7 @@ export const Page = <TEntity extends BaseEntityDto>(
     isLoading,
     addOptions,
     actions,
+    queryKey,
     animated = true,
     showBack = false,
   } = props;
@@ -37,17 +43,27 @@ export const Page = <TEntity extends BaseEntityDto>(
   const navigate = useNavigate();
 
   const parsedActions = useMemo(() => {
+    const pActions = Array.isArray(actions) ? actions : [];
+    if (queryKey) {
+      const refreshAction = {
+        id: GlobalActions.Refresh,
+        onClick: () => queryClient.invalidateQueries({ queryKey }),
+        icon: <FontAwesomeIcon icon={faRotateLeft} />,
+        tooltip: t("_pages:common.actions.refresh.text"),
+      };
+      pActions.unshift(refreshAction as Action<BaseEntityDto>);
+    }
     if (addOptions) {
       const addAction = {
         ...(addOptions as Action<BaseEntityDto>),
         id: GlobalActions.Add,
         icon: <FontAwesomeIcon icon={faAdd} />,
       };
-      if (Array.isArray(actions)) actions.unshift(addAction);
-      else return [addAction];
+      pActions.unshift(addAction);
     }
-    return actions;
-  }, [actions, addOptions]);
+
+    return pActions;
+  }, [actions, addOptions, queryKey, t]);
 
   return (
     <main className="">

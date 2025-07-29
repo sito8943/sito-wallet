@@ -62,6 +62,7 @@ export function Accounts() {
         disabled: isLoading,
         tooltip: t("_pages:accounts.add"),
       }}
+      queryKey={AccountsQueryKeys.all().queryKey}
     >
       {!error ? (
         <>

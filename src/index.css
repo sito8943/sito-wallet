@@ -6,6 +6,10 @@
   scroll-behavior: smooth;
 }
 
+.react-tooltip{
+  z-index: 21
+}
+
 textarea {
   resize: none;
 }

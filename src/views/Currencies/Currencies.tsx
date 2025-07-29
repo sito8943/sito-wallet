@@ -66,6 +66,7 @@ export function Currencies() {
         disabled: isLoading,
         tooltip: t("_pages:currencies.add"),
       }}
+      queryKey={CurrenciesQueryKeys.all().queryKey}
     >
       {!error ? (
         <>
