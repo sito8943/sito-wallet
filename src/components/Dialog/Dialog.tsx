@@ -87,7 +87,7 @@ export const Dialog = (props: DialogPropsType) => {
         >
           <FontAwesomeIcon icon={faClose} />
         </button>
-        <div className="flex items-center gap-2 mb-5">
+        <div className="flex items-center gap-2 mb-5 max-xs:mb-10">
           <h3 className="text-text text-xl">{title}</h3>
         </div>
         {children}

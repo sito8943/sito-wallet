@@ -1,7 +1,7 @@
 @import "./variables.css";
 
 .chip-main {
-  @apply py-1
+  @apply py-1;
 }
 
 .text-input,
@@ -40,8 +40,14 @@ select > option {
 .select-input-label,
 .peer:focus ~ .text-input-label,
 .peer:focus ~ .select-input-label {
-  transform: translateY(-30px) scale(1);
+  transform: translateY(-30px);
+  font-weight: 400;
   top: 10px;
+}
+
+.text-input.has-placeholder ~ .text-input-label {
+  font-weight: 400;
+  transform: translateY(-1.75rem);
 }
 
 .text-input-helper-text {
