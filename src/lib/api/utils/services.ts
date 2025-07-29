@@ -39,7 +39,6 @@ export async function makeRequest<TBody = undefined, TResponse = unknown>(
     ...(body ? { body: JSON.stringify(body) } : {}),
   };
 
-
   try {
     const response = await fetch(`${config.apiUrl}${url}`, options);
     const isJson = response.headers
@@ -50,7 +49,10 @@ export async function makeRequest<TBody = undefined, TResponse = unknown>(
 
     const error =
       !response.ok || isAnError(response.status)
-        ? { status: response.status, message: response.statusText }
+        ? {
+            status: response.status,
+            message: response.statusText ?? response.status,
+          }
         : null;
 
     return {
