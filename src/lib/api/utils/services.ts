@@ -32,7 +32,6 @@ export async function makeRequest<TBody = undefined, TResponse = unknown>(
     "Content-Type": "application/json",
     ...customHeaders,
   };
-
   const options: RequestInit = {
     method,
     headers,

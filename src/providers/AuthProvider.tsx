@@ -45,11 +45,9 @@ const AuthProvider = (props: BasicProviderPropTypes) => {
 
   const logUserFromLocal = useCallback(async () => {
     try {
-      const result = await manager.Auth.getSession();
-      if (result.token) {
-        const loggedUser = fromLocal(config.user, "object");
-        if (loggedUser) setAccount(loggedUser);
-      } else logoutUser();
+      await manager.Auth.getSession();
+      const loggedUser = fromLocal(config.user, "object");
+      if (loggedUser) setAccount(loggedUser);
     } catch (err) {
       console.error(err);
       logoutUser();

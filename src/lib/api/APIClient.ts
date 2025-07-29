@@ -27,7 +27,7 @@ export class APIClient {
 
   defaultTokenAdquierer() {
     const auth = fromLocal(config.user, "object") as unknown as SessionDto;
-    if (auth.token)
+    if (auth?.token)
       return { Authorization: `Bearer ${auth.token}` } as HeadersInit;
 
     return undefined;
@@ -37,18 +37,15 @@ export class APIClient {
     endpoint: string,
     method = Methods.GET,
     query?: string,
-    body?: TBody
+    body?: TBody,
+    header?: HeadersInit
   ) {
     const builtUrl = buildQueryUrl(endpoint, query);
-    const securedHeader = this.secured
-      ? this.defaultTokenAdquierer()
-      : undefined;
-    const { data: result, status } = await makeRequest(
-      builtUrl,
-      method,
-      body,
-      securedHeader
-    );
+    const securedHeader = this.secured ? this.defaultTokenAdquierer() : {};
+    const { data: result, status } = await makeRequest(builtUrl, method, body, {
+      ...securedHeader,
+      ...(header ?? {}),
+    });
 
     if (status !== 200 && status !== 204) throw new Error(String(status));
 
