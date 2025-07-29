@@ -21,7 +21,7 @@ export function SignOut() {
     await manager.Auth.logout();
     logoutUser();
     setTimeout(() => {
-      navigate("/auth");
+      navigate("/auth/sign-in");
     }, 1000);
   }, [logoutUser, manager.Auth, navigate]);
 

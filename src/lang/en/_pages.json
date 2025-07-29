@@ -36,6 +36,9 @@
       "toLogin": "Login to your account"
     }
   },
+  "signOut": {
+    "title": "Sign out"
+  },
   "accounts": {
     "title": "Accounts",
     "empty": "No accounts to load",

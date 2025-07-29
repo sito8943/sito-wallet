@@ -4,7 +4,7 @@ import { APIClient } from "./APIClient";
 import { AuthDto, RegisterDto, SessionDto } from "../entities";
 
 export default class AuthClient {
-  api: APIClient = new APIClient();
+  api: APIClient = new APIClient(false);
 
   constructor() {
     // Initialization logic if needed
@@ -22,7 +22,7 @@ export default class AuthClient {
   }
 
   async logout() {
-    const endpoint = "auth/logout";
+    const endpoint = "auth/sign-out";
     return await this.api.doQuery<void>(endpoint, "POST");
   }
 

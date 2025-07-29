@@ -21,14 +21,17 @@ export default class BaseClient<
   TFilter
 > {
   table: Tables;
-  api: APIClient = new APIClient();
-
+  secured: boolean;
+  api: APIClient;
   /**
    *
    * @param table
+   * @param secured to see if the api client requires jwt protection
    */
-  constructor(table: Tables) {
+  constructor(table: Tables, secured: boolean = true) {
     this.table = table;
+    this.secured = secured;
+    this.api = new APIClient(secured);
   }
 
   /**

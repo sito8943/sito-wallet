@@ -2,13 +2,37 @@
 import { buildQueryUrl, makeRequest } from "./utils/services";
 
 // types
-import { QueryResult } from "lib";
+import { fromLocal, QueryResult, SessionDto } from "lib";
+
+// config
+import { config } from "../../config";
 
 /**
  * @class APIClient
  * @description it has all base methods
  */
 export class APIClient {
+  secured: boolean;
+  tokenAdquirer!: () => HeadersInit | undefined;
+
+  /**
+   *
+   * @param secured if the api client requires token
+   * @param tokenAdquirer custom token adquirer
+   */
+  constructor(secured = true, tokenAdquirer = null) {
+    this.secured = secured;
+    if (!tokenAdquirer) this.tokenAdquirer = this.defaultTokenAdquierer;
+  }
+
+  defaultTokenAdquierer() {
+    const auth = fromLocal(config.user, "object") as unknown as SessionDto;
+    if (auth.token)
+      return { Authorization: `Bearer ${auth.token}` } as HeadersInit;
+
+    return undefined;
+  }
+
   async doQuery<TResponse, TBody = unknown>(
     endpoint: string,
     method = "GET",
@@ -16,9 +40,17 @@ export class APIClient {
     body?: TBody
   ) {
     const builtUrl = buildQueryUrl(endpoint, query);
-    const { data: result, status } = await makeRequest(builtUrl, method, body);
-
-    if (status !== 200) throw new Error(String(status));
+    const securedHeader = this.secured
+      ? this.defaultTokenAdquierer()
+      : undefined;
+    const { data: result, status } = await makeRequest(
+      builtUrl,
+      method,
+      body,
+      securedHeader
+    );
+    console.log(status);
+    if (status !== 200 && status !== 204) throw new Error(String(status));
 
     return result as TResponse;
   }
@@ -31,7 +63,15 @@ export class APIClient {
    */
   async get<TDto, TFilter>(endpoint: string, query?: TFilter) {
     const builtUrl = buildQueryUrl<TFilter>(endpoint, query);
-    const { data: result, error } = await makeRequest(builtUrl, "GET", null);
+    const securedHeader = this.secured
+      ? this.defaultTokenAdquierer()
+      : undefined;
+    const { data: result, error } = await makeRequest(
+      builtUrl,
+      "GET",
+      null,
+      securedHeader
+    );
     if (error) throw new Error(`${error.status} ${error.message}`);
 
     return result as QueryResult<TDto>;
@@ -47,10 +87,14 @@ export class APIClient {
     endpoint: string,
     data: TUpdateDto
   ): Promise<TDto> {
+    const securedHeader = this.secured
+      ? this.defaultTokenAdquierer()
+      : undefined;
     const { error, data: result } = await makeRequest<TUpdateDto, TDto>(
       endpoint,
       "PATCH",
-      data
+      data,
+      securedHeader
     );
 
     if (error || !result) throw new Error(error?.message);
@@ -64,10 +108,14 @@ export class APIClient {
    * @returns delete result
    */
   async delete(endpoint: string, data: number[]) {
+    const securedHeader = this.secured
+      ? this.defaultTokenAdquierer()
+      : undefined;
     const { error, data: result } = await makeRequest<number[], number>(
       endpoint,
       "DELETE",
-      data
+      data,
+      securedHeader
     );
 
     if (error || !result) throw new Error(error?.message);
@@ -82,10 +130,14 @@ export class APIClient {
    * @returns inserted item
    */
   async post<TDto, TAddDto>(endpoint: string, data: TAddDto): Promise<TDto> {
+    const securedHeader = this.secured
+      ? this.defaultTokenAdquierer()
+      : undefined;
     const { error, data: result } = await makeRequest<TAddDto, TDto>(
       endpoint,
       "POST",
-      data
+      data,
+      securedHeader
     );
 
     if (error || !result) throw new Error(error?.message);

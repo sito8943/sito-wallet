@@ -11,6 +11,7 @@ export enum MenuKeys {
   Currencies = "currencies",
   Products = "products",
   Movements = "movements",
+  SignOut = "signOut",
 }
 
 export const menuMap: MenuItemType[] = [
@@ -27,6 +28,11 @@ export const menuMap: MenuItemType[] = [
   {
     page: MenuKeys.Currencies,
     path: "/currencies",
+    icon: <FontAwesomeIcon icon={faHome} />,
+  },
+  {
+    page: MenuKeys.SignOut,
+    path: "/sign-out",
     icon: <FontAwesomeIcon icon={faHome} />,
   },
 ];

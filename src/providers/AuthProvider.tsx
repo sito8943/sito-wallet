@@ -39,7 +39,7 @@ const AuthProvider = (props: BasicProviderPropTypes) => {
   }, []);
 
   const logUserFromLocal = useCallback(async () => {
-    try {
+    /* try {
       const result = await manager.Auth.getSession();
       if (result.token) {
         const loggedUser = fromLocal(config.user, "object");
@@ -48,7 +48,9 @@ const AuthProvider = (props: BasicProviderPropTypes) => {
     } catch (err) {
       console.error(err);
       logoutUser();
-    }
+    } */
+    const loggedUser = fromLocal(config.user, "object");
+    if (loggedUser) setAccount(loggedUser);
   }, [logoutUser, manager.Auth]);
 
   const value = { account, logUser, logoutUser, logUserFromLocal };

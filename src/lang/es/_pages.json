@@ -29,6 +29,9 @@
       "toLogin": "Iniciar sesión en tu cuenta"
     }
   },
+  "signOut": {
+    "title": "Cerrar sesión"
+  },
   "accounts": {
     "title": "Cuentas",
     "empty": "No hay cuentas para mostrar",

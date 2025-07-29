@@ -14,7 +14,7 @@ export async function makeRequest<TBody, TResponse>(
   url: string,
   method = "GET",
   body: TBody,
-  h = null
+  h?: HeadersInit
 ) {
   try {
     const headers = {
@@ -29,7 +29,7 @@ export async function makeRequest<TBody, TResponse>(
 
     const request = await fetch(`${config.apiUrl}${url}`, options);
 
-    if (request.ok) {
+    if (request.ok && request.status !== 204) {
       const data: TResponse = await request.json();
 
       return {
@@ -46,6 +46,7 @@ export async function makeRequest<TBody, TResponse>(
         error: { message: request.statusText },
       };
   } catch (err) {
+    console.log(err);
     return {
       data: null,
       status: 500,

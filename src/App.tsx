@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import loadable from "@loadable/component";
 
 // layouts
@@ -7,6 +7,9 @@ import { View, Auth } from "./layouts";
 
 // components
 import { SplashScreen } from "components";
+
+// providers
+import { useAuth } from "providers";
 
 // auth
 const SignUp = loadable(() =>
@@ -57,6 +60,12 @@ const Currencies = loadable(() =>
 );
 
 function App() {
+  const { logUserFromLocal } = useAuth();
+
+  useEffect(() => {
+    logUserFromLocal();
+  }, [logUserFromLocal]);
+
   return (
     <Suspense fallback={<SplashScreen />}>
       <BrowserRouter>
@@ -64,11 +73,11 @@ function App() {
           <Route path="/auth/" element={<Auth />}>
             <Route path="/auth/sign-in" element={<SignIn />} />
             <Route path="/auth/sign-up" element={<SignUp />} />
-            <Route path="/auth/sign-out" element={<SignOut />} />
             <Route path="/auth/update-password" element={<UpdatePassword />} />
             <Route path="/auth/recovery" element={<Recovery />} />
             <Route path="/auth/*" element={<NotFound />} />
           </Route>
+          <Route path="/sign-out" element={<SignOut />} />
           <Route path="/" element={<View />}>
             <Route index element={<Home />} />
             <Route path="/accounts" element={<Accounts />} />
