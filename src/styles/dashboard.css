@@ -45,6 +45,7 @@ select > option {
   top: 10px;
 }
 
+.text-input.has-value~.text-input-label,
 .text-input.has-placeholder ~ .text-input-label {
   font-weight: 400;
   transform: translateY(-1.75rem);
