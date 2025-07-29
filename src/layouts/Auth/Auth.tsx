@@ -1,10 +1,21 @@
+import { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 // components
 import { Notification, Error } from "components";
 
+// providers
+import { useAuth } from "providers";
+
 export const Auth = () => {
+  const { account } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (account.email) navigate("/auth/sign-in");
+  }, [account, navigate]);
+
   return (
     <>
       <ErrorBoundary
