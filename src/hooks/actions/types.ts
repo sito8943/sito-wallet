@@ -17,4 +17,5 @@ export enum GlobalActions {
   Edit = "edit",
   Delete = "delete",
   Restore = "restore",
+  Refresh = "refresh",
 }
