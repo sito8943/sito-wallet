@@ -3,22 +3,22 @@
 @import "./styles/components.css";
 
 * {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 textarea {
-    resize: none;
+  resize: none;
 }
 
 .animated {
-    @apply transition duration-300 ease-in-out;
+  @apply transition duration-300 ease-in-out;
 }
 
 h1,
 h2,
 th,
 .poppins {
-    font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 p,
@@ -30,137 +30,88 @@ textarea,
 select,
 td,
 .roboto {
-    font-family: "Roboto", sans-serif;
-}
-
-button {
-    @apply text-sm font-medium;
-}
-
-input,
-p {
-    @apply text-sm text-text-muted;
-}
-
-.button {
-    @apply flex items-center justify-center gap-2 text-text bg-base hover:bg-base-light px-4 py-1 cursor-pointer rounded-4xl;
-}
-
-.button.close {
-    @apply hover:bg-red-500;
-}
-
-.icon-button {
-    @apply bg-base hover:bg-base-light w-7 h-7 rounded-full flex items-center justify-center;
-}
-
-.action {
-    @apply bg-base hover:bg-base-light w-10 h-10 rounded-full;
-}
-
-.input {
-    @apply text-white bg-base border-border border-2 px-4 py-1 rounded-sm;
-}
-
-.input.error {
-    @apply border-red-500;
-}
-
-.dialog .button {
-    @apply px-4 py-1 rounded-4xl;
-}
-
-.outlined {
-    @apply border-border text-text border-2;
-}
-
-.outlined:hover {
-    @apply bg-border text-text-muted border-2 border-border;
-}
-
-.primary {
-    @apply bg-primary hover:bg-hover-primary text-black;
+  font-family: "Roboto", sans-serif;
 }
 
 #root {
-    display: grid;
-    min-height: 100vh;
-    transition: grid-template-rows 500ms ease-in-out;
-    transition-delay: 1s;
-    grid-template-rows: 60px 1fr 40px
+  display: grid;
+  min-height: 100vh;
+  transition: grid-template-rows 500ms ease-in-out;
+  transition-delay: 1s;
+  grid-template-rows: 60px 1fr 40px;
 }
 
 main {
-    height: 100%;
-    @apply bg-base-dark grid grid-rows-1;
+  height: 100%;
+  @apply bg-base-dark grid grid-rows-1;
 }
 
 main h1,
 main h2,
 main h3 {
-    @apply text-text;
+  @apply text-text;
 }
 
 .apparition {
-    animation: apparition 300ms ease-in-out;
+  animation: apparition 300ms ease-in-out;
 }
 
 @keyframes apparition {
-    0% {
-        opacity: 0;
-        transform: translateY(4px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .opacity {
-    animation: opacity 300ms ease-in-out;
+  animation: opacity 300ms ease-in-out;
 }
 
 @keyframes opacity {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .history {
-    height: calc(100vh - 304px);
-    @apply overflow-auto;
+  height: calc(100vh - 304px);
+  @apply overflow-auto;
 }
 
 .rotate {
-    animation: rotate 1000ms infinite;
-    --tw-ease: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation: rotate 1000ms infinite;
+  --tw-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes rotate {
-    0% {
-        rotate: 0;
-    }
-    100% {
-        rotate: 360deg;
-    }
+  0% {
+    rotate: 0;
+  }
+  100% {
+    rotate: 360deg;
+  }
 }
 
 .chip {
-    @apply rounded-4xl pl-3 pr-3 py-1 flex items-center justify-center gap-2;
+  @apply rounded-4xl pl-3 pr-3 py-1 flex items-center justify-center gap-2;
 }
 
 .chip.primary {
-    @apply bg-primary text-text;
+  @apply bg-primary text-text;
 }
 
 .chip.primary p {
-    @apply text-text font-medium;
+  @apply text-text font-medium;
 }
 
 .elevated {
-    box-shadow: 0 3px 8px 0 #0000004f;
+  box-shadow: 0 3px 8px 0 #0000004f;
 }

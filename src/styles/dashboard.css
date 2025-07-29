@@ -36,7 +36,7 @@ select > option {
 .select-input-label,
 .peer:focus ~ .text-input-label,
 .peer:focus ~ .select-input-label {
-  transform: translateY(-30px) scale(0.75);
+  transform: translateY(-30px) scale(1);
   top: 10px;
 }
 
