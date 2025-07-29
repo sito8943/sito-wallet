@@ -1,11 +1,10 @@
-import { BaseEntityDto, CommonCurrencyDto } from "lib";
-import { CommonAccountDto } from "./CommonAccountDto";
+import { BaseEntityDto, CommonCurrencyDto, CommonUserDto } from "lib";
 import { AccountType } from "./AccountType";
 
-export interface AccountDto extends CommonAccountDto, BaseEntityDto {
+export interface AccountDto extends BaseEntityDto {
   name: string;
   description: string;
   currency: CommonCurrencyDto | null;
   type: AccountType;
-  userId: number;
+  user: CommonUserDto | null;
 }

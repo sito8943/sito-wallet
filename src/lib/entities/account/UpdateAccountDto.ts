@@ -1,8 +1,7 @@
-import { AccountDto } from "./AccountDto";
+import { DeleteDto } from "../base";
 import { AccountType } from "./AccountType";
 
-export interface UpdateAccountDto
-  extends Omit<AccountDto, "updatedAt" | "deleted" | "createdAt" | "currency"> {
+export interface UpdateAccountDto extends DeleteDto {
   name: string;
   description: string;
   type: AccountType;

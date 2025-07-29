@@ -1,7 +1,7 @@
-import { BaseEntityDto } from "lib";
-import { CommonCurrencyDto } from "./CommonCurrencyDto";
+import { BaseEntityDto, CommonUserDto } from "lib";
 
-export interface CurrencyDto extends CommonCurrencyDto, BaseEntityDto {
+export interface CurrencyDto extends BaseEntityDto {
   name: string;
   description: string;
+  user: CommonUserDto | null;
 }

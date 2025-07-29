@@ -1,12 +1,9 @@
-import { AccountDto, AccountType } from "lib";
+import { AccountType } from "lib";
 
-export interface AddAccountDto
-  extends Omit<
-    AccountDto,
-    "id" | "updatedAt" | "createdAt" | "deleted" | "currency"
-  > {
+export interface AddAccountDto {
   name: string;
   description: string;
   type: AccountType;
   currencyId: number;
+  userId: number;
 }
