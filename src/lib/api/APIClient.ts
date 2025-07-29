@@ -52,7 +52,7 @@ export class APIClient {
       data
     );
 
-    if (error) throw new Error(error.message);
+    if (error || !result) throw new Error(error?.message);
 
     return result;
   }
@@ -87,7 +87,7 @@ export class APIClient {
       data
     );
 
-    if (error) throw new Error(error.message);
+    if (error || !result) throw new Error(error?.message);
 
     return result;
   }

@@ -16,26 +16,42 @@ export async function makeRequest<TBody, TResponse>(
   body: TBody,
   h = null
 ) {
-  const headers = {
-    "Content-Type": "application/json",
-    ...(h ?? {}),
-  };
-  const options: RequestInit = {
-    method,
-    headers,
-  };
-  if (body) options.body = JSON.stringify(body);
+  try {
+    const headers = {
+      "Content-Type": "application/json",
+      ...(h ?? {}),
+    };
+    const options: RequestInit = {
+      method,
+      headers,
+    };
+    if (body) options.body = JSON.stringify(body);
 
-  const request = await fetch(`${config.apiUrl}${url}`, options);
-  const data: TResponse = await request.json();
+    const request = await fetch(`${config.apiUrl}${url}`, options);
 
-  return {
-    data,
-    status: request.status,
-    error: isAnError(request.status)
-      ? { status: request.status, message: request.statusText }
-      : null,
-  };
+    if (request.ok) {
+      const data: TResponse = await request.json();
+
+      return {
+        data,
+        status: request.status,
+        error: isAnError(request.status)
+          ? { status: request.status, message: request.statusText }
+          : null,
+      };
+    } else
+      return {
+        data: null,
+        status: request.status,
+        error: { message: request.statusText },
+      };
+  } catch (err) {
+    return {
+      data: null,
+      status: 500,
+      error: { status: 500, message: (err as Error).message },
+    };
+  }
 }
 
 export function buildQueryUrl<TFilter>(

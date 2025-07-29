@@ -11,7 +11,7 @@ export default class AuthClient {
   }
 
   async login(data: AuthDto) {
-    const endpoint = "/auth/login";
+    const endpoint = "auth/sign-in";
     const body = data;
     return await this.api.doQuery<SessionDto, AuthDto>(
       endpoint,
@@ -22,12 +22,12 @@ export default class AuthClient {
   }
 
   async logout() {
-    const endpoint = "/auth/logout";
+    const endpoint = "auth/logout";
     return await this.api.doQuery<void>(endpoint, "POST");
   }
 
   async register(userData: RegisterDto) {
-    const endpoint = "/auth/register";
+    const endpoint = "auth/register";
     return await this.api.doQuery<SessionDto, RegisterDto>(
       endpoint,
       "POST",
@@ -37,7 +37,7 @@ export default class AuthClient {
   }
 
   async getSession() {
-    const endpoint = "/auth/session";
+    const endpoint = "auth/session";
     return await this.api.doQuery<SessionDto>(endpoint, "GET");
   }
 }
