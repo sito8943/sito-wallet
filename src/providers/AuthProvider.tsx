@@ -28,11 +28,13 @@ const AuthProvider = (props: BasicProviderPropTypes) => {
 
   const logUser = useCallback((data: SessionDto) => {
     setAccount(data);
+    //TODO Save token on cookie
     toLocal(config.user, data);
   }, []);
 
   const logoutUser = useCallback(() => {
     setAccount({} as SessionDto);
+    //TODO Remove token from cookie
     removeFromLocal(config.user);
   }, []);
 

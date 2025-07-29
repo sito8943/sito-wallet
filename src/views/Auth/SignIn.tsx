@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // @sito/dashboard
 import { State, TextInput } from "@sito/dashboard";
@@ -32,6 +32,7 @@ export function SignIn() {
   const { showErrorNotification } = useNotification();
 
   const manager = useManager();
+  const navigate = useNavigate();
 
   const { handleSubmit, control, onSubmit, isLoading } = usePostForm<
     AuthDto,
@@ -43,6 +44,7 @@ export function SignIn() {
     mutationFn: async (data: AuthDto) => await manager.Auth.login(data),
     onSuccess: (data) => {
       logUser(data);
+      navigate("/");
     },
     onError: (errors) => {
       console.log(errors);
