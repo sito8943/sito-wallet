@@ -7,6 +7,9 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 // types
 import { NavbarPropsType } from "./types.js";
 
+// lib
+import { getFormattedDateTime } from "lib";
+
 // styles
 import "./styles.css";
 
@@ -30,6 +33,9 @@ export function Navbar(props: NavbarPropsType) {
         <h1 className="text-lg text-text pointer-events-none poppins font-bold">
           {t("_pages:home.appName")}
         </h1>
+      </div>
+      <div className="max-xs:hidden">
+        <p className="capitalize">{getFormattedDateTime()}</p>
       </div>
     </header>
   );
