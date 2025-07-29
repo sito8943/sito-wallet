@@ -140,7 +140,8 @@ export class APIClient {
       securedHeader
     );
 
-    if (error || !result) throw new Error(error?.message);
+    if (error || !result)
+      throw new Error(error?.message ?? String(error?.status));
 
     return result;
   }
