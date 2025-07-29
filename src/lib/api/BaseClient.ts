@@ -10,6 +10,7 @@ import {
   BaseEntityDto,
   buildQueryUrl,
   DeleteDto,
+  Methods,
   QueryResult,
 } from "lib";
 
@@ -51,7 +52,7 @@ export default class BaseClient<
   async insertMany(data: TAddDto[]): Promise<TDto> {
     return await this.api.doQuery<TDto, TAddDto[]>(
       `${this.table}/batch`,
-      "POST",
+      Methods.POST,
       "",
       data
     );
@@ -86,7 +87,7 @@ export default class BaseClient<
   async commonGet(query: TFilter): Promise<TCommonDto[]> {
     return await this.api.doQuery<TCommonDto[], TFilter>(
       `${this.table}/common`,
-      "GET",
+      Methods.GET,
       buildQueryUrl<TFilter>(`${this.table}/common`, query)
     );
   }
