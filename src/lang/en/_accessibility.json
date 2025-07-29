@@ -56,7 +56,8 @@
     "retry": "Retry to connect"
   },
   "errors": {
-    "unknownError": "An error has occurred"
+    "unknownError": "An error has occurred",
+    "403": "Wrong user or password"
   },
   "messages": {},
   "components": {

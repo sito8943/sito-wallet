@@ -16,8 +16,9 @@ export class APIClient {
     body?: TBody
   ) {
     const builtUrl = buildQueryUrl(endpoint, query);
-    const { data: result, error } = await makeRequest(builtUrl, method, body);
-    if (error) throw new Error(error.message);
+    const { data: result, status } = await makeRequest(builtUrl, method, body);
+
+    if (status !== 200) throw new Error(String(status));
 
     return result as TResponse;
   }

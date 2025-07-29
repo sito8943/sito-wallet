@@ -10,7 +10,7 @@ import { State, TextInput, Loading } from "@sito/dashboard";
 import { PasswordInput } from "components";
 
 // providers
-import { useAuth, useManager } from "providers";
+import { useAuth, useManager, useNotification } from "providers";
 
 // hooks
 import { usePostForm } from "hooks";
@@ -29,6 +29,8 @@ export function SignIn() {
 
   const [appear, setAppear] = useState(false);
 
+  const { showErrorNotification } = useNotification();
+
   const manager = useManager();
 
   const { handleSubmit, control, onSubmit, isLoading } = usePostForm<
@@ -41,6 +43,12 @@ export function SignIn() {
     mutationFn: async (data: AuthDto) => await manager.Auth.login(data),
     onSuccess: (data) => {
       logUser(data);
+    },
+    onError: (errors) => {
+      console.log(errors);
+      showErrorNotification({
+        message: t(`_accessibility:errors.${errors.message}`),
+      });
     },
   });
 

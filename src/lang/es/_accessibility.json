@@ -51,7 +51,8 @@
     "retry": "Reintentar conexión"
   },
   "errors": {
-    "unknownError": "Ha ocurrido un error"
+    "unknownError": "Ha ocurrido un error",
+    "403": "Usuario o contraseña incorrectos"
   },
   "messages": {}
 }
