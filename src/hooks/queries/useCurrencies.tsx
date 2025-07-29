@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 // providers
-import { useLocalCache, useManager } from "providers";
+import { useAuth, useLocalCache, useManager } from "providers";
 
 // types
 import { UseFetchPropsType } from "./types.ts";
@@ -31,13 +31,17 @@ export function useCurrenciesList(
   const { filters = { deleted: false } } = props;
 
   const manager = useManager();
+  const { account } = useAuth();
   const { loadCache, updateCache } = useLocalCache();
 
   return useQuery({
     ...CurrenciesQueryKeys.list(),
     queryFn: async () => {
       try {
-        const result = await manager.Currencies.get(filters);
+        const result = await manager.Currencies.get({
+          ...filters,
+          userId: account?.id,
+        });
         updateCache(Tables.Currencies, result.items);
         return result;
       } catch (error) {
