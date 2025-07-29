@@ -1,7 +1,8 @@
 {
   "home": {
     "title": "Home",
-    "appName": "Sito Wallet"
+    "appName": "Sito Wallet",
+    "welcome": "Welcome {{user}}"
   },
   "common": {
     "actions": {
