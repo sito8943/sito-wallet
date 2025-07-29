@@ -36,13 +36,13 @@ import { useCurrenciesCommon } from "hooks";
 import { useAuth } from "providers";
 
 export function AccountForm(props: AccountFormPropsType) {
-  const { control, isLoading, setValue } = props;
+  const { control, isLoading, setValue, open } = props;
   const { t } = useTranslation();
   const { account } = useAuth();
 
   useEffect(() => {
     if (account && setValue) setValue("userId", account?.id ?? 0);
-  }, [account, setValue]);
+  }, [account, setValue, open]);
 
   const currencies = useCurrenciesCommon();
 

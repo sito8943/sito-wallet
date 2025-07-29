@@ -22,13 +22,13 @@ import { Tables } from "lib";
 import { useAuth } from "providers";
 
 export function CurrencyForm(props: CurrencyFormPropsType) {
-  const { control, setValue, isLoading } = props;
+  const { control, setValue, isLoading, open } = props;
   const { t } = useTranslation();
   const { account } = useAuth();
 
   useEffect(() => {
     if (account && setValue) setValue("userId", account?.id ?? 0);
-  }, [account, setValue]);
+  }, [account, setValue, open]);
 
   return (
     <>
