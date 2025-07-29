@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
 import { useEffect } from "react";
@@ -13,9 +13,11 @@ import { Notification, Error } from "components";
 
 export function View() {
   const { account } = useAuth();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    console.log(account);
-  }, [account]);
+    if (!account.email) navigate("/auth/sign-in");
+  }, [account, navigate]);
 
   return (
     <>

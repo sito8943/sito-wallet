@@ -1,6 +1,6 @@
 export type SessionDto = {
   id: number;
-  user: string;
+  username: string;
   email: string;
   token: string;
 };

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import loadable from "@loadable/component";
 
 // layouts
@@ -61,31 +61,37 @@ const Currencies = loadable(() =>
 
 function App() {
   const { logUserFromLocal } = useAuth();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    logUserFromLocal();
+    logUserFromLocal().then(() => setTimeout(() => setLoading(false), 300));
   }, [logUserFromLocal]);
 
   return (
     <Suspense fallback={<SplashScreen />}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/auth/" element={<Auth />}>
-            <Route path="/auth/sign-in" element={<SignIn />} />
-            <Route path="/auth/sign-up" element={<SignUp />} />
-            <Route path="/auth/update-password" element={<UpdatePassword />} />
-            <Route path="/auth/recovery" element={<Recovery />} />
-            <Route path="/auth/*" element={<NotFound />} />
-          </Route>
-          <Route path="/sign-out" element={<SignOut />} />
-          <Route path="/" element={<View />}>
-            <Route index element={<Home />} />
-            <Route path="/accounts" element={<Accounts />} />
-            <Route path="/currencies" element={<Currencies />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      {!loading && (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/auth/" element={<Auth />}>
+              <Route path="/auth/sign-in" element={<SignIn />} />
+              <Route path="/auth/sign-up" element={<SignUp />} />
+              <Route
+                path="/auth/update-password"
+                element={<UpdatePassword />}
+              />
+              <Route path="/auth/recovery" element={<Recovery />} />
+              <Route path="/auth/*" element={<NotFound />} />
+            </Route>
+            <Route path="/sign-out" element={<SignOut />} />
+            <Route path="/" element={<View />}>
+              <Route index element={<Home />} />
+              <Route path="/accounts" element={<Accounts />} />
+              <Route path="/currencies" element={<Currencies />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      )}
     </Suspense>
   );
 }
