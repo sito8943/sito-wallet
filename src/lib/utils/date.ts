@@ -11,5 +11,5 @@ export function getFormattedDateTime() {
     hour12: true, // PM
   };
 
-  return now.toLocaleString("es-ES", options);
+  return now.toLocaleString(navigator.language || "es-ES", options as Intl.DateTimeFormatOptions);
 }

@@ -8,7 +8,7 @@ export function useTimeAge() {
     (date: Date) => {
       const now = new Date();
 
-      const diffInMilliseconds = now - date;
+      const diffInMilliseconds = now.getTime() - date.getTime();
       const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
       const diffInHours = Math.floor(diffInMinutes / 60);
 
