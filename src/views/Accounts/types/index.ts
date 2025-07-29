@@ -14,8 +14,10 @@ export interface AccountCardPropsType extends AccountDto {
 }
 
 export interface AccountFormType
-  extends Omit<AccountDto, "deleted" | "createdAt" | "updatedAt">,
-    FieldValues {}
+  extends Omit<AccountDto, "deleted" | "createdAt" | "updatedAt" | "user">,
+    FieldValues {
+  userId: number;
+}
 
 export type AccountFormPropsType = FormDialogPropsType<
   AccountFormType,

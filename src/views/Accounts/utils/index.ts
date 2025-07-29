@@ -7,6 +7,7 @@ export const formToDto = ({
   description,
   type,
   currency,
+  userId,
 }: AccountFormType): UpdateAccountDto => {
   return {
     id,
@@ -14,6 +15,7 @@ export const formToDto = ({
     description,
     type: type,
     currencyId: currency?.id ?? 0,
+    userId: userId,
   };
 };
 
@@ -23,6 +25,7 @@ export const dtoToForm = (dto: AccountDto): AccountFormType => ({
   description: dto.description,
   type: dto.type,
   currency: dto.currency,
+  userId: dto.user?.id ?? 0,
 });
 
 export const emptyAccount: AccountFormType = {
@@ -31,4 +34,5 @@ export const emptyAccount: AccountFormType = {
   description: "",
   type: AccountType.Physical,
   currency: null,
+  userId: 0,
 };

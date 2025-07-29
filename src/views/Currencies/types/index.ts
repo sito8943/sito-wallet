@@ -14,8 +14,10 @@ export interface CurrencyCardPropsType extends CurrencyDto {
 }
 
 export interface CurrencyFormType
-  extends Omit<CurrencyDto, "deleted" | "createdAt" | "updatedAt">,
-    FieldValues {}
+  extends Omit<CurrencyDto, "deleted" | "createdAt" | "updatedAt" | "user">,
+    FieldValues {
+  userId: number;
+}
 
 export type CurrencyFormPropsType = FormDialogPropsType<
   CurrencyFormType,

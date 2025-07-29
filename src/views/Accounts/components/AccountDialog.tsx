@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Controller, useWatch } from "react-hook-form";
 
@@ -32,9 +32,17 @@ import { icons } from "./utils";
 // hooks
 import { useCurrenciesCommon } from "hooks";
 
+// providers
+import { useAuth } from "providers";
+
 export function AccountForm(props: AccountFormPropsType) {
-  const { control, isLoading } = props;
+  const { control, isLoading, setValue } = props;
   const { t } = useTranslation();
+  const { account } = useAuth();
+
+  useEffect(() => {
+    if (account && setValue) setValue("userId", account?.id ?? 0);
+  }, [account, setValue]);
 
   const currencies = useCurrenciesCommon();
 
@@ -42,8 +50,6 @@ export function AccountForm(props: AccountFormPropsType) {
     () => [...(currencies?.data ?? [])] as Option[],
     [currencies.data]
   );
-
-
 
   const typeOptions = useMemo(
     () => [
@@ -63,6 +69,11 @@ export function AccountForm(props: AccountFormPropsType) {
         control={control}
         render={({ field }) => <input {...field} type="hidden" />}
         name="id"
+      />
+      <Controller
+        control={control}
+        render={({ field }) => <input {...field} type="hidden" />}
+        name="userId"
       />
       <Controller
         control={control}
