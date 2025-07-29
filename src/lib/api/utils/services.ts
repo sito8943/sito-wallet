@@ -39,7 +39,7 @@ export async function makeRequest<TBody = undefined, TResponse = unknown>(
     ...(body ? { body: JSON.stringify(body) } : {}),
   };
 
-  console.log(options);
+
   try {
     const response = await fetch(`${config.apiUrl}${url}`, options);
     const isJson = response.headers

@@ -56,7 +56,6 @@ export function SignUp() {
       navigate("/");
     },
     onError: (errors) => {
-      console.log(errors);
       showErrorNotification({
         message: t(`_accessibility:errors.${errors.message}`),
       });

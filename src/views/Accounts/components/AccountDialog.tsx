@@ -43,7 +43,7 @@ export function AccountForm(props: AccountFormPropsType) {
     [currencies.data]
   );
 
-  console.log(currencyOptions);
+
 
   const typeOptions = useMemo(
     () => [

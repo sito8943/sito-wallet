@@ -47,7 +47,6 @@ export function SignIn() {
       navigate("/");
     },
     onError: (errors) => {
-      console.log(errors);
       showErrorNotification({
         message: t(`_accessibility:errors.${errors.message}`),
       });

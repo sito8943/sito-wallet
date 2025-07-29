@@ -8,7 +8,6 @@ export const formToDto = ({
   type,
   currency,
 }: AccountFormType): UpdateAccountDto => {
-  console.log(currency);
   return {
     id,
     name,
