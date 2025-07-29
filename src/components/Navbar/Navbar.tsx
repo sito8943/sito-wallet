@@ -7,11 +7,11 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 // types
 import { NavbarPropsType } from "./types.js";
 
-// lib
-import { getFormattedDateTime } from "lib";
-
 // styles
 import "./styles.css";
+
+// clock
+import { Clock } from "./Clock";
 
 export function Navbar(props: NavbarPropsType) {
   const { t } = useTranslation();
@@ -35,7 +35,7 @@ export function Navbar(props: NavbarPropsType) {
         </h1>
       </div>
       <div className="max-xs:hidden">
-        <p className="capitalize">{getFormattedDateTime()}</p>
+        <Clock />
       </div>
     </header>
   );
