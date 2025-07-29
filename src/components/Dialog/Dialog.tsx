@@ -73,7 +73,7 @@ export const Dialog = (props: DialogPropsType) => {
       } fixed left-0 top-0 flex items-center justify-center z-10 ${containerClassName}`}
     >
       <div
-        className={`relative elevated min-w-70 bg-base p-5 rounded-2xl border-border border-2 animated ${
+        className={`relative elevated min-w-70 bg-base p-5 pr-10 rounded-2xl border-border border-2 animated ${
           open ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
         } ${className}`}
       >
