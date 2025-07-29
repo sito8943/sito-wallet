@@ -1,0 +1,13 @@
+@import "../../styles/variables.css";
+
+.dialog .button {
+  @apply px-4 py-1 rounded-4xl;
+}
+
+.dialog-backdrop {
+  @apply fixed left-0 top-0 flex items-center justify-center z-10 max-xs:z-30;
+}
+
+.dialog {
+  @apply relative min-w-70 bg-base p-5 min-xs:rounded-2xl min-xs:border-border border-2 max-xs:w-screen max-xs:h-screen;
+}

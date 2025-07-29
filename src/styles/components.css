@@ -34,10 +34,6 @@ p {
   @apply border-red-500;
 }
 
-.dialog .button {
-  @apply px-4 py-1 rounded-4xl;
-}
-
 a.primary {
   @apply hover:text-hover-primary;
 }

@@ -68,12 +68,12 @@ export const Dialog = (props: DialogPropsType) => {
       aria-label={t("_accessibility:ariaLabels.closeDialog")}
       aria-disabled={!open}
       onClick={bigHandleClose}
-      className={`dialog  ${styles} h-screen ${
+      className={`dialog-backdrop ${styles} h-screen ${
         open ? "bg-base/20 backdrop-blur-xl" : "pointer-events-none"
-      } fixed left-0 top-0 flex items-center justify-center z-10 ${containerClassName}`}
+      } ${containerClassName}`}
     >
       <div
-        className={`relative elevated min-w-70 bg-base p-5 pr-10 rounded-2xl border-border border-2 animated ${
+        className={`dialog elevated animated ${
           open ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
         } ${className}`}
       >
@@ -82,7 +82,7 @@ export const Dialog = (props: DialogPropsType) => {
           aria-disabled={!open}
           name={t("_accessibility:buttons.closeDialog")}
           aria-label={t("_accessibility:ariaLabels.closeDialog")}
-          className="icon-button absolute top-2 right-2 text-red-400"
+          className="icon-button justify-self-end text-red-400"
           onClick={handleClose}
         >
           <FontAwesomeIcon icon={faClose} />
