@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Controller } from "react-hook-form";
 
@@ -17,9 +18,17 @@ import {
 // lib
 import { Tables } from "lib";
 
+// providers
+import { useAuth } from "providers";
+
 export function CurrencyForm(props: CurrencyFormPropsType) {
-  const { control, isLoading } = props;
+  const { control, setValue, isLoading } = props;
   const { t } = useTranslation();
+  const { account } = useAuth();
+
+  useEffect(() => {
+    if (account && setValue) setValue("userId", account?.id ?? 0);
+  }, [account, setValue]);
 
   return (
     <>
@@ -27,6 +36,11 @@ export function CurrencyForm(props: CurrencyFormPropsType) {
         control={control}
         render={({ field }) => <input {...field} type="hidden" />}
         name="id"
+      />
+      <Controller
+        control={control}
+        render={({ field }) => <input {...field} type="hidden" />}
+        name="userId"
       />
       <Controller
         control={control}
