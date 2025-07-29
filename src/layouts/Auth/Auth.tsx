@@ -13,7 +13,7 @@ export const Auth = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (account.email) navigate("/auth/sign-in");
+    if (account.email) navigate("/");
   }, [account, navigate]);
 
   return (
