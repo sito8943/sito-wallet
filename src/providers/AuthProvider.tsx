@@ -32,11 +32,16 @@ const AuthProvider = (props: BasicProviderPropTypes) => {
     toLocal(config.user, data);
   }, []);
 
-  const logoutUser = useCallback(() => {
+  const logoutUser = useCallback(async () => {
+    try {
+      await manager.Auth.logout();
+    } catch (err) {
+      console.error(err);
+    }
     setAccount({} as SessionDto);
     //TODO Remove token from cookie
     removeFromLocal(config.user);
-  }, []);
+  }, [manager.Auth]);
 
   const logUserFromLocal = useCallback(async () => {
     /* try {

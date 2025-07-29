@@ -1,10 +1,6 @@
-import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
-
-// providers
-import { useAuth } from "providers";
 
 // components
 import Header from "./Header";
@@ -12,13 +8,6 @@ import Footer from "./Footer";
 import { Notification, Error } from "components";
 
 export function View() {
-  const { account } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!account?.email) navigate("/auth/sign-in");
-  }, [account?.email, navigate]);
-
   return (
     <>
       <Header />

@@ -2,6 +2,14 @@ import { config } from "../../../config";
 
 const isAnError = (status: number) => status < 200 || status > 299;
 
+export enum Methods {
+  GET = "GET",
+  POST = "POST",
+  PUT = "PUT",
+  PATCH = "PATCH",
+  DELETE = "DELETE",
+}
+
 /**
  * @description Make a request to the API
  * @param url - URL to make the request
@@ -10,47 +18,55 @@ const isAnError = (status: number) => status < 200 || status > 299;
  * @param h - Request headers
  * @returns Request response
  */
-export async function makeRequest<TBody, TResponse>(
+export async function makeRequest<TBody = undefined, TResponse = unknown>(
   url: string,
-  method = "GET",
-  body: TBody,
-  h?: HeadersInit
-) {
+  method: Methods = Methods.GET,
+  body?: TBody,
+  customHeaders?: HeadersInit
+): Promise<{
+  data: TResponse | null;
+  status: number;
+  error: { status: number; message: string } | null;
+}> {
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+    ...customHeaders,
+  };
+
+  const options: RequestInit = {
+    method,
+    headers,
+    ...(body ? { body: JSON.stringify(body) } : {}),
+  };
+
+  console.log(options);
   try {
-    const headers = {
-      "Content-Type": "application/json",
-      ...(h ?? {}),
+    const response = await fetch(`${config.apiUrl}${url}`, options);
+    const isJson = response.headers
+      .get("content-type")
+      ?.includes("application/json");
+
+    const responseBody = isJson ? await response.json() : null;
+
+    const error =
+      !response.ok || isAnError(response.status)
+        ? { status: response.status, message: response.statusText }
+        : null;
+
+    return {
+      data: response.ok && response.status !== 204 ? responseBody : null,
+      status: response.status,
+      error,
     };
-    const options: RequestInit = {
-      method,
-      headers,
-    };
-    if (body) options.body = JSON.stringify(body);
-
-    const request = await fetch(`${config.apiUrl}${url}`, options);
-
-    if (request.ok && request.status !== 204) {
-      const data: TResponse = await request.json();
-
-      return {
-        data,
-        status: request.status,
-        error: isAnError(request.status)
-          ? { status: request.status, message: request.statusText }
-          : null,
-      };
-    } else
-      return {
-        data: null,
-        status: request.status,
-        error: { message: request.statusText },
-      };
   } catch (err) {
-    console.log(err);
+    console.error("Fetch error:", err);
     return {
       data: null,
       status: 500,
-      error: { status: 500, message: (err as Error).message },
+      error: {
+        status: 500,
+        message: (err as Error).message || "Unknown error occurred",
+      },
     };
   }
 }

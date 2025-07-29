@@ -2,6 +2,7 @@ import { APIClient } from "./APIClient";
 
 // entities
 import { AuthDto, RegisterDto, SessionDto } from "../entities";
+import { Methods } from "./utils/services";
 
 export default class AuthClient {
   api: APIClient = new APIClient(false);
@@ -15,7 +16,7 @@ export default class AuthClient {
     const body = data;
     return await this.api.doQuery<SessionDto, AuthDto>(
       endpoint,
-      "POST",
+      Methods.POST,
       "",
       body
     );
@@ -23,14 +24,14 @@ export default class AuthClient {
 
   async logout() {
     const endpoint = "auth/sign-out";
-    return await this.api.doQuery<void>(endpoint, "POST");
+    return await this.api.doQuery<void>(endpoint, Methods.POST);
   }
 
   async register(userData: RegisterDto) {
     const endpoint = "auth/sign-up";
     return await this.api.doQuery<SessionDto, RegisterDto>(
       endpoint,
-      "POST",
+      Methods.POST,
       "",
       userData
     );
@@ -38,6 +39,6 @@ export default class AuthClient {
 
   async getSession() {
     const endpoint = "auth/session";
-    return await this.api.doQuery<SessionDto>(endpoint, "GET");
+    return await this.api.doQuery<SessionDto>(endpoint, Methods.GET);
   }
 }

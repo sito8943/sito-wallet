@@ -1,5 +1,5 @@
 // services
-import { buildQueryUrl, makeRequest } from "./utils/services";
+import { buildQueryUrl, makeRequest, Methods } from "./utils/services";
 
 // types
 import { fromLocal, QueryResult, SessionDto } from "lib";
@@ -35,7 +35,7 @@ export class APIClient {
 
   async doQuery<TResponse, TBody = unknown>(
     endpoint: string,
-    method = "GET",
+    method = Methods.GET,
     query?: string,
     body?: TBody
   ) {
@@ -68,7 +68,7 @@ export class APIClient {
       : undefined;
     const { data: result, error } = await makeRequest(
       builtUrl,
-      "GET",
+      Methods.GET,
       null,
       securedHeader
     );
@@ -92,7 +92,7 @@ export class APIClient {
       : undefined;
     const { error, data: result } = await makeRequest<TUpdateDto, TDto>(
       endpoint,
-      "PATCH",
+      Methods.PATCH,
       data,
       securedHeader
     );
@@ -113,7 +113,7 @@ export class APIClient {
       : undefined;
     const { error, data: result } = await makeRequest<number[], number>(
       endpoint,
-      "DELETE",
+      Methods.DELETE,
       data,
       securedHeader
     );
@@ -135,7 +135,7 @@ export class APIClient {
       : undefined;
     const { error, data: result } = await makeRequest<TAddDto, TDto>(
       endpoint,
-      "POST",
+      Methods.POST,
       data,
       securedHeader
     );
