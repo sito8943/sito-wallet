@@ -55,9 +55,9 @@ export function SignUp() {
       logUser(data);
       navigate("/");
     },
-    onError: (errors) => {
+    onError: () => {
       showErrorNotification({
-        message: t(`_accessibility:errors.${errors.message}`),
+        message: t("_entities:user.email.unique"),
       });
     },
   });
@@ -72,7 +72,7 @@ export function SignUp() {
     <div className="w-full h-screen flex items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-base rounded-3xl w-96 max-sm:w-10/12 px-5 py-10 flex flex-col items-center justify-start"
+        className={`${appear ? "bg-base" : ""} auth-form`}
       >
         {/* LOGO */}
         <h1

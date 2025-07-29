@@ -63,7 +63,9 @@ export function SignIn() {
     <div className="w-full h-screen flex items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-base rounded-3xl w-96 max-sm:w-10/12 px-5 py-10 flex flex-col items-center justify-start"
+        className={`${
+          appear ? "bg-base" : ""
+        } auth-form`}
       >
         {/* LOGO */}
         <h1
@@ -135,7 +137,7 @@ export function SignIn() {
           </Link>
         </div>
         <div
-          className={`flex gap-3 mt-6 w-full duration-500 ease-in-out delay-[600ms] ${
+          className={`flex max-xs:flex-col gap-3 mt-6 w-full duration-500 ease-in-out delay-[600ms] ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
