@@ -15,6 +15,16 @@
         "dialog": {
           "title": "¿Estás seguro de que deseas eliminar?"
         }
+      },
+      "restore": {
+        "text": "Restaurar",
+        "successMessage": "Restaurado exitosamente",
+        "dialog": {
+          "title": "¿Estás seguro de que deseas restaurar?"
+        }
+      },
+      "refresh": {
+        "text": "Recargar"
       }
     }
   },
@@ -45,11 +55,11 @@
   "currencies": {
     "title": "Monedas",
     "empty": "No monedas to load",
-    "add": "Add a moneda",
+    "add": "Agregar una moneda",
     "forms": {
-      "add": "New moneda",
-      "edit": "Edit moneda",
-      "editAria": "Click to edit moneda"
+      "add": "Nueva moneda",
+      "edit": "Editar moneda",
+      "editAria": "Click para editar moneda"
     }
   },
   "footer": {

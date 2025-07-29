@@ -22,6 +22,9 @@
         "dialog": {
           "title": "Are you sure to restore?"
         }
+      },
+      "refresh": {
+        "text": "Refresh"
       }
     }
   },
