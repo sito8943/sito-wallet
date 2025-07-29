@@ -31,13 +31,21 @@
   },
   "auth": {
     "signIn": {
+      "submit": "Entrar",
       "title": "Iniciar sesión",
       "passwordRecovery": "Recuperar contraseña",
-      "toRegister": "Crear cuenta"
+      "toRegister": {
+        "question": "¿No tienes cuenta?",
+        "link": "Creala aquí"
+      }
     },
     "signUp": {
+      "submit": "Crear cuenta",
       "title": "Registrarse",
-      "toLogin": "Iniciar sesión en tu cuenta"
+      "toLogin": {
+        "question": "¿Ya tienes cuenta?",
+        "link": "Inicia sesión"
+      }
     }
   },
   "signOut": {

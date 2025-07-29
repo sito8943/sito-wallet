@@ -63,9 +63,7 @@ export function SignIn() {
     <div className="w-full h-screen flex items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={`${
-          appear ? "bg-base" : ""
-        } auth-form`}
+        className={`${appear ? "bg-base" : ""} auth-form`}
       >
         {/* LOGO */}
         <h1
@@ -129,12 +127,15 @@ export function SignIn() {
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
-          <Link
-            to="/auth/sign-up"
-            className={`primary text-sm underline text-left`}
-          >
-            {t("_pages:auth.signIn.toRegister")}
-          </Link>
+          <p className="ml-1">
+            {t("_pages:auth.signIn.toRegister.question")}
+            <Link
+              to="/auth/sign-up"
+              className={`ml-1 primary text-sm underline text-left`}
+            >
+              {t("_pages:auth.signIn.toRegister.link")}
+            </Link>
+          </p>
         </div>
         <div
           className={`flex max-xs:flex-col gap-3 mt-6 w-full duration-500 ease-in-out delay-[600ms] ${
@@ -144,10 +145,10 @@ export function SignIn() {
           <button
             type="submit"
             disabled={isLoading}
-            className={`button primary submit`}
+            className={`button !px-8 primary submit`}
           >
             {isLoading && <Loading color="text-base" />}
-            {t("_accessibility:buttons.submit")}
+            {t("_pages:auth.signIn.submit")}
           </button>
           <Link to="/auth/recovery" className={`button primary outlined`}>
             {t("_pages:auth.signIn.passwordRecovery")}

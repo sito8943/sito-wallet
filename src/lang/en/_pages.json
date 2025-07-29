@@ -33,11 +33,17 @@
     "signIn": {
       "title": "Sign In",
       "passwordRecovery": "Password recovery",
-      "toRegister": "Create an account"
+      "toRegister": {
+        "question": "Not registered yet?",
+        "link": "Click here"
+      }
     },
     "signUp": {
       "title": "Sign Up",
-      "toLogin": "Login to your account"
+      "toLogin": {
+        "question": "Already registered?",
+        "link": "Sign In"
+      }
     }
   },
   "signOut": {

@@ -157,12 +157,15 @@ export function SignUp() {
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
-          <Link
-            to="/auth/sign-in"
-            className={`primary text-sm underline text-left`}
-          >
-            {t("_pages:auth.signUp.toLogin")}
-          </Link>
+          <p className="ml-1">
+            {t("_pages:auth.signUp.toLogin.question")}
+            <Link
+              to="/auth/sign-in"
+              className={`ml-1 primary text-sm underline text-left`}
+            >
+              {t("_pages:auth.signUp.toLogin.link")}
+            </Link>
+          </p>
         </div>
         <div
           className={`flex gap-3 mt-6 w-full duration-500 ease-in-out delay-[600ms] ${
@@ -172,10 +175,10 @@ export function SignUp() {
           <button
             type="submit"
             disabled={isLoading}
-            className={`button primary submit`}
+            className={`button !px-8 primary submit`}
           >
             {isLoading && <Loading color="text-base" />}
-            {t("_pages:auth.signIn.toRegister")}
+            {t("_pages:auth.signUp.submit")}
           </button>
         </div>
       </form>
