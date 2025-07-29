@@ -55,7 +55,7 @@
   },
   "currencies": {
     "title": "Monedas",
-    "empty": "No monedas to load",
+    "empty": "No hay monedas para mostrar",
     "add": "Agregar una moneda",
     "forms": {
       "add": "Nueva moneda",
