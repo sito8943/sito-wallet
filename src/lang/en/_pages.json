@@ -28,7 +28,12 @@
   "auth": {
     "signIn": {
       "title": "Sign In",
-      "passwordRecovery": "Password recovery"
+      "passwordRecovery": "Password recovery",
+      "toRegister": "Create an account"
+    },
+    "signUp": {
+      "title": "Sign Up",
+      "toLogin": "Login to your account"
     }
   },
   "accounts": {

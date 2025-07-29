@@ -9,6 +9,11 @@ import { View, Auth } from "./layouts";
 import { SplashScreen } from "components";
 
 // auth
+const SignUp = loadable(() =>
+  import("views").then((module) => ({
+    default: module.SignUp,
+  }))
+);
 const SignIn = loadable(() =>
   import("views").then((module) => ({
     default: module.SignIn,
@@ -58,6 +63,7 @@ function App() {
         <Routes>
           <Route path="/auth/" element={<Auth />}>
             <Route path="/auth/sign-in" element={<SignIn />} />
+            <Route path="/auth/sign-up" element={<SignUp />} />
             <Route path="/auth/sign-out" element={<SignOut />} />
             <Route path="/auth/update-password" element={<UpdatePassword />} />
             <Route path="/auth/recovery" element={<Recovery />} />

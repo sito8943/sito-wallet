@@ -38,16 +38,24 @@ p {
   @apply px-4 py-1 rounded-4xl;
 }
 
+a.primary {
+  @apply hover:text-hover-primary;
+}
+
 .outlined {
   @apply border-border text-text border-2 hover:bg-border;
 }
 
 .outlined.primary {
-  @apply border-primary hover:bg-hover-primary hover:border-hover-primary;
+  @apply border-primary hover:bg-hover-primary hover:border-hover-primary hover:text-text;
 }
 
 .submit.primary {
   @apply bg-primary hover:bg-hover-primary text-text;
+}
+
+.primary {
+  @apply transition duration-300;
 }
 
 .password-icon {

@@ -39,6 +39,10 @@
       "placeholder": "Ex: ********",
       "required": "La contraseña es obligatoria",
       "wrongPassword": "Contraseña incorrecta"
+    },
+    "rPassword": {
+      "label": "Confirmar contraseña",
+      "placeholder": "Ex: ********"
     }
   },
   "account": {

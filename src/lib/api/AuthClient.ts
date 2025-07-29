@@ -27,7 +27,7 @@ export default class AuthClient {
   }
 
   async register(userData: RegisterDto) {
-    const endpoint = "auth/register";
+    const endpoint = "auth/sign-up";
     return await this.api.doQuery<SessionDto, RegisterDto>(
       endpoint,
       "POST",

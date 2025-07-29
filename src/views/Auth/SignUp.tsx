@@ -16,13 +16,13 @@ import { useAuth, useManager, useNotification } from "providers";
 import { usePostForm } from "hooks";
 
 // lib
-import { AuthDto, SessionDto } from "lib";
+import { RegisterDto, SessionDto } from "lib";
 
 /**
  * Sign Page
  * @returns Sign component
  */
-export function SignIn() {
+export function SignUp() {
   const { t } = useTranslation();
 
   const { logUser } = useAuth();
@@ -34,13 +34,21 @@ export function SignIn() {
   const manager = useManager();
 
   const { handleSubmit, control, onSubmit, isLoading } = usePostForm<
-    AuthDto,
-    AuthDto,
+    RegisterDto,
+    RegisterDto,
     SessionDto,
-    AuthDto
+    RegisterDto
   >({
-    formToDto: (data: AuthDto) => data,
-    mutationFn: async (data: AuthDto) => await manager.Auth.login(data),
+    formToDto: (data: RegisterDto) => {
+      if (data.password !== data.rPassword) {
+        showErrorNotification({
+          message: t("_accessibility:errors.differentPasswords"),
+        });
+        throw Error("differentPasswords");
+      }
+      return data;
+    },
+    mutationFn: async (data: RegisterDto) => await manager.Auth.register(data),
     onSuccess: (data) => {
       logUser(data);
     },
@@ -70,7 +78,7 @@ export function SignIn() {
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
-          {t("_pages:auth.signIn.title")}
+          {t("_pages:auth.signUp.title")}
         </h1>
         <div className="flex flex-col gap-5 w-full">
           <div
@@ -120,6 +128,27 @@ export function SignIn() {
               rules={{ required: `${t("_entities:user.password.required")}` }}
             />
           </div>
+          <div
+            className={`w-full transition-all duration-500 ease-in-out delay-[400ms] ${
+              appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+            }`}
+          >
+            <Controller
+              control={control}
+              disabled={isLoading}
+              name="rPassword"
+              render={({ field, fieldState }) => (
+                <PasswordInput
+                  {...field}
+                  id="rPassword"
+                  className={`text-input peer`}
+                  label={t("_entities:user.rPassword.label")}
+                  helperText={fieldState.error?.message}
+                  state={fieldState.error ? State.error : State.default}
+                />
+              )}
+            />
+          </div>
         </div>
         <div
           className={`self-start transition-all duration-500 ease-in-out delay-[500ms] ${
@@ -127,10 +156,10 @@ export function SignIn() {
           }`}
         >
           <Link
-            to="/auth/sign-up"
+            to="/auth/sign-in"
             className={`primary text-sm underline text-left`}
           >
-            {t("_pages:auth.signIn.toRegister")}
+            {t("_pages:auth.signUp.toLogin")}
           </Link>
         </div>
         <div
@@ -144,11 +173,8 @@ export function SignIn() {
             className={`button primary submit`}
           >
             {isLoading && <Loading color="text-base" />}
-            {t("_accessibility:buttons.submit")}
+            {t("_pages:auth.signIn.toRegister")}
           </button>
-          <Link to="/auth/recovery" className={`button primary outlined`}>
-            {t("_pages:auth.signIn.passwordRecovery")}
-          </Link>
         </div>
       </form>
     </div>

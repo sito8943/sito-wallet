@@ -16,6 +16,7 @@ import {
   ManagerProvider,
   NotificationProvider,
   LocalCacheProvider,
+  AuthProvider,
 } from "providers";
 
 //i18
@@ -25,7 +26,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <ManagerProvider>
     <LocalCacheProvider>
       <NotificationProvider>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </NotificationProvider>
     </LocalCacheProvider>
   </ManagerProvider>

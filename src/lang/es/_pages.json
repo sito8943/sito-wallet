@@ -21,7 +21,12 @@
   "auth": {
     "signIn": {
       "title": "Iniciar sesión",
-      "passwordRecovery": "Recuperar contraseña"
+      "passwordRecovery": "Recuperar contraseña",
+      "toRegister": "Crear cuenta"
+    },
+    "signUp": {
+      "title": "Registrarse",
+      "toLogin": "Iniciar sesión en tu cuenta"
     }
   },
   "accounts": {
