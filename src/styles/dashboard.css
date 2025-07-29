@@ -1,5 +1,9 @@
 @import "./variables.css";
 
+.chip-main {
+  @apply py-1
+}
+
 .text-input,
 .text-input-label,
 .select-input-label {
