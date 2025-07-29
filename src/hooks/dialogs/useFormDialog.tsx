@@ -30,7 +30,11 @@ export const useFormDialog = <
   >
 ): FormDialogPropsType<TFormType, ValidationError> => {
   const { t } = useTranslation();
-  const { showStackNotifications, showSuccessNotification } = useNotification();
+  const {
+    showErrorNotification,
+    showStackNotifications,
+    showSuccessNotification,
+  } = useNotification();
 
   const {
     defaultValues,
@@ -128,8 +132,8 @@ export const useFormDialog = <
               } as NotificationType)
           )
         );
-      }
-      if (onError) onError(error);
+      } else if (onError) onError(error);
+      else showErrorNotification({ message: t("_accessibility:errors.500") });
     },
     onSuccess: async (result) => {
       await queryClient.invalidateQueries({ queryKey });
