@@ -7,4 +7,5 @@ export interface UpdateAccountDto
   description: string;
   type: AccountType;
   currencyId: number;
+  userId: number;
 }

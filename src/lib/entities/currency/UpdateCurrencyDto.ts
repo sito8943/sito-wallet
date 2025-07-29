@@ -4,4 +4,5 @@ export interface UpdateCurrencyDto
   extends Omit<CurrencyDto, "updatedAt" | "deleted" | "createdAt"> {
   name: string;
   description: string;
+  userId: number;
 }

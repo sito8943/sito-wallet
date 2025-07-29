@@ -7,5 +7,5 @@ export interface AccountDto extends CommonAccountDto, BaseEntityDto {
   description: string;
   currency: CommonCurrencyDto | null;
   type: AccountType;
-  /* owner: string; */
+  userId: number;
 }
