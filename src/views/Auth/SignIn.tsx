@@ -46,9 +46,9 @@ export function SignIn() {
       logUser(data);
       navigate("/");
     },
-    onError: (errors) => {
+    onError: () => {
       showErrorNotification({
-        message: t(`_accessibility:errors.${errors.message}`),
+        message: t("_accessibility:errors.invalidCredentials"),
       });
     },
   });

@@ -58,7 +58,7 @@
   "errors": {
     "unknownError": "An error has occurred",
     "differentPasswords": "Passwords do not match",
-    "403": "Wrong user or password",
+    "invalidCredentials": "Wrong user or password",
     "500": "An error has ocurrred in the server"
   },
   "messages": {},
