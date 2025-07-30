@@ -10,7 +10,7 @@ export function Actions<TRow extends BaseEntityDto>(
 ) {
   const { actions = [] } = props;
   return (
-    <ul className="flex w-full items-center justify-end">
+    <ul className="flex w-full items-center justify-end gap-2">
       {actions?.map((action) => (
         <li key={action.id ?? action.tooltip}>
           <Action {...action} />
