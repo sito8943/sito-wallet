@@ -4,7 +4,12 @@ import { useTranslation } from "react-i18next";
 import { useManager } from "providers";
 
 // hooks
-import { TransactionsQueryKeys, useEditAction, useFormDialog } from "hooks";
+import {
+  TransactionsQueryKeys,
+  useEditAction,
+  useFormDialog,
+  UseActionDialog,
+} from "hooks";
 
 // utils
 import { dtoToForm, emptyTransaction, formToDto } from "../utils";
@@ -15,7 +20,10 @@ import { UpdateTransactionDto, TransactionDto } from "lib";
 // types
 import { TransactionFormType } from "../types";
 
-export function useEditTransaction() {
+export function useEditTransaction(): UseActionDialog<
+  TransactionDto,
+  TransactionFormType
+> {
   const { t } = useTranslation();
 
   const manager = useManager();
@@ -36,7 +44,7 @@ export function useEditTransaction() {
     ...TransactionsQueryKeys.all(),
   });
 
-  const { action } = useEditAction({ onClick });
+  const { action } = useEditAction<TransactionDto>({ onClick });
 
   return {
     action,

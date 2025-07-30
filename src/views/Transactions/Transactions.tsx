@@ -1,47 +1,112 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // components
 import { Page, TabsLayout, TabsType } from "components";
 
 // hooks
-import { useAddTransaction } from "./hooks";
-import { TransactionsQueryKeys, useAccountsCommon } from "hooks";
+import { useAddTransaction, useEditTransaction } from "./hooks";
+import {
+  TransactionsQueryKeys,
+  useAccountsCommon,
+  useDeleteDialog,
+  useRestoreDialog,
+} from "hooks";
 
 // components
-import { AddTransactionDialog, TransactionTable } from "./components";
+import {
+  AddTransactionDialog,
+  TransactionGrid,
+  TransactionTable,
+} from "./components";
+
+// lib
+import { TransactionDto } from "lib";
+
+// providers
+import { useManager } from "providers";
 
 export function Transactions() {
   const { t } = useTranslation();
 
-  const { data, isLoading } = useAccountsCommon();
+  const manager = useManager();
 
-  const accountTabs = useMemo(() => {
-    return (data?.map((item) => ({
-      id: item.id,
-      label: item.name,
-      content: <TransactionTable accounts={data} accountId={item.id} />,
-    })) ?? []) as TabsType[];
-  }, [data]);
+  // #region actions
 
-  // #region toolbar actions
+  const deleteTransaction = useDeleteDialog({
+    mutationFn: (data) => manager.Transactions.softDelete(data),
+    ...TransactionsQueryKeys.all(),
+  });
+
+  const restoreTransaction = useRestoreDialog({
+    mutationFn: (data) => manager.Transactions.restore(data),
+    ...TransactionsQueryKeys.all(),
+  });
 
   const addTransaction = useAddTransaction();
 
+  const editTransaction = useEditTransaction();
+
   // #endregion
+
+  const getTableActions = useCallback(
+    (record: TransactionDto) => [
+      editTransaction.action(record),
+      deleteTransaction.action(record),
+      restoreTransaction.action(record),
+    ],
+    [deleteTransaction, editTransaction, restoreTransaction]
+  );
+
+  // #region accounts
+
+  const account = useAccountsCommon();
+
+  const accountDesktopTabs = useMemo(() => {
+    return (account.data?.map((item) => ({
+      id: item.id,
+      label: item.name,
+      content: (
+        <TransactionTable
+          accounts={account.data}
+          accountId={item.id}
+          getActions={getTableActions}
+          editAction={editTransaction}
+        />
+      ),
+    })) ?? []) as TabsType[];
+  }, [account.data, editTransaction, getTableActions]);
+
+  const accountMobileTabs = useMemo(() => {
+    return (account.data?.map((item) => ({
+      id: item.id,
+      label: item.name,
+      content: (
+        <TransactionGrid
+          accounts={account.data}
+          accountId={item.id}
+          getActions={getTableActions}
+          editAction={editTransaction}
+        />
+      ),
+    })) ?? []) as TabsType[];
+  }, [account.data, editTransaction, getTableActions]);
+
+  // #endregion accounts
 
   return (
     <Page
       title={t("_pages:transactions.title")}
-      isLoading={isLoading}
+      isLoading={account.isLoading}
       addOptions={{
         onClick: () => addTransaction.onClick(),
-        disabled: isLoading,
+        disabled: account.isLoading,
         tooltip: t("_pages:transactions.add"),
       }}
       queryKey={TransactionsQueryKeys.all().queryKey}
     >
-      <TabsLayout tabs={accountTabs} className="h-full" />
+      <TabsLayout tabs={accountDesktopTabs} className="h-full max-xs:hidden" />
+      <TabsLayout tabs={accountMobileTabs} className="h-full min-xs:hidden" />
 
       {/* Dialogs */}
       <AddTransactionDialog {...addTransaction} />

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useCallback } from "react";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,21 +7,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Chip, FilterTypes, Option } from "@sito/dashboard";
 
 // components
-import { ConfirmationDialog, Error, WalletTable } from "components";
-import {
-  AddTransactionDialog,
-  EditTransactionDialog,
-} from "../TransactionDialog";
+import { Error, WalletTable } from "components";
 
 // hooks
-import {
-  useTransactionsList,
-  useDeleteDialog,
-  TransactionsQueryKeys,
-  useRestoreDialog,
-  useTimeAge,
-} from "hooks";
-import { useAddTransaction, useEditTransaction } from "../../hooks";
+import { useTransactionsList, useTimeAge } from "hooks";
 
 // lib
 import {
@@ -35,52 +23,20 @@ import {
   useParseColumns,
 } from "lib";
 
-// providers
-import { useManager } from "providers";
-
 // utils
 import { icons } from "../utils";
 
 // types
-import { TransactionTablePropsType } from "./types";
+import { TransactionContainerPropsType } from "./types";
 
-export const TransactionTable = (props: TransactionTablePropsType) => {
-  const { accountId, accounts } = props;
+export const TransactionTable = (props: TransactionContainerPropsType) => {
+  const { accountId, accounts, getActions, editAction } = props;
 
   const { timeAge } = useTimeAge();
-
-  const manager = useManager();
 
   const { data, isLoading, error } = useTransactionsList({
     filters: { accountId },
   });
-
-  // #region actions
-
-  const deleteTransaction = useDeleteDialog({
-    mutationFn: (data) => manager.Transactions.softDelete(data),
-    ...TransactionsQueryKeys.all(),
-  });
-
-  const restoreTransaction = useRestoreDialog({
-    mutationFn: (data) => manager.Transactions.restore(data),
-    ...TransactionsQueryKeys.all(),
-  });
-
-  const addTransaction = useAddTransaction();
-
-  const editTransaction = useEditTransaction();
-
-  // #endregion
-
-  const getActions = useCallback(
-    (record: TransactionDto) => [
-      editTransaction.action(record),
-      deleteTransaction.action(record),
-      restoreTransaction.action(record),
-    ],
-    [deleteTransaction, editTransaction, restoreTransaction]
-  );
 
   // #region columns
 
@@ -96,7 +52,7 @@ export const TransactionTable = (props: TransactionTablePropsType) => {
               entity.deleted ? "text-base" : "primary"
             } flex`}
             onClick={(e) => {
-              editTransaction.onClick(entity.id);
+              editAction.onClick(entity.id);
               e.preventDefault();
               e.stopPropagation();
             }}
@@ -175,19 +131,12 @@ export const TransactionTable = (props: TransactionTablePropsType) => {
   return error ? (
     <Error message={error?.message} />
   ) : (
-    <>
-      <WalletTable
-        data={data?.items ?? []}
-        actions={getActions}
-        isLoading={isLoading}
-        entity={EntityName.Transaction}
-        columns={columns}
-      />
-      {/* Dialogs */}
-      <AddTransactionDialog {...addTransaction} />
-      <EditTransactionDialog {...editTransaction} />
-      <ConfirmationDialog {...deleteTransaction} />
-      <ConfirmationDialog {...restoreTransaction} />
-    </>
+    <WalletTable
+      data={data?.items ?? []}
+      actions={getActions}
+      isLoading={isLoading}
+      entity={EntityName.Transaction}
+      columns={columns}
+    />
   );
 };
