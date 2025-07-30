@@ -67,7 +67,7 @@ export function TransactionForm(props: TransactionFormPropsType) {
       <Controller
         control={control}
         rules={{
-          required: `t("_entities:base.name.required")`,
+          required: `${t("_entities:base.name.required")}`,
         }}
         name="name"
         disabled={isLoading}
@@ -81,28 +81,6 @@ export function TransactionForm(props: TransactionFormPropsType) {
             )}`}
             label={t("_entities:base.name.label")}
             placeholder={t("_entities:transaction.name.placeholder")}
-            {...rest}
-          />
-        )}
-      />
-      <Controller
-        control={control}
-        rules={{
-          required: `t("_entities:transaction.amount.required")`,
-        }}
-        name="amount"
-        disabled={isLoading}
-        render={({ field: { value, ...rest } }) => (
-          <TextInput
-            required
-            maxLength={20}
-            value={value ?? ""}
-            type="number"
-            autoComplete={`${Tables.Transactions}-${t(
-              "_entities:transaction.amount.label"
-            )}`}
-            label={t("_entities:transaction.amount.label")}
-            placeholder={t("_entities:transaction.amount.placeholder")}
             {...rest}
           />
         )}
@@ -145,6 +123,52 @@ export function TransactionForm(props: TransactionFormPropsType) {
               onChange={(v) => onChange(v)}
               label={t("_entities:transaction.account.label")}
               multiple={false}
+              {...rest}
+            />
+          )}
+        />
+      </div>
+      <div>
+        <Controller
+          control={control}
+          rules={{
+            required: `${t("_entities:transaction.amount.required")}`,
+          }}
+          name="amount"
+          disabled={isLoading}
+          render={({ field: { value, ...rest } }) => (
+            <TextInput
+              required
+              maxLength={20}
+              value={value ?? ""}
+              type="number"
+              autoComplete={`${Tables.Transactions}-${t(
+                "_entities:transaction.amount.label"
+              )}`}
+              label={t("_entities:transaction.amount.label")}
+              placeholder={t("_entities:transaction.amount.placeholder")}
+              {...rest}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          rules={{
+            required: `${t("_entities:transaction.date.required")}`,
+          }}
+          name="date"
+          disabled={isLoading}
+          render={({ field: { value, ...rest } }) => (
+            <TextInput
+              required
+              maxLength={20}
+              value={value ?? ""}
+              type="number"
+              autoComplete={`${Tables.Transactions}-${t(
+                "_entities:transaction.amount.label"
+              )}`}
+              label={t("_entities:transaction.amount.label")}
+              placeholder={t("_entities:transaction.amount.placeholder")}
               {...rest}
             />
           )}

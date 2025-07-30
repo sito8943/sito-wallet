@@ -78,7 +78,7 @@ export function AccountForm(props: AccountFormPropsType) {
       <Controller
         control={control}
         rules={{
-          required: `t("_entities:base.name.required")`,
+          required: `${t("_entities:base.name.required")}`,
         }}
         name="name"
         disabled={isLoading}
