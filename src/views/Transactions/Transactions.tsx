@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // components
@@ -6,8 +7,9 @@ import { Page, TabsLayout, TabsType } from "components";
 // hooks
 import { useAddTransaction } from "./hooks";
 import { TransactionsQueryKeys, useAccountsCommon } from "hooks";
-import { useMemo } from "react";
-import { TransactionTable } from "./components";
+
+// components
+import { AddTransactionDialog, TransactionTable } from "./components";
 
 export function Transactions() {
   const { t } = useTranslation();
@@ -39,7 +41,10 @@ export function Transactions() {
       }}
       queryKey={TransactionsQueryKeys.all().queryKey}
     >
-      <TabsLayout tabs={accountTabs} />
+      <TabsLayout tabs={accountTabs} className="h-full" />
+
+      {/* Dialogs */}
+      <AddTransactionDialog {...addTransaction} />
     </Page>
   );
 }
