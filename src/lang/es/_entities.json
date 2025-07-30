@@ -63,6 +63,7 @@
   },
   "transaction": {
     "name": {
+      "label": "Nombre",
       "placeholder": "Ej: Depósito"
     },
     "type": {
