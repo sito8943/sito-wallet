@@ -62,6 +62,16 @@
       "editAria": "Click to edit account"
     }
   },
+  "transactions": {
+    "title": "Transactions",
+    "empty": "No transactions to load",
+    "add": "Add a transaction",
+    "forms": {
+      "add": "New transaction",
+      "edit": "Edit transaction",
+      "editAria": "Click to edit transaction"
+    }
+  },
   "currencies": {
     "title": "Currencies",
     "empty": "No currencies to load",

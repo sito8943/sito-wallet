@@ -60,13 +60,17 @@ export function useAccountsList(
 
 export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
   const manager = useManager();
+  const { account } = useAuth();
   const { loadCache, updateCache } = useLocalCache();
 
   return useQuery({
     ...AccountsQueryKeys.common(),
     queryFn: async () => {
       try {
-        const result = await manager.Accounts.commonGet({ deleted: false });
+        const result = await manager.Accounts.commonGet({
+          deleted: false,
+          userId: account?.id,
+        });
         updateCache(Tables.Accounts, result);
         return result;
       } catch (error) {

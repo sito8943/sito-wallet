@@ -60,13 +60,17 @@ export function useCurrenciesList(
 
 export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
   const manager = useManager();
+  const { account } = useAuth();
   const { loadCache, updateCache } = useLocalCache();
 
   return useQuery({
     ...CurrenciesQueryKeys.common(),
     queryFn: async () => {
       try {
-        const result = await manager.Currencies.commonGet({ deleted: false });
+        const result = await manager.Currencies.commonGet({
+          deleted: false,
+          userId: account?.id,
+        });
         updateCache(Tables.Currencies, result);
         return result;
       } catch (error) {

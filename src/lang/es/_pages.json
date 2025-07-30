@@ -64,6 +64,16 @@
       "editAria": "Haz clic para editar la cuenta"
     }
   },
+  "transactions": {
+    "title": "Transacciones",
+    "empty": "No hay transacciones para mostrar",
+    "add": "Agregar una transacción",
+    "forms": {
+      "add": "Nueva transacción",
+      "edit": "Editar transacción",
+      "editAria": "Haz clic para editar la transacción"
+    }
+  },
   "currencies": {
     "title": "Monedas",
     "empty": "No hay monedas para mostrar",
