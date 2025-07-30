@@ -79,6 +79,10 @@
       "label": "Account",
       "placeholder": "Select an account",
       "required": "Account is required"
+    },
+    "date": {
+      "label": "Date",
+      "required": "Date is required"
     }
   },
   "currency": {

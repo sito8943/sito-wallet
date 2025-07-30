@@ -6,4 +6,5 @@ export interface AddTransactionDto {
   accountId: number;
   type: TransactionType;
   amount: number;
+  date: Date;
 }

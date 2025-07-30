@@ -79,6 +79,10 @@
       "label": "Cuenta",
       "placeholder": "Selecciona una cuenta",
       "required": "La cuenta es requerida"
+    },
+    "date": {
+      "label": "Fecha",
+      "required": "La fecha es requerida"
     }
   },
   "currency": {

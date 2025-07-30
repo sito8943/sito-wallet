@@ -7,4 +7,5 @@ export interface UpdateTransactionDto extends DeleteDto {
   accountId: number;
   type: TransactionType;
   amount: number;
+  date: Date;
 }

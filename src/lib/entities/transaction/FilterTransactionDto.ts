@@ -5,4 +5,5 @@ export interface FilterTransactionDto extends BaseFilterDto {
   accountId?: number;
   amount?: number;
   userId?: number;
+  date?: Date;
 }
