@@ -75,10 +75,11 @@ export const TransactionTable = (props: TransactionTablePropsType) => {
 
   const getActions = useCallback(
     (record: TransactionDto) => [
+      editTransaction.action(record),
       deleteTransaction.action(record),
       restoreTransaction.action(record),
     ],
-    [deleteTransaction, restoreTransaction]
+    [deleteTransaction, editTransaction, restoreTransaction]
   );
 
   // #region columns
@@ -114,7 +115,11 @@ export const TransactionTable = (props: TransactionTablePropsType) => {
         sortable: false,
         renderBody: (_, transaction: TransactionDto) => (
           <div className="w-fit">
-            <Chip label={transaction?.account?.name} spanClassName="text-xs" className="!py-2" />
+            <Chip
+              label={transaction?.account?.name}
+              spanClassName="text-xs"
+              className="!py-2"
+            />
           </div>
         ),
       },
