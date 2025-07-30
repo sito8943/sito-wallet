@@ -25,7 +25,7 @@ export const TabsLayout = (props: TabsLayoutPropsType) => {
     >
       <ul className="horizontal tabs flex w-full items-center justify-start -mt-6">
         {tabs.map(({ id, label }) => (
-          <li key={id} className="flex-1">
+          <li key={id}>
             <Tab
               onClick={() => setActiveTab(id)}
               id={id}

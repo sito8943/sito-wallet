@@ -8,7 +8,7 @@ export const Tab = (props: TabPropsType) => {
     <a
       href={`#${id}`}
       onClick={() => onClick()}
-      className={`whitespace-nowrap button submit !px-3 !pt-2 !border-none !rounded-none ${
+      className={`whitespace-nowrap button submit px-3 !pt-2 !border-none !rounded-none ${
         active ? "primary" : "outlined"
       }`}
     >
