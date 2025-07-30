@@ -34,6 +34,8 @@ p {
   @apply border-red-500;
 }
 
+svg.primary,
+p.primary,
 a.primary {
   @apply hover:text-hover-primary;
 }
