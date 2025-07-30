@@ -1,61 +1,32 @@
-import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-// providers
-import { useManager } from "providers";
-
 // components
-import { ConfirmationDialog, Error, Page, PrettyGrid } from "components";
-import {
-  AddTransactionDialog,
-  TransactionCard,
-  EditTransactionDialog,
-} from "./components";
+import { Page, TabsLayout, TabsType } from "components";
 
 // hooks
-import {
-  useDeleteDialog,
-  useTransactionsList,
-  TransactionsQueryKeys,
-  useRestoreDialog,
-} from "hooks";
-import { useAddTransaction, useEditTransaction } from "./hooks";
-
-// types
-import { TransactionDto } from "lib";
+import { useAddTransaction } from "./hooks";
+import { TransactionsQueryKeys, useAccountsCommon } from "hooks";
+import { useMemo } from "react";
+import { TransactionTable } from "./components";
 
 export function Transactions() {
   const { t } = useTranslation();
 
-  const manager = useManager();
+  const { data, isLoading } = useAccountsCommon();
 
-  const { data, isLoading, error } = useTransactionsList({});
+  const accountTabs = useMemo(() => {
+    return (data?.map((item) => ({
+      id: item.id,
+      label: item.name,
+      content: <TransactionTable accountId={item.id} />,
+    })) ?? []) as TabsType[];
+  }, [data]);
 
-  // #region actions
-
-  const deleteTransaction = useDeleteDialog({
-    mutationFn: (data) => manager.Transactions.softDelete(data),
-    ...TransactionsQueryKeys.all(),
-  });
-
-  const restoreTransaction = useRestoreDialog({
-    mutationFn: (data) => manager.Transactions.restore(data),
-    ...TransactionsQueryKeys.all(),
-  });
+  // #region toolbar actions
 
   const addTransaction = useAddTransaction();
 
-  const editTransaction = useEditTransaction();
-
   // #endregion
-
-  const getActions = useCallback(
-    (record: TransactionDto) => [
-      deleteTransaction.action(record),
-      restoreTransaction.action(record),
-    ],
-    [deleteTransaction, restoreTransaction]
-  );
 
   return (
     <Page
@@ -68,28 +39,7 @@ export function Transactions() {
       }}
       queryKey={TransactionsQueryKeys.all().queryKey}
     >
-      {!error ? (
-        <>
-          <PrettyGrid
-            data={data?.items}
-            emptyMessage={t("_pages:transactions.empty")}
-            renderComponent={(transaction) => (
-              <TransactionCard
-                actions={getActions(transaction)}
-                onClick={(id: number) => editTransaction.onClick(id)}
-                {...transaction}
-              />
-            )}
-          />
-          {/* Dialogs */}
-          <AddTransactionDialog {...addTransaction} />
-          <EditTransactionDialog {...editTransaction} />
-          <ConfirmationDialog {...deleteTransaction} />
-          <ConfirmationDialog {...restoreTransaction} />
-        </>
-      ) : (
-        <Error message={error?.message} />
-      )}
+      <TabsLayout tabs={accountTabs} />
     </Page>
   );
 }
