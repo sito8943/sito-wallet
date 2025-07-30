@@ -67,7 +67,7 @@ export function SignIn() {
       >
         {/* LOGO */}
         <h1
-          className={`w-full text-2xl md:text-3xl mb-10 transition-all duration-500 ease-in-out delay-200 ${
+          className={`w-full text-2xl md:text-3xl mb-8 transition-all duration-500 ease-in-out delay-200 ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
@@ -138,7 +138,22 @@ export function SignIn() {
           </p>
         </div>
         <div
-          className={`flex max-xs:flex-col gap-3 mt-6 w-full duration-500 ease-in-out delay-[600ms] ${
+          className={`self-start transition-all duration-500 ease-in-out delay-[600ms] ${
+            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+          }`}
+        >
+          <p className="ml-1">
+            {t("_pages:auth.signIn.accountRecovery.question")}
+            <Link
+              to="/auth/sign-up"
+              className={`ml-1 primary text-sm underline text-left`}
+            >
+              {t("_pages:auth.signIn.accountRecovery.link")}
+            </Link>
+          </p>
+        </div>
+        <div
+          className={`flex max-xs:flex-col gap-3 mt-4 w-full duration-500 ease-in-out delay-[700ms] ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
@@ -150,9 +165,6 @@ export function SignIn() {
             {isLoading && <Loading color="text-base" />}
             {t("_pages:auth.signIn.submit")}
           </button>
-          <Link to="/auth/recovery" className={`button primary outlined`}>
-            {t("_pages:auth.signIn.passwordRecovery")}
-          </Link>
         </div>
       </form>
     </div>

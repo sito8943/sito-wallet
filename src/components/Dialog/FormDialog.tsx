@@ -29,7 +29,7 @@ export const FormDialog = <TInput extends FieldValues, TError extends Error>(
         <div className={`flex gap-2 mt-5 ${buttonEnd ? "justify-end" : ""}`}>
           <button
             type="submit"
-            className="button submit primary"
+            className="button !px-6 submit primary"
             name={t("_accessibility:buttons.submit")}
             aria-label={t("_accessibility:ariaLabels.submit")}
           >

@@ -32,10 +32,13 @@
   "auth": {
     "signIn": {
       "title": "Sign In",
-      "passwordRecovery": "Password recovery",
+      "accountRecovery": {
+        "question": "Trouble accessing your account?",
+        "link": "Recover it here"
+      },
       "toRegister": {
-        "question": "Not registered yet?",
-        "link": "Click here"
+        "question": "Don't have an account yet?",
+        "link": "Create one now"
       }
     },
     "signUp": {

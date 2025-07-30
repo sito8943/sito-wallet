@@ -33,10 +33,13 @@
     "signIn": {
       "submit": "Entrar",
       "title": "Iniciar sesión",
-      "passwordRecovery": "Recuperar contraseña",
+      "accountRecovery": {
+        "question": "¿Problemas con tu cuenta?",
+        "link": "Recupérala aquí"
+      },
       "toRegister": {
-        "question": "¿No tienes cuenta?",
-        "link": "Creala aquí"
+        "question": "¿Aún no tienes una cuenta?",
+        "link": "Crea una ahora"
       }
     },
     "signUp": {
