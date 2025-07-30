@@ -77,18 +77,18 @@ export const Dialog = (props: DialogPropsType) => {
           open ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
         } ${className}`}
       >
-        <button
-          disabled={!open}
-          aria-disabled={!open}
-          name={t("_accessibility:buttons.closeDialog")}
-          aria-label={t("_accessibility:ariaLabels.closeDialog")}
-          className="icon-button justify-self-end text-red-400"
-          onClick={handleClose}
-        >
-          <FontAwesomeIcon icon={faClose} />
-        </button>
-        <div className="flex items-center gap-2 mb-5 max-xs:mb-10">
+        <div className="flex items-center justify-between mb-6 max-xs:mb-10">
           <h3 className="text-text text-xl">{title}</h3>
+          <button
+            disabled={!open}
+            aria-disabled={!open}
+            name={t("_accessibility:buttons.closeDialog")}
+            aria-label={t("_accessibility:ariaLabels.closeDialog")}
+            className="icon-button text-red-400"
+            onClick={handleClose}
+          >
+            <FontAwesomeIcon icon={faClose} />
+          </button>
         </div>
         {children}
       </div>
