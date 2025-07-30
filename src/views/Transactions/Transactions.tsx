@@ -18,7 +18,7 @@ export function Transactions() {
     return (data?.map((item) => ({
       id: item.id,
       label: item.name,
-      content: <TransactionTable accountId={item.id} />,
+      content: <TransactionTable accounts={data} accountId={item.id} />,
     })) ?? []) as TabsType[];
   }, [data]);
 

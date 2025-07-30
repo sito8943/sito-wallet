@@ -40,9 +40,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
       </p>
       <div className="flex gap-2">
         <Chip
-          className={
-            type === TransactionType.In ? "success" : "error"
-          }
+          className={type === TransactionType.In ? "success" : "error"}
           label={
             <div className="flex gap-2 items-center justify-center">
               <FontAwesomeIcon
