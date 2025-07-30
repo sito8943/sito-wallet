@@ -6,8 +6,8 @@
   scroll-behavior: smooth;
 }
 
-.react-tooltip{
-  z-index: 21
+.react-tooltip {
+  z-index: 21;
 }
 
 textarea {
@@ -119,4 +119,12 @@ main h3 {
 
 .elevated {
   box-shadow: 0 3px 8px 0 #0000004f;
+}
+
+.success {
+  @apply bg-bg-success text-success;
+}
+
+.error {
+  @apply bg-bg-error text-error;
 }

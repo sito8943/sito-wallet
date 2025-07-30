@@ -30,7 +30,7 @@ export function useEditTransaction() {
     getFunction: (id) => manager.Transactions.getById(id),
     mutationFn: (data) => manager.Transactions.update(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
-    title: t("_pages:accounts.forms.edit"),
+    title: t("_pages:transactions.forms.edit"),
     ...TransactionsQueryKeys.all(),
   });
 }

@@ -30,13 +30,13 @@ import { enumToKeyValueArray, Tables, TransactionType } from "lib";
 import { icons } from "./utils";
 
 // hooks
-import { useCurrenciesCommon } from "hooks";
+import { useAccountsCommon } from "hooks";
 
 export function TransactionForm(props: TransactionFormPropsType) {
   const { control, isLoading } = props;
   const { t } = useTranslation();
 
-  const accounts = useCurrenciesCommon();
+  const accounts = useAccountsCommon();
 
   const accountOptions = useMemo(
     () => [...(accounts?.data ?? [])] as Option[],
@@ -95,6 +95,7 @@ export function TransactionForm(props: TransactionFormPropsType) {
             required
             maxLength={20}
             value={value ?? ""}
+            type="number"
             autoComplete={`${Tables.Transactions}-${t(
               "_entities:transaction.amount.label"
             )}`}

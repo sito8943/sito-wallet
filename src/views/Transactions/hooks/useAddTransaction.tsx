@@ -29,7 +29,7 @@ export function useAddTransaction() {
     defaultValues: emptyTransaction,
     mutationFn: (data) => manager.Transactions.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
-    title: t("_pages:accounts.forms.add"),
+    title: t("_pages:transactions.forms.add"),
     ...TransactionsQueryKeys.all(),
   });
 

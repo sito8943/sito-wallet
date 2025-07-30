@@ -1,5 +1,11 @@
 import { useTranslation } from "react-i18next";
 
+// icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+// utils
+import { icons } from "./utils";
+
 // components
 import { ItemCard } from "components";
 
@@ -33,7 +39,19 @@ export function TransactionCard(props: TransactionCardPropsType) {
         {description ? description : t("_entities:account.description.empty")}
       </p>
       <div className="flex gap-2">
-        <Chip label={String(TransactionType[type])} />
+        <Chip
+          className={
+            type === TransactionType.In ? "success" : "error"
+          }
+          label={
+            <div className="flex gap-2 items-center justify-center">
+              <FontAwesomeIcon
+                icon={icons[(type ?? 0) as keyof typeof icons]}
+              />
+              {String(TransactionType[type])}
+            </div>
+          }
+        />
         <Chip label={String(amount)} />
       </div>
     </ItemCard>

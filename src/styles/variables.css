@@ -15,11 +15,11 @@
   /** Notification colors **/
   --color-bg-info: #0070ba;
   --color-info: #fbfbfb;
-  --color-bg-success: #065f46;
+  --color-bg-success: hsl(149.76, 68%, 36%);
   --color-success: #fbfbfb;
   --color-bg-warning: #ffa500;
   --color-warning: #000000;
-  --color-bg-error: #b63d3d;
+  --color-bg-error: hsl(0, 50%, 51%);
   --color-error: #fbfbfb;
   --breakpoint-xs: 28rem;
 }

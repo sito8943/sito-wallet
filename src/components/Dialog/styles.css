@@ -9,5 +9,5 @@
 }
 
 .dialog {
-  @apply relative min-w-70 bg-base p-5 min-xs:rounded-2xl min-xs:border-border border-2 max-xs:w-screen max-xs:h-screen;
+  @apply relative min-w-90 bg-base p-5 min-xs:rounded-2xl min-xs:border-border border-2 max-xs:w-screen max-xs:h-screen;
 }
