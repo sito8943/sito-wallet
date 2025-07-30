@@ -2,8 +2,8 @@
  *
  * @returns now date formatted
  */
-export function getFormattedDateTime() {
-  const now = new Date();
+export function getFormattedDateTime(date?: string) {
+  const now = date ? new Date(date) : new Date();
 
   const options = {
     weekday: "long", // martes
