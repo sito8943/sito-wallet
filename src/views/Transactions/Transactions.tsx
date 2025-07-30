@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // components
-import { Page, TabsLayout, TabsType } from "components";
+import { ConfirmationDialog, Page, TabsLayout, TabsType } from "components";
 
 // hooks
 import { useAddTransaction, useEditTransaction } from "./hooks";
@@ -16,6 +16,7 @@ import {
 // components
 import {
   AddTransactionDialog,
+  EditTransactionDialog,
   TransactionGrid,
   TransactionTable,
 } from "./components";
@@ -58,6 +59,14 @@ export function Transactions() {
     [deleteTransaction, editTransaction, restoreTransaction]
   );
 
+  const getGridActions = useCallback(
+    (record: TransactionDto) => [
+      deleteTransaction.action(record),
+      restoreTransaction.action(record),
+    ],
+    [deleteTransaction, restoreTransaction]
+  );
+
   // #region accounts
 
   const account = useAccountsCommon();
@@ -85,12 +94,12 @@ export function Transactions() {
         <TransactionGrid
           accounts={account.data}
           accountId={item.id}
-          getActions={getTableActions}
+          getActions={getGridActions}
           editAction={editTransaction}
         />
       ),
     })) ?? []) as TabsType[];
-  }, [account.data, editTransaction, getTableActions]);
+  }, [account.data, editTransaction, getGridActions]);
 
   // #endregion accounts
 
@@ -109,7 +118,10 @@ export function Transactions() {
       <TabsLayout tabs={accountMobileTabs} className="h-full min-xs:hidden" />
 
       {/* Dialogs */}
+      <EditTransactionDialog {...editTransaction} />
       <AddTransactionDialog {...addTransaction} />
+      <ConfirmationDialog {...deleteTransaction} />
+      <ConfirmationDialog {...restoreTransaction} />
     </Page>
   );
 }
