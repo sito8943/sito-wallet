@@ -4,7 +4,8 @@ import { JSX } from "react";
 import { BaseEntityDto } from "lib";
 
 export type PrettyGridPropsType<TDto extends BaseEntityDto> = {
+  renderComponent: (item: TDto) => JSX.Element;
   emptyMessage?: string;
   data?: TDto[];
-  renderComponent: (item: TDto) => JSX.Element;
+  loading?: boolean;
 };
