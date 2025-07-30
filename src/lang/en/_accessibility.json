@@ -65,15 +65,19 @@
   "components": {
     "table": {
       "filters": {
-        "title": "Filtros"
+        "title": "Filters",
+        "range": {
+          "start": "From",
+          "end": "To"
+        }
       },
-      "pageSizes": "Filas por página",
-      "jumpToPage": "Saltar a página",
-      "from": "del",
-      "to": "al",
-      "of": "de",
-      "results": "resultados",
-      "empty": "No hay resultados"
+      "pageSizes": "Rows per page",
+      "jumpToPage": "Jump to page",
+      "from": "from",
+      "to": "to",
+      "of": "of",
+      "results": "results",
+      "empty": "There are not results"
     }
   }
 }
