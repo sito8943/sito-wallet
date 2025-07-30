@@ -55,8 +55,6 @@ export function TransactionForm(props: TransactionFormPropsType) {
 
   const { type } = useWatch({ control });
 
-  console.log(type);
-
   return (
     <>
       <Controller

@@ -1,4 +1,9 @@
-import { TransactionDto, TransactionType, UpdateTransactionDto } from "lib";
+import {
+  formatForDatetimeLocal,
+  TransactionDto,
+  TransactionType,
+  UpdateTransactionDto,
+} from "lib";
 import { TransactionFormType } from "../types";
 
 export const formToDto = ({
@@ -14,6 +19,7 @@ export const formToDto = ({
 export const dtoToForm = (dto: TransactionDto): TransactionFormType => ({
   ...dto,
   accountId: dto.account?.id ?? 0,
+  date: formatForDatetimeLocal(dto.date),
 });
 
 export const emptyTransaction: TransactionFormType = {
@@ -23,4 +29,5 @@ export const emptyTransaction: TransactionFormType = {
   type: TransactionType.In,
   account: null,
   amount: 0,
+  date: formatForDatetimeLocal(),
 };

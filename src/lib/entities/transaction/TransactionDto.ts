@@ -6,5 +6,5 @@ export interface TransactionDto extends BaseEntityDto {
   type: TransactionType;
   amount: number;
   account: CommonAccountDto | null;
-  date: Date;
+  date: string;
 }
