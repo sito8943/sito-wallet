@@ -21,9 +21,9 @@ export const TabsLayout = (props: TabsLayoutPropsType) => {
 
   return (
     <div
-      className={`bg-alt-background mt-5 rounded-b-xl rounded-r-xl ${className}`}
+      className={`bg-alt-background rounded-b-xl rounded-r-xl ${className}`}
     >
-      <ul className="horizontal tabs flex w-full items-center justify-start -mt-6">
+      <ul className="horizontal tabs flex w-full items-center justify-start mb-5">
         {tabs.map(({ id, label }) => (
           <li key={id}>
             <Tab
