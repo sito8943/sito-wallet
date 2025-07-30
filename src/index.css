@@ -128,3 +128,11 @@ main h3 {
 .error {
   @apply bg-bg-error text-error;
 }
+
+.inverted-success {
+  @apply text-bg-success;
+}
+
+.inverted-error {
+  @apply text-bg-error;
+}
