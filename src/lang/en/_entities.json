@@ -61,6 +61,26 @@
       "required": "Currency is required"
     }
   },
+  "transaction": {
+    "name": {
+      "placeholder": "Ex: Deposit"
+    },
+    "type": {
+      "label": "Type",
+      "placeholder": "Select a type",
+      "required": "Type is required"
+    },
+    "amount": {
+      "label": "Amount",
+      "placeholder": "Ex: 100.00",
+      "required": "Amount is required"
+    },
+    "account": {
+      "label": "Account",
+      "placeholder": "Select an account",
+      "required": "Account is required"
+    }
+  },
   "currency": {
     "name": {
       "unique": "There is a currency with that name already",

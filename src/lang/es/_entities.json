@@ -2,7 +2,7 @@
   "base": {
     "name": {
       "label": "Nombre",
-      "required": "El nombre es obligatorio"
+      "required": "El nombre es requerido"
     },
     "description": {
       "label": "Descripción",
@@ -29,20 +29,20 @@
   "user": {
     "email": {
       "label": "Correo electrónico",
-      "placeholder": "Ex: email@provider.com",
+      "placeholder": "Ej: email@provider.com",
       "unique": "Ya existe un usuario con ese correo electrónico",
-      "required": "El correo electrónico es obligatorio",
+      "required": "El correo electrónico es requerido",
       "notFound": "Usuario no encontrado"
     },
     "password": {
       "label": "Contraseña",
-      "placeholder": "Ex: ********",
-      "required": "La contraseña es obligatoria",
+      "placeholder": "Ej: ********",
+      "required": "La contraseña es requerida",
       "wrongPassword": "Contraseña incorrecta"
     },
     "rPassword": {
       "label": "Confirmar contraseña",
-      "placeholder": "Ex: ********"
+      "placeholder": "Ej: ********"
     }
   },
   "account": {
@@ -53,12 +53,32 @@
     "type": {
       "label": "Tipo",
       "placeholder": "Selecciona un tipo",
-      "required": "El tipo es obligatorio"
+      "required": "El tipo es requerido"
     },
     "currency": {
       "label": "Moneda",
       "placeholder": "Selecciona una moneda",
-      "required": "La moneda es obligatoria"
+      "required": "La moneda es requerida"
+    }
+  },
+  "transaction": {
+    "name": {
+      "placeholder": "Ej: Depósito"
+    },
+    "type": {
+      "label": "Tipo",
+      "placeholder": "Selecciona un tipo",
+      "required": "El tipo es requerido"
+    },
+    "amount": {
+      "label": "Cantidad",
+      "placeholder": "Ej: 100.00",
+      "required": "La cantidad es requerida"
+    },
+    "account": {
+      "label": "Cuenta",
+      "placeholder": "Selecciona una cuenta",
+      "required": "La cuenta es requerida"
     }
   },
   "currency": {
