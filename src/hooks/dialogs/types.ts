@@ -1,9 +1,13 @@
 import { MutationFunction, QueryKey } from "@tanstack/react-query";
 import { DefaultValues, FieldValues } from "react-hook-form";
 
+// @sito/dashboard
+import { Action } from "@sito/dashboard";
+
 // types
-import { ValidationError } from "lib";
+import { BaseEntityDto, ValidationError } from "lib";
 import { UseConfirmationPropsType } from "../forms";
+import { FormDialogPropsType } from "components";
 
 export interface UseDeleteDialogPropsType
   extends UseConfirmationPropsType<number, ValidationError> {
@@ -26,4 +30,11 @@ export interface UseFormDialogPropsType<
   queryKey: QueryKey;
   onSuccessMessage: string;
   title: string;
+}
+
+export interface UseActionDialog<
+  TRow extends BaseEntityDto,
+  TFormType extends FieldValues
+> extends FormDialogPropsType<TFormType, ValidationError> {
+  action: (record: TRow) => Action<TRow>;
 }
