@@ -1,0 +1,11 @@
+.horizontal .tabs.multiple li a {
+  border-radius: 0 !important;
+}
+
+.horizontal .tabs.multiple li:first-child a {
+  border-radius: 12px 0 0 0 !important;
+}
+
+.horizontal .tabs.multiple li:last-child a {
+  border-radius: 0 12px 0 0 !important;
+}

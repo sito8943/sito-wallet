@@ -12,3 +12,4 @@ export * from "./Notification";
 export * from "./Drawer";
 export * from "./Loading";
 export * from "./Card";
+export * from "./TabsLayout";
