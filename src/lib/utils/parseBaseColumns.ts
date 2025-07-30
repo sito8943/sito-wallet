@@ -21,7 +21,7 @@ export const isBaseColumn = (column: string) => baseColumns.includes(column);
  * @returns array of prefab
  */
 export const prefabBaseColumns = <
-  TDto extends BaseEntityDto,
+  TDto extends BaseEntityDto
 >(): ColumnType<TDto>[] => [
   {
     key: "id",
@@ -33,14 +33,14 @@ export const prefabBaseColumns = <
     className: "w-56",
     filterOptions: { type: FilterTypes.date, defaultValue: "" },
     renderBody: (updatedAt: string) =>
-      new Date(updatedAt).toLocaleDateString("es-ES"),
+      new Date(updatedAt).toLocaleDateString(navigator.language || "es-ES"),
     pos: -1,
   },
   {
     key: "createdAt",
     filterOptions: { type: FilterTypes.date, defaultValue: "" },
     renderBody: (createdAt: string) =>
-      new Date(createdAt).toLocaleDateString("es-ES"),
+      new Date(createdAt).toLocaleDateString(navigator.language || "es-ES"),
     pos: -2,
   },
   {
@@ -84,7 +84,9 @@ export const useParseColumns = <TDto extends BaseEntityDto>(
           label:
             label ??
             t(
-              `_entities:${isBaseColumn(key as string) ? "base" : entity}.${key as string}.label`
+              `_entities:${isBaseColumn(key as string) ? "base" : entity}.${
+                key as string
+              }.label`
             ),
           renderBody,
           pos: pos ?? 0,
