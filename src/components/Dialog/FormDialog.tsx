@@ -26,7 +26,7 @@ export const FormDialog = <TInput extends FieldValues, TError extends Error>(
     <Dialog {...rest} handleClose={handleClose}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-5 pt-1">{children}</div>
-        <div className={`flex gap-2 mt-5 ${buttonEnd ? "justify-end" : ""}`}>
+        <div className={`flex gap-2 mt-2 ${buttonEnd ? "justify-end" : ""}`}>
           <button
             type="submit"
             className="button !px-6 submit primary"
