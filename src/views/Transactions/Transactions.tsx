@@ -79,7 +79,6 @@ export function Transactions() {
       label: item.name,
       content: (
         <TransactionTable
-          accounts={account.data}
           accountId={item.id}
           getActions={getTableActions}
           editAction={editTransaction}
@@ -96,7 +95,6 @@ export function Transactions() {
       label: item.name,
       content: (
         <TransactionGrid
-          accounts={account.data}
           accountId={item.id}
           getActions={getGridActions}
           editAction={editTransaction}

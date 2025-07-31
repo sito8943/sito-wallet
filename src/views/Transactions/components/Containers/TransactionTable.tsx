@@ -30,14 +30,8 @@ import { icons } from "../utils";
 import { TransactionContainerPropsType } from "./types";
 
 export const TransactionTable = (props: TransactionContainerPropsType) => {
-  const {
-    accountId,
-    accounts,
-    getActions,
-    editAction,
-    showFilters,
-    setShowFilters,
-  } = props;
+  const { accountId, getActions, editAction, showFilters, setShowFilters } =
+    props;
 
   const { data, isLoading, error } = useTransactionsList({
     filters: { accountId },
@@ -67,24 +61,6 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
         ),
       },
       {
-        key: "account",
-        filterOptions: {
-          type: FilterTypes.autocomplete,
-          options: accounts,
-          defaultValue: [],
-        },
-        sortable: false,
-        renderBody: (_, transaction: TransactionDto) => (
-          <div className="w-fit">
-            <Chip
-              label={transaction?.account?.name}
-              spanClassName="text-xs whitespace-nowrap"
-              className="!py-2"
-            />
-          </div>
-        ),
-      },
-      {
         key: "amount",
         filterOptions: { type: FilterTypes.number },
       },
@@ -101,6 +77,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
             id: item.value,
             value: item.key,
           })) as Option[],
+          customFilter: (value) => String(TransactionType[value]),
         },
 
         renderBody: (type: TransactionType) => (

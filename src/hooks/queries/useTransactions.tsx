@@ -1,5 +1,8 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
+// @sito/dashboard
+import { useTableOptions } from "@sito/dashboard";
+
 // providers
 import { useAuth, useLocalCache, useManager } from "providers";
 
@@ -14,13 +17,14 @@ import {
   QueryResult,
   Tables,
 } from "lib";
+import { useMemo } from "react";
 
 export const TransactionsQueryKeys = {
   all: () => ({
     queryKey: ["transactions"],
   }),
-  list: (id: number) => ({
-    queryKey: [...TransactionsQueryKeys.all().queryKey, "list", id],
+  list: (filters: FilterTransactionDto) => ({
+    queryKey: [...TransactionsQueryKeys.all().queryKey, "list", filters],
   }),
   common: () => ({
     queryKey: [...TransactionsQueryKeys.all().queryKey, "common"],
@@ -30,20 +34,46 @@ export const TransactionsQueryKeys = {
 export function useTransactionsList(
   props: UseFetchPropsType<FilterTransactionDto>
 ): UseQueryResult<QueryResult<TransactionDto>> {
+  const {
+    sortingBy,
+    sortingOrder,
+    currentPage,
+    pageSize,
+    filters: tableFilters,
+  } = useTableOptions();
+
   const { filters = { deleted: false, accountId: 0 } } = props;
 
   const manager = useManager();
   const { account } = useAuth();
   const { loadCache, updateCache } = useLocalCache();
 
+  const parsedFilters = useMemo(
+    () => ({
+      sortingBy,
+      sortingOrder,
+      currentPage,
+      pageSize,
+      ...tableFilters,
+      ...filters,
+      userId: account?.id,
+    }),
+    [
+      account?.id,
+      currentPage,
+      filters,
+      pageSize,
+      sortingBy,
+      sortingOrder,
+      tableFilters,
+    ]
+  );
+
   return useQuery({
-    ...TransactionsQueryKeys.list(filters.accountId ?? 0),
+    ...TransactionsQueryKeys.list(parsedFilters),
     queryFn: async () => {
       try {
-        const result = await manager.Transactions.get({
-          ...filters,
-          userId: account?.id,
-        });
+        const result = await manager.Transactions.get(parsedFilters);
         updateCache(Tables.Transactions, result.items);
         return result;
       } catch (error) {
