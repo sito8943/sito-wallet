@@ -86,14 +86,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
       {
         key: "date",
         filterOptions: { type: FilterTypes.date },
-        renderBody: (value) => (
-          <p
-            data-tooltip-id="tooltip"
-            data-tooltip-content={getFormattedDateTime(value)}
-          >
-            {timeAge(new Date(value))}
-          </p>
-        ),
+        renderBody: (value) => <p>{getFormattedDateTime(value)}</p>,
       },
       {
         key: "type",
