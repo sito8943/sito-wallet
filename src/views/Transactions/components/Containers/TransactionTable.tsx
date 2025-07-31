@@ -71,7 +71,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
           <div className="w-fit">
             <Chip
               label={transaction?.account?.name}
-              spanClassName="text-xs"
+              spanClassName="text-xs whitespace-nowrap"
               className="!py-2"
             />
           </div>
