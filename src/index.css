@@ -44,7 +44,7 @@ td,
   min-height: 100vh;
   transition: grid-template-rows 500ms ease-in-out;
   transition-delay: 1s;
-  grid-template-rows: 60px 1fr 40px;
+  grid-template-rows: 48px 1fr 40px;
 }
 
 main {
