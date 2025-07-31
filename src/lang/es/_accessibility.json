@@ -55,8 +55,8 @@
       "filters": {
         "title": "Filtros",
         "range": {
-          "start": "de",
-          "end": "a"
+          "start": "desde",
+          "end": "hasta"
         }
       },
       "pageSizes": "Filas por página",
