@@ -50,6 +50,24 @@
     "cleanInput": "Limpia los valores de la entrada",
     "retry": "Reintentar conexión"
   },
+  "components": {
+    "table": {
+      "filters": {
+        "title": "Filtros",
+        "range": {
+          "start": "de",
+          "end": "a"
+        }
+      },
+      "pageSizes": "Filas por página",
+      "jumpToPage": "Saltar a página",
+      "from": "d",
+      "to": "a",
+      "of": "d",
+      "results": "resultados",
+      "empty": "No hay resultados"
+    }
+  },
   "errors": {
     "unknownError": "Ha ocurrido un error",
     "differentPasswords": "Las contraseñas no coinciden",
