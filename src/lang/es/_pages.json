@@ -6,6 +6,10 @@
   },
   "common": {
     "actions": {
+      "edit": {
+        "text": "Editar",
+        "successMessage": "Guardado exitosamente"
+      },
       "add": {
         "text": "Agregar",
         "successMessage": "Guardado exitosamente"
