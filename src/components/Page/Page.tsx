@@ -67,8 +67,8 @@ export const Page = <TEntity extends BaseEntityDto>(
 
   return (
     <main className="">
-      <div className={`${animated ? "apparition" : ""} flex flex-col gap-5`}>
-        <div className="flex items-center justify-between p-5 bg-base">
+      <div className={`${animated ? "apparition" : ""} flex flex-col`}>
+        <div className="flex items-center justify-between px-5 py-2 bg-base">
           <div className="flex gap-2 items-center justify-start">
             {showBack && (
               <button
@@ -85,7 +85,7 @@ export const Page = <TEntity extends BaseEntityDto>(
           </div>
           <Actions actions={parsedActions ?? []} />
         </div>
-        <div className="p-5 h-full">
+        <div className="px-5 py-3 h-full">
           {isLoading ? (
             <Loading containerClassName="flex justify-center items-center h-50" />
           ) : (
