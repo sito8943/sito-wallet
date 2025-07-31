@@ -27,7 +27,7 @@ export const useEditAction = <TRow extends BaseEntityDto>(
       hidden: record.deleted || hidden,
       disabled: record.deleted,
       icon: <FontAwesomeIcon className="primary" icon={faPencil} />,
-      tooltip: t("_pages:common.actions.restore.text"),
+      tooltip: t("_pages:common.actions.edit.text"),
       onClick: () => onClick(record?.id),
     }),
     [hidden, onClick, t]
