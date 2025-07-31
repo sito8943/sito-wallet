@@ -49,7 +49,8 @@ td,
 
 main {
   height: 100%;
-  @apply bg-base-dark;
+  width: 100%;
+  @apply bg-base-dark flex flex-col;
 }
 
 main h1,
