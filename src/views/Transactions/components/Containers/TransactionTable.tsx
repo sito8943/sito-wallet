@@ -10,7 +10,7 @@ import { Chip, FilterTypes, Option } from "@sito/dashboard";
 import { Error, WalletTable } from "components";
 
 // hooks
-import { useTransactionsList, useTimeAge } from "hooks";
+import { useTransactionsList } from "hooks";
 
 // lib
 import {
@@ -31,8 +31,6 @@ import { TransactionContainerPropsType } from "./types";
 
 export const TransactionTable = (props: TransactionContainerPropsType) => {
   const { accountId, accounts, getActions, editAction } = props;
-
-  const { timeAge } = useTimeAge();
 
   const { data, isLoading, error } = useTransactionsList({
     filters: { accountId },
