@@ -9,6 +9,7 @@ export type PagePropsType<TRow extends BaseEntityDto> = {
   children: ReactNode;
   isLoading?: boolean;
   addOptions?: Partial<Action<TRow>>;
+  filterOptions?: Partial<Action<TRow>>;
   animated?: boolean;
   actions?: Action<TRow>[];
   showBack?: boolean;

@@ -30,7 +30,14 @@ import { icons } from "../utils";
 import { TransactionContainerPropsType } from "./types";
 
 export const TransactionTable = (props: TransactionContainerPropsType) => {
-  const { accountId, accounts, getActions, editAction } = props;
+  const {
+    accountId,
+    accounts,
+    getActions,
+    editAction,
+    showFilters,
+    setShowFilters,
+  } = props;
 
   const { data, isLoading, error } = useTransactionsList({
     filters: { accountId },
@@ -91,8 +98,8 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
         filterOptions: {
           type: FilterTypes.select,
           options: enumToKeyValueArray(TransactionType)?.map((item) => ({
-            id: item.key,
-            value: item.value,
+            id: item.value,
+            value: item.key,
           })) as Option[],
         },
 
@@ -128,6 +135,18 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
       isLoading={isLoading}
       entity={EntityName.Transaction}
       columns={columns}
+      filterOptions={{
+        button: {
+          hide: true,
+        },
+        dropdown:
+          setShowFilters && !!showFilters
+            ? {
+                opened: showFilters,
+                setOpened: setShowFilters,
+              }
+            : undefined,
+      }}
     />
   );
 };

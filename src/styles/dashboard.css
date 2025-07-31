@@ -32,8 +32,9 @@ select > option {
   @apply left-2 peer-focus:!left-2;
 }
 
+.options-widget-container,
 .text-input-container {
-  @apply mb-4;
+  @apply mb-0 pb-0;
 }
 
 .text-input-label,
@@ -45,7 +46,7 @@ select > option {
   top: 10px;
 }
 
-.text-input.has-value~.text-input-label,
+.text-input.has-value ~ .text-input-label,
 .text-input.has-placeholder ~ .text-input-label {
   font-weight: 400;
   transform: translateY(-1.75rem);
@@ -53,4 +54,8 @@ select > option {
 
 .text-input-helper-text {
   @apply text-sm;
+}
+
+.table-empty {
+  border-top: 0;
 }

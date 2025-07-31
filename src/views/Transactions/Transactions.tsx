@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // components
@@ -31,6 +31,8 @@ export function Transactions() {
   const { t } = useTranslation();
 
   const manager = useManager();
+
+  const [showFilters, setShowFilters] = useState(false);
 
   // #region actions
 
@@ -81,10 +83,12 @@ export function Transactions() {
           accountId={item.id}
           getActions={getTableActions}
           editAction={editTransaction}
+          showFilters={showFilters}
+          setShowFilters={setShowFilters}
         />
       ),
     })) ?? []) as TabsType[];
-  }, [account.data, editTransaction, getTableActions]);
+  }, [account.data, editTransaction, getTableActions, showFilters]);
 
   const accountMobileTabs = useMemo(() => {
     return (account.data?.map((item) => ({
@@ -111,6 +115,11 @@ export function Transactions() {
         onClick: () => addTransaction.onClick(),
         disabled: account.isLoading,
         tooltip: t("_pages:transactions.add"),
+      }}
+      filterOptions={{
+        onClick: () => setShowFilters(!showFilters),
+        disabled: account.isLoading,
+        tooltip: t("_accessibility:buttons.filters"),
       }}
       queryKey={TransactionsQueryKeys.all().queryKey}
     >

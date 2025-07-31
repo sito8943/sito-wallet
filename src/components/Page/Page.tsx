@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,
   faArrowLeft,
+  faFilter,
   faRotateLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -32,6 +33,7 @@ export const Page = <TEntity extends BaseEntityDto>(
     children,
     isLoading,
     addOptions,
+    filterOptions,
     actions,
     queryKey,
     animated = true,
@@ -61,9 +63,16 @@ export const Page = <TEntity extends BaseEntityDto>(
       };
       pActions.unshift(addAction);
     }
-
+    if (filterOptions) {
+      const filterAction = {
+        ...(filterOptions as Action<BaseEntityDto>),
+        id: "filter",
+        icon: <FontAwesomeIcon icon={faFilter} />,
+      };
+      pActions.push(filterAction);
+    }
     return pActions;
-  }, [actions, addOptions, queryKey, t]);
+  }, [actions, addOptions, filterOptions, queryKey, t]);
 
   return (
     <main className="">
