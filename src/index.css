@@ -21,6 +21,7 @@ textarea {
 h1,
 h2,
 th,
+th span,
 .poppins {
   font-family: "Poppins", sans-serif;
   font-weight: bold;
@@ -48,7 +49,7 @@ td,
 
 main {
   height: 100%;
-  @apply bg-base-dark grid grid-rows-1;
+  @apply bg-base-dark;
 }
 
 main h1,
