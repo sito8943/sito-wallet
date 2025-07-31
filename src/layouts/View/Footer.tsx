@@ -6,7 +6,7 @@ function Footer() {
 
     const {t} = useTranslation();
 
-    return <footer className="w-full bg-base flex items-center justify-center">
+    return <footer className="w-full bg-base flex items-center justify-center h-10">
         <p>{t("_pages:footer.copyright")} {year}</p>
     </footer>;
 }

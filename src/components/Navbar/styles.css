@@ -1,7 +1,7 @@
 @import "../../styles/variables.css";
 
 .header {
-  @apply w-full flex items-center justify-between z-20 px-3;
+  @apply w-full flex items-center justify-between z-20 px-3 h-12;
 }
 
 .toolbar {
