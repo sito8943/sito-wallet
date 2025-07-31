@@ -19,7 +19,9 @@ export const TransactionsQueryKeys = {
   all: () => ({
     queryKey: ["transactions"],
   }),
-  list: () => ({ queryKey: [...TransactionsQueryKeys.all().queryKey, "list"] }),
+  list: (id: number) => ({
+    queryKey: [...TransactionsQueryKeys.all().queryKey, "list", id],
+  }),
   common: () => ({
     queryKey: [...TransactionsQueryKeys.all().queryKey, "common"],
   }),
@@ -28,14 +30,14 @@ export const TransactionsQueryKeys = {
 export function useTransactionsList(
   props: UseFetchPropsType<FilterTransactionDto>
 ): UseQueryResult<QueryResult<TransactionDto>> {
-  const { filters = { deleted: false } } = props;
+  const { filters = { deleted: false, accountId: 0 } } = props;
 
   const manager = useManager();
   const { account } = useAuth();
   const { loadCache, updateCache } = useLocalCache();
 
   return useQuery({
-    ...TransactionsQueryKeys.list(),
+    ...TransactionsQueryKeys.list(filters.accountId ?? 0),
     queryFn: async () => {
       try {
         const result = await manager.Transactions.get({
