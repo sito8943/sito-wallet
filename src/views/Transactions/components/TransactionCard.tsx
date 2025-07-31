@@ -16,11 +16,25 @@ import { Chip } from "@sito/dashboard";
 // lib
 import { TransactionType } from "lib";
 
+// hooks
+import { useTimeAge } from "hooks";
+
 export function TransactionCard(props: TransactionCardPropsType) {
   const { t } = useTranslation();
 
-  const { id, onClick, actions, name, description, type, amount, deleted } =
-    props;
+  const {
+    id,
+    onClick,
+    actions,
+    name,
+    description,
+    date,
+    type,
+    amount,
+    deleted,
+  } = props;
+
+  const { timeAge } = useTimeAge();
 
   return (
     <ItemCard
@@ -51,6 +65,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
           }
         />
         <Chip label={String(amount)} />
+        <Chip label={timeAge(new Date(date))} />
       </div>
     </ItemCard>
   );
