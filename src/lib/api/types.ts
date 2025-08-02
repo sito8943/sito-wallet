@@ -1,3 +1,9 @@
+// @sito/dashboard
+import { SortOrder } from "@sito/dashboard";
+
+// entities
+import { BaseEntityDto } from "../entities";
+
 export enum Tables {
   Accounts = "accounts",
   Currencies = "currencies",
@@ -13,7 +19,7 @@ export enum TablesCamelCase {
 export enum EntityName {
   Account = "account",
   Currency = "currency",
-  Transaction = "transaction"
+  Transaction = "transaction",
 }
 
 export type APIError = {
@@ -28,4 +34,11 @@ export type QueryResult<TDto> = {
   pageSize: number;
   total: number;
   items: TDto[];
+};
+
+export type QueryParam<TDto extends BaseEntityDto> = {
+  sortingBy: keyof TDto;
+  sortingOrder: SortOrder;
+  currentPage: number;
+  pageSize: number;
 };

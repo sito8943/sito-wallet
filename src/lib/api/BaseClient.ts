@@ -2,12 +2,13 @@
 import { APIClient } from "./APIClient.ts";
 
 // types
-import { Tables } from "./types.ts";
+import { QueryParam, Tables } from "./types.ts";
 
 // lib
 import {
   BaseCommonEntityDto,
   BaseEntityDto,
+  BaseFilterDto,
   buildQueryUrl,
   DeleteDto,
   Methods,
@@ -19,7 +20,7 @@ export default class BaseClient<
   TCommonDto extends BaseCommonEntityDto,
   TAddDto,
   TUpdateDto extends DeleteDto,
-  TFilter
+  TFilter extends BaseFilterDto
 > {
   table: Tables;
   secured: boolean;
@@ -75,8 +76,11 @@ export default class BaseClient<
    * @param query - Where conditions (key-value)
    * @returns - Query result
    */
-  async get(query: TFilter): Promise<QueryResult<TDto>> {
-    return await this.api.get<TDto, TFilter>(`${this.table}`, query);
+  async get(
+    query?: QueryParam<TDto>,
+    filters?: TFilter
+  ): Promise<QueryResult<TDto>> {
+    return await this.api.get<TDto, TFilter>(`${this.table}`, query, filters);
   }
 
   /**

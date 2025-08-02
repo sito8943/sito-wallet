@@ -2,10 +2,18 @@
 import { buildQueryUrl, makeRequest, Methods } from "./utils/services";
 
 // types
-import { fromLocal, QueryResult, SessionDto } from "lib";
+import {
+  BaseEntityDto,
+  BaseFilterDto,
+  fromLocal,
+  QueryParam,
+  QueryResult,
+  SessionDto,
+} from "lib";
 
 // config
 import { config } from "../../config";
+import { parseQueries } from "./utils";
 
 /**
  * @class APIClient
@@ -58,8 +66,13 @@ export class APIClient {
    * @param query - query parameters
    * @returns Result list
    */
-  async get<TDto, TFilter>(endpoint: string, query?: TFilter) {
-    const builtUrl = buildQueryUrl<TFilter>(endpoint, query);
+  async get<TDto extends BaseEntityDto, TFilter extends BaseFilterDto>(
+    endpoint: string,
+    query?: QueryParam<TDto>,
+    filters?: TFilter
+  ) {
+    const builtUrl = parseQueries<TDto, TFilter>(endpoint, query, filters);
+
     const securedHeader = this.secured
       ? this.defaultTokenAdquierer()
       : undefined;
