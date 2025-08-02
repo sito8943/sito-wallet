@@ -1,10 +1,11 @@
-import { Action as ActionType } from "@sito/dashboard";
-
 // lib
 import { BaseEntityDto } from "lib";
 
+// types
+import { ActionPropsType } from "./types";
+
 export function Action<TEntity extends BaseEntityDto>(
-  props: ActionType<TEntity>
+  props: ActionPropsType<TEntity>
 ) {
   const {
     id,
@@ -13,6 +14,7 @@ export function Action<TEntity extends BaseEntityDto>(
     icon,
     tooltip,
     onClick,
+    children,
   } = props;
 
   return !hidden ? (
@@ -26,6 +28,7 @@ export function Action<TEntity extends BaseEntityDto>(
       data-tooltip-content={tooltip}
     >
       {icon}
+      {children}
     </button>
   ) : null;
 }
