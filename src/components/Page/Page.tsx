@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
-import { Action } from "@sito/dashboard";
+import { Action, Badge, useTableOptions } from "@sito/dashboard";
 
 // components
 import { Actions, Loading } from "components";
@@ -44,6 +44,8 @@ export const Page = <TEntity extends BaseEntityDto>(
 
   const navigate = useNavigate();
 
+  const { countOfFilters } = useTableOptions();
+
   const parsedActions = useMemo(() => {
     const pActions = Array.isArray(actions) ? actions : [];
     if (queryKey) {
@@ -68,11 +70,19 @@ export const Page = <TEntity extends BaseEntityDto>(
         ...(filterOptions as Action<BaseEntityDto>),
         id: "filter",
         icon: <FontAwesomeIcon icon={faFilter} />,
+        children: (
+          <Badge
+            className={`${
+              countOfFilters > 0 ? "!scale-100" : "!scale-0"
+            } transition ease-in-out duration-300`}
+            count={countOfFilters}
+          />
+        ),
       };
       pActions.push(filterAction);
     }
     return pActions;
-  }, [actions, addOptions, filterOptions, queryKey, t]);
+  }, [actions, addOptions, countOfFilters, filterOptions, queryKey, t]);
 
   return (
     <main className="">
@@ -92,7 +102,9 @@ export const Page = <TEntity extends BaseEntityDto>(
             )}
             <h2 className="text-3xl font-bold">{title}</h2>
           </div>
-          <Actions actions={parsedActions ?? []} />
+          <div className="max-xs:hidden">
+            <Actions actions={parsedActions ?? []} />
+          </div>
         </div>
         <div className="px-5 py-3 h-full">
           {isLoading ? (
@@ -102,6 +114,9 @@ export const Page = <TEntity extends BaseEntityDto>(
           )}
         </div>
       </div>
+      <button className="submit button icon-button fab primary min-xs:!hidden">
+        <FontAwesomeIcon icon={faAdd} />
+      </button>
     </main>
   );
 };
