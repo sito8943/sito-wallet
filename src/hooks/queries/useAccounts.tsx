@@ -38,7 +38,7 @@ export function useAccountsList(
     ...AccountsQueryKeys.list(),
     queryFn: async () => {
       try {
-        const result = await manager.Accounts.get({
+        const result = await manager.Accounts.get(undefined, {
           ...filters,
           userId: account?.id,
         });

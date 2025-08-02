@@ -50,30 +50,26 @@ export function useTransactionsList(
 
   const parsedFilters = useMemo(
     () => ({
-      sortingBy,
-      sortingOrder,
-      currentPage,
-      pageSize,
       ...tableFilters,
       ...filters,
       userId: account?.id,
     }),
-    [
-      account?.id,
-      currentPage,
-      filters,
-      pageSize,
-      sortingBy,
-      sortingOrder,
-      tableFilters,
-    ]
+    [account?.id, filters, tableFilters]
   );
 
   return useQuery({
     ...TransactionsQueryKeys.list(parsedFilters),
     queryFn: async () => {
       try {
-        const result = await manager.Transactions.get(parsedFilters);
+        const result = await manager.Transactions.get(
+          {
+            sortingBy: sortingBy as keyof TransactionDto,
+            sortingOrder,
+            currentPage,
+            pageSize,
+          },
+          parsedFilters
+        );
         updateCache(Tables.Transactions, result.items);
         return result;
       } catch (error) {

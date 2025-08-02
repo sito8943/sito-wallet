@@ -38,7 +38,7 @@ export function useCurrenciesList(
     ...CurrenciesQueryKeys.list(),
     queryFn: async () => {
       try {
-        const result = await manager.Currencies.get({
+        const result = await manager.Currencies.get(undefined, {
           ...filters,
           userId: account?.id,
         });
