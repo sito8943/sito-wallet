@@ -59,3 +59,7 @@ select > option {
 .table-empty {
   border-top: 0;
 }
+
+.filter-dropdown-submit {
+  @apply bg-bg-primary hover:bg-hover-primary text-base;
+}

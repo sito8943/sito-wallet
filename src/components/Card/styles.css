@@ -1,5 +1,5 @@
 @import "../../styles/variables.css";
 
 .add-card {
-    @apply shadow-md shadow-black/50 flex items-center justify-center h-14 w-14 max-xs:h-10 max-xs:w-10 rounded-full fixed bottom-3 right-3 bg-bg-primary hover:bg-hover-primary border-bg-primary hover:border-hover-primary
+    @apply shadow-md shadow-black/50 flex items-center justify-center h-14 w-14 max-xs:h-10 max-xs:w-10 rounded-full fixed bottom-3 right-3 bg-bg-primary hover:bg-primary border-bg-primary hover:border-primary
 }

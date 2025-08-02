@@ -113,7 +113,7 @@ main h3 {
 }
 
 .chip.primary {
-  @apply bg-primary text-text;
+  @apply bg-bg-primary text-base;
 }
 
 .chip.primary p {

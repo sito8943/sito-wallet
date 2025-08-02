@@ -45,11 +45,11 @@ a.primary {
 }
 
 .outlined.primary {
-  @apply border-primary hover:bg-hover-primary hover:border-hover-primary hover:text-text;
+  @apply border-bg-primary hover:bg-primary hover:border-primary hover:text-base;
 }
 
 .submit.primary {
-  @apply bg-primary hover:bg-hover-primary text-text;
+  @apply bg-bg-primary hover:bg-primary text-base hover:text-text;
 }
 
 .primary {
