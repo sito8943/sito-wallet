@@ -50,6 +50,7 @@
       "unique": "Ya existe una cuenta con ese nombre",
       "placeholder": "Ej: Personal"
     },
+    "description": { "empty": "Sin descripción" },
     "type": {
       "label": "Tipo",
       "placeholder": "Selecciona un tipo",

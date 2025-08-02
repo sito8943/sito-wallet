@@ -50,6 +50,7 @@
       "placeholder": "Ex: Personal",
       "unique": "There is a account with that name already"
     },
+    "description": { "empty": "No description" },
     "type": {
       "label": "Type",
       "placeholder": "Select a type",
