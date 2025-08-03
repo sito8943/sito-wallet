@@ -27,7 +27,7 @@ p {
 }
 
 .action {
-  @apply bg-base hover:bg-base-light w-10 h-10 rounded-full;
+  @apply bg-base hover:bg-base-light w-9 h-9 rounded-full;
 }
 
 .input {
