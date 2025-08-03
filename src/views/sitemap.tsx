@@ -81,3 +81,10 @@ export const findPath = (targetPageId: PageId) => {
   }
   return path;
 };
+
+const pathMap: Record<PageId, string> = sitemap.reduce((acc, { key, path }) => {
+  acc[key] = path;
+  return acc;
+}, {} as Record<PageId, string>);
+
+export const getPathByKey = (key: PageId): string | undefined => pathMap[key];
