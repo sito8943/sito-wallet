@@ -7,11 +7,11 @@
 .text-input,
 .text-input-label,
 .select-input-label {
-  @apply !text-text;
+  @apply !text-text disabled:!text-gray-500;
 }
 
 .select-input {
-  @apply !text-text;
+  @apply !text-text disabled:!text-gray-500;
 }
 
 select > option {
@@ -32,6 +32,8 @@ select > option {
   @apply left-2 peer-focus:!left-2;
 }
 
+.autocomplete-input-container,
+.select-input-container,
 .options-widget-container,
 .text-input-container {
   @apply mb-0 pb-0;
