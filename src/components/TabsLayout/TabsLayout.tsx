@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 // types
 import { TabsLayoutPropsType } from "./types";
@@ -11,18 +11,18 @@ import "./styles.css";
 
 export const TabsLayout = (props: TabsLayoutPropsType) => {
   const { tabs = [], defaultTab, className = "" } = props;
+  const [activeTab, setActiveTab] = useState(tabs[0]?.id);
 
-  const [activeTab, setActiveTab] = useState(defaultTab ?? tabs[0]?.id);
+  const current = useMemo(() => {
+    return tabs.find((item) => item.id === activeTab);
+  }, [tabs, activeTab]);
 
-  const current = useMemo(
-    () => tabs.find((item) => item.id === activeTab),
-    [tabs, activeTab]
-  );
+  useEffect(() => {
+    if (defaultTab) setActiveTab(defaultTab);
+  }, [defaultTab]);
 
   return (
-    <div
-      className={`bg-alt-background rounded-b-xl rounded-r-xl ${className}`}
-    >
+    <div className={`bg-alt-background rounded-b-xl rounded-r-xl ${className}`}>
       <ul className="horizontal tabs flex w-full items-center justify-start mb-5">
         {tabs.map(({ id, label }) => (
           <li key={id}>

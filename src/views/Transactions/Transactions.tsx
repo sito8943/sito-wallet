@@ -1,4 +1,5 @@
-import { useCallback, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // components
@@ -29,6 +30,8 @@ import { useManager } from "providers";
 
 export function Transactions() {
   const { t } = useTranslation();
+
+  const location = useLocation();
 
   const manager = useManager();
 
@@ -105,6 +108,16 @@ export function Transactions() {
 
   // #endregion accounts
 
+  const [tabValue, setTabValue] = useState<number>();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.split("#")[1];
+      if (accountDesktopTabs.find((tab) => tab.id === Number(id)))
+        setTabValue(Number(id));
+    }
+  }, [accountDesktopTabs, location]);
+
   return (
     <Page
       title={t("_pages:transactions.title")}
@@ -121,8 +134,16 @@ export function Transactions() {
       }}
       queryKey={TransactionsQueryKeys.all().queryKey}
     >
-      <TabsLayout tabs={accountDesktopTabs} className="h-full max-xs:hidden" />
-      <TabsLayout tabs={accountMobileTabs} className="h-full min-xs:hidden" />
+      <TabsLayout
+        defaultTab={tabValue}
+        tabs={accountDesktopTabs}
+        className="h-full max-xs:hidden"
+      />
+      <TabsLayout
+        defaultTab={tabValue}
+        tabs={accountMobileTabs}
+        className="h-full min-xs:hidden"
+      />
 
       {/* Dialogs */}
       <EditTransactionDialog {...editTransaction} />
