@@ -10,8 +10,10 @@ import { useFormDialog, TransactionsQueryKeys } from "hooks";
 import { dtoToForm, emptyTransaction, formToDto } from "../utils";
 
 // types
-import { AddTransactionDto, TransactionDto } from "lib";
 import { TransactionFormType } from "../types";
+
+// lib
+import { AddTransactionDto, TransactionDto } from "lib";
 
 export function useAddTransaction() {
   const { t } = useTranslation();

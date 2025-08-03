@@ -13,7 +13,7 @@ import { dtoToForm, emptyAccount, formToDto } from "../utils";
 import { UpdateAccountDto, AccountDto } from "lib";
 import { AccountFormType } from "../types";
 
-export function useEditAccount() {
+export function useEditAccountDialog() {
   const { t } = useTranslation();
 
   const manager = useManager();
