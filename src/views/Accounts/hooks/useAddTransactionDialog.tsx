@@ -1,26 +1,29 @@
 // transaction
-import { TransactionFormType, useAddTransaction } from "../../Transactions";
+import {
+  useAddTransaction,
+  UseAddTransactionActionDialog,
+} from "../../Transactions";
 
 // hooks
-import { UseActionDialog } from "hooks";
 import { useAddTransactionAction } from "./useAddTransactionAction";
 
 // lib
 import { AccountDto } from "lib";
 
-export function useAddTransactionDialog(): UseActionDialog<
-  AccountDto,
-  TransactionFormType
-> {
+export function useAddTransactionDialog(): UseAddTransactionActionDialog {
   const { onClick, ...rest } = useAddTransaction();
 
   const { action } = useAddTransactionAction({
-    onClick,
+    onClick: (account) => {
+      onClick();
+      if (rest.setValue) rest.setValue("account", account as AccountDto);
+    },
   });
 
   return {
     action,
     onClick,
+    lockAccount: true,
     ...rest,
   };
 }

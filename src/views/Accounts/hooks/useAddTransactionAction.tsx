@@ -16,7 +16,7 @@ import { AccountActions } from "../types";
 import { BaseEntityDto } from "lib";
 
 export const useAddTransactionAction = <TRow extends BaseEntityDto>(
-  props: UseSingleActionPropTypes<number>
+  props: UseSingleActionPropTypes<TRow>
 ) => {
   const { t } = useTranslation();
 
@@ -24,12 +24,12 @@ export const useAddTransactionAction = <TRow extends BaseEntityDto>(
 
   const action = useCallback(
     (record: TRow): Action<TRow> => ({
-      id: AccountActions.ViewTransactions,
+      id: AccountActions.AddTransaction,
       hidden: record.deleted || hidden,
       disabled: record.deleted,
       icon: <FontAwesomeIcon className="primary" icon={faAdd} />,
       tooltip: t("_pages:accounts.actions.addTransaction.text"),
-      onClick: () => onClick(record.id),
+      onClick: () => onClick(record),
     }),
     [hidden, onClick, t]
   );

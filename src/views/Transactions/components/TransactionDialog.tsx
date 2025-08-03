@@ -33,7 +33,7 @@ import { icons } from "./utils";
 import { useAccountsCommon } from "hooks";
 
 export function TransactionForm(props: TransactionFormPropsType) {
-  const { control, isLoading } = props;
+  const { control, isLoading, lockAccount } = props;
   const { t } = useTranslation();
 
   const accounts = useAccountsCommon();
@@ -112,7 +112,7 @@ export function TransactionForm(props: TransactionFormPropsType) {
         <Controller
           control={control}
           name="account"
-          disabled={isLoading}
+          disabled={isLoading || lockAccount}
           render={({ field: { value, onChange, ...rest } }) => (
             <AutocompleteInput
               required

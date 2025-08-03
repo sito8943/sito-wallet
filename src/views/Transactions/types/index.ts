@@ -5,7 +5,8 @@ import { Action } from "@sito/dashboard";
 
 // types
 import { FormDialogPropsType } from "components";
-import { TransactionDto, ValidationError } from "lib";
+import { AccountDto, TransactionDto, ValidationError } from "lib";
+import { UseActionDialog } from "hooks";
 
 export interface TransactionCardPropsType extends TransactionDto {
   actions: Action<TransactionDto>[];
@@ -20,14 +21,17 @@ export interface TransactionFormType
 export type TransactionFormPropsType = FormDialogPropsType<
   TransactionFormType,
   ValidationError
->;
+> & {
+  lockAccount?: boolean;
+};
 
-export type AddTransactionDialogPropsType = FormDialogPropsType<
-  TransactionFormType,
-  ValidationError
->;
+export type AddTransactionDialogPropsType = TransactionFormPropsType;
 
-export type EditTransactionDialogPropsType = FormDialogPropsType<
-  TransactionFormType,
-  ValidationError
->;
+export type EditTransactionDialogPropsType = TransactionFormPropsType;
+
+export type UseAddTransactionActionDialog = UseActionDialog<
+  AccountDto,
+  TransactionFormType
+> & {
+  lockAccount?: boolean;
+};
