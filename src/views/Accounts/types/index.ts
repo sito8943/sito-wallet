@@ -5,7 +5,11 @@ import { Action } from "@sito/dashboard";
 
 // types
 import { FormDialogPropsType } from "components";
+
+// lib
 import { AccountDto, ValidationError } from "lib";
+
+export * from "./actions";
 
 export interface AccountCardPropsType extends AccountDto {
   actions: Action<AccountDto>[];

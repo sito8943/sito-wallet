@@ -15,7 +15,7 @@ import {
   AccountsQueryKeys,
   useRestoreDialog,
 } from "hooks";
-import { useAddAccount, useEditAccount } from "./hooks";
+import { useAddAccount, useEditAccount, useViewTransactions } from "./hooks";
 
 // types
 import { AccountDto } from "lib";
@@ -28,6 +28,8 @@ export function Accounts() {
   const { data, isLoading, error } = useAccountsList({});
 
   // #region actions
+
+  const viewTransactions = useViewTransactions({});
 
   const deleteAccount = useDeleteDialog({
     mutationFn: (data) => manager.Accounts.softDelete(data),
@@ -47,10 +49,11 @@ export function Accounts() {
 
   const getActions = useCallback(
     (record: AccountDto) => [
+      viewTransactions.action(record),
       deleteAccount.action(record),
       restoreAccount.action(record),
     ],
-    [deleteAccount, restoreAccount]
+    [deleteAccount, restoreAccount, viewTransactions]
   );
 
   return (
