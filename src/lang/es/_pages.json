@@ -62,6 +62,16 @@
     "title": "Cuentas",
     "empty": "No hay cuentas para mostrar",
     "add": "Agregar una cuenta",
+    "actions": {
+      "viewTransactions": {
+        "text": "Ver transacciones",
+        "successMessage": "Guardado exitosamente"
+      },
+      "addTransaction": {
+        "text": "Añadir transacción",
+        "successMessage": "Guardado exitosamente"
+      }
+    },
     "forms": {
       "add": "Nueva cuenta",
       "edit": "Editar cuenta",

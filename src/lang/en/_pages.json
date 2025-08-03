@@ -60,6 +60,13 @@
     "title": "Accounts",
     "empty": "No accounts to load",
     "add": "Add a account",
+    "actions": {
+      "viewTransactions": { "text": "View transactions" },
+      "addTransaction": {
+        "text": "Add transaction",
+        "successMessage": "Saved successful"
+      }
+    },
     "forms": {
       "add": "New account",
       "edit": "Edit account",
