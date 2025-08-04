@@ -58,7 +58,13 @@ export function useTransactionsList(
   );
 
   return useQuery({
-    ...TransactionsQueryKeys.list(parsedFilters),
+    ...TransactionsQueryKeys.list({
+      sortingBy: sortingBy as keyof TransactionDto,
+      sortingOrder,
+      currentPage,
+      pageSize,
+      ...parsedFilters,
+    }),
     queryFn: async () => {
       try {
         const result = await manager.Transactions.get(
