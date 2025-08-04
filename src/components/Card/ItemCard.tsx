@@ -22,7 +22,7 @@ export function ItemCard<TRow extends BaseEntityDto>(
 
   return (
     <div
-      className={`${containerClassName} flex flex-col justify-between items-start h-40 w-60 max-xs:w-full rounded-2xl p-3 bg-base group ${
+      className={`${containerClassName} flex flex-col justify-between items-start min-h-40 w-70 max-xs:w-full rounded-2xl p-3 bg-base group ${
         deleted
           ? "border-secondary/30"
           : "border-primary/30 hover:border-primary"
