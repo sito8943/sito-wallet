@@ -60,6 +60,11 @@
       "label": "Currency",
       "placeholder": "Select a currency",
       "required": "Currency is required"
+    },
+    "balance": {
+      "initial": "Initial balance",
+      "label": "Balance",
+      "placeholder": "ex: 600"
     }
   },
   "transaction": {

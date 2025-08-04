@@ -60,6 +60,11 @@
       "label": "Moneda",
       "placeholder": "Selecciona una moneda",
       "required": "La moneda es requerida"
+    },
+    "balance": {
+      "initial": "Saldo inicial",
+      "label": "Saldo",
+      "placeholder": "ej: 600"
     }
   },
   "transaction": {
