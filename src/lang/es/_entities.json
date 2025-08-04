@@ -70,6 +70,10 @@
     "type": {
       "label": "Tipo",
       "placeholder": "Selecciona un tipo",
+      "values": {
+        "In": "Entrada",
+        "Out": "Salida"
+      },
       "required": "El tipo es requerido"
     },
     "amount": {

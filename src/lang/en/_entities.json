@@ -70,7 +70,11 @@
     "type": {
       "label": "Type",
       "placeholder": "Select a type",
-      "required": "Type is required"
+      "required": "Type is required",
+      "values": {
+        "In": "In",
+        "Out": "Out"
+      }
     },
     "amount": {
       "label": "Amount",
