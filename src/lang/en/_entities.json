@@ -54,7 +54,11 @@
     "type": {
       "label": "Type",
       "placeholder": "Select a type",
-      "required": "Type is required"
+      "required": "Type is required",
+      "values": {
+        "Physical": "Physical",
+        "Card": "Digital"
+      }
     },
     "currency": {
       "label": "Currency",

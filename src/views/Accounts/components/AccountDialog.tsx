@@ -55,10 +55,10 @@ export function AccountForm(props: AccountFormPropsType) {
     () => [
       ...(enumToKeyValueArray(AccountType)?.map(({ key, value }) => ({
         id: value as number,
-        name: key,
+        name: t(`_entities:account.type.values.${key}`),
       })) ?? []),
     ],
-    []
+    [t]
   );
 
   const { type } = useWatch({ control });

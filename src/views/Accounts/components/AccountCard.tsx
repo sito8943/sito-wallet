@@ -20,7 +20,7 @@ export function AccountCard(props: AccountCardPropsType) {
     type,
     currency,
     deleted,
-    amount,
+    balance,
   } = props;
 
   return (
@@ -39,10 +39,14 @@ export function AccountCard(props: AccountCardPropsType) {
       >
         {description ? description : t("_entities:account.description.empty")}
       </p>
-      <div className="flex gap-2">
-        <Chip label={String(AccountType[type])} />
+      <div className="flex gap-2 flex-wrap">
+        <Chip
+          label={t(
+            `_entities:account.type.values.${String(AccountType[type])}`
+          )}
+        />
         <Chip label={currency?.name} />
-        <Chip label={`${t("_entities:account.balance.label")}: ${amount}`} />
+        <Chip label={`${t("_entities:account.balance.label")}: ${balance}`} />
       </div>
     </ItemCard>
   );
