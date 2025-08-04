@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 // icons
@@ -32,6 +33,8 @@ import { TransactionContainerPropsType } from "./types";
 export const TransactionTable = (props: TransactionContainerPropsType) => {
   const { accountId, getActions, editAction, showFilters, setShowFilters } =
     props;
+
+  const { t } = useTranslation();
 
   const { data, isLoading, error } = useTransactionsList({
     filters: { accountId },
@@ -75,7 +78,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
           type: FilterTypes.select,
           options: enumToKeyValueArray(TransactionType)?.map((item) => ({
             id: item.value,
-            value: item.key,
+            value: t(`_entities:transaction:type.values.${item.key}`),
           })) as Option[],
           customFilter: (value) => String(TransactionType[value]),
         },
@@ -89,7 +92,11 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
                   <FontAwesomeIcon
                     icon={icons[(type ?? 0) as keyof typeof icons]}
                   />
-                  {String(TransactionType[type])}
+                  {t(
+                    `_entities:transaction:type.values.${String(
+                      TransactionType[type]
+                    )}`
+                  )}
                 </div>
               }
             />

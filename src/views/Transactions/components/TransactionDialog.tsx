@@ -47,10 +47,10 @@ export function TransactionForm(props: TransactionFormPropsType) {
     () => [
       ...(enumToKeyValueArray(TransactionType)?.map(({ key, value }) => ({
         id: value as number,
-        name: key,
+        name: t(`_entities:transaction:type.values.${key}`),
       })) ?? []),
     ],
-    []
+    [t]
   );
 
   const { type } = useWatch({ control });
