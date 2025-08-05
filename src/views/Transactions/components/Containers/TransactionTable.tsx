@@ -74,13 +74,13 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
       },
       {
         key: "type",
+        label: t("_entities:transactionCategory.type.label"),
         filterOptions: {
           type: FilterTypes.select,
           options: enumToKeyValueArray(TransactionType)?.map((item) => ({
             id: item.value,
-            value: t(`_entities:transaction:type.values.${item.key}`),
+            value: t(`_entities:transactionCategory:type.values.${item.key}`),
           })) as Option[],
-          customFilter: (value) => String(TransactionType[value]),
         },
 
         renderBody: (type: TransactionType) => (
@@ -93,7 +93,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
                     icon={icons[(type ?? 0) as keyof typeof icons]}
                   />
                   {t(
-                    `_entities:transaction:type.values.${String(
+                    `_entities:transactionCategory:type.values.${String(
                       TransactionType[type]
                     )}`
                   )}
