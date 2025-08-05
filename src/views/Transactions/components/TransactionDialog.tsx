@@ -1,17 +1,9 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Controller, useWatch } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 // @sito/dashboard
-import {
-  SelectInput,
-  TextInput,
-  Option,
-  AutocompleteInput,
-} from "@sito/dashboard";
-
-// icons
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { TextInput, Option, AutocompleteInput } from "@sito/dashboard";
 
 // components
 import { FormDialog, ParagraphInput } from "components";
@@ -24,10 +16,7 @@ import {
 } from "../types";
 
 // lib
-import { enumToKeyValueArray, Tables, TransactionType } from "lib";
-
-// utils
-import { icons } from "./utils";
+import { Tables } from "lib";
 
 // hooks
 import { useAccountsCommon } from "hooks";
@@ -42,18 +31,6 @@ export function TransactionForm(props: TransactionFormPropsType) {
     () => [...(accounts?.data ?? [])] as Option[],
     [accounts.data]
   );
-
-  const typeOptions = useMemo(
-    () => [
-      ...(enumToKeyValueArray(TransactionType)?.map(({ key, value }) => ({
-        id: value as number,
-        name: t(`_entities:transaction:type.values.${key}`),
-      })) ?? []),
-    ],
-    [t]
-  );
-
-  const { type } = useWatch({ control });
 
   return (
     <>
@@ -83,49 +60,22 @@ export function TransactionForm(props: TransactionFormPropsType) {
           />
         )}
       />
-      <div className="flex gap-5 max-xs:gap-2 max-xs:flex-col">
-        <Controller
-          control={control}
-          name="type"
-          disabled={isLoading}
-          render={({ field: { value, onChange, ...rest } }) => (
-            <SelectInput
-              required
-              options={typeOptions}
-              value={value}
-              onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
-              label={t("_entities:transaction.type.label")}
-              inputClassName="!pl-7"
-              {...rest}
-            >
-              <FontAwesomeIcon
-                icon={icons[(type ?? 0) as keyof typeof icons]}
-                className={`absolute left-2 top-3.5 -translate-y-[50%] text-text text-sm ${
-                  Number(type) === TransactionType.In
-                    ? "inverted-success"
-                    : "inverted-error"
-                }`}
-              />
-            </SelectInput>
-          )}
-        />
-        <Controller
-          control={control}
-          name="account"
-          disabled={isLoading || lockAccount}
-          render={({ field: { value, onChange, ...rest } }) => (
-            <AutocompleteInput
-              required
-              options={accountOptions}
-              value={value}
-              onChange={(v) => onChange(v)}
-              label={t("_entities:transaction.account.label")}
-              multiple={false}
-              {...rest}
-            />
-          )}
-        />
-      </div>
+      <Controller
+        control={control}
+        name="account"
+        disabled={isLoading || lockAccount}
+        render={({ field: { value, onChange, ...rest } }) => (
+          <AutocompleteInput
+            required
+            options={accountOptions}
+            value={value}
+            onChange={(v) => onChange(v)}
+            label={t("_entities:transaction.account.label")}
+            multiple={false}
+            {...rest}
+          />
+        )}
+      />
       <Controller
         control={control}
         rules={{
