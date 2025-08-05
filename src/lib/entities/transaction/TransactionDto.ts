@@ -1,4 +1,9 @@
-import { BaseEntityDto, CommonAccountDto, TransactionType } from "lib";
+import {
+  BaseEntityDto,
+  CommonAccountDto,
+  CommonTransactionCategoryDto,
+  TransactionType,
+} from "lib";
 
 export interface TransactionDto extends BaseEntityDto {
   name: string;
@@ -6,5 +11,6 @@ export interface TransactionDto extends BaseEntityDto {
   type: TransactionType;
   amount: number;
   account: CommonAccountDto | null;
+  category: CommonTransactionCategoryDto | null;
   date: string;
 }

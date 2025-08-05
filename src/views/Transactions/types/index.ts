@@ -22,6 +22,7 @@ export type TransactionFormPropsType = FormDialogPropsType<
   TransactionFormType,
   ValidationError
 > & {
+  lockCategory?: boolean;
   lockAccount?: boolean;
 };
 
@@ -31,5 +32,6 @@ export type EditTransactionDialogPropsType = TransactionFormPropsType;
 
 export type UseAddTransactionActionDialog<TDto extends BaseEntityDto> =
   UseActionDialog<TDto, TransactionFormType> & {
+    lockCategory?: boolean;
     lockAccount?: boolean;
   };

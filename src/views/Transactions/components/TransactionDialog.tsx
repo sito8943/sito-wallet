@@ -19,11 +19,18 @@ import {
 import { Tables } from "lib";
 
 // hooks
-import { useAccountsCommon } from "hooks";
+import { useAccountsCommon, useTransactionCategoriesCommon } from "hooks";
 
 export function TransactionForm(props: TransactionFormPropsType) {
-  const { control, isLoading, lockAccount } = props;
+  const {
+    control,
+    isLoading,
+    lockCategory = false,
+    lockAccount = false,
+  } = props;
   const { t } = useTranslation();
+
+  // #region external entities
 
   const accounts = useAccountsCommon();
 
@@ -31,6 +38,15 @@ export function TransactionForm(props: TransactionFormPropsType) {
     () => [...(accounts?.data ?? [])] as Option[],
     [accounts.data]
   );
+
+  const categories = useTransactionCategoriesCommon();
+
+  const categoryOptions = useMemo(
+    () => [...(categories?.data ?? [])] as Option[],
+    [categories.data]
+  );
+
+  // #endregion
 
   return (
     <>
@@ -41,21 +57,16 @@ export function TransactionForm(props: TransactionFormPropsType) {
       />
       <Controller
         control={control}
-        rules={{
-          required: `${t("_entities:base.name.required")}`,
-        }}
-        name="name"
-        disabled={isLoading}
-        render={({ field: { value, ...rest } }) => (
-          <TextInput
+        name="category"
+        disabled={isLoading || lockCategory}
+        render={({ field: { value, onChange, ...rest } }) => (
+          <AutocompleteInput
             required
-            maxLength={20}
-            value={value ?? ""}
-            autoComplete={`${Tables.Transactions}-${t(
-              "_entities:base.name.label"
-            )}`}
-            label={t("_entities:base.name.label")}
-            placeholder={t("_entities:transaction.name.placeholder")}
+            options={categoryOptions}
+            value={value}
+            onChange={(v) => onChange(v)}
+            label={t("_entities:transaction.category.label")}
+            multiple={false}
             {...rest}
           />
         )}
