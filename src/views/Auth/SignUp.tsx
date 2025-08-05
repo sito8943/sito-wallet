@@ -82,7 +82,7 @@ export function SignUp() {
         >
           {t("_pages:auth.signUp.title")}
         </h1>
-        <div className="flex flex-col gap-5 w-full">
+        <div className="form-container w-full">
           <div
             className={`w-full transition-all duration-500 ease-in-out delay-300 ${
               appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
