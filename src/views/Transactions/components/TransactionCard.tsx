@@ -60,7 +60,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
               <FontAwesomeIcon
                 icon={icons[(type ?? 0) as keyof typeof icons]}
               />
-              {String(TransactionType[type])}
+              {t(`_entities:transactionCategory.type.values.${String(TransactionType[type])}`)}
             </div>
           }
         />
