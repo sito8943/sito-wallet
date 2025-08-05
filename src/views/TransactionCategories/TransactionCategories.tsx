@@ -76,12 +76,12 @@ export function TransactionCategories() {
 
   return (
     <Page
-      title={t("_pages:transactionCategorys.title")}
+      title={t("_pages:transactionCategories.title")}
       isLoading={isLoading}
       addOptions={{
         onClick: () => addTransactionCategory.onClick(),
         disabled: isLoading,
-        tooltip: t("_pages:transactionCategorys.add"),
+        tooltip: t("_pages:transactionCategories.add"),
       }}
       queryKey={TransactionCategoriesQueryKeys.all().queryKey}
     >
@@ -89,7 +89,7 @@ export function TransactionCategories() {
         <>
           <PrettyGrid
             data={data?.items}
-            emptyMessage={t("_pages:transactionCategorys.empty")}
+            emptyMessage={t("_pages:transactionCategories.empty")}
             renderComponent={(transactionCategory) => (
               <TransactionCategoryCard
                 actions={getActions(transactionCategory)}
