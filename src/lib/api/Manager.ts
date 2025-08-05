@@ -1,8 +1,8 @@
 import AccountClient from "./AccountClient";
 import AuthClient from "./AuthClient";
 import CurrencyClient from "./CurrencyClient";
-import TransactionCategoryClient from "./TransactionClient";
 import TransactionClient from "./TransactionClient";
+import TransactionCategoryClient from "./TransactionCategoryClient";
 
 export class Manager {
   accounts: AccountClient = new AccountClient();
