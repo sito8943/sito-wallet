@@ -76,15 +76,6 @@
       "label": "Nombre",
       "placeholder": "Ej: Depósito"
     },
-    "type": {
-      "label": "Tipo",
-      "placeholder": "Selecciona un tipo",
-      "values": {
-        "In": "Entrada",
-        "Out": "Salida"
-      },
-      "required": "El tipo es requerido"
-    },
     "amount": {
       "label": "Cantidad",
       "placeholder": "Ej: 100.00",
@@ -98,6 +89,21 @@
     "date": {
       "label": "Fecha",
       "required": "La fecha es requerida"
+    }
+  },
+  "transactionCategory": {
+    "name": {
+      "label": "Nombre",
+      "placeholder": "Ej: Alimentos"
+    },
+    "type": {
+      "label": "Tipo",
+      "placeholder": "Selecciona un tipo",
+      "values": {
+        "In": "Entrada",
+        "Out": "Salida"
+      },
+      "required": "El tipo es requerido"
     }
   },
   "currency": {

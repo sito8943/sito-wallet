@@ -5,23 +5,23 @@ import { Tables } from "./types";
 
 // types
 import {
-  CommonTransactionDto,
-  TransactionDto,
-  UpdateTransactionDto,
-  FilterTransactionDto,
-  AddTransactionDto,
+  CommonTransactionCategoryDto,
+  TransactionCategoryDto,
+  UpdateTransactionCategoryDto,
+  FilterTransactionCategoryDto,
+  AddTransactionCategoryDto,
 } from "lib";
 
-export default class TransactionClient extends BaseClient<
-  TransactionDto,
-  CommonTransactionDto,
-  AddTransactionDto,
-  UpdateTransactionDto,
-  FilterTransactionDto
+export default class TransactionCategoryClient extends BaseClient<
+  TransactionCategoryDto,
+  CommonTransactionCategoryDto,
+  AddTransactionCategoryDto,
+  UpdateTransactionCategoryDto,
+  FilterTransactionCategoryDto
 > {
   /**
    */
   constructor() {
-    super(Tables.Transactions);
+    super(Tables.TransactionCategories);
   }
 }

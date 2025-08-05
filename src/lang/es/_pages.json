@@ -88,6 +88,16 @@
       "editAria": "Haz clic para editar la transacción"
     }
   },
+  "transactionCategories": {
+    "title": "Categorias",
+    "empty": "No hay categorias para mostrar",
+    "add": "Agregar una categoria",
+    "forms": {
+      "add": "Nueva categoria",
+      "edit": "Editar categoria",
+      "editAria": "Haz clic para editar la categoria"
+    }
+  },
   "currencies": {
     "title": "Monedas",
     "empty": "No hay monedas para mostrar",

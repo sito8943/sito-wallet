@@ -76,15 +76,6 @@
       "label": "Name",
       "placeholder": "Ex: Deposit"
     },
-    "type": {
-      "label": "Type",
-      "placeholder": "Select a type",
-      "required": "Type is required",
-      "values": {
-        "In": "In",
-        "Out": "Out"
-      }
-    },
     "amount": {
       "label": "Amount",
       "placeholder": "Ex: 100.00",
@@ -98,6 +89,21 @@
     "date": {
       "label": "Date",
       "required": "Date is required"
+    }
+  },
+  "transactionCategory": {
+    "name": {
+      "label": "Name",
+      "placeholder": "Ex: Food"
+    },
+    "type": {
+      "label": "Type",
+      "placeholder": "Select a type",
+      "required": "Type is required",
+      "values": {
+        "In": "In",
+        "Out": "Out"
+      }
     }
   },
   "currency": {

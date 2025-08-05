@@ -11,7 +11,7 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 // types
 import { UseSingleActionPropTypes } from "hooks";
-import { AccountActions } from "../types";
+import { TransactionCategoriesActions } from "../types";
 
 // lib
 import { BaseEntityDto } from "lib";
@@ -29,7 +29,7 @@ export const useViewTransactionsAction = <TRow extends BaseEntityDto>(
 
   const action = useCallback(
     (record: TRow): Action<TRow> => ({
-      id: AccountActions.ViewTransactions,
+      id: TransactionCategoriesActions.ViewTransactions,
       hidden: record.deleted || hidden,
       disabled: record.deleted,
       icon: <FontAwesomeIcon className="text-bg-primary" icon={faClock} />,

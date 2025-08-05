@@ -48,6 +48,9 @@ const NotFound = loadable(() =>
     default: module.NotFound,
   }))
 );
+const TransactionCategories = loadable(() =>
+  import("views").then((module) => ({ default: module.TransactionCategories }))
+);
 const Transactions = loadable(() =>
   import("views").then((module) => ({
     default: module.Transactions,
@@ -91,6 +94,7 @@ function App() {
             <Route path="/" element={<View />}>
               <Route index element={<Home />} />
               <Route path="/transactions" element={<Transactions />} />
+              <Route path="/transaction-categories" element={<TransactionCategories />} />
               <Route path="/accounts" element={<Accounts />} />
               <Route path="/currencies" element={<Currencies />} />
               <Route path="*" element={<NotFound />} />

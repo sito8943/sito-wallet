@@ -10,8 +10,10 @@ import { useFormDialog, AccountsQueryKeys } from "hooks";
 import { dtoToForm, emptyAccount, formToDto } from "../utils";
 
 // types
-import { AddAccountDto, AccountDto } from "lib";
 import { AccountFormType } from "../types";
+
+// lib
+import { AddAccountDto, AccountDto } from "lib";
 
 export function useAddAccountDialog() {
   const { t } = useTranslation();

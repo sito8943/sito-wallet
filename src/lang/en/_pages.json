@@ -83,6 +83,16 @@
       "editAria": "Click to edit transaction"
     }
   },
+  "transactionCategories": {
+    "title": "Categories",
+    "empty": "No categories to load",
+    "add": "Add a category",
+    "forms": {
+      "add": "New category",
+      "edit": "Edit category",
+      "editAria": "Click to edit category"
+    }
+  },
   "currencies": {
     "title": "Currencies",
     "empty": "No currencies to load",
