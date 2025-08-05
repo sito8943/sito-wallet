@@ -72,9 +72,7 @@ export const Page = <TEntity extends BaseEntityDto>(
         icon: <FontAwesomeIcon icon={faFilter} />,
         children: (
           <Badge
-            className={`${
-              countOfFilters > 0 ? "!scale-100" : "!scale-0"
-            } transition ease-in-out duration-300`}
+            className={`${countOfFilters > 0 ? "show" : "hide"} `}
             count={countOfFilters}
           />
         ),
