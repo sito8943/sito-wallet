@@ -81,6 +81,11 @@
       "placeholder": "Ej: 100.00",
       "required": "La cantidad es requerida"
     },
+    "category": {
+      "label": "Categoria",
+      "placeholder": "Selecciona una categoria",
+      "required": "La categoria es requerida"
+    },
     "account": {
       "label": "Cuenta",
       "placeholder": "Selecciona una cuenta",

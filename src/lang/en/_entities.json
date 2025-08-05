@@ -81,6 +81,11 @@
       "placeholder": "Ex: 100.00",
       "required": "Amount is required"
     },
+    "category": {
+      "label": "Category",
+      "placeholder": "Select an category",
+      "required": "Category is required"
+    },
     "account": {
       "label": "Account",
       "placeholder": "Select an account",
