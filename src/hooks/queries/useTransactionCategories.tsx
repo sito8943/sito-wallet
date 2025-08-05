@@ -17,7 +17,7 @@ import {
 
 export const TransactionCategoriesQueryKeys = {
   all: () => ({
-    queryKey: ["accounts"],
+    queryKey: ["transaction-categories"],
   }),
   list: () => ({
     queryKey: [...TransactionCategoriesQueryKeys.all().queryKey, "list"],
