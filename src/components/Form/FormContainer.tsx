@@ -7,6 +7,9 @@ import { Loading } from "components";
 // types
 import { FormContainerPropsType } from "./types";
 
+// styles
+import "./styles.css";
+
 export const FormContainer = <TInput extends FieldValues, TError extends Error>(
   props: FormContainerPropsType<TInput, TError>
 ) => {
@@ -21,10 +24,7 @@ export const FormContainer = <TInput extends FieldValues, TError extends Error>(
   } = props;
 
   return (
-    <form
-      className="flex flex-col gap-5 pt-1"
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form className="form-container" onSubmit={handleSubmit(onSubmit)}>
       {children}
       <div className={`flex gap-2 mt-5 ${buttonEnd ? "justify-end" : ""}`}>
         <button
