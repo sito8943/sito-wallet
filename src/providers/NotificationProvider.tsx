@@ -3,6 +3,8 @@ import { useContext, createContext, useReducer } from "react";
 
 // lib
 import { NotificationEnumType, NotificationType } from "lib";
+
+// types
 import { BasicProviderPropTypes, NotificationContextType } from "./types.ts";
 
 const NotificationContext = createContext({} as NotificationContextType);
@@ -11,15 +13,18 @@ export function NotificationProvider(props: BasicProviderPropTypes) {
   const { children } = props;
 
   const [notification, dispatch] = useReducer(
-    (state, action) => {
+    (
+      state: NotificationType[],
+      action: { type: string; items?: NotificationType[]; index?: number }
+    ) => {
       const { type, items, index } = action;
 
       switch (type) {
         case "set":
-          return items.map((item: NotificationType, i: number) => ({
+          return items?.map((item: NotificationType, i: number) => ({
             ...item,
             id: i,
-          }));
+          })) ?? [];
         case "remove":
           if (index) return state.filter((_, i) => i !== index);
           return [];
