@@ -15,7 +15,6 @@ import { useTransactionsList } from "hooks";
 
 // lib
 import {
-  BaseEntityDto,
   EntityName,
   enumToKeyValueArray,
   getFormattedDateTime,
@@ -45,9 +44,9 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
   const { columns } = useParseColumns<TransactionDto>(
     [
       {
-        key: "name",
+        key: "category",
         filterOptions: { type: FilterTypes.text, defaultValue: "" },
-        renderBody: (name: string, entity: BaseEntityDto) => (
+        renderBody: (_: string, entity: TransactionDto) => (
           <Link
             to="/"
             className={`underline ${
@@ -59,7 +58,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
               e.stopPropagation();
             }}
           >
-            <span className="truncate">{name}</span>
+            <span className="truncate">{entity.category?.name}</span>
           </Link>
         ),
       },
@@ -83,18 +82,18 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
           })) as Option[],
         },
 
-        renderBody: (type: TransactionType) => (
+        renderBody: (_: unknown, entity: TransactionDto) => (
           <div className="w-fit">
             <Chip
-              className={type === TransactionType.In ? "success" : "error"}
+              className={entity.category?.type === TransactionType.In ? "success" : "error"}
               label={
                 <div className="flex gap-2 items-center justify-center">
                   <FontAwesomeIcon
-                    icon={icons[(type ?? 0) as keyof typeof icons]}
+                    icon={icons[(entity.category?.type ?? 0) as keyof typeof icons]}
                   />
                   {t(
                     `_entities:transactionCategory:type.values.${String(
-                      TransactionType[type]
+                      TransactionType[entity.category?.type ?? 0]
                     )}`
                   )}
                 </div>
