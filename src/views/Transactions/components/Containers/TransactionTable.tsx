@@ -30,8 +30,14 @@ import { icons } from "../utils";
 import { TransactionContainerPropsType } from "./types";
 
 export const TransactionTable = (props: TransactionContainerPropsType) => {
-  const { accountId, getActions, editAction, showFilters, setShowFilters } =
-    props;
+  const {
+    accountId,
+    categories,
+    getActions,
+    editAction,
+    showFilters,
+    setShowFilters,
+  } = props;
 
   const { t } = useTranslation();
 
@@ -45,7 +51,11 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
     [
       {
         key: "category",
-        filterOptions: { type: FilterTypes.text, defaultValue: "" },
+        filterOptions: {
+          type: FilterTypes.autocomplete,
+          defaultValue: [],
+          options: categories,
+        },
         renderBody: (_: string, entity: TransactionDto) => (
           <Link
             to="/"
@@ -75,7 +85,8 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
         key: "type",
         label: t("_entities:transactionCategory.type.label"),
         filterOptions: {
-          type: FilterTypes.select,
+          multiple: false,
+          type: FilterTypes.autocomplete,
           options: enumToKeyValueArray(TransactionType)?.map((item) => ({
             id: item.value,
             value: t(`_entities:transactionCategory:type.values.${item.key}`),
@@ -85,11 +96,17 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
         renderBody: (_: unknown, entity: TransactionDto) => (
           <div className="w-fit">
             <Chip
-              className={entity.category?.type === TransactionType.In ? "success" : "error"}
+              className={
+                entity.category?.type === TransactionType.In
+                  ? "success"
+                  : "error"
+              }
               label={
                 <div className="flex gap-2 items-center justify-center">
                   <FontAwesomeIcon
-                    icon={icons[(entity.category?.type ?? 0) as keyof typeof icons]}
+                    icon={
+                      icons[(entity.category?.type ?? 0) as keyof typeof icons]
+                    }
                   />
                   {t(
                     `_entities:transactionCategory:type.values.${String(

@@ -12,6 +12,7 @@ import {
   useAccountsCommon,
   useDeleteDialog,
   useRestoreDialog,
+  useTransactionCategoriesCommon,
 } from "hooks";
 
 // components
@@ -72,6 +73,12 @@ export function Transactions() {
     [deleteTransaction, restoreTransaction]
   );
 
+  // #region categories
+
+  const categories = useTransactionCategoriesCommon();
+
+  // #endregion categories
+
   // #region accounts
 
   const account = useAccountsCommon();
@@ -83,6 +90,7 @@ export function Transactions() {
       content: (
         <TransactionTable
           accountId={item.id}
+          categories={categories.data ?? []}
           getActions={getTableActions}
           editAction={editTransaction}
           showFilters={showFilters}
@@ -90,7 +98,7 @@ export function Transactions() {
         />
       ),
     })) ?? []) as TabsType[];
-  }, [account.data, editTransaction, getTableActions, showFilters]);
+  }, [account.data, categories, editTransaction, getTableActions, showFilters]);
 
   const accountMobileTabs = useMemo(() => {
     return (account.data?.map((item) => ({
@@ -99,12 +107,13 @@ export function Transactions() {
       content: (
         <TransactionGrid
           accountId={item.id}
+          categories={categories.data ?? []}
           getActions={getGridActions}
           editAction={editTransaction}
         />
       ),
     })) ?? []) as TabsType[];
-  }, [account.data, editTransaction, getGridActions]);
+  }, [account.data, categories.data, editTransaction, getGridActions]);
 
   // #endregion accounts
 
@@ -121,7 +130,7 @@ export function Transactions() {
   return (
     <Page
       title={t("_pages:transactions.title")}
-      isLoading={account.isLoading}
+      isLoading={account.isLoading || categories.isLoading}
       addOptions={{
         onClick: () => addTransaction.onClick(),
         disabled: account.isLoading,
