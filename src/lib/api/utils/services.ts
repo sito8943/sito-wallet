@@ -45,14 +45,16 @@ export async function makeRequest<TBody = undefined, TResponse = unknown>(
       ?.includes("application/json");
 
     const responseBody = isJson ? await response.json() : null;
+    let error = null;
+    if (!response.ok || isAnError(response.status)) {
+      const text = await response.text();
 
-    const error =
-      !response.ok || isAnError(response.status)
-        ? {
-            status: response.status,
-            message: response.statusText ?? response.status,
-          }
-        : null;
+      if (text)
+        error = {
+          status: response.status,
+          message: text,
+        };
+    }
 
     return {
       data: response.ok && response.status !== 204 ? responseBody : null,
@@ -60,7 +62,6 @@ export async function makeRequest<TBody = undefined, TResponse = unknown>(
       error,
     };
   } catch (err) {
-    console.error("Fetch error:", err);
     return {
       data: null,
       status: 500,
