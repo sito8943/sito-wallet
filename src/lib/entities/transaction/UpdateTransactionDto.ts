@@ -2,7 +2,6 @@ import { DeleteDto } from "../base";
 import { TransactionType } from "./TransactionType";
 
 export interface UpdateTransactionDto extends DeleteDto {
-  name: string;
   description: string;
   accountId: number;
   categoryId: number;
