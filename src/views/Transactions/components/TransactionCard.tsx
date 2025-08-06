@@ -26,7 +26,6 @@ export function TransactionCard(props: TransactionCardPropsType) {
     id,
     onClick,
     actions,
-    name,
     description,
     date,
     type,
@@ -39,7 +38,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
 
   return (
     <ItemCard
-      title={name}
+      title={category?.name ?? ""}
       deleted={deleted}
       name={t("_pages:accounts.forms.edit")}
       aria-label={t("_pages:accounts.forms.editAria")}
