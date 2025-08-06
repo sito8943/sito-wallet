@@ -37,7 +37,7 @@ export function AccountCard(props: AccountCardPropsType) {
           deleted ? "!text-secondary" : ""
         }`}
       >
-        {description ? description : t("_entities:account.description.empty")}
+        {description ? description : t("_entities:base.description.empty")}
       </p>
       <div className="flex gap-2 flex-wrap">
         <Chip

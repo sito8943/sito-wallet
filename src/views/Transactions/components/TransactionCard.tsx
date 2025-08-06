@@ -18,6 +18,7 @@ import { TransactionType } from "lib";
 
 // hooks
 import { useTimeAge } from "hooks";
+import { useMemo } from "react";
 
 export function TransactionCard(props: TransactionCardPropsType) {
   const { t } = useTranslation();
@@ -36,9 +37,20 @@ export function TransactionCard(props: TransactionCardPropsType) {
 
   const { timeAge } = useTimeAge();
 
+  const parsedDescription = useMemo(() => {
+    if (!description?.length) return t("_entities:base.description.empty");
+    if (description === "init")
+      return t("_entities:transactionCategory.description.init");
+    return description;
+  }, [description, t]);
+
   return (
     <ItemCard
-      title={category?.name ?? ""}
+      title={
+        category?.name === "init"
+          ? t("_entities:transactionCategory.name.init")
+          : category?.name
+      }
       deleted={deleted}
       name={t("_pages:accounts.forms.edit")}
       aria-label={t("_pages:accounts.forms.editAria")}
@@ -50,7 +62,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
           deleted ? "!text-secondary" : ""
         }`}
       >
-        {description ? description : t("_entities:account.description.empty")}
+        {parsedDescription}
       </p>
       <div className="flex gap-2">
         <Chip

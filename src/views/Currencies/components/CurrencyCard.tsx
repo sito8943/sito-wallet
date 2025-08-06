@@ -25,7 +25,7 @@ export function CurrencyCard(props: CurrencyCardPropsType) {
           deleted ? "!text-secondary" : ""
         }`}
       >
-        {description ? description : t("_entities:account.description.empty")}
+        {description ? description : t("_entities:base.description.empty")}
       </p>
     </ItemCard>
   );
