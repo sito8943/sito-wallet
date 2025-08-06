@@ -13,7 +13,7 @@ import { useTransactionsList } from "hooks";
 export const TransactionGrid = (props: TransactionContainerPropsType) => {
   const { t } = useTranslation();
 
-  const { accountId, accounts, getActions, editAction } = props;
+  const { accountId, getActions, editAction } = props;
 
   const { data, isLoading, error } = useTransactionsList({
     filters: { accountId },

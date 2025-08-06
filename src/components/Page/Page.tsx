@@ -112,7 +112,10 @@ export const Page = <TEntity extends BaseEntityDto>(
           )}
         </div>
       </div>
-      <button className="submit button icon-button fab primary min-xs:!hidden">
+      <button
+        onClick={() => addOptions?.onClick?.()}
+        className="submit button icon-button fab primary min-xs:!hidden"
+      >
         <FontAwesomeIcon icon={faAdd} />
       </button>
     </main>
