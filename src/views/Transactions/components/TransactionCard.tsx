@@ -31,6 +31,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
     date,
     type,
     amount,
+    category,
     deleted,
   } = props;
 
@@ -54,13 +55,19 @@ export function TransactionCard(props: TransactionCardPropsType) {
       </p>
       <div className="flex gap-2">
         <Chip
-          className={type === TransactionType.In ? "success" : "error"}
+          className={
+            category?.type === TransactionType.In ? "success" : "error"
+          }
           label={
             <div className="flex gap-2 items-center justify-center">
               <FontAwesomeIcon
                 icon={icons[(type ?? 0) as keyof typeof icons]}
               />
-              {t(`_entities:transactionCategory.type.values.${String(TransactionType[type])}`)}
+              {t(
+                `_entities:transactionCategory.type.values.${String(
+                  TransactionType[category?.type ?? 0]
+                )}`
+              )}
             </div>
           }
         />

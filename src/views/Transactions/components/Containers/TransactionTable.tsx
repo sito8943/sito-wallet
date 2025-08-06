@@ -55,6 +55,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
           type: FilterTypes.autocomplete,
           defaultValue: [],
           options: categories,
+          placeholder: t("_entities:transaction.category.placeholder"),
         },
         renderBody: (_: string, entity: TransactionDto) => (
           <Link
@@ -87,6 +88,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
         filterOptions: {
           multiple: false,
           type: FilterTypes.autocomplete,
+          placeholder: t("_entities:transactionCategory.type.placeholder"),
           options: enumToKeyValueArray(TransactionType)?.map((item) => ({
             id: item.value,
             value: t(`_entities:transactionCategory:type.values.${item.key}`),
