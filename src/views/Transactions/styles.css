@@ -1,0 +1,4 @@
+.account-tabs {
+  width: calc(100vw - 40px);
+  overflow: auto;
+}

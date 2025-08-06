@@ -10,7 +10,7 @@ import { Tab } from "./Tab";
 import "./styles.css";
 
 export const TabsLayout = (props: TabsLayoutPropsType) => {
-  const { tabs = [], defaultTab, className = "" } = props;
+  const { tabs = [], defaultTab, className = "", tabsContainerClassName = "" } = props;
   const [activeTab, setActiveTab] = useState(tabs[0]?.id);
 
   const current = useMemo(() => {
@@ -23,7 +23,7 @@ export const TabsLayout = (props: TabsLayoutPropsType) => {
 
   return (
     <div className={`bg-alt-background rounded-b-xl rounded-r-xl ${className}`}>
-      <ul className="horizontal tabs flex w-full items-center justify-start mb-5">
+      <ul className={`horizontal tabs flex w-full items-center justify-start mb-5 ${tabsContainerClassName}`}>
         {tabs.map(({ id, label }) => (
           <li key={id}>
             <Tab

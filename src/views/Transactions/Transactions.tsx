@@ -29,6 +29,9 @@ import { TransactionDto } from "lib";
 // providers
 import { useManager } from "providers";
 
+// styles
+import "./styles.css";
+
 export function Transactions() {
   const { t } = useTranslation();
 
@@ -147,11 +150,13 @@ export function Transactions() {
         defaultTab={tabValue}
         tabs={accountDesktopTabs}
         className="h-full max-xs:hidden"
+        tabsContainerClassName="account-tabs"
       />
       <TabsLayout
         defaultTab={tabValue}
         tabs={accountMobileTabs}
         className="h-full min-xs:hidden"
+        tabsContainerClassName="account-tabs"
       />
 
       {/* Dialogs */}

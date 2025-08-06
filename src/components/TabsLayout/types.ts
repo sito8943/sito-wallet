@@ -4,6 +4,7 @@ export type TabsLayoutPropsType = {
   tabs: TabsType[];
   defaultTab?: number;
   className?: string;
+  tabsContainerClassName?: string;
 };
 
 export type TabsType = {
