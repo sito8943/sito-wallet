@@ -50,7 +50,6 @@
       "unique": "Ya existe una cuenta con ese nombre",
       "placeholder": "Ej: Personal"
     },
-    "description": { "empty": "Sin descripción" },
     "type": {
       "label": "Tipo",
       "placeholder": "Selecciona un tipo",
@@ -73,14 +72,13 @@
     }
   },
   "transaction": {
-    "name": {
-      "label": "Nombre",
-      "placeholder": "Ej: Depósito"
-    },
     "amount": {
       "label": "Cantidad",
       "placeholder": "Ej: 100.00",
       "required": "La cantidad es requerida"
+    },
+    "description": {
+      "init": "Creada automáticamente por el saldo inicial"
     },
     "category": {
       "label": "Categoria",
@@ -100,7 +98,11 @@
   "transactionCategory": {
     "name": {
       "label": "Nombre",
-      "placeholder": "Ej: Alimentos"
+      "placeholder": "Ej: Alimentos",
+      "init": "Transacción inicial"
+    },
+    "description": {
+      "init": "Creada automáticamente por el saldo inicial"
     },
     "type": {
       "label": "Tipo",

@@ -50,7 +50,6 @@
       "placeholder": "Ex: Personal",
       "unique": "There is a account with that name already"
     },
-    "description": { "empty": "No description" },
     "type": {
       "label": "Type",
       "placeholder": "Select a type",
@@ -73,14 +72,13 @@
     }
   },
   "transaction": {
-    "name": {
-      "label": "Name",
-      "placeholder": "Ex: Deposit"
-    },
     "amount": {
       "label": "Amount",
       "placeholder": "Ex: 100.00",
       "required": "Amount is required"
+    },
+    "description": {
+      "init": "Automatically created by initial balance"
     },
     "category": {
       "label": "Category",
@@ -100,7 +98,11 @@
   "transactionCategory": {
     "name": {
       "label": "Name",
+      "init": "Initial Transaction",
       "placeholder": "Ex: Food"
+    },
+    "description": {
+      "init": "Automatically created by initial balance"
     },
     "type": {
       "label": "Type",
