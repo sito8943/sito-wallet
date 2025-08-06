@@ -1,23 +1,28 @@
-// components
+// lib
 import { BaseEntityDto } from "lib";
+
+// components
 import { Action } from "./Action";
 
 // types
-import { ActionsPropsType } from "./types.ts";
+import { ActionsContainerPropsType } from "./types.ts";
+
+// styles
+import "./styles.css";
 
 export function Actions<TRow extends BaseEntityDto>(
-  props: ActionsPropsType<TRow>
+  props: ActionsContainerPropsType<TRow>
 ) {
-  const { actions = [] } = props;
+  const { actions = [], className = "", showActionTexts = false } = props;
   return (
-    <ul className="flex w-full items-center justify-end gap-1">
+    <ul className={`actions-container ${className}`}>
       {actions?.map((action) => (
         <li key={action.id ?? action.tooltip}>
-          <Action {...action}>{action.children}</Action>
+          <Action showText={showActionTexts} {...action}>
+            {action.children}
+          </Action>
         </li>
       ))}
     </ul>
   );
 }
-
-export default Actions;
