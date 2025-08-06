@@ -96,6 +96,28 @@ export function AccountForm(props: AccountFormPropsType) {
           />
         )}
       />
+      <Controller
+        control={control}
+        rules={{
+          required: `${t("_entities:account.balance.required")}`,
+        }}
+        name="balance"
+        disabled={isLoading}
+        render={({ field: { value, ...rest } }) => (
+          <TextInput
+            required
+            maxLength={20}
+            value={value ?? ""}
+            type="number"
+            autoComplete={`${Tables.Accounts}-${t(
+              "_entities:account.balance.initial"
+            )}`}
+            label={t("_entities:account.balance.initial")}
+            placeholder={t("_entities:account.balance.placeholder")}
+            {...rest}
+          />
+        )}
+      />
       <div className="flex gap-5">
         <Controller
           control={control}
@@ -127,6 +149,9 @@ export function AccountForm(props: AccountFormPropsType) {
               required
               options={currencyOptions}
               value={value}
+              autoComplete={`${Tables.Accounts}-${t(
+                "_entities:account.currency.label"
+              )}`}
               onChange={(v) => onChange(v)}
               label={t("_entities:account.currency.label")}
               multiple={false}

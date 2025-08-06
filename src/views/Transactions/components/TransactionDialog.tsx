@@ -66,6 +66,9 @@ export function TransactionForm(props: TransactionFormPropsType) {
             value={value}
             onChange={(v) => onChange(v)}
             label={t("_entities:transaction.category.label")}
+            autoComplete={`${Tables.Transactions}-${t(
+              "_entities:transaction.category.label"
+            )}`}
             multiple={false}
             {...rest}
           />
@@ -82,6 +85,9 @@ export function TransactionForm(props: TransactionFormPropsType) {
             value={value}
             onChange={(v) => onChange(v)}
             label={t("_entities:transaction.account.label")}
+            autoComplete={`${Tables.Transactions}-${t(
+              "_entities:transaction.account.label"
+            )}`}
             multiple={false}
             {...rest}
           />
