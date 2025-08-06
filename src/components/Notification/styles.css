@@ -1,7 +1,7 @@
 @import "../../styles/variables.css";
 
 .notification-portal {
-    @apply bottom-0 left-0 p-2 gap-2 flex flex-col justify-end items-start fixed z-30 pointer-events-none;
+    @apply bottom-0 left-0 p-2 gap-2 flex flex-col justify-end items-start fixed z-35 pointer-events-none;
 }
 
 .notification {

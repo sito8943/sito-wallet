@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 // providers
-import { useManager } from "providers";
+import { useManager, useNotification } from "providers";
 
 // hooks
 import { useFormDialog, TransactionsQueryKeys } from "hooks";
@@ -20,7 +20,9 @@ export function useAddTransaction() {
 
   const manager = useManager();
 
-  const { handleSubmit, ...rest } = useFormDialog<
+  const { showErrorNotification } = useNotification();
+
+  const { handleSubmit, setError, ...rest } = useFormDialog<
     TransactionDto,
     AddTransactionDto,
     TransactionDto,
@@ -32,6 +34,20 @@ export function useAddTransaction() {
     mutationFn: (data) => manager.Transactions.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:transactions.forms.add"),
+    onError: (error) => {
+      if (error.message === "balance.greaterThan0") {
+        setError?.(
+          "amount",
+          { message: t("_entities:account.balance.greaterThan0") },
+          {
+            shouldFocus: true,
+          }
+        );
+        showErrorNotification({
+          message: t("_entities:account.balance.greaterThan0"),
+        });
+      }
+    },
     ...TransactionsQueryKeys.all(),
   });
 

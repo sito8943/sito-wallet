@@ -74,20 +74,28 @@ export function Notification() {
 
   return createPortal(
     <div
-      className={`notification-portal ${notification?.length ? "w-screen h-screen" : ""}`}
+      className={`notification-portal ${
+        notification?.length ? "w-screen h-screen" : ""
+      }`}
     >
       {notification?.length
         ? notification?.map(({ id, type, message }, i) => (
             <div
               key={id}
-              className={`apparition notification ${bgColor(type)}`}
+              className={`apparition notification ${bgColor(
+                type ?? NotificationEnumType.error
+              )}`}
             >
               <div className="flex gap-3 items-center">
                 <FontAwesomeIcon
-                  icon={renderIcon(type)}
-                  className={`${textColor(type)}`}
+                  icon={renderIcon(type ?? NotificationEnumType.error)}
+                  className={`${textColor(type ?? NotificationEnumType.error)}`}
                 />
-                <p className={`whitespace-nowrap ${textColor(type)}`}>
+                <p
+                  className={`whitespace-nowrap ${textColor(
+                    type ?? NotificationEnumType.error
+                  )}`}
+                >
                   {message}
                 </p>
               </div>
@@ -98,7 +106,9 @@ export function Notification() {
               >
                 <FontAwesomeIcon
                   icon={faClose}
-                  className={`${textColor(type)} hover:text-red-400 cursor-pointer`}
+                  className={`${textColor(
+                    type ?? NotificationEnumType.error
+                  )} hover:text-red-400 cursor-pointer`}
                   onClick={() => onClose(i)}
                 />
               </button>

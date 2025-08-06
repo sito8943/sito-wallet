@@ -68,7 +68,8 @@
     "balance": {
       "initial": "Saldo inicial",
       "label": "Saldo",
-      "placeholder": "ej: 600"
+      "placeholder": "ej: 600",
+      "greaterThan0": "Saldo insuficiente"
     }
   },
   "transaction": {
