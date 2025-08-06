@@ -11,6 +11,7 @@ export function Action<TEntity extends BaseEntityDto>(
     id,
     hidden = false,
     disabled = false,
+    showText = false,
     icon,
     tooltip,
     onClick,
@@ -27,7 +28,7 @@ export function Action<TEntity extends BaseEntityDto>(
       data-tooltip-id="tooltip"
       data-tooltip-content={tooltip}
     >
-      {icon}
+      {icon} {showText && tooltip}
       {children}
     </button>
   ) : null;
