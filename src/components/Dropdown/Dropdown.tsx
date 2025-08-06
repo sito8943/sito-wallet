@@ -1,7 +1,11 @@
-import React from "react";
+// types
+import { DropdownPropsType } from "./types";
 
-const Dropdown = () => {
-  return <div></div>;
+// styles
+import "./styles.css";
+
+export const Dropdown = (props: DropdownPropsType) => {
+  const { children } = props;
+
+  return <div className="dropdown-main">{children}</div>;
 };
-
-export default Dropdown;

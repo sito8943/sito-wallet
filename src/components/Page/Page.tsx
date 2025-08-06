@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Action, Badge, useTableOptions } from "@sito/dashboard";
 
 // components
-import { Actions, Loading } from "components";
+import { Actions, Loading, ActionsDropdown } from "components";
 
 // types
 import { PagePropsType } from "./types.ts";
@@ -22,7 +22,11 @@ import {
 
 // lib
 import { BaseEntityDto } from "lib";
+
+// hooks
 import { GlobalActions } from "hooks";
+
+// providers
 import { queryClient } from "providers";
 
 export const Page = <TEntity extends BaseEntityDto>(
@@ -100,8 +104,12 @@ export const Page = <TEntity extends BaseEntityDto>(
             )}
             <h2 className="text-3xl font-bold">{title}</h2>
           </div>
-          <div className="max-xs:hidden">
-            <Actions actions={parsedActions ?? []} />
+          <div>
+            <Actions className="max-xs:hidden" actions={parsedActions ?? []} />
+            <ActionsDropdown
+              className="min-xs:hidden"
+              actions={parsedActions ?? []}
+            />
           </div>
         </div>
         <div className="px-5 py-3 h-full">
