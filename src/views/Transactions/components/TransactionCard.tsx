@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // icons
@@ -18,7 +19,6 @@ import { TransactionType } from "lib";
 
 // hooks
 import { useTimeAge } from "hooks";
-import { useMemo } from "react";
 
 export function TransactionCard(props: TransactionCardPropsType) {
   const { t } = useTranslation();
