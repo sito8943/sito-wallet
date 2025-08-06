@@ -26,10 +26,6 @@ p {
   @apply w-12 h-12 fixed right-4 bottom-12 text-lg;
 }
 
-.action {
-  @apply bg-base hover:bg-base-light w-9 h-9 rounded-full;
-}
-
 .input {
   @apply text-white bg-base border-border border-2 px-4 py-1 rounded-sm;
 }
@@ -45,7 +41,7 @@ a.primary {
 }
 
 .outlined {
-  @apply border-border text-text border-2 hover:bg-border;
+  @apply bg-base border-border text-text border-2 hover:bg-border;
 }
 
 .outlined.primary {
