@@ -7,7 +7,7 @@ import { useManager } from "providers";
 import { useFormDialog, AccountsQueryKeys } from "hooks";
 
 // utils
-import { dtoToForm, emptyAccount, formToDto } from "../utils";
+import { dtoToForm, emptyAccount, formToAddDto } from "../utils";
 
 // types
 import { AccountFormType } from "../types";
@@ -26,7 +26,7 @@ export function useAddAccountDialog() {
     AccountDto,
     AccountFormType
   >({
-    formToDto,
+    formToDto: formToAddDto,
     dtoToForm,
     defaultValues: emptyAccount,
     mutationFn: (data) => manager.Accounts.insert(data),

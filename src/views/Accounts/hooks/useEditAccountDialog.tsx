@@ -7,7 +7,7 @@ import { useManager } from "providers";
 import { AccountsQueryKeys, useFormDialog } from "hooks";
 
 // utils
-import { dtoToForm, emptyAccount, formToDto } from "../utils";
+import { dtoToForm, emptyAccount, formToUpdateDto } from "../utils";
 
 // types
 import { AccountFormType } from "../types";
@@ -20,8 +20,13 @@ export function useEditAccountDialog() {
 
   const manager = useManager();
 
-  return useFormDialog<AccountDto, UpdateAccountDto, AccountDto, AccountFormType>({
-    formToDto,
+  return useFormDialog<
+    AccountDto,
+    UpdateAccountDto,
+    AccountDto,
+    AccountFormType
+  >({
+    formToDto: formToUpdateDto,
     dtoToForm,
     defaultValues: emptyAccount,
     getFunction: (id) => manager.Accounts.getById(id),

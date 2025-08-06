@@ -69,7 +69,11 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
               e.stopPropagation();
             }}
           >
-            <span className="truncate">{entity.category?.name}</span>
+            <span className="truncate">
+              {entity.category?.name === "init"
+                ? t("_entities:transactionCategory.name.init")
+                : entity.category?.name}
+            </span>
           </Link>
         ),
       },
