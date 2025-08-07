@@ -10,7 +10,6 @@ export const Dropdown = (props: DropdownPropsType) => {
   const { children, open, onClose } = props;
 
   useEffect(() => {
-    console.log(open);
     if (open) setTimeout(() => window.addEventListener("click", onClose), 300);
     return () => {
       window.removeEventListener("click", onClose);
