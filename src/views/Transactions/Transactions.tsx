@@ -80,6 +80,18 @@ export function Transactions() {
 
   const categories = useTransactionCategoriesCommon();
 
+  const parsedCategories = useMemo(
+    () =>
+      categories?.data?.map((category) => ({
+        ...category,
+        name:
+          category.name === "init"
+            ? t("_entities:transactionCategory.name.init")
+            : category.name,
+      })),
+    [categories?.data, t]
+  );
+
   // #endregion categories
 
   // #region accounts
@@ -93,7 +105,7 @@ export function Transactions() {
       content: (
         <TransactionTable
           accountId={item.id}
-          categories={categories.data ?? []}
+          categories={parsedCategories ?? []}
           getActions={getTableActions}
           editAction={editTransaction}
           showFilters={showFilters}
@@ -101,7 +113,13 @@ export function Transactions() {
         />
       ),
     })) ?? []) as TabsType[];
-  }, [account.data, categories, editTransaction, getTableActions, showFilters]);
+  }, [
+    account.data,
+    editTransaction,
+    getTableActions,
+    parsedCategories,
+    showFilters,
+  ]);
 
   const accountMobileTabs = useMemo(() => {
     return (account.data?.map((item) => ({
@@ -110,13 +128,13 @@ export function Transactions() {
       content: (
         <TransactionGrid
           accountId={item.id}
-          categories={categories.data ?? []}
+          categories={parsedCategories ?? []}
           getActions={getGridActions}
           editAction={editTransaction}
         />
       ),
     })) ?? []) as TabsType[];
-  }, [account.data, categories.data, editTransaction, getGridActions]);
+  }, [account.data, editTransaction, getGridActions, parsedCategories]);
 
   // #endregion accounts
 
@@ -167,7 +185,6 @@ export function Transactions() {
 
       {/* Category Dialogs */}
       {/* <EditTransactionDialog /> */}
-
     </Page>
   );
 }
