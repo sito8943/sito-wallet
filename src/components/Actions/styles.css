@@ -1,13 +1,13 @@
 @import "../../styles/variables.css";
 
-.action-container {
+.actions-container {
   @apply flex w-full items-center justify-end gap-1;
 }
 
 .actions-dropdown .action {
-  @apply w-full;
+  @apply w-full justify-start;
 }
 
 .action {
-  @apply bg-base hover:bg-base-light w-9 h-9 rounded-full flex items-center justify-start gap-2;
+  @apply bg-base hover:bg-base-light w-9 h-9 rounded-full flex items-center justify-center gap-2;
 }
