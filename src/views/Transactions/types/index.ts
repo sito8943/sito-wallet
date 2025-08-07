@@ -15,7 +15,10 @@ export interface TransactionCardPropsType extends TransactionDto {
 }
 
 export interface TransactionFormType
-  extends Omit<TransactionDto, "deleted" | "createdAt" | "updatedAt" | "user">,
+  extends Omit<
+      TransactionDto,
+      "currency" | "deleted" | "createdAt" | "updatedAt" | "user"
+    >,
     FieldValues {}
 
 export type TransactionFormPropsType = FormDialogPropsType<

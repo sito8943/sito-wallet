@@ -80,6 +80,11 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
       {
         key: "amount",
         filterOptions: { type: FilterTypes.number },
+        renderBody: (value: number, entity: TransactionDto) => (
+          <p>
+            {value} {entity.currency.name}
+          </p>
+        ),
       },
       {
         key: "date",

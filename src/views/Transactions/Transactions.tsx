@@ -164,6 +164,10 @@ export function Transactions() {
       <AddTransactionDialog {...addTransaction} />
       <ConfirmationDialog {...deleteTransaction} />
       <ConfirmationDialog {...restoreTransaction} />
+
+      {/* Category Dialogs */}
+      {/* <EditTransactionDialog /> */}
+
     </Page>
   );
 }
