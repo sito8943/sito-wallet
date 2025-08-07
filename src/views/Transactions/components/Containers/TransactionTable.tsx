@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,14 +29,8 @@ import { icons } from "../utils";
 import { TransactionContainerPropsType } from "./types";
 
 export const TransactionTable = (props: TransactionContainerPropsType) => {
-  const {
-    accountId,
-    categories,
-    getActions,
-    editAction,
-    showFilters,
-    setShowFilters,
-  } = props;
+  const { accountId, categories, getActions, showFilters, setShowFilters } =
+    props;
 
   const { t } = useTranslation();
 
@@ -58,23 +51,11 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
           placeholder: t("_entities:transaction.category.placeholder"),
         },
         renderBody: (_: string, entity: TransactionDto) => (
-          <Link
-            to="/"
-            className={`underline ${
-              entity.deleted ? "text-base" : "primary"
-            } flex`}
-            onClick={(e) => {
-              editAction.onClick(entity.id);
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-          >
-            <span className="truncate">
-              {entity.category?.name === "init"
-                ? t("_entities:transactionCategory.name.init")
-                : entity.category?.name}
-            </span>
-          </Link>
+          <span className="truncate">
+            {entity.category?.name === "init"
+              ? t("_entities:transactionCategory.name.init")
+              : entity.category?.name}
+          </span>
         ),
       },
       {
