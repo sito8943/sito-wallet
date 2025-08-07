@@ -84,9 +84,10 @@ export function useTransactionCategoriesCommon(): UseQueryResult<
         ) as CommonTransactionCategoryDto[];
         if (!cached || !Array.isArray(cached))
           throw new Error("No cached accounts available");
-        return cached.map(({ id, name, updatedAt }) => ({
+        return cached.map(({ id, name, type, updatedAt }) => ({
           id,
           name,
+          type,
           updatedAt,
         }));
       }
