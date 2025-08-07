@@ -32,6 +32,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
     type,
     amount,
     category,
+    currency,
     deleted,
   } = props;
 
@@ -82,7 +83,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
             </div>
           }
         />
-        <Chip label={String(amount)} />
+        <Chip label={`${String(amount)} ${currency.name}`} />
         <Chip label={timeAge(new Date(date))} />
       </div>
     </ItemCard>

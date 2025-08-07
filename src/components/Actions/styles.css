@@ -5,7 +5,11 @@
 }
 
 .actions-dropdown .action {
-  @apply w-full justify-start;
+  @apply w-full justify-start px-2;
+}
+
+.actions-dropdown .actions-container li {
+  @apply w-full
 }
 
 .action {

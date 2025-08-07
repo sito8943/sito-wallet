@@ -10,6 +10,8 @@ import { ActionsContainerPropsType } from "./types";
 // components
 import { Dropdown } from "../Dropdown/Dropdown";
 import { Actions } from "./Actions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 
 export const ActionsDropdown = <TRow extends BaseEntityDto>(
   props: ActionsContainerPropsType<TRow>
@@ -23,13 +25,20 @@ export const ActionsDropdown = <TRow extends BaseEntityDto>(
   return (
     <div className={`actions-dropdown ${className}`}>
       <button
-        className="action"
+        className="action !w-9 !justify-center"
         onClick={() => setOpenMenu(true)}
         data-tooltip-id="tooltip"
         data-tooltip-content={t("_accessibility:buttons.openActions")}
-      ></button>
-      <Dropdown>
-        <Actions showActionTexts actions={actions} className="flex-col" />
+      >
+        <FontAwesomeIcon icon={faEllipsisV} />
+      </button>
+      <Dropdown open={openMenu} onClose={() => setOpenMenu(false)}>
+        <Actions
+          showActionTexts
+          actions={actions}
+          className="flex-col"
+          showTooltips={false}
+        />
       </Dropdown>
     </div>
   );

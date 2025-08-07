@@ -9,13 +9,14 @@ export function Action<TEntity extends BaseEntityDto>(
 ) {
   const {
     id,
-    hidden = false,
-    disabled = false,
-    showText = false,
     icon,
     tooltip,
     onClick,
     children,
+    hidden = false,
+    disabled = false,
+    showText = false,
+    showTooltips = true,
   } = props;
 
   return !hidden ? (
@@ -26,7 +27,7 @@ export function Action<TEntity extends BaseEntityDto>(
       onClick={() => onClick()}
       aria-disabled={disabled}
       data-tooltip-id="tooltip"
-      data-tooltip-content={tooltip}
+      data-tooltip-content={showTooltips ? tooltip : ""}
     >
       {icon} {showText && tooltip}
       {children}

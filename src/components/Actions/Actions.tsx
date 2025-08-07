@@ -13,12 +13,21 @@ import "./styles.css";
 export function Actions<TRow extends BaseEntityDto>(
   props: ActionsContainerPropsType<TRow>
 ) {
-  const { actions = [], className = "", showActionTexts = false } = props;
+  const {
+    actions = [],
+    className = "",
+    showTooltips = true,
+    showActionTexts = false,
+  } = props;
   return (
     <ul className={`actions-container ${className}`}>
       {actions?.map((action) => (
         <li key={action.id ?? action.tooltip}>
-          <Action showText={showActionTexts} {...action}>
+          <Action
+            showTooltips={showTooltips}
+            showText={showActionTexts}
+            {...action}
+          >
             {action.children}
           </Action>
         </li>

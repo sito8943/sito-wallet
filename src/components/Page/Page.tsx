@@ -105,7 +105,7 @@ export const Page = <TEntity extends BaseEntityDto>(
             <h2 className="text-3xl font-bold">{title}</h2>
           </div>
           <div>
-            <Actions className="max-xs:hidden" actions={parsedActions ?? []} />
+            <Actions className="max-xs:!hidden" actions={parsedActions ?? []} />
             <ActionsDropdown
               className="min-xs:hidden"
               actions={parsedActions ?? []}

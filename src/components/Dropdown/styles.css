@@ -1,5 +1,13 @@
 @import "../../styles/variables.css";
 
 .dropdown-main {
-  @apply absolute right-5 bg-base p-2 shadow-xl shadow-black/50;
+  @apply transition duration-300 ease-in-out absolute right-5 bg-base p-2 shadow-xl shadow-black/50;
+}
+
+.dropdown-main.opened {
+  @apply z-10 opacity-100;
+}
+
+.dropdown-main.closed {
+  @apply -z-10 opacity-0;
 }
