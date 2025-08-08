@@ -41,17 +41,16 @@ label,
 }
 
 #root {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  transition: grid-template-rows 500ms ease-in-out;
   transition-delay: 1s;
-  grid-template-rows: 48px 1fr 40px;
 }
 
 main {
   height: 100%;
   width: 100%;
-  @apply bg-base-dark flex flex-col;
+  @apply bg-base-dark flex flex-col flex-1;
 }
 
 main h1,

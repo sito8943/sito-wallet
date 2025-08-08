@@ -39,7 +39,7 @@ export function AccountCard(props: AccountCardPropsType) {
       >
         {description ? description : t("_entities:base.description.empty")}
       </p>
-      <div className="flex gap-2 flex-wrap">
+      <div className="chip-container">
         <Chip
           label={t(
             `_entities:account.type.values.${String(AccountType[type])}`

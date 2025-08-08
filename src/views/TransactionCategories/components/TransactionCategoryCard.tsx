@@ -51,7 +51,7 @@ export function TransactionCategoryCard(
       >
         {parsedDescription}
       </p>
-      <div className="flex gap-2 flex-wrap">
+      <div className="chip-container">
         <Chip
           className={type === TransactionType.In ? "success" : "error"}
           label={

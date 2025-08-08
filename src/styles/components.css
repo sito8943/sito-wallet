@@ -23,7 +23,7 @@ p {
 }
 
 .fab {
-  @apply w-12 h-12 fixed right-4 bottom-12 text-lg;
+  @apply w-12 h-12 fixed right-4 bottom-4 text-lg;
 }
 
 .input {

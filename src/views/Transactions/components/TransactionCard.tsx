@@ -65,7 +65,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
       >
         {parsedDescription}
       </p>
-      <div className="flex gap-2">
+      <div className="chip-container">
         <Chip
           className={
             category?.type === TransactionType.In ? "success" : "error"

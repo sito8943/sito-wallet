@@ -7,6 +7,9 @@ import { BaseEntityDto } from "lib";
 // types
 import { ItemCardPropsType } from "./types.ts";
 
+// styles
+import "./styles.css";
+
 export function ItemCard<TRow extends BaseEntityDto>(
   props: ItemCardPropsType<TRow>
 ) {
