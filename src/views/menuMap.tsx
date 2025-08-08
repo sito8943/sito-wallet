@@ -61,6 +61,7 @@ export const menuMap: MenuItemType[] = [
   {
     page: MenuKeys.SignIn,
     path: "/auth/sign-in",
+    auth: false,
     icon: <FontAwesomeIcon icon={faRightToBracket} />,
   },
 ];
