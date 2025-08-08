@@ -10,12 +10,26 @@ import "./styles.css";
 // views
 import { menuMap } from "views";
 
+// providers
+import { useAuth } from "providers";
+import { useMemo } from "react";
+
 export function Drawer(props: DrawerPropsTypes) {
   const { t } = useTranslation();
 
   const location = useLocation();
 
   const { open, onClose } = props;
+
+  const { account } = useAuth();
+
+  const parsedMenu = useMemo(() => {
+    return menuMap.filter(
+      (map) => (account.email && map.auth) || (!account.email && !map.auth)
+    );
+  }, [account.email]);
+
+  console.log(parsedMenu);
 
   return (
     <div
@@ -31,21 +45,26 @@ export function Drawer(props: DrawerPropsTypes) {
           {t("_pages:home.appName")}
         </h2>
         <ul className="flex flex-col">
-          {menuMap.map((link) => (
+          {parsedMenu.map((link) => (
             <li
               key={link.page}
               className={`w-full flex hover:bg-base-light ${
                 link.path === location.pathname ? "bg-base-light" : ""
               } animated`}
             >
-              <Link
-                aria-disabled={!open}
-                to={link.path ?? `/${link.path}`}
-                aria-label={t(`_accessibility:ariaLabels.${link.path}`)}
-                className="text-lg text-text-muted flex w-full py-2 px-5"
-              >
-                {t(`_pages:${link.page}.title`)}
-              </Link>
+              {link.type !== "divider" ? (
+                <Link
+                  aria-disabled={!open}
+                  to={link.path ?? `/${link.path}`}
+                  aria-label={t(`_accessibility:ariaLabels.${link.path}`)}
+                  className="text-lg text-text-muted w-full py-2 px-5 flex items-center justify-start gap-2"
+                >
+                  {link.icon}
+                  {t(`_pages:${link.page}.title`)}
+                </Link>
+              ) : (
+                <hr className="border-border border-spacing-x-0.5 w-full" />
+              )}
             </li>
           ))}
         </ul>

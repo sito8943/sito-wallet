@@ -1,6 +1,14 @@
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+import {
+  faClock,
+  faCoins,
+  faCreditCard,
+  faHome,
+  faLayerGroup,
+  faRightFromBracket,
+  faRightToBracket,
+} from "@fortawesome/free-solid-svg-icons";
 
 // types
 import { MenuItemType } from "./types";
@@ -14,6 +22,7 @@ export enum MenuKeys {
   Products = "products",
   Movements = "movements",
   SignOut = "signOut",
+  SignIn = "auth.signIn",
 }
 
 export const menuMap: MenuItemType[] = [
@@ -25,26 +34,33 @@ export const menuMap: MenuItemType[] = [
   {
     page: MenuKeys.Transactions,
     path: "/transactions",
-    icon: <FontAwesomeIcon icon={faHome} />,
+    icon: <FontAwesomeIcon icon={faClock} />,
   },
   {
     page: MenuKeys.TransactionCategories,
     path: "/transaction-categories",
-    icon: <FontAwesomeIcon icon={faHome} />,
+    icon: <FontAwesomeIcon icon={faLayerGroup} />,
   },
   {
     page: MenuKeys.Accounts,
     path: "/accounts",
-    icon: <FontAwesomeIcon icon={faHome} />,
+    icon: <FontAwesomeIcon icon={faCreditCard} />,
   },
   {
     page: MenuKeys.Currencies,
     path: "/currencies",
-    icon: <FontAwesomeIcon icon={faHome} />,
+    icon: <FontAwesomeIcon icon={faCoins} />,
   },
+  { type: "divider" },
   {
     page: MenuKeys.SignOut,
     path: "/sign-out",
-    icon: <FontAwesomeIcon icon={faHome} />,
+    auth: true,
+    icon: <FontAwesomeIcon icon={faRightFromBracket} />,
+  },
+  {
+    page: MenuKeys.SignIn,
+    path: "/auth/sign-in",
+    icon: <FontAwesomeIcon icon={faRightToBracket} />,
   },
 ];

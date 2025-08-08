@@ -17,8 +17,10 @@ export type SubMenuItemType = {
 };
 
 export type MenuItemType = {
-  page: MenuKeys;
-  path: string;
-  icon: ReactNode;
+  page?: MenuKeys;
+  path?: string;
+  icon?: ReactNode;
+  type?: "menu" | "divider";
+  auth?: boolean;
   child?: SubMenuItemType[];
 };
