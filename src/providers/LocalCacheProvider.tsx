@@ -12,7 +12,16 @@ import {
 } from "./types.ts";
 
 // lib
-import { BaseEntityDto, fromLocal, Tables, toLocal } from "lib";
+import {
+  AccountDto,
+  BaseEntityDto,
+  CurrencyDto,
+  fromLocal,
+  Tables,
+  toLocal,
+  TransactionCategoryDto,
+  TransactionDto,
+} from "lib";
 
 const LocalCacheContext = createContext({} as LocalCacheProviderContextType);
 
@@ -20,7 +29,10 @@ const LocalCacheProvider = (props: BasicProviderPropTypes) => {
   const { children } = props;
 
   const [data, setData] = useState<FileDataType>({
-    [Tables.Accounts]: [],
+    [Tables.Accounts]: [] as AccountDto[],
+    [Tables.Currencies]: [] as CurrencyDto[],
+    [Tables.TransactionCategories]: [] as TransactionCategoryDto[],
+    [Tables.Transactions]: [] as TransactionDto[],
   });
 
   const updateCache = useCallback(
