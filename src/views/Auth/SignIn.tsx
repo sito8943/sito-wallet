@@ -29,6 +29,8 @@ export function SignIn() {
 
   const [appear, setAppear] = useState(false);
 
+  const { setGuestMode } = useAuth();
+
   const { showErrorNotification } = useNotification();
 
   const manager = useManager();
@@ -44,6 +46,7 @@ export function SignIn() {
     mutationFn: async (data: AuthDto) => await manager.Auth.login(data),
     onSuccess: (data) => {
       logUser(data);
+      setGuestMode(false);
       navigate("/");
     },
     onError: () => {
