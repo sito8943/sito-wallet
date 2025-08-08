@@ -54,6 +54,7 @@ export const Dialog = (props: DialogPropsType) => {
 
   const bigHandleClose = useCallback(
     (e: MouseEvent<HTMLDivElement>) => {
+      console.log(e?.currentTarget?.getAttribute("aria-label"));
       if (
         e?.currentTarget?.getAttribute("name") ===
         t("_accessibility:buttons.closeDialog")
@@ -68,13 +69,15 @@ export const Dialog = (props: DialogPropsType) => {
       aria-label={t("_accessibility:ariaLabels.closeDialog")}
       aria-disabled={!open}
       onClick={bigHandleClose}
-      className={`dialog-backdrop ${styles} h-screen ${
+      className={`dialog-backdrop animated ${
+        open ? "opened" : "closed"
+      } ${styles} h-screen ${
         open ? "bg-base/20 backdrop-blur-xl" : "pointer-events-none"
       } ${containerClassName}`}
     >
       <div
         className={`dialog elevated animated ${
-          open ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+          open ? "opened" : "closed"
         } ${className}`}
       >
         <div className="flex items-center justify-between gap-2 mb-6 max-xs:mb-10">
