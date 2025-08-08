@@ -13,3 +13,4 @@ export * from "./Loading";
 export * from "./Card";
 export * from "./TabsLayout";
 export * from "./WalletTable";
+export * from "./Onboarding";

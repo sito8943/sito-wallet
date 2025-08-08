@@ -46,7 +46,7 @@ export const Step = (props: StepPropsType) => {
             <button
               onClick={() => (window.location.href = "/")}
               aria-label={t("_accessibility:ariaLabels.start")}
-              className="button !px-8 primary submit"
+              className="button !px-8 primary outlined"
             >
               {t("_accessibility:buttons.startAsGuest")}
             </button>

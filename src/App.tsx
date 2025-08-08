@@ -16,7 +16,13 @@ import { SplashScreen } from "components";
 
 // providers
 import { useAuth } from "providers";
-import { Onboarding } from "./components/Onboarding/Onboarding";
+
+// components
+const Onboarding = loadable(() =>
+  import("components").then((module) => ({
+    default: module.Onboarding,
+  }))
+);
 
 // auth
 const SignUp = loadable(() =>
