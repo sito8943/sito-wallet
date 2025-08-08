@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
@@ -8,18 +9,24 @@ import { TableOptionsProvider, TranslationProvider } from "@sito/dashboard";
 // providers
 import { useAuth } from "providers";
 
+// lib
+import { fromLocal } from "lib";
+
+// config
+import { config } from "../../config";
+
 // components
 import Header from "./Header";
 import Footer from "./Footer";
 import { Notification, Error } from "components";
-import { useTranslation } from "react-i18next";
 
 export function View() {
   const { account } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!account.email) navigate("/auth/sign-in");
+    if (!account.email && !fromLocal(config.guestMode))
+      navigate("/auth/sign-in");
   }, [account, navigate]);
 
   const { t } = useTranslation();

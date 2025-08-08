@@ -14,6 +14,7 @@ const {
   VITE_SUPABASE_ANON,
   VITE_CACHE,
   VITE_ONBOARDING,
+  VITE_GUEST_MODE,
 } = import.meta.env;
 
 export const config = {
@@ -32,4 +33,5 @@ export const config = {
   supabaseCo: VITE_SUPABASE_CO,
   supabaseAnon: VITE_SUPABASE_ANON,
   onboarding: VITE_ONBOARDING,
+  guestMode: VITE_GUEST_MODE,
 };

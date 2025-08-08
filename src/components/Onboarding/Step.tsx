@@ -3,6 +3,12 @@ import { useTranslation } from "react-i18next";
 // types
 import { StepPropsType } from "./types";
 
+// lib
+import { toLocal } from "lib";
+
+// config
+import { config } from "../../config";
+
 export const Step = (props: StepPropsType) => {
   const {
     translation,
@@ -44,7 +50,10 @@ export const Step = (props: StepPropsType) => {
         ) : (
           <>
             <button
-              onClick={() => (window.location.href = "/")}
+              onClick={() => {
+                toLocal(config.guestMode, true);
+                window.location.href = "/";
+              }}
               aria-label={t("_accessibility:ariaLabels.start")}
               className="button !px-8 primary outlined"
             >
