@@ -9,25 +9,18 @@ import { TableOptionsProvider, TranslationProvider } from "@sito/dashboard";
 // providers
 import { useAuth } from "providers";
 
-// lib
-import { fromLocal } from "lib";
-
-// config
-import { config } from "../../config";
-
 // components
 import Header from "./Header";
 import Footer from "./Footer";
 import { Notification, Error } from "components";
 
 export function View() {
-  const { account } = useAuth();
+  const { account, isInGuestMode } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!account.email && !fromLocal(config.guestMode))
-      navigate("/auth/sign-in");
-  }, [account, navigate]);
+    if (!account.email && !isInGuestMode()) navigate("/auth/sign-in");
+  }, [account, isInGuestMode, navigate]);
 
   const { t } = useTranslation();
 

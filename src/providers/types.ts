@@ -22,6 +22,8 @@ export type AuthProviderContextType = {
   logUser: (data: SessionDto) => void;
   logoutUser: () => void;
   logUserFromLocal: () => Promise<void>;
+  isInGuestMode: () => boolean;
+  setGuestMode: (value: boolean) => void;
 };
 
 export type LocalCacheProviderContextType = {

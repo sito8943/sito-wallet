@@ -26,6 +26,14 @@ const AuthProvider = (props: BasicProviderPropTypes) => {
 
   const [account, setAccount] = useState<SessionDto>({} as SessionDto);
 
+  const isInGuestMode = useCallback(() => {
+    return !!fromLocal(config.guestMode);
+  }, []);
+
+  const setGuestMode = useCallback((value: boolean) => {
+    toLocal(config.guestMode, value);
+  }, []);
+
   const logUser = useCallback((data: SessionDto) => {
     setAccount(data);
     //TODO Save token on cookie
@@ -54,7 +62,14 @@ const AuthProvider = (props: BasicProviderPropTypes) => {
     }
   }, [logoutUser, manager.Auth]);
 
-  const value = { account, logUser, logoutUser, logUserFromLocal };
+  const value = {
+    account,
+    logUser,
+    logoutUser,
+    logUserFromLocal,
+    isInGuestMode,
+    setGuestMode,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

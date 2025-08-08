@@ -1,6 +1,7 @@
 {
   "home": {
     "title": "Home",
+    "guest": "Guest",
     "appName": "Sito Wallet",
     "welcome": "Welcome {{user}}"
   },

@@ -1,13 +1,10 @@
 import { useTranslation } from "react-i18next";
 
+// providers
+import { useAuth } from "providers";
+
 // types
 import { StepPropsType } from "./types";
-
-// lib
-import { toLocal } from "lib";
-
-// config
-import { config } from "../../config";
 
 export const Step = (props: StepPropsType) => {
   const {
@@ -18,6 +15,7 @@ export const Step = (props: StepPropsType) => {
     final = false,
   } = props;
 
+  const { setGuestMode } = useAuth();
   const { t } = useTranslation();
 
   return (
@@ -51,7 +49,7 @@ export const Step = (props: StepPropsType) => {
           <>
             <button
               onClick={() => {
-                toLocal(config.guestMode, true);
+                setGuestMode(true);
                 window.location.href = "/";
               }}
               aria-label={t("_accessibility:ariaLabels.start")}
