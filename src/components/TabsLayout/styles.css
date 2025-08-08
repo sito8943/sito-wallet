@@ -1,0 +1,13 @@
+@import "../../styles/variables.css";
+
+.tabs-layout-main {
+  @apply rounded-b-xl rounded-r-xl;
+}
+
+.tabs-container {
+  @apply flex w-full items-center justify-start mb-5;
+}
+
+.tab {
+  @apply whitespace-nowrap px-3 !pt-2 !border-none !rounded-none;
+}
