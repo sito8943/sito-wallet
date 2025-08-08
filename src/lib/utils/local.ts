@@ -11,6 +11,8 @@ export const fromLocal = (key: string, as = "") => {
     switch (as) {
       case "object":
         return JSON.parse(result);
+      case "number":
+        return Number(result);
       default: // "string"
         return result;
     }
