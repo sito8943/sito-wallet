@@ -11,7 +11,6 @@ import {
   TransactionCategoryCard,
   EditTransactionCategoryDialog,
 } from "./components";
-import { AddTransactionDialog } from "../Transactions";
 
 // hooks
 import {
@@ -22,7 +21,6 @@ import {
 } from "hooks";
 import {
   useAddTransactionCategoryDialog,
-  useAddTransactionDialog,
   useEditTransactionCategoryDialog,
   useViewTransactionsAction,
 } from "./hooks";
@@ -38,8 +36,6 @@ export function TransactionCategories() {
   const { data, isLoading, error } = useTransactionCategoriesList({});
 
   // #region actions
-
-  const addTransaction = useAddTransactionDialog();
 
   const viewTransactions = useViewTransactionsAction({});
 
@@ -61,17 +57,11 @@ export function TransactionCategories() {
 
   const getActions = useCallback(
     (record: TransactionCategoryDto) => [
-      addTransaction.action(record),
       viewTransactions.action(record),
       deleteTransactionCategory.action(record),
       restoreTransactionCategory.action(record),
     ],
-    [
-      addTransaction,
-      deleteTransactionCategory,
-      restoreTransactionCategory,
-      viewTransactions,
-    ]
+    [deleteTransactionCategory, restoreTransactionCategory, viewTransactions]
   );
 
   return (
@@ -100,7 +90,6 @@ export function TransactionCategories() {
           />
           {/* Dialogs */}
           <AddTransactionCategoryDialog {...addTransactionCategory} />
-          <AddTransactionDialog {...addTransaction} />
           <EditTransactionCategoryDialog {...editTransactionCategory} />
           <ConfirmationDialog {...deleteTransactionCategory} />
           <ConfirmationDialog {...restoreTransactionCategory} />

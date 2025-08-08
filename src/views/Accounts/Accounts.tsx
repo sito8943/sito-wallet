@@ -7,7 +7,6 @@ import { useManager } from "providers";
 // components
 import { ConfirmationDialog, Error, Page, PrettyGrid } from "components";
 import { AddAccountDialog, AccountCard, EditAccountDialog } from "./components";
-import { AddTransactionDialog } from "../Transactions";
 
 // hooks
 import {
@@ -18,7 +17,6 @@ import {
 } from "hooks";
 import {
   useAddAccountDialog,
-  useAddTransactionDialog,
   useEditAccountDialog,
   useViewTransactionsAction,
 } from "./hooks";
@@ -34,8 +32,6 @@ export function Accounts() {
   const { data, isLoading, error } = useAccountsList({});
 
   // #region actions
-
-  const addTransaction = useAddTransactionDialog();
 
   const viewTransactions = useViewTransactionsAction({});
 
@@ -57,12 +53,11 @@ export function Accounts() {
 
   const getActions = useCallback(
     (record: AccountDto) => [
-      addTransaction.action(record),
       viewTransactions.action(record),
       deleteAccount.action(record),
       restoreAccount.action(record),
     ],
-    [addTransaction, deleteAccount, restoreAccount, viewTransactions]
+    [deleteAccount, restoreAccount, viewTransactions]
   );
 
   return (
@@ -91,7 +86,6 @@ export function Accounts() {
           />
           {/* Dialogs */}
           <AddAccountDialog {...addAccount} />
-          <AddTransactionDialog {...addTransaction} />
           <EditAccountDialog {...editAccount} />
           <ConfirmationDialog {...deleteAccount} />
           <ConfirmationDialog {...restoreAccount} />
