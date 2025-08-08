@@ -33,6 +33,24 @@
       }
     }
   },
+  "onboarding": {
+    "welcome": {
+      "title": "Welcome to Sito Wallet",
+      "body": "Your personal assistant to organize your money, save more, and make smarter financial decisions."
+    },
+    "currencies": {
+      "title": "Manage All Your Currencies",
+      "body": "Add and track any currency to keep control of your finances anywhere in the world."
+    },
+    "accounts": {
+      "title": "All Your Accounts in One Place",
+      "body": "Record bank accounts, cash, or cryptocurrencies and get a complete view of your money."
+    },
+    "transactions": {
+      "title": "Full Control of Your Transactions",
+      "body": "Log income and expenses in seconds, and categorize them to know exactly where your money goes."
+    }
+  },
   "auth": {
     "signIn": {
       "title": "Sign In",

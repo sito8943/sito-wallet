@@ -33,6 +33,24 @@
       }
     }
   },
+  "onboarding": {
+    "welcome": {
+      "title": "Bienvenido a Sito Wallet",
+      "body": "Tu asistente personal para organizar tu dinero, ahorrar más y tomar decisiones financieras inteligentes."
+    },
+    "currencies": {
+      "title": "Gestiona todas tus monedas",
+      "body": "Añade y administra cualquier divisa para llevar el control de tus finanzas en todo el mundo."
+    },
+    "accounts": {
+      "title": "Todas tus cuentas en un solo lugar",
+      "body": "Registra cuentas bancarias, efectivo o criptomonedas y ten una visión completa de tu dinero."
+    },
+    "transactions": {
+      "title": "Control total de tus movimientos",
+      "body": "Registra ingresos y gastos en segundos, y clasifícalos para saber exactamente a dónde va tu dinero."
+    }
+  },
   "auth": {
     "signIn": {
       "submit": "Entrar",
