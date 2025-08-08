@@ -49,6 +49,10 @@
     "transactions": {
       "title": "Full Control of Your Transactions",
       "body": "Log income and expenses in seconds, and categorize them to know exactly where your money goes."
+    },
+    "get_started": {
+      "title": "You're Ready to Take Control 🎯",
+      "body": "Add your first account now and start your journey to healthier finances today."
     }
   },
   "auth": {

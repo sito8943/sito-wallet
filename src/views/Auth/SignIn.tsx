@@ -161,6 +161,7 @@ export function SignIn() {
             type="submit"
             disabled={isLoading}
             className={`button !px-8 primary submit`}
+            aria-label={t("_accessibility:buttons.submit")}
           >
             {isLoading && <Loading color="text-base" />}
             {t("_pages:auth.signIn.submit")}

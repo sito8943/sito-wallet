@@ -2,6 +2,7 @@
   "buttons": {
     "ok": "Ok",
     "back": "Go back",
+    "start": "Start",
     "openMenu": "Open menu",
     "openActions": "Actions",
     "submit": "Submit",
@@ -20,7 +21,34 @@
     "workOffline": "Work offline",
     "filters": "Filters",
     "applyFilters": "Apply filters",
-    "clear": "Clear"
+    "clear": "Clear",
+    "next": "Next",
+    "skip": "Skip"
+  },
+  "ariaLabels": {
+    "ok": "Confirm action",
+    "insert": "Insert content",
+    "cancel": "Cancel action",
+    "delete": "Delete item",
+    "openMenu": "Open menu",
+    "openActions": "Open actions menu",
+    "submit": "Submit data",
+    "closeDialog": "Close dialog window",
+    "closeColorDialog": "Close color selection dialog",
+    "closeNotification": "Dismiss notification",
+    "closeOutsideNotification": "Dismiss external notification",
+    "toggleMaximize": "Toggle maximize window",
+    "minimize": "Minimize window",
+    "closeApp": "Close application",
+    "closeMenu": "Close menu",
+    "deleteChip": "Delete {{value}}",
+    "cleanInput": "Clear input field",
+    "retry": "Retry connection",
+    "filters": "Open filters",
+    "applyFilters": "Apply selected filters",
+    "clear": "Clear filters",
+    "next": "Go to next step",
+    "skip": "Skip step"
   },
   "labels": {
     "colorPicker": "Pick a color",
@@ -36,25 +64,6 @@
   "tooltips": {
     "showAsTable": "Mostrar como tabla",
     "showAsGrid": "Mostrar como grid"
-  },
-  "ariaLabels": {
-    "ok": "Confirm action",
-    "insert": "Insert content",
-    "cancel": "Cancel action",
-    "delete": "Delete item",
-    "restore": "Restore item",
-    "openMenu": "Open menu",
-    "closeDialog": "Close dialog window",
-    "closeColorDialog": "Close color dialog window",
-    "closeNotification": "Dismiss notification",
-    "closeOutsideNotification": "Dismiss outside notification",
-    "toggleMaximize": "Toggle maximize window",
-    "minimize": "Minimize window",
-    "closeApp": "Close the application",
-    "closeMenu": "Close the menu",
-    "deleteChip": "Remove the {{value}}",
-    "cleanInput": "Clean the input value",
-    "retry": "Retry to connect"
   },
   "errors": {
     "unknownError": "An error has occurred",

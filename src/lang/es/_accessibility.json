@@ -2,6 +2,7 @@
   "buttons": {
     "ok": "Aceptar",
     "back": "Atrás",
+    "start": "Comenzar",
     "openMenu": "Abrir menú",
     "openActions": "Actions",
     "submit": "Enviar",
@@ -19,7 +20,34 @@
     "retry": "Reintentar",
     "filters": "Filtros",
     "applyFilters": "Aplicar filtros",
-    "clear": "Limpiar"
+    "clear": "Limpiar",
+    "next": "Siguiente",
+    "skip": "Saltar"
+  },
+  "ariaLabels": {
+    "ok": "Confirmar acción",
+    "insert": "Insertar contenido",
+    "cancel": "Cancelar acción",
+    "delete": "Eliminar elemento",
+    "openMenu": "Abrir menú",
+    "openActions": "Abrir menú de acciones",
+    "submit": "Enviar datos",
+    "closeDialog": "Cerrar ventana de diálogo",
+    "closeColorDialog": "Cerrar ventana de selección de color",
+    "closeNotification": "Descartar notificación",
+    "closeOutsideNotification": "Descartar notificación externa",
+    "toggleMaximize": "Alternar maximizar ventana",
+    "minimize": "Minimizar ventana",
+    "closeApp": "Cerrar la aplicación",
+    "closeMenu": "Cerrar el menú",
+    "deleteChip": "Eliminar {{value}}",
+    "cleanInput": "Limpiar campo de entrada",
+    "retry": "Reintentar conexión",
+    "filters": "Abrir filtros",
+    "applyFilters": "Aplicar filtros seleccionados",
+    "clear": "Limpiar filtros",
+    "next": "Ir al siguiente paso",
+    "skip": "Omitir paso"
   },
   "labels": {
     "colorPicker": "Selecciona un color",
@@ -33,24 +61,6 @@
     "actions": "Acciones"
   },
   "tooltips": {},
-  "ariaLabels": {
-    "ok": "Confirmar acción",
-    "insert": "Insertar contenido",
-    "cancel": "Cancelar acción",
-    "delete": "Eliminar elemento",
-    "openMenu": "Abrir menú",
-    "closeDialog": "Cerrar ventana de diálogo",
-    "closeColorDialog": "Cerrar ventana de color",
-    "closeNotification": "Descartar notificación",
-    "closeOutsideNotification": "Descartar notificación externa",
-    "toggleMaximize": "Alternar maximizar ventana",
-    "minimize": "Minimizar ventana",
-    "closeApp": "Cerrar la aplicación",
-    "closeMenu": "Cerrar el menú",
-    "deleteChip": "Elimina a {{value}}",
-    "cleanInput": "Limpia los valores de la entrada",
-    "retry": "Reintentar conexión"
-  },
   "components": {
     "table": {
       "filters": {

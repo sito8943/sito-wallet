@@ -49,6 +49,10 @@
     "transactions": {
       "title": "Control total de tus movimientos",
       "body": "Registra ingresos y gastos en segundos, y clasifícalos para saber exactamente a dónde va tu dinero."
+    },
+    "get_started": {
+      "title": "Listo para tomar el control 🎯",
+      "body": "Añade tu primera cuenta ahora y comienza tu camino hacia unas finanzas más saludables hoy mismo."
     }
   },
   "auth": {
