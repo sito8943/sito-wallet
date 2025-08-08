@@ -30,6 +30,7 @@ export type LocalCacheProviderContextType = {
   data?: FileDataType;
   updateCache: <T = BaseEntityDto>(key: Tables, data: T[]) => void;
   loadCache: <T = BaseEntityDto>(key: Tables) => T[] | null;
+  inCache: (key: Tables) => BaseEntityDto[];
 };
 
 export type FileCacheProviderContextType = {

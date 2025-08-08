@@ -35,6 +35,13 @@ const LocalCacheProvider = (props: BasicProviderPropTypes) => {
     [Tables.Transactions]: [] as TransactionDto[],
   });
 
+  const inCache = useCallback(
+    (key: Tables) => {
+      return data[key];
+    },
+    [data]
+  );
+
   const updateCache = useCallback(
     <T = BaseEntityDto,>(key: Tables, value: T[]) => {
       const newData = {
@@ -62,7 +69,7 @@ const LocalCacheProvider = (props: BasicProviderPropTypes) => {
   );
 
   return (
-    <LocalCacheContext.Provider value={{ updateCache, loadCache }}>
+    <LocalCacheContext.Provider value={{ updateCache, loadCache, inCache }}>
       {children}
     </LocalCacheContext.Provider>
   );

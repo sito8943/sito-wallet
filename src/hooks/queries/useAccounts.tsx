@@ -42,6 +42,7 @@ export function useAccountsList(
           ...filters,
           userId: account?.id,
         });
+
         updateCache(Tables.Accounts, result.items);
         return result;
       } catch (error) {
@@ -61,7 +62,7 @@ export function useAccountsList(
 export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
   const manager = useManager();
   const { account } = useAuth();
-  const { loadCache, updateCache } = useLocalCache();
+  const { loadCache, updateCache, inCache } = useLocalCache();
 
   return useQuery({
     ...AccountsQueryKeys.common(),
@@ -71,7 +72,7 @@ export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
           deleted: false,
           userId: account?.id,
         });
-        updateCache(Tables.Accounts, result);
+        if (!inCache(Tables.Accounts)) updateCache(Tables.Accounts, result);
         return result;
       } catch (error) {
         console.warn("API failed, loading accounts from cache", error);

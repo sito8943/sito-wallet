@@ -61,7 +61,7 @@ export function useCurrenciesList(
 export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
   const manager = useManager();
   const { account } = useAuth();
-  const { loadCache, updateCache } = useLocalCache();
+  const { loadCache, updateCache, inCache } = useLocalCache();
 
   return useQuery({
     ...CurrenciesQueryKeys.common(),
@@ -71,7 +71,7 @@ export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
           deleted: false,
           userId: account?.id,
         });
-        updateCache(Tables.Currencies, result);
+        if (!inCache(Tables.Currencies)) updateCache(Tables.Currencies, result);
         return result;
       } catch (error) {
         console.warn("API failed, loading currencies from cache", error);

@@ -76,6 +76,7 @@ export function useTransactionsList(
           },
           parsedFilters
         );
+
         updateCache(Tables.Transactions, result.items);
         return result;
       } catch (error) {
@@ -97,7 +98,7 @@ export function useTransactionsCommon(): UseQueryResult<
 > {
   const manager = useManager();
   const { account } = useAuth();
-  const { loadCache, updateCache } = useLocalCache();
+  const { loadCache, updateCache, inCache } = useLocalCache();
 
   return useQuery({
     ...TransactionsQueryKeys.common(),
@@ -107,16 +108,16 @@ export function useTransactionsCommon(): UseQueryResult<
           deleted: false,
           userId: account?.id,
         });
-        updateCache(Tables.Transactions, result);
+        if (!inCache(Tables.Transactions))
+          updateCache(Tables.Transactions, result);
         return result;
       } catch (error) {
         console.warn("API failed, loading transactions from cache", error);
         const cached = loadCache(Tables.Transactions) as CommonTransactionDto[];
         if (!cached || !Array.isArray(cached))
           throw new Error("No cached transactions available");
-        return cached.map(({ id, name, updatedAt }) => ({
+        return cached.map(({ id, updatedAt }) => ({
           id,
-          name,
           updatedAt,
         }));
       }

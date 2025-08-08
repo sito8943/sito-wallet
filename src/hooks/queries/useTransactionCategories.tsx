@@ -34,7 +34,7 @@ export function useTransactionCategoriesList(
 
   const manager = useManager();
   const { account } = useAuth();
-  const { loadCache, updateCache } = useLocalCache();
+  const { loadCache, updateCache, inCache } = useLocalCache();
 
   return useQuery({
     ...TransactionCategoriesQueryKeys.list(),
@@ -44,7 +44,8 @@ export function useTransactionCategoriesList(
           ...filters,
           userId: account?.id,
         });
-        updateCache(Tables.TransactionCategories, result.items);
+        if (!inCache(Tables.TransactionCategories))
+          updateCache(Tables.TransactionCategories, result.items);
         return result;
       } catch (error) {
         console.warn("API failed, loading accounts from cache", error);
