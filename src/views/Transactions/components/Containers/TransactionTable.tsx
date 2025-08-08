@@ -43,7 +43,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
   const { columns } = useParseColumns<TransactionDto>(
     [
       {
-        key: "category.name",
+        key: "category",
         label: t("_entities:transaction.category.label"),
         filterOptions: {
           type: FilterTypes.autocomplete,
