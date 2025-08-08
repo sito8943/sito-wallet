@@ -43,7 +43,8 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
   const { columns } = useParseColumns<TransactionDto>(
     [
       {
-        key: "category",
+        key: "category.name",
+        label: t("_entities:transaction.category.label"),
         filterOptions: {
           type: FilterTypes.autocomplete,
           defaultValue: [],
@@ -73,7 +74,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
         renderBody: (value) => <p>{getFormattedDateTime(value)}</p>,
       },
       {
-        key: "type",
+        key: "category.type",
         label: t("_entities:transactionCategory.type.label"),
         filterOptions: {
           multiple: false,

@@ -42,8 +42,17 @@ export function TransactionForm(props: TransactionFormPropsType) {
   const categories = useTransactionCategoriesCommon();
 
   const categoryOptions = useMemo(
-    () => [...(categories?.data ?? [])] as Option[],
-    [categories.data]
+    () =>
+      [
+        ...(categories?.data?.map((category) => ({
+          ...category,
+          name:
+            category.name === "init"
+              ? t("_entities:transactionCategory.name.init")
+              : category.name,
+        })) ?? []),
+      ] as Option[],
+    [categories?.data, t]
   );
 
   // #endregion
