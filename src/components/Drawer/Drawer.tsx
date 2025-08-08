@@ -25,7 +25,7 @@ export function Drawer(props: DrawerPropsTypes) {
 
   const parsedMenu = useMemo(() => {
     return menuMap.filter(
-      (map) => (account.email && map.auth) || (!account.email && !map.auth)
+      (map) => map.auth === undefined || (map.auth && account.email)
     );
   }, [account.email]);
 
