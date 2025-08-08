@@ -22,7 +22,9 @@
     "applyFilters": "Aplicar filtros",
     "clear": "Limpiar",
     "next": "Siguiente",
-    "skip": "Saltar"
+    "skip": "Saltar",
+    "startAsGuest": "Comenzar como invitado",
+    "signIn": "Iniciar sesión"
   },
   "ariaLabels": {
     "ok": "Confirmar acción",
@@ -47,7 +49,9 @@
     "applyFilters": "Aplicar filtros seleccionados",
     "clear": "Limpiar filtros",
     "next": "Ir al siguiente paso",
-    "skip": "Omitir paso"
+    "skip": "Omitir paso",
+    "startAsGuest": "Comenzar como invitado",
+    "signIn": "Iniciar sesión"
   },
   "labels": {
     "colorPicker": "Selecciona un color",

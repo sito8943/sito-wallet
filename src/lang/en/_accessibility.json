@@ -23,7 +23,9 @@
     "applyFilters": "Apply filters",
     "clear": "Clear",
     "next": "Next",
-    "skip": "Skip"
+    "skip": "Skip",
+    "startAsGuest": "Start as guest",
+    "signIn": "Sign in"
   },
   "ariaLabels": {
     "ok": "Confirm action",
@@ -48,7 +50,9 @@
     "applyFilters": "Apply selected filters",
     "clear": "Clear filters",
     "next": "Go to next step",
-    "skip": "Skip step"
+    "skip": "Skip step",
+    "startAsGuest": "Start as guest",
+    "signIn": "Sign in"
   },
   "labels": {
     "colorPicker": "Pick a color",

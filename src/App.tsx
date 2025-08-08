@@ -2,6 +2,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense, useEffect, useState } from "react";
 import loadable from "@loadable/component";
 
+// lib
+import { fromLocal, toLocal } from "lib";
+
+// config
+import { config } from "./config";
+
 // layouts
 import { View, Auth } from "./layouts";
 
@@ -10,6 +16,7 @@ import { SplashScreen } from "components";
 
 // providers
 import { useAuth } from "providers";
+import { Onboarding } from "./components/Onboarding/Onboarding";
 
 // auth
 const SignUp = loadable(() =>
@@ -70,13 +77,23 @@ const Currencies = loadable(() =>
 function App() {
   const { logUserFromLocal } = useAuth();
   const [loading, setLoading] = useState(true);
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   useEffect(() => {
     logUserFromLocal().then(() => setTimeout(() => setLoading(false), 300));
   }, [logUserFromLocal]);
 
+  useEffect(() => {
+    const onboarding = fromLocal(config.onboarding);
+    if (!onboarding) {
+      setShowOnboarding(true);
+      toLocal(config.onboarding, true);
+    }
+  }, []);
+
   return (
     <Suspense fallback={<SplashScreen />}>
+      {showOnboarding && <Onboarding />}
       {!loading && (
         <BrowserRouter>
           <Routes>
@@ -94,7 +111,10 @@ function App() {
             <Route path="/" element={<View />}>
               <Route index element={<Home />} />
               <Route path="/transactions" element={<Transactions />} />
-              <Route path="/transaction-categories" element={<TransactionCategories />} />
+              <Route
+                path="/transaction-categories"
+                element={<TransactionCategories />}
+              />
               <Route path="/accounts" element={<Accounts />} />
               <Route path="/currencies" element={<Currencies />} />
               <Route path="*" element={<NotFound />} />

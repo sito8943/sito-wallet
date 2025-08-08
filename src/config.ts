@@ -13,6 +13,7 @@ const {
   VITE_SUPABASE_CO,
   VITE_SUPABASE_ANON,
   VITE_CACHE,
+  VITE_ONBOARDING,
 } = import.meta.env;
 
 export const config = {
@@ -30,4 +31,5 @@ export const config = {
   crypto: VITE_CRYPTO,
   supabaseCo: VITE_SUPABASE_CO,
   supabaseAnon: VITE_SUPABASE_ANON,
+  onboarding: VITE_ONBOARDING,
 };
