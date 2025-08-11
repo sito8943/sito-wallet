@@ -42,7 +42,7 @@ export function useTransactionsList(
     filters: tableFilters,
   } = useTableOptions();
 
-  const { filters = { deleted: false, accountId: 0 } } = props;
+  const { filters = { deleted: false } } = props;
 
   const manager = useManager();
   const { account } = useAuth();

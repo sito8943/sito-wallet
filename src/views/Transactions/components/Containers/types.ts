@@ -12,6 +12,7 @@ import { Dispatch, SetStateAction } from "react";
 
 export type TransactionContainerPropsType = {
   accountId: number;
+  categoryId?: number;
   categories: CommonTransactionCategoryDto[];
   getActions: (record: TransactionDto) => Action<TransactionDto>[];
   editAction: UseActionDialog<TransactionDto, TransactionFormType>;

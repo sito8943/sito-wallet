@@ -5,6 +5,7 @@ import {
   faCoins,
   faCreditCard,
   faHome,
+  faInfo,
   faLayerGroup,
   faRightFromBracket,
   faRightToBracket,
@@ -23,6 +24,7 @@ export enum MenuKeys {
   Movements = "movements",
   SignOut = "signOut",
   SignIn = "auth.signIn",
+  About = "about",
 }
 
 export const menuMap: MenuItemType[] = [
@@ -63,5 +65,11 @@ export const menuMap: MenuItemType[] = [
     path: "/auth/sign-in",
     auth: false,
     icon: <FontAwesomeIcon icon={faRightToBracket} />,
+  },
+  { type: "divider" },
+  {
+    page: MenuKeys.About,
+    path: "/about-us",
+    icon: <FontAwesomeIcon icon={faInfo} />,
   },
 ];

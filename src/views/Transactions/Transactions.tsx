@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { parseQueries } from "some-javascript-utils/browser";
 
 // components
 import { ConfirmationDialog, Page, TabsLayout, TabsType } from "components";
@@ -24,7 +25,7 @@ import {
 } from "./components";
 
 // lib
-import { TransactionDto } from "lib";
+import { FilterTransactionDto, TransactionDto } from "lib";
 
 // providers
 import { useManager } from "providers";
@@ -38,6 +39,14 @@ export function Transactions() {
   const location = useLocation();
 
   const [tabValue, setTabValue] = useState<number>();
+  const filteredCategory = useMemo(() => {
+    const queries = parseQueries(location.search) as FilterTransactionDto;
+
+    if (queries.categoryId && !isNaN(queries.categoryId)) {
+      return Number(queries.categoryId);
+    }
+    return undefined;
+  }, [location]);
 
   const manager = useManager();
 
@@ -124,6 +133,7 @@ export function Transactions() {
           getActions={getTableActions}
           editAction={editTransaction}
           showFilters={showFilters}
+          categoryId={filteredCategory}
           setShowFilters={setShowFilters}
         />
       ),
@@ -131,6 +141,7 @@ export function Transactions() {
   }, [
     accounts.data,
     editTransaction,
+    filteredCategory,
     getTableActions,
     parsedCategories,
     showFilters,
@@ -146,16 +157,26 @@ export function Transactions() {
           categories={parsedCategories ?? []}
           getActions={getGridActions}
           editAction={editTransaction}
+          categoryId={filteredCategory}
         />
       ),
     })) ?? []) as TabsType[];
-  }, [accounts.data, editTransaction, getGridActions, parsedCategories]);
+  }, [
+    accounts.data,
+    editTransaction,
+    filteredCategory,
+    getGridActions,
+    parsedCategories,
+  ]);
 
   useEffect(() => {
-    if (location.hash) {
-      const id = location.hash.split("#")[1];
-      if (accountDesktopTabs.find((tab) => tab.id === Number(id)))
-        setTabValue(Number(id));
+    console.log(parseQueries(location.search));
+    const queries = parseQueries(location.search) as FilterTransactionDto;
+
+    if (queries.accountId && !isNaN(queries.accountId)) {
+      const accountId = Number(queries.accountId);
+      if (accountDesktopTabs.find((tab) => tab.id === accountId))
+        setTabValue(accountId);
     }
   }, [accountDesktopTabs, location]);
 

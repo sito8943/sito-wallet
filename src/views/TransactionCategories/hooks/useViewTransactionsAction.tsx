@@ -36,7 +36,7 @@ export const useViewTransactionsAction = (
       tooltip: t("_pages:accounts.actions.viewTransactions.text"),
       onClick: () => {
         const url = getPathByKey(PageId.Transactions) ?? "";
-        navigate(`${url}?category=${record.id}`);
+        navigate(`${url}?categoryId=${record.id}`);
       },
     }),
     [hidden, navigate, t]
