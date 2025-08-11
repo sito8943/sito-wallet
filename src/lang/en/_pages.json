@@ -131,5 +131,18 @@
   },
   "about": {
     "title": "About Sito wallet"
+  },
+  "termsAndConditions": {
+    "title": "Terms and Conditions"
+  },
+  "cookiesPolicy": {
+    "title": "Cookies Policy"
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy"
+  },
+  "notFound": {
+    "title": "Not Found",
+    "body": "The resource you are looking for was not found"
   }
 }

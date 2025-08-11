@@ -145,5 +145,9 @@
   },
   "privacyPolicy": {
     "title": "Política de privacidad"
+  },
+  "notFound": {
+    "title": "No encontrado",
+    "body": "El recurso que estás buscando no se encuentra"
   }
 }
