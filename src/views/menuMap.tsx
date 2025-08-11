@@ -5,10 +5,13 @@ import {
   faCoins,
   faCreditCard,
   faHome,
-  faInfo,
+  faCircleInfo,
   faLayerGroup,
   faRightFromBracket,
   faRightToBracket,
+  faCookieBite,
+  faShieldHalved,
+  faScroll,
 } from "@fortawesome/free-solid-svg-icons";
 
 // types
@@ -25,6 +28,9 @@ export enum MenuKeys {
   SignOut = "signOut",
   SignIn = "auth.signIn",
   About = "about",
+  CookiesPolicy = "cookiesPolicy",
+  TermsAndConditions = "termsAndConditions",
+  PrivacyPolicy = "privacyPolicy",
 }
 
 export const menuMap: MenuItemType[] = [
@@ -55,6 +61,27 @@ export const menuMap: MenuItemType[] = [
   },
   { type: "divider" },
   {
+    page: MenuKeys.About,
+    path: "/about-us",
+    icon: <FontAwesomeIcon icon={faCircleInfo} />,
+  },
+  {
+    page: MenuKeys.TermsAndConditions,
+    path: "/terms-and-conditions",
+    icon: <FontAwesomeIcon icon={faScroll} />,
+  },
+  {
+    page: MenuKeys.CookiesPolicy,
+    path: "/cookies-policy",
+    icon: <FontAwesomeIcon icon={faCookieBite} />,
+  },
+  {
+    page: MenuKeys.PrivacyPolicy,
+    path: "/privacy-policy",
+    icon: <FontAwesomeIcon icon={faShieldHalved} />,
+  },
+  { type: "divider" },
+  {
     page: MenuKeys.SignOut,
     path: "/sign-out",
     auth: true,
@@ -65,11 +92,5 @@ export const menuMap: MenuItemType[] = [
     path: "/auth/sign-in",
     auth: false,
     icon: <FontAwesomeIcon icon={faRightToBracket} />,
-  },
-  { type: "divider" },
-  {
-    page: MenuKeys.About,
-    path: "/about-us",
-    icon: <FontAwesomeIcon icon={faInfo} />,
   },
 ];
