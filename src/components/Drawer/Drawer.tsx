@@ -29,8 +29,6 @@ export function Drawer(props: DrawerPropsTypes) {
     );
   }, [account.email]);
 
-  console.log(parsedMenu);
-
   return (
     <div
       aria-label={t("_accessibility:ariaLabels.closeMenu")}

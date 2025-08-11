@@ -54,7 +54,6 @@ export const Dialog = (props: DialogPropsType) => {
 
   const bigHandleClose = useCallback(
     (e: MouseEvent<HTMLDivElement>) => {
-      console.log(e?.currentTarget?.getAttribute("aria-label"));
       if (
         e?.currentTarget?.getAttribute("name") ===
         t("_accessibility:buttons.closeDialog")
