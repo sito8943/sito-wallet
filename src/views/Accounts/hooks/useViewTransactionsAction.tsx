@@ -14,12 +14,12 @@ import { UseSingleActionPropTypes } from "hooks";
 import { AccountActions } from "../types";
 
 // lib
-import { BaseEntityDto } from "lib";
+import { AccountDto } from "lib";
 
 // sitemap
 import { getPathByKey, PageId } from "../../sitemap";
 
-export const useViewTransactionsAction = <TRow extends BaseEntityDto>(
+export const useViewTransactionsAction = (
   props: Omit<UseSingleActionPropTypes<number>, "onClick">
 ) => {
   const { t } = useTranslation();
@@ -28,7 +28,7 @@ export const useViewTransactionsAction = <TRow extends BaseEntityDto>(
   const { hidden = false } = props;
 
   const action = useCallback(
-    (record: TRow): Action<TRow> => ({
+    (record: AccountDto): Action<AccountDto> => ({
       id: AccountActions.ViewTransactions,
       hidden: record.deleted || hidden,
       disabled: record.deleted,
@@ -36,7 +36,7 @@ export const useViewTransactionsAction = <TRow extends BaseEntityDto>(
       tooltip: t("_pages:accounts.actions.viewTransactions.text"),
       onClick: () => {
         const url = getPathByKey(PageId.Transactions) ?? "";
-        navigate(`${url}#${record.id}`);
+        navigate(`${url}?account=${record.id}`);
       },
     }),
     [hidden, navigate, t]
