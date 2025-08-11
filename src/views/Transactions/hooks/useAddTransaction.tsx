@@ -10,12 +10,20 @@ import { useFormDialog, TransactionsQueryKeys } from "hooks";
 import { dtoToForm, emptyTransaction, formToDto } from "../utils";
 
 // types
-import { TransactionFormType } from "../types";
+import {
+  AddTransactionDialogPropsType,
+  TransactionFormType,
+  UseAddTransactionDialogActionPropsType,
+} from "../types";
 
 // lib
 import { AddTransactionDto, TransactionDto } from "lib";
 
-export function useAddTransaction() {
+export function useAddTransaction(
+  props: UseAddTransactionDialogActionPropsType
+): AddTransactionDialogPropsType {
+  const { account } = props;
+
   const { t } = useTranslation();
 
   const manager = useManager();
@@ -30,7 +38,7 @@ export function useAddTransaction() {
   >({
     formToDto,
     dtoToForm,
-    defaultValues: emptyTransaction,
+    defaultValues: emptyTransaction(account),
     mutationFn: (data) => manager.Transactions.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:transactions.forms.add"),
@@ -53,6 +61,7 @@ export function useAddTransaction() {
 
   return {
     handleSubmit,
+    account,
     ...rest,
   };
 }

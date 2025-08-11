@@ -36,7 +36,7 @@ export function useEditTransaction(): UseActionDialog<
   >({
     formToDto,
     dtoToForm,
-    defaultValues: emptyTransaction,
+    defaultValues: emptyTransaction(),
     getFunction: (id) => manager.Transactions.getById(id),
     mutationFn: (data) => manager.Transactions.update(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),

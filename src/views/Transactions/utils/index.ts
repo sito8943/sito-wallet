@@ -1,4 +1,5 @@
 import {
+  CommonAccountDto,
   formatForDatetimeLocal,
   TransactionDto,
   TransactionType,
@@ -25,13 +26,15 @@ export const dtoToForm = (dto: TransactionDto): TransactionFormType => ({
   date: formatForDatetimeLocal(dto.date),
 });
 
-export const emptyTransaction: TransactionFormType = {
+export const emptyTransaction = (
+  account: CommonAccountDto | null = null
+): TransactionFormType => ({
   id: 0,
   name: "",
   description: "",
   type: TransactionType.In,
-  account: null,
+  account,
   category: null,
   amount: 0,
   date: formatForDatetimeLocal(),
-};
+});

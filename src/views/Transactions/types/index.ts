@@ -5,7 +5,12 @@ import { Action } from "@sito/dashboard";
 
 // types
 import { FormDialogPropsType } from "components";
-import { BaseEntityDto, TransactionDto, ValidationError } from "lib";
+import {
+  BaseEntityDto,
+  CommonAccountDto,
+  TransactionDto,
+  ValidationError,
+} from "lib";
 import { UseActionDialog } from "hooks";
 
 export interface TransactionCardPropsType extends TransactionDto {
@@ -27,6 +32,7 @@ export type TransactionFormPropsType = FormDialogPropsType<
 > & {
   lockCategory?: boolean;
   lockAccount?: boolean;
+  account?: CommonAccountDto | null;
 };
 
 export type AddTransactionDialogPropsType = TransactionFormPropsType;
@@ -38,3 +44,7 @@ export type UseAddTransactionActionDialog<TDto extends BaseEntityDto> =
     lockCategory?: boolean;
     lockAccount?: boolean;
   };
+
+export type UseAddTransactionDialogActionPropsType = {
+  account: CommonAccountDto | null;
+};

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Controller } from "react-hook-form";
 
@@ -24,7 +24,9 @@ import { useAccountsCommon, useTransactionCategoriesCommon } from "hooks";
 export function TransactionForm(props: TransactionFormPropsType) {
   const {
     control,
+    account,
     isLoading,
+    setValue,
     lockCategory = false,
     lockAccount = false,
   } = props;
@@ -56,6 +58,10 @@ export function TransactionForm(props: TransactionFormPropsType) {
   );
 
   // #endregion
+
+  useEffect(() => {
+    if (account && setValue) setValue("account", account);
+  }, [account, setValue]);
 
   return (
     <>

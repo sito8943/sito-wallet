@@ -37,9 +37,44 @@ export function Transactions() {
 
   const location = useLocation();
 
+  const [tabValue, setTabValue] = useState<number>();
+
   const manager = useManager();
 
   const [showFilters, setShowFilters] = useState(false);
+
+  // #region categories
+
+  const categories = useTransactionCategoriesCommon();
+
+  const parsedCategories = useMemo(
+    () =>
+      categories?.data?.map((category) => ({
+        ...category,
+        name:
+          category.name === "init"
+            ? t("_entities:transactionCategory.name.init")
+            : category.name,
+      })),
+    [categories?.data, t]
+  );
+
+  // #endregion categories
+
+  // #region accounts
+
+  const accounts = useAccountsCommon();
+
+  const selectedAccount = useMemo(
+    () =>
+      tabValue
+        ? accounts.data?.find((account) => account.id === Number(tabValue)) ??
+          null
+        : accounts.data?.[0] ?? null,
+    [accounts.data, tabValue]
+  );
+
+  // #endregion accounts
 
   // #region actions
 
@@ -53,7 +88,9 @@ export function Transactions() {
     ...TransactionsQueryKeys.all(),
   });
 
-  const addTransaction = useAddTransaction();
+  const addTransaction = useAddTransaction({
+    account: selectedAccount,
+  });
 
   const editTransaction = useEditTransaction();
 
@@ -76,30 +113,8 @@ export function Transactions() {
     [deleteTransaction, restoreTransaction]
   );
 
-  // #region categories
-
-  const categories = useTransactionCategoriesCommon();
-
-  const parsedCategories = useMemo(
-    () =>
-      categories?.data?.map((category) => ({
-        ...category,
-        name:
-          category.name === "init"
-            ? t("_entities:transactionCategory.name.init")
-            : category.name,
-      })),
-    [categories?.data, t]
-  );
-
-  // #endregion categories
-
-  // #region accounts
-
-  const account = useAccountsCommon();
-
   const accountDesktopTabs = useMemo(() => {
-    return (account.data?.map((item) => ({
+    return (accounts.data?.map((item) => ({
       id: item.id,
       label: item.name,
       content: (
@@ -114,7 +129,7 @@ export function Transactions() {
       ),
     })) ?? []) as TabsType[];
   }, [
-    account.data,
+    accounts.data,
     editTransaction,
     getTableActions,
     parsedCategories,
@@ -122,7 +137,7 @@ export function Transactions() {
   ]);
 
   const accountMobileTabs = useMemo(() => {
-    return (account.data?.map((item) => ({
+    return (accounts.data?.map((item) => ({
       id: item.id,
       label: item.name,
       content: (
@@ -134,11 +149,7 @@ export function Transactions() {
         />
       ),
     })) ?? []) as TabsType[];
-  }, [account.data, editTransaction, getGridActions, parsedCategories]);
-
-  // #endregion accounts
-
-  const [tabValue, setTabValue] = useState<number>();
+  }, [accounts.data, editTransaction, getGridActions, parsedCategories]);
 
   useEffect(() => {
     if (location.hash) {
@@ -151,15 +162,15 @@ export function Transactions() {
   return (
     <Page
       title={t("_pages:transactions.title")}
-      isLoading={account.isLoading || categories.isLoading}
+      isLoading={accounts.isLoading || categories.isLoading}
       addOptions={{
         onClick: () => addTransaction.onClick(),
-        disabled: account.isLoading,
+        disabled: accounts.isLoading,
         tooltip: t("_pages:transactions.add"),
       }}
       filterOptions={{
         onClick: () => setShowFilters(!showFilters),
-        disabled: account.isLoading,
+        disabled: accounts.isLoading,
         tooltip: t("_accessibility:buttons.filters"),
       }}
       queryKey={TransactionsQueryKeys.all().queryKey}
