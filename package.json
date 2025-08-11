@@ -31,7 +31,7 @@
     "react-i18next": "^15.6.1",
     "react-router-dom": "^6.28.2",
     "react-tooltip": "^5.29.1",
-    "some-javascript-utils": "^0.10.6",
+    "some-javascript-utils": "^0.10.10",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
