@@ -1,5 +1,5 @@
 // services
-import { buildQueryUrl, makeRequest, Methods } from "./utils/services";
+import { makeRequest, Methods } from "./utils/services";
 
 // types
 import {
@@ -44,13 +44,11 @@ export class APIClient {
   async doQuery<TResponse, TBody = unknown>(
     endpoint: string,
     method = Methods.GET,
-    query?: string,
     body?: TBody,
     header?: HeadersInit
   ) {
-    const builtUrl = buildQueryUrl(endpoint, query);
     const securedHeader = this.secured ? this.defaultTokenAdquierer() : {};
-    const { data: result, status } = await makeRequest(builtUrl, method, body, {
+    const { data: result, status } = await makeRequest(endpoint, method, body, {
       ...securedHeader,
       ...(header ?? {}),
     });

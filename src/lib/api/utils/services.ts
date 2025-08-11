@@ -77,6 +77,7 @@ export function buildQueryUrl<TFilter>(
   endpoint: string,
   params?: TFilter
 ): string {
+  console.log(params);
   if (params) {
     const queryString = Object.entries(params)
       .filter(([, value]) => value !== undefined && value !== null)
@@ -85,7 +86,7 @@ export function buildQueryUrl<TFilter>(
           `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`
       )
       .join("&");
-
+    console.log(queryString);
     return queryString ? `${endpoint}?${queryString}` : endpoint;
   }
   return endpoint;

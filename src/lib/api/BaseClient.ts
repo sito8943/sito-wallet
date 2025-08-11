@@ -54,7 +54,6 @@ export default class BaseClient<
     return await this.api.doQuery<TDto, TAddDto[]>(
       `${this.table}/batch`,
       Methods.POST,
-      "",
       data
     );
   }
@@ -90,9 +89,8 @@ export default class BaseClient<
    */
   async commonGet(query: TFilter): Promise<TCommonDto[]> {
     return await this.api.doQuery<TCommonDto[], TFilter>(
-      `${this.table}/common`,
-      Methods.GET,
-      buildQueryUrl<TFilter>(`${this.table}/common`, query)
+      buildQueryUrl<TFilter>(`${this.table}/common`, query),
+      Methods.GET
     );
   }
 

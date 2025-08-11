@@ -17,7 +17,6 @@ export default class AuthClient {
     return await this.api.doQuery<SessionDto, AuthDto>(
       endpoint,
       Methods.POST,
-      "",
       body
     );
   }
@@ -32,7 +31,6 @@ export default class AuthClient {
     return await this.api.doQuery<SessionDto, RegisterDto>(
       endpoint,
       Methods.POST,
-      "",
       userData
     );
   }
@@ -40,14 +38,8 @@ export default class AuthClient {
   async getSession() {
     const endpoint = "app/session";
 
-    return await this.api.doQuery<SessionDto>(
-      endpoint,
-      Methods.GET,
-      undefined,
-      null,
-      {
-        ...this.api.defaultTokenAdquierer(),
-      }
-    );
+    return await this.api.doQuery<SessionDto>(endpoint, Methods.GET, null, {
+      ...this.api.defaultTokenAdquierer(),
+    });
   }
 }
