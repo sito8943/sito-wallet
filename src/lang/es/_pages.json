@@ -133,5 +133,17 @@
   },
   "footer": {
     "copyright": "Sito Wallet ©"
+  },
+  "about": {
+    "title": "Acerca de Sito wallet"
+  },
+  "termsAndConditions": {
+    "title": "Condiciones de uso"
+  },
+  "cookiesPolicy": {
+    "title": "Política de cookies"
+  },
+  "privacyPolicy": {
+    "title": "Política de privacidad"
   }
 }

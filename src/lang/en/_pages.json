@@ -128,5 +128,8 @@
   },
   "footer": {
     "copyright": "Sito Account App ©"
+  },
+  "about": {
+    "title": "About Sito wallet"
   }
 }
