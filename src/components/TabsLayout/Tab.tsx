@@ -1,18 +1,17 @@
 // types
+import { Link } from "react-router-dom";
 import { TabPropsType } from "./types";
 
 export const Tab = (props: TabPropsType) => {
-  const { id, active, onClick, children } = props;
+  const { id, active, onClick, children, to } = props;
 
   return (
-    <a
-      href={`#${id}`}
+    <Link
+      to={to ?? `#${id}`}
       onClick={() => onClick()}
-      className={`button submit tab ${
-        active ? "primary" : "outlined"
-      }`}
+      className={`button submit tab ${active ? "primary" : "outlined"}`}
     >
-      {children}
-    </a>
+      {children}s
+    </Link>
   );
 };

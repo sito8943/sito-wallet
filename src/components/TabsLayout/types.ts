@@ -11,11 +11,13 @@ export type TabsType = {
   id: number | string;
   label: string;
   content: ReactNode;
+  to?: string;
 };
 
 export type TabPropsType = {
   children: ReactNode;
   id: number | string;
+  to?: string;
   active: boolean;
   onClick: () => void;
   siblings?: boolean;

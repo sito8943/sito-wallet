@@ -28,12 +28,15 @@ export const TabsLayout = (props: TabsLayoutPropsType) => {
 
   return (
     <div className={`tabs-layout-main ${className}`}>
-      <ul className={`horizontal tabs tabs-container ${tabsContainerClassName}`}>
-        {tabs.map(({ id, label }) => (
+      <ul
+        className={`horizontal tabs tabs-container ${tabsContainerClassName}`}
+      >
+        {tabs.map(({ id, to, label }) => (
           <li key={id}>
             <Tab
               onClick={() => setActiveTab(id)}
               id={id}
+              to={to ?? ""}
               siblings={tabs.length > 1}
               active={activeTab === id}
             >

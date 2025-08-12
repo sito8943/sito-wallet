@@ -118,6 +118,7 @@ export function Transactions() {
     return (accounts.data?.map((item) => ({
       id: item.id,
       label: item.name,
+      to: `?accountId=${item.id}`,
       content: (
         <TransactionTable
           accountId={item.id}
@@ -153,7 +154,6 @@ export function Transactions() {
   }, [accounts.data, editTransaction, getGridActions, parsedCategories]);
 
   useEffect(() => {
-    console.log(parseQueries(location.search));
     const queries = parseQueries(location.search) as FilterTransactionDto;
 
     if (queries.accountId && !isNaN(queries.accountId)) {
