@@ -22,7 +22,6 @@ import {
 import {
   useAddTransactionCategoryDialog,
   useEditTransactionCategoryDialog,
-  useViewTransactionsAction,
 } from "./hooks";
 
 // types
@@ -36,8 +35,6 @@ export function TransactionCategories() {
   const { data, isLoading, error } = useTransactionCategoriesList({});
 
   // #region actions
-
-  const viewTransactions = useViewTransactionsAction({});
 
   const deleteTransactionCategory = useDeleteDialog({
     mutationFn: (data) => manager.TransactionCategories.softDelete(data),
@@ -57,11 +54,10 @@ export function TransactionCategories() {
 
   const getActions = useCallback(
     (record: TransactionCategoryDto) => [
-      viewTransactions.action(record),
       deleteTransactionCategory.action(record),
       restoreTransactionCategory.action(record),
     ],
-    [deleteTransactionCategory, restoreTransactionCategory, viewTransactions]
+    [deleteTransactionCategory, restoreTransactionCategory]
   );
 
   return (

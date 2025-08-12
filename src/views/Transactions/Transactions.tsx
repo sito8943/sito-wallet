@@ -40,10 +40,10 @@ export function Transactions() {
 
   const [tabValue, setTabValue] = useState<number>();
   const filteredCategory = useMemo(() => {
-    const queries = parseQueries(location.search) as FilterTransactionDto;
+    const queries = parseQueries(location.search);
 
-    if (queries.categoryId && !isNaN(queries.categoryId)) {
-      return Number(queries.categoryId);
+    if (queries.category && !isNaN(Number(queries.category))) {
+      return Number(queries.category);
     }
     return undefined;
   }, [location]);
