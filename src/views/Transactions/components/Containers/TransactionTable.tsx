@@ -29,19 +29,13 @@ import { icons } from "../utils";
 import { TransactionContainerPropsType } from "./types";
 
 export const TransactionTable = (props: TransactionContainerPropsType) => {
-  const {
-    accountId,
-    categories,
-    getActions,
-    showFilters,
-    setShowFilters,
-    categoryId = 0,
-  } = props;
+  const { accountId, categories, getActions, showFilters, setShowFilters } =
+    props;
 
   const { t } = useTranslation();
 
   const { data, isLoading, error } = useTransactionsList({
-    filters: { accountId, category: [categoryId] },
+    filters: { accountId },
   });
 
   // #region columns

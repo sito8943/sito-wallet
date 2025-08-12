@@ -39,14 +39,6 @@ export function Transactions() {
   const location = useLocation();
 
   const [tabValue, setTabValue] = useState<number>();
-  const filteredCategory = useMemo(() => {
-    const queries = parseQueries(location.search);
-
-    if (queries.category && !isNaN(Number(queries.category))) {
-      return Number(queries.category);
-    }
-    return undefined;
-  }, [location]);
 
   const manager = useManager();
 
@@ -133,7 +125,6 @@ export function Transactions() {
           getActions={getTableActions}
           editAction={editTransaction}
           showFilters={showFilters}
-          categoryId={filteredCategory}
           setShowFilters={setShowFilters}
         />
       ),
@@ -141,7 +132,6 @@ export function Transactions() {
   }, [
     accounts.data,
     editTransaction,
-    filteredCategory,
     getTableActions,
     parsedCategories,
     showFilters,
@@ -157,17 +147,10 @@ export function Transactions() {
           categories={parsedCategories ?? []}
           getActions={getGridActions}
           editAction={editTransaction}
-          categoryId={filteredCategory}
         />
       ),
     })) ?? []) as TabsType[];
-  }, [
-    accounts.data,
-    editTransaction,
-    filteredCategory,
-    getGridActions,
-    parsedCategories,
-  ]);
+  }, [accounts.data, editTransaction, getGridActions, parsedCategories]);
 
   useEffect(() => {
     console.log(parseQueries(location.search));
