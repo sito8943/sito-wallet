@@ -40,6 +40,16 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
 
   // #region columns
 
+  const renderValueOrEmpty = (value: string | undefined | null) => {
+    if (value === "init") {
+      return t("_entities:transactionCategory.name.init");
+    }
+    if (value && value.length) {
+      return value;
+    }
+    return t("_entities:base.description.empty");
+  };
+
   const { columns } = useParseColumns<TransactionDto>(
     [
       {
@@ -57,6 +67,17 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
               ? t("_entities:transactionCategory.name.init")
               : entity.category?.name}
           </span>
+        ),
+      },
+      {
+        key: "description",
+        label: t("_entities:base.description.label"),
+        filterOptions: {
+          type: FilterTypes.text,
+          placeholder: t("_entities:base.description.placeholder"),
+        },
+        renderBody: (value: string) => (
+          <span className="truncate">{renderValueOrEmpty(value)}</span>
         ),
       },
       {
