@@ -1,0 +1,9 @@
+@import "../../styles/variables.css";
+
+.pretty-grid-main {
+  @apply flex flex-wrap max-xs:flex-col gap-3;
+}
+
+.pretty-grid-item {
+  @apply min-h-50 flex;
+}

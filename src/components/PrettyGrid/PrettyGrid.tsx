@@ -7,6 +7,9 @@ import { PrettyGridPropsType } from "./types";
 // component
 import { Loading } from "components";
 
+// styles
+import "./styles.css";
+
 export const PrettyGrid = <TDto extends BaseEntityDto>(
   props: PrettyGridPropsType<TDto>
 ) => {
@@ -22,9 +25,11 @@ export const PrettyGrid = <TDto extends BaseEntityDto>(
   }
 
   return data?.length ? (
-    <ul className="flex flex-wrap max-xs:flex-col gap-3">
+    <ul className="pretty-grid-main">
       {data?.map((item) => (
-        <li key={item.id}>{renderComponent(item)}</li>
+        <li className="pretty-grid-item" key={item.id}>
+          {renderComponent(item)}
+        </li>
       ))}
     </ul>
   ) : (
