@@ -12,7 +12,7 @@ export const About = () => {
 
   return (
     <main className="py-10 px-5 gap-5">
-      <h2 className="text-4xl">{t("_pages:about.title")}</h2>
+      <h2 className="text-4xl max-xs:text-2xl">{t("_pages:about.title")}</h2>
       <p>
         <Trans
           i18nKey="_pages:about.body"
