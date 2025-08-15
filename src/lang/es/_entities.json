@@ -118,6 +118,11 @@
     "name": {
       "unique": "Ya existe una currency con ese nombre",
       "placeholder": "Ej: CUP"
+    },
+    "symbol": {
+      "required": "El símbolo es requerido",
+      "label": "Símbolo",
+      "placeholder": "Ej: $"
     }
   }
 }

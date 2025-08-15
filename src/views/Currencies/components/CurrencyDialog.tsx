@@ -65,6 +65,27 @@ export function CurrencyForm(props: CurrencyFormPropsType) {
       />
       <Controller
         control={control}
+        rules={{
+          required: `${t("_entities:currency.symbol.required")}`,
+        }}
+        name="symbol"
+        disabled={isLoading}
+        render={({ field: { value, ...rest } }) => (
+          <TextInput
+            required
+            maxLength={20}
+            value={value ?? ""}
+            autoComplete={`${Tables.Currencies}-${t(
+              "_entities:currency.symbol.label"
+            )}`}
+            label={t("_entities:currency.symbol.label")}
+            placeholder={t("_entities:currency.symbol.placeholder")}
+            {...rest}
+          />
+        )}
+      />
+      <Controller
+        control={control}
         name="description"
         disabled={isLoading}
         render={({ field: { value, ...rest } }) => (

@@ -67,7 +67,7 @@
     "balance": {
       "initial": "Initial balance",
       "label": "Balance",
-      "placeholder": "ex: 600",
+      "placeholder": "Ex: 600",
       "greaterThan0": "Not enough insufficient balance"
     }
   },
@@ -117,7 +117,12 @@
   "currency": {
     "name": {
       "unique": "There is a currency with that name already",
-      "placeholder": "Ej: USD"
+      "placeholder": "Ex: USD"
+    },
+    "symbol": {
+      "required": "Symbol is required",
+      "label": "Symbol",
+      "placeholder": "Ex: $"
     }
   }
 }

@@ -9,11 +9,11 @@ import { CurrencyCardPropsType } from "../types";
 export function CurrencyCard(props: CurrencyCardPropsType) {
   const { t } = useTranslation();
 
-  const { id, onClick, actions, name, description, deleted } = props;
+  const { id, onClick, actions, name, description, symbol, deleted } = props;
 
   return (
     <ItemCard
-      title={name}
+      title={`${name} ${symbol?.length ? `(${symbol})` : ""}`}
       deleted={deleted}
       name={t("_pages:currencies.forms.edit")}
       aria-label={t("_pages:currencies.forms.editAria")}
