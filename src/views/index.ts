@@ -7,3 +7,4 @@ export * from "./Home";
 export * from "./NotFound";
 export * from "./sitemap";
 export * from "./menuMap";
+export * from "./Info";
