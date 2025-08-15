@@ -1,7 +1,6 @@
 import {
   BaseEntityDto,
   CommonAccountDto,
-  CommonCurrencyDto,
   CommonTransactionCategoryDto,
   TransactionType,
 } from "lib";
@@ -13,5 +12,4 @@ export interface TransactionDto extends BaseEntityDto {
   account: CommonAccountDto | null;
   category: CommonTransactionCategoryDto | null;
   date: string;
-  currency: CommonCurrencyDto;
 }

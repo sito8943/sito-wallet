@@ -1,12 +1,19 @@
 import { useTranslation } from "react-i18next";
 
+// @sito/dashboard
+import { Chip } from "@sito/dashboard";
+
 // components
 import { ItemCard } from "components";
 
 // types
 import { AccountCardPropsType } from "../types";
-import { Chip } from "@sito/dashboard";
+
+// lib
 import { AccountType } from "lib";
+
+// views
+import { Currency } from "views";
 
 export function AccountCard(props: AccountCardPropsType) {
   const { t } = useTranslation();
@@ -46,7 +53,14 @@ export function AccountCard(props: AccountCardPropsType) {
           )}
         />
         <Chip label={currency?.name} />
-        <Chip label={`${t("_entities:account.balance.label")}: ${balance}`} />
+        <Chip
+          label={
+            <>
+              {`${t("_entities:account.balance.label")}: ${balance}`}{" "}
+              <Currency name={currency?.name} symbol={currency?.symbol} />
+            </>
+          }
+        />
       </div>
     </ItemCard>
   );

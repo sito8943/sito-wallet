@@ -19,6 +19,7 @@ import { TransactionType } from "lib";
 
 // hooks
 import { useTimeAge } from "hooks";
+import { Currency } from "views";
 
 export function TransactionCard(props: TransactionCardPropsType) {
   const { t } = useTranslation();
@@ -32,7 +33,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
     type,
     amount,
     category,
-    currency,
+    account,
     deleted,
   } = props;
 
@@ -83,7 +84,17 @@ export function TransactionCard(props: TransactionCardPropsType) {
             </div>
           }
         />
-        <Chip label={`${String(amount)} ${currency.name}`} />
+        <Chip
+          label={
+            <>
+              {amount}{" "}
+              <Currency
+                name={account?.currency?.name}
+                symbol={account?.currency?.symbol}
+              />
+            </>
+          }
+        />
         <Chip label={timeAge(new Date(date))} />
       </div>
     </ItemCard>

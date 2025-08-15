@@ -28,6 +28,9 @@ import { icons } from "../utils";
 // types
 import { TransactionContainerPropsType } from "./types";
 
+// views
+import { Currency } from "views";
+
 export const TransactionTable = (props: TransactionContainerPropsType) => {
   const { accountId, categories, getActions, showFilters, setShowFilters } =
     props;
@@ -85,7 +88,11 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
         filterOptions: { type: FilterTypes.number },
         renderBody: (value: number, entity: TransactionDto) => (
           <p>
-            {value} {entity.currency.name}
+            {value}{" "}
+            <Currency
+              name={entity.account?.currency?.name}
+              symbol={entity.account?.currency?.symbol}
+            />
           </p>
         ),
       },
