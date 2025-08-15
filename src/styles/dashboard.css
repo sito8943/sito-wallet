@@ -1,5 +1,9 @@
 @import "./variables.css";
 
+.table-headers-cell {
+  @apply rounded-4xl
+}
+
 .chip-main {
   @apply py-1;
 }
