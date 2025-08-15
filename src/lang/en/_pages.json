@@ -130,7 +130,50 @@
     "copyright": "Sito Account App ©"
   },
   "about": {
-    "title": "About Sito wallet"
+    "title": "About Sito Wallet",
+    "body": "<p>At <strong>Sito Wallet</strong>, we believe managing your money should be easy and stress-free. That's why we offer an app where you can manage all your accounts, both digital and physical, in one place.</p><p>Created with care by <2>sito8943</2>, our mission is to help you understand and organize your finances clearly, safely, and without complications.</p><p>And the best part: <strong>it's completely free</strong>. Because we believe having control over your money shouldn't cost you anything.</p>",
+    "howTo": {
+      "title": "What you can do",
+      "body": "With Sito Wallet, you have everything you need to fully control your finances, both digital and physical, thanks to its simple and powerful tools.",
+      "steps": [
+        {
+          "title": "Currencies",
+          "items": [
+            "Create custom currencies.",
+            "Edit their details when values change or if you want to update their name or symbol.",
+            "Delete the ones you no longer use to keep your app clean.",
+            "View all your currencies in one place to know which currencies you are using."
+          ]
+        },
+        {
+          "title": "Accounts",
+          "items": [
+            "Add physical accounts (cash, banks) or digital accounts (PayPal, cryptocurrencies).",
+            "Modify details such as initial balance, name, or account type.",
+            "Delete inactive or unused accounts.",
+            "View and organize all your accounts clearly."
+          ]
+        },
+        {
+          "title": "Transaction Categories",
+          "items": [
+            "Create categories to organize your income and expenses (e.g., Food, Freelance Work).",
+            "Edit names and descriptions to match your way of classifying transactions.",
+            "Delete obsolete or unnecessary categories.",
+            "List all categories to have an organized view of your finances."
+          ]
+        },
+        {
+          "title": "Transactions",
+          "items": [
+            "Record income and expenses with all details (date, amount, category, account).",
+            "Edit transactions if you made a mistake or want to update information.",
+            "Delete incorrect or duplicate transactions.",
+            "Check your history to analyze how and where your money is moving."
+          ]
+        }
+      ]
+    }
   },
   "termsAndConditions": {
     "title": "Terms and Conditions"
