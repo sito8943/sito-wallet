@@ -59,6 +59,27 @@ const Currencies = loadable(() =>
     default: module.Currencies,
   }))
 );
+// Info
+const About = loadable(() =>
+  import("views").then((module) => ({
+    default: module.About,
+  }))
+);
+const CookiesPolicy = loadable(() =>
+  import("views").then((module) => ({
+    default: module.CookiesPolicy,
+  }))
+);
+const PrivacyPolicy = loadable(() =>
+  import("views").then((module) => ({
+    default: module.PrivacyPolicy,
+  }))
+);
+const TermsAndConditions = loadable(() =>
+  import("views").then((module) => ({
+    default: module.TermsAndConditions,
+  }))
+);
 
 export const Routes = () => {
   return (
@@ -81,7 +102,10 @@ export const Routes = () => {
           />
           <Route path="/accounts" element={<Accounts />} />
           <Route path="/currencies" element={<Currencies />} />
-
+          <Route path="/about-us" element={<About />} />
+          <Route path="/cookies-policy" element={<CookiesPolicy />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </ReactRoutes>

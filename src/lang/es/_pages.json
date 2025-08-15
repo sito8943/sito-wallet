@@ -135,7 +135,50 @@
     "copyright": "Sito Wallet ©"
   },
   "about": {
-    "title": "Acerca de Sito wallet"
+    "title": "Acerca de Sito wallet",
+    "body": "<p>En <strong>Sito Wallet</strong> creemos que llevar el control de tu dinero debe ser fácil y sin estrés. Por eso te ofrecemos una app donde puedes gestionar todas tus cuentas, tanto digitales como físicas, desde un solo lugar.</p><p>Creada con cariño por <2>sito8943</2>, nuestra misión es ayudarte a entender y organizar tus finanzas de forma clara, segura y sin complicaciones.</p><p>Y lo mejor: <strong>es totalmente gratis</strong>. Porque creemos que tener control de tu dinero no debería costarte nada.</p>",
+    "howTo": {
+      "title": "Lo que puedes hacer",
+      "body": "En Sito Wallet tienes todo lo necesario para llevar un control total de tus finanzas, tanto digitales como físicas, gracias a sus herramientas simples y potentes.",
+      "steps": [
+        {
+          "title": "Monedas",
+          "items": [
+            "Crear monedas personalizadas",
+            "Editar sus datos cuando cambie el valor o quieras actualizar su nombre o símbolo.",
+            "Eliminar las que ya no uses para mantener tu app limpia.",
+            "Consultar todas tus monedas en un solo lugar para saber en qué divisas trabajas."
+          ]
+        },
+        {
+          "title": "Cuentas",
+          "items": [
+            "Agregar cuentas físicas (efectivo, bancos) o digitales (PayPal, criptomonedas).",
+            "Modificar datos como saldo inicial, nombre o tipo de cuenta.",
+            "Borrar cuentas inactivas o que ya no uses.",
+            "Ver y organizar todas tus cuentas de forma clara."
+          ]
+        },
+        {
+          "title": "Categorías de transacciones",
+          "items": [
+            "Crear categorías para organizar tus gastos e ingresos (por ejemplo: Comida, Trabajo freelance).",
+            "Editar nombres y descripciones para que se adapten a tu forma de clasificar.",
+            "Eliminar categorías obsoletas o innecesarias.",
+            "Listar todas las categorías para tener una visión ordenada de tus finanzas."
+          ]
+        },
+        {
+          "title": "Transacciones",
+          "items": [
+            "Registrar ingresos y gastos con todos los detalles (fecha, monto, categoría, cuenta).",
+            "Editar transacciones si cometiste un error o quieres actualizar información.",
+            "Eliminar transacciones incorrectas o duplicadas.",
+            "Consultar tu historial para analizar cómo y en qué se mueve tu dinero."
+          ]
+        }
+      ]
+    }
   },
   "termsAndConditions": {
     "title": "Condiciones de uso"
