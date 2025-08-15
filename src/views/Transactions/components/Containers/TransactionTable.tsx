@@ -95,7 +95,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
         renderBody: (value) => <p>{getFormattedDateTime(value)}</p>,
       },
       {
-        key: "category.type",
+        key: "type",
         label: t("_entities:transactionCategory.type.label"),
         filterOptions: {
           multiple: false,
