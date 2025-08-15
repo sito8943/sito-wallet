@@ -8,6 +8,10 @@ export enum PageId {
   Accounts = "accounts",
   Currencies = "currencies",
   NotFound = "not-found",
+  About = "about",
+  CookiesPolicy = "cookies-policy",
+  TermsAndConditions = "terms-and-conditions",
+  PrivacyPolicy = "privacy-policy",
 }
 
 export const sitemap: ViewPageType[] = [
@@ -35,6 +39,13 @@ export const sitemap: ViewPageType[] = [
     key: PageId.NotFound,
     path: "/*",
   },
+  {
+    key: PageId.About,
+    path: "/about",
+  },
+  { key: PageId.CookiesPolicy, path: "/cookies-policy" },
+  { key: PageId.TermsAndConditions, path: "/termns-and-conditions" },
+  { key: PageId.PrivacyPolicy, path: "/privacy-policy" },
 ];
 
 /**
