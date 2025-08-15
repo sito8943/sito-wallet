@@ -41,7 +41,7 @@ export const sitemap: ViewPageType[] = [
   },
   {
     key: PageId.About,
-    path: "/about",
+    path: "/about-us",
   },
   { key: PageId.CookiesPolicy, path: "/cookies-policy" },
   { key: PageId.TermsAndConditions, path: "/termns-and-conditions" },
