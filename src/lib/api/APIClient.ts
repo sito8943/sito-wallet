@@ -8,7 +8,6 @@ import {
   fromLocal,
   QueryParam,
   QueryResult,
-  SessionDto,
 } from "lib";
 
 // utils
@@ -37,9 +36,9 @@ export class APIClient {
 
   defaultTokenAdquierer(useCookie?: boolean) {
     if (useCookie) return { credentials: "include" } as HeadersInit;
-    const auth = fromLocal(config.user, "object") as unknown as SessionDto;
-    if (auth?.token)
-      return { Authorization: `Bearer ${auth.token}` } as HeadersInit;
+    const token = fromLocal(config.user) as string;
+    if (token && token.length)
+      return { Authorization: `Bearer ${token}` } as HeadersInit;
 
     return undefined;
   }

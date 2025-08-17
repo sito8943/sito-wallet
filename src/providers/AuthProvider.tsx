@@ -36,8 +36,8 @@ const AuthProvider = (props: BasicProviderPropTypes) => {
 
   const logUser = useCallback((data: SessionDto) => {
     setAccount(data);
-    //TODO Save token on cookie
-    toLocal(config.user, data);
+    removeFromLocal(config.guestMode);
+    toLocal(config.user, data.token);
   }, []);
 
   const logoutUser = useCallback(async () => {
@@ -47,15 +47,13 @@ const AuthProvider = (props: BasicProviderPropTypes) => {
       console.error(err);
     }
     setAccount({} as SessionDto);
-    //TODO Remove token from cookie
     removeFromLocal(config.user);
   }, [manager.Auth]);
 
   const logUserFromLocal = useCallback(async () => {
     try {
-      await manager.Auth.getSession();
-      const loggedUser = fromLocal(config.user, "object");
-      if (loggedUser) setAccount(loggedUser);
+      const authDto = await manager.Auth.getSession();
+      console.log(authDto);
     } catch (err) {
       console.error(err);
       logoutUser();
