@@ -36,7 +36,7 @@ export default class AuthClient {
   }
 
   async getSession() {
-    const endpoint = "app/session";
+    const endpoint = "auth/session";
 
     return await this.api.doQuery<SessionDto>(endpoint, Methods.GET, null, {
       ...this.api.defaultTokenAdquierer(),

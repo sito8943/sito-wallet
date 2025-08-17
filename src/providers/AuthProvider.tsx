@@ -53,12 +53,12 @@ const AuthProvider = (props: BasicProviderPropTypes) => {
   const logUserFromLocal = useCallback(async () => {
     try {
       const authDto = await manager.Auth.getSession();
-      console.log(authDto);
+      logUser(authDto);
     } catch (err) {
       console.error(err);
       logoutUser();
     }
-  }, [logoutUser, manager.Auth]);
+  }, [logUser, logoutUser, manager.Auth]);
 
   const value = {
     account,
