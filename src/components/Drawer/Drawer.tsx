@@ -43,9 +43,9 @@ export function Drawer(props: DrawerPropsTypes) {
           {t("_pages:home.appName")}
         </h2>
         <ul className="flex flex-col">
-          {parsedMenu.map((link) => (
+          {parsedMenu.map((link, i) => (
             <li
-              key={link.page}
+              key={link.page ?? i}
               className={`w-full flex hover:bg-base-light ${
                 link.path === location.pathname ? "bg-base-light" : ""
               } animated`}
