@@ -109,8 +109,8 @@
       "placeholder": "Select a type",
       "required": "Type is required",
       "values": {
-        "In": "In",
-        "Out": "Out"
+        "In": "Income",
+        "Out": "Expense"
       }
     }
   },
