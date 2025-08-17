@@ -10,6 +10,9 @@ import {
   UpdateTransactionDto,
   FilterTransactionDto,
   AddTransactionDto,
+  TransactionTypeResumeDto,
+  Methods,
+  TransactionType,
 } from "lib";
 
 export default class TransactionClient extends BaseClient<
@@ -23,5 +26,19 @@ export default class TransactionClient extends BaseClient<
    */
   constructor() {
     super(Tables.Transactions);
+  }
+
+  async getTypeResume(
+    transactionType: TransactionType,
+    userId: number
+  ): Promise<TransactionTypeResumeDto> {
+    return await this.api.doQuery<TransactionTypeResumeDto>(
+      `${Tables.Transactions}/type-resume?type=${transactionType}&userId=${userId}`,
+      Methods.GET,
+      null,
+      {
+        ...this.api.defaultTokenAdquierer(),
+      }
+    );
   }
 }

@@ -1,5 +1,5 @@
 import { UseQueryResult } from "@tanstack/react-query";
-import { BaseEntityDto, QueryResult } from "lib";
+import { BaseEntityDto, QueryResult, TransactionType } from "lib";
 
 export type UseFetchPropsType<TFilterDto> = {
   filters?: TFilterDto;
@@ -13,3 +13,7 @@ export interface ApiQueryResult<TResponseDto extends BaseEntityDto>
   extends Omit<UseQueryResult<QueryResult<TResponseDto>>, "setTotal"> {
   setTotal: (total: number) => void;
 }
+
+export type UseTransactionTypeResumePropsType = {
+  type?: TransactionType;
+};

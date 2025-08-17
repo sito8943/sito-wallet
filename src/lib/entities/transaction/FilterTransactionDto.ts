@@ -1,4 +1,4 @@
-import { BaseFilterDto } from "lib";
+import { BaseFilterDto, TransactionType } from "lib";
 
 export interface FilterTransactionDto extends BaseFilterDto {
   accountId?: number;
@@ -7,4 +7,5 @@ export interface FilterTransactionDto extends BaseFilterDto {
   userId?: number;
   date?: string;
   currencyId?: number;
+  type?: TransactionType;
 }

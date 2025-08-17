@@ -2,7 +2,9 @@ import { useTranslation } from "react-i18next";
 
 // providers
 import { useAuth } from "providers";
-import { SearchWrapper } from "./components/SearchWrapper";
+
+// components
+import { Dashboard, SearchWrapper } from "./components";
 
 export function Home() {
   const { t } = useTranslation();
@@ -18,6 +20,7 @@ export function Home() {
       <div className="md:w-1/2 w-5/6">
         <SearchWrapper />
       </div>
+      <Dashboard />
     </main>
   );
 }

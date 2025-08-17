@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 // @sito/dashboard
@@ -7,7 +8,10 @@ import { useTableOptions } from "@sito/dashboard";
 import { useAuth, useLocalCache, useManager } from "providers";
 
 // types
-import { UseFetchPropsType } from "./types.ts";
+import {
+  UseFetchPropsType,
+  UseTransactionTypeResumePropsType,
+} from "./types.ts";
 
 // lib
 import {
@@ -16,8 +20,10 @@ import {
   FilterTransactionDto,
   QueryResult,
   Tables,
+  TransactionTypeResumeDto,
+  TransactionType,
 } from "lib";
-import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 export const TransactionsQueryKeys = {
   all: () => ({
@@ -29,8 +35,9 @@ export const TransactionsQueryKeys = {
   common: () => ({
     queryKey: [...TransactionsQueryKeys.all().queryKey, "common"],
   }),
-  typeResume: () => ({
-    queryKey: [...TransactionsQueryKeys.all().queryKey, "typeResume"],
+  typeResume: (filters: FilterTransactionDto) => ({
+    queryKey: [...TransactionsQueryKeys.all().queryKey, "typeResume", filters],
+    enabled: !!filters.type,
   }),
 };
 
@@ -97,34 +104,30 @@ export function useTransactionsList(
 }
 
 export function useTransactionTypeResume(
-  props: UseFetchPropsType<FilterTransactionDto>
-): UseQueryResult<QueryResult<TransactionDto>> {
-  const { filters = { deleted: false, date: undefined } } = props;
+  props: UseTransactionTypeResumePropsType
+): UseQueryResult<TransactionTypeResumeDto> {
+  const { type } = props;
+  const { t } = useTranslation();
 
   const manager = useManager();
   const { account } = useAuth();
-  const { loadCache, updateCache } = useLocalCache();
 
   return useQuery({
-    ...TransactionsQueryKeys.list({ accountId: account?.id, ...filters }),
+    ...TransactionsQueryKeys.typeResume({ userId: account?.id, type }),
     queryFn: async () => {
       try {
-        const result = await manager.Transactions.get(undefined, {
-          accountId: account?.id,
-          ...filters,
-        });
+        const result = await manager.Transactions.getTypeResume(
+          type ?? TransactionType.In,
+          account?.id ?? 0
+        );
 
-        updateCache(Tables.TransactionsTypeResume, result.items);
         return result;
       } catch (error) {
-        console.warn("API failed, loading transactions from cache", error);
-        const cached = loadCache(Tables.TransactionsTypeResume);
-        if (!cached || !Array.isArray(cached))
-          throw new Error("No cached transactions available");
-        return {
-          items: cached as unknown as TransactionDto,
-          total: cached?.length,
-        } as unknown as QueryResult<TransactionDto>;
+        throw new Error(
+          `${t("_accessibility:errors.unknownError")} ${
+            (error as Error).message
+          }`
+        );
       }
     },
   });
