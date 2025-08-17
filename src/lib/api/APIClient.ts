@@ -11,9 +11,11 @@ import {
   SessionDto,
 } from "lib";
 
+// utils
+import { parseQueries } from "./utils";
+
 // config
 import { config } from "../../config";
-import { parseQueries } from "./utils";
 
 /**
  * @class APIClient
@@ -21,7 +23,7 @@ import { parseQueries } from "./utils";
  */
 export class APIClient {
   secured: boolean;
-  tokenAdquirer!: () => HeadersInit | undefined;
+  tokenAdquirer!: (useCookie?: boolean) => HeadersInit | undefined;
 
   /**
    *
@@ -33,7 +35,8 @@ export class APIClient {
     if (!tokenAdquirer) this.tokenAdquirer = this.defaultTokenAdquierer;
   }
 
-  defaultTokenAdquierer() {
+  defaultTokenAdquierer(useCookie?: boolean) {
+    if (useCookie) return { credentials: "include" } as HeadersInit;
     const auth = fromLocal(config.user, "object") as unknown as SessionDto;
     if (auth?.token)
       return { Authorization: `Bearer ${auth.token}` } as HeadersInit;
@@ -48,6 +51,7 @@ export class APIClient {
     header?: HeadersInit
   ) {
     const securedHeader = this.secured ? this.defaultTokenAdquierer() : {};
+
     const { data: result, status } = await makeRequest(endpoint, method, body, {
       ...securedHeader,
       ...(header ?? {}),
