@@ -29,6 +29,9 @@ export const TransactionsQueryKeys = {
   common: () => ({
     queryKey: [...TransactionsQueryKeys.all().queryKey, "common"],
   }),
+  typeResume: () => ({
+    queryKey: [...TransactionsQueryKeys.all().queryKey, "typeResume"],
+  }),
 };
 
 export function useTransactionsList(
@@ -82,6 +85,40 @@ export function useTransactionsList(
       } catch (error) {
         console.warn("API failed, loading transactions from cache", error);
         const cached = loadCache(Tables.Transactions);
+        if (!cached || !Array.isArray(cached))
+          throw new Error("No cached transactions available");
+        return {
+          items: cached as unknown as TransactionDto,
+          total: cached?.length,
+        } as unknown as QueryResult<TransactionDto>;
+      }
+    },
+  });
+}
+
+export function useTransactionTypeResume(
+  props: UseFetchPropsType<FilterTransactionDto>
+): UseQueryResult<QueryResult<TransactionDto>> {
+  const { filters = { deleted: false, date: undefined } } = props;
+
+  const manager = useManager();
+  const { account } = useAuth();
+  const { loadCache, updateCache } = useLocalCache();
+
+  return useQuery({
+    ...TransactionsQueryKeys.list({ accountId: account?.id, ...filters }),
+    queryFn: async () => {
+      try {
+        const result = await manager.Transactions.get(undefined, {
+          accountId: account?.id,
+          ...filters,
+        });
+
+        updateCache(Tables.TransactionsTypeResume, result.items);
+        return result;
+      } catch (error) {
+        console.warn("API failed, loading transactions from cache", error);
+        const cached = loadCache(Tables.TransactionsTypeResume);
         if (!cached || !Array.isArray(cached))
           throw new Error("No cached transactions available");
         return {
