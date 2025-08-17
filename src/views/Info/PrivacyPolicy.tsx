@@ -1,3 +1,3 @@
 export const PrivacyPolicy = () => {
-  return <div></div>;
+  return <main></main>;
 };

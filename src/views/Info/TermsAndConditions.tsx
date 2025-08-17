@@ -1,3 +1,3 @@
 export const TermsAndConditions = () => {
-  return <div></div>;
+  return <main></main>;
 };

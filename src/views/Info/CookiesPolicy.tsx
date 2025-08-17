@@ -1,3 +1,3 @@
 export const CookiesPolicy = () => {
-  return <div></div>;
+  return <main></main>;
 };
