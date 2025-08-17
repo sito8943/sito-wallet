@@ -95,7 +95,6 @@ export const usePostForm = <
           showSuccessNotification({
             message: onSuccessMessage,
           } as NotificationType);
-        close();
       },
     }
   );
