@@ -3,7 +3,12 @@
     "title": "Inicio",
     "guest": "Invitado",
     "appName": "Sito Wallet",
-    "welcome": "Bienvenido {{user}}"
+    "welcome": "Bienvenido {{user}}",
+    "dashboard": {
+      "transactionTypeResume": {
+        "title": "{{transactionType}} por rango"
+      }
+    }
   },
   "common": {
     "actions": {

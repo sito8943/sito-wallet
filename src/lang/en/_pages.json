@@ -3,7 +3,12 @@
     "title": "Home",
     "guest": "Guest",
     "appName": "Sito Wallet",
-    "welcome": "Welcome {{user}}"
+    "welcome": "Welcome {{user}}",
+    "dashboard": {
+      "transactionTypeResume": {
+        "title": "{{transactionType}} per range"
+      }
+    }
   },
   "common": {
     "actions": {
