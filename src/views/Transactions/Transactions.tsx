@@ -29,7 +29,7 @@ import {
 import { FilterTransactionDto, Tables, TransactionDto } from "lib";
 
 // providers
-import { useLocalCache, useManager } from "providers";
+import { useManager } from "providers";
 
 // styles
 import "./styles.css";
@@ -44,8 +44,6 @@ export function Transactions() {
   const manager = useManager();
 
   const [showFilters, setShowFilters] = useState(false);
-
-  const { loadCache } = useLocalCache();
 
   // #region categories
 
@@ -98,11 +96,7 @@ export function Transactions() {
 
   const editTransaction = useEditTransaction();
 
-  const cachedTransactions = useMemo(() => {
-    return loadCache(Tables.Transactions) ?? [];
-  }, [loadCache]);
-
-  const exportTransactions = useExportAction({ data: cachedTransactions });
+  const exportTransactions = useExportAction({ entity: Tables.Transactions });
 
   // #endregion
 
