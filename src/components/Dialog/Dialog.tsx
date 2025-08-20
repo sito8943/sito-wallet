@@ -63,6 +63,20 @@ export const Dialog = (props: DialogPropsType) => {
     [t, handleClose]
   );
 
+  useEffect(() => {
+    const toggleBodyOverflow = (open: boolean) => {
+      if (open) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "auto";
+      }
+    };
+    toggleBodyOverflow(open);
+    return () => {
+      toggleBodyOverflow(open);
+    };
+  }, [open]);
+
   return createPortal(
     <div
       aria-label={t("_accessibility:ariaLabels.closeDialog")}
