@@ -4,4 +4,6 @@ import { TablePropsType } from "@sito/dashboard";
 import { BaseEntityDto } from "lib";
 
 export type WalletTablePropsType<TRow extends BaseEntityDto> =
-  TablePropsType<TRow>;
+  TablePropsType<TRow> & {
+    total: number;
+  };
