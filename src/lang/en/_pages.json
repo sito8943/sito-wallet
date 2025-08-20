@@ -36,6 +36,9 @@
       },
       "refresh": {
         "text": "Refresh"
+      },
+      "export": {
+        "text": "Export"
       }
     }
   },
