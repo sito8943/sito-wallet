@@ -35,7 +35,8 @@ export type QueryResult<TDto> = {
   order: "asc" | "desc";
   currentPage: number;
   pageSize: number;
-  total: number;
+  totalElements: number;
+  totalPages: number;
   items: TDto[];
 };
 
