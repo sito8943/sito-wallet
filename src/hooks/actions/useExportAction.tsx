@@ -9,11 +9,11 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { GlobalActions, UseExportAction } from "hooks";
 
 export const useExportAction = <TRow extends object>(
-  props: UseExportAction<TRow>
+  props: UseExportAction
 ) => {
   const { t } = useTranslation();
 
-  const { data = [], hidden = false, disabled = false } = props;
+  const { entity = "", hidden = false, disabled = false } = props;
 
   const action = useCallback(
     () => ({
@@ -22,26 +22,22 @@ export const useExportAction = <TRow extends object>(
       disabled: disabled,
       icon: <FontAwesomeIcon icon={faDownload} />,
       tooltip: t("_pages:common.actions.export.text"),
-      onClick: () => {
+      onClick: (data: TRow) => {
         const json = JSON.stringify(data, null, 2);
 
-        // Crear un blob
         const blob = new Blob([json], { type: "application/json" });
 
-        // Crear una URL temporal
         const url = URL.createObjectURL(blob);
 
-        // Crear un link invisible
         const link = document.createElement("a");
         link.href = url;
-        link.download = "data.json"; // nombre del archivo
+        link.download = `${entity}.json`;
         link.click();
 
-        // Liberar memoria
         URL.revokeObjectURL(url);
       },
     }),
-    [data, disabled, hidden, t]
+    [disabled, entity, hidden, t]
   );
 
   return {

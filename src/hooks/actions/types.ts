@@ -1,3 +1,5 @@
+import { Tables } from "lib";
+
 export interface UseActionPropTypes {
   hidden?: boolean;
   disabled?: boolean;
@@ -13,8 +15,8 @@ export interface UseMultipleActionPropTypes<TInDto> extends UseActionPropTypes {
   hidden?: boolean;
 }
 
-export interface UseExportAction<TRow> extends UseActionPropTypes {
-  data: TRow
+export interface UseExportAction extends UseActionPropTypes {
+  entity: Tables
 }
 
 export enum GlobalActions {
