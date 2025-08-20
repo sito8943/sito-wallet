@@ -1,5 +1,6 @@
 export interface UseActionPropTypes {
   hidden?: boolean;
+  disabled?: boolean;
 }
 
 export interface UseSingleActionPropTypes<TInDto> extends UseActionPropTypes {
@@ -12,10 +13,15 @@ export interface UseMultipleActionPropTypes<TInDto> extends UseActionPropTypes {
   hidden?: boolean;
 }
 
+export interface UseExportAction<TRow> extends UseActionPropTypes {
+  data: TRow
+}
+
 export enum GlobalActions {
   Add = "add",
   Edit = "edit",
   Delete = "delete",
   Restore = "restore",
   Refresh = "refresh",
+  Export = "export",
 }

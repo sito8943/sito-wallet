@@ -12,6 +12,7 @@ import {
   TransactionsQueryKeys,
   useAccountsCommon,
   useDeleteDialog,
+  useExportAction,
   useRestoreDialog,
   useTransactionCategoriesCommon,
 } from "hooks";
@@ -25,10 +26,10 @@ import {
 } from "./components";
 
 // lib
-import { FilterTransactionDto, TransactionDto } from "lib";
+import { FilterTransactionDto, Tables, TransactionDto } from "lib";
 
 // providers
-import { useManager } from "providers";
+import { useLocalCache, useManager } from "providers";
 
 // styles
 import "./styles.css";
@@ -43,6 +44,8 @@ export function Transactions() {
   const manager = useManager();
 
   const [showFilters, setShowFilters] = useState(false);
+
+  const { loadCache } = useLocalCache();
 
   // #region categories
 
@@ -94,6 +97,12 @@ export function Transactions() {
   });
 
   const editTransaction = useEditTransaction();
+
+  const cachedTransactions = useMemo(() => {
+    return loadCache(Tables.Transactions) ?? [];
+  }, [loadCache]);
+
+  const exportTransactions = useExportAction({ data: cachedTransactions });
 
   // #endregion
 
@@ -163,10 +172,15 @@ export function Transactions() {
     }
   }, [accountDesktopTabs, location]);
 
+  const pageToolbar = useMemo(() => {
+    return [exportTransactions.action()];
+  }, [exportTransactions]);
+
   return (
     <Page
       title={t("_pages:transactions.title")}
       isLoading={accounts.isLoading || categories.isLoading}
+      actions={pageToolbar}
       addOptions={{
         onClick: () => addTransaction.onClick(),
         disabled: accounts.isLoading,
