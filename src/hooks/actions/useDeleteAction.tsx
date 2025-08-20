@@ -14,18 +14,18 @@ import { BaseEntityDto } from "lib";
 export const useDeleteAction = (props: UseMultipleActionPropTypes<number>) => {
   const { t } = useTranslation();
 
-  const { onClick, hidden = false } = props;
+  const { onClick, hidden = false, disabled = false } = props;
 
   const action = useCallback(
     (record: BaseEntityDto) => ({
       id: GlobalActions.Delete,
       hidden: record.deleted || hidden,
-      disabled: record.deleted,
+      disabled: record.deleted || disabled,
       icon: <FontAwesomeIcon className="text-red-500" icon={faTrash} />,
       tooltip: t("_pages:common.actions.delete.text"),
       onClick: () => onClick([record?.id]),
     }),
-    [hidden, onClick, t]
+    [disabled, hidden, onClick, t]
   );
 
   return {
