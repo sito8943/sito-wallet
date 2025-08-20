@@ -151,6 +151,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
     <Error message={error?.message} />
   ) : (
     <WalletTable
+      total={data?.totalElements ?? 0}
       data={data?.items ?? []}
       actions={getActions}
       isLoading={isLoading}
