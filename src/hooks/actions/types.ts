@@ -16,7 +16,8 @@ export interface UseMultipleActionPropTypes<TInDto> extends UseActionPropTypes {
 }
 
 export interface UseExportAction extends UseActionPropTypes {
-  entity: Tables
+  onClick: () => void;
+  entity: Tables;
 }
 
 export enum GlobalActions {
