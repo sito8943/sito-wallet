@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // providers
@@ -18,11 +18,12 @@ import {
   useCurrenciesList,
   CurrenciesQueryKeys,
   useRestoreDialog,
+  useExportActionMutate,
 } from "hooks";
 import { useAddCurrency, useEditCurrency } from "./hooks";
 
 // types
-import { CurrencyDto } from "lib";
+import { CurrencyDto, Tables } from "lib";
 
 export function Currencies() {
   const { t } = useTranslation();
@@ -47,6 +48,11 @@ export function Currencies() {
 
   const editCurrency = useEditCurrency();
 
+  const exportCurrency = useExportActionMutate({
+    entity: Tables.Currencies,
+    mutationFn: () => manager.Currencies.export(),
+  });
+
   // #endregion
 
   const getActions = useCallback(
@@ -57,10 +63,15 @@ export function Currencies() {
     [deleteCurrency, restoreCurrency]
   );
 
+  const pageToolbar = useMemo(() => {
+    return [exportCurrency.action()];
+  }, [exportCurrency]);
+
   return (
     <Page
       title={t("_pages:currencies.title")}
       isLoading={isLoading}
+      actions={pageToolbar}
       addOptions={{
         onClick: () => addCurrency.onClick(),
         disabled: isLoading,

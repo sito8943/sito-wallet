@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // providers
@@ -14,6 +14,7 @@ import {
   useAccountsList,
   AccountsQueryKeys,
   useRestoreDialog,
+  useExportActionMutate,
 } from "hooks";
 import {
   useAddAccountDialog,
@@ -22,7 +23,7 @@ import {
 } from "./hooks";
 
 // types
-import { AccountDto } from "lib";
+import { AccountDto, Tables } from "lib";
 
 export function Accounts() {
   const { t } = useTranslation();
@@ -49,6 +50,11 @@ export function Accounts() {
 
   const editAccount = useEditAccountDialog();
 
+  const exportAccounts = useExportActionMutate({
+    entity: Tables.Accounts,
+    mutationFn: () => manager.Accounts.export(),
+  });
+
   // #endregion
 
   const getActions = useCallback(
@@ -60,10 +66,15 @@ export function Accounts() {
     [deleteAccount, restoreAccount, viewTransactions]
   );
 
+  const pageToolbar = useMemo(() => {
+    return [exportAccounts.action()];
+  }, [exportAccounts]);
+
   return (
     <Page
       title={t("_pages:accounts.title")}
       isLoading={isLoading}
+      actions={pageToolbar}
       addOptions={{
         onClick: () => addAccount.onClick(),
         disabled: isLoading,

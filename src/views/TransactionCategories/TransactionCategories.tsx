@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // providers
@@ -18,6 +18,7 @@ import {
   useTransactionCategoriesList,
   TransactionCategoriesQueryKeys,
   useRestoreDialog,
+  useExportActionMutate,
 } from "hooks";
 import {
   useAddTransactionCategoryDialog,
@@ -25,7 +26,7 @@ import {
 } from "./hooks";
 
 // types
-import { TransactionCategoryDto } from "lib";
+import { Tables, TransactionCategoryDto } from "lib";
 
 export function TransactionCategories() {
   const { t } = useTranslation();
@@ -50,6 +51,11 @@ export function TransactionCategories() {
 
   const editTransactionCategory = useEditTransactionCategoryDialog();
 
+  const exportTransactionCategory = useExportActionMutate({
+    entity: Tables.TransactionCategories,
+    mutationFn: () => manager.TransactionCategories.export(),
+  });
+
   // #endregion
 
   const getActions = useCallback(
@@ -60,10 +66,15 @@ export function TransactionCategories() {
     [deleteTransactionCategory, restoreTransactionCategory]
   );
 
+  const pageToolbar = useMemo(() => {
+    return [exportTransactionCategory.action()];
+  }, [exportTransactionCategory]);
+
   return (
     <Page
       title={t("_pages:transactionCategories.title")}
       isLoading={isLoading}
+      actions={pageToolbar}
       addOptions={{
         onClick: () => addTransactionCategory.onClick(),
         disabled: isLoading,
