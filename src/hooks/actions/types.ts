@@ -1,8 +1,7 @@
-import { Tables } from "lib";
-
 export interface UseActionPropTypes {
   hidden?: boolean;
   disabled?: boolean;
+  isLoading?: boolean;
 }
 
 export interface UseSingleActionPropTypes<TInDto> extends UseActionPropTypes {
@@ -17,7 +16,6 @@ export interface UseMultipleActionPropTypes<TInDto> extends UseActionPropTypes {
 
 export interface UseExportAction extends UseActionPropTypes {
   onClick: () => void;
-  entity: Tables;
 }
 
 export enum GlobalActions {

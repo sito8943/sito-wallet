@@ -12,7 +12,7 @@ import {
   TransactionsQueryKeys,
   useAccountsCommon,
   useDeleteDialog,
-  useExportAction,
+  useExportActionMutate,
   useRestoreDialog,
   useTransactionCategoriesCommon,
 } from "hooks";
@@ -33,6 +33,7 @@ import { useManager } from "providers";
 
 // styles
 import "./styles.css";
+import { useTableOptions } from "@sito/dashboard";
 
 export function Transactions() {
   const { t } = useTranslation();
@@ -96,7 +97,12 @@ export function Transactions() {
 
   const editTransaction = useEditTransaction();
 
-  const exportTransactions = useExportAction({ entity: Tables.Transactions });
+  const { filters } = useTableOptions();
+
+  const exportTransactions = useExportActionMutate({
+    entity: Tables.Transactions,
+    mutationFn: () => manager.Transactions.export(filters),
+  });
 
   // #endregion
 

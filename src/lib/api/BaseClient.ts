@@ -14,6 +14,7 @@ import {
   Methods,
   QueryResult,
 } from "lib";
+import { parseQueries } from "./utils/query.ts";
 
 export default class BaseClient<
   TDto extends BaseEntityDto,
@@ -73,6 +74,7 @@ export default class BaseClient<
   /**
    *
    * @param query - Where conditions (key-value)
+   * @param filters - Filters to apply
    * @returns - Query result
    */
   async get(
@@ -80,6 +82,21 @@ export default class BaseClient<
     filters?: TFilter
   ): Promise<QueryResult<TDto>> {
     return await this.api.get<TDto, TFilter>(`${this.table}`, query, filters);
+  }
+
+  /**
+   *
+   * @param filters - Filters to apply
+   * @returns - List of elementes
+   */
+  async export(filters?: TFilter): Promise<TDto[]> {
+    const builtUrl = parseQueries<TDto, TFilter>(
+      `${this.table}/export`,
+      undefined,
+      filters
+    );
+
+    return await this.api.doQuery<TDto[]>(builtUrl, Methods.GET, undefined);
   }
 
   /**

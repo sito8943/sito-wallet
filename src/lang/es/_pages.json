@@ -36,6 +36,10 @@
       },
       "refresh": {
         "text": "Recargar"
+      },
+      "export": {
+        "text": "Exportar",
+        "successMessage": "Exportado correctamente"
       }
     }
   },

@@ -72,5 +72,5 @@ export const parseQueries = <
     }
   }
 
-  return queryParts.length ? `${endpoint}?${queryParts.join("&")}` : "";
+  return queryParts.length ? `${endpoint}?${queryParts.join("&")}` : endpoint;
 };
