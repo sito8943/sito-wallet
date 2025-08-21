@@ -16,3 +16,8 @@ export type ItemCardPropsType<TEntity extends BaseEntityDto> = {
   onClick?: () => void;
   deleted: boolean;
 };
+
+export type ItemCardTitlePropsType = {
+  children: ReactNode;
+  deleted?: boolean;
+};

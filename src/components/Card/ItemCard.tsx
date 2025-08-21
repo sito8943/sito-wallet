@@ -1,5 +1,5 @@
 // components
-import { Actions } from "..";
+import { Actions, ItemCardTitle } from "components";
 
 // lib
 import { BaseEntityDto } from "lib";
@@ -38,13 +38,7 @@ export function ItemCard<TRow extends BaseEntityDto>(
         {...rest}
       >
         {typeof title === "string" || typeof title === "number" ? (
-          <h3
-            className={`text-lg ${
-              deleted ? "!text-secondary" : "!text-text"
-            } text-start`}
-          >
-            {title}
-          </h3>
+          <ItemCardTitle>{title}</ItemCardTitle>
         ) : (
           title
         )}
