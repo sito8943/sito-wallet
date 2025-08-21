@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Controller } from "react-hook-form";
+import { Controller, useWatch } from "react-hook-form";
 
 // @sito/dashboard
 import { TextInput, Option, AutocompleteInput } from "@sito/dashboard";
@@ -25,6 +25,7 @@ export function TransactionForm(props: TransactionFormPropsType) {
   const {
     control,
     account,
+    open,
     isLoading,
     setValue,
     lockCategory = false,
@@ -61,7 +62,17 @@ export function TransactionForm(props: TransactionFormPropsType) {
 
   useEffect(() => {
     if (account && setValue) setValue("account", account);
-  }, [account, setValue]);
+  }, [open, account, setValue]);
+
+  const description = useWatch({ control, name: "description" });
+
+  useEffect(() => {
+    if (description === "init" && setValue)
+      setValue(
+        "description",
+        t("_entities:transactionCategory.description.init")
+      );
+  }, [open, description, setValue, t]);
 
   return (
     <>
