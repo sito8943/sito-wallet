@@ -49,10 +49,9 @@ export function TransactionForm(props: TransactionFormPropsType) {
       [
         ...(categories?.data?.map((category) => ({
           ...category,
-          name:
-            category.name === "init"
-              ? t("_entities:transactionCategory.name.init")
-              : category.name,
+          name: category.initial
+            ? t("_entities:transactionCategory.name.init")
+            : category.name,
         })) ?? []),
       ] as Option[],
     [categories?.data, t]
@@ -64,15 +63,15 @@ export function TransactionForm(props: TransactionFormPropsType) {
     if (account && setValue) setValue("account", account);
   }, [open, account, setValue]);
 
-  const description = useWatch({ control, name: "description" });
+  const initial = useWatch({ control, name: "initial" });
 
   useEffect(() => {
-    if (description === "init" && setValue)
+    if (initial && setValue)
       setValue(
         "description",
         t("_entities:transactionCategory.description.init")
       );
-  }, [open, description, setValue, t]);
+  }, [open, initial, setValue, t]);
 
   return (
     <>

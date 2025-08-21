@@ -29,6 +29,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
     onClick,
     actions,
     description,
+    initial,
     date,
     type,
     amount,
@@ -41,15 +42,14 @@ export function TransactionCard(props: TransactionCardPropsType) {
 
   const parsedDescription = useMemo(() => {
     if (!description?.length) return t("_entities:base.description.empty");
-    if (description === "init")
-      return t("_entities:transactionCategory.description.init");
+    if (initial) return t("_entities:transactionCategory.description.init");
     return description;
-  }, [description, t]);
+  }, [description, initial, t]);
 
   return (
     <ItemCard
       title={
-        category?.name === "init"
+        category?.initial
           ? t("_entities:transactionCategory.name.init")
           : category?.name
       }

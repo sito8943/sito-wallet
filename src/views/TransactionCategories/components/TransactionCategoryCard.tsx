@@ -24,20 +24,18 @@ export function TransactionCategoryCard(
 ) {
   const { t } = useTranslation();
 
-  const { id, onClick, actions, name, description, type, deleted } = props;
+  const { id, onClick, actions, name, description, type, deleted, initial } =
+    props;
 
   const parsedDescription = useMemo(() => {
     if (!description?.length) return t("_entities:base.description.empty");
-    if (description === "init")
-      return t("_entities:transactionCategory.description.init");
+    if (initial) return t("_entities:transactionCategory.description.init");
     return description;
-  }, [description, t]);
+  }, [description, initial, t]);
 
   return (
     <ItemCard
-      title={
-        name === "init" ? t("_entities:transactionCategory.name.init") : name
-      }
+      title={initial ? t("_entities:transactionCategory.name.init") : name}
       deleted={deleted}
       name={t("_pages:transactionCategory.forms.edit")}
       aria-label={t("_pages:transactionCategory.forms.editAria")}

@@ -54,10 +54,9 @@ export function Transactions() {
     () =>
       categories?.data?.map((category) => ({
         ...category,
-        name:
-          category.name === "init"
-            ? t("_entities:transactionCategory.name.init")
-            : category.name,
+        name: category.initial
+          ? t("_entities:transactionCategory.name.init")
+          : category.name,
       })),
     [categories?.data, t]
   );

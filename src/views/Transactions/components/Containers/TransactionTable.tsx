@@ -43,10 +43,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
 
   // #region columns
 
-  const renderValueOrEmpty = (value: string | undefined | null) => {
-    if (value === "init") {
-      return t("_entities:transactionCategory.name.init");
-    }
+  const renderEmpty = (value: string | undefined | null) => {
     if (value && value.length) {
       return value;
     }
@@ -66,7 +63,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
         },
         renderBody: (_: string, entity: TransactionDto) => (
           <span className="truncate">
-            {entity.category?.name === "init"
+            {entity.category?.initial
               ? t("_entities:transactionCategory.name.init")
               : entity.category?.name}
           </span>
@@ -79,8 +76,12 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
           type: FilterTypes.text,
           placeholder: t("_entities:base.description.placeholder"),
         },
-        renderBody: (value: string) => (
-          <span className="truncate">{renderValueOrEmpty(value)}</span>
+        renderBody: (value: string, entity: TransactionDto) => (
+          <span className="truncate">
+            {entity.initial
+              ? t("_entities:transactionCategory.name.init")
+              : renderEmpty(value)}
+          </span>
         ),
       },
       {

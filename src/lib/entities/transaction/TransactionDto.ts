@@ -7,6 +7,7 @@ import {
 
 export interface TransactionDto extends BaseEntityDto {
   description: string;
+  initial: boolean;
   type: TransactionType;
   amount: number;
   account: CommonAccountDto | null;
