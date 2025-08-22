@@ -1,12 +1,11 @@
 import { useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
 import { Action, Badge, useTableOptions } from "@sito/dashboard";
 
 // components
-import { Actions, Loading, ActionsDropdown } from "components";
+import { Loading } from "components";
 
 // types
 import { PagePropsType } from "./types.ts";
@@ -15,7 +14,6 @@ import { PagePropsType } from "./types.ts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,
-  faArrowLeft,
   faFilter,
   faRotateLeft,
 } from "@fortawesome/free-solid-svg-icons";
@@ -28,6 +26,12 @@ import { GlobalActions } from "hooks";
 
 // providers
 import { queryClient } from "providers";
+
+// components
+import { PageHeader } from "./PageHeader.tsx";
+
+// styles
+import "./styles.css";
 
 export const Page = <TEntity extends BaseEntityDto>(
   props: PagePropsType<TEntity>
@@ -45,8 +49,6 @@ export const Page = <TEntity extends BaseEntityDto>(
   } = props;
 
   const { t } = useTranslation();
-
-  const navigate = useNavigate();
 
   const { countOfFilters } = useTableOptions();
 
@@ -89,29 +91,7 @@ export const Page = <TEntity extends BaseEntityDto>(
   return (
     <main className="">
       <div className={`${animated ? "apparition" : ""} flex flex-col`}>
-        <div className="flex items-center justify-between px-5 py-2 bg-base">
-          <div className="flex gap-2 items-center justify-start">
-            {showBack && (
-              <button
-                onClick={() => navigate(-1)}
-                className="action"
-                name={t("_accessibility:buttons.back")}
-                data-tooltip-id="tooltip"
-                data-tooltip-content={t("_accessibility:buttons.back")}
-              >
-                <FontAwesomeIcon icon={faArrowLeft} />
-              </button>
-            )}
-            <h2 className="text-3xl font-bold">{title}</h2>
-          </div>
-          <div>
-            <Actions className="max-xs:!hidden" actions={parsedActions ?? []} />
-            <ActionsDropdown
-              className="min-xs:hidden"
-              actions={parsedActions ?? []}
-            />
-          </div>
-        </div>
+        <PageHeader showBack={showBack} actions={parsedActions} title={title} />
         <div className="px-5 py-3 h-full">
           {isLoading ? (
             <Loading containerClassName="flex justify-center items-center h-50" />

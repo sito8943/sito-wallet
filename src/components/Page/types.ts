@@ -15,3 +15,9 @@ export type PagePropsType<TRow extends BaseEntityDto> = {
   showBack?: boolean;
   queryKey?: string[];
 };
+
+export type PageHeaderPropsType<TRow extends BaseEntityDto> = {
+  title?: string;
+  actions?: Action<TRow>[];
+  showBack?: boolean;
+};

@@ -13,13 +13,18 @@ import "./styles.css";
 // clock
 import { Clock } from "./Clock";
 
+// hook
+import { useScrollTrigger } from "hooks";
+
 export function Navbar(props: NavbarPropsType) {
   const { t } = useTranslation();
 
   const { openDrawer } = props;
 
+  const passedOffset = useScrollTrigger(100);
+
   return (
-    <header id="header" className="header bg-base">
+    <header id="header" className={`header ${passedOffset ? "fixed" : ""}`}>
       <div className="flex gap-2 items-center">
         <button
           type="button"
