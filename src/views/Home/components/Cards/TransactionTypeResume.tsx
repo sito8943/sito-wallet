@@ -22,7 +22,10 @@ export const TransactionTypeResume = () => {
     useState<CommonAccountDto | null>(null);
   const { data: accounts } = useAccountsCommon();
 
-  const { data } = useTransactionTypeResume({ type: selectedType });
+  const { data } = useTransactionTypeResume({
+    type: selectedType,
+    accountId: selectedAccount?.id,
+  });
 
   useEffect(() => {
     if (accounts?.length) {
@@ -45,9 +48,7 @@ export const TransactionTypeResume = () => {
         <AutocompleteInput
           value={selectedAccount}
           multiple={false}
-          onChange={(value) => {
-            console.log(value);
-          }}
+          onChange={(value) => setSelectedAccount(value as CommonAccountDto)}
           options={accounts ?? []}
         />
       </div>

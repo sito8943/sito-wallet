@@ -1,9 +1,6 @@
 // @sito/dashboard
 import { SortOrder } from "@sito/dashboard";
 
-// entities
-import { BaseEntityDto } from "../entities";
-
 export enum Tables {
   Accounts = "accounts",
   Currencies = "currencies",
@@ -40,7 +37,7 @@ export type QueryResult<TDto> = {
   items: TDto[];
 };
 
-export type QueryParam<TDto extends BaseEntityDto> = {
+export type QueryParam<TDto> = {
   sortingBy: keyof TDto;
   sortingOrder: SortOrder;
   currentPage: number;

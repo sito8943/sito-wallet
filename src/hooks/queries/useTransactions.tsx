@@ -122,10 +122,11 @@ export function useTransactionTypeResume(
     enabled: !!type && !!accountId && !!account?.id,
     queryFn: async () => {
       try {
-        const result = await manager.Transactions.getTypeResume(
-          type ?? TransactionType.In,
-          account?.id ?? 0
-        );
+        const result = await manager.Transactions.getTypeResume({
+          type: type ?? TransactionType.In,
+          userId: account?.id ?? 0,
+          accountId,
+        });
 
         return result;
       } catch (error) {

@@ -16,4 +16,5 @@ export interface ApiQueryResult<TResponseDto extends BaseEntityDto>
 
 export type UseTransactionTypeResumePropsType = {
   type?: TransactionType;
+  accountId?: number;
 };

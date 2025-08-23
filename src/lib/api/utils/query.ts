@@ -2,7 +2,7 @@
 import { QueryParam } from "../types";
 
 // entities
-import { BaseEntityDto, BaseFilterDto } from "../../entities";
+import { BaseFilterDto } from "../../entities";
 
 /**
  * Builds a query string from pagination and filter params
@@ -10,10 +10,7 @@ import { BaseEntityDto, BaseFilterDto } from "../../entities";
  * @param filters - Filters to apply
  * @returns - Encoded query string
  */
-export const parseQueries = <
-  TDto extends BaseEntityDto,
-  TFilter extends BaseFilterDto
->(
+export const parseQueries = <TDto, TFilter extends BaseFilterDto>(
   endpoint: string,
   query?: QueryParam<TDto>,
   filters?: TFilter

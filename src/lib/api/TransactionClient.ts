@@ -12,8 +12,10 @@ import {
   AddTransactionDto,
   TransactionTypeResumeDto,
   Methods,
-  TransactionType,
 } from "lib";
+
+// utils
+import { parseQueries } from "./utils";
 
 export default class TransactionClient extends BaseClient<
   TransactionDto,
@@ -29,11 +31,15 @@ export default class TransactionClient extends BaseClient<
   }
 
   async getTypeResume(
-    transactionType: TransactionType,
-    userId: number
+    filters: FilterTransactionDto
   ): Promise<TransactionTypeResumeDto> {
+    const builtUrl = parseQueries<
+      TransactionTypeResumeDto,
+      FilterTransactionDto
+    >(`${Tables.Transactions}/type-resume`, undefined, filters);
+
     return await this.api.doQuery<TransactionTypeResumeDto>(
-      `${Tables.Transactions}/type-resume?type=${transactionType}&userId=${userId}`,
+      builtUrl,
       Methods.GET,
       null,
       {
