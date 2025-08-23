@@ -36,6 +36,7 @@ export function useAccountsList(
 
   return useQuery({
     ...AccountsQueryKeys.list(),
+    enabled: !!account?.id,
     queryFn: async () => {
       try {
         const result = await manager.Accounts.get(undefined, {
@@ -66,6 +67,7 @@ export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
 
   return useQuery({
     ...AccountsQueryKeys.common(),
+    enabled: !!account?.id,
     queryFn: async () => {
       try {
         const result = await manager.Accounts.commonGet({
@@ -79,10 +81,11 @@ export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
         const cached = loadCache(Tables.Accounts) as CommonAccountDto[];
         if (!cached || !Array.isArray(cached))
           throw new Error("No cached accounts available");
-        return cached.map(({ id, name, updatedAt }) => ({
+        return cached.map(({ id, name, updatedAt, currency }) => ({
           id,
           name,
           updatedAt,
+          currency,
         }));
       }
     },

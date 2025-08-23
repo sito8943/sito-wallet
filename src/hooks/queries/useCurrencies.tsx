@@ -36,6 +36,7 @@ export function useCurrenciesList(
 
   return useQuery({
     ...CurrenciesQueryKeys.list(),
+    enabled: !!account?.id,
     queryFn: async () => {
       try {
         const result = await manager.Currencies.get(undefined, {
@@ -65,6 +66,7 @@ export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
 
   return useQuery({
     ...CurrenciesQueryKeys.common(),
+    enabled: !!account?.id,
     queryFn: async () => {
       try {
         const result = await manager.Currencies.commonGet({
@@ -78,11 +80,14 @@ export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
         const cached = loadCache(Tables.Currencies) as CommonCurrencyDto[];
         if (!cached || !Array.isArray(cached))
           throw new Error("No cached currencies available");
-        return cached.map(({ id, name, updatedAt }) => ({
-          id,
-          name,
-          updatedAt,
-        }));
+        return cached.map(
+          ({ id, name, updatedAt, symbol }: CommonCurrencyDto) => ({
+            id,
+            name,
+            symbol,
+            updatedAt,
+          })
+        );
       }
     },
   });

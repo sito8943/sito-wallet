@@ -38,6 +38,7 @@ export function useTransactionCategoriesList(
 
   return useQuery({
     ...TransactionCategoriesQueryKeys.list(),
+    enabled: !!account?.id,
     queryFn: async () => {
       try {
         const result = await manager.TransactionCategories.get(undefined, {
@@ -70,6 +71,7 @@ export function useTransactionCategoriesCommon(): UseQueryResult<
 
   return useQuery({
     ...TransactionCategoriesQueryKeys.common(),
+    enabled: !!account?.id,
     queryFn: async () => {
       try {
         const result = await manager.TransactionCategories.commonGet({
@@ -85,12 +87,21 @@ export function useTransactionCategoriesCommon(): UseQueryResult<
         ) as CommonTransactionCategoryDto[];
         if (!cached || !Array.isArray(cached))
           throw new Error("No cached accounts available");
-        return cached.map(({ id, name, type, updatedAt }) => ({
-          id,
-          name,
-          type,
-          updatedAt,
-        }));
+        return cached.map(
+          ({
+            id,
+            name,
+            type,
+            updatedAt,
+            initial,
+          }: CommonTransactionCategoryDto) => ({
+            id,
+            name,
+            type,
+            updatedAt,
+            initial,
+          })
+        );
       }
     },
   });
