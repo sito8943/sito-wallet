@@ -38,10 +38,10 @@ export type QueryResult<TDto> = {
 };
 
 export type QueryParam<TDto> = {
-  sortingBy: keyof TDto;
-  sortingOrder: SortOrder;
-  currentPage: number;
-  pageSize: number;
+  sortingBy?: keyof TDto;
+  sortingOrder?: SortOrder;
+  currentPage?: number;
+  pageSize?: number;
 };
 
 export type RangeValue<T> = {

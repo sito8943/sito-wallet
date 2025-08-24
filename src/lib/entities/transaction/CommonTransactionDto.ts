@@ -1,3 +1,3 @@
 import { BaseCommonEntityDto } from "lib";
 
-export type CommonTransactionDto = BaseCommonEntityDto;
+export type CommonTransactionDto = BaseCommonEntityDto ;

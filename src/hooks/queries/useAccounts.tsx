@@ -19,14 +19,16 @@ export const AccountsQueryKeys = {
   all: () => ({
     queryKey: ["accounts"],
   }),
-  list: () => ({ queryKey: [...AccountsQueryKeys.all().queryKey, "list"] }),
+  list: (filters: FilterAccountDto) => ({
+    queryKey: [...AccountsQueryKeys.all().queryKey, "list", filters],
+  }),
   common: () => ({
     queryKey: [...AccountsQueryKeys.all().queryKey, "common"],
   }),
 };
 
 export function useAccountsList(
-  props: UseFetchPropsType<FilterAccountDto>
+  props: UseFetchPropsType<AccountDto, FilterAccountDto>
 ): UseQueryResult<QueryResult<AccountDto>> {
   const { filters = { deleted: false } } = props;
 
@@ -35,7 +37,7 @@ export function useAccountsList(
   const { loadCache, updateCache } = useLocalCache();
 
   return useQuery({
-    ...AccountsQueryKeys.list(),
+    ...AccountsQueryKeys.list(filters),
     enabled: !!account?.id,
     queryFn: async () => {
       try {

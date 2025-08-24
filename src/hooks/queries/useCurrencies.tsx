@@ -19,14 +19,16 @@ export const CurrenciesQueryKeys = {
   all: () => ({
     queryKey: ["currencies"],
   }),
-  list: () => ({ queryKey: [...CurrenciesQueryKeys.all().queryKey, "list"] }),
+  list: (filters: FilterCurrencyDto) => ({
+    queryKey: [...CurrenciesQueryKeys.all().queryKey, "list", filters],
+  }),
   common: () => ({
     queryKey: [...CurrenciesQueryKeys.all().queryKey, "common"],
   }),
 };
 
 export function useCurrenciesList(
-  props: UseFetchPropsType<FilterCurrencyDto>
+  props: UseFetchPropsType<CurrencyDto, FilterCurrencyDto>
 ): UseQueryResult<QueryResult<CurrencyDto>> {
   const { filters = { deleted: false } } = props;
 
@@ -35,7 +37,7 @@ export function useCurrenciesList(
   const { loadCache, updateCache } = useLocalCache();
 
   return useQuery({
-    ...CurrenciesQueryKeys.list(),
+    ...CurrenciesQueryKeys.list(filters),
     enabled: !!account?.id,
     queryFn: async () => {
       try {

@@ -19,8 +19,12 @@ export const TransactionCategoriesQueryKeys = {
   all: () => ({
     queryKey: ["transaction-categories"],
   }),
-  list: () => ({
-    queryKey: [...TransactionCategoriesQueryKeys.all().queryKey, "list"],
+  list: (filters: FilterTransactionCategoryDto) => ({
+    queryKey: [
+      ...TransactionCategoriesQueryKeys.all().queryKey,
+      "list",
+      filters,
+    ],
   }),
   common: () => ({
     queryKey: [...TransactionCategoriesQueryKeys.all().queryKey, "common"],
@@ -28,7 +32,7 @@ export const TransactionCategoriesQueryKeys = {
 };
 
 export function useTransactionCategoriesList(
-  props: UseFetchPropsType<FilterTransactionCategoryDto>
+  props: UseFetchPropsType<TransactionCategoryDto, FilterTransactionCategoryDto>
 ): UseQueryResult<QueryResult<TransactionCategoryDto>> {
   const { filters = { deleted: false } } = props;
 
@@ -37,7 +41,7 @@ export function useTransactionCategoriesList(
   const { loadCache, updateCache, inCache } = useLocalCache();
 
   return useQuery({
-    ...TransactionCategoriesQueryKeys.list(),
+    ...TransactionCategoriesQueryKeys.list(filters),
     enabled: !!account?.id,
     queryFn: async () => {
       try {

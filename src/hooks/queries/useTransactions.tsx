@@ -22,6 +22,7 @@ import {
   Tables,
   TransactionTypeResumeDto,
   TransactionType,
+  QueryParam,
 } from "lib";
 import { useTranslation } from "react-i18next";
 
@@ -29,11 +30,11 @@ export const TransactionsQueryKeys = {
   all: () => ({
     queryKey: ["transactions"],
   }),
-  list: (filters: FilterTransactionDto) => ({
-    queryKey: [...TransactionsQueryKeys.all().queryKey, "list", filters],
+  list: (query: QueryParam<TransactionDto>, filters: FilterTransactionDto) => ({
+    queryKey: [...TransactionsQueryKeys.all().queryKey, "list", query, filters],
   }),
-  common: () => ({
-    queryKey: [...TransactionsQueryKeys.all().queryKey, "common"],
+  common: (filters: FilterTransactionDto) => ({
+    queryKey: [...TransactionsQueryKeys.all().queryKey, "common", filters],
   }),
   typeResume: (filters: FilterTransactionDto) => ({
     queryKey: [...TransactionsQueryKeys.all().queryKey, "typeResume", filters],
@@ -42,7 +43,7 @@ export const TransactionsQueryKeys = {
 };
 
 export function useTransactionsList(
-  props: UseFetchPropsType<FilterTransactionDto>
+  props: UseFetchPropsType<TransactionDto, FilterTransactionDto>
 ): UseQueryResult<QueryResult<TransactionDto>> {
   const {
     sortingBy,
@@ -52,7 +53,7 @@ export function useTransactionsList(
     filters: tableFilters,
   } = useTableOptions();
 
-  const { filters = { deleted: false } } = props;
+  const { filters = { deleted: false }, query } = props;
 
   const manager = useManager();
   const { account } = useAuth();
@@ -67,26 +68,26 @@ export function useTransactionsList(
     [account?.id, filters, tableFilters]
   );
 
-  console.log(parsedFilters);
-
-  return useQuery({
-    ...TransactionsQueryKeys.list({
+  const parsedQueries = useMemo(
+    () => ({
       sortingBy: sortingBy as keyof TransactionDto,
       sortingOrder,
       currentPage,
       pageSize,
+      ...query,
+    }),
+    [currentPage, pageSize, query, sortingBy, sortingOrder]
+  );
+
+  return useQuery({
+    ...TransactionsQueryKeys.list(parsedQueries, {
       ...parsedFilters,
     }),
     enabled: !!account?.id,
     queryFn: async () => {
       try {
         const result = await manager.Transactions.get(
-          {
-            sortingBy: sortingBy as keyof TransactionDto,
-            sortingOrder,
-            currentPage,
-            pageSize,
-          },
+          parsedQueries,
           parsedFilters
         );
 
@@ -143,20 +144,22 @@ export function useTransactionTypeResume(
   });
 }
 
-export function useTransactionsCommon(): UseQueryResult<
-  CommonTransactionDto[]
-> {
+export function useTransactionsCommon(
+  props: UseTransactionTypeResumePropsType
+): UseQueryResult<CommonTransactionDto[]> {
   const manager = useManager();
   const { account } = useAuth();
+  const filters = props;
   const { loadCache, updateCache, inCache } = useLocalCache();
 
   return useQuery({
-    ...TransactionsQueryKeys.common(),
+    ...TransactionsQueryKeys.common(filters),
     queryFn: async () => {
       try {
         const result = await manager.Transactions.commonGet({
           deleted: false,
           userId: account?.id,
+          ...filters,
         });
         if (!inCache(Tables.Transactions))
           updateCache(Tables.Transactions, result);
