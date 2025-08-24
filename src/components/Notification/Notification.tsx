@@ -82,7 +82,7 @@ export function Notification() {
         ? notification?.map(({ id, type, message }, i) => (
             <div
               key={id}
-              className={`apparition notification ${bgColor(
+              className={`appear notification ${bgColor(
                 type ?? NotificationEnumType.error
               )}`}
             >

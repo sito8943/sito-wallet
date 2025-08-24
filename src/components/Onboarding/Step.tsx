@@ -19,7 +19,7 @@ export const Step = (props: StepPropsType) => {
   const { t } = useTranslation();
 
   return (
-    <div className="appear w-md flex flex-col gap-20">
+    <div className="big-appear w-md flex flex-col gap-20">
       <img src={image} alt={alt} />
       <h2 className="text-5xl text-center leading-16">
         {t(`_pages:onboarding.${translation}.title`)}

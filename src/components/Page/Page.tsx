@@ -90,7 +90,7 @@ export const Page = <TEntity extends BaseEntityDto>(
 
   return (
     <main className="">
-      <div className={`${animated ? "apparition" : ""} flex flex-col`}>
+      <div className={`${animated ? "appear" : ""} flex flex-col`}>
         <PageHeader showBack={showBack} actions={parsedActions} title={title} />
         <div className="px-5 py-3 h-full">
           {isLoading ? (

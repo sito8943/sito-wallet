@@ -3,6 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // types
 import { ChipPropsType } from "./types.ts";
 
+// styles
+import "./styles.css";
+
 /**
  * Chip component
  * @param {object} props - component props
