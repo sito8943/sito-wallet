@@ -53,7 +53,7 @@ export const Page = <TEntity extends BaseEntityDto>(
   const { countOfFilters } = useTableOptions();
 
   const parsedActions = useMemo(() => {
-    const pActions = Array.isArray(actions) ? actions : [];
+    const pActions = Array.isArray(actions) ? [...actions] : [];
     if (queryKey) {
       const refreshAction = {
         id: GlobalActions.Refresh,
