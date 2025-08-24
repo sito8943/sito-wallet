@@ -67,6 +67,8 @@ export function useTransactionsList(
     [account?.id, filters, tableFilters]
   );
 
+  console.log(parsedFilters);
+
   return useQuery({
     ...TransactionsQueryKeys.list({
       sortingBy: sortingBy as keyof TransactionDto,
@@ -75,7 +77,7 @@ export function useTransactionsList(
       pageSize,
       ...parsedFilters,
     }),
-    enabled: !account?.id,
+    enabled: !!account?.id,
     queryFn: async () => {
       try {
         const result = await manager.Transactions.get(
@@ -127,7 +129,7 @@ export function useTransactionTypeResume(
           type: type ?? TransactionType.In,
           userId: account?.id ?? 0,
           accountId,
-          category
+          category,
         });
 
         return result;
