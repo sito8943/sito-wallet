@@ -34,7 +34,7 @@ import { icons } from "../../../Transactions/components/utils";
 
 // components
 import { Currency } from "../../../Currencies";
-import { Accordion } from "components";
+import { Accordion, Loading } from "components";
 
 export const TransactionTypeResume = () => {
   const { t } = useTranslation();
@@ -73,7 +73,7 @@ export const TransactionTypeResume = () => {
 
   // #endregion filters
 
-  const { data } = useTransactionTypeResume({
+  const { data, isLoading } = useTransactionTypeResume({
     type: type,
     accountId: account?.id,
     category: category ? [category?.id] : undefined,
@@ -86,7 +86,8 @@ export const TransactionTypeResume = () => {
   const [showFilters, setShowFilters] = useState(false);
 
   return (
-    <article className="flex flex-col gap-3 border-border border-2 p-5 rounded-2xl min-md:min-w-100 min-w-auto max-md:w-5/6">
+    <article className="relative flex flex-col gap-3 border-border border-2 p-5 rounded-2xl min-md:min-w-100 min-w-auto max-md:w-5/6">
+      {isLoading ? <Loading containerClassName="flex items-center justify-center rounded-2xl backdrop-blur-xl bg-base/80 w-full h-full absolute top-0 left-0" /> : null}
       <div className="flex items-center justify-between gap-5">
         <h2 className="text-3xl max-xs:text-xl">
           {t("_pages:home.dashboard.transactionTypeResume.title", {
