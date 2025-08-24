@@ -109,7 +109,7 @@ export function useTransactionsList(
 export function useTransactionTypeResume(
   props: UseTransactionTypeResumePropsType
 ): UseQueryResult<TransactionTypeResumeDto> {
-  const { type, accountId, category } = props;
+  const filters = props;
   const { t } = useTranslation();
 
   const manager = useManager();
@@ -118,18 +118,17 @@ export function useTransactionTypeResume(
   return useQuery({
     ...TransactionsQueryKeys.typeResume({
       userId: account?.id,
-      accountId,
-      category,
-      type,
+      ...filters,
     }),
-    enabled: !!accountId && !!account?.id,
+    enabled: !!filters?.accountId && !!account?.id,
     queryFn: async () => {
       try {
         const result = await manager.Transactions.getTypeResume({
-          type: type ?? TransactionType.In,
+          type: filters?.type ?? TransactionType.In,
           userId: account?.id ?? 0,
-          accountId,
-          category,
+          accountId: filters?.accountId,
+          category: filters?.category,
+          date: filters?.date,
         });
 
         return result;

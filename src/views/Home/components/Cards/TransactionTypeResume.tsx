@@ -4,7 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard
-import { AutocompleteInput, SelectInput, Option, Chip } from "@sito/dashboard";
+import {
+  AutocompleteInput,
+  SelectInput,
+  Option,
+  Chip,
+  TextInput,
+  RangeChip,
+} from "@sito/dashboard";
 
 // lib
 import {
@@ -61,8 +68,8 @@ export const TransactionTypeResume = () => {
 
   const { data: categories } = useTransactionCategoriesCommon();
 
-  const [startDate, setStartDate] = useState<string | null>(null);
-  const [endDate, setEndDate] = useState<string | null>(null);
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
 
   // #endregion filters
 
@@ -72,14 +79,14 @@ export const TransactionTypeResume = () => {
     category: category ? [category?.id] : undefined,
     date: {
       start: startDate,
-      endDate: endDate,
+      end: endDate,
     },
   });
 
   const [showFilters, setShowFilters] = useState(false);
 
   return (
-    <article className="flex flex-col gap-3 border-border border-2 p-5 rounded-2xl min-w-100 max-xs:min-w-5/6">
+    <article className="flex flex-col gap-3 border-border border-2 p-5 rounded-2xl min-md:min-w-100 min-w-auto max-md:w-5/6">
       <div className="flex items-center justify-between gap-5">
         <h2 className="text-3xl max-xs:text-xl">
           {t("_pages:home.dashboard.transactionTypeResume.title", {
@@ -115,7 +122,33 @@ export const TransactionTypeResume = () => {
             options={accounts ?? []}
             containerClassName="!w-full"
           />
-          <div></div>
+          <div className="range-widget-container">
+            <p className="text-input-label input-widget-label input-label-normal">
+              {t("_entities:transaction.date.label")}
+            </p>
+            <div className="flex max-xs:flex-col items-center justify-start gap-2">
+              <TextInput
+                value={startDate}
+                placeholder={t(
+                  "_accessibility:components.table.filters.range.start"
+                )}
+                type="date"
+                onChange={(e) =>
+                  setStartDate((e.target as HTMLInputElement).value)
+                }
+              />
+              <TextInput
+                value={endDate}
+                placeholder={t(
+                  "_accessibility:components.table.filters.range.end"
+                )}
+                type="date"
+                onChange={(e) =>
+                  setEndDate((e.target as HTMLInputElement).value)
+                }
+              />
+            </div>
+          </div>
           <AutocompleteInput
             value={category}
             multiple={false}
@@ -141,7 +174,7 @@ export const TransactionTypeResume = () => {
         </div>
       </Accordion>
 
-      <div className="flex gap-2 items-center justify-start">
+      <div className="flex flex-wrap gap-2 items-center justify-start">
         <Chip label={account?.name} />
         <Chip
           label={
@@ -158,6 +191,17 @@ export const TransactionTypeResume = () => {
             )
           }
         />
+        {(startDate || endDate) && (
+          <RangeChip
+            start={startDate}
+            end={endDate}
+            label={t("_entities:transaction.date.label")}
+            onClearFilter={() => {
+              setStartDate("");
+              setEndDate("");
+            }}
+          />
+        )}
       </div>
       <FontAwesomeIcon
         icon={icons[(type ?? 0) as keyof typeof icons]}

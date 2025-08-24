@@ -43,3 +43,8 @@ export type QueryParam<TDto> = {
   currentPage: number;
   pageSize: number;
 };
+
+export type RangeValue<T> = {
+  start: T;
+  end: T;
+};
