@@ -5,6 +5,7 @@ import { Chip } from "@sito/dashboard";
 
 // components
 import { ItemCard } from "components";
+import { LastTransactions } from "./LastTransactions";
 
 // types
 import { AccountCardPropsType } from "../types";
@@ -38,6 +39,7 @@ export function AccountCard(props: AccountCardPropsType) {
       aria-label={t("_pages:accounts.forms.editAria")}
       onClick={() => (!deleted ? onClick(id) : {})}
       actions={actions}
+      containerClassName="w-100"
     >
       <p
         className={`${description ? "" : "!text-xs italic"} text-start mb-2 ${
@@ -62,6 +64,7 @@ export function AccountCard(props: AccountCardPropsType) {
           }
         />
       </div>
+      <LastTransactions accountId={id} currency={currency} />
     </ItemCard>
   );
 }
