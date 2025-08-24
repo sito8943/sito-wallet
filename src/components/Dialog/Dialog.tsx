@@ -93,7 +93,7 @@ export const Dialog = (props: DialogPropsType) => {
           open ? "opened" : "closed"
         } ${className}`}
       >
-        <div className="flex items-center justify-between gap-2 mb-6 max-xs:mb-10">
+        <div className="dialog-header">
           <h3 className="text-text text-xl">{title}</h3>
           <button
             disabled={!open}

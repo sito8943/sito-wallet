@@ -23,3 +23,7 @@
 .dialog.closed {
   @apply opacity-0 translate-y-2;
 }
+
+.dialog-header {
+  @apply flex items-center justify-between gap-2 mb-6 max-xs:mb-10;
+}
