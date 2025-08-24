@@ -91,11 +91,17 @@ export function useTransactionsList(
           parsedFilters
         );
 
-        updateCache(Tables.Transactions, result.items);
+        updateCache(
+          `${Tables.Transactions}_${filters?.accountId ?? 0}`,
+          result.items
+        );
         return result;
       } catch (error) {
         console.warn("API failed, loading transactions from cache", error);
-        const cached = loadCache(Tables.Transactions);
+
+        const cached = loadCache(
+          `${Tables.Transactions}_${filters?.accountId ?? 0}`
+        );
         if (!cached || !Array.isArray(cached))
           throw new Error("No cached transactions available");
         return {

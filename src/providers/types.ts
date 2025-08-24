@@ -1,13 +1,7 @@
 import { ReactNode } from "react";
 
 // lib
-import {
-  BaseEntityDto,
-  Manager,
-  NotificationType,
-  SessionDto,
-  Tables,
-} from "lib";
+import { BaseEntityDto, Manager, NotificationType, SessionDto } from "lib";
 
 export type BasicProviderPropTypes = {
   children: ReactNode;
@@ -28,9 +22,9 @@ export type AuthProviderContextType = {
 
 export type LocalCacheProviderContextType = {
   data?: FileDataType;
-  updateCache: <T = BaseEntityDto>(key: Tables, data: T[]) => void;
-  loadCache: <T = BaseEntityDto>(key: Tables) => T[] | null;
-  inCache: (key: Tables) => BaseEntityDto[];
+  updateCache: <T = BaseEntityDto>(key: string, data: T[]) => void;
+  loadCache: <T = BaseEntityDto>(key: string) => T[] | null;
+  inCache: (key: string) => BaseEntityDto[];
 };
 
 export type FileCacheProviderContextType = {
@@ -39,7 +33,7 @@ export type FileCacheProviderContextType = {
 };
 
 export type FileDataType = {
-  [key in Tables]: BaseEntityDto[];
+  [key: string]: BaseEntityDto[];
 };
 
 export type NotificationContextType = {

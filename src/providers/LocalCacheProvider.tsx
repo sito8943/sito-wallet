@@ -36,14 +36,14 @@ const LocalCacheProvider = (props: BasicProviderPropTypes) => {
   });
 
   const inCache = useCallback(
-    (key: Tables) => {
+    (key: string) => {
       return data[key];
     },
     [data]
   );
 
   const updateCache = useCallback(
-    <T = BaseEntityDto,>(key: Tables, value: T[]) => {
+    <T = BaseEntityDto,>(key: string, value: T[]) => {
       const newData = {
         ...data,
         [key]: value,
@@ -61,7 +61,7 @@ const LocalCacheProvider = (props: BasicProviderPropTypes) => {
   );
 
   const loadCache = useCallback(
-    <T = BaseEntityDto,>(key: Tables): T[] | null => {
+    <T = BaseEntityDto,>(key: string): T[] | null => {
       const content = fromLocal(config.localCache, "object");
       return content ? content[key] : null;
     },
