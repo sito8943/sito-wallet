@@ -14,3 +14,4 @@ export * from "./Card";
 export * from "./TabsLayout";
 export * from "./WalletTable";
 export * from "./Onboarding";
+export * from "./Accordion";

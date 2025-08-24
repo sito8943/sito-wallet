@@ -1,0 +1,14 @@
+@import "../../styles/variables.css";
+
+.accordion-main {
+  transition: grid-template-rows 300ms ease-in-out;
+  @apply grid;
+}
+
+.accordion-main.open {
+  grid-template-rows: 1fr;
+}
+
+.accordion-main.closed {
+  grid-template-rows: 0fr;
+}
