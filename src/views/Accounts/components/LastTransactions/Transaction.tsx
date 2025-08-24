@@ -29,6 +29,8 @@ export const Transaction = (props: TransactionPropsType) => {
 
   const isIn = useMemo(() => category?.type === TransactionType.In, [category]);
 
+  console.log(parsedDescription, date);
+
   return (
     <li className={"flex items-center gap-2 w-full"}>
       <Type
@@ -48,7 +50,7 @@ export const Transaction = (props: TransactionPropsType) => {
         </div>
         <p className="!text-xs">{parsedDescription}</p>
       </div>
-      <p className="flex items-center gap-1 text-lg">
+      <p className="flex items-center gap-1 !text-lg">
         {isIn ? "+" : "-"}
         {amount}
         <Currency {...currency} />
