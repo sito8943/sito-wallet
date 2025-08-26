@@ -9,10 +9,6 @@
   @apply fixed top-0;
 }
 
-.toolbar {
-  @apply flex items-center justify-end;
-}
-
 .button.menu {
   @apply h-10 w-10 rounded-full !p-0;
 }
