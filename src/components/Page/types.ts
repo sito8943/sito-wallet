@@ -10,7 +10,7 @@ export type PagePropsType<TRow extends BaseEntityDto> = {
   isLoading?: boolean;
   addOptions?: Partial<Action<TRow>>;
   filterOptions?: Partial<Action<TRow>>;
-  animated?: boolean;
+  isAnimated?: boolean;
   actions?: Action<TRow>[];
   showBack?: boolean;
   queryKey?: string[];

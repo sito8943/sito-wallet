@@ -21,10 +21,10 @@ export function Navbar(props: NavbarPropsType) {
 
   const { openDrawer } = props;
 
-  const passedOffset = useScrollTrigger(100);
+  const isScrolled = useScrollTrigger(100);
 
   return (
-    <header id="header" className={`header ${passedOffset ? "fixed" : ""}`}>
+    <header id="header" className={`header ${isScrolled ? "fixed" : ""}`}>
       <div className="flex gap-2 items-center">
         <button
           type="button"
