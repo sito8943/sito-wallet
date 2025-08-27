@@ -12,12 +12,12 @@ export type PagePropsType<TRow extends BaseEntityDto> = {
   filterOptions?: Partial<Action<TRow>>;
   isAnimated?: boolean;
   actions?: Action<TRow>[];
-  showBack?: boolean;
+  showBackButton?: boolean;
   queryKey?: string[];
 };
 
 export type PageHeaderPropsType<TRow extends BaseEntityDto> = {
   title?: string;
   actions?: Action<TRow>[];
-  showBack?: boolean;
+  showBackButton?: boolean;
 };

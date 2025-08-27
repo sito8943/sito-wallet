@@ -20,7 +20,7 @@ import { useScrollTrigger } from "hooks";
 export const PageHeader = <TEntity extends BaseEntityDto>(
   props: PageHeaderPropsType<TEntity>
 ) => {
-  const { showBack, title, actions } = props;
+  const { showBackButton, title, actions } = props;
 
   const { t } = useTranslation();
 
@@ -31,7 +31,7 @@ export const PageHeader = <TEntity extends BaseEntityDto>(
   return (
     <div className={`page-header ${passedOffset ? "fixed" : ""}`}>
       <div className="flex gap-2 items-center justify-start">
-        {showBack && (
+        {showBackButton && (
           <button
             onClick={() => navigate(-1)}
             className="action"

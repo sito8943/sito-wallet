@@ -39,13 +39,13 @@ export const Page = <TEntity extends BaseEntityDto>(
   const {
     title,
     children,
-    isLoading,
     addOptions,
     filterOptions,
     actions,
     queryKey,
+    isLoading = false,
     isAnimated = true,
-    showBack = false,
+    showBackButton = false,
   } = props;
 
   const { t } = useTranslation();
@@ -91,7 +91,11 @@ export const Page = <TEntity extends BaseEntityDto>(
   return (
     <main className="">
       <div className={`${isAnimated ? "appear" : ""} flex flex-col`}>
-        <PageHeader showBack={showBack} actions={parsedActions} title={title} />
+        <PageHeader
+          showBackButton={showBackButton}
+          actions={parsedActions}
+          title={title}
+        />
         <div className="px-5 py-3 h-full">
           {isLoading ? (
             <Loading containerClassName="flex justify-center items-center h-50" />
