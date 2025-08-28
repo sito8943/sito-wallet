@@ -35,6 +35,9 @@ import { Currency } from "../../../Currencies";
 import { Accordion, Loading } from "components";
 import { ActiveFilters } from "./ActiveFilters";
 
+// styles
+import "./styles.css";
+
 export const TransactionTypeResume = () => {
   const { t } = useTranslation();
 
@@ -45,8 +48,6 @@ export const TransactionTypeResume = () => {
   const [selectedAccounts, setSelectedAccounts] = useState<
     CommonAccountDto[] | null
   >(null);
-
-  console.log(selectedAccounts);
 
   const parsedTypes = useMemo(
     () =>
@@ -98,23 +99,27 @@ export const TransactionTypeResume = () => {
 
   const [showFilters, setShowFilters] = useState(false);
 
-  console.log(selectedAccounts);
+  const [cardTitle, setCardTitle] = useState(
+    t("_pages:home.dashboard.transactionTypeResume.title", {
+      transactionType: t(
+        `_entities:transactionCategory.type.values.${String(
+          TransactionType[type]
+        )}`
+      ),
+    })
+  );
 
   return (
-    <article className="relative flex flex-col gap-3 border-border border-2 p-5 rounded-2xl min-md:min-w-100 min-w-auto max-md:w-5/6">
+    <article className="type-resume-main">
       {isLoading ? (
-        <Loading containerClassName="flex items-center justify-center rounded-2xl backdrop-blur-xl bg-base/80 w-full h-full absolute top-0 left-0" />
+        <Loading containerClassName="type-resume-main-loading" />
       ) : null}
-      <div className="flex items-center justify-between gap-5">
-        <h2 className="text-3xl max-xs:text-xl">
-          {t("_pages:home.dashboard.transactionTypeResume.title", {
-            transactionType: t(
-              `_entities:transactionCategory.type.values.${String(
-                TransactionType[type]
-              )}`
-            ),
-          })}
-        </h2>
+      <div className="type-resume-header">
+        <input
+          className="type-resume-title poppins"
+          value={cardTitle}
+          onChange={(e) => setCardTitle(e.target.value)}
+        />
         <button
           className={`icon-button ${showFilters ? "primary submit" : ""}`}
           onClick={() => setShowFilters(!showFilters)}
@@ -123,75 +128,69 @@ export const TransactionTypeResume = () => {
         </button>
       </div>
 
-      <Accordion open={showFilters} className="relative">
-        <div
-          className={`flex max-xs:flex-col flex-wrap min-xs:items-center justify-between gap-2 gap-y-6 transition-all 300ms ease-in-out ${
-            showFilters ? "pt-4" : ""
-          } overflow-hidden`}
-        >
-          <AutocompleteInput
-            value={selectedAccounts}
-            multiple
-            label={t("_entities:transaction.account.label")}
-            autoComplete={`${Tables.Transactions}-${t(
-              "_entities:transaction.account.label"
-            )}`}
-            onChange={(value) =>
-              setSelectedAccounts(value as CommonAccountDto[])
-            }
-            options={accounts ?? []}
-            containerClassName="!w-full"
-          />
-          <div className="range-widget-container">
-            <p className="text-input-label input-widget-label input-label-normal">
-              {t("_entities:transaction.date.label")}
-            </p>
-            <div className="flex max-xs:flex-col items-center justify-start gap-2">
-              <TextInput
-                value={startDate}
-                placeholder={t(
-                  "_accessibility:components.table.filters.range.start"
-                )}
-                type="date"
-                onChange={(e) =>
-                  setStartDate((e.target as HTMLInputElement).value)
-                }
-              />
-              <TextInput
-                value={endDate}
-                placeholder={t(
-                  "_accessibility:components.table.filters.range.end"
-                )}
-                type="date"
-                onChange={(e) =>
-                  setEndDate((e.target as HTMLInputElement).value)
-                }
-              />
-            </div>
+      <Accordion
+        open={showFilters}
+        className="relative"
+        contentClassName={showFilters ? "pt-4" : ""}
+      >
+        <AutocompleteInput
+          value={selectedAccounts}
+          multiple
+          label={t("_entities:transaction.account.label")}
+          autoComplete={`${Tables.Transactions}-${t(
+            "_entities:transaction.account.label"
+          )}`}
+          onChange={(value) => setSelectedAccounts(value as CommonAccountDto[])}
+          options={accounts ?? []}
+          containerClassName="!w-full"
+        />
+        <div className="range-widget-container">
+          <p className="text-input-label input-widget-label input-label-normal">
+            {t("_entities:transaction.date.label")}
+          </p>
+          <div className="flex max-xs:flex-col items-center justify-start gap-2">
+            <TextInput
+              value={startDate}
+              placeholder={t(
+                "_accessibility:components.table.filters.range.start"
+              )}
+              type="date"
+              onChange={(e) =>
+                setStartDate((e.target as HTMLInputElement).value)
+              }
+            />
+            <TextInput
+              value={endDate}
+              placeholder={t(
+                "_accessibility:components.table.filters.range.end"
+              )}
+              type="date"
+              onChange={(e) => setEndDate((e.target as HTMLInputElement).value)}
+            />
           </div>
-          <AutocompleteInput
-            value={selectedCategories}
-            multiple
-            options={categoriesByType ?? []}
-            label={t("_entities:transaction.category.label")}
-            autoComplete={`${Tables.Transactions}-${t(
-              "_entities:transaction.category.label"
-            )}`}
-            containerClassName="!w-[unset] flex-1"
-            onChange={(value) =>
-              setSelectedCategories(value as CommonTransactionCategoryDto[])
-            }
-          />
-          <SelectInput
-            value={type}
-            label={t("_entities:transactionCategory.type.label")}
-            onChange={(e) =>
-              setSetSelectType(Number((e.target as HTMLSelectElement).value))
-            }
-            containerClassName="!w-[unset] flex-1"
-            options={parsedTypes}
-          />
         </div>
+        <AutocompleteInput
+          value={selectedCategories}
+          multiple
+          options={categoriesByType ?? []}
+          label={t("_entities:transaction.category.label")}
+          autoComplete={`${Tables.Transactions}-${t(
+            "_entities:transaction.category.label"
+          )}`}
+          containerClassName="!w-[unset] flex-1"
+          onChange={(value) =>
+            setSelectedCategories(value as CommonTransactionCategoryDto[])
+          }
+        />
+        <SelectInput
+          value={type}
+          label={t("_entities:transactionCategory.type.label")}
+          onChange={(e) =>
+            setSetSelectType(Number((e.target as HTMLSelectElement).value))
+          }
+          containerClassName="!w-[unset] flex-1"
+          options={parsedTypes}
+        />
       </Accordion>
 
       <ActiveFilters

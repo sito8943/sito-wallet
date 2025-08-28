@@ -5,11 +5,11 @@ import { AccordionPropsType } from "./types";
 import "./styles.css";
 
 export const Accordion = (props: AccordionPropsType) => {
-  const { open, children, className = "" } = props;
+  const { open, children, className = "", contentClassName = "" } = props;
 
   return (
     <div className={`accordion-main ${className} ${open ? "open" : "closed"}`}>
-      {children}
+      <div className={`accordion-content ${contentClassName}`}>{children}</div>
     </div>
   );
 };

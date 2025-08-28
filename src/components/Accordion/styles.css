@@ -12,3 +12,7 @@
 .accordion-main.closed {
   grid-template-rows: 0fr;
 }
+
+.accordion-content {
+  @apply flex max-xs:flex-col flex-wrap min-xs:items-center justify-between gap-2 gap-y-6 transition-all duration-300 ease-in-out overflow-hidden;
+}

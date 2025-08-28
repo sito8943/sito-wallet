@@ -4,4 +4,5 @@ export type AccordionPropsType = {
   open: boolean;
   children: ReactNode;
   className?: string;
+  contentClassName?: string;
 };

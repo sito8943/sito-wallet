@@ -1,0 +1,17 @@
+@import "../../../../styles/variables.css";
+
+.type-resume-main {
+  @apply relative flex flex-col gap-3 border-border border-2 p-5 rounded-2xl min-md:min-w-100 min-w-auto max-md:w-5/6;
+}
+
+.type-resume-main-loading {
+  @apply flex items-center justify-center rounded-2xl backdrop-blur-xl bg-base/80 w-full h-full absolute top-0 left-0;
+}
+
+.type-resume-header {
+  @apply flex items-center justify-between gap-5;
+}
+
+.type-resume-title {
+  @apply text-3xl max-xs:text-xl;
+}
