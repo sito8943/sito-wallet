@@ -3,6 +3,7 @@ import AuthClient from "./AuthClient";
 import CurrencyClient from "./CurrencyClient";
 import TransactionClient from "./TransactionClient";
 import TransactionCategoryClient from "./TransactionCategoryClient";
+import DashboardClient from "./DashboardClient";
 
 export class Manager {
   accounts: AccountClient = new AccountClient();
@@ -11,6 +12,7 @@ export class Manager {
   transactionCategories: TransactionCategoryClient =
     new TransactionCategoryClient();
   auth: AuthClient = new AuthClient();
+  dashboard: DashboardClient = new DashboardClient();
 
   constructor() {}
 
@@ -44,5 +46,12 @@ export class Manager {
    */
   get Auth(): AuthClient {
     return this.auth;
+  }
+
+  /**
+   * @returns dashboard
+   */
+  get Dashboard(): DashboardClient {
+    return this.dashboard;
   }
 }

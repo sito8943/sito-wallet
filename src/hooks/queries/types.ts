@@ -1,12 +1,13 @@
 import { UseQueryResult } from "@tanstack/react-query";
 import {
   BaseEntityDto,
+  BaseFilterDto,
   FilterTransactionTypeResumeDto,
   QueryParam,
   QueryResult,
 } from "lib";
 
-export type UseFetchPropsType<TRow, TFilterDto> = {
+export type UseFetchPropsType<TRow, TFilterDto = BaseFilterDto> = {
   filters?: TFilterDto;
   query?: QueryParam<TRow>;
 };

@@ -6,6 +6,7 @@ export enum Tables {
   Currencies = "currencies",
   Transactions = "transactions",
   TransactionCategories = "transaction-categories",
+  UserDashboardConfig = "user-dashboard-config",
 }
 
 export enum TablesCamelCase {
@@ -13,6 +14,7 @@ export enum TablesCamelCase {
   Currencies = "currencies",
   Transactions = "transactions",
   TransactionCategories = "transactionCategories",
+  UserDashboardConfig = "userDashboardConfig",
 }
 
 export enum EntityName {
@@ -20,6 +22,7 @@ export enum EntityName {
   Currency = "currency",
   Transaction = "transaction",
   TransactionCategory = "transactionCategory",
+  UserDashboardConfig = "userDashboardConfig",
 }
 
 export type APIError = {
