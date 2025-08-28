@@ -8,9 +8,7 @@ import {
   AutocompleteInput,
   SelectInput,
   Option,
-  Chip,
   TextInput,
-  RangeChip,
 } from "@sito/dashboard";
 
 // lib
@@ -35,6 +33,7 @@ import { icons } from "../../../Transactions/components/utils";
 // components
 import { Currency } from "../../../Currencies";
 import { Accordion, Loading } from "components";
+import { ActiveFilters } from "./ActiveFilters";
 
 export const TransactionTypeResume = () => {
   const { t } = useTranslation();
@@ -43,7 +42,11 @@ export const TransactionTypeResume = () => {
 
   const [type, setSetSelectType] = useState(TransactionType.In);
 
-  const [account, setSelectedAccount] = useState<CommonAccountDto | null>(null);
+  const [selectedAccounts, setSelectedAccounts] = useState<
+    CommonAccountDto[] | null
+  >(null);
+
+  console.log(selectedAccounts);
 
   const parsedTypes = useMemo(
     () =>
@@ -58,13 +61,13 @@ export const TransactionTypeResume = () => {
 
   useEffect(() => {
     if (accounts?.length) {
-      setSelectedAccount(accounts[0]);
+      setSelectedAccounts([accounts[0]]);
     }
   }, [accounts]);
 
-  const [category, setCategory] = useState<CommonTransactionCategoryDto | null>(
-    null
-  );
+  const [selectedCategories, setSelectedCategories] = useState<
+    CommonTransactionCategoryDto[] | null
+  >(null);
 
   const { data: categories } = useTransactionCategoriesCommon();
 
@@ -75,8 +78,10 @@ export const TransactionTypeResume = () => {
 
   const { data, isLoading } = useTransactionTypeResume({
     type: type,
-    accountId: account?.id,
-    category: category ? [category?.id] : undefined,
+    account: selectedAccounts ? selectedAccounts.map((a) => a.id) : undefined,
+    category: selectedCategories
+      ? selectedCategories.map((c) => c.id)
+      : undefined,
     date: {
       start: startDate,
       end: endDate,
@@ -85,9 +90,13 @@ export const TransactionTypeResume = () => {
 
   const [showFilters, setShowFilters] = useState(false);
 
+  console.log(selectedAccounts);
+
   return (
     <article className="relative flex flex-col gap-3 border-border border-2 p-5 rounded-2xl min-md:min-w-100 min-w-auto max-md:w-5/6">
-      {isLoading ? <Loading containerClassName="flex items-center justify-center rounded-2xl backdrop-blur-xl bg-base/80 w-full h-full absolute top-0 left-0" /> : null}
+      {isLoading ? (
+        <Loading containerClassName="flex items-center justify-center rounded-2xl backdrop-blur-xl bg-base/80 w-full h-full absolute top-0 left-0" />
+      ) : null}
       <div className="flex items-center justify-between gap-5">
         <h2 className="text-3xl max-xs:text-xl">
           {t("_pages:home.dashboard.transactionTypeResume.title", {
@@ -113,13 +122,15 @@ export const TransactionTypeResume = () => {
           } overflow-hidden`}
         >
           <AutocompleteInput
-            value={account}
-            multiple={false}
+            value={selectedAccounts}
+            multiple
             label={t("_entities:transaction.account.label")}
             autoComplete={`${Tables.Transactions}-${t(
               "_entities:transaction.account.label"
             )}`}
-            onChange={(value) => setSelectedAccount(value as CommonAccountDto)}
+            onChange={(value) =>
+              setSelectedAccounts(value as CommonAccountDto[])
+            }
             options={accounts ?? []}
             containerClassName="!w-full"
           />
@@ -151,8 +162,8 @@ export const TransactionTypeResume = () => {
             </div>
           </div>
           <AutocompleteInput
-            value={category}
-            multiple={false}
+            value={selectedCategories}
+            multiple
             options={categories ?? []}
             label={t("_entities:transaction.category.label")}
             autoComplete={`${Tables.Transactions}-${t(
@@ -160,7 +171,7 @@ export const TransactionTypeResume = () => {
             )}`}
             containerClassName="!w-[unset] flex-1"
             onChange={(value) =>
-              setCategory(value as CommonTransactionCategoryDto)
+              setSelectedCategories(value as CommonTransactionCategoryDto[])
             }
           />
           <SelectInput
@@ -175,35 +186,19 @@ export const TransactionTypeResume = () => {
         </div>
       </Accordion>
 
-      <div className="flex flex-wrap gap-2 items-center justify-start">
-        <Chip label={account?.name} />
-        <Chip
-          label={
-            category ? (
-              <p>{category?.name}</p>
-            ) : (
-              <p>
-                {t(
-                  `_entities:transactionCategory.type.values.${String(
-                    TransactionType[type]
-                  )}`
-                )}
-              </p>
-            )
-          }
-        />
-        {(startDate || endDate) && (
-          <RangeChip
-            start={startDate}
-            end={endDate}
-            label={t("_entities:transaction.date.label")}
-            onClearFilter={() => {
-              setStartDate("");
-              setEndDate("");
-            }}
-          />
-        )}
-      </div>
+      <ActiveFilters
+        accounts={selectedAccounts ?? []}
+        clearAccounts={() => setSelectedAccounts([])}
+        categories={selectedCategories ?? []}
+        clearCategories={() => setSelectedCategories([])}
+        startDate={startDate}
+        endDate={endDate}
+        clearDate={() => {
+          setStartDate("");
+          setEndDate("");
+        }}
+        type={type}
+      />
       <FontAwesomeIcon
         icon={icons[(type ?? 0) as keyof typeof icons]}
         className={`text-lg mt-2 self-end ${
@@ -214,10 +209,7 @@ export const TransactionTypeResume = () => {
       />
       <p
         className={`!text-4xl font-bold self-end poppins ${
-          (category && category?.type === TransactionType.In) ||
-          (!category && type === TransactionType.In)
-            ? "!text-bg-success"
-            : "!text-bg-error"
+          type === TransactionType.In ? "!text-bg-success" : "!text-bg-error"
         }`}
       >
         {data?.total}{" "}

@@ -12,6 +12,7 @@ import {
   AddTransactionDto,
   TransactionTypeResumeDto,
   Methods,
+  FilterTransactionTypeResumeDto,
 } from "lib";
 
 // utils
@@ -31,7 +32,7 @@ export default class TransactionClient extends BaseClient<
   }
 
   async getTypeResume(
-    filters: FilterTransactionDto
+    filters: FilterTransactionTypeResumeDto
   ): Promise<TransactionTypeResumeDto> {
     const builtUrl = parseQueries<
       TransactionTypeResumeDto,
