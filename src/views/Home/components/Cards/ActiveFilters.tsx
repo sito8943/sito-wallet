@@ -25,7 +25,7 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
 
   return (
     <div className="flex flex-wrap gap-2 items-center justify-start">
-      {accounts?.length && (
+      {!!accounts?.length && (
         <ArrayChip
           label={t("_entities:transaction.account.label")}
           items={accounts ?? []}

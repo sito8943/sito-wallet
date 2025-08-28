@@ -71,6 +71,14 @@ export const TransactionTypeResume = () => {
 
   const { data: categories } = useTransactionCategoriesCommon();
 
+  const categoriesByType = useMemo(() => {
+    return categories?.filter((category) => category.type === type) ?? [];
+  }, [categories, type]);
+
+  useEffect(() => {
+    setSelectedCategories(null);
+  }, [type]);
+
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
 
@@ -164,7 +172,7 @@ export const TransactionTypeResume = () => {
           <AutocompleteInput
             value={selectedCategories}
             multiple
-            options={categories ?? []}
+            options={categoriesByType ?? []}
             label={t("_entities:transaction.category.label")}
             autoComplete={`${Tables.Transactions}-${t(
               "_entities:transaction.category.label"
