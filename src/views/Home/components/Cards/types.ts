@@ -3,6 +3,7 @@ import {
   CommonTransactionCategoryDto,
   TransactionType,
 } from "lib";
+import { ReactNode } from "react";
 
 export type ActiveFiltersPropsType = {
   accounts: CommonAccountDto[];
@@ -13,4 +14,9 @@ export type ActiveFiltersPropsType = {
   endDate: string;
   clearDate: () => void;
   type: TransactionType;
+};
+
+export type BaseCardPropsType = {
+  className?: string;
+  children: ReactNode;
 };

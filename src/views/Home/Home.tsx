@@ -4,7 +4,10 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "providers";
 
 // components
-import { Dashboard, SearchWrapper } from "./components";
+import { SearchWrapper } from "./components";
+
+// sections
+import { Dashboard } from "./sections";
 
 export function Home() {
   const { t } = useTranslation();

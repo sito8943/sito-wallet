@@ -28,12 +28,13 @@ import {
 } from "hooks";
 
 // utils
-import { icons } from "../../../Transactions/components/utils";
+import { icons } from "../../../../Transactions/components/utils";
 
 // components
-import { Currency } from "../../../Currencies";
 import { Accordion, Loading } from "components";
-import { ActiveFilters } from "./ActiveFilters";
+import { Currency } from "../../../../Currencies";
+import { ActiveFilters } from "../ActiveFilters";
+import { BaseCard } from "../BaseCard";
 
 // styles
 import "./styles.css";
@@ -110,7 +111,7 @@ export const TransactionTypeResume = () => {
   );
 
   return (
-    <article className="type-resume-main">
+    <BaseCard className="type-resume-main">
       {isLoading ? (
         <Loading containerClassName="type-resume-main-loading" />
       ) : null}
@@ -225,6 +226,6 @@ export const TransactionTypeResume = () => {
           symbol={data?.account?.currency?.symbol}
         />
       </p>
-    </article>
+    </BaseCard>
   );
 };
