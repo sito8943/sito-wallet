@@ -1,5 +1,6 @@
-// types
 import { Link } from "react-router-dom";
+
+// types
 import { TabPropsType } from "./types";
 
 export const Tab = (props: TabPropsType) => {
