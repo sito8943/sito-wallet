@@ -31,7 +31,7 @@ export function useAddDashboardCard() {
     defaultValues: emptyDashboard,
     mutationFn: (data) => manager.Dashboard.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
-    title: t("_pages:currencies.forms.add"),
+    title: t("_pages:home.dashboard.addCard.title"),
     ...CurrenciesQueryKeys.all(),
   });
 
