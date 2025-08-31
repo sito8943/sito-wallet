@@ -7,6 +7,9 @@
     "dashboard": {
       "transactionTypeResume": {
         "title": "{{transactionType}} por rango"
+      },
+      "addCard": {
+        "title": "Seleccionar tipo de tarjeta"
       }
     }
   },
