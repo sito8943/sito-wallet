@@ -21,7 +21,7 @@ export function Navbar(props: NavbarPropsType) {
 
   const { openDrawer } = props;
 
-  const isScrolled = useScrollTrigger(100);
+  const isScrolled = useScrollTrigger(200);
 
   return (
     <header id="header" className={`header ${isScrolled ? "fixed" : ""}`}>

@@ -26,7 +26,7 @@ export const PageHeader = <TEntity extends BaseEntityDto>(
 
   const navigate = useNavigate();
 
-  const passedOffset = useScrollTrigger(100);
+  const passedOffset = useScrollTrigger(200);
 
   return (
     <div className={`page-header ${passedOffset ? "fixed" : ""}`}>
