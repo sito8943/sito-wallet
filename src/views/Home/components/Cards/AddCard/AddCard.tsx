@@ -8,8 +8,8 @@ import { BaseCard } from "../BaseCard";
 
 export const AddCard = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
-    <BaseCard>
-      <button {...props}>
+    <BaseCard className="!p-0">
+      <button {...props} className="w-full h-full">
         <FontAwesomeIcon icon={faAdd} />
       </button>
     </BaseCard>
