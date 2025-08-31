@@ -13,8 +13,7 @@ import { NotificationEnumType, NotificationType, ValidationError } from "lib";
 import { useDialog } from "hooks";
 
 // types
-import { UseFormDialogPropsType } from "hooks";
-import { FormDialogPropsType } from "components";
+import { UseFormDialogPropsType, TriggerFormDialogPropsType } from "hooks";
 
 export const useFormDialog = <
   TDto,
@@ -28,7 +27,7 @@ export const useFormDialog = <
     TMutationOutputDto,
     TFormType
   >
-): FormDialogPropsType<TFormType, ValidationError> => {
+): TriggerFormDialogPropsType<TFormType, ValidationError> => {
   const { t } = useTranslation();
   const {
     showErrorNotification,
@@ -147,7 +146,7 @@ export const useFormDialog = <
 
   return {
     open,
-    onClick,
+    openDialog: onClick,
     handleClose: close,
     control,
     getValues,

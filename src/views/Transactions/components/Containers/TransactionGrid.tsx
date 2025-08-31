@@ -29,7 +29,7 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
       renderComponent={(transaction) => (
         <TransactionCard
           actions={getActions(transaction)}
-          onClick={(id: number) => editAction.onClick(id)}
+          onClick={(id: number) => editAction.openDialog(id)}
           {...transaction}
         />
       )}

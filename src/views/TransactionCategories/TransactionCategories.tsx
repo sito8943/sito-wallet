@@ -76,7 +76,7 @@ export function TransactionCategories() {
       isLoading={isLoading}
       actions={pageToolbar}
       addOptions={{
-        onClick: () => addTransactionCategory.onClick(),
+        onClick: () => addTransactionCategory.openDialog(),
         disabled: isLoading,
         tooltip: t("_pages:transactionCategories.add"),
       }}
@@ -90,7 +90,7 @@ export function TransactionCategories() {
             renderComponent={(transactionCategory) => (
               <TransactionCategoryCard
                 actions={getActions(transactionCategory)}
-                onClick={(id: number) => editTransactionCategory.onClick(id)}
+                onClick={(id: number) => editTransactionCategory.openDialog(id)}
                 {...transactionCategory}
               />
             )}

@@ -22,6 +22,4 @@ export interface FormDialogPropsType<
   TFormType extends FieldValues,
   TError extends Error = Error
 > extends DialogPropsType,
-    Omit<FormContainerPropsType<TFormType, TError>, "children"> {
-  onClick: (id?: number) => void;
-}
+    Omit<FormContainerPropsType<TFormType, TError>, "children"> {}

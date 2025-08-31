@@ -25,7 +25,7 @@ export const Dashboard = () => {
       <TransactionTypeResume />
       <AddCard
         disabled={isLoading}
-        onClick={() => addDashboardCard.onClick()}
+        onClick={() => addDashboardCard.openDialog()}
       />
       {/* Dialogs */}
       <AddDashboardCardDialog {...addDashboardCard} />

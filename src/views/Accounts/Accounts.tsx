@@ -76,7 +76,7 @@ export function Accounts() {
       isLoading={isLoading}
       actions={pageToolbar}
       addOptions={{
-        onClick: () => addAccount.onClick(),
+        onClick: () => addAccount.openDialog(),
         disabled: isLoading,
         tooltip: t("_pages:accounts.add"),
       }}
@@ -90,7 +90,7 @@ export function Accounts() {
             renderComponent={(account) => (
               <AccountCard
                 actions={getActions(account)}
-                onClick={(id: number) => editAccount.onClick(id)}
+                onClick={(id: number) => editAccount.openDialog(id)}
                 {...account}
               />
             )}

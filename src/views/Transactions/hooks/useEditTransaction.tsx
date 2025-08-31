@@ -28,7 +28,7 @@ export function useEditTransaction(): UseActionDialog<
 
   const manager = useManager();
 
-  const { onClick, ...rest } = useFormDialog<
+  const { openDialog: onClick, ...rest } = useFormDialog<
     TransactionDto,
     UpdateTransactionDto,
     TransactionDto,
@@ -48,7 +48,7 @@ export function useEditTransaction(): UseActionDialog<
 
   return {
     action,
-    onClick,
+    openDialog: onClick,
     ...rest,
   };
 }

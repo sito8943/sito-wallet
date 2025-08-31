@@ -73,7 +73,7 @@ export function Currencies() {
       isLoading={isLoading}
       actions={pageToolbar}
       addOptions={{
-        onClick: () => addCurrency.onClick(),
+        onClick: () => addCurrency.openDialog(),
         disabled: isLoading,
         tooltip: t("_pages:currencies.add"),
       }}
@@ -87,7 +87,7 @@ export function Currencies() {
             renderComponent={(account) => (
               <CurrencyCard
                 actions={getActions(account)}
-                onClick={(id: number) => editCurrency.onClick(id)}
+                onClick={(id: number) => editCurrency.openDialog(id)}
                 {...account}
               />
             )}

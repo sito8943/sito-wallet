@@ -35,9 +35,13 @@ export type TransactionFormPropsType = FormDialogPropsType<
   account?: CommonAccountDto | null;
 };
 
-export type AddTransactionDialogPropsType = TransactionFormPropsType;
+export interface TriggerTransactionPropsType extends TransactionFormPropsType {
+  openDialog: (id?: number) => void;
+}
 
-export type EditTransactionDialogPropsType = TransactionFormPropsType;
+export type AddTransactionDialogPropsType = TriggerTransactionPropsType;
+
+export type EditTransactionDialogPropsType = TriggerTransactionPropsType;
 
 export type UseAddTransactionActionDialog<TDto extends BaseEntityDto> =
   UseActionDialog<TDto, TransactionFormType> & {

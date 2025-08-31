@@ -32,9 +32,16 @@ export interface UseFormDialogPropsType<
   title: string;
 }
 
+export interface TriggerFormDialogPropsType<
+  TFormType extends FieldValues,
+  TError extends Error = Error
+> extends FormDialogPropsType<TFormType, TError> {
+  openDialog: (id?: number) => void;
+}
+
 export interface UseActionDialog<
   TRow extends BaseEntityDto,
   TFormType extends FieldValues
-> extends FormDialogPropsType<TFormType, ValidationError> {
+> extends TriggerFormDialogPropsType<TFormType, ValidationError> {
   action: (record: TRow) => Action<TRow>;
 }
