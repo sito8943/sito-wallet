@@ -124,5 +124,15 @@
       "label": "Symbol",
       "placeholder": "Ex: $"
     }
+  },
+  "userDashboardCard": {
+    "type": {
+      "label": "Type",
+      "required": "Type is required",
+      "values": {
+        "TypeResume": "Type Resume",
+        "CurrentBalance": "Current Balance"
+      }
+    }
   }
 }

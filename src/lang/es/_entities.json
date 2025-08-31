@@ -124,5 +124,15 @@
       "label": "Símbolo",
       "placeholder": "Ej: $"
     }
+  },
+  "userDashboardCard": {
+    "type": {
+      "label": "Tipo",
+      "required": "El tipo es requerido",
+      "values": {
+        "TypeResume": "Resumen de tipo",
+        "CurrentBalance": "Saldo actual"
+      }
+    }
   }
 }

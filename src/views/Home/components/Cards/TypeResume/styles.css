@@ -1,7 +1,7 @@
 @import "../../../../../styles/variables.css";
 
 .type-resume-main {
-  @apply min-md:min-w-100 min-w-auto max-md:w-5/6;
+  @apply min-md:min-w-100 min-w-auto max-md:w-5/6 items-stretch;
 }
 
 .type-resume-main-loading {
