@@ -1,5 +1,5 @@
 @import "../../../styles/variables.css";
 
 .dashboard {
-  @apply flex flex-wrap gap-5 items-center justify-center w-full;
+  @apply flex flex-wrap gap-5 items-center justify-center w-full pb-5;
 }

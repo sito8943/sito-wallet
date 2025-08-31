@@ -13,5 +13,5 @@
 }
 
 .type-resume-title {
-  @apply text-3xl max-xs:text-xl;
+  @apply text-3xl max-xs:text-xl w-full;
 }
