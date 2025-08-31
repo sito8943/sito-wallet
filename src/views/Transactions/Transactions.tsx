@@ -181,7 +181,7 @@ export function Transactions() {
       isLoading={accounts.isLoading || categories.isLoading}
       actions={pageToolbar}
       addOptions={{
-        onClick: () => addTransaction.onClick(),
+        onClick: () => addTransaction.openDialog(),
         disabled: accounts.isLoading,
         tooltip: t("_pages:transactions.add"),
       }}
