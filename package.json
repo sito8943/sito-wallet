@@ -32,7 +32,8 @@
     "react-router-dom": "^6.28.2",
     "react-tooltip": "^5.29.1",
     "some-javascript-utils": "^0.10.10",
-    "tailwindcss": "^4.1.11"
+    "tailwindcss": "^4.1.11",
+    "use-debounce": "^10.0.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
