@@ -1,7 +1,9 @@
+import { useMutation } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { faFilter, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useDebouncedCallback } from "use-debounce";
 
 // @sito/dashboard
 import {
@@ -18,6 +20,7 @@ import {
   enumToKeyValueArray,
   Tables,
   TransactionType,
+  UpdateDashboardCardTitleDto,
 } from "lib";
 
 // hooks
@@ -31,7 +34,7 @@ import {
 import { icons } from "../../../../Transactions/components/utils";
 
 // components
-import { Accordion, Loading } from "components";
+import { FormDialog, Loading } from "components";
 import { Currency } from "../../../../Currencies";
 import { ActiveFilters } from "../ActiveFilters";
 import { BaseCard } from "../BaseCard";
@@ -39,8 +42,17 @@ import { BaseCard } from "../BaseCard";
 // styles
 import "./styles.css";
 
-export const TransactionTypeResume = () => {
+// types
+import { TransactionTypePropsType } from "./types";
+
+// providers
+import { useManager } from "providers";
+
+export const TransactionTypeResume = (props: TransactionTypePropsType) => {
+  const { title, id, user, onDelete } = props;
+
   const { t } = useTranslation();
+  const manager = useManager();
 
   // #region filters
 
@@ -101,14 +113,44 @@ export const TransactionTypeResume = () => {
   const [showFilters, setShowFilters] = useState(false);
 
   const [cardTitle, setCardTitle] = useState(
-    t("_pages:home.dashboard.transactionTypeResume.title", {
-      transactionType: t(
-        `_entities:transactionCategory.type.values.${String(
-          TransactionType[type]
-        )}`
-      ),
-    })
+    title ??
+      t("_pages:home.dashboard.transactionTypeResume.title", {
+        transactionType: t(
+          `_entities:transactionCategory.type.values.${String(
+            TransactionType[type]
+          )}`
+        ),
+      })
   );
+  // Debounce callback
+  const debounced = useDebouncedCallback(
+    // function
+    (value) => {
+      updateTitle.mutate({
+        id,
+        title: value,
+        userId: user?.id,
+      } as UpdateDashboardCardTitleDto);
+    },
+    // delay in ms
+    500
+  );
+
+  useEffect(() => {
+    debounced.flush();
+  }, [debounced]);
+
+  const updateTitle = useMutation<number, Error, UpdateDashboardCardTitleDto>({
+    mutationFn: (data) => manager.Dashboard.updateCardTitle(data),
+    onError: (error: Error) => {
+      console.error(error);
+    },
+    onSuccess: () => {
+      console.log("Saved?");
+    },
+  });
+
+  const globalLoading = updateTitle.isPending || isLoading;
 
   return (
     <BaseCard className="type-resume-main">
@@ -119,20 +161,67 @@ export const TransactionTypeResume = () => {
         <input
           className="type-resume-title poppins"
           value={cardTitle}
-          onChange={(e) => setCardTitle(e.target.value)}
+          onChange={(e) => {
+            debounced(e.target.value);
+            setCardTitle(e.target.value);
+          }}
         />
+        {!updateTitle.isPending ? <Loading className="mt-1" /> : null}
         <button
-          className={`icon-button ${showFilters ? "primary submit" : ""}`}
+          disabled={globalLoading}
+          className={`icon-button min-w-7`}
           onClick={() => setShowFilters(!showFilters)}
         >
           <FontAwesomeIcon icon={faFilter} />
         </button>
+        <button
+          disabled={globalLoading}
+          onClick={onDelete}
+          className={`icon-button min-w-7 error`}
+        >
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
       </div>
 
-      <Accordion
+      <ActiveFilters
+        accounts={selectedAccounts ?? []}
+        clearAccounts={() => setSelectedAccounts([])}
+        categories={selectedCategories ?? []}
+        clearCategories={() => setSelectedCategories([])}
+        startDate={startDate}
+        endDate={endDate}
+        clearDate={() => {
+          setStartDate("");
+          setEndDate("");
+        }}
+        type={type}
+      />
+      <FontAwesomeIcon
+        icon={icons[(type ?? 0) as keyof typeof icons]}
+        className={`text-lg mt-2 self-end ${
+          Number(type) === TransactionType.In
+            ? "inverted-success"
+            : "inverted-error"
+        }`}
+      />
+      <p
+        className={`!text-4xl font-bold self-end poppins ${
+          type === TransactionType.In ? "!text-bg-success" : "!text-bg-error"
+        }`}
+      >
+        {data?.total}{" "}
+        <Currency
+          name={data?.account?.currency?.name}
+          symbol={data?.account?.currency?.symbol}
+        />
+      </p>
+
+      <FormDialog
+        title={t("_accessibility:buttons.filters")}
         open={showFilters}
-        className="relative"
-        contentClassName={showFilters ? "pt-4" : ""}
+        handleClose={() => setShowFilters(false)}
+        handleSubmit={() => null}
+        onSubmit={() => {}}
       >
         <AutocompleteInput
           value={selectedAccounts}
@@ -171,8 +260,8 @@ export const TransactionTypeResume = () => {
           </div>
         </div>
         <AutocompleteInput
-          value={selectedCategories}
           multiple
+          value={selectedCategories}
           options={categoriesByType ?? []}
           label={t("_entities:transaction.category.label")}
           autoComplete={`${Tables.Transactions}-${t(
@@ -192,40 +281,7 @@ export const TransactionTypeResume = () => {
           containerClassName="!w-[unset] flex-1"
           options={parsedTypes}
         />
-      </Accordion>
-
-      <ActiveFilters
-        accounts={selectedAccounts ?? []}
-        clearAccounts={() => setSelectedAccounts([])}
-        categories={selectedCategories ?? []}
-        clearCategories={() => setSelectedCategories([])}
-        startDate={startDate}
-        endDate={endDate}
-        clearDate={() => {
-          setStartDate("");
-          setEndDate("");
-        }}
-        type={type}
-      />
-      <FontAwesomeIcon
-        icon={icons[(type ?? 0) as keyof typeof icons]}
-        className={`text-lg mt-2 self-end ${
-          Number(type) === TransactionType.In
-            ? "inverted-success"
-            : "inverted-error"
-        }`}
-      />
-      <p
-        className={`!text-4xl font-bold self-end poppins ${
-          type === TransactionType.In ? "!text-bg-success" : "!text-bg-error"
-        }`}
-      >
-        {data?.total}{" "}
-        <Currency
-          name={data?.account?.currency?.name}
-          symbol={data?.account?.currency?.symbol}
-        />
-      </p>
+      </FormDialog>
     </BaseCard>
   );
 };
