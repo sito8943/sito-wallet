@@ -12,7 +12,7 @@ import { NotificationType } from "lib";
 import { UseConfirmationPropsType } from "hooks";
 
 export const useConfirmationForm = <TInDto, TError extends Error>(
-  props: UseConfirmationPropsType<TInDto, TError>,
+  props: UseConfirmationPropsType<TInDto, TError>
 ) => {
   const { showSuccessNotification } = useNotification();
 
@@ -35,7 +35,7 @@ export const useConfirmationForm = <TInDto, TError extends Error>(
   const dialogFn = useMutation<TInDto, TError>({
     mutationFn: () =>
       mutationFn(
-        Array.isArray(recordToProcess) ? recordToProcess : [recordToProcess],
+        Array.isArray(recordToProcess) ? recordToProcess : [recordToProcess]
       ),
     onError: (error: TError) => {
       console.error(error);
