@@ -14,8 +14,8 @@ import { UseExportActionMutatePropsType } from "./types";
 // actions
 import { useExportAction } from "../actions";
 
-export const useExportActionMutate = <TInDto, TError extends Error>(
-  props: UseExportActionMutatePropsType<TInDto, TError>
+export const useExportActionMutate = <TInOutDto, TError extends Error>(
+  props: UseExportActionMutatePropsType<TInOutDto, TError>
 ) => {
   const { showSuccessNotification } = useNotification();
   const { t } = useTranslation();
@@ -28,13 +28,13 @@ export const useExportActionMutate = <TInDto, TError extends Error>(
     onSuccessMessage = t("_pages:common.actions.export.successMessage"),
   } = props;
 
-  const mutation = useMutation<TInDto, TError>({
+  const mutation = useMutation<TInOutDto, TError>({
     mutationFn: () => mutationFn(),
     onError: (error: TError) => {
       console.error(error);
       if (onError) onError(error);
     },
-    onSuccess: async (result: TInDto) => {
+    onSuccess: async (result: TInOutDto) => {
       const json = JSON.stringify(result, null, 2);
 
       const blob = new Blob([json], { type: "application/json" });
