@@ -1,7 +1,7 @@
 @import "../../../../../styles/variables.css";
 
 .type-resume-main {
-  @apply min-md:min-w-100 min-w-auto max-md:w-5/6 items-stretch;
+  @apply items-stretch;
 }
 
 .type-resume-main-loading {
@@ -13,5 +13,5 @@
 }
 
 .type-resume-title {
-  @apply text-3xl max-xs:text-xl w-full;
+  @apply text-3xl max-sm:text-lg w-full;
 }
