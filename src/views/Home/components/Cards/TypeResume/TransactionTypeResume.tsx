@@ -166,7 +166,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
             setCardTitle(e.target.value);
           }}
         />
-        {!updateTitle.isPending ? <Loading className="mt-1" /> : null}
+        {updateTitle.isPending ? <Loading className="mt-1" /> : null}
         <button
           disabled={globalLoading}
           className={`icon-button min-w-7`}
