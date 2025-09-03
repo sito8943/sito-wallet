@@ -24,10 +24,7 @@ export const formToDto = ({
 export const dtoToForm = (
   dto: TransactionCategoryDto
 ): TransactionCategoryFormType => ({
-  id: dto.id,
-  name: dto.name,
-  description: dto.description,
-  type: dto.type,
+  ...dto,
   userId: dto.user?.id ?? 0,
 });
 
@@ -37,4 +34,5 @@ export const emptyTransactionCategory: TransactionCategoryFormType = {
   description: "",
   type: TransactionType.In,
   userId: 0,
+  initial: false,
 };

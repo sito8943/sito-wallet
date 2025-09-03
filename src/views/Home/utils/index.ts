@@ -16,4 +16,5 @@ export const emptyDashboard: DashboardFormType = {
   config: "",
   position: 0,
   userId: 0,
+  title: "",
 };

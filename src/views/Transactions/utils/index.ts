@@ -16,6 +16,7 @@ export const formToDto = ({
     ...data,
     accountId: account?.id ?? 0,
     categoryId: category?.id ?? 0,
+    type: data.type as TransactionType,
   };
 };
 
@@ -30,6 +31,7 @@ export const emptyTransaction = (
   account: CommonAccountDto | null = null
 ): TransactionFormType => ({
   id: 0,
+  initial: false,
   name: "",
   description: "",
   type: TransactionType.In,

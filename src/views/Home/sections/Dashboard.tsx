@@ -3,7 +3,7 @@ import { useEffect, useMemo } from "react";
 // components
 import { AddCard, TransactionTypeResume } from "../components/Cards";
 import { AddDashboardCardDialog } from "../components";
-import { ConfirmationDialog } from "components";
+import { ConfirmationDialog, Error } from "components";
 
 // styles
 import "./styles.css";
@@ -56,9 +56,9 @@ export const Dashboard = () => {
     });
   }, [data, deleteDashboardCard]);
 
-  return (
-    <section id="dashboard" className="">
-      <ul className="dashboard">
+  return !error ? (
+    <section id="dashboard">
+      <ul className={cards?.length ? "dashboard" : "dashboard empty"}>
         {cards}
         <li>
           <AddCard
@@ -72,5 +72,7 @@ export const Dashboard = () => {
       <AddDashboardCardDialog {...addDashboardCard} />
       <ConfirmationDialog {...deleteDashboardCard} />
     </section>
+  ) : (
+    <Error message={error?.message} />
   );
 };
