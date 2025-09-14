@@ -7,6 +7,6 @@
 @media (width < 40rem) {
   .auth-form {
     width: 90%;
-    @apply px-4
+    @apply px-4;
   }
 }
