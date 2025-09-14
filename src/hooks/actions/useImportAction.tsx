@@ -4,35 +4,35 @@ import { useTranslation } from "react-i18next";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faFileArrowUp,
   faCircleNotch,
-  faFileArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 
 // types
-import { GlobalActions, UseExportAction } from "hooks";
+import { GlobalActions, UseImportAction } from "hooks";
 
-export const useExportAction = (props: UseExportAction) => {
+export const useImportAction = (props: UseImportAction) => {
   const { t } = useTranslation();
 
   const {
-    isLoading = false,
     onClick,
     hidden = false,
     disabled = false,
+    isLoading = false,
   } = props;
 
   const action = useCallback(
     () => ({
-      id: GlobalActions.Export,
+      id: GlobalActions.Import,
       hidden: hidden,
       disabled: disabled,
       icon: (
         <FontAwesomeIcon
-          icon={isLoading ? faCircleNotch : faFileArrowDown}
-          className={`${isLoading ? "rotate" : ""}`}
+          className="primary"
+          icon={isLoading ? faCircleNotch : faFileArrowUp}
         />
       ),
-      tooltip: t("_pages:common.actions.export.text"),
+      tooltip: t("_pages:common.actions.import.text"),
       onClick: onClick,
     }),
     [disabled, hidden, isLoading, onClick, t]

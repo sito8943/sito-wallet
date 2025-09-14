@@ -17,7 +17,7 @@ export interface UseFormPropsType<
 > {
   defaultValues?: DefaultValues<TFormType>;
   getFunction?: (id: number) => Promise<TDto>;
-  formToDto: (data: TFormType) => TMutationDto;
+  formToDto?: (data: TFormType) => TMutationDto;
   dtoToForm?: (data: TDto) => TFormType;
   mutationFn: MutationFunction<TMutationOutputDto, TMutationDto>;
   onError?: (errors: ValidationError) => void;

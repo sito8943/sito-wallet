@@ -15,6 +15,7 @@ import {
   AccountsQueryKeys,
   useRestoreDialog,
   useExportActionMutate,
+  useImportDialog,
 } from "hooks";
 import {
   useAddAccountDialog,
@@ -24,6 +25,7 @@ import {
 
 // types
 import { AccountDto, Tables } from "lib";
+import ImportDialog from "../../components/Dialog/ImportDialog";
 
 export function Accounts() {
   const { t } = useTranslation();
@@ -55,6 +57,12 @@ export function Accounts() {
     mutationFn: () => manager.Accounts.export(),
   });
 
+  const importAccounts = useImportDialog({
+    entity: Tables.Accounts,
+    mutationFn: (data) => manager.Accounts.import(data),
+    ...AccountsQueryKeys.all(),
+  });
+
   // #endregion
 
   const getActions = useCallback(
@@ -67,8 +75,8 @@ export function Accounts() {
   );
 
   const pageToolbar = useMemo(() => {
-    return [exportAccounts.action()];
-  }, [exportAccounts]);
+    return [exportAccounts.action(), importAccounts.action()];
+  }, [exportAccounts, importAccounts]);
 
   return (
     <Page
@@ -100,6 +108,7 @@ export function Accounts() {
           <EditAccountDialog {...editAccount} />
           <ConfirmationDialog {...deleteAccount} />
           <ConfirmationDialog {...restoreAccount} />
+          <ImportDialog {...importAccounts} />
         </>
       ) : (
         <Error message={error?.message} />

@@ -43,6 +43,10 @@
       "export": {
         "text": "Exportar",
         "successMessage": "Exportado correctamente"
+      },
+      "import": {
+        "text": "Importar",
+        "successMessage": "Importado correctamente"
       }
     }
   },

@@ -18,6 +18,8 @@ export interface UseExportAction extends UseActionPropTypes {
   onClick: () => void;
 }
 
+export type UseImportAction = UseExportAction;
+
 export enum GlobalActions {
   Add = "add",
   Edit = "edit",
@@ -25,4 +27,5 @@ export enum GlobalActions {
   Restore = "restore",
   Refresh = "refresh",
   Export = "export",
+  Import = "import",
 }

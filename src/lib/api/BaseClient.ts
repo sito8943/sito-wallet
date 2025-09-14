@@ -11,6 +11,7 @@ import {
   BaseFilterDto,
   buildQueryUrl,
   DeleteDto,
+  ImportDto,
   Methods,
   QueryResult,
 } from "lib";
@@ -97,6 +98,19 @@ export default class BaseClient<
     );
 
     return await this.api.doQuery<TDto[]>(builtUrl, Methods.GET, undefined);
+  }
+
+  /**
+   *
+   * @param data - Import data
+   * @returns - List of elementes
+   */
+  async import(data: ImportDto): Promise<number> {
+    return await this.api.doQuery<number>(
+      `${this.table}/import`,
+      Methods.POST,
+      data
+    );
   }
 
   /**

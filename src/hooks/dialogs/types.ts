@@ -45,3 +45,9 @@ export interface UseActionDialog<
 > extends TriggerFormDialogPropsType<TFormType, ValidationError> {
   action: (record: TRow) => Action<TRow>;
 }
+
+export type UseImportDialogPropsType<TMutationOutputDto, TMutationDto> = {
+  mutationFn: MutationFunction<TMutationOutputDto, TMutationDto>;
+  queryKey: QueryKey;
+  entity: string;
+};

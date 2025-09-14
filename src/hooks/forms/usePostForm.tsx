@@ -27,7 +27,7 @@ export const usePostForm = <
   const {
     defaultValues,
     mutationFn,
-    formToDto,
+    formToDto = (data) => data,
     onError,
     onSuccess,
     queryKey,
@@ -104,7 +104,7 @@ export const usePostForm = <
     getValues,
     setValue,
     handleSubmit,
-    onSubmit: (data) => formFn.mutate(formToDto(data)),
+    onSubmit: (data) => formFn.mutate(formToDto(data) as TMutationDto),
     reset,
     setError,
     parseFormError,
