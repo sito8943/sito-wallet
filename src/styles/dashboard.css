@@ -1,7 +1,7 @@
 @import "./variables.css";
 
 .table-headers-cell {
-  @apply rounded-4xl
+  @apply rounded-4xl;
 }
 
 .chip-main {
