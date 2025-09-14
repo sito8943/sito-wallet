@@ -44,7 +44,6 @@ export const Dashboard = () => {
             <li key={item.id}>
               <TransactionTypeResume
                 onDelete={() => {
-                  console.log(item);
                   deleteDashboardCard.onClick([item.id]);
                 }}
                 key={item.id}

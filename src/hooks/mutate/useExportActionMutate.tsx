@@ -55,7 +55,6 @@ export const useExportActionMutate = <TInOutDto, TError extends Error>(
   });
 
   const onClickFn = useCallback(() => {
-    console.log("hola");
     mutation.mutate();
   }, [mutation]);
 

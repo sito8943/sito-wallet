@@ -1,7 +1,5 @@
 import { useTranslation } from "react-i18next";
 
-// @sito/dashboard
-
 // components
 import { Dialog } from "./Dialog";
 import { Loading } from "components";
