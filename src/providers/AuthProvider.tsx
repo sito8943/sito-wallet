@@ -35,9 +35,11 @@ const AuthProvider = (props: BasicProviderPropTypes) => {
   }, []);
 
   const logUser = useCallback((data: SessionDto) => {
-    setAccount(data);
-    removeFromLocal(config.guestMode);
-    toLocal(config.user, data.token);
+    if (data) {
+      setAccount(data);
+      removeFromLocal(config.guestMode);
+      toLocal(config.user, data.token);
+    }
   }, []);
 
   const logoutUser = useCallback(async () => {
