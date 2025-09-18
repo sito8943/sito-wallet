@@ -1,0 +1,20 @@
+VITE_API_URL="http://localhost:8080/"
+VITE_THIS_URL="http://localhost:5173/"
+
+VITE_BASIC_KEY="basic_wallet"
+VITE_CACHE="cache_wallet"
+VITE_VALIDATION_COOKIE="validation_wallet"
+VITE_RECOVERING_COOKIE="recovering_wallet"
+VITE_CRYPTO='api.wallet.com'
+
+# user settings
+VITE_USER="user_wallet"
+VITE_ACCEPT_COOKIE="accept_wallet"
+VITE_DECLINE_COOKIE="decline_wallet"
+VITE_LANGUAGE="language_wallet"
+VITE_REMEMBER="remember_wallet"
+VITE_ONBOARDING="onboarding_wallet"
+VITE_GUEST_MODE="guest_mode_wallet"
+
+VITE_SUPABASE_CO=""
+VITE_SUPABASE_ANON=""
