@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
 
 // icons
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import { Chip } from "./Chip";
+import { IconButton } from "components";
 
 // types
 import { DeleteChipPropsType } from "./types.ts";
@@ -18,17 +18,15 @@ export const DeletableChip = (props: DeleteChipPropsType) => {
   return (
     <Chip {...rest} className="!pr-1">
       <p>{text}</p>
-      <button
-        type="button"
+      <IconButton
         name={t("_accessibility:buttons.deleteChip", { value: text })}
         aria-label={t("_accessibility:ariaLabels.deleteChip", {
           value: text,
         })}
-        className="icon-button hover:text-red-300"
+        className="hover:text-red-300"
         onClick={onDelete}
-      >
-        <FontAwesomeIcon icon={faClose} />
-      </button>
+        icon={faClose}
+      />
     </Chip>
   );
 };

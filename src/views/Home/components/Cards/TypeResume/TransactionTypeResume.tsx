@@ -34,7 +34,7 @@ import {
 import { icons } from "../../../../Transactions/components/utils";
 
 // components
-import { FormDialog, Loading } from "components";
+import { FormDialog, IconButton, Loading } from "components";
 import { Currency } from "../../../../Currencies";
 import { ActiveFilters } from "../ActiveFilters";
 import { BaseCard } from "../BaseCard";
@@ -167,20 +167,18 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
           }}
         />
         {updateTitle.isPending ? <Loading className="mt-1" /> : null}
-        <button
+        <IconButton
           disabled={globalLoading}
-          className={`icon-button min-w-7`}
           onClick={() => setShowFilters(!showFilters)}
-        >
-          <FontAwesomeIcon icon={faFilter} />
-        </button>
-        <button
+          icon={faFilter}
+        />
+
+        <IconButton
           disabled={globalLoading}
           onClick={onDelete}
-          className={`icon-button min-w-7 error`}
-        >
-          <FontAwesomeIcon icon={faTrash} />
-        </button>
+          className={`error`}
+          icon={faTrash}
+        />
       </div>
 
       <ActiveFilters

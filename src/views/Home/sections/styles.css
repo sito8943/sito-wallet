@@ -1,4 +1,4 @@
-@import "../../../styles/variables.css";
+@reference "../../../styles/variables.css";
 
 .dashboard {
   @apply gap-5 p-5 m-auto grid grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1;

@@ -1,4 +1,4 @@
-@import "../../styles/variables";
+@reference "../../styles/variables";
 
 .chip {
   @apply rounded-4xl pl-3 pr-3 py-1 flex items-center justify-center gap-2;

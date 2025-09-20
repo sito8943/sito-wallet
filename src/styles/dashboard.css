@@ -1,4 +1,4 @@
-@import "./variables.css";
+@reference "./variables.css";
 
 .table-headers-cell {
   @apply rounded-4xl;
