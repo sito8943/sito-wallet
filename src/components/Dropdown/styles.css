@@ -1,4 +1,4 @@
-@import "../../styles/variables.css";
+@reference "../../styles/variables.css";
 
 .dropdown-main {
   @apply transition duration-300 ease-in-out absolute right-5 bg-base p-2 shadow-xl shadow-black/50;

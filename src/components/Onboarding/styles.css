@@ -1,4 +1,4 @@
-@import "../../styles/variables.css";
+@reference "../../styles/variables.css";
 
 .onboarding-main {
   @apply fixed w-screen h-screen top-0 left-0 bg-base z-50 flex items-center justify-center;

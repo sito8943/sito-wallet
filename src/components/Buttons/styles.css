@@ -1,0 +1,9 @@
+@reference "../../styles/variables.css";
+
+.icon-button {
+  @apply bg-base hover:bg-base-light w-7 h-7 min-w-7 rounded-full flex items-center justify-center transition duration-300 ease-in-out;
+}
+
+.icon-button.error:hover {
+  @apply bg-error text-bg-error;
+}
