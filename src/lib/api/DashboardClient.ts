@@ -11,6 +11,7 @@ import {
   BaseCommonEntityDto,
   FilterDashboardDto,
   UpdateDashboardCardTitleDto,
+  UpdateDashboardCardConfigDto,
 } from "lib";
 
 export default class DashboardClient extends BaseClient<
@@ -26,10 +27,12 @@ export default class DashboardClient extends BaseClient<
     super(Tables.UserDashboardConfig);
   }
 
-  async updateCardTitle(
-    data: UpdateDashboardCardTitleDto
-  ): Promise<number> {
+  async updateCardTitle(data: UpdateDashboardCardTitleDto): Promise<number> {
     return await this.api.patch(`${this.table}/update-card-title`, data);
+  }
+
+  async updateCardConfig(data: UpdateDashboardCardConfigDto): Promise<number> {
+    return await this.api.patch(`${this.table}/update-card-config`, data);
   }
 
   async delete(ids: number[]): Promise<number> {

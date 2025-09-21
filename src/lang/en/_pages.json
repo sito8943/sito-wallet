@@ -6,7 +6,8 @@
     "welcome": "Welcome {{user}}",
     "dashboard": {
       "transactionTypeResume": {
-        "title": "{{transactionType}} per range"
+        "title": "{{transactionType}} per range",
+        "placeholder": "Type the title"
       },
       "addCard": {
         "title": "Select Card Type"

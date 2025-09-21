@@ -1,2 +1,2 @@
-export * from "./TypeResume/TransactionTypeResume";
+export * from "./TypeResume/TransactionTypeResumeCard";
 export * from "./AddCard/AddCard";
