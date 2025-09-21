@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useManager } from "providers";
 
 // hooks
-import { useFormDialog, CurrenciesQueryKeys } from "hooks";
+import { useFormDialog, DashboardsQueryKeys } from "hooks";
 
 // utils
 import { dtoToAddForm, emptyDashboard, formToAddDto } from "../utils";
@@ -32,7 +32,7 @@ export function useAddDashboardCard() {
     mutationFn: (data) => manager.Dashboard.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:home.dashboard.addCard.title"),
-    ...CurrenciesQueryKeys.all(),
+    ...DashboardsQueryKeys.all(),
   });
 
   return {
