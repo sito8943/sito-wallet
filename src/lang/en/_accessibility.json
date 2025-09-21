@@ -76,7 +76,9 @@
     "invalidCredentials": "Wrong user or password",
     "500": "An error has ocurrred in the server"
   },
-  "messages": {},
+  "messages": {
+    "saved": "Saved successful"
+  },
   "components": {
     "table": {
       "filters": {

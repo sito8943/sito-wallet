@@ -90,5 +90,7 @@
     "invalidCredentials": "Usuario o contraseña incorrectos",
     "500": "Ha ocurrido un error en el servidor"
   },
-  "messages": {}
+  "messages": {
+    "saved": "Guardado correctamente"
+  }
 }
