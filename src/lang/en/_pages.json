@@ -111,6 +111,10 @@
     "add": "Add a account",
     "actions": {
       "viewTransactions": { "text": "View transactions" },
+      "sync": {
+        "text": "Sync balance",
+        "successMessage": "Synced successful"
+      },
       "addTransaction": {
         "text": "Add transaction",
         "successMessage": "Saved successful"

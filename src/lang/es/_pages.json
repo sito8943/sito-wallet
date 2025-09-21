@@ -17,22 +17,22 @@
     "actions": {
       "edit": {
         "text": "Editar",
-        "successMessage": "Guardado exitosamente"
+        "successMessage": "Guardado correctamente"
       },
       "add": {
         "text": "Agregar",
-        "successMessage": "Guardado exitosamente"
+        "successMessage": "Guardado correctamente"
       },
       "delete": {
         "text": "Eliminar",
-        "successMessage": "Eliminado exitosamente",
+        "successMessage": "Eliminado correctamente",
         "dialog": {
           "title": "¿Estás seguro de que deseas eliminar?"
         }
       },
       "restore": {
         "text": "Restaurar",
-        "successMessage": "Restaurado exitosamente",
+        "successMessage": "Restaurado correctamente",
         "dialog": {
           "title": "¿Estás seguro de que deseas restaurar?"
         }
@@ -102,13 +102,17 @@
     "empty": "No hay cuentas para mostrar",
     "add": "Agregar una cuenta",
     "actions": {
+      "sync": {
+        "text": "Sincronizar saldo",
+        "successMessage": "Sincronizado correctamente"
+      },
       "viewTransactions": {
         "text": "Ver transacciones",
-        "successMessage": "Guardado exitosamente"
+        "successMessage": "Guardado correctamente"
       },
       "addTransaction": {
         "text": "Añadir transacción",
-        "successMessage": "Guardado exitosamente"
+        "successMessage": "Guardado correctamente"
       }
     },
     "forms": {

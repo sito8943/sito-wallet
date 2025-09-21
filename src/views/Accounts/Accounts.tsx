@@ -20,6 +20,7 @@ import {
 import {
   useAddAccountDialog,
   useEditAccountDialog,
+  useSyncAccountMutation,
   useViewTransactionsAction,
 } from "./hooks";
 
@@ -63,15 +64,18 @@ export function Accounts() {
     ...AccountsQueryKeys.all(),
   });
 
+  const syncAccount = useSyncAccountMutation();
+
   // #endregion
 
   const getActions = useCallback(
     (record: AccountDto) => [
       viewTransactions.action(record),
+      syncAccount.action(record),
       deleteAccount.action(record),
       restoreAccount.action(record),
     ],
-    [deleteAccount, restoreAccount, viewTransactions]
+    [deleteAccount, restoreAccount, syncAccount, viewTransactions]
   );
 
   const pageToolbar = useMemo(() => {
