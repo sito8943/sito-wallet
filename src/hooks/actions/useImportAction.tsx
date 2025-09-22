@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faFileArrowUp,
   faCircleNotch,
+  faCloudUpload,
 } from "@fortawesome/free-solid-svg-icons";
 
 // types
@@ -29,7 +29,7 @@ export const useImportAction = (props: UseImportAction) => {
       icon: (
         <FontAwesomeIcon
           className="primary"
-          icon={isLoading ? faCircleNotch : faFileArrowUp}
+          icon={isLoading ? faCircleNotch : faCloudUpload}
         />
       ),
       tooltip: t("_pages:common.actions.import.text"),

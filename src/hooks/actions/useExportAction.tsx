@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleNotch,
-  faFileArrowDown,
+  faCloudArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 
 // types
@@ -28,7 +28,7 @@ export const useExportAction = (props: UseExportAction) => {
       disabled: disabled,
       icon: (
         <FontAwesomeIcon
-          icon={isLoading ? faCircleNotch : faFileArrowDown}
+          icon={isLoading ? faCircleNotch : faCloudArrowDown}
           className={`${isLoading ? "rotate" : ""}`}
         />
       ),
