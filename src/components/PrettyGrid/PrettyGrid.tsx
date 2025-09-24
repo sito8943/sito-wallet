@@ -20,7 +20,7 @@ export const PrettyGrid = <TDto extends BaseEntityDto>(
   const {
     loading = false,
     emptyComponent = null,
-    emptyMessage = t("_messages:empty"),
+    emptyMessage = t("_accessibility:messages.empty"),
     renderComponent,
     data = [],
   } = props;
@@ -31,7 +31,7 @@ export const PrettyGrid = <TDto extends BaseEntityDto>(
 
   return (
     <>
-      {!!data?.length && (
+      {data?.length ? (
         <ul className="pretty-grid-main">
           {data?.map((item) => (
             <li className="pretty-grid-item" key={item.id}>
@@ -39,11 +39,14 @@ export const PrettyGrid = <TDto extends BaseEntityDto>(
             </li>
           ))}
         </ul>
-      )}
-      {!data?.length && emptyComponent ? (
-        emptyComponent
       ) : (
-        <p className="text-center mt-5">{emptyMessage}</p>
+        <>
+          {emptyComponent ? (
+            emptyComponent
+          ) : (
+            <p className="text-center mt-5">{emptyMessage}</p>
+          )}
+        </>
       )}
     </>
   );

@@ -23,11 +23,15 @@ export function Drawer(props: DrawerPropsTypes) {
 
   const { account } = useAuth();
 
-  const parsedMenu = useMemo(() => {
-    return menuMap.filter(
-      (map) => map.auth === undefined || (map.auth && account.email)
-    );
-  }, [account.email]);
+const parsedMenu = useMemo(() => {
+  return menuMap.filter((item) => {
+    const requiresAuth = item.auth ?? false; // default to false if undefined
+    const isLoggedIn = Boolean(account?.email);
+
+    // Include item if it doesn’t require auth, or if auth matches login status
+    return !requiresAuth || (requiresAuth && isLoggedIn) || (!requiresAuth && !isLoggedIn);
+  });
+}, [account]);
 
   return (
     <div
