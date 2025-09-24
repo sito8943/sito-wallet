@@ -12,7 +12,7 @@ export const Tab = (props: TabPropsType) => {
       onClick={() => onClick()}
       className={`button submit tab ${active ? "primary" : "outlined"}`}
     >
-      {children}s
+      {children}
     </Link>
   );
 };
