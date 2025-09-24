@@ -94,8 +94,8 @@
   },
   "accounts": {
     "title": "Accounts",
-    "empty": "No accounts to load",
-    "add": "Add a account",
+    "empty": "You don’t have any bank accounts. Add one to get started.",
+    "add": "Add an account",
     "actions": {
       "viewTransactions": { "text": "View transactions" },
       "sync": {
@@ -125,7 +125,7 @@
   },
   "transactionCategories": {
     "title": "Categories",
-    "empty": "No categories to load",
+    "empty": "You don't have any categories. Add one to get started.",
     "add": "Add a category",
     "forms": {
       "add": "New category",
@@ -135,7 +135,7 @@
   },
   "currencies": {
     "title": "Currencies",
-    "empty": "No currencies to load",
+    "empty": "No currencies available. Create one to get started.",
     "add": "Add a currency",
     "forms": {
       "add": "New currency",

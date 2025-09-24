@@ -5,8 +5,7 @@ button {
   @apply text-sm font-medium;
 }
 
-input,
-p {
+input {
   @apply text-sm text-text-muted;
 }
 

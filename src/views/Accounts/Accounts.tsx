@@ -4,8 +4,12 @@ import { useTranslation } from "react-i18next";
 // providers
 import { useManager } from "providers";
 
+// icons
+import { faAdd, faWallet } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 // components
-import { ConfirmationDialog, Error, Page, PrettyGrid } from "components";
+import { ConfirmationDialog, Empty, Error, Page, PrettyGrid } from "components";
 import { AddAccountDialog, AccountCard, EditAccountDialog } from "./components";
 
 // hooks
@@ -15,6 +19,7 @@ import {
   AccountsQueryKeys,
   useRestoreDialog,
   useExportActionMutate,
+  GlobalActions,
 } from "hooks";
 import {
   useAddAccountDialog,
@@ -90,7 +95,22 @@ export function Accounts() {
         <>
           <PrettyGrid
             data={data?.items}
-            emptyMessage={t("_pages:accounts.empty")}
+            emptyComponent={
+              <Empty
+                message={t("_pages:accounts.empty")}
+                iconProps={{
+                  icon: faWallet,
+                  className: "text-5xl max-md:text-3xl text-gray-400",
+                }}
+                action={{
+                  icon: <FontAwesomeIcon icon={faAdd} />,
+                  id: GlobalActions.Add,
+                  disabled: isLoading,
+                  onClick: () => addAccount.openDialog(),
+                  tooltip: t("_pages:accounts.add"),
+                }}
+              />
+            }
             renderComponent={(account) => (
               <AccountCard
                 actions={getActions(account)}

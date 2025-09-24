@@ -77,7 +77,8 @@
     "500": "An error has ocurrred in the server"
   },
   "messages": {
-    "saved": "Saved successful"
+    "saved": "Saved successful",
+    "message": "Nothing to show"
   },
   "components": {
     "table": {

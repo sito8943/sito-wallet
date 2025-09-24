@@ -53,12 +53,6 @@ main {
   @apply bg-base-dark flex flex-col flex-1;
 }
 
-main h1,
-main h2,
-main h3 {
-  @apply text-text;
-}
-
 .opacity {
   animation: opacity 300ms ease-in-out;
 }

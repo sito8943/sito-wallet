@@ -91,6 +91,7 @@
     "500": "Ha ocurrido un error en el servidor"
   },
   "messages": {
-    "saved": "Guardado correctamente"
+    "saved": "Guardado correctamente",
+    "empty": "Nada que mostrar"
   }
 }

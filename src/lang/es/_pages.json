@@ -96,7 +96,7 @@
   },
   "accounts": {
     "title": "Cuentas",
-    "empty": "No hay cuentas para mostrar",
+    "empty": "No tienes cuentas bancarias. Crea una para empezar.",
     "add": "Agregar una cuenta",
     "actions": {
       "sync": {
@@ -130,7 +130,7 @@
   },
   "transactionCategories": {
     "title": "Categorias",
-    "empty": "No hay categorias para mostrar",
+    "empty": "No tienes ninguna categoría. Agrega una para empezar.",
     "add": "Agregar una categoria",
     "forms": {
       "add": "Nueva categoria",
@@ -140,7 +140,7 @@
   },
   "currencies": {
     "title": "Monedas",
-    "empty": "No hay monedas para mostrar",
+    "empty": "No hay monedas disponibles. Crea una para empezar.",
     "add": "Agregar una moneda",
     "forms": {
       "add": "Nueva moneda",
