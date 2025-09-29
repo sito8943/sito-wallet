@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 
@@ -12,7 +13,6 @@ import { menuMap } from "views";
 
 // providers
 import { useAuth } from "providers";
-import { useMemo } from "react";
 
 export function Drawer(props: DrawerPropsTypes) {
   const { t } = useTranslation();
@@ -25,11 +25,11 @@ export function Drawer(props: DrawerPropsTypes) {
 
 const parsedMenu = useMemo(() => {
   return menuMap.filter((item) => {
-    const requiresAuth = item.auth ?? false; // default to false if undefined
+    const requiresAuth = item.auth;
     const isLoggedIn = Boolean(account?.email);
 
     // Include item if it doesn’t require auth, or if auth matches login status
-    return !requiresAuth || (requiresAuth && isLoggedIn) || (!requiresAuth && !isLoggedIn);
+    return requiresAuth == null || (requiresAuth && isLoggedIn) || (!requiresAuth && !isLoggedIn);
   });
 }, [account]);
 

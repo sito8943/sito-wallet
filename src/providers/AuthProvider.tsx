@@ -27,8 +27,8 @@ const AuthProvider = (props: BasicProviderPropTypes) => {
   const [account, setAccount] = useState<SessionDto>({} as SessionDto);
 
   const isInGuestMode = useCallback(() => {
-    return !!fromLocal(config.guestMode, "boolean");
-  }, []);
+    return !!fromLocal(config.guestMode, "boolean") && account.token === undefined;
+  }, [account.token]);
 
   const setGuestMode = useCallback((value: boolean) => {
     toLocal(config.guestMode, value);
