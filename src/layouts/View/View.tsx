@@ -13,7 +13,7 @@ import { useAuth } from "providers";
 import { fromLocal, toLocal } from "lib";
 
 // components
-import { Notification, Error, Onboarding } from "components";
+import { Notification, Error, Onboarding, ToTop } from "components";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -41,6 +41,7 @@ export function View() {
   return (
     <>
       {showOnboarding && <Onboarding />}
+      <ToTop />
       <Header />
       <ErrorBoundary
         fallback={

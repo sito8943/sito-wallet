@@ -24,7 +24,8 @@
     "next": "Siguiente",
     "skip": "Saltar",
     "startAsGuest": "Comenzar como invitado",
-    "signIn": "Iniciar sesión"
+    "signIn": "Iniciar sesión",
+    "toTop": "Ir al inicio"
   },
   "ariaLabels": {
     "ok": "Confirmar acción",

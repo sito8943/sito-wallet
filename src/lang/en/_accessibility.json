@@ -25,7 +25,8 @@
     "next": "Next",
     "skip": "Skip",
     "startAsGuest": "Start as guest",
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "toTop": "Go to top"
   },
   "ariaLabels": {
     "ok": "Confirm action",
