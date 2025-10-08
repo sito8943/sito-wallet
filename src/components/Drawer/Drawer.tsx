@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 
@@ -23,15 +23,35 @@ export function Drawer(props: DrawerPropsTypes) {
 
   const { account } = useAuth();
 
-const parsedMenu = useMemo(() => {
-  return menuMap.filter((item) => {
-    const requiresAuth = item.auth;
-    const isLoggedIn = Boolean(account?.email);
+  const parsedMenu = useMemo(() => {
+    return menuMap.filter((item) => {
+      const requiresAuth = item.auth;
+      const isLoggedIn = Boolean(account?.email);
 
-    // Include item if it doesn’t require auth, or if auth matches login status
-    return requiresAuth == null || (requiresAuth && isLoggedIn) || (!requiresAuth && !isLoggedIn);
-  });
-}, [account]);
+      // Include item if it doesn’t require auth, or if auth matches login status
+      return (
+        requiresAuth == null ||
+        (requiresAuth && isLoggedIn) ||
+        (!requiresAuth && !isLoggedIn)
+      );
+    });
+  }, [account]);
+
+  const onEscapePress = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape" && open) {
+        onClose();
+      }
+    },
+    [onClose, open]
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", onEscapePress);
+    return () => {
+      document.removeEventListener("keydown", onEscapePress);
+    };
+  }, [onEscapePress]);
 
   return (
     <div
