@@ -7,3 +7,15 @@
 .icon-button.error:hover {
   @apply bg-error text-bg-error;
 }
+
+.to-top {
+  @apply fixed bottom-4 right-4 z-50 transition duration-500 ease-in-out
+}
+
+.to-top.show {
+  transform: scale(1);
+}
+
+.to-top.hide {
+  transform: scale(0);
+}
