@@ -17,3 +17,4 @@ export * from "./Onboarding";
 export * from "./Accordion";
 export * from "./Buttons"
 export * from "./Empty"
+export * from "./Search"

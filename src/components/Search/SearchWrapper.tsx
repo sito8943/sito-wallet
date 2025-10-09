@@ -14,11 +14,11 @@ import { SearchResult } from "./SearchResult";
 import { SearchInput } from "./SearchInput";
 
 // sitemap
-import { flattenSitemap, sitemap } from "../../../sitemap";
+import { flattenSitemap, sitemap } from "../../views/sitemap";
 
 // types
 import { SearchResultType } from "./types";
-import { config } from "../../../../config";
+import { config } from "../../config";
 
 export const SearchWrapper = () => {
   const [loading, setLoading] = useState(false);

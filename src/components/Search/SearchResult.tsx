@@ -119,9 +119,16 @@ export const SearchResult = (props: SearchResultPropsType) => {
         {recent?.length ? (
           <ul>
             {recent.map((item, index) => (
-              <li key={index}>
+              <li
+                key={item.path ?? `${item.name}-${item.time ?? index}`}
+              >
                 {item.type === "page" && (
-                  <PageResult {...item} onClick={() => onRecentClick?.(item)} />
+                  <PageResult
+                    path={item.path}
+                    name={item.name}
+                    time={item.time}
+                    onClick={() => onRecentClick?.(item)}
+                  />
                 )}
               </li>
             ))}

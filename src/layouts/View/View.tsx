@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
 import { useEffect, useState } from "react";
@@ -13,7 +13,7 @@ import { useAuth } from "providers";
 import { fromLocal, toLocal } from "lib";
 
 // components
-import { Notification, Error, Onboarding, ToTop } from "components";
+import { Notification, Error, Onboarding, ToTop, SearchModal } from "components";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -23,6 +23,7 @@ import { config } from "../../config";
 export function View() {
   const { account, isInGuestMode } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { t } = useTranslation();
 
@@ -35,12 +36,16 @@ export function View() {
       setShowOnboarding(true);
       toLocal(config.onboarding, true);
     }
-    if (!account.email && !isInGuestMode() && onboarding) navigate("/auth/sign-in");
+    if (!account.email && !isInGuestMode() && onboarding)
+      navigate("/auth/sign-in");
   }, [account.email, isInGuestMode, navigate]);
+
+  console.log(location.pathname)
 
   return (
     <>
       {showOnboarding && <Onboarding />}
+      {location.pathname !== "/" && <SearchModal />}
       <ToTop />
       <Header />
       <ErrorBoundary
