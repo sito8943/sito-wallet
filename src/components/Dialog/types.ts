@@ -11,6 +11,7 @@ export type DialogPropsType = {
   handleClose: () => void;
   containerClassName?: string;
   className?: string;
+  animationClass?: string;
 };
 
 export interface ConfirmationDialogPropsType extends DialogPropsType {

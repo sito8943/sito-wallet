@@ -21,6 +21,7 @@ export const Dialog = (props: DialogPropsType) => {
     open = false,
     containerClassName = "",
     className = "",
+    animationClass = "appear"
   } = props;
 
   const [windowSize, setWindowSize] = useState(window.innerWidth);
@@ -83,14 +84,14 @@ export const Dialog = (props: DialogPropsType) => {
       aria-disabled={!open}
       onClick={bigHandleClose}
       className={`dialog-backdrop animated ${
-        open ? "opened" : "closed"
+        open ? `opened ${animationClass}` : "closed"
       } ${styles} h-screen ${
         open ? "bg-base/20 backdrop-blur-xl" : "pointer-events-none"
       } ${containerClassName}`}
     >
       <div
         className={`dialog elevated animated ${
-          open ? "opened" : "closed"
+          open ? `opened ${animationClass}` : "closed"
         } ${className}`}
       >
         <div className="dialog-header">

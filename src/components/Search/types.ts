@@ -1,3 +1,7 @@
+export type SearchWrapperPropsType = {
+  isModal?: boolean;
+};
+
 export type SearchInputPropsType = {
   onClick: () => void;
   searching: string;
@@ -24,4 +28,5 @@ export type SearchResultPropsType = {
   onRecentClick?: (item: SearchResultType) => void;
   onClose: () => void;
   isLoading: boolean;
+  isModal?: boolean;
 };

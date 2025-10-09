@@ -161,6 +161,10 @@ main {
   animation: blur-appear 0.6s ease-out forwards;
 }
 
+.quick-blur-appear {
+  animation: blur-appear 0.3s ease-out forwards;
+}
+
 @keyframes blur-appear {
   from {
     opacity: 0;

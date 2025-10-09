@@ -1,3 +1,5 @@
+import { forwardRef } from "react";
+
 // icons
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,25 +10,30 @@ import { TextInput } from "@sito/dashboard";
 // types
 import { SearchInputPropsType } from "./types";
 
-export const SearchInput = (props: SearchInputPropsType) => {
-  const { searching, setSearching, onClick } = props;
+export const SearchInput = forwardRef<HTMLInputElement, SearchInputPropsType>(
+  (props, ref) => {
+    const { searching, setSearching, onClick } = props;
 
-  return (
-    <div>
-      <TextInput
-        onClick={(e) => {
-          e.stopPropagation();
-          onClick();
-        }}
-        value={searching}
-        onChange={(e) => setSearching((e.target as HTMLInputElement).value)}
-        inputClassName="!pl-9"
-      >
-        <FontAwesomeIcon
-          icon={faSearch}
-          className="absolute top-3.5 left-3.5"
-        />
-      </TextInput>
-    </div>
-  );
-};
+    return (
+      <div>
+        <TextInput
+          ref={ref}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick();
+          }}
+          value={searching}
+          onChange={(e) => setSearching((e.target as HTMLInputElement).value)}
+          inputClassName="!pl-9"
+        >
+          <FontAwesomeIcon
+            icon={faSearch}
+            className="absolute top-3.5 left-3.5"
+          />
+        </TextInput>
+      </div>
+    );
+  }
+);
+
+SearchInput.displayName = "SearchInput";

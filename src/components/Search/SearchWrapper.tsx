@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { useNavigate } from "react-router-dom";
 import { stringSimilarity } from "string-similarity-js";
@@ -17,10 +17,18 @@ import { SearchInput } from "./SearchInput";
 import { flattenSitemap, sitemap } from "../../views/sitemap";
 
 // types
-import { SearchResultType } from "./types";
+import { SearchResultType, SearchWrapperPropsType } from "./types";
+
+// config
 import { config } from "../../config";
 
-export const SearchWrapper = () => {
+// utils
+import { isMac } from "./utils";
+
+export const SearchWrapper = (props: SearchWrapperPropsType) => {
+  const { isModal = false } = props;
+
+  const inputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [searching, setSearching] = useState("");
@@ -97,9 +105,29 @@ export const SearchWrapper = () => {
     debounced(searching);
   }, [searching, debounced]);
 
+  const openOnKeyCombination = useCallback(
+    (e: KeyboardEvent) => {
+      const primary = isMac() ? e.metaKey : e.ctrlKey;
+      if (primary && e.shiftKey && e.key.toLowerCase() === "f") {
+        inputRef?.current?.focus();
+        if (!showResults && !isModal) setShowResults(true);
+        e.preventDefault();
+      }
+    },
+    [isModal, showResults]
+  );
+
+  useEffect(() => {
+    window.addEventListener("keydown", openOnKeyCombination);
+    return () => {
+      window.removeEventListener("keydown", openOnKeyCombination);
+    };
+  }, [isModal, openOnKeyCombination]);
+
   return (
     <div role="search" className="relative">
       <SearchInput
+        ref={inputRef}
         onClick={() => {
           if (!showResults) setShowResults(true);
         }}
@@ -107,6 +135,7 @@ export const SearchWrapper = () => {
         setSearching={setSearching}
       />
       <SearchResult
+        isModal={isModal}
         isLoading={loading}
         searching={searching}
         items={searchResults}

@@ -21,6 +21,7 @@ export const SearchResult = (props: SearchResultPropsType) => {
     onClose,
     onClearRecent,
     onRecentClick,
+    isModal = false,
   } = props;
 
   const { t } = useTranslation();
@@ -68,8 +69,10 @@ export const SearchResult = (props: SearchResultPropsType) => {
   return (
     <div
       ref={containerRef}
-      className={`flex flex-col animated gap-2 absolute w-full z-10 bg-base p-2 rounded-md elevated mt-2 ${
-        show
+      className={`flex flex-col animated gap-2 ${
+        !isModal ? "z-10 bg-base elevated absolute" : ""
+      } w-full p-2 rounded-md mt-2 ${
+        show || isModal
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-2 opacity-0"
       }`}
@@ -119,9 +122,7 @@ export const SearchResult = (props: SearchResultPropsType) => {
         {recent?.length ? (
           <ul>
             {recent.map((item, index) => (
-              <li
-                key={item.path ?? `${item.name}-${item.time ?? index}`}
-              >
+              <li key={item.path ?? `${item.name}-${item.time ?? index}`}>
                 {item.type === "page" && (
                   <PageResult
                     path={item.path}
