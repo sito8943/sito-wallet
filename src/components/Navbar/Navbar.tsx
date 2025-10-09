@@ -19,7 +19,7 @@ export function Navbar(props: NavbarPropsType) {
   const { openDrawer } = props;
 
   return (
-    <header id="header" className={`header`}>
+    <header id="header" className="header">
       <div className="flex gap-2 items-center">
         <button
           type="button"

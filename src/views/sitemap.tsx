@@ -1,5 +1,7 @@
+import { t } from "i18next";
+
 // types
-import { ViewPageType } from "./types.js";
+import { NamedViewPageType, ViewPageType } from "./types";
 
 export enum PageId {
   Home = "home",
@@ -104,3 +106,29 @@ const pathMap: Record<PageId, string> = sitemap.reduce((acc, { key, path }) => {
 }, {} as Record<PageId, string>);
 
 export const getPathByKey = (key: PageId): string | undefined => pathMap[key];
+
+/**
+ *
+ * @param routes routes to flat
+ * @param basePath base path
+ * @returns flatten sitemap
+ */
+export const flattenSitemap = (
+  routes: ViewPageType[],
+  basePath = ""
+): NamedViewPageType[] => {
+  const result = [];
+
+  for (const route of routes) {
+    const fullPath = `${basePath.replace(/\/$/, "")}${route.path}`;
+
+    const name = t(`_pages:pages.${route.key}`);
+
+    result.push({ key: route.key, path: fullPath, name, role: route.role });
+
+    if (route.children)
+      result.push(...flattenSitemap(route.children, fullPath));
+  }
+
+  return result;
+};

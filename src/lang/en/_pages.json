@@ -1,4 +1,28 @@
 {
+  "pages": {
+    "home": "Home",
+    "accounts": "Accounts",
+    "transactions": "Transactions",
+    "transactionCategories": "Categories",
+    "currencies": "Currencies",
+    "about": "About Sito Wallet",
+    "termsAndConditions": "Terms and Conditions",
+    "cookiesPolicy": "Cookies Policy",
+    "privacyPolicy": "Privacy Policy"
+  },
+  "search": {
+    "label": "Search",
+    "placeholder": "Type something to search...",
+    "recentSearches": "Recent searches",
+    "clearRecent": "Clear",
+    "noRecentSearches": "No recent searches",
+    "noResult": "No results found",
+    "result": "Search results",
+    "error": "An error occurred while searching",
+    "types": {
+      "page": "Page"
+    }
+  },
   "home": {
     "title": "Home",
     "guest": "Guest",

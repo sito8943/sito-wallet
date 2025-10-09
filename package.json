@@ -33,6 +33,7 @@
     "react-router-dom": "6.28.2",
     "react-tooltip": "5.29.1",
     "some-javascript-utils": "0.10.10",
+    "string-similarity-js": "^2.1.4",
     "tailwindcss": "4.1.11",
     "use-debounce": "10.0.6"
   },
@@ -42,7 +43,7 @@
     "@types/node": "24.1.0",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.2.14",
-    "@vitejs/plugin-react-swc": "3.5.0",
+    "@vitejs/plugin-react-swc": "3.7.2",
     "eslint": "9.19.0",
     "eslint-plugin-react-hooks": "5.0.0",
     "eslint-plugin-react-refresh": "0.4.18",

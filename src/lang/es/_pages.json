@@ -1,4 +1,28 @@
 {
+  "pages": {
+    "home": "Inicio",
+    "accounts": "Cuentas",
+    "transactions": "Transacciones",
+    "transactionCategories": "Categorías",
+    "currencies": "Monedas",
+    "about": "Acerca de Sito Wallet",
+    "terms-and-conditions": "Términos y Condiciones",
+    "cookies-policy": "Política de Cookies",
+    "privacy-policy": "Política de Privacidad"
+  },
+  "search": {
+    "label": "Buscar",
+    "placeholder": "Escribe algo para buscar...",
+    "recentSearches": "Búsquedas recientes",
+    "clearRecent": "Limpiar",
+    "noRecentSearches": "No hay búsquedas recientes",
+    "noResult": "Sin resultados",
+    "result": "Resultados de búsqueda",
+    "error": "Ha ocurrido un error al buscar",
+    "types": {
+      "page": "Página"
+    }
+  },
   "home": {
     "title": "Inicio",
     "guest": "Invitado",
