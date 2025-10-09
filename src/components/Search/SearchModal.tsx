@@ -1,37 +1,22 @@
 import { useTranslation } from "react-i18next";
-import { useCallback, useEffect, useState } from "react";
 
 // components
 import { Dialog, SearchWrapper } from "components";
 
-// utils
-import { isMac } from "./utils";
+// types
+import { SearchModalPropsType } from "./types";
 
-export const SearchModal = () => {
+export const SearchModal = (props: SearchModalPropsType) => {
   const { t } = useTranslation();
-  const [showDialog, setShowDialog] = useState(false);
 
-  const openOnKeyCombination = useCallback((e: KeyboardEvent) => {
-    const primary = isMac() ? e.metaKey : e.ctrlKey;
-    if (primary && e.shiftKey && e.key.toLowerCase() === "f") {
-      setShowDialog(true);
-      e.preventDefault();
-    }
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("keydown", openOnKeyCombination);
-    return () => {
-      window.removeEventListener("keydown", openOnKeyCombination);
-    };
-  }, [openOnKeyCombination]);
+  const { open, onClose } = props;
 
   return (
     <Dialog
-      open={showDialog}
+      open={open}
       className="md:w-1/2 w-5/6"
       title={t("_pages:search.label")}
-      handleClose={() => setShowDialog(false)}
+      handleClose={onClose}
     >
       <SearchWrapper isModal />
     </Dialog>

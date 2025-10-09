@@ -23,7 +23,7 @@ import { SearchResultType, SearchWrapperPropsType } from "./types";
 import { config } from "../../config";
 
 // utils
-import { isMac } from "./utils";
+import { isMac } from "../../lib/utils/os";
 
 export const SearchWrapper = (props: SearchWrapperPropsType) => {
   const { isModal = false } = props;

@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { useTranslation } from "react-i18next";
 
 // icons
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +13,7 @@ import { SearchInputPropsType } from "./types";
 
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputPropsType>(
   (props, ref) => {
+    const { t } = useTranslation();
     const { searching, setSearching, onClick } = props;
 
     return (
@@ -23,6 +25,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputPropsType>(
             onClick();
           }}
           value={searching}
+          placeholder={t("_pages:search.placeholder")}
           onChange={(e) => setSearching((e.target as HTMLInputElement).value)}
           inputClassName="!pl-9"
         >

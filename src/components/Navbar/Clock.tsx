@@ -14,5 +14,5 @@ export const Clock = () => {
     return () => clearInterval(interval);
   }, []);
 
-  return <p className="capitalize">{dateNow}</p>;
+  return <p className="capitalize max-xs:hidden">{dateNow}</p>;
 };

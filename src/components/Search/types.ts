@@ -30,3 +30,8 @@ export type SearchResultPropsType = {
   isLoading: boolean;
   isModal?: boolean;
 };
+
+export type SearchModalPropsType = {
+  open: boolean;
+  onClose: () => void
+};
