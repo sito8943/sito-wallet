@@ -108,7 +108,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
     number,
     TypeResumeTypeFormType
   >({
-    defaultValues: JSON.parse(config ?? {}),
+    defaultValues: parsedConfig,
     formToDto: (data: TypeResumeTypeFormType) =>
       formToDto({
         ...data,

@@ -63,7 +63,6 @@ export const ConfigFormDialog = <ValidationError extends Error>(
   const { data: categories } = useTransactionCategoriesCommon();
 
   const categoriesByType = useMemo(() => {
-    console.log(type);
     return categories?.filter((category) => category.type === type) ?? [];
   }, [categories, type]);
 
@@ -99,7 +98,7 @@ export const ConfigFormDialog = <ValidationError extends Error>(
         <div className="flex max-xs:flex-col items-center justify-start gap-2">
           <Controller
             control={props.control}
-            name={"startDate"}
+            name={"date.start"}
             render={({ field: { value, ...rest } }) => (
               <TextInput
                 value={value}
@@ -113,7 +112,7 @@ export const ConfigFormDialog = <ValidationError extends Error>(
           />
           <Controller
             control={props.control}
-            name={"endDate"}
+            name={"date.end"}
             render={({ field: { value, ...rest } }) => (
               <TextInput
                 value={value}

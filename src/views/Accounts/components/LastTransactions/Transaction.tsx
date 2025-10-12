@@ -29,8 +29,6 @@ export const Transaction = (props: TransactionPropsType) => {
 
   const isIn = useMemo(() => category?.type === TransactionType.In, [category]);
 
-  console.log(parsedDescription, date);
-
   return (
     <li className={"flex items-center gap-2 w-full"}>
       <Type
