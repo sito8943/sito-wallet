@@ -15,6 +15,7 @@ const {
   VITE_CACHE,
   VITE_ONBOARDING,
   VITE_GUEST_MODE,
+  VITE_RECENT_SEARCHES
 } = import.meta.env;
 
 export const config = {
@@ -27,6 +28,7 @@ export const config = {
   remember: VITE_REMEMBER,
   user: VITE_USER,
   localCache: VITE_CACHE,
+  recentSearches:VITE_RECENT_SEARCHES,
   validationCookie: VITE_VALIDATION_COOKIE,
   recoveringCookie: VITE_RECOVERING_COOKIE,
   crypto: VITE_CRYPTO,

@@ -9,7 +9,12 @@ export type ViewPageType = {
   key: PageId;
   path: string;
   children?: ViewPageType[];
+  role? : string[];
 };
+
+export interface NamedViewPageType extends ViewPageType {
+  name: string;
+}
 
 export type SubMenuItemType = {
   label: string;

@@ -66,7 +66,7 @@ export function SignIn() {
     <div className="w-full h-screen flex items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={`${appear ? "bg-base" : ""} auth-form`}
+        className={`${appear ? "bg-base blur-appear" : ""} auth-form`}
       >
         {/* LOGO */}
         <h1

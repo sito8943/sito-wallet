@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 // icons
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // types
 import { PageHeaderPropsType } from "./types";
@@ -12,7 +11,7 @@ import { PageHeaderPropsType } from "./types";
 import { BaseEntityDto } from "lib";
 
 // components
-import { Actions, ActionsDropdown } from "components";
+import { Actions, ActionsDropdown, IconButton } from "components";
 
 // hooks
 import { useScrollTrigger } from "hooks";
@@ -32,15 +31,13 @@ export const PageHeader = <TEntity extends BaseEntityDto>(
     <div className={`page-header ${passedOffset ? "fixed" : ""}`}>
       <div className="flex gap-2 items-center justify-start">
         {showBackButton && (
-          <button
+          <IconButton
+            icon={faArrowLeft}
             onClick={() => navigate(-1)}
-            className="action"
             name={t("_accessibility:buttons.back")}
             data-tooltip-id="tooltip"
             data-tooltip-content={t("_accessibility:buttons.back")}
-          >
-            <FontAwesomeIcon icon={faArrowLeft} />
-          </button>
+          />
         )}
         <h2 className="text-3xl font-bold">{title}</h2>
       </div>

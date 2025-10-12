@@ -1,4 +1,28 @@
 {
+  "pages": {
+    "home": "Home",
+    "accounts": "Accounts",
+    "transactions": "Transactions",
+    "transactionCategories": "Categories",
+    "currencies": "Currencies",
+    "about": "About Sito Wallet",
+    "termsAndConditions": "Terms and Conditions",
+    "cookiesPolicy": "Cookies Policy",
+    "privacyPolicy": "Privacy Policy"
+  },
+  "search": {
+    "label": "Search",
+    "placeholder": "Type something to search...",
+    "recentSearches": "Recent searches",
+    "clearRecent": "Clear",
+    "noRecentSearches": "No recent searches",
+    "noResult": "No results found",
+    "result": "Search results",
+    "error": "An error occurred while searching",
+    "types": {
+      "page": "Page"
+    }
+  },
   "home": {
     "title": "Home",
     "guest": "Guest",
@@ -94,8 +118,8 @@
   },
   "accounts": {
     "title": "Accounts",
-    "empty": "No accounts to load",
-    "add": "Add a account",
+    "empty": "You don’t have any bank accounts. Add one to get started.",
+    "add": "Add an account",
     "actions": {
       "viewTransactions": { "text": "View transactions" },
       "sync": {
@@ -125,7 +149,7 @@
   },
   "transactionCategories": {
     "title": "Categories",
-    "empty": "No categories to load",
+    "empty": "You don't have any categories. Add one to get started.",
     "add": "Add a category",
     "forms": {
       "add": "New category",
@@ -135,7 +159,7 @@
   },
   "currencies": {
     "title": "Currencies",
-    "empty": "No currencies to load",
+    "empty": "No currencies available. Create one to get started.",
     "add": "Add a currency",
     "forms": {
       "add": "New currency",
@@ -193,7 +217,42 @@
     }
   },
   "termsAndConditions": {
-    "title": "Terms and Conditions"
+    "title": "Terms and Conditions",
+    "body": "<p>Welcome to <strong>Sito Wallet</strong>. By downloading, accessing, or using our app, you agree to comply with these Terms and Conditions. Please read them carefully.</p>",
+    "sections": [
+      {
+        "title": "1. About Sito Wallet",
+        "body": "<p><strong>Sito Wallet</strong> is a free application with the goal of helping you manage and organize your finances (digital and physical) in one place. The app provides tools to manage currencies, accounts, transaction categories, and transactions. <strong>Sito Wallet</strong> is offered <strong>completely free of charge</strong>.</p>"
+      },
+      {
+        "title": "2. Use of the Application",
+        "body": "<ul><li>You agree to use <strong>Sito Wallet</strong> only for lawful purposes and in accordance with these Terms.</li><li>You are responsible for the accuracy of the information you add (accounts, transactions, balances, etc.).</li><li>The app is intended for <strong>personal finance management</strong> only and must not be used for illegal or fraudulent activities.</li></ul>"
+      },
+      {
+        "title": "3. Data and Privacy",
+        "body": "<ul><li><strong>Sito Wallet does not sell or share your personal financial data</strong> with third parties.</li><li>The information you enter remains under your control.</li><li>We may collect non-identifiable usage data to improve the app (such as errors or performance metrics).</li></ul>"
+      },
+      {
+        "title": "4. No Financial Advice",
+        "body": "<p><strong>Sito Wallet</strong> provides tools to record and organize your money, but we do not provide financial, tax, or investment advice. Any decisions you make based on the information in the app are your sole responsibility.</p>"
+      },
+      {
+        "title": "5. Changes and Updates",
+        "body": "<ul><li>We may update or improve the app from time to time.</li><li>We may also update these Terms. If we do, we will notify users with the new version.</li><li>By continuing to use the app after updates, you agree to the new Terms.</li></ul>"
+      },
+      {
+        "title": "6. Limitation of Liability",
+        "body": "<p>The app is provided <strong>“as is”</strong> and <strong>“as available”</strong>. We do not guarantee that the app will always work without interruptions, errors, or bugs. We are not responsible for any financial loss or damage resulting from the use of the app.</p>"
+      },
+      {
+        "title": "7. Termination of Use",
+        "body": "<p>We reserve the right to suspend or terminate your access to the app if you misuse it, violate the Terms, or use it for unlawful activities.</p>"
+      },
+      {
+        "title": "8. Governing Law",
+        "body": "<p>These Terms shall be governed by and interpreted according to the laws of Spain.</p>"
+      }
+    ]
   },
   "cookiesPolicy": {
     "title": "Cookies Policy"

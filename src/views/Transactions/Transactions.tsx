@@ -3,6 +3,9 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { parseQueries } from "some-javascript-utils/browser";
 
+// @sito-dashboard
+import { useTableOptions } from "@sito/dashboard";
+
 // components
 import { ConfirmationDialog, Page, TabsLayout, TabsType } from "components";
 
@@ -33,7 +36,6 @@ import { useManager } from "providers";
 
 // styles
 import "./styles.css";
-import { useTableOptions } from "@sito/dashboard";
 
 export function Transactions() {
   const { t } = useTranslation();

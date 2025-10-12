@@ -13,6 +13,8 @@ export const fromLocal = (key: string, as = "") => {
         return JSON.parse(result);
       case "number":
         return Number(result);
+      case "boolean":
+        return Boolean(result);
       default: // "string"
         return result;
     }

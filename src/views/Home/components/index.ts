@@ -1,3 +1,3 @@
-export * from "./SearchWrapper";
+export * from "./Search";
 export * from "./Cards";
 export * from "./Dialogs";

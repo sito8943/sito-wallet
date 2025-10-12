@@ -22,7 +22,7 @@ export function Action<TEntity extends BaseEntityDto>(
   return !hidden ? (
     <button
       id={id}
-      className="action"
+      className={`action ${showText ? "text-action" : "icon-action"}`}
       disabled={disabled}
       onClick={() => onClick()}
       aria-disabled={disabled}

@@ -16,3 +16,4 @@ export * from "./WalletTable";
 export * from "./Onboarding";
 export * from "./Accordion";
 export * from "./Buttons"
+export * from "./Empty"

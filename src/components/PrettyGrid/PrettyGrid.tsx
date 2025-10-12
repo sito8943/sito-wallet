@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 // lib
 import { BaseEntityDto } from "lib";
 
@@ -13,9 +15,12 @@ import "./styles.css";
 export const PrettyGrid = <TDto extends BaseEntityDto>(
   props: PrettyGridPropsType<TDto>
 ) => {
+  const { t } = useTranslation();
+
   const {
     loading = false,
-    emptyMessage = "",
+    emptyComponent = null,
+    emptyMessage = t("_accessibility:messages.empty"),
     renderComponent,
     data = [],
   } = props;
@@ -24,15 +29,25 @@ export const PrettyGrid = <TDto extends BaseEntityDto>(
     <Loading />;
   }
 
-  return data?.length ? (
-    <ul className="pretty-grid-main">
-      {data?.map((item) => (
-        <li className="pretty-grid-item" key={item.id}>
-          {renderComponent(item)}
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <p className="text-center mt-5">{emptyMessage}</p>
+  return (
+    <>
+      {data?.length ? (
+        <ul className="pretty-grid-main">
+          {data?.map((item) => (
+            <li className="pretty-grid-item" key={item.id}>
+              {renderComponent(item)}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <>
+          {emptyComponent ? (
+            emptyComponent
+          ) : (
+            <p className="text-center mt-5">{emptyMessage}</p>
+          )}
+        </>
+      )}
+    </>
   );
 };

@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+// icons
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
+
 // lib
 import { BaseEntityDto } from "lib";
 
@@ -10,8 +13,7 @@ import { ActionsContainerPropsType } from "./types";
 // components
 import { Dropdown } from "../Dropdown/Dropdown";
 import { Actions } from "./Actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
+import { IconButton } from "../Buttons";
 
 export const ActionsDropdown = <TRow extends BaseEntityDto>(
   props: ActionsContainerPropsType<TRow>
@@ -24,14 +26,12 @@ export const ActionsDropdown = <TRow extends BaseEntityDto>(
 
   return (
     <div className={`actions-dropdown ${className}`}>
-      <button
-        className="action !w-9 !justify-center"
+      <IconButton
+        icon={faEllipsisV}
         onClick={() => setOpenMenu(true)}
         data-tooltip-id="tooltip"
         data-tooltip-content={t("_accessibility:buttons.openActions")}
-      >
-        <FontAwesomeIcon icon={faEllipsisV} />
-      </button>
+      />
       <Dropdown open={openMenu} onClose={() => setOpenMenu(false)}>
         <Actions
           showActionTexts

@@ -68,7 +68,7 @@
       "initial": "Initial balance",
       "label": "Balance",
       "placeholder": "Ex: 600",
-      "greaterThan0": "Not enough insufficient balance"
+      "greaterThan0": "Insufficient balance"
     }
   },
   "transaction": {

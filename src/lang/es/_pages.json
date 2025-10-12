@@ -1,4 +1,28 @@
 {
+  "pages": {
+    "home": "Inicio",
+    "accounts": "Cuentas",
+    "transactions": "Transacciones",
+    "transactionCategories": "Categorías",
+    "currencies": "Monedas",
+    "about": "Acerca de Sito Wallet",
+    "terms-and-conditions": "Términos y Condiciones",
+    "cookies-policy": "Política de Cookies",
+    "privacy-policy": "Política de Privacidad"
+  },
+  "search": {
+    "label": "Buscar",
+    "placeholder": "Escribe algo para buscar...",
+    "recentSearches": "Búsquedas recientes",
+    "clearRecent": "Limpiar",
+    "noRecentSearches": "No hay búsquedas recientes",
+    "noResult": "Sin resultados",
+    "result": "Resultados de búsqueda",
+    "error": "Ha ocurrido un error al buscar",
+    "types": {
+      "page": "Página"
+    }
+  },
   "home": {
     "title": "Inicio",
     "guest": "Invitado",
@@ -96,7 +120,7 @@
   },
   "accounts": {
     "title": "Cuentas",
-    "empty": "No hay cuentas para mostrar",
+    "empty": "No tienes cuentas bancarias. Crea una para empezar.",
     "add": "Agregar una cuenta",
     "actions": {
       "sync": {
@@ -130,7 +154,7 @@
   },
   "transactionCategories": {
     "title": "Categorias",
-    "empty": "No hay categorias para mostrar",
+    "empty": "No tienes ninguna categoría. Agrega una para empezar.",
     "add": "Agregar una categoria",
     "forms": {
       "add": "Nueva categoria",
@@ -140,7 +164,7 @@
   },
   "currencies": {
     "title": "Monedas",
-    "empty": "No hay monedas para mostrar",
+    "empty": "No hay monedas disponibles. Crea una para empezar.",
     "add": "Agregar una moneda",
     "forms": {
       "add": "Nueva moneda",
@@ -198,7 +222,42 @@
     }
   },
   "termsAndConditions": {
-    "title": "Condiciones de uso"
+    "title": "Condiciones de uso",
+    "body": "<p>Bienvenido a <strong>Sito Wallet</strong>. Al descargar, acceder o usar nuestra aplicación, aceptas cumplir con estos Términos y Condiciones. Por favor, léelos con atención.</p>",
+    "sections": [
+      {
+        "title": "1. Sobre Sito Wallet",
+        "body": "<p><strong>Sito Wallet</strong> es una aplicación gratuita creada por <2>sito8943</2> con el objetivo de ayudarte a gestionar y organizar tus finanzas (digitales y físicas) en un solo lugar. La app ofrece herramientas para administrar monedas, cuentas, categorías de transacciones y movimientos. <strong>Sito Wallet</strong> se ofrece de manera <strong>totalmente gratuita</strong>.</p>"
+      },
+      {
+        "title": "2. Uso de la Aplicación",
+        "body": "<ul><li>Aceptas usar <strong>Sito Wallet</strong> únicamente para fines legales y de acuerdo con estos Términos.</li><li>Eres responsable de la exactitud de la información que ingreses (cuentas, transacciones, saldos, etc.).</li><li>La aplicación está pensada solo para la <strong>gestión personal de finanzas</strong> y no debe usarse para actividades ilegales o fraudulentas.</li></ul>"
+      },
+      {
+        "title": "3. Datos y Privacidad",
+        "body": "<ul><li><strong>Sito Wallet no vende ni comparte tus datos financieros personales</strong> con terceros.</li><li>La información que ingreses permanece bajo tu control.</li><li>Podemos recopilar datos de uso no identificables para mejorar la app (como errores o métricas de rendimiento).</li></ul>"
+      },
+      {
+        "title": "4. No Asesoría Financiera",
+        "body": "<p><strong>Sito Wallet</strong> proporciona herramientas para registrar y organizar tu dinero, pero no ofrecemos asesoría financiera, fiscal ni de inversión. Cualquier decisión que tomes basada en la información de la app es tu única responsabilidad.</p>"
+      },
+      {
+        "title": "5. Cambios y Actualizaciones",
+        "body": "<ul><li>Podemos actualizar o mejorar la aplicación periódicamente.</li><li>También podemos modificar estos Términos. Si lo hacemos, notificaremos a los usuarios con la nueva versión.</li><li>Al seguir usando la aplicación después de una actualización, aceptas los nuevos Términos.</li></ul>"
+      },
+      {
+        "title": "6. Limitación de Responsabilidad",
+        "body": "<p>La aplicación se ofrece <strong>“tal cual”</strong> y <strong>“según disponibilidad”</strong>. No garantizamos que siempre funcione sin interrupciones, errores o fallos. No somos responsables de pérdidas o daños financieros derivados del uso de la app.</p>"
+      },
+      {
+        "title": "7. Terminación del Uso",
+        "body": "<p>Nos reservamos el derecho de suspender o terminar tu acceso a la aplicación si haces un uso indebido, violas los Términos o la usas para actividades ilegales.</p>"
+      },
+      {
+        "title": "8. Legislación Aplicable",
+        "body": "<p>Estos Términos se regirán e interpretarán de acuerdo con las leyes de España.</p>"
+      }
+    ]
   },
   "cookiesPolicy": {
     "title": "Política de cookies"

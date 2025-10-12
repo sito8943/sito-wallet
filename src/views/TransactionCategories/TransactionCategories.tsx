@@ -1,11 +1,15 @@
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+// icons
+import { faAdd, faTags } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 // providers
 import { useManager } from "providers";
 
 // components
-import { ConfirmationDialog, Error, Page, PrettyGrid } from "components";
+import { ConfirmationDialog, Empty, Error, Page, PrettyGrid } from "components";
 import {
   AddTransactionCategoryDialog,
   TransactionCategoryCard,
@@ -19,6 +23,7 @@ import {
   TransactionCategoriesQueryKeys,
   useRestoreDialog,
   useExportActionMutate,
+  GlobalActions,
 } from "hooks";
 import {
   useAddTransactionCategoryDialog,
@@ -86,7 +91,22 @@ export function TransactionCategories() {
         <>
           <PrettyGrid
             data={data?.items}
-            emptyMessage={t("_pages:transactionCategories.empty")}
+            emptyComponent={
+              <Empty
+                message={t("_pages:transactionCategories.empty")}
+                iconProps={{
+                  icon: faTags,
+                  className: "text-5xl max-md:text-3xl text-gray-400",
+                }}
+                action={{
+                  icon: <FontAwesomeIcon icon={faAdd} />,
+                  id: GlobalActions.Add,
+                  disabled: isLoading,
+                  onClick: () => addTransactionCategory.openDialog(),
+                  tooltip: t("_pages:transactionCategories.add"),
+                }}
+              />
+            }
             renderComponent={(transactionCategory) => (
               <TransactionCategoryCard
                 actions={getActions(transactionCategory)}
