@@ -10,10 +10,7 @@ export const formToDto = (
     account: parsedAccount,
     category: parsedCategory,
     type: data.type ?? TransactionType.Out,
-    date: {
-      start: data.startDate,
-      end: data.endDate,
-    },
+    date: data.date,
   });
   return {
     userId: data.userId,

@@ -26,8 +26,7 @@ export interface TypeResumeTypeFormType
   extends UpdateDashboardCardConfigDto,
     FieldValues {
   accounts: CommonAccountDto[];
-  startDate: string;
-  endDate: string;
+  date: { starT: string; end: string };
   category: CommonTransactionCategoryDto[];
   type: TransactionType;
 }
