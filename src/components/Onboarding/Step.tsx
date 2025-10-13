@@ -5,6 +5,7 @@ import { useAuth } from "providers";
 
 // types
 import { StepPropsType } from "./types";
+import { Button } from "../Buttons";
 
 export const Step = (props: StepPropsType) => {
   const {
@@ -30,40 +31,48 @@ export const Step = (props: StepPropsType) => {
       <div className="flex gap-5 items-center justify-center">
         {!final ? (
           <>
-            <button
+            <Button
+              color="primary"
+              className="!px-8"
+              variant="outlined"
               onClick={() => (window.location.href = "/auth/sign-in")}
               aria-label={t("_accessibility:ariaLabels.skip")}
-              className="button !px-8 primary outlined"
             >
               {t("_accessibility:buttons.skip")}
-            </button>
-            <button
+            </Button>
+            <Button
+              color="primary"
+              className="!px-8"
+              variant="outlined"
               onClick={() => onClickNext()}
               aria-label={t("_accessibility:ariaLabels.next")}
-              className="button !px-8 primary submit"
             >
               {t("_accessibility:buttons.next")}
-            </button>
+            </Button>
           </>
         ) : (
           <>
-            <button
+            <Button
+              color="primary"
+              className="!px-8"
+              variant="outlined"
               onClick={() => {
                 setGuestMode(true);
                 window.location.href = "/";
               }}
               aria-label={t("_accessibility:ariaLabels.start")}
-              className="button !px-8 primary outlined"
             >
               {t("_accessibility:buttons.startAsGuest")}
-            </button>
-            <button
-              onClick={() => (window.location.href = "/auth/sign-in")}
+            </Button>
+            <Button
+              color="primary"
+              variant="submit"
+              className="!px-8"
               aria-label={t("_accessibility:ariaLabels.start")}
-              className="button !px-8 primary submit"
+              onClick={() => (window.location.href = "/auth/sign-in")}
             >
               {t("_accessibility:buttons.signIn")}
-            </button>
+            </Button>
           </>
         )}
       </div>

@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { FieldValues } from "react-hook-form";
 
 // components
-import { Loading } from "components";
+import { Button, Loading } from "components";
 
 // types
 import { FormContainerPropsType } from "./types";
@@ -27,24 +27,26 @@ export const FormContainer = <TInput extends FieldValues, TError extends Error>(
     <form className="form-container" onSubmit={handleSubmit(onSubmit)}>
       {children}
       <div className={`flex gap-2 mt-5 ${buttonEnd ? "justify-end" : ""}`}>
-        <button
+        <Button
           type="submit"
-          className="button submit primary"
+          color="primary"
+          variant="submit"
+          disabled={isLoading}
           name={t("_accessibility:buttons.submit")}
           aria-label={t("_accessibility:ariaLabels.submit")}
         >
           {isLoading ? <Loading color="text-dark" className="mt-1" /> : null}
           {t("_accessibility:buttons.submit")}
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant="outlined"
           onClick={() => reset?.()}
-          className="button outlined"
           name={t("_accessibility:buttons.cancel")}
           aria-label={t("_accessibility:ariaLabels.cancel")}
         >
           {t("_accessibility:buttons.cancel")}
-        </button>
+        </Button>
       </div>
     </form>
   );

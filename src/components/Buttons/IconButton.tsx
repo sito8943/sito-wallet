@@ -7,11 +7,24 @@ import { IconButtonPropsType } from "./types";
 import "./styles.css";
 
 export const IconButton = (props: IconButtonPropsType) => {
-  const { className = "", children, icon, type = "button", ...rest } = props;
+  const {
+    children,
+    icon,
+    type = "button",
+    className = "",
+    variant = "text",
+    color = "default",
+    iconClassName = "",
+    ...rest
+  } = props;
 
   return (
-    <button className={`icon-button ${className}`} {...rest} type={type}>
-      <FontAwesomeIcon icon={icon} className="!w-auto" />
+    <button
+      type={type}
+      className={`icon-button ${className} ${variant} ${color}`}
+      {...rest}
+    >
+      <FontAwesomeIcon icon={icon} className={`!w-auto ${iconClassName}`} />
       {children}
     </button>
   );

@@ -3,7 +3,7 @@ import { FieldValues } from "react-hook-form";
 
 // components
 import { Dialog } from "./Dialog";
-import { Loading } from "components";
+import { Button, Loading } from "components";
 
 // types
 import { FormDialogPropsType } from "./types.ts";
@@ -27,26 +27,28 @@ export const FormDialog = <TInput extends FieldValues, TError extends Error>(
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-container">{children}</div>
         <div className={`flex gap-2 mt-2 ${buttonEnd ? "justify-end" : ""}`}>
-          <button
+          <Button
             type="submit"
+            color="primary"
+            variant="submit"
+            className="!px-6"
             disabled={isLoading}
-            className="button !px-6 submit primary"
             name={t("_accessibility:buttons.submit")}
             aria-label={t("_accessibility:ariaLabels.submit")}
           >
             {isLoading ? <Loading color="text-dark" className="mt-1" /> : null}
             {t("_accessibility:buttons.submit")}
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
+            variant="outlined"
             disabled={isLoading}
             onClick={handleClose}
-            className="button outlined"
             name={t("_accessibility:buttons.cancel")}
             aria-label={t("_accessibility:ariaLabels.cancel")}
           >
             {t("_accessibility:buttons.cancel")}
-          </button>
+          </Button>
         </div>
       </form>
     </Dialog>

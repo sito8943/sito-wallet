@@ -3,7 +3,6 @@ import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 
 // icons
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 // @emotion/css
@@ -11,6 +10,9 @@ import { css } from "@emotion/css";
 
 // types
 import { DialogPropsType } from "./types.ts";
+
+// components
+import { IconButton } from "components";
 
 export const Dialog = (props: DialogPropsType) => {
   const { t } = useTranslation();
@@ -21,7 +23,7 @@ export const Dialog = (props: DialogPropsType) => {
     open = false,
     containerClassName = "",
     className = "",
-    animationClass = "appear"
+    animationClass = "appear",
   } = props;
 
   const [windowSize, setWindowSize] = useState(window.innerWidth);
@@ -96,16 +98,15 @@ export const Dialog = (props: DialogPropsType) => {
       >
         <div className="dialog-header">
           <h3 className="text-text text-xl">{title}</h3>
-          <button
+          <IconButton
+            icon={faClose}
             disabled={!open}
             aria-disabled={!open}
+            onClick={handleClose}
+            className="icon-button text-red-400"
             name={t("_accessibility:buttons.closeDialog")}
             aria-label={t("_accessibility:ariaLabels.closeDialog")}
-            className="icon-button text-red-400"
-            onClick={handleClose}
-          >
-            <FontAwesomeIcon icon={faClose} />
-          </button>
+          />
         </div>
         {children}
       </div>

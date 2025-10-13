@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Action, Badge, useTableOptions } from "@sito/dashboard";
 
 // components
-import { Loading } from "components";
+import { IconButton, Loading } from "components";
 
 // types
 import { PagePropsType } from "./types.ts";
@@ -104,12 +104,13 @@ export const Page = <TEntity extends BaseEntityDto>(
           )}
         </div>
       </div>
-      <button
+      <IconButton
+        icon={faAdd}
+        color="primary"
+        variant="submit"
         onClick={() => addOptions?.onClick?.()}
-        className="submit button icon-button fab primary min-xs:!hidden"
-      >
-        <FontAwesomeIcon icon={faAdd} />
-      </button>
+        className="button fab min-xs:!hidden"
+      />
     </main>
   );
 };

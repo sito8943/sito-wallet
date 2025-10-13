@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { useCallback, useEffect, useState } from "react";
 
 // icons
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 // types
@@ -52,15 +51,14 @@ export function Navbar(props: NavbarPropsType) {
       )}
       <header id="header" className="header">
         <div className="flex gap-2 items-center">
-          <button
+          <IconButton
             type="button"
+            icon={faBars}
+            onClick={openDrawer}
             name={t("_accessibility:buttons.openMenu")}
             aria-label={t("_accessibility:ariaLabels.openMenu")}
-            onClick={openDrawer}
-            className="button menu animated"
-          >
-            <FontAwesomeIcon icon={faBars} />
-          </button>
+            className="menu animated"
+          />
           <h1 className="text-lg text-text pointer-events-none poppins font-bold">
             {t("_pages:home.appName")}
           </h1>

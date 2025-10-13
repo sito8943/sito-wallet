@@ -18,6 +18,7 @@ import { NotificationEnumType } from "lib";
 
 // styles
 import "./styles.css";
+import { IconButton } from "../Buttons";
 
 export function Notification() {
   const { t } = useTranslation();
@@ -99,19 +100,18 @@ export function Notification() {
                   {message}
                 </p>
               </div>
-              <button
+              <IconButton
                 type="button"
+                icon={faClose}
+                color="error"
+                className="group"
+                onClick={() => onClose(i)}
+                iconClassName={`${textColor(
+                  type ?? NotificationEnumType.error
+                )} group-hover:!text-red-400 cursor-pointer`}
                 name={t("_accessibility:buttons.closeNotification")}
                 aria-label={t("_accessibility:ariaLabels.closeNotification")}
-              >
-                <FontAwesomeIcon
-                  icon={faClose}
-                  className={`${textColor(
-                    type ?? NotificationEnumType.error
-                  )} hover:text-red-400 cursor-pointer`}
-                  onClick={() => onClose(i)}
-                />
-              </button>
+              />
             </div>
           ))
         : null}

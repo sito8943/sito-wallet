@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { State, TextInput } from "@sito/dashboard";
 
 // components
-import { PasswordInput, Loading } from "components";
+import { PasswordInput, Loading, Button } from "components";
 
 // providers
 import { useAuth, useManager, useNotification } from "providers";
@@ -172,14 +172,16 @@ export function SignUp() {
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
-          <button
+          <Button
             type="submit"
+            color="primary"
+            variant="submit"
             disabled={isLoading}
-            className={`button !px-8 primary submit`}
+            className="!px-8"
           >
             {isLoading && <Loading color="text-base" />}
             {t("_pages:auth.signUp.submit")}
-          </button>
+          </Button>
         </div>
       </form>
     </div>

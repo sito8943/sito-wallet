@@ -8,7 +8,7 @@ import { deleteCookie } from "some-javascript-utils/browser";
 import { State, Loading } from "@sito/dashboard";
 
 // components
-import { PasswordInput } from "components";
+import { Button, PasswordInput } from "components";
 
 // providers
 import { uesAuth, useManager } from "providers";
@@ -127,13 +127,15 @@ export function UpdatePassword() {
                 label={t("_entities:user.rPassword.label")}
                 required
                 helperText={passwordError}
-                state={passwordError.length ? "error" : ""}
+                state={passwordError.length ? State.error : State.default}
               />
             )}
           />
         </div>
-        <button
+        <Button
           type="submit"
+          variant="submit"
+          color="primary"
           disabled={saving}
           className={`mb-5 self-start duration-500 ease-in-out delay-[500ms] ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
@@ -148,7 +150,7 @@ export function UpdatePassword() {
             />
           )}
           {t("_accessibility:buttons.submit")}
-        </button>
+        </Button>
       </form>
     </div>
   );

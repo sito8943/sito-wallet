@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 // components
 import { Dialog } from "./Dialog";
-import { Loading } from "components";
+import { Button, Loading } from "components";
 
 // types
 import { ConfirmationDialogPropsType } from "./types";
@@ -24,10 +24,11 @@ export const ConfirmationDialog = (props: ConfirmationDialogPropsType) => {
     <Dialog {...rest} handleClose={handleClose}>
       {children}
       <div className="flex gap-2 mt-5">
-        <button
+        <Button
+          color="primary"
+          variant="submit"
           disabled={isLoading}
           onClick={handleSubmit}
-          className="button submit primary"
           name={t("_accessibility:buttons.ok")}
           aria-label={t("_accessibility:ariaLabels.ok")}
         >
@@ -35,17 +36,17 @@ export const ConfirmationDialog = (props: ConfirmationDialogPropsType) => {
             <Loading color="text-text-mute" className="mt-1" />
           ) : null}
           {t("_accessibility:buttons.ok")}
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant="outlined"
           disabled={isLoading}
           onClick={handleClose}
-          className="button outlined"
           name={t("_accessibility:buttons.cancel")}
           aria-label={t("_accessibility:ariaLabels.cancel")}
         >
           {t("_accessibility:buttons.cancel")}
-        </button>
+        </Button>
       </div>
     </Dialog>
   );
