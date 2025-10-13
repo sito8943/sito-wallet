@@ -15,6 +15,7 @@ VITE_LANGUAGE="language_wallet"
 VITE_REMEMBER="remember_wallet"
 VITE_ONBOARDING="onboarding_wallet"
 VITE_GUEST_MODE="guest_mode_wallet"
+VITE_RECENT_SEARCHES="recent_searches_wallet"
 
 VITE_SUPABASE_CO=""
 VITE_SUPABASE_ANON=""

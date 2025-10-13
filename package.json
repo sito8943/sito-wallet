@@ -33,7 +33,7 @@
     "react-router-dom": "6.28.2",
     "react-tooltip": "5.29.1",
     "some-javascript-utils": "0.10.10",
-    "string-similarity-js": "^2.1.4",
+    "string-similarity-js": "2.1.4",
     "tailwindcss": "4.1.11",
     "use-debounce": "10.0.6"
   },
