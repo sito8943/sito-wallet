@@ -10,6 +10,9 @@ import { IconButton } from "./IconButton";
 // hook
 import { useScrollTrigger } from "hooks";
 
+// styles
+import "./styles.css";
+
 export const ToTop = () => {
   const { t } = useTranslation();
 
@@ -21,9 +24,7 @@ export const ToTop = () => {
       onClick={() => scrollTo(0, 0)}
       data-tooltip-id="tooltip"
       data-tooltip-content={t("_accessibility:buttons.toTop")}
-      className={`submit primary to-top ${
-        isScrolled ? "show" : "hide"
-      }`}
+      className={`submit primary to-top ${isScrolled ? "show" : "hide"}`}
     />
   );
 };

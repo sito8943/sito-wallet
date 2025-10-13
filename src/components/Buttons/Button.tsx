@@ -1,5 +1,8 @@
 import { ButtonPropsType } from "./types";
 
+// styles
+import "./styles.css";
+
 export const Button = (props: ButtonPropsType) => {
   const {
     children,

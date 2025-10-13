@@ -1,24 +1,11 @@
 @reference "./variables.css";
 
-a,
-button {
+a, button {
   @apply text-sm font-medium;
 }
 
 input {
   @apply text-sm text-text-muted;
-}
-
-.button {
-  @apply text-text bg-base hover:bg-base-light transition flex items-center gap-2 justify-center rounded-4xl px-4 py-2 cursor-pointer;
-}
-
-.button.close {
-  @apply hover:bg-red-500;
-}
-
-.fab {
-  @apply w-12 h-12 fixed right-4 bottom-4 text-lg;
 }
 
 .input {
@@ -33,25 +20,4 @@ svg.primary,
 p.primary,
 a.primary {
   @apply hover:text-hover-primary;
-}
-
-.outlined {
-  @apply bg-base border-border text-text border-2 hover:bg-border;
-}
-
-.outlined.primary {
-  @apply border-bg-primary hover:bg-primary hover:border-primary hover:text-base;
-}
-
-.submit.primary {
-  @apply bg-bg-primary hover:bg-primary text-base hover:text-text;
-}
-
-.primary {
-  @apply transition duration-300;
-}
-
-.password-icon {
-  top: 50%;
-  transform: translateY(-50%);
 }
