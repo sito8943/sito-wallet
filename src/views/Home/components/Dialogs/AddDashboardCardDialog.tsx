@@ -4,7 +4,7 @@ import { Controller } from "react-hook-form";
 
 // @sito/dashboard
 import { SelectInput } from "@sito/dashboard";
-import { enumToKeyValueArray } from "@sito/dashboard-app";
+import { enumToKeyValueArray, useAuth } from "@sito/dashboard-app";
 
 // components
 import { FormDialog } from "components";
@@ -17,9 +17,6 @@ import {
 
 // lib
 import { DashboardCardType } from "lib";
-
-// providers
-import { useAuth } from "@sito/dashboard-app";
 
 export function AddDashboardCardForm(props: DashboardFormPropsType) {
   const { control, setValue, isLoading, open } = props;

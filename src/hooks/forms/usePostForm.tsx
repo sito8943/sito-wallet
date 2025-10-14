@@ -3,15 +3,16 @@ import { FieldValues, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
 
-// providers
-import { useNotification } from "@sito/dashboard-app";
-import { queryClient } from "@sito/dashboard-app";
+// @sito/dashboard-app
+import { useNotification, queryClient } from "@sito/dashboard-app";
 
 // lib
 import { NotificationEnumType, NotificationType, ValidationError } from "lib";
 
-// types
+// hooks
 import { UseFormPropsType } from "hooks";
+
+// components
 import { FormPropsType } from "components";
 
 export const usePostForm = <

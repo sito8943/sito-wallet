@@ -5,14 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 // @sito/dashboard
 import { State, TextInput } from "@sito/dashboard";
+import { useNotification, useAuth } from "@sito/dashboard-app";
 
 // components
 import { PasswordInput, Loading, Button } from "components";
 
 // providers
-import { useNotification } from "@sito/dashboard-app";
 import { useManager } from "providers";
-import { useAuth } from "@sito/dashboard-app"
 
 // hooks
 import { usePostForm } from "hooks";
