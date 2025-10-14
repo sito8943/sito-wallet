@@ -8,7 +8,8 @@ import { State, TextInput } from "@sito/dashboard";
 import { useNotification, useAuth, usePostForm, AuthDto, SessionDto } from "@sito/dashboard-app";
 
 // components
-import { PasswordInput, Loading, Button } from "components";
+import { PasswordInput, Loading } from "components";
+import { Button } from "@sito/dashboard-app";
 
 // providers
 import { useManager } from "providers";

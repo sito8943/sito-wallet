@@ -3,7 +3,8 @@ import { FieldValues } from "react-hook-form";
 
 // components
 import { Dialog } from "./Dialog";
-import { Button, Loading } from "components";
+import { Loading } from "components";
+import { Button } from "@sito/dashboard-app";
 
 // types
 import { FormDialogPropsType } from "./types.ts";

@@ -8,7 +8,8 @@ import { faBroom } from "@fortawesome/free-solid-svg-icons";
 import { SearchResultPropsType } from "./types";
 
 // components
-import { IconButton, Loading } from "components";
+import { Loading } from "components";
+import { IconButton } from "@sito/dashboard-app";
 import PageResult from "./PageResult";
 
 export const SearchResult = (props: SearchResultPropsType) => {

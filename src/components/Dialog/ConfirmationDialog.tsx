@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 
 // components
 import { Dialog } from "./Dialog";
-import { Button, Loading } from "components";
+import { Loading } from "components";
+import { Button } from "@sito/dashboard-app";
 
 // types
 import { ConfirmationDialogPropsType } from "./types";

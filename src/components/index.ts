@@ -15,6 +15,5 @@ export * from "./TabsLayout";
 export * from "./WalletTable";
 export * from "./Onboarding";
 export * from "./Accordion";
-export * from "./Buttons"
-export * from "./Empty"
-export * from "./Search"
+export * from "./Empty";
+export * from "./Search";

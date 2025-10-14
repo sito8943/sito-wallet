@@ -8,7 +8,8 @@ import { deleteCookie } from "some-javascript-utils/browser"; */
 /* import { State, Loading } from "@sito/dashboard"; */
 
 // components
-import { Button, PasswordInput } from "components";
+import { PasswordInput } from "components";
+import { Button } from "@sito/dashboard-app";
 
 // providers
 /* import { uesAuth } from "providers"; */

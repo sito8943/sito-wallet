@@ -3,7 +3,11 @@ import { useTranslation } from "react-i18next";
 import { createPortal } from "react-dom";
 
 // provider
-import { useNotification } from "@sito/dashboard-app";
+import {
+  useNotification,
+  NotificationEnumType,
+  IconButton,
+} from "@sito/dashboard-app";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,12 +17,8 @@ import {
   faWarning,
 } from "@fortawesome/free-solid-svg-icons";
 
-// types
-import { NotificationEnumType } from "lib";
-
 // styles
 import "./styles.css";
-import { IconButton } from "../Buttons";
 
 export function Notification() {
   const { t } = useTranslation();

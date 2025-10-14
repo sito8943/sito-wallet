@@ -6,7 +6,8 @@ import { Action, Badge, useTableOptions } from "@sito/dashboard";
 import { queryClient, GlobalActions } from "@sito/dashboard-app";
 
 // components
-import { IconButton, Loading } from "components";
+import { Loading } from "components";
+import { IconButton } from "@sito/dashboard-app";
 
 // types
 import { PagePropsType } from "./types.ts";

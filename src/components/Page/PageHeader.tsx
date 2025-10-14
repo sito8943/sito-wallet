@@ -14,7 +14,8 @@ import { PageHeaderPropsType } from "./types";
 import { BaseEntityDto } from "@sito/dashboard-app";
 
 // components
-import { Actions, ActionsDropdown, IconButton } from "components";
+import { Actions, ActionsDropdown } from "components";
+import { IconButton } from "@sito/dashboard-app";
 
 export const PageHeader = <TEntity extends BaseEntityDto>(
   props: PageHeaderPropsType<TEntity>

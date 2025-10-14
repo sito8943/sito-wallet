@@ -12,7 +12,7 @@ import { css } from "@emotion/css";
 import { DialogPropsType } from "./types.ts";
 
 // components
-import { IconButton } from "components";
+import { IconButton } from "@sito/dashboard-app";
 
 export const Dialog = (props: DialogPropsType) => {
   const { t } = useTranslation();

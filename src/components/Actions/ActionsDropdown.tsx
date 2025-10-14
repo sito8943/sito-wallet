@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 
 // lib
-import { BaseEntityDto } from "@sito/dashboard-app";
+import { BaseEntityDto, IconButton } from "@sito/dashboard-app";
 
 // types
 import { ActionsContainerPropsType } from "./types";
@@ -13,7 +13,6 @@ import { ActionsContainerPropsType } from "./types";
 // components
 import { Dropdown } from "../Dropdown/Dropdown";
 import { Actions } from "./Actions";
-import { IconButton } from "../Buttons";
 
 export const ActionsDropdown = <TRow extends BaseEntityDto>(
   props: ActionsContainerPropsType<TRow>

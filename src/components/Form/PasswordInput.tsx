@@ -5,7 +5,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import { TextInput, TextInputPropsType } from "@sito/dashboard";
-import { IconButton } from "components";
+import { IconButton } from "@sito/dashboard-app";
 
 export const PasswordInput = forwardRef(function (
   props: TextInputPropsType,

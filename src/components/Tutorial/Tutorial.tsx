@@ -1,3 +1,3 @@
-export const Tutorial = (props) => {
+export const Tutorial = () => {
   return <div></div>;
 };

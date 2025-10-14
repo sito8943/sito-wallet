@@ -10,7 +10,8 @@ import { TableOptionsProvider, TranslationProvider } from "@sito/dashboard";
 import { useAuth, fromLocal, toLocal } from "@sito/dashboard-app";
 
 // components
-import { Notification, Error, Onboarding, ToTop } from "components";
+import { Notification, Error, Onboarding } from "components";
+import { ToTop } from "@sito/dashboard-app";
 import Header from "./Header";
 import Footer from "./Footer";
 

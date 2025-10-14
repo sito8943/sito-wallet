@@ -5,7 +5,7 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import { Chip } from "./Chip";
-import { IconButton } from "components";
+import { IconButton } from "@sito/dashboard-app";
 
 // types
 import { DeleteChipPropsType } from "./types.ts";

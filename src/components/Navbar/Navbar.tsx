@@ -18,7 +18,8 @@ import "./styles.css";
 import { Clock } from "./Clock";
 
 // components
-import { IconButton, SearchModal } from "components";
+import { SearchModal } from "components";
+import { IconButton } from "@sito/dashboard-app";
 
 export function Navbar(props: NavbarPropsType) {
   const { t } = useTranslation();

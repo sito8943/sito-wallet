@@ -2,7 +2,8 @@ import { useTranslation } from "react-i18next";
 import { FieldValues } from "react-hook-form";
 
 // components
-import { Button, Loading } from "components";
+import { Loading } from "components";
+import { Button } from "@sito/dashboard-app";
 
 // types
 import { FormContainerPropsType } from "./types";
