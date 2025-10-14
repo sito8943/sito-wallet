@@ -1,6 +1,14 @@
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+// @sito-dashboard
+import {
+  useDeleteDialog,
+  useRestoreDialog,
+  useExportActionMutate,
+  GlobalActions,
+} from "@sito/dashboard-app";
+
 // icons
 import { faAdd, faTags } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,12 +26,8 @@ import {
 
 // hooks
 import {
-  useDeleteDialog,
   useTransactionCategoriesList,
   TransactionCategoriesQueryKeys,
-  useRestoreDialog,
-  useExportActionMutate,
-  GlobalActions,
 } from "hooks";
 import {
   useAddTransactionCategoryDialog,

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
 import { Action, Badge, useTableOptions } from "@sito/dashboard";
+import { queryClient, GlobalActions } from "@sito/dashboard-app";
 
 // components
 import { IconButton, Loading } from "components";
@@ -20,12 +21,6 @@ import {
 
 // lib
 import { BaseEntityDto } from "lib";
-
-// hooks
-import { GlobalActions } from "hooks";
-
-// providers
-import { queryClient } from "@sito/dashboard-app";
 
 // components
 import { PageHeader } from "./PageHeader.tsx";

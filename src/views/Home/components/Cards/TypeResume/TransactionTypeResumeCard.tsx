@@ -9,6 +9,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDebouncedCallback } from "use-debounce";
 
+// @sito/dashboard-app
+import { usePostForm, useNotification } from "@sito/dashboard-app";
+
 // lib
 import {
   TransactionType,
@@ -17,7 +20,7 @@ import {
 } from "lib";
 
 // hooks
-import { usePostForm, useTransactionTypeResume } from "hooks";
+import { useTransactionTypeResume } from "hooks";
 
 // utils
 import { icons } from "../../../../Transactions/components/utils";
@@ -36,7 +39,6 @@ import "./styles.css";
 import { TransactionTypePropsType, TypeResumeTypeFormType } from "./types";
 
 // providers
-import { useNotification } from "@sito/dashboard-app";
 import { useManager } from "providers";
 import { formToDto } from "./utils";
 

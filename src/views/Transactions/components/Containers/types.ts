@@ -1,14 +1,14 @@
-import { Action } from "@sito/dashboard";
+import { Dispatch, SetStateAction } from "react";
 
-// hooks
-import { UseActionDialog } from "hooks";
+// @sito/dashboard-app
+import { Action } from "@sito/dashboard";
+import { UseActionDialog } from "@sito/dashboard-app";
 
 // lib
 import { CommonTransactionCategoryDto, TransactionDto } from "lib";
 
 // types
 import { TransactionFormType } from "../../types";
-import { Dispatch, SetStateAction } from "react";
 
 export type TransactionContainerPropsType = {
   accountId: number;

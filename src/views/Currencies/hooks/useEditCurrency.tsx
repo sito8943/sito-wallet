@@ -1,16 +1,21 @@
 import { useTranslation } from "react-i18next";
 
+// @sito/dashboard-app
+import { useFormDialog } from "@sito/dashboard-app";
+
 // providers
 import { useManager } from "providers";
 
 // hooks
-import { CurrenciesQueryKeys, useFormDialog } from "hooks";
+import { CurrenciesQueryKeys } from "hooks";
 
 // utils
 import { dtoToForm, emptyCurrency, formToDto } from "../utils";
 
-// types
+// lib
 import { UpdateCurrencyDto, CurrencyDto } from "lib";
+
+// types
 import { CurrencyFormType } from "../types";
 
 export function useEditCurrency() {

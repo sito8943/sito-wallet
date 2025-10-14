@@ -1,6 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
+// @sito/dashboard-app
+import { useScrollTrigger } from "@sito/dashboard-app";
+
 // icons
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,9 +15,6 @@ import { BaseEntityDto } from "lib";
 
 // components
 import { Actions, ActionsDropdown, IconButton } from "components";
-
-// hooks
-import { useScrollTrigger } from "hooks";
 
 export const PageHeader = <TEntity extends BaseEntityDto>(
   props: PageHeaderPropsType<TEntity>

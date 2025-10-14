@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 
 // types
-import { UseSingleActionPropTypes } from "hooks";
+import { UseSingleActionPropTypes } from "@sito/dashboard-app";
 import { AccountActions } from "../types";
 
 // lib

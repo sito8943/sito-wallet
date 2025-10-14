@@ -1,5 +1,8 @@
 import { useEffect, useMemo } from "react";
 
+// @sito/dashboard-app
+import { useDeleteDialog } from "@sito/dashboard-app";
+
 // components
 import { AddCard, TransactionTypeResume } from "../components/Cards";
 import { AddDashboardCardDialog } from "../components";
@@ -9,7 +12,7 @@ import { ConfirmationDialog, Error } from "components";
 import "./styles.css";
 
 // hooks
-import { DashboardsQueryKeys, useDashboardsList, useDeleteDialog } from "hooks";
+import { DashboardsQueryKeys, useDashboardsList } from "hooks";
 import { useAddDashboardCard } from "../hooks";
 
 // lib

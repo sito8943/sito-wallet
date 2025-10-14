@@ -1,6 +1,14 @@
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+// @sito/dashboard-app
+import {
+  useDeleteDialog,
+  useRestoreDialog,
+  useExportActionMutate,
+  GlobalActions,
+} from "@sito/dashboard-app";
+
 // providers
 import { useManager } from "providers";
 
@@ -13,14 +21,7 @@ import { ConfirmationDialog, Empty, Error, Page, PrettyGrid } from "components";
 import { AddAccountDialog, AccountCard, EditAccountDialog } from "./components";
 
 // hooks
-import {
-  useDeleteDialog,
-  useAccountsList,
-  AccountsQueryKeys,
-  useRestoreDialog,
-  useExportActionMutate,
-  GlobalActions,
-} from "hooks";
+import { useAccountsList, AccountsQueryKeys } from "hooks";
 import {
   useAddAccountDialog,
   useEditAccountDialog,

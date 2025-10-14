@@ -1,14 +1,14 @@
 import { useTranslation } from "react-i18next";
 import { scrollTo } from "some-javascript-utils/browser";
 
+// @sito/dashboard-app
+import { useScrollTrigger } from "@sito/dashboard-app";
+
 // icons
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import { IconButton } from "./IconButton";
-
-// hook
-import { useScrollTrigger } from "hooks";
 
 // styles
 import "./styles.css";

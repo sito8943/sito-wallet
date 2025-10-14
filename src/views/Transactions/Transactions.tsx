@@ -5,6 +5,11 @@ import { parseQueries } from "some-javascript-utils/browser";
 
 // @sito-dashboard
 import { useTableOptions } from "@sito/dashboard";
+import {
+  useDeleteDialog,
+  useExportActionMutate,
+  useRestoreDialog,
+} from "@sito/dashboard-app";
 
 // components
 import { ConfirmationDialog, Page, TabsLayout, TabsType } from "components";
@@ -14,9 +19,6 @@ import { useAddTransaction, useEditTransaction } from "./hooks";
 import {
   TransactionsQueryKeys,
   useAccountsCommon,
-  useDeleteDialog,
-  useExportActionMutate,
-  useRestoreDialog,
   useTransactionCategoriesCommon,
 } from "hooks";
 

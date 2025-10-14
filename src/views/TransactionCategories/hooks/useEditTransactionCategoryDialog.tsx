@@ -1,10 +1,13 @@
 import { useTranslation } from "react-i18next";
 
+// @sito/dashboard-app
+import { useFormDialog } from "@sito/dashboard-app";
+
 // providers
 import { useManager } from "providers";
 
 // hooks
-import { TransactionCategoriesQueryKeys, useFormDialog } from "hooks";
+import { TransactionCategoriesQueryKeys } from "hooks";
 
 // utils
 import { dtoToForm, emptyTransactionCategory, formToDto } from "../utils";

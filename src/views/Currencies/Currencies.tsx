@@ -1,6 +1,14 @@
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+// @sito/dashboard-app
+import {
+  useDeleteDialog,
+  useRestoreDialog,
+  useExportActionMutate,
+  GlobalActions,
+} from "@sito/dashboard-app";
+
 // icons
 import { faAdd, faCoins } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,14 +25,7 @@ import {
 } from "./components";
 
 // hooks
-import {
-  useDeleteDialog,
-  useCurrenciesList,
-  CurrenciesQueryKeys,
-  useRestoreDialog,
-  useExportActionMutate,
-  GlobalActions,
-} from "hooks";
+import { useCurrenciesList, CurrenciesQueryKeys } from "hooks";
 import { useAddCurrency, useEditCurrency } from "./hooks";
 
 // types

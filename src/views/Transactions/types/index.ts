@@ -2,6 +2,7 @@ import { FieldValues } from "react-hook-form";
 
 // @sito/dashboard
 import { Action } from "@sito/dashboard";
+import { UseActionDialog } from "@sito/dashboard-app";
 
 // types
 import { FormDialogPropsType } from "components";
@@ -11,7 +12,6 @@ import {
   TransactionDto,
   ValidationError,
 } from "lib";
-import { UseActionDialog } from "hooks";
 
 export interface TransactionCardPropsType extends TransactionDto {
   actions: Action<TransactionDto>[];
