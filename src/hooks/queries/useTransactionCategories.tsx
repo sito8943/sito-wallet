@@ -2,7 +2,7 @@ import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 // providers
 import { useLocalCache, useManager } from "providers";
-import { useAuth } from "@sito/dashboard-app"
+import { QueryResult, useAuth } from "@sito/dashboard-app"
 
 // types
 import { UseFetchPropsType } from "./types.ts";
@@ -12,7 +12,6 @@ import {
   TransactionCategoryDto,
   CommonTransactionCategoryDto,
   FilterTransactionCategoryDto,
-  QueryResult,
   Tables,
 } from "lib";
 

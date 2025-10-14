@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 
 // lib
-import { BaseEntityDto } from "lib";
+import { BaseEntityDto } from "@sito/dashboard-app";
 
 // types
 import { ActionsContainerPropsType } from "./types";

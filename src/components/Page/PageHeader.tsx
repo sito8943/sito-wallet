@@ -11,7 +11,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { PageHeaderPropsType } from "./types";
 
 // lib
-import { BaseEntityDto } from "lib";
+import { BaseEntityDto } from "@sito/dashboard-app";
 
 // components
 import { Actions, ActionsDropdown, IconButton } from "components";

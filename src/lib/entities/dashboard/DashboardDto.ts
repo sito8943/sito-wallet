@@ -1,4 +1,4 @@
-import { BaseEntityDto, CommonUserDto } from "lib";
+import { BaseEntityDto, CommonUserDto } from "@sito/dashboard-app";
 import { DashboardCardType } from "./DashboardCardType";
 
 export interface DashboardDto extends BaseEntityDto {

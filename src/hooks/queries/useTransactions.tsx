@@ -6,7 +6,7 @@ import { useTableOptions } from "@sito/dashboard";
 
 // providers
 import { useLocalCache, useManager } from "providers";
-import { useAuth } from "@sito/dashboard-app"
+import { QueryParam, QueryResult, useAuth } from "@sito/dashboard-app"
 
 // types
 import {
@@ -19,11 +19,9 @@ import {
   TransactionDto,
   CommonTransactionDto,
   FilterTransactionDto,
-  QueryResult,
   Tables,
   TransactionTypeResumeDto,
-  TransactionType,
-  QueryParam,
+  TransactionType
 } from "lib";
 import { useTranslation } from "react-i18next";
 

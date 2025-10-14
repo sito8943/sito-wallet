@@ -5,16 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 // @sito/dashboard
 import { State, TextInput } from "@sito/dashboard";
-import { useNotification, useAuth, usePostForm } from "@sito/dashboard-app";
+import { useNotification, useAuth, usePostForm, AuthDto, SessionDto } from "@sito/dashboard-app";
 
 // components
 import { PasswordInput, Loading, Button } from "components";
 
 // providers
 import { useManager } from "providers";
-
-// lib
-import { AuthDto, SessionDto } from "lib";
 
 /**
  * Sign Page

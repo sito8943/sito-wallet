@@ -1,4 +1,4 @@
-import BaseClient from "./BaseClient";
+import { BaseClient } from "@sito/dashboard-app";
 
 // enum
 import { Tables } from "./types";
@@ -12,7 +12,11 @@ import {
   AddCurrencyDto,
 } from "lib";
 
+// config
+import { config } from "../../config";
+
 export default class CurrencyClient extends BaseClient<
+  Tables,
   CurrencyDto,
   CommonCurrencyDto,
   AddCurrencyDto,
@@ -22,6 +26,6 @@ export default class CurrencyClient extends BaseClient<
   /**
    */
   constructor() {
-    super(Tables.Currencies);
+    super(Tables.Currencies, config.apiUrl, config.auth.user);
   }
 }

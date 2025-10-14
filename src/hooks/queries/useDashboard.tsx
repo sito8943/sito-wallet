@@ -2,13 +2,13 @@ import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 // providers
 import { useLocalCache, useManager } from "providers";
-import { useAuth } from "@sito/dashboard-app"
+import { QueryResult, useAuth } from "@sito/dashboard-app"
 
 // types
 import { UseFetchPropsType } from "./types.ts";
 
 // lib
-import { DashboardDto, QueryResult, Tables } from "lib";
+import { DashboardDto, Tables } from "lib";
 
 export const DashboardsQueryKeys = {
   all: () => ({

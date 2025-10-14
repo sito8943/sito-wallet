@@ -1,5 +1,5 @@
 // lib
-import { BaseEntityDto } from "lib";
+import { BaseEntityDto } from "@sito/dashboard-app";
 
 // components
 import { Action } from "./Action";

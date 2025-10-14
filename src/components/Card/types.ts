@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import { Action } from "@sito/dashboard";
 
 // lib
-import { BaseEntityDto } from "lib";
+import { BaseEntityDto } from "@sito/dashboard-app";
 
 export type ItemCardPropsType<TEntity extends BaseEntityDto> = {
   children: ReactNode;

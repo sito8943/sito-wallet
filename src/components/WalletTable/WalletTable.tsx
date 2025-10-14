@@ -4,7 +4,7 @@ import { Table, useTableOptions } from "@sito/dashboard";
 import { WalletTablePropsType } from "./types";
 
 // lib
-import { BaseEntityDto } from "lib";
+import { BaseEntityDto } from "@sito/dashboard-app";
 import { useEffect } from "react";
 
 export const WalletTable = <TRow extends BaseEntityDto>(

@@ -2,7 +2,7 @@
 import { Actions, ItemCardTitle } from "components";
 
 // lib
-import { BaseEntityDto } from "lib";
+import { BaseEntityDto } from "@sito/dashboard-app";
 
 // types
 import { ItemCardPropsType } from "./types.ts";

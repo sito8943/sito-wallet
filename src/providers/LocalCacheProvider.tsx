@@ -2,7 +2,7 @@
 import { createContext, useCallback, useContext, useState } from "react";
 
 // @sito/dashboard
-import { fromLocal, toLocal } from "@sito/dashboard-app";
+import { BaseEntityDto, fromLocal, toLocal } from "@sito/dashboard-app";
 
 // config
 import { config } from "../config.ts";
@@ -17,7 +17,6 @@ import {
 // lib
 import {
   AccountDto,
-  BaseEntityDto,
   CurrencyDto,
   Tables,
   TransactionCategoryDto,

@@ -1,5 +1,5 @@
 // lib
-import { BaseEntityDto } from "lib";
+import { BaseEntityDto } from "@sito/dashboard-app";
 
 // types
 import { ActionPropsType } from "./types";

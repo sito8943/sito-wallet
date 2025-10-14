@@ -1,4 +1,4 @@
-import BaseClient from "./BaseClient";
+import { BaseClient, BaseCommonEntityDto } from "@sito/dashboard-app";
 
 // enum
 import { Tables } from "./types";
@@ -8,13 +8,16 @@ import {
   DashboardDto,
   UpdateDashboardDto,
   AddDashboardDto,
-  BaseCommonEntityDto,
   FilterDashboardDto,
   UpdateDashboardCardTitleDto,
   UpdateDashboardCardConfigDto,
 } from "lib";
 
+// config
+import { config } from "../../config";
+
 export default class DashboardClient extends BaseClient<
+  Tables,
   DashboardDto,
   BaseCommonEntityDto,
   AddDashboardDto,
@@ -24,7 +27,7 @@ export default class DashboardClient extends BaseClient<
   /**
    */
   constructor() {
-    super(Tables.UserDashboardConfig);
+    super(Tables.UserDashboardConfig, config.apiUrl, config.auth.user);
   }
 
   async updateCardTitle(data: UpdateDashboardCardTitleDto): Promise<number> {

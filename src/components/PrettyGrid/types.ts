@@ -1,7 +1,7 @@
 import { JSX, ReactNode } from "react";
 
 // lib
-import { BaseEntityDto } from "lib";
+import { BaseEntityDto } from "@sito/dashboard-app";
 
 export type PrettyGridPropsType<TDto extends BaseEntityDto> = {
   renderComponent: (item: TDto) => JSX.Element;

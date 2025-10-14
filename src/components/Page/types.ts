@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Action } from "@sito/dashboard";
 
 // types
-import { BaseEntityDto } from "lib";
+import { BaseEntityDto } from "@sito/dashboard-app";
 
 export type PagePropsType<TRow extends BaseEntityDto> = {
   title?: string;

@@ -1,4 +1,4 @@
-import BaseClient from "./BaseClient";
+import { BaseClient } from "@sito/dashboard-app";
 
 // enum
 import { Tables } from "./types";
@@ -12,7 +12,11 @@ import {
   AddAccountDto,
 } from "lib";
 
+// config
+import { config } from "../../config";
+
 export default class AccountClient extends BaseClient<
+  Tables,
   AccountDto,
   CommonAccountDto,
   AddAccountDto,
@@ -22,7 +26,7 @@ export default class AccountClient extends BaseClient<
   /**
    */
   constructor() {
-    super(Tables.Accounts);
+    super(Tables.Accounts, config.apiUrl, config.auth.user);
   }
 
   async sync(accountId: number): Promise<number> {

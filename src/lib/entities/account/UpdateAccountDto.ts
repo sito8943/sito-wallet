@@ -1,4 +1,4 @@
-import { DeleteDto } from "../base";
+import { DeleteDto } from "@sito/dashboard-app";
 import { AccountType } from "./AccountType";
 
 export interface UpdateAccountDto extends DeleteDto {

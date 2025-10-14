@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 // lib
-import { BaseEntityDto } from "lib";
+import { BaseEntityDto } from "@sito/dashboard-app";
 
 export type BasicProviderPropTypes = {
   children: ReactNode;

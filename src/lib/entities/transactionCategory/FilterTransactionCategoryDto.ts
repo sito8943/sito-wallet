@@ -1,4 +1,5 @@
-import { BaseFilterDto, TransactionType } from "lib";
+import { BaseFilterDto } from "@sito/dashboard-app";
+import { TransactionType } from "lib";
 
 export interface FilterTransactionCategoryDto extends BaseFilterDto {
   name?: string;

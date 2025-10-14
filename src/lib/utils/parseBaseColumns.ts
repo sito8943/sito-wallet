@@ -5,7 +5,8 @@ import { t } from "i18next";
 import { ColumnType, FilterTypes } from "@sito/dashboard";
 
 // lib
-import { BaseEntityDto, EntityName } from "lib";
+import { BaseEntityDto } from "@sito/dashboard-app";
+import { EntityName } from "lib";
 
 export const baseColumns = ["id", "createdAt", "updatedAt", "deleted"];
 

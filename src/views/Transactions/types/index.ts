@@ -2,12 +2,11 @@ import { FieldValues } from "react-hook-form";
 
 // @sito/dashboard
 import { Action } from "@sito/dashboard";
-import { UseActionDialog } from "@sito/dashboard-app";
+import { BaseEntityDto, UseActionDialog } from "@sito/dashboard-app";
 
 // types
 import { FormDialogPropsType } from "components";
 import {
-  BaseEntityDto,
   CommonAccountDto,
   TransactionDto,
   ValidationError,

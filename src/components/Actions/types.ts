@@ -1,5 +1,5 @@
 import { Action } from "@sito/dashboard";
-import { BaseEntityDto } from "lib";
+import { BaseEntityDto } from "@sito/dashboard-app";
 import { ReactNode } from "react";
 
 export type ActionsContainerPropsType<TRow extends BaseEntityDto> = {

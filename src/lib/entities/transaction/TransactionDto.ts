@@ -1,8 +1,5 @@
-import {
-  BaseEntityDto,
-  CommonAccountDto,
-  CommonTransactionCategoryDto,
-} from "lib";
+import { BaseEntityDto } from "@sito/dashboard-app";
+import { CommonAccountDto, CommonTransactionCategoryDto } from "lib";
 
 export interface TransactionDto extends BaseEntityDto {
   description: string;

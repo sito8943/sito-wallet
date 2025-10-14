@@ -1,4 +1,4 @@
-import BaseClient from "./BaseClient";
+import { BaseClient, Methods, parseQueries } from "@sito/dashboard-app";
 
 // enum
 import { Tables } from "./types";
@@ -11,14 +11,14 @@ import {
   FilterTransactionDto,
   AddTransactionDto,
   TransactionTypeResumeDto,
-  Methods,
   FilterTransactionTypeResumeDto,
 } from "lib";
 
 // utils
-import { parseQueries } from "./utils";
+import { config } from "../../config";
 
 export default class TransactionClient extends BaseClient<
+  Tables,
   TransactionDto,
   CommonTransactionDto,
   AddTransactionDto,
@@ -28,7 +28,7 @@ export default class TransactionClient extends BaseClient<
   /**
    */
   constructor() {
-    super(Tables.Transactions);
+    super(Tables.Transactions, config.apiUrl, config.auth.user);
   }
 
   async getTypeResume(
@@ -44,7 +44,7 @@ export default class TransactionClient extends BaseClient<
       Methods.GET,
       null,
       {
-        ...this.api.defaultTokenAdquierer(),
+        ...this.api.defaultTokenAcquirer(),
       }
     );
   }
