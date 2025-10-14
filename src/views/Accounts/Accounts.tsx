@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { To, useNavigate } from "react-router-dom";
 
 // @sito/dashboard-app
 import {
@@ -7,6 +8,10 @@ import {
   useRestoreDialog,
   useExportActionMutate,
   GlobalActions,
+  PrettyGrid,
+  Page,
+  Empty,
+  Error,
 } from "@sito/dashboard-app";
 
 // providers
@@ -17,7 +22,7 @@ import { faAdd, faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
-import { ConfirmationDialog, Empty, Error, Page, PrettyGrid } from "components";
+import { ConfirmationDialog } from "components";
 import { AddAccountDialog, AccountCard, EditAccountDialog } from "./components";
 
 // hooks
@@ -80,8 +85,11 @@ export function Accounts() {
     return [exportAccounts.action()];
   }, [exportAccounts]);
 
+  const navigate = useNavigate();
+
   return (
     <Page
+      navigate={(route) => navigate(route as To)}
       title={t("_pages:accounts.title")}
       isLoading={isLoading}
       actions={pageToolbar}

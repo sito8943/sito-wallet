@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { To, useLocation, useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { parseQueries } from "some-javascript-utils/browser";
@@ -6,13 +6,14 @@ import { parseQueries } from "some-javascript-utils/browser";
 // @sito-dashboard
 import { useTableOptions } from "@sito/dashboard";
 import {
+  Page,
   useDeleteDialog,
   useExportActionMutate,
   useRestoreDialog,
 } from "@sito/dashboard-app";
 
 // components
-import { ConfirmationDialog, Page, TabsLayout, TabsType } from "components";
+import { ConfirmationDialog, TabsLayout, TabsType } from "components";
 
 // hooks
 import { useAddTransaction, useEditTransaction } from "./hooks";
@@ -179,8 +180,11 @@ export function Transactions() {
     return [exportTransactions.action()];
   }, [exportTransactions]);
 
+  const navigate = useNavigate()
+
   return (
     <Page
+      navigate={(route) => navigate(route as To)}
       title={t("_pages:transactions.title")}
       isLoading={accounts.isLoading || categories.isLoading}
       actions={pageToolbar}

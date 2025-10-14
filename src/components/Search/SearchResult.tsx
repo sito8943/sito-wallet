@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
+// @sito/dashboard-app
+import { Loading, IconButton } from "@sito/dashboard-app";
+
 // icons
 import { faBroom } from "@fortawesome/free-solid-svg-icons";
 
@@ -8,8 +11,6 @@ import { faBroom } from "@fortawesome/free-solid-svg-icons";
 import { SearchResultPropsType } from "./types";
 
 // components
-import { Loading } from "components";
-import { IconButton } from "@sito/dashboard-app";
 import PageResult from "./PageResult";
 
 export const SearchResult = (props: SearchResultPropsType) => {

@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { FieldValues } from "react-hook-form";
 
+// @sito/dashboard-app
+import { Loading, Button } from "@sito/dashboard-app";
+
 // components
 import { Dialog } from "./Dialog";
-import { Loading } from "components";
-import { Button } from "@sito/dashboard-app";
 
 // types
 import { FormDialogPropsType } from "./types.ts";

@@ -1,11 +1,10 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
+import { Loading, Button } from "@sito/dashboard-app";
 
 // components
 import { Dialog } from "./Dialog";
-import { Loading } from "components";
-import { Button } from "@sito/dashboard-app";
 
 // types
 import { ConfirmationDialogPropsType } from "./types";

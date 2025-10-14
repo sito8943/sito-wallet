@@ -1,8 +1,13 @@
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { To, useNavigate } from "react-router-dom";
 
 // @sito-dashboard
 import {
+  Page,
+  PrettyGrid,
+  Empty,
+  Error,
   useDeleteDialog,
   useRestoreDialog,
   useExportActionMutate,
@@ -17,7 +22,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useManager } from "providers";
 
 // components
-import { ConfirmationDialog, Empty, Error, Page, PrettyGrid } from "components";
+import { ConfirmationDialog } from "components";
 import {
   AddTransactionCategoryDialog,
   TransactionCategoryCard,
@@ -79,8 +84,11 @@ export function TransactionCategories() {
     return [exportTransactionCategory.action()];
   }, [exportTransactionCategory]);
 
+  const navigate = useNavigate();
+
   return (
     <Page
+      navigate={(route) => navigate(route as To)}
       title={t("_pages:transactionCategories.title")}
       isLoading={isLoading}
       actions={pageToolbar}

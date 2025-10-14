@@ -1,7 +1,9 @@
 import { useTranslation } from "react-i18next";
 
+// @sito/dashboard
+import { PrettyGrid, Error } from "@sito/dashboard-app";
+
 // components
-import { PrettyGrid, Error } from "components";
 import { TransactionCard } from "../TransactionCard";
 
 // types

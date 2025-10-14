@@ -2,16 +2,25 @@ import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
 import { FilterTypes, Option } from "@sito/dashboard";
-import { enumToKeyValueArray, getFormattedDateTime } from "@sito/dashboard-app";
+import {
+  enumToKeyValueArray,
+  getFormattedDateTime,
+  Error,
+} from "@sito/dashboard-app";
 
 // components
-import { Error, WalletTable } from "components";
+import { WalletTable } from "components";
 
 // hooks
 import { useTransactionsList } from "hooks";
 
 // lib
-import { EntityName, TransactionDto, TransactionType, useParseColumns } from "lib";
+import {
+  EntityName,
+  TransactionDto,
+  TransactionType,
+  useParseColumns,
+} from "lib";
 
 // types
 import { TransactionContainerPropsType } from "./types";

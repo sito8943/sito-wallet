@@ -1,17 +1,17 @@
-import { useTranslation } from "react-i18next";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
 import { useEffect, useState } from "react";
 
-import { TableOptionsProvider, TranslationProvider } from "@sito/dashboard";
+// @sito/dashboard
+import { TableOptionsProvider } from "@sito/dashboard";
+import { Error, Notification, ToTop } from "@sito/dashboard-app";
 
 // providers
 import { useAuth, fromLocal, toLocal } from "@sito/dashboard-app";
 
 // components
-import { Notification, Error, Onboarding } from "components";
-import { ToTop } from "@sito/dashboard-app";
+import { Onboarding } from "components";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -21,8 +21,6 @@ import { config } from "../../config";
 export function View() {
   const { account, isInGuestMode } = useAuth();
   const navigate = useNavigate();
-
-  const { t } = useTranslation();
 
   const [showOnboarding, setShowOnboarding] = useState(false);
 
@@ -50,9 +48,7 @@ export function View() {
         }
       >
         <TableOptionsProvider>
-          <TranslationProvider t={t}>
-            <Outlet />
-          </TranslationProvider>
+          <Outlet />
         </TableOptionsProvider>
       </ErrorBoundary>
       <Footer />

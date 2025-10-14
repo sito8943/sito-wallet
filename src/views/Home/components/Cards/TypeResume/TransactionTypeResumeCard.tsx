@@ -10,7 +10,7 @@ import {
 import { useDebouncedCallback } from "use-debounce";
 
 // @sito/dashboard-app
-import { usePostForm, useNotification } from "@sito/dashboard-app";
+import { usePostForm, useNotification,IconButton,Loading } from "@sito/dashboard-app";
 
 // lib
 import {
@@ -26,8 +26,6 @@ import { useTransactionTypeResume } from "hooks";
 import { icons } from "../../../../Transactions/components/utils";
 
 // components
-import { Loading } from "components";
-import { IconButton } from "@sito/dashboard-app";
 import { Currency } from "../../../../Currencies";
 import { ActiveFilters } from "../ActiveFilters";
 import { BaseCard } from "../BaseCard";

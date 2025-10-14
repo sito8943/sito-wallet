@@ -1,5 +1,6 @@
 // @sito/dashboard
 import { SortOrder } from "@sito/dashboard";
+import { Loading } from "@sito/dashboard-app";
 
 // types
 import { LastTransactionsPropsType } from "./types";
@@ -8,7 +9,6 @@ import { LastTransactionsPropsType } from "./types";
 import { useTransactionsList } from "hooks";
 
 // components
-import { Loading } from "components";
 import { Transaction } from "./Transaction";
 
 export const LastTransactions = (props: LastTransactionsPropsType) => {
