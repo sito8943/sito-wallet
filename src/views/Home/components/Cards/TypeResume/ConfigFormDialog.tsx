@@ -12,6 +12,7 @@ import {
   SelectInput,
   Option,
 } from "@sito/dashboard";
+import { enumToKeyValueArray } from "@sito/dashboard-app";
 
 // components
 import { FormDialog } from "components";
@@ -20,7 +21,7 @@ import { FormDialog } from "components";
 import { useAccountsCommon, useTransactionCategoriesCommon } from "hooks";
 
 // lib
-import { Tables, enumToKeyValueArray, TransactionType } from "lib";
+import { Tables, TransactionType } from "lib";
 
 // types
 import { ConfigFormDialogPropsType, TypeResumeTypeFormType } from "./types";

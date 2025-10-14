@@ -36,7 +36,8 @@ import "./styles.css";
 import { TransactionTypePropsType, TypeResumeTypeFormType } from "./types";
 
 // providers
-import { useManager, useNotification } from "providers";
+import { useNotification } from "@sito/dashboard-app";
+import { useManager } from "providers";
 import { formToDto } from "./utils";
 
 export const TransactionTypeResume = (props: TransactionTypePropsType) => {

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { createPortal } from "react-dom";
 
 // provider
-import { useNotification } from "providers";
+import { useNotification } from "@sito/dashboard-app";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

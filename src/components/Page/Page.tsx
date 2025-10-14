@@ -25,7 +25,7 @@ import { BaseEntityDto } from "lib";
 import { GlobalActions } from "hooks";
 
 // providers
-import { queryClient } from "providers";
+import { queryClient } from "@sito/dashboard-app";
 
 // components
 import { PageHeader } from "./PageHeader.tsx";

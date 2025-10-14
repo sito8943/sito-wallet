@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { NotificationType } from "lib";
 
 // providers
-import { useNotification } from "providers";
+import { useNotification } from "@sito/dashboard-app";
 
 // types
 import { UseExportActionMutatePropsType } from "./types";

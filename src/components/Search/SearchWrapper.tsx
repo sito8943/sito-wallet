@@ -3,11 +3,8 @@ import { useDebouncedCallback } from "use-debounce";
 import { useNavigate } from "react-router-dom";
 import { stringSimilarity } from "string-similarity-js";
 
-// hooks
-import { useTimeAge } from "hooks";
-
-// utils
-import { toLocal, fromLocal } from "lib";
+// "@sito/dashboard
+import { useTimeAge, isMac, toLocal, fromLocal } from "@sito/dashboard-app";
 
 // components
 import { SearchResult } from "./SearchResult";
@@ -21,9 +18,6 @@ import { SearchResultType, SearchWrapperPropsType } from "./types";
 
 // config
 import { config } from "../../config";
-
-// utils
-import { isMac } from "../../lib/utils/os";
 
 export const SearchWrapper = (props: SearchWrapperPropsType) => {
   const { isModal = false } = props;

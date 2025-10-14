@@ -1,5 +1,5 @@
-export * from "./NotificationProvider";
-export * from "./ManagerProvider";
+export * from "./SWManagerProvider";
 export * from "./LocalCacheProvider";
-export * from "./AuthProvider";
+export * from "./SitoWalletProvider";
+export * from "./useSWManager";
 export type * from "./types";

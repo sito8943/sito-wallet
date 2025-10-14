@@ -7,10 +7,7 @@ import { useEffect, useState } from "react";
 import { TableOptionsProvider, TranslationProvider } from "@sito/dashboard";
 
 // providers
-import { useAuth } from "providers";
-
-// lib
-import { fromLocal, toLocal } from "lib";
+import { useAuth, fromLocal, toLocal } from "@sito/dashboard-app";
 
 // components
 import { Notification, Error, Onboarding, ToTop } from "components";

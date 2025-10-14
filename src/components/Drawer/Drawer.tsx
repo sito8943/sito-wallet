@@ -12,7 +12,7 @@ import "./styles.css";
 import { menuMap } from "views";
 
 // providers
-import { useAuth } from "providers";
+import { useAuth } from "@sito/dashboard-app";
 
 export function Drawer(props: DrawerPropsTypes) {
   const { t } = useTranslation();

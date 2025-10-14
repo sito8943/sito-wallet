@@ -1,6 +1,8 @@
+// @sito/dashboard-app
+import { formatForDatetimeLocal } from "@sito/dashboard-app";
+
 import {
   CommonAccountDto,
-  formatForDatetimeLocal,
   TransactionDto,
   TransactionType,
   UpdateTransactionDto,

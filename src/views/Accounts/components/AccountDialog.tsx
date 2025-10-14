@@ -9,6 +9,7 @@ import {
   Option,
   AutocompleteInput,
 } from "@sito/dashboard";
+import { enumToKeyValueArray } from "@sito/dashboard-app";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,7 +25,7 @@ import {
 } from "../types";
 
 // lib
-import { enumToKeyValueArray, Tables, AccountType } from "lib";
+import { Tables, AccountType } from "lib";
 
 // utils
 import { icons } from "./utils";
@@ -33,7 +34,7 @@ import { icons } from "./utils";
 import { useCurrenciesCommon } from "hooks";
 
 // providers
-import { useAuth } from "providers";
+import { useAuth } from "@sito/dashboard-app";
 
 export function AccountForm(props: AccountFormPropsType) {
   const { control, isLoading, setValue, open } = props;

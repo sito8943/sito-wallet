@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-// lib
-import { getFormattedDateTime } from "lib";
+// @sito/dashboard
+import { getFormattedDateTime } from "@sito/dashboard-app";
 
 export const Clock = () => {
   const [dateNow, setDateNow] = useState(getFormattedDateTime());

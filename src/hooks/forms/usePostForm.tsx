@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
 
 // providers
-import { queryClient, useNotification } from "providers";
+import { useNotification } from "@sito/dashboard-app";
+import { queryClient } from "@sito/dashboard-app";
 
 // lib
 import { NotificationEnumType, NotificationType, ValidationError } from "lib";

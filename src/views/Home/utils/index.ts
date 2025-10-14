@@ -1,8 +1,12 @@
 import { DashboardDto, AddDashboardDto, DashboardCardType } from "lib";
 import { DashboardFormType } from "../types";
 
-export const formToAddDto = (data: DashboardFormType): AddDashboardDto => ({
-  ...data,
+export const formToAddDto = ({
+  config,
+  ...rest
+}: DashboardFormType): AddDashboardDto => ({
+  config: config ?? "",
+  ...rest,
 });
 
 export const dtoToAddForm = (dto: DashboardDto): DashboardFormType => ({

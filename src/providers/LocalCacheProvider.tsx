@@ -1,6 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useState } from "react";
 
+// @sito/dashboard
+import { fromLocal, toLocal } from "@sito/dashboard-app";
+
 // config
 import { config } from "../config.ts";
 
@@ -16,9 +19,7 @@ import {
   AccountDto,
   BaseEntityDto,
   CurrencyDto,
-  fromLocal,
   Tables,
-  toLocal,
   TransactionCategoryDto,
   TransactionDto,
 } from "lib";

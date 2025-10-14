@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next";
 
 // providers
-import { queryClient, useNotification } from "providers";
+import { useNotification } from "@sito/dashboard-app";
+import { queryClient } from "@sito/dashboard-app";
 
 // lib
 import { NotificationEnumType, NotificationType, ValidationError } from "lib";

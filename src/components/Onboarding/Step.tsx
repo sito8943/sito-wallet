@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 // providers
-import { useAuth } from "providers";
+import { useAuth } from "@sito/dashboard-app";
 
 // types
 import { StepPropsType } from "./types";

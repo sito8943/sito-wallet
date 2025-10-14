@@ -7,7 +7,6 @@ export type { ServiceError, ValidationError, NotificationType };
 
 // entities
 export * from "./entities";
-export * from "./utils/";
 
 // api
 export * from "./api";

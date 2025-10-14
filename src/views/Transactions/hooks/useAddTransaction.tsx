@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next";
 
 // providers
-import { useManager, useNotification } from "providers";
+import { useNotification } from "@sito/dashboard-app";
+import { useManager } from "providers";
 
 // hooks
 import { useFormDialog, TransactionsQueryKeys } from "hooks";

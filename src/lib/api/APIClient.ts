@@ -1,3 +1,6 @@
+// @sito/dashboard-app
+import { fromLocal } from "@sito/dashboard-app";
+
 // services
 import { makeRequest, Methods } from "./utils/services";
 
@@ -5,7 +8,6 @@ import { makeRequest, Methods } from "./utils/services";
 import {
   BaseEntityDto,
   BaseFilterDto,
-  fromLocal,
   QueryParam,
   QueryResult,
 } from "lib";

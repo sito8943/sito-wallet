@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-// hooks
-import { useTimeAge } from "hooks";
+// @sito/dashboard
+import { useTimeAge } from "@sito/dashboard-app";
 
 // lib
 import { TransactionType } from "lib";

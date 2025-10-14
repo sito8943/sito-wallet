@@ -10,7 +10,9 @@ import { State, TextInput } from "@sito/dashboard";
 import { PasswordInput, Loading, Button } from "components";
 
 // providers
-import { useAuth, useManager, useNotification } from "providers";
+import { useNotification } from "@sito/dashboard-app";
+import { useManager } from "providers";
+import { useAuth } from "@sito/dashboard-app"
 
 // hooks
 import { usePostForm } from "hooks";

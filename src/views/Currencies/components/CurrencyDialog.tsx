@@ -19,7 +19,7 @@ import {
 import { Tables } from "lib";
 
 // providers
-import { useAuth } from "providers";
+import { useAuth } from "@sito/dashboard-app";
 
 export function CurrencyForm(props: CurrencyFormPropsType) {
   const { control, setValue, isLoading, open } = props;

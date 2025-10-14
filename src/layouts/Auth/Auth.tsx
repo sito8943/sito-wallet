@@ -6,7 +6,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { Notification, Error } from "components";
 
 // providers
-import { useAuth } from "providers";
+import { useAuth } from "@sito/dashboard-app";
 
 export const Auth = () => {
   const { account } = useAuth();

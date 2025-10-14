@@ -2,6 +2,9 @@ import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useCallback, useEffect, useState } from "react";
 
+// @sito/dashboard-app
+import { isMac } from "@sito/dashboard-app";
+
 // icons
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 
@@ -16,9 +19,6 @@ import { Clock } from "./Clock";
 
 // components
 import { IconButton, SearchModal } from "components";
-
-// utils
-import { isMac } from "lib";
 
 export function Navbar(props: NavbarPropsType) {
   const { t } = useTranslation();

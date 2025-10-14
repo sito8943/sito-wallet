@@ -1,20 +1,26 @@
 import AccountClient from "./AccountClient";
-import AuthClient from "./AuthClient";
 import CurrencyClient from "./CurrencyClient";
 import TransactionClient from "./TransactionClient";
 import TransactionCategoryClient from "./TransactionCategoryClient";
 import DashboardClient from "./DashboardClient";
 
-export class Manager {
+// @sito/dashboard-app
+import { IManager } from "@sito/dashboard-app";
+
+// config
+import { config } from "../../config";
+
+export class Manager extends IManager {
   accounts: AccountClient = new AccountClient();
   currencies: CurrencyClient = new CurrencyClient();
   transactions: TransactionClient = new TransactionClient();
   transactionCategories: TransactionCategoryClient =
     new TransactionCategoryClient();
-  auth: AuthClient = new AuthClient();
   dashboard: DashboardClient = new DashboardClient();
 
-  constructor() {}
+  constructor() {
+    super(config.apiUrl, config.auth.user);
+  }
 
   get TransactionCategories(): TransactionCategoryClient {
     return this.transactionCategories;
@@ -39,13 +45,6 @@ export class Manager {
    */
   get Currencies(): CurrencyClient {
     return this.currencies;
-  }
-
-  /**
-   * @returns auth
-   */
-  get Auth(): AuthClient {
-    return this.auth;
   }
 
   /**

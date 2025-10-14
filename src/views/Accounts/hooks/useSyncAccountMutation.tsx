@@ -5,7 +5,9 @@ import { useTranslation } from "react-i18next";
 import { useSyncAccountAction } from "./useSyncAccountAction";
 
 // providers
-import { useManager, useNotification, queryClient } from "providers";
+import { useNotification } from "@sito/dashboard-app";
+import { queryClient } from "@sito/dashboard-app";
+import { useManager } from "providers";
 import { AccountsQueryKeys } from "hooks";
 
 export const useSyncAccountMutation = () => {

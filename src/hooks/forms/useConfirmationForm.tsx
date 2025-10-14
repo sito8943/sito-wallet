@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useDialog } from "hooks";
 
 // providers
-import { useNotification } from "providers";
+import { useNotification } from "@sito/dashboard-app";
 
 // types
 import { NotificationType } from "lib";

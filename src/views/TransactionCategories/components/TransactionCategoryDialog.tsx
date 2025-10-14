@@ -4,6 +4,7 @@ import { Controller, useWatch } from "react-hook-form";
 
 // @sito/dashboard
 import { SelectInput, TextInput } from "@sito/dashboard";
+import { enumToKeyValueArray } from "@sito/dashboard-app";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,13 +20,13 @@ import {
 } from "../types";
 
 // lib
-import { enumToKeyValueArray, Tables, TransactionType } from "lib";
+import { Tables, TransactionType } from "lib";
 
 // utils
 import { icons } from "../../Transactions/components/utils";
 
 // providers
-import { useAuth } from "providers";
+import { useAuth } from "@sito/dashboard-app";
 
 export function TransactionCategoryForm(
   props: TransactionCategoryFormPropsType

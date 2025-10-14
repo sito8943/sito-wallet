@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, /* useForm */ } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
-import { deleteCookie } from "some-javascript-utils/browser";
+/* import { Link, useNavigate } from "react-router-dom";
+import { deleteCookie } from "some-javascript-utils/browser"; */
 
 // @sito/dashboard
-import { State, Loading } from "@sito/dashboard";
+/* import { State, Loading } from "@sito/dashboard"; */
 
 // components
 import { Button, PasswordInput } from "components";
 
 // providers
-import { uesAuth, useManager } from "providers";
+/* import { uesAuth } from "providers"; */
+/* import { useNotification } from "@sito/dashboard-app";
+import { useManager } from "providers"; */
 
 // hooks
-import { usePostForm } from "hooks";
+/* import { usePostForm } from "hooks"; */
 
 // config
-import { config } from "../../config";
+/* import { config } from "../../config"; */
 
 /**
  * UpdatePassword page
@@ -26,18 +28,18 @@ import { config } from "../../config";
 export function UpdatePassword() {
   const { t } = useTranslation();
 
-  const navigate = useNavigate();
-  const manager = useManager();
+  /* const navigate = useNavigate();
+  const manager = useManager(); */
 
   const [appear, setAppear] = useState(false);
-  const [passwordError, setPasswordError] = useState("");
-  const [saving, setSaving] = useState(false);
+  /* const [passwordError, setPasswordError] = useState("");
+  const [saving, setSaving] = useState(false); */
 
-  const { handleSubmit, control } = useForm();
+  /* const { handleSubmit, control } = useForm(); */
 
-  const { setNotification } = useNotification();
+  /* const { setNotification } = useNotification(); */
 
-  const onSubmit = async (d) => {
+  /*const onSubmit = async (d) => {
     setSaving(true);
     setPasswordError("");
     if (d.password !== d.rPassword) {
@@ -59,7 +61,7 @@ export function UpdatePassword() {
       setNotification(String(e.status));
     }
     setSaving(false);
-  };
+  }; */
 
   useEffect(() => {
     setTimeout(() => {
@@ -70,17 +72,10 @@ export function UpdatePassword() {
   return (
     <div className="w-full h-screen flex items-start justify-center">
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        /* onSubmit={handleSubmit(onSubmit)} */
         className="w-96 max-sm:w-10/12 px-5 pt-10 flex flex-col items-center justify-start"
       >
-        <Link to="/auth">
-          <Logo
-            extra={false}
-            className={`my-5 transition-all duration-500 ease-in-out delay-100  ${
-              appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-            }`}
-          />
-        </Link>
+        {/* <Link to="/auth">LOGO</Link> */}
         <h1
           className={`w-full text-2xl md:text-3xl font-bold mb-5 transition-all duration-500 ease-in-out delay-200 ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
@@ -94,8 +89,8 @@ export function UpdatePassword() {
           }`}
         >
           <Controller
-            control={control}
-            disabled={saving}
+            /* control={control} */
+            /* disabled={saving} */
             name="password"
             render={({ field }) => (
               <PasswordInput
@@ -115,8 +110,8 @@ export function UpdatePassword() {
           }`}
         >
           <Controller
-            control={control}
-            disabled={saving}
+            /* control={control} */
+            /* disabled={saving} */
             name="rPassword"
             render={({ field }) => (
               <PasswordInput
@@ -126,8 +121,8 @@ export function UpdatePassword() {
                 className={`text-input peer`}
                 label={t("_entities:user.rPassword.label")}
                 required
-                helperText={passwordError}
-                state={passwordError.length ? State.error : State.default}
+                /* helperText={passwordError}
+                state={passwordError.length ? State.error : State.default} */
               />
             )}
           />
@@ -136,19 +131,19 @@ export function UpdatePassword() {
           type="submit"
           variant="submit"
           color="primary"
-          disabled={saving}
+          /* disabled={saving} */
           className={`mb-5 self-start duration-500 ease-in-out delay-[500ms] ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           } submit`}
         >
-          {saving && (
+          {/* {saving && (
             <Loading
               className="button-loading"
               strokeWidth="4"
               loaderClass="!w-6"
               color="stroke-white"
             />
-          )}
+          )} */}
           {t("_accessibility:buttons.submit")}
         </Button>
       </form>

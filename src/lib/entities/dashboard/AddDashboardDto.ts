@@ -2,7 +2,7 @@ import { DashboardCardType } from "./DashboardCardType";
 
 export interface AddDashboardDto {
   type: DashboardCardType;
-  config: string;
+  config: string ;
   position: number;
   userId: number;
 }

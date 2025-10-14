@@ -12,24 +12,13 @@ import "@fontsource/roboto";
 import "./index.css";
 
 // providers
-import {
-  ManagerProvider,
-  NotificationProvider,
-  LocalCacheProvider,
-  AuthProvider,
-} from "providers";
+import { SitoWalletProvider } from "providers";
 
-//i18
+// i18
 import "./i18";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <ManagerProvider>
-    <LocalCacheProvider>
-      <NotificationProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </NotificationProvider>
-    </LocalCacheProvider>
-  </ManagerProvider>
+  <SitoWalletProvider>
+    <App />
+  </SitoWalletProvider>
 );
