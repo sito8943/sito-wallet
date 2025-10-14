@@ -2,12 +2,13 @@ import { FieldValues } from "react-hook-form";
 
 // @sito/dashboard
 import { Action } from "@sito/dashboard";
+import { ValidationError } from "@sito/dashboard-app";
 
 // types
 import { FormDialogPropsType } from "components";
 
 // lib
-import { AccountDto, ValidationError } from "lib";
+import { AccountDto } from "lib";
 
 export * from "./actions";
 
