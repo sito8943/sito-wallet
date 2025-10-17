@@ -13,21 +13,19 @@ export const About = () => {
   return (
     <main className="py-10 px-5 gap-5">
       <h2 className="text-4xl max-xs:text-2xl">{t("_pages:about.title")}</h2>
-      <p>
-        <Trans
-          i18nKey="_pages:about.body"
-          components={[
-            <p />,
-            <strong />,
-            <a
-              href="https://sito8943.com?utm_source=sitowallet&utm_medium=about_page&utm_campaign=portfolio_link"
-              target="_blank"
-              rel="noopener"
-              className="primary underline !font-bold"
-            />,
-          ]}
-        />
-      </p>
+      <Trans
+        i18nKey="_pages:about.body"
+        components={[
+          <p />,
+          <strong />,
+          <a
+            href="https://sito8943.com?utm_source=sitowallet&utm_medium=about_page&utm_campaign=portfolio_link"
+            target="_blank"
+            rel="noopener"
+            className="primary underline !font-bold"
+          />,
+        ]}
+      />
       <section>
         <h3 className="text-2xl font-bold">{t("_pages:about.howTo.title")}</h3>
         <p className="mt-2">{t("_pages:about.howTo.body")}</p>

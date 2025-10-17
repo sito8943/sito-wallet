@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { To, useNavigate } from "react-router-dom";
 
 // @sito-dashboard
 import {
@@ -12,7 +11,7 @@ import {
   useRestoreDialog,
   useExportActionMutate,
   GlobalActions,
-  ConfirmationDialog
+  ConfirmationDialog,
 } from "@sito/dashboard-app";
 
 // icons
@@ -84,11 +83,8 @@ export function TransactionCategories() {
     return [exportTransactionCategory.action()];
   }, [exportTransactionCategory]);
 
-  const navigate = useNavigate();
-
   return (
     <Page
-      navigate={(route) => navigate(route as To)}
       title={t("_pages:transactionCategories.title")}
       isLoading={isLoading}
       actions={pageToolbar}
@@ -134,7 +130,7 @@ export function TransactionCategories() {
           <ConfirmationDialog {...restoreTransactionCategory} />
         </>
       ) : (
-        <Error message={error?.message} />
+        <Error error={error} />
       )}
     </Page>
   );

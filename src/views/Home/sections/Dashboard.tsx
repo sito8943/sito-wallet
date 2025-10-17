@@ -78,6 +78,6 @@ export const Dashboard = () => {
       <ConfirmationDialog {...deleteDashboardCard} />
     </section>
   ) : (
-    <Error message={error?.message} />
+    <Error error={error} />
   );
 };

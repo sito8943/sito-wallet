@@ -22,7 +22,7 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
   });
 
   return error ? (
-    <Error message={error?.message} />
+    <Error error={error} />
   ) : (
     <PrettyGrid
       data={data?.items}

@@ -125,7 +125,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
   // #endregion
 
   return error ? (
-    <Error message={error?.message} />
+    <Error error={error} />
   ) : (
     <WalletTable
       total={data?.totalElements ?? 0}

@@ -1,17 +1,23 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useLocation, Link, To } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
-import { useEffect, useState } from "react";
+import { ComponentType, useEffect, useState } from "react";
 
 // @sito/dashboard
 import { TableOptionsProvider } from "@sito/dashboard";
-import { Error, Notification, ToTop } from "@sito/dashboard-app";
+import {
+  BaseLinkPropsType,
+  ConfigProvider,
+  Error,
+  Notification,
+  ToTop,
+} from "@sito/dashboard-app";
 
 // providers
 import { useAuth, fromLocal, toLocal } from "@sito/dashboard-app";
 
 // components
-import { Onboarding } from "components";
+import { Onboarding, SearchModal } from "components";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -21,6 +27,7 @@ import { config } from "../../config";
 export function View() {
   const { account, isInGuestMode } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [showOnboarding, setShowOnboarding] = useState(false);
 
@@ -36,17 +43,16 @@ export function View() {
   }, [account.email, isInGuestMode, navigate]);
 
   return (
-    <>
+    <ConfigProvider
+      navigate={(route) => navigate(route as To)}
+      location={location}
+      linkComponent={Link as unknown as ComponentType<BaseLinkPropsType>}
+      searchComponent={SearchModal}
+    >
       {showOnboarding && <Onboarding />}
       <ToTop />
       <Header />
-      <ErrorBoundary
-        fallback={
-          <main>
-            <Error />
-          </main>
-        }
-      >
+      <ErrorBoundary FallbackComponent={Error}>
         <TableOptionsProvider>
           <Outlet />
         </TableOptionsProvider>
@@ -54,6 +60,6 @@ export function View() {
       <Footer />
       <Notification />
       <Tooltip id="tooltip" />
-    </>
+    </ConfigProvider>
   );
 }

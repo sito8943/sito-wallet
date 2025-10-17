@@ -3,7 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Outlet, useNavigate } from "react-router-dom";
 
 // @sito/dashboard-app
-import { Error, Notification } from "@sito/dashboard-app";
+import { Notification, Error } from "@sito/dashboard-app";
 
 // providers
 import { useAuth } from "@sito/dashboard-app";
@@ -18,13 +18,7 @@ export const Auth = () => {
 
   return (
     <>
-      <ErrorBoundary
-        fallback={
-          <main>
-            <Error />
-          </main>
-        }
-      >
+      <ErrorBoundary FallbackComponent={Error}>
         <Outlet />
       </ErrorBoundary>
       <Notification />

@@ -1,5 +1,4 @@
 import { useCallback, useMemo } from "react";
-import { To, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
@@ -12,7 +11,7 @@ import {
   PrettyGrid,
   Empty,
   Error,
-  ConfirmationDialog
+  ConfirmationDialog,
 } from "@sito/dashboard-app";
 
 // icons
@@ -78,11 +77,8 @@ export function Currencies() {
     return [exportCurrency.action()];
   }, [exportCurrency]);
 
-  const navigate = useNavigate();
-
   return (
     <Page
-      navigate={(route) => navigate(route as To)}
       title={t("_pages:currencies.title")}
       isLoading={isLoading}
       actions={pageToolbar}
@@ -128,7 +124,7 @@ export function Currencies() {
           <ConfirmationDialog {...restoreCurrency} />
         </>
       ) : (
-        <Error message={error?.message} />
+        <Error error={error} />
       )}
     </Page>
   );

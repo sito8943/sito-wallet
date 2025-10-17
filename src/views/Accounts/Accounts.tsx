@@ -12,7 +12,7 @@ import {
   Page,
   Empty,
   Error,
-  ConfirmationDialog
+  ConfirmationDialog,
 } from "@sito/dashboard-app";
 
 // providers
@@ -85,11 +85,8 @@ export function Accounts() {
     return [exportAccounts.action()];
   }, [exportAccounts]);
 
-  const navigate = useNavigate();
-
   return (
     <Page
-      navigate={(route) => navigate(route as To)}
       title={t("_pages:accounts.title")}
       isLoading={isLoading}
       actions={pageToolbar}
@@ -135,7 +132,7 @@ export function Accounts() {
           <ConfirmationDialog {...restoreAccount} />
         </>
       ) : (
-        <Error message={error?.message} />
+        <Error error={error} />
       )}
     </Page>
   );

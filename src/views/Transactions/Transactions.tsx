@@ -1,4 +1,4 @@
-import { To, useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { parseQueries } from "some-javascript-utils/browser";
@@ -181,11 +181,8 @@ export function Transactions() {
     return [exportTransactions.action()];
   }, [exportTransactions]);
 
-  const navigate = useNavigate();
-
   return (
     <Page
-      navigate={(route) => navigate(route as To)}
       title={t("_pages:transactions.title")}
       isLoading={accounts.isLoading || categories.isLoading}
       actions={pageToolbar}
