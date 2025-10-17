@@ -11,18 +11,27 @@ import {
   Error,
   Notification,
   ToTop,
+  Onboarding,
 } from "@sito/dashboard-app";
 
 // providers
 import { useAuth, fromLocal, toLocal } from "@sito/dashboard-app";
 
 // components
-import { Onboarding, SearchModal } from "components";
+import { SearchModal } from "components";
 import Header from "./Header";
 import Footer from "./Footer";
 
 // config
 import { config } from "../../config";
+
+const steps = [
+  "welcome",
+  "currencies",
+  "accounts",
+  "transactions",
+  "get_started",
+];
 
 export function View() {
   const { account, isInGuestMode } = useAuth();
@@ -49,7 +58,7 @@ export function View() {
       linkComponent={Link as unknown as ComponentType<BaseLinkPropsType>}
       searchComponent={SearchModal}
     >
-      {showOnboarding && <Onboarding />}
+      {showOnboarding && <Onboarding steps={steps} />}
       <ToTop />
       <Header />
       <ErrorBoundary FallbackComponent={Error}>

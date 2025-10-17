@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { To, useNavigate } from "react-router-dom";
 
 // @sito/dashboard-app
 import {

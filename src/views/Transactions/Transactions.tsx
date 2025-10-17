@@ -11,10 +11,9 @@ import {
   useExportActionMutate,
   useRestoreDialog,
   ConfirmationDialog,
+  TabsLayout,
+  TabsType,
 } from "@sito/dashboard-app";
-
-// components
-import { TabsLayout, TabsType } from "components";
 
 // hooks
 import { useAddTransaction, useEditTransaction } from "./hooks";

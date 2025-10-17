@@ -1,7 +1,10 @@
 import { useState } from "react";
 
-// components
-import { Navbar, Drawer } from "components";
+// @sito-dashboard
+import { Navbar, Drawer } from "@sito/dashboard-app";
+
+// menu
+import { menuMap } from "views";
 
 function Header() {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -9,6 +12,7 @@ function Header() {
   return (
     <>
       <Drawer
+        menuMap={menuMap}
         open={showDrawer}
         onClose={() => {
           setShowDrawer(false);
