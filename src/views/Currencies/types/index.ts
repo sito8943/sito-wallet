@@ -2,10 +2,7 @@ import { FieldValues } from "react-hook-form";
 
 // @sito/dashboard
 import { Action } from "@sito/dashboard";
-import { ValidationError } from "@sito/dashboard-app";
-
-// types
-import { FormDialogPropsType } from "components";
+import { ValidationError, FormDialogPropsType } from "@sito/dashboard-app";
 
 // lib
 import { CurrencyDto } from "lib";

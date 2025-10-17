@@ -13,10 +13,8 @@ import {
   SessionDto,
   Button,
   Loading,
+  PasswordInput,
 } from "@sito/dashboard-app";
-
-// components
-import { PasswordInput } from "components";
 
 // providers
 import { useManager } from "providers";

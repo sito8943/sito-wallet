@@ -4,9 +4,7 @@ import { Controller, useWatch } from "react-hook-form";
 
 // @sito/dashboard
 import { TextInput, Option, AutocompleteInput } from "@sito/dashboard";
-
-// components
-import { FormDialog, ParagraphInput } from "components";
+import { FormDialog, ParagraphInput } from "@sito/dashboard-app";
 
 // types
 import {

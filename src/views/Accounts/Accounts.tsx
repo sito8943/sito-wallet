@@ -12,6 +12,7 @@ import {
   Page,
   Empty,
   Error,
+  ConfirmationDialog
 } from "@sito/dashboard-app";
 
 // providers
@@ -22,7 +23,6 @@ import { faAdd, faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
-import { ConfirmationDialog } from "components";
 import { AddAccountDialog, AccountCard, EditAccountDialog } from "./components";
 
 // hooks

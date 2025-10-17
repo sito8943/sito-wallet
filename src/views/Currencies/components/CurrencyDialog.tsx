@@ -4,9 +4,7 @@ import { Controller } from "react-hook-form";
 
 // @sito/dashboard
 import { TextInput } from "@sito/dashboard";
-
-// components
-import { FormDialog, ParagraphInput } from "components";
+import { FormDialog, ParagraphInput } from "@sito/dashboard-app";
 
 // types
 import {
@@ -106,6 +104,8 @@ export function CurrencyForm(props: CurrencyFormPropsType) {
 }
 
 export function AddCurrencyDialog(props: AddCurrencyDialogPropsType) {
+  console.log(props.open);
+
   return (
     <FormDialog {...props}>
       <CurrencyForm {...props} />

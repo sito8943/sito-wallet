@@ -1,12 +1,15 @@
 import { useEffect, useMemo } from "react";
 
 // @sito/dashboard-app
-import { useDeleteDialog, Error } from "@sito/dashboard-app";
+import {
+  useDeleteDialog,
+  Error,
+  ConfirmationDialog,
+} from "@sito/dashboard-app";
 
 // components
 import { AddCard, TransactionTypeResume } from "../components/Cards";
 import { AddDashboardCardDialog } from "../components";
-import { ConfirmationDialog } from "components";
 
 // styles
 import "./styles.css";

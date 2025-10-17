@@ -4,10 +4,7 @@ import { Controller } from "react-hook-form";
 
 // @sito/dashboard
 import { SelectInput } from "@sito/dashboard";
-import { enumToKeyValueArray, useAuth } from "@sito/dashboard-app";
-
-// components
-import { FormDialog } from "components";
+import { enumToKeyValueArray, useAuth, FormDialog } from "@sito/dashboard-app";
 
 // types
 import {

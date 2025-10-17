@@ -1,7 +1,10 @@
 import { useTranslation } from "react-i18next";
 
+// @sito/dashboard-app
+import { Dialog } from "@sito/dashboard-app";
+
 // components
-import { Dialog, SearchWrapper } from "components";
+import { SearchWrapper } from "components";
 
 // types
 import { SearchModalPropsType } from "./types";

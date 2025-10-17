@@ -12,10 +12,7 @@ import {
   SelectInput,
   Option,
 } from "@sito/dashboard";
-import { enumToKeyValueArray } from "@sito/dashboard-app";
-
-// components
-import { FormDialog } from "components";
+import { enumToKeyValueArray, FormDialog } from "@sito/dashboard-app";
 
 // hooks
 import { useAccountsCommon, useTransactionCategoriesCommon } from "hooks";

@@ -12,6 +12,7 @@ import {
   useRestoreDialog,
   useExportActionMutate,
   GlobalActions,
+  ConfirmationDialog
 } from "@sito/dashboard-app";
 
 // icons
@@ -21,8 +22,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // providers
 import { useManager } from "providers";
 
-// components
-import { ConfirmationDialog } from "components";
+// components]
 import {
   AddTransactionCategoryDialog,
   TransactionCategoryCard,

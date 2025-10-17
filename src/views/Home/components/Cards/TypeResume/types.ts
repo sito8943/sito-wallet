@@ -1,5 +1,8 @@
 import { FieldValues } from "react-hook-form";
 
+// @sito/dashboard-app
+import { DialogPropsType, FormPropsType } from "@sito/dashboard-app";
+
 // lib
 import {
   CommonAccountDto,
@@ -8,9 +11,6 @@ import {
   TransactionType,
   UpdateDashboardCardConfigDto,
 } from "lib";
-
-// components
-import { DialogPropsType, FormPropsType } from "components";
 
 export interface TransactionTypePropsType extends DashboardDto {
   onDelete: () => void;

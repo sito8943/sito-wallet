@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
@@ -23,6 +24,8 @@ export function useAddCurrency() {
 
   const manager = useManager();
 
+  const queryKey = useMemo(() => CurrenciesQueryKeys.all().queryKey, []);
+
   const { handleSubmit, ...rest } = useFormDialog<
     CurrencyDto,
     AddCurrencyDto,
@@ -35,7 +38,7 @@ export function useAddCurrency() {
     mutationFn: (data) => manager.Currencies.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:currencies.forms.add"),
-    ...CurrenciesQueryKeys.all(),
+    queryKey,
   });
 
   return {

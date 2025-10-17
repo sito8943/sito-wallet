@@ -4,13 +4,15 @@ import { Controller, useWatch } from "react-hook-form";
 
 // @sito/dashboard
 import { SelectInput, TextInput } from "@sito/dashboard";
-import { enumToKeyValueArray, useAuth } from "@sito/dashboard-app";
+import {
+  enumToKeyValueArray,
+  useAuth,
+  FormDialog,
+  ParagraphInput,
+} from "@sito/dashboard-app";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-// components
-import { FormDialog, ParagraphInput } from "components";
 
 // types
 import {

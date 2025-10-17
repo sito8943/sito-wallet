@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Controller, /* useForm */ } from "react-hook-form";
+/* import { Controller,  useForm } from "react-hook-form"; */
 import { useTranslation } from "react-i18next";
 /* import { Link, useNavigate } from "react-router-dom";
 import { deleteCookie } from "some-javascript-utils/browser"; */
@@ -8,7 +8,6 @@ import { deleteCookie } from "some-javascript-utils/browser"; */
 /* import { State, Loading } from "@sito/dashboard"; */
 
 // components
-import { PasswordInput } from "components";
 import { Button } from "@sito/dashboard-app";
 
 // providers
@@ -89,9 +88,9 @@ export function UpdatePassword() {
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
-          <Controller
-            /* control={control} */
-            /* disabled={saving} */
+         {/*  <Controller
+            control={control}
+            disabled={saving}
             name="password"
             render={({ field }) => (
               <PasswordInput
@@ -103,16 +102,16 @@ export function UpdatePassword() {
                 required
               />
             )}
-          />
+          /> */}
         </div>
         <div
           className={`w-full transition-all duration-500 ease-in-out delay-[400ms] ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
-          <Controller
-            /* control={control} */
-            /* disabled={saving} */
+          {/* <Controller
+            control={control}
+            disabled={saving}
             name="rPassword"
             render={({ field }) => (
               <PasswordInput
@@ -122,11 +121,11 @@ export function UpdatePassword() {
                 className={`text-input peer`}
                 label={t("_entities:user.rPassword.label")}
                 required
-                /* helperText={passwordError}
-                state={passwordError.length ? State.error : State.default} */
+                helperText={passwordError}
+                state={passwordError.length ? State.error : State.default}
               />
             )}
-          />
+          /> */}
         </div>
         <Button
           type="submit"

@@ -12,6 +12,7 @@ import {
   PrettyGrid,
   Empty,
   Error,
+  ConfirmationDialog
 } from "@sito/dashboard-app";
 
 // icons
@@ -22,7 +23,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useManager } from "providers";
 
 // components
-import { ConfirmationDialog } from "components";
 import {
   AddCurrencyDialog,
   CurrencyCard,

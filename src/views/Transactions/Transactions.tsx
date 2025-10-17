@@ -10,10 +10,11 @@ import {
   useDeleteDialog,
   useExportActionMutate,
   useRestoreDialog,
+  ConfirmationDialog,
 } from "@sito/dashboard-app";
 
 // components
-import { ConfirmationDialog, TabsLayout, TabsType } from "components";
+import { TabsLayout, TabsType } from "components";
 
 // hooks
 import { useAddTransaction, useEditTransaction } from "./hooks";
@@ -180,7 +181,7 @@ export function Transactions() {
     return [exportTransactions.action()];
   }, [exportTransactions]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <Page
