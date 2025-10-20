@@ -35,6 +35,7 @@ import {
 
 // types
 import { AccountDto, Tables } from "lib";
+import ImportDialog from "../../components/Dialog/ImportDialog";
 
 export function Accounts() {
   const { t } = useTranslation();
@@ -81,8 +82,8 @@ export function Accounts() {
   );
 
   const pageToolbar = useMemo(() => {
-    return [exportAccounts.action()];
-  }, [exportAccounts]);
+    return [exportAccounts.action(), importAccounts.action()];
+  }, [exportAccounts, importAccounts]);
 
   return (
     <Page
@@ -129,6 +130,7 @@ export function Accounts() {
           <EditAccountDialog {...editAccount} />
           <ConfirmationDialog {...deleteAccount} />
           <ConfirmationDialog {...restoreAccount} />
+          <ImportDialog {...importAccounts} />
         </>
       ) : (
         <Error error={error} />

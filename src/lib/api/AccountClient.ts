@@ -32,4 +32,8 @@ export default class AccountClient extends BaseClient<
   async sync(accountId: number): Promise<number> {
     return await this.api.patch(`${this.table}/${accountId}/sync`, undefined);
   }
+
+  async sync(accountId: number): Promise<number> {
+    return await this.api.patch(`${this.table}/${accountId}/sync`, undefined);
+  }
 }
