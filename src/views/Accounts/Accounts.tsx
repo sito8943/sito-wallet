@@ -12,6 +12,8 @@ import {
   Empty,
   Error,
   ConfirmationDialog,
+  ImportDialog,
+  useImportDialog,
 } from "@sito/dashboard-app";
 
 // providers
@@ -35,7 +37,6 @@ import {
 
 // types
 import { AccountDto, Tables } from "lib";
-import ImportDialog from "../../components/Dialog/ImportDialog";
 
 export function Accounts() {
   const { t } = useTranslation();
@@ -67,6 +68,12 @@ export function Accounts() {
     mutationFn: () => manager.Accounts.export(),
   });
 
+  const importAccounts = useImportDialog({
+    entity: Tables.Accounts,
+    mutationFn: (data) => manager.Accounts.import(data),
+    ...AccountsQueryKeys.all(),
+  });
+
   const syncAccount = useSyncAccountMutation();
 
   // #endregion
@@ -82,7 +89,7 @@ export function Accounts() {
   );
 
   const pageToolbar = useMemo(() => {
-    return [exportAccounts.action(), importAccounts.action()];
+    return [importAccounts.action(), exportAccounts.action()];
   }, [exportAccounts, importAccounts]);
 
   return (
