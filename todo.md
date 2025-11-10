@@ -22,6 +22,8 @@
 - [x] Fix Scroll de la navbar que si te traba el scroll test home en mobile
 - [x] En el home puedes agregar y quitar tarjetas por tipo de tarjetas
 - [x] Guardar en una tabla config las tarjetas
+- [ ] Una vez seleccionada una categoria no te deja borrar en el input del filtro
+- [ ] Una vez seleccionada una categoria al darle en el delete del chip se rompe, filtro
 - [ ] Guardar los filtros de las cards en config
 - [ ] Revisar que el LastTransactions si ya existe un cache actualizado no sobreescribir
 - [ ] En los rangos de fecha poder selecionar por mes (incluid mes actual), dia (hoy) o año (actual)
