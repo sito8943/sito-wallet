@@ -12,6 +12,8 @@ import {
   Empty,
   Error,
   ConfirmationDialog,
+  ImportDialog,
+  useImportDialog,
 } from "@sito/dashboard-app";
 
 // providers
@@ -66,6 +68,12 @@ export function Accounts() {
     mutationFn: () => manager.Accounts.export(),
   });
 
+  const importAccounts = useImportDialog({
+    entity: Tables.Accounts,
+    mutationFn: (data) => manager.Accounts.import(data),
+    ...AccountsQueryKeys.all(),
+  });
+
   const syncAccount = useSyncAccountMutation();
 
   // #endregion
@@ -81,8 +89,8 @@ export function Accounts() {
   );
 
   const pageToolbar = useMemo(() => {
-    return [exportAccounts.action()];
-  }, [exportAccounts]);
+    return [importAccounts.action(), exportAccounts.action()];
+  }, [exportAccounts, importAccounts]);
 
   return (
     <Page
@@ -129,6 +137,7 @@ export function Accounts() {
           <EditAccountDialog {...editAccount} />
           <ConfirmationDialog {...deleteAccount} />
           <ConfirmationDialog {...restoreAccount} />
+          <ImportDialog {...importAccounts} />
         </>
       ) : (
         <Error error={error} />
