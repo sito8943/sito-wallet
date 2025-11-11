@@ -27,6 +27,7 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
     <div className="flex flex-wrap gap-2 items-center justify-start">
       {!!accounts?.length && (
         <ArrayChip
+          id="account"
           label={t("_entities:transaction.account.label")}
           items={accounts ?? []}
           onClearFilter={() => clearAccounts()}
@@ -34,6 +35,7 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
       )}
       {categories?.length ? (
         <ArrayChip
+          id="category"
           label={t("_entities:transaction.category.label")}
           items={categories ?? []}
           onClearFilter={() => clearCategories()}
@@ -53,6 +55,7 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
       )}
       {(startDate || endDate) && (
         <RangeChip
+          id={"date"}
           start={startDate}
           end={endDate}
           label={t("_entities:transaction.date.label")}

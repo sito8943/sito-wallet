@@ -7,8 +7,6 @@ import { ValidationError, FormDialogPropsType } from "@sito/dashboard-app";
 // lib
 import { AccountDto } from "lib";
 
-export * from "./actions";
-
 export interface AccountCardPropsType extends AccountDto {
   actions: Action<AccountDto>[];
   onClick: (id: number) => void;
@@ -35,3 +33,9 @@ export type EditAccountDialogPropsType = FormDialogPropsType<
   AccountFormType,
   ValidationError
 >;
+
+export enum AccountActions {
+  ViewTransactions = "viewTransactions",
+  AddTransaction = "addTransaction",
+  SyncAccount = "syncAccount",
+}

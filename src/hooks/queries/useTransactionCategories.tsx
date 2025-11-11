@@ -2,7 +2,7 @@ import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 // providers
 import { useLocalCache, useManager } from "providers";
-import { QueryResult, useAuth } from "@sito/dashboard-app"
+import { QueryResult, useAuth } from "@sito/dashboard-app";
 
 // types
 import { UseFetchPropsType } from "./types.ts";
@@ -53,10 +53,10 @@ export function useTransactionCategoriesList(
           updateCache(Tables.TransactionCategories, result.items);
         return result;
       } catch (error) {
-        console.warn("API failed, loading accounts from cache", error);
+        console.warn("API failed, loading categories from cache", error);
         const cached = loadCache(Tables.TransactionCategories);
         if (!cached || !Array.isArray(cached))
-          throw new Error("No cached accounts available");
+          throw new Error("No cached categories available");
         return {
           items: cached as unknown as TransactionCategoryDto,
           total: cached?.length,
@@ -85,12 +85,12 @@ export function useTransactionCategoriesCommon(): UseQueryResult<
         updateCache(Tables.TransactionCategories, result);
         return result;
       } catch (error) {
-        console.warn("API failed, loading accounts from cache", error);
+        console.warn("API failed, loading categories from cache", error);
         const cached = loadCache(
           Tables.TransactionCategories
         ) as CommonTransactionCategoryDto[];
         if (!cached || !Array.isArray(cached))
-          throw new Error("No cached accounts available");
+          throw new Error("No cached categories available");
         return cached.map(
           ({
             id,
