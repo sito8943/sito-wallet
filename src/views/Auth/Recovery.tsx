@@ -4,9 +4,8 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 /* import { createCookie } from "some-javascript-utils/browser"; */
 
-// @sito/dashboard
-import { TextInput } from "@sito/dashboard";
-import { /* useNotification */ Loading } from "@sito/dashboard-app";
+// @sito/dashboard-app
+import { /* useNotification */ Loading, TextInput } from "@sito/dashboard-app";
 
 // providers
 /* import { useManager } from "providers"; */

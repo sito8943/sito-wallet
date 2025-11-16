@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// @sito/dashboard
-import { Chip } from "@sito/dashboard";
+// @sito/dashboard-app
+import { Chip } from "@sito/dashboard-app";
 
 // components
 import { ItemCard } from "components";

@@ -1,8 +1,8 @@
 import { FieldValues } from "react-hook-form";
 
 // @sito/dashboard
-import { Action } from "@sito/dashboard";
 import {
+  ActionType,
   BaseEntityDto,
   UseActionDialog,
   ValidationError,
@@ -13,7 +13,7 @@ import {
 import { CommonAccountDto, TransactionDto } from "lib";
 
 export interface TransactionCardPropsType extends TransactionDto {
-  actions: Action<TransactionDto>[];
+  actions: ActionType<TransactionDto>[];
   onClick: (id: number) => void;
   deleted: boolean;
 }

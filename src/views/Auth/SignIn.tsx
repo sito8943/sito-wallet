@@ -3,8 +3,7 @@ import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 
-// @sito/dashboard
-import { State, TextInput } from "@sito/dashboard";
+// @sito/dashboard-app
 import {
   useNotification,
   useAuth,
@@ -14,6 +13,8 @@ import {
   PasswordInput,
   Loading,
   Button,
+  State,
+  TextInput,
 } from "@sito/dashboard-app";
 
 // providers

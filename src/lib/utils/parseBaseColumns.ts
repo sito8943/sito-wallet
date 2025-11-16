@@ -1,11 +1,10 @@
 import { useMemo } from "react";
 import { t } from "i18next";
 
-// @sito/dashboard
-import { ColumnType, FilterTypes } from "@sito/dashboard";
+// @sito/dashboard-app
+import { BaseEntityDto, ColumnType, FilterTypes } from "@sito/dashboard-app";
 
 // lib
-import { BaseEntityDto } from "@sito/dashboard-app";
 import { EntityName } from "lib";
 
 export const baseColumns = ["id", "createdAt", "updatedAt", "deleted"];

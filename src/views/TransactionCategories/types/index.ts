@@ -1,8 +1,11 @@
 import { FieldValues } from "react-hook-form";
 
-// @sito/dashboard
-import { Action } from "@sito/dashboard";
-import { ValidationError, FormDialogPropsType } from "@sito/dashboard-app";
+// @sito/dashboard-app
+import {
+  ActionType,
+  ValidationError,
+  FormDialogPropsType,
+} from "@sito/dashboard-app";
 
 // lib
 import { TransactionCategoryDto } from "lib";
@@ -11,7 +14,7 @@ export * from "./actions";
 
 export interface TransactionCategoryCardPropsType
   extends TransactionCategoryDto {
-  actions: Action<TransactionCategoryDto>[];
+  actions: ActionType<TransactionCategoryDto>[];
   onClick: (id: number) => void;
   deleted: boolean;
 }

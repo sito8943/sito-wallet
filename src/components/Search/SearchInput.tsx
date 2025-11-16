@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// @sito/dashboard
-import { TextInput } from "@sito/dashboard";
+// @sito/dashboard-app
+import { TextInput } from "@sito/dashboard-app";
 
 // types
 import { SearchInputPropsType } from "./types";

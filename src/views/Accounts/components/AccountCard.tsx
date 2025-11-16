@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
-// @sito/dashboard
-import { Chip } from "@sito/dashboard";
+// @sito/dashboard-app
+import { Chip } from "@sito/dashboard-app";
 
 // components
 import { ItemCard } from "components";

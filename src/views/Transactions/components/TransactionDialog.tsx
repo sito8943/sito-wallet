@@ -2,9 +2,14 @@ import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Controller, useWatch } from "react-hook-form";
 
-// @sito/dashboard
-import { TextInput, Option, AutocompleteInput } from "@sito/dashboard";
-import { FormDialog, ParagraphInput } from "@sito/dashboard-app";
+// @sito/dashboard-app
+import {
+  FormDialog,
+  ParagraphInput,
+  TextInput,
+  Option,
+  AutocompleteInput,
+} from "@sito/dashboard-app";
 
 // types
 import {

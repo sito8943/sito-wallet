@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
-// @sito/dashboard
-import { ArrayChip, Chip, RangeChip } from "@sito/dashboard";
+// @sito/dashboard-app
+import { ArrayChip, Chip, RangeChip } from "@sito/dashboard-app";
 
 // types
 import { ActiveFiltersPropsType } from "./types";

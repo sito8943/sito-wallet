@@ -2,8 +2,8 @@ import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
 
-// @sito/dashboard
-import { Chip } from "@sito/dashboard";
+// @sito/dashboard-app
+import { Chip } from "@sito/dashboard-app";
 
 // lib
 import { TransactionType } from "lib";

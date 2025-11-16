@@ -5,14 +5,15 @@ import { useEffect, useMemo } from "react";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// @sito/dashboard
+// @sito/dashboard-app
 import {
+  enumToKeyValueArray,
+  FormDialog,
   AutocompleteInput,
   TextInput,
   SelectInput,
   Option,
-} from "@sito/dashboard";
-import { enumToKeyValueArray, FormDialog } from "@sito/dashboard-app";
+} from "@sito/dashboard-app";
 
 // hooks
 import { useAccountsCommon, useTransactionCategoriesCommon } from "hooks";

@@ -2,9 +2,8 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Controller } from "react-hook-form";
 
-// @sito/dashboard
-import { TextInput } from "@sito/dashboard";
-import { FormDialog, ParagraphInput } from "@sito/dashboard-app";
+// @sito/dashboard-app
+import { TextInput, FormDialog, ParagraphInput } from "@sito/dashboard-app";
 
 // types
 import {

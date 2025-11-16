@@ -1,12 +1,16 @@
 import { useMemo } from "react";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
-// @sito/dashboard
-import { useTableOptions } from "@sito/dashboard";
+// @sito/dashboard-app
+import {
+  QueryParam,
+  QueryResult,
+  useAuth,
+  useTableOptions,
+} from "@sito/dashboard-app";
 
 // providers
 import { useLocalCache, useManager } from "providers";
-import { QueryParam, QueryResult, useAuth } from "@sito/dashboard-app"
 
 // types
 import {
@@ -21,7 +25,7 @@ import {
   FilterTransactionDto,
   Tables,
   TransactionTypeResumeDto,
-  TransactionType
+  TransactionType,
 } from "lib";
 import { useTranslation } from "react-i18next";
 

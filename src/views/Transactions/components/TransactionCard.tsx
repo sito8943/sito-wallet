@@ -1,9 +1,8 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-// @sito/dashboard
-import { Chip } from "@sito/dashboard";
-import { useTimeAge } from "@sito/dashboard-app";
+// @sito/dashboard-app
+import { useTimeAge, Chip } from "@sito/dashboard-app";
 
 // components
 import { ItemCard } from "components";

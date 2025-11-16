@@ -1,13 +1,12 @@
 import { ReactNode } from "react";
 
-// @sito/dashboard
-import { Action } from "@sito/dashboard";
-import { BaseEntityDto } from "@sito/dashboard-app";
+// @sito/dashboard-app
+import { BaseEntityDto, ActionType } from "@sito/dashboard-app";
 
 export type ItemCardPropsType<TEntity extends BaseEntityDto> = {
   children: ReactNode;
   containerClassName?: string;
-  actions: Action<TEntity>[];
+  actions: ActionType<TEntity>[];
   title: string | ReactNode;
   className?: string;
   name: string;

@@ -1,8 +1,9 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
-import { FilterTypes, Option } from "@sito/dashboard";
 import {
+  FilterTypes,
+  Option,
   enumToKeyValueArray,
   getFormattedDateTime,
   Error,
@@ -96,7 +97,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
       {
         key: "date",
         filterOptions: { type: FilterTypes.date },
-        renderBody: (value) => <p>{getFormattedDateTime(value)}</p>,
+        renderBody: (value: string) => <p>{getFormattedDateTime(value)}</p>,
       },
       {
         key: "type",

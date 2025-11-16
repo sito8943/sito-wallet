@@ -3,8 +3,7 @@ import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
 import { ComponentType, useEffect, useState } from "react";
 
-// @sito/dashboard
-import { TableOptionsProvider } from "@sito/dashboard";
+// @sito/dashboard-app
 import {
   BaseLinkPropsType,
   ConfigProvider,
@@ -12,6 +11,7 @@ import {
   Notification,
   ToTop,
   Onboarding,
+  TableOptionsProvider,
 } from "@sito/dashboard-app";
 
 // providers

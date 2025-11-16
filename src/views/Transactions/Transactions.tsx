@@ -3,8 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { parseQueries } from "some-javascript-utils/browser";
 
-// @sito-dashboard
-import { useTableOptions } from "@sito/dashboard";
+// @sito-dashboard-app
 import {
   Page,
   useDeleteDialog,
@@ -13,6 +12,7 @@ import {
   ConfirmationDialog,
   TabsLayout,
   TabsType,
+  useTableOptions,
 } from "@sito/dashboard-app";
 
 // hooks

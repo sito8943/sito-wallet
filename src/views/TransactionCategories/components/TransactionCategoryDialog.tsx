@@ -2,13 +2,14 @@ import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Controller, useWatch } from "react-hook-form";
 
-// @sito/dashboard
-import { SelectInput, TextInput } from "@sito/dashboard";
+// @sito/dashboard-app
 import {
   enumToKeyValueArray,
   useAuth,
   FormDialog,
   ParagraphInput,
+  SelectInput,
+  TextInput,
 } from "@sito/dashboard-app";
 
 // icons

@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-// @sito/dashboard
-import { Action } from "@sito/dashboard";
+// @sito/dashboard-app
+import { ActionType } from "@sito/dashboard-app";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,7 +28,7 @@ export const useViewTransactionsAction = (
   const { hidden = false } = props;
 
   const action = useCallback(
-    (record: AccountDto): Action<AccountDto> => ({
+    (record: AccountDto): ActionType<AccountDto> => ({
       id: AccountActions.ViewTransactions,
       hidden: record.deleted || hidden,
       disabled: record.deleted,

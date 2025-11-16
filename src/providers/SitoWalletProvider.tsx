@@ -1,8 +1,11 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { TranslationProvider } from "@sito/dashboard";
-import { AuthProvider, NotificationProvider } from "@sito/dashboard-app";
+import {
+  AuthProvider,
+  NotificationProvider,
+  TranslationProvider,
+} from "@sito/dashboard-app";
 
 import { type BasicProviderPropTypes } from "./types";
 

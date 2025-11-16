@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-// @sito/dashboard
-import { Action } from "@sito/dashboard";
+// @sito/dashboard-app
+import { ActionType } from "@sito/dashboard-app";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,7 +23,7 @@ export const useSyncAccountAction = (
   const { hidden = false, onClick, isLoading } = props;
 
   const action = useCallback(
-    (record: AccountDto): Action<AccountDto> => ({
+    (record: AccountDto): ActionType<AccountDto> => ({
       id: AccountActions.SyncAccount,
       hidden: record.deleted || hidden,
       disabled: record.deleted,

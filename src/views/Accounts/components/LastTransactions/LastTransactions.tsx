@@ -1,6 +1,5 @@
-// @sito/dashboard
-import { SortOrder } from "@sito/dashboard";
-import { Loading } from "@sito/dashboard-app";
+// @sito/dashboard-app
+import { Loading, SortOrder } from "@sito/dashboard-app";
 
 // types
 import { LastTransactionsPropsType } from "./types";

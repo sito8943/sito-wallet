@@ -1,14 +1,17 @@
 import { FieldValues } from "react-hook-form";
 
-// @sito/dashboard
-import { Action } from "@sito/dashboard";
-import { ValidationError, FormDialogPropsType } from "@sito/dashboard-app";
+// @sito/dashboard-app
+import {
+  ActionType,
+  ValidationError,
+  FormDialogPropsType,
+} from "@sito/dashboard-app";
 
 // lib
 import { DashboardDto } from "lib";
 
 export interface DashboardCardPropsType extends DashboardDto {
-  actions: Action<DashboardDto>[];
+  actions: ActionType<DashboardDto>[];
   onClick: (id: number) => void;
   deleted: boolean;
 }
