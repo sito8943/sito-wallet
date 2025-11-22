@@ -59,7 +59,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
       <div className="chip-container">
         <Type type={category?.type ?? TransactionType.In} />
         <Chip
-          label={
+          text={
             <>
               {amount}{" "}
               <Currency
@@ -69,7 +69,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
             </>
           }
         />
-        <Chip label={timeAge(new Date(date))} />
+        <Chip text={timeAge(new Date(date))} />
       </div>
     </ItemCard>
   );

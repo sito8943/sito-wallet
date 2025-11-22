@@ -23,12 +23,14 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
 
   const { t } = useTranslation();
 
+  console.log(accounts)
+
   return (
     <div className="flex flex-wrap gap-2 items-center justify-start">
       {!!accounts?.length && (
         <ArrayChip
           id="account"
-          label={t("_entities:transaction.account.label")}
+          text={t("_entities:transaction.account.label")}
           items={accounts ?? []}
           onClearFilter={() => clearAccounts()}
         />
@@ -36,13 +38,13 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
       {categories?.length ? (
         <ArrayChip
           id="category"
-          label={t("_entities:transaction.category.label")}
+          text={t("_entities:transaction.category.label")}
           items={categories ?? []}
           onClearFilter={() => clearCategories()}
         />
       ) : (
         <Chip
-          label={
+          text={
             <p>
               {t(
                 `_entities:transactionCategory.type.values.${String(
@@ -58,7 +60,7 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
           id={"date"}
           start={startDate}
           end={endDate}
-          label={t("_entities:transaction.date.label")}
+          text={t("_entities:transaction.date.label")}
           onClearFilter={() => {
             clearDate();
           }}

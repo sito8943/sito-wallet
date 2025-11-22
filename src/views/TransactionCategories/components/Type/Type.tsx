@@ -29,7 +29,7 @@ export const Type = (props: TypePropsType) => {
   return (
     <Chip
       className={chipClassName}
-      label={
+      text={
         <div className="flex gap-2 items-center justify-center">
           <FontAwesomeIcon
             className={className}

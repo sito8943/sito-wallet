@@ -50,13 +50,11 @@ export function AccountCard(props: AccountCardPropsType) {
       </p>
       <div className="chip-container">
         <Chip
-          label={t(
-            `_entities:account.type.values.${String(AccountType[type])}`
-          )}
+          text={t(`_entities:account.type.values.${String(AccountType[type])}`)}
         />
-        <Chip label={currency?.name} />
+        <Chip text={currency?.name} />
         <Chip
-          label={
+          text={
             <>
               {`${t("_entities:account.balance.label")}: ${balance}`}{" "}
               <Currency name={currency?.name} symbol={currency?.symbol} />

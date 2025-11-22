@@ -53,7 +53,7 @@ export function TransactionCategoryCard(
       <div className="chip-container">
         <Chip
           className={type === TransactionType.In ? "success" : "error"}
-          label={
+          text={
             <div className="flex gap-2 items-center justify-center">
               <FontAwesomeIcon
                 icon={icons[(type ?? 0) as keyof typeof icons]}

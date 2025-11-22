@@ -135,7 +135,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   return (
     <BaseCard className="type-resume-main">
       {isLoading ? (
-        <Loading containerClassName="type-resume-main-loading" />
+        <Loading className="type-resume-main-loading" />
       ) : null}
       <div className="type-resume-header">
         <input
