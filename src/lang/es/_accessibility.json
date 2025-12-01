@@ -90,7 +90,12 @@
     "unknownError": "Ha ocurrido un error",
     "differentPasswords": "Las contraseñas no coinciden",
     "invalidCredentials": "Usuario o contraseña incorrectos",
-    "500": "Ha ocurrido un error en el servidor"
+    "500": "Ha ocurrido un error en el servidor",
+    "auth": {
+      "500": "Ha ocurrido un error de autenticación",
+      "404": "Usuario no encontrado",
+      "403": "Acceso denegado"
+    }
   },
   "messages": {
     "saved": "Guardado correctamente",

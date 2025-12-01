@@ -76,7 +76,12 @@
     "unknownError": "An error has occurred",
     "differentPasswords": "Passwords do not match",
     "invalidCredentials": "Wrong user or password",
-    "500": "An error has ocurrred in the server"
+    "500": "An error has ocurrred in the server",
+    "auth": {
+      "500": "An authentication error has occurred",
+      "404": "User not found",
+      "403": "Access denied"
+    }
   },
   "messages": {
     "saved": "Saved successful",
