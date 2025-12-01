@@ -91,10 +91,14 @@
     "differentPasswords": "Las contraseñas no coinciden",
     "invalidCredentials": "Usuario o contraseña incorrectos",
     "500": "Ha ocurrido un error en el servidor",
-    "auth": {
+    "signIn": {
       "500": "Ha ocurrido un error de autenticación",
       "404": "Usuario no encontrado",
       "403": "Acceso denegado"
+    },
+    "signUp": {
+      "401": "El correo electrónico ya está en uso",
+      "500": "Ha ocurrido un error de autenticación"
     }
   },
   "messages": {
