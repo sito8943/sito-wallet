@@ -180,8 +180,11 @@ export function SignUp() {
             variant="submit"
             disabled={isLoading}
             className="!px-8"
+            aria-label={t("_accessibility:buttons.submit")}
           >
-            {isLoading && <Loading color="text-base" />}
+            {isLoading && (
+              <Loading className="!w-auto" color="stroke-base" loaderClass="!w-6" strokeWidth="6" />
+            )}
             {t("_pages:auth.signUp.submit")}
           </Button>
         </div>
