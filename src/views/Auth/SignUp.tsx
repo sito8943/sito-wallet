@@ -57,9 +57,9 @@ export function SignUp() {
       logUser(data);
       navigate("/");
     },
-    onError: () => {
+    onError: (error) => {
       showErrorNotification({
-        message: t("_entities:user.email.unique"),
+        message: t(`_accessibility:errors.signUp.${error.message}`),
       });
     },
   });

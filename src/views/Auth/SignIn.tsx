@@ -51,9 +51,9 @@ export function SignIn() {
       setGuestMode(false);
       navigate("/");
     },
-    onError: () => {
+    onError: (error) => {
       showErrorNotification({
-        message: t("_accessibility:errors.invalidCredentials"),
+        message: t(`_accessibility:errors.signIn.${error.message}`),
       });
     },
   });
@@ -170,7 +170,9 @@ export function SignIn() {
             disabled={isLoading}
             aria-label={t("_accessibility:buttons.submit")}
           >
-            {isLoading && <Loading color="stroke-base" loaderClass="!w-6"  strokeWidth="6"/>}
+            {isLoading && (
+              <Loading color="stroke-base" loaderClass="!w-6" strokeWidth="6" />
+            )}
             {t("_pages:auth.signIn.submit")}
           </Button>
         </div>
