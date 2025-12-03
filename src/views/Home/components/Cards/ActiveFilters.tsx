@@ -23,8 +23,6 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
 
   const { t } = useTranslation();
 
-  console.log(accounts)
-
   return (
     <div className="flex flex-wrap gap-2 items-center justify-start">
       {!!accounts?.length && (

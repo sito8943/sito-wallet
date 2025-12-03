@@ -103,8 +103,6 @@ export function CurrencyForm(props: CurrencyFormPropsType) {
 }
 
 export function AddCurrencyDialog(props: AddCurrencyDialogPropsType) {
-  console.log(props.open);
-
   return (
     <FormDialog {...props}>
       <CurrencyForm {...props} />

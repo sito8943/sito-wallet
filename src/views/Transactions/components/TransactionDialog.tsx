@@ -75,9 +75,6 @@ export function TransactionForm(props: TransactionFormPropsType) {
         t("_entities:transactionCategory.description.init")
       );
   }, [open, initial, setValue, t]);
-  const wat = useWatch({ control });
-  console.log(wat);
-  console.log(account);
 
   return (
     <>
