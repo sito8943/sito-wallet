@@ -13,6 +13,8 @@ import {
   TabsLayout,
   TabsType,
   useTableOptions,
+  Empty,
+  GlobalActions,
 } from "@sito/dashboard-app";
 
 // hooks
@@ -39,6 +41,8 @@ import { useManager } from "providers";
 
 // styles
 import "./styles.css";
+import { faAdd, faFileInvoice } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function Transactions() {
   const { t } = useTranslation();
@@ -180,6 +184,10 @@ export function Transactions() {
     return [exportTransactions.action()];
   }, [exportTransactions]);
 
+  const isEmpty = useMemo(() => {
+    return accountDesktopTabs.length === 0 || accountMobileTabs.length === 0;
+  }, [accountDesktopTabs, accountMobileTabs]);
+
   return (
     <Page
       title={t("_pages:transactions.title")}
@@ -197,18 +205,37 @@ export function Transactions() {
       }}
       queryKey={TransactionsQueryKeys.all().queryKey}
     >
-      <TabsLayout
-        defaultTab={tabValue}
-        tabs={accountDesktopTabs}
-        className="h-full max-xs:hidden"
-        tabsContainerClassName="account-tabs"
-      />
-      <TabsLayout
-        defaultTab={tabValue}
-        tabs={accountMobileTabs}
-        className="h-full min-xs:hidden"
-        tabsContainerClassName="account-tabs"
-      />
+      {isEmpty ? (
+        <Empty
+          message={t("_pages:transactions.empty")}
+          iconProps={{
+            icon: faFileInvoice,
+            className: "text-5xl max-md:text-3xl text-gray-400",
+          }}
+          action={{
+            icon: <FontAwesomeIcon icon={faAdd} />,
+            id: GlobalActions.Add,
+            disabled: accounts.isLoading,
+            onClick: () => addTransaction.openDialog(),
+            tooltip: t("_pages:accounts.add"),
+          }}
+        />
+      ) : (
+        <>
+          <TabsLayout
+            defaultTab={tabValue}
+            tabs={accountDesktopTabs}
+            className="h-full max-xs:hidden"
+            tabsContainerClassName="account-tabs"
+          />
+          <TabsLayout
+            defaultTab={tabValue}
+            tabs={accountMobileTabs}
+            className="h-full min-xs:hidden"
+            tabsContainerClassName="account-tabs"
+          />
+        </>
+      )}
 
       {/* Dialogs */}
       <EditTransactionDialog {...editTransaction} />
