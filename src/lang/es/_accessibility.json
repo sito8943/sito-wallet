@@ -94,7 +94,9 @@
     "signIn": {
       "500": "Ha ocurrido un error de autenticación",
       "404": "Usuario no encontrado",
-      "403": "Acceso denegado"
+      "403": "Acceso denegado",
+      "401": "Contraseña incorrecta",
+      "400": "Contraseña incorrecta"
     },
     "signUp": {
       "401": "El correo electrónico ya está en uso",

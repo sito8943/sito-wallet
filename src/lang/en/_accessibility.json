@@ -80,6 +80,8 @@
     "signIn": {
       "403": "Access denied",
       "404": "User not found",
+      "401": "Wrong password",
+      "400": "Wrong password",
       "500": "An authentication error has occurred"
     },
     "signUp": {
