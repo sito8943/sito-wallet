@@ -43,6 +43,7 @@ import { useManager } from "providers";
 import "./styles.css";
 import { faAdd, faFileInvoice } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { WeeklySpentCard } from "./components/WeeklySpentCard";
 
 export function Transactions() {
   const { t } = useTranslation();
@@ -205,6 +206,15 @@ export function Transactions() {
       }}
       queryKey={TransactionsQueryKeys.all().queryKey}
     >
+      {/* Weekly spent summary */}
+      <div className="mb-4">
+        <WeeklySpentCard
+          accountId={selectedAccount?.id}
+          currencyName={selectedAccount?.currency?.name}
+          currencySymbol={selectedAccount?.currency?.symbol}
+        />
+      </div>
+
       {isEmpty ? (
         <Empty
           message={t("_pages:transactions.empty")}

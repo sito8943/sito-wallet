@@ -149,6 +149,11 @@
   "transactions": {
     "title": "Transacciones",
     "empty": "No hay transacciones para mostrar",
+    "cards": {
+      "weeklySpent": {
+        "title": "Gasto de esta semana"
+      }
+    },
     "add": "Agregar una transacción",
     "forms": {
       "add": "Nueva transacción",

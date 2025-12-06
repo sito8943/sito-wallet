@@ -154,6 +154,11 @@
   "transactions": {
     "title": "Transactions",
     "empty": "No transactions to load",
+    "cards": {
+      "weeklySpent": {
+        "title": "This week's spending"
+      }
+    },
     "add": "Add a transaction",
     "forms": {
       "add": "New transaction",
