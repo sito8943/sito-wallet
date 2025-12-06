@@ -8,7 +8,7 @@ import {
 } from "@sito/dashboard-app";
 
 // components
-import { AddCard, TransactionTypeResume } from "../components/Cards";
+import { AddCard, TransactionTypeResume, WeeklySpentCard } from "../components/Cards";
 import { AddDashboardCardDialog } from "../components";
 
 // styles
@@ -49,6 +49,18 @@ export const Dashboard = () => {
           return (
             <li key={item.id}>
               <TransactionTypeResume
+                onDelete={() => {
+                  deleteDashboardCard.onClick([item.id]);
+                }}
+                key={item.id}
+                {...item}
+              />
+            </li>
+          );
+        case DashboardCardType.WeeklySpent:
+          return (
+            <li key={item.id}>
+              <WeeklySpentCard
                 onDelete={() => {
                   deleteDashboardCard.onClick([item.id]);
                 }}

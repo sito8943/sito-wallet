@@ -131,7 +131,8 @@
       "required": "Type is required",
       "values": {
         "TypeResume": "Type Resume",
-        "CurrentBalance": "Current Balance"
+        "CurrentBalance": "Current Balance",
+        "WeeklySpent": "Weekly Spent"
       }
     }
   }
