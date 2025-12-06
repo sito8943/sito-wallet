@@ -2,12 +2,8 @@ import { useMemo } from "react";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 // @sito/dashboard-app
-import {
-  QueryParam,
-  QueryResult,
-  useAuth,
-  useTableOptions,
-} from "@sito/dashboard-app";
+import { QueryParam, QueryResult, useTableOptions } from "@sito/dashboard-app";
+import { useAuth } from "providers";
 
 // providers
 import { useLocalCache, useManager } from "providers";

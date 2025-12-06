@@ -1,15 +1,12 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import {
-  AuthProvider,
-  NotificationProvider,
-  TranslationProvider,
-} from "@sito/dashboard-app";
+import { NotificationProvider, TranslationProvider } from "@sito/dashboard-app";
 
 import { type BasicProviderPropTypes } from "./types";
 
 import { SWManagerProvider } from "./SWManagerProvider";
+import { SupabaseAuthProvider } from "./SupabaseAuthProvider";
 import { LocalCacheProvider } from "./LocalCacheProvider";
 
 // config
@@ -25,7 +22,7 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
       <LocalCacheProvider>
         <TranslationProvider t={t} language={i18n.language}>
           <NotificationProvider>
-            <AuthProvider {...authConfig}>{children}</AuthProvider>
+            <SupabaseAuthProvider {...authConfig}>{children}</SupabaseAuthProvider>
           </NotificationProvider>
         </TranslationProvider>
       </LocalCacheProvider>

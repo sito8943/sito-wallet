@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 // providers
-import { useAuth } from "@sito/dashboard-app";
+import { useAuth } from "providers";
 
 // components
 import { SearchWrapper } from "components";

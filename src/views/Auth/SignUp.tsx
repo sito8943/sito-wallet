@@ -8,7 +8,6 @@ import {
   State,
   TextInput,
   useNotification,
-  useAuth,
   usePostForm,
   RegisterDto,
   SessionDto,
@@ -16,6 +15,7 @@ import {
   Loading,
   PasswordInput,
 } from "@sito/dashboard-app";
+import { useAuth } from "providers";
 
 // providers
 import { useManager } from "providers";

@@ -3,12 +3,8 @@ import { useTranslation } from "react-i18next";
 import { Controller } from "react-hook-form";
 
 // @sito/dashboard
-import {
-  enumToKeyValueArray,
-  useAuth,
-  FormDialog,
-  SelectInput,
-} from "@sito/dashboard-app";
+import { enumToKeyValueArray, FormDialog, SelectInput } from "@sito/dashboard-app";
+import { useAuth } from "providers";
 
 // types
 import {

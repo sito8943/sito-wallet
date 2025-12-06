@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 // @sito/dashboard-app
 import {
   useNotification,
-  useAuth,
   usePostForm,
   AuthDto,
   SessionDto,
@@ -16,6 +15,7 @@ import {
   State,
   TextInput,
 } from "@sito/dashboard-app";
+import { useAuth } from "providers";
 
 // providers
 import { useManager } from "providers";

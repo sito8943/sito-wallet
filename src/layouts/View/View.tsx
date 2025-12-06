@@ -15,7 +15,8 @@ import {
 } from "@sito/dashboard-app";
 
 // providers
-import { useAuth, fromLocal, toLocal } from "@sito/dashboard-app";
+import { fromLocal, toLocal } from "@sito/dashboard-app";
+import { useAuth } from "providers";
 
 // components
 import { SearchModal } from "components";

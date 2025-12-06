@@ -2,7 +2,8 @@ import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 // providers
 import { useLocalCache, useManager } from "providers";
-import { QueryResult, useAuth } from "@sito/dashboard-app";
+import { QueryResult } from "@sito/dashboard-app";
+import { useAuth } from "providers";
 
 // types
 import { UseFetchPropsType } from "./types.ts";

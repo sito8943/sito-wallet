@@ -9,6 +9,7 @@ import { IManager } from "@sito/dashboard-app";
 
 // config
 import { config } from "../../config";
+import { SupabaseAuth } from "./SupabaseAuth";
 
 export class Manager extends IManager {
   accounts: AccountClient = new AccountClient();
@@ -20,6 +21,11 @@ export class Manager extends IManager {
 
   constructor() {
     super(config.apiUrl, config.auth.user);
+    // Override Auth adapter to use Supabase under the hood
+    // Keeping IManager interface intact for the rest of the app
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    this.auth = new SupabaseAuth();
   }
 
   get TransactionCategories(): TransactionCategoryClient {

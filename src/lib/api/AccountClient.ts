@@ -1,4 +1,5 @@
 import { BaseClient } from "@sito/dashboard-app";
+import { SupabaseAPIClient } from "./SupabaseAPIClient";
 
 // enum
 import { Tables } from "./types";
@@ -27,6 +28,8 @@ export default class AccountClient extends BaseClient<
    */
   constructor() {
     super(Tables.Accounts, config.apiUrl, config.auth.user);
+    // Swap transport to Supabase while keeping BaseClient API
+    this.api = new SupabaseAPIClient(config.apiUrl, config.auth.user, true) as unknown as typeof this.api;
   }
 
   async sync(accountId: number): Promise<number> {

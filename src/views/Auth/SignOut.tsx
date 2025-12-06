@@ -2,7 +2,8 @@ import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 // providers
-import { useAuth, SplashScreen } from "@sito/dashboard-app";
+import { SplashScreen } from "@sito/dashboard-app";
+import { useAuth } from "providers";
 
 /**
  * SignOut page

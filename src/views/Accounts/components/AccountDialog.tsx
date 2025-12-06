@@ -5,7 +5,6 @@ import { Controller, useWatch } from "react-hook-form";
 // @sito/dashboard-app
 import {
   enumToKeyValueArray,
-  useAuth,
   FormDialog,
   ParagraphInput,
   SelectInput,
@@ -13,6 +12,7 @@ import {
   Option,
   AutocompleteInput,
 } from "@sito/dashboard-app";
+import { useAuth } from "providers";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

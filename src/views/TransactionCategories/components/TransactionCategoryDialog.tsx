@@ -3,14 +3,8 @@ import { useTranslation } from "react-i18next";
 import { Controller, useWatch } from "react-hook-form";
 
 // @sito/dashboard-app
-import {
-  enumToKeyValueArray,
-  useAuth,
-  FormDialog,
-  ParagraphInput,
-  SelectInput,
-  TextInput,
-} from "@sito/dashboard-app";
+import { enumToKeyValueArray, FormDialog, ParagraphInput, SelectInput, TextInput } from "@sito/dashboard-app";
+import { useAuth } from "providers";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

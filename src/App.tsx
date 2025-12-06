@@ -1,7 +1,8 @@
 import { Suspense, useEffect, useState } from "react";
 
 // components
-import { useAuth, SplashScreen } from "@sito/dashboard-app";
+import { SplashScreen } from "@sito/dashboard-app";
+import { useAuth } from "providers";
 
 // providers
 import { Routes } from "./Routes";

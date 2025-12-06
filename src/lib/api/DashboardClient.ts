@@ -1,4 +1,5 @@
 import { BaseClient, BaseCommonEntityDto } from "@sito/dashboard-app";
+import { SupabaseAPIClient } from "./SupabaseAPIClient";
 
 // enum
 import { Tables } from "./types";
@@ -28,6 +29,7 @@ export default class DashboardClient extends BaseClient<
    */
   constructor() {
     super(Tables.UserDashboardConfig, config.apiUrl, config.auth.user);
+    this.api = new SupabaseAPIClient(config.apiUrl, config.auth.user, true) as unknown as typeof this.api;
   }
 
   async updateCardTitle(data: UpdateDashboardCardTitleDto): Promise<number> {
