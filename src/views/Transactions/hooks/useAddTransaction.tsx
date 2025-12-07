@@ -10,7 +10,7 @@ import { useManager } from "providers";
 import { TransactionsQueryKeys } from "hooks";
 
 // utils
-import { dtoToForm, emptyTransaction, formToDto } from "../utils";
+import { addEmptyTransaction, dtoToForm, formToDto } from "../utils";
 
 // types
 import {
@@ -41,7 +41,7 @@ export function useAddTransaction(
   >({
     formToDto,
     dtoToForm,
-    defaultValues: emptyTransaction(account),
+    defaultValues: addEmptyTransaction(account),
     mutationFn: (data) => manager.Transactions.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:transactions.forms.add"),
