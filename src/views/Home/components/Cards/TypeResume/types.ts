@@ -1,7 +1,11 @@
 import { FieldValues } from "react-hook-form";
 
 // @sito/dashboard-app
-import { DialogPropsType, FormPropsType } from "@sito/dashboard-app";
+import {
+  DialogPropsType,
+  FormPropsType,
+  RangeValue,
+} from "@sito/dashboard-app";
 
 // lib
 import {
@@ -27,6 +31,13 @@ export interface TypeResumeTypeFormType
     FieldValues {
   accounts: CommonAccountDto[];
   date: { starT: string; end: string };
-  category: CommonTransactionCategoryDto[];
+  categories: CommonTransactionCategoryDto[];
   type: TransactionType;
 }
+
+export type TypeResumeConfigType = {
+  accounts?: number[];
+  categories?: number[];
+  type: TransactionType;
+  date?: RangeValue<string>;
+};

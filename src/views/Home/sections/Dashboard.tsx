@@ -8,7 +8,11 @@ import {
 } from "@sito/dashboard-app";
 
 // components
-import { AddCard, TransactionTypeResume, WeeklySpentCard } from "../components/Cards";
+import {
+  AddCard,
+  TransactionTypeResume,
+  WeeklySpentCard,
+} from "../components/Cards";
 import { AddDashboardCardDialog } from "../components";
 
 // styles

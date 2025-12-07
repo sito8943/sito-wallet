@@ -10,7 +10,13 @@ import {
 import { useDebouncedCallback } from "use-debounce";
 
 // @sito/dashboard-app
-import { usePostForm, useNotification,IconButton,Loading } from "@sito/dashboard-app";
+import {
+  usePostForm,
+  useNotification,
+  IconButton,
+  Loading,
+  queryClient,
+} from "@sito/dashboard-app";
 
 // lib
 import {
@@ -20,7 +26,7 @@ import {
 } from "lib";
 
 // hooks
-import { useTransactionTypeResume } from "hooks";
+import { TransactionsQueryKeys, useTransactionTypeResume } from "hooks";
 
 // utils
 import { icons } from "../../../../Transactions/components/utils";
@@ -35,11 +41,19 @@ import { ConfigFormDialog } from "./ConfigFormDialog";
 import "./styles.css";
 
 // types
-import { TransactionTypePropsType, TypeResumeTypeFormType } from "./types";
+import {
+  TransactionTypePropsType,
+  TypeResumeConfigType,
+  TypeResumeTypeFormType,
+} from "./types";
 
 // providers
 import { useManager } from "providers";
 import { formToDto } from "./utils";
+
+const defaultConfig: TypeResumeConfigType = {
+  type: TransactionType.In,
+};
 
 export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const { title, config, id, user, onDelete } = props;
@@ -48,15 +62,16 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const { showErrorNotification } = useNotification();
   const manager = useManager();
 
-  const parsedConfig = useMemo(() => {
-    const defaultConfig = {
-      type: TransactionType.In,
-    };
+  const [parsedConfig, setParsedConfig] =
+    useState<TypeResumeConfigType>(defaultConfig);
+  useEffect(() => {
     try {
-      return config ? JSON.parse(config) : defaultConfig;
+      setParsedConfig(
+        config ? (JSON.parse(config) as TypeResumeConfigType) : defaultConfig
+      );
     } catch (err) {
       console.error(err);
-      return defaultConfig;
+      setParsedConfig(defaultConfig);
     }
   }, [config]);
 
@@ -67,6 +82,9 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const [showFilters, setShowFilters] = useState(false);
 
   const [cardTitle, setCardTitle] = useState(title);
+  useEffect(() => {
+    setCardTitle(title);
+  }, [title]);
 
   const [titleSuccess, setTitleSuccess] = useState(false);
   useEffect(() => {
@@ -120,6 +138,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
     mutationFn: async (data: UpdateDashboardCardConfigDto) =>
       await manager.Dashboard.updateCardConfig(data),
     onSuccess: () => {
+      queryClient.invalidateQueries({ ...TransactionsQueryKeys.all() });
       setShowFilters(false);
     },
     onSuccessMessage: t("_accessibility:messages.saved"),
@@ -134,9 +153,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
 
   return (
     <BaseCard className="type-resume-main">
-      {isLoading ? (
-        <Loading className="type-resume-main-loading" />
-      ) : null}
+      {isLoading ? <Loading className="type-resume-main-loading" /> : null}
       <div className="type-resume-header">
         <input
           className="type-resume-title poppins"
@@ -170,7 +187,14 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         />
       </div>
 
-      <ActiveFilters {...parsedConfig} />
+      <ActiveFilters
+        {...parsedConfig}
+        clearAccounts={() => setParsedConfig({ ...parsedConfig, accounts: [] })}
+        clearCategories={() =>
+          setParsedConfig({ ...parsedConfig, categories: [] })
+        }
+        clearDate={() => setParsedConfig({ ...parsedConfig, date: undefined })}
+      />
       <FontAwesomeIcon
         icon={icons[(parsedConfig.type ?? 0) as keyof typeof icons]}
         className={`text-lg mt-2 self-end ${

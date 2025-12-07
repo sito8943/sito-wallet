@@ -66,7 +66,7 @@ export const ConfigFormDialog = <ValidationError extends Error>(
   }, [categories, type]);
 
   useEffect(() => {
-    if (setValue) setValue("categories", null);
+    if (setValue) setValue("categories", []);
   }, [setValue, type]);
 
   return (

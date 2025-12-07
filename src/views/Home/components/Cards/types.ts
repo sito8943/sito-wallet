@@ -6,12 +6,12 @@ import {
 import { ReactNode } from "react";
 
 export type ActiveFiltersPropsType = {
-  accounts: CommonAccountDto[];
+  accounts?: CommonAccountDto[];
   clearAccounts: () => void;
-  categories: CommonTransactionCategoryDto[];
+  categories?: CommonTransactionCategoryDto[];
   clearCategories: () => void;
-  startDate: string;
-  endDate: string;
+  startDate?: string;
+  endDate?: string;
   clearDate: () => void;
   type: TransactionType;
 };
