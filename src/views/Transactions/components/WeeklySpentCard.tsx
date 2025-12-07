@@ -51,7 +51,7 @@ export const WeeklySpentCard = (props: WeeklySpentCardProps) => {
   const name = currencyName ?? data?.account?.currency?.name ?? "";
 
   return (
-    <BaseCard>
+    <BaseCard className="!h-auto">
       <div className="flex flex-col gap-2 w-full">
         <h3 className="text-xl poppins">
           {t("_pages:transactions.cards.weeklySpent.title")}
