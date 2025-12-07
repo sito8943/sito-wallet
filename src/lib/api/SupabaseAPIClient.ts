@@ -11,6 +11,7 @@ import {
 
 // shared supabase singleton
 import { supabase } from "./supabaseClient";
+import { getRelationSelect } from "./relationSelectConfig";
 
 type Order = "asc" | "desc";
 
@@ -47,7 +48,7 @@ export class SupabaseAPIClient {
 
     // Common filters
     if (anyFilters.userId !== undefined)
-      q = q.eq("userId", anyFilters.userId as number);
+      q = q.eq("userId", anyFilters.userId as any);
     if (anyFilters.deleted !== undefined)
       q = q.eq("deleted", anyFilters.deleted as boolean);
 
@@ -89,6 +90,8 @@ export class SupabaseAPIClient {
     return curr;
   }
 
+  // Relation select mapping is configured externally in relationSelectConfig.ts
+
   // Generic SELECT with pagination and filters
   async get<TDto extends BaseEntityDto, TFilter extends BaseFilterDto>(
     endpoint: string,
@@ -96,7 +99,8 @@ export class SupabaseAPIClient {
     filters?: TFilter
   ) {
     const table = endpoint.replace(/^\//, "");
-    let q = this.supabase.from(table).select("*", { count: "exact" });
+    const select = getRelationSelect(table) ?? "*";
+    let q = this.supabase.from(table).select(select, { count: "exact" });
     q = this.applyFilters(table, q, filters);
     q = this.applyQuery(q, query);
     const { data, error, count } = await q;
@@ -114,39 +118,56 @@ export class SupabaseAPIClient {
   ) {
     // Handle patterns
     const clean = endpoint.replace(this.baseUrl, "").replace(/^\//, "");
+    const url = new URL(`http://local/${clean}`);
+    const path = url.pathname.replace(/^\//, "");
 
     // /:table/:id
-    const idMatch = clean.match(/^(.*)\/(\d+)$/);
+    const idMatch = path.match(/^(.*)\/(\d+)$/);
     if (idMatch) {
       const table = idMatch[1];
       const id = Number(idMatch[2]);
-      const { data, error } = await this.supabase.from(table).select("*").eq("id", id).single();
+      const select = getRelationSelect(table) ?? "*";
+      const { data, error } = await this.supabase
+        .from(table)
+        .select(select)
+        .eq("id", id)
+        .single();
       if (error) throw new Error(error.message);
       return data as TResponse;
     }
 
     // /:table/common
-    if (/\/common$/.test(clean)) {
-      const table = clean.replace(/\/common$/, "");
-      const { data, error } = await this.supabase
-        .from(table)
-        .select("id, updatedAt")
-        .order("updatedAt", { ascending: false });
+    if (/\/common$/.test(path)) {
+      const table = path.replace(/\/common$/, "");
+      // Select minimal/common fields per table
+      const { getCommonSelect } = await import("./relationSelectConfig");
+      const select = getCommonSelect(table) ?? "id, updatedAt";
+      let q = this.supabase.from(table).select(select);
+      // Apply filters from query string (userId, deleted, etc.)
+      const deletedParam = url.searchParams.get("deleted");
+      const userIdParam = url.searchParams.get("userId");
+      const maybeFilters: Record<string, unknown> = {};
+      if (deletedParam !== null)
+        maybeFilters.deleted = deletedParam === "true" || deletedParam === "1";
+      if (userIdParam !== null) maybeFilters.userId = userIdParam;
+      q = this.applyFilters(table, q, maybeFilters as any);
+      q = q.order("updatedAt", { ascending: false });
+      const { data, error } = await q;
       if (error) throw new Error(error.message);
       return (data ?? []) as TResponse;
     }
 
     // /:table/export
-    if (/\/export$/.test(clean)) {
-      const table = clean.replace(/\/export$/, "");
-      const { data, error } = await this.supabase.from(table).select("*");
+    if (/\/export$/.test(path)) {
+      const table = path.replace(/\/export$/, "");
+      const select = getRelationSelect(table) ?? "*";
+      const { data, error } = await this.supabase.from(table).select(select);
       if (error) throw new Error(error.message);
       return (data ?? []) as TResponse;
     }
 
     // transactions/type-resume?type=&userId=&account=&category=&date.start=&date.end=
-    if (/^transactions\/type-resume/.test(clean)) {
-      const url = new URL(`http://local/${clean}`);
+    if (/^transactions\/type-resume/.test(path)) {
       const p = url.searchParams;
 
       const num = (v: string | null) => (v == null ? undefined : Number(v));
