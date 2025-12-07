@@ -30,6 +30,15 @@ export const dtoToForm = (dto: AccountDto): AccountFormType => ({
   userId: dto.user?.id ?? 0,
 });
 
+export const addEmptyAccount: Omit<AccountFormType, "if"> = {
+  name: "",
+  balance: 0,
+  description: "",
+  type: AccountType.Physical,
+  currency: null,
+  userId: 0,
+};
+
 export const emptyAccount: AccountFormType = {
   id: 0,
   name: "",

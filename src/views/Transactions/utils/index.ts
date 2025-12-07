@@ -29,14 +29,23 @@ export const dtoToForm = (dto: TransactionDto): TransactionFormType => ({
   date: formatForDatetimeLocal(dto.date),
 });
 
+export const addEmptyTransaction = (
+  account: CommonAccountDto | null = null
+): Omit<TransactionFormType, "id"> => ({
+  initial: false,
+  description: "",
+  account,
+  category: null,
+  amount: 0,
+  date: formatForDatetimeLocal(),
+});
+
 export const emptyTransaction = (
   account: CommonAccountDto | null = null
 ): TransactionFormType => ({
   id: 0,
   initial: false,
-  name: "",
   description: "",
-  type: TransactionType.In,
   account,
   category: null,
   amount: 0,

@@ -10,7 +10,7 @@ import { useManager } from "providers";
 import { DashboardsQueryKeys } from "hooks";
 
 // utils
-import { dtoToAddForm, emptyDashboard, formToAddDto } from "../utils";
+import { addEmptyDashboard, dtoToAddForm, formToAddDto } from "../utils";
 
 // lib
 import { AddDashboardDto, DashboardDto } from "lib";
@@ -31,7 +31,7 @@ export function useAddDashboardCard() {
   >({
     formToDto: formToAddDto,
     dtoToForm: dtoToAddForm,
-    defaultValues: emptyDashboard,
+    defaultValues: addEmptyDashboard,
     mutationFn: (data) => manager.Dashboard.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:home.dashboard.addCard.title"),

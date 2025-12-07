@@ -14,6 +14,14 @@ export const dtoToAddForm = (dto: DashboardDto): DashboardFormType => ({
   userId: dto.user?.id ?? 0,
 });
 
+export const addEmptyDashboard: Omit<DashboardFormType, "id"> = {
+  type: DashboardCardType.TypeResume,
+  config: "",
+  position: 0,
+  userId: 0,
+  title: "",
+};
+
 export const emptyDashboard: DashboardFormType = {
   id: 0,
   type: DashboardCardType.TypeResume,

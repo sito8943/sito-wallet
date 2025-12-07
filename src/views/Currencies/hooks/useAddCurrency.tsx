@@ -11,7 +11,7 @@ import { useManager } from "providers";
 import { CurrenciesQueryKeys } from "hooks";
 
 // utils
-import { dtoToForm, emptyCurrency, formToDto } from "../utils";
+import { addEmptyCurrency, dtoToForm, formToDto } from "../utils";
 
 // lib
 import { AddCurrencyDto, CurrencyDto } from "lib";
@@ -34,7 +34,7 @@ export function useAddCurrency() {
   >({
     formToDto,
     dtoToForm,
-    defaultValues: emptyCurrency,
+    defaultValues: addEmptyCurrency,
     mutationFn: (data) => manager.Currencies.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:currencies.forms.add"),

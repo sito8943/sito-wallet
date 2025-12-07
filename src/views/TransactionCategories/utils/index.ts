@@ -28,6 +28,17 @@ export const dtoToForm = (
   userId: dto.user?.id ?? 0,
 });
 
+export const addEmptyTransactionCategory: Omit<
+  TransactionCategoryFormType,
+  "id"
+> = {
+  name: "",
+  description: "",
+  type: TransactionType.In,
+  userId: 0,
+  initial: false,
+};
+
 export const emptyTransactionCategory: TransactionCategoryFormType = {
   id: 0,
   name: "",
