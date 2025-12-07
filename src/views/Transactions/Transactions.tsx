@@ -17,8 +17,13 @@ import {
   GlobalActions,
 } from "@sito/dashboard-app";
 
+// icons
+import { faAdd, faWallet } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 // hooks
 import { useAddTransaction, useEditTransaction } from "./hooks";
+import { useAddAccountDialog } from "../Accounts/hooks";
 import {
   TransactionsQueryKeys,
   useAccountsCommon,
@@ -32,6 +37,8 @@ import {
   TransactionGrid,
   TransactionTable,
 } from "./components";
+import { WeeklySpentCard } from "./components/WeeklySpentCard";
+import { AddAccountDialog } from "../Accounts";
 
 // lib
 import { FilterTransactionDto, Tables, TransactionDto } from "lib";
@@ -41,9 +48,6 @@ import { useManager } from "providers";
 
 // styles
 import "./styles.css";
-import { faAdd, faFileInvoice } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { WeeklySpentCard } from "./components/WeeklySpentCard";
 
 export function Transactions() {
   const { t } = useTranslation();
@@ -85,6 +89,8 @@ export function Transactions() {
         : accounts.data?.[0] ?? null,
     [accounts.data, tabValue]
   );
+
+  const addAccount = useAddAccountDialog();
 
   // #endregion accounts
 
@@ -185,7 +191,7 @@ export function Transactions() {
     return [exportTransactions.action()];
   }, [exportTransactions]);
 
-  const isEmpty = useMemo(() => {
+  const noAccounts = useMemo(() => {
     return accountDesktopTabs.length === 0 || accountMobileTabs.length === 0;
   }, [accountDesktopTabs, accountMobileTabs]);
 
@@ -215,18 +221,18 @@ export function Transactions() {
         />
       </div>
 
-      {isEmpty ? (
+      {noAccounts ? (
         <Empty
-          message={t("_pages:transactions.empty")}
+          message={t("_pages:accounts.empty")}
           iconProps={{
-            icon: faFileInvoice,
+            icon: faWallet,
             className: "text-5xl max-md:text-3xl text-gray-400",
           }}
           action={{
             icon: <FontAwesomeIcon icon={faAdd} />,
             id: GlobalActions.Add,
             disabled: accounts.isLoading,
-            onClick: () => addTransaction.openDialog(),
+            onClick: () => addAccount.openDialog(),
             tooltip: t("_pages:accounts.add"),
           }}
         />
@@ -248,6 +254,7 @@ export function Transactions() {
       )}
 
       {/* Dialogs */}
+      <AddAccountDialog {...addAccount} />
       <EditTransactionDialog {...editTransaction} />
       <AddTransactionDialog {...addTransaction} />
       <ConfirmationDialog {...deleteTransaction} />
