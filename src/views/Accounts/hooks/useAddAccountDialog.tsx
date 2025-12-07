@@ -10,7 +10,7 @@ import { useManager } from "providers";
 import { AccountsQueryKeys } from "hooks";
 
 // utils
-import { formToAddDto, emptyAccount, dtoToForm } from "../utils";
+import { formToAddDto, dtoToForm, addEmptyAccount } from "../utils";
 
 // types
 import { AccountFormType } from "../types";
@@ -31,7 +31,7 @@ export function useAddAccountDialog() {
   >({
     formToDto: formToAddDto,
     dtoToForm,
-    defaultValues: emptyAccount,
+    defaultValues: addEmptyAccount,
     mutationFn: (data) => manager.Accounts.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:accounts.forms.add"),

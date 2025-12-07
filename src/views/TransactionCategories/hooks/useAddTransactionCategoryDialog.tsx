@@ -10,7 +10,7 @@ import { useManager } from "providers";
 import { TransactionCategoriesQueryKeys } from "hooks";
 
 // utils
-import { dtoToForm, emptyTransactionCategory, formToDto } from "../utils";
+import { addEmptyTransactionCategory, dtoToForm, formToDto } from "../utils";
 
 // types
 import { TransactionCategoryFormType } from "../types";
@@ -31,7 +31,7 @@ export function useAddTransactionCategoryDialog() {
   >({
     formToDto,
     dtoToForm,
-    defaultValues: emptyTransactionCategory,
+    defaultValues: addEmptyTransactionCategory,
     mutationFn: (data) => manager.TransactionCategories.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:accounts.forms.add"),

@@ -10,6 +10,13 @@ export const dtoToForm = (dto: CurrencyDto): CurrencyFormType => ({
   userId: dto.user?.id ?? 0,
 });
 
+export const addEmptyCurrency: Omit<CurrencyFormType, "id"> = {
+  name: "",
+  description: "",
+  symbol: "",
+  userId: 0,
+};
+
 export const emptyCurrency: CurrencyFormType = {
   id: 0,
   name: "",
