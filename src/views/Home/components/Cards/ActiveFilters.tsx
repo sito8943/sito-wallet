@@ -28,7 +28,7 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
       {!!accounts?.length && (
         <ArrayChip
           id="account"
-          text={t("_entities:transaction.account.label")}
+          text={t("_entities:entities.account.plural")}
           items={accounts ?? []}
           onClearFilter={() => clearAccounts()}
         />
@@ -36,7 +36,7 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
       {categories?.length ? (
         <ArrayChip
           id="category"
-          text={t("_entities:transaction.category.label")}
+          text={t("_entities:entities.transactionCategory.plural")}
           items={categories ?? []}
           onClearFilter={() => clearCategories()}
         />

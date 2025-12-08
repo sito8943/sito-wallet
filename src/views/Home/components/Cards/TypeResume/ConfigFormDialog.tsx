@@ -53,12 +53,6 @@ export const ConfigFormDialog = <ValidationError extends Error>(
 
   const { data: accounts } = useAccountsCommon();
 
-  useEffect(() => {
-    if (accounts?.length && setValue) {
-      setValue("accounts", [accounts[0]]);
-    }
-  }, [accounts, setValue]);
-
   const { data: categories } = useTransactionCategoriesCommon();
 
   const categoriesByType = useMemo(() => {
@@ -78,9 +72,9 @@ export const ConfigFormDialog = <ValidationError extends Error>(
           <AutocompleteInput
             value={value}
             multiple
-            label={t("_entities:transaction.account.label")}
+            label={t("_entities:entities.account.plural")}
             autoComplete={`${Tables.Transactions}-${t(
-              "_entities:transaction.account.label"
+              "_entities:entities.account.plural"
             )}`}
             onChange={(v) => onChange(v)}
             options={accounts ?? []}
@@ -127,15 +121,15 @@ export const ConfigFormDialog = <ValidationError extends Error>(
       </div>
       <Controller
         control={props.control}
-        name="category"
+        name="categories"
         render={({ field: { value, onChange, ...rest } }) => (
           <AutocompleteInput
             multiple
             value={value}
             options={categoriesByType ?? []}
-            label={t("_entities:transaction.category.label")}
+            label={t("_entities:entities.transactionCategory.plural")}
             autoComplete={`${Tables.Transactions}-${t(
-              "_entities:transaction.category.label"
+              "_entities:entities.transactionCategory.plural"
             )}`}
             containerClassName="!w-[unset] flex-1"
             onChange={(value) => onChange(value)}

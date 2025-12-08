@@ -1,4 +1,22 @@
 {
+  "entities": {
+    "account": {
+      "singular": "Cuenta",
+      "plural": "Cuentas"
+    },
+    "currency": {
+      "singular": "Moneda",
+      "plural": "Monedas"
+    },
+    "transaction": {
+      "singular": "Transacción",
+      "plural": "Transacciones"
+    },
+    "transactionCategory": {
+      "singular": "Categoria",
+      "plural": "Categorias"
+    }
+  },
   "base": {
     "name": {
       "label": "Nombre",
