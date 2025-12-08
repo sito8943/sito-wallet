@@ -9,11 +9,10 @@ export const formToDto = (
     data.categories?.map((category) => category.id) ?? [];
   const stringified = JSON.stringify({
     accounts: parsedAccounts,
-    category: parsedCategories,
+    categories: parsedCategories,
     type: data.type ?? TransactionType.Out,
     date: data.date,
   });
-  console.log(stringified)
   return {
     userId: data.userId,
     id: data.id,
