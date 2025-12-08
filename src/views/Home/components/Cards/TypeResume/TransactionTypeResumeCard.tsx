@@ -30,10 +30,11 @@ import { TransactionsQueryKeys, useTransactionTypeResume } from "hooks";
 
 // utils
 import { icons } from "../../../../Transactions/components/utils";
+import { formToDto } from "./utils";
 
 // components
 import { Currency } from "../../../../Currencies";
-import { ActiveFilters } from "../ActiveFilters";
+import { ActiveFilters } from "./ActiveFilters";
 import { BaseCard } from "../BaseCard";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 
@@ -49,7 +50,6 @@ import {
 
 // providers
 import { useManager } from "providers";
-import { formToDto } from "./utils";
 
 const defaultConfig: TypeResumeTypeFormType = {
   type: TransactionType.In,
@@ -79,7 +79,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         parsed.categories?.map((category) => category.id) ?? [];
       transformed.date = parsed.date;
 
-      return parsed;
+      return transformed;
     } catch (err) {
       console.error(err);
       return defaultConfig;
@@ -217,7 +217,9 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         clearCategories={() =>
           configFormProps.onSubmit({ ...formConfig, categories: [] })
         }
-        clearDate={() => configFormProps.onSubmit({ ...formConfig, date: undefined })}
+        clearDate={() =>
+          configFormProps.onSubmit({ ...formConfig, date: undefined })
+        }
       />
       <FontAwesomeIcon
         icon={icons[(formConfig.type ?? 0) as keyof typeof icons]}

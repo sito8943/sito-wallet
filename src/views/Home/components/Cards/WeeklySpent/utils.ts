@@ -6,6 +6,7 @@ export const formToDto = (
 ): UpdateDashboardCardConfigDto => {
   const parsedAccount = data.accounts?.map((account) => account.id) ?? [];
   const stringified = JSON.stringify({
+    ...data,
     account: parsedAccount,
   });
   return {
@@ -14,4 +15,3 @@ export const formToDto = (
     config: stringified,
   };
 };
-

@@ -41,3 +41,14 @@ export type FilterTypeResumeConfigType = {
   type: TransactionType;
   date?: RangeValue<string>;
 };
+
+export type ActiveFiltersPropsType = {
+  accounts?: CommonAccountDto[];
+  clearAccounts: () => void;
+  categories?: CommonTransactionCategoryDto[];
+  clearCategories: () => void;
+  startDate?: string;
+  endDate?: string;
+  clearDate: () => void;
+  type: TransactionType;
+};

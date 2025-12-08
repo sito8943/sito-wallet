@@ -2,14 +2,27 @@ import { useMutation } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faFilter, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheckCircle,
+  faFilter,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { useDebouncedCallback } from "use-debounce";
 
 // @sito/dashboard-app
-import { usePostForm, useNotification, IconButton, Loading } from "@sito/dashboard-app";
+import {
+  usePostForm,
+  useNotification,
+  IconButton,
+  Loading,
+} from "@sito/dashboard-app";
 
 // lib
-import { TransactionType, UpdateDashboardCardConfigDto, UpdateDashboardCardTitleDto } from "lib";
+import {
+  TransactionType,
+  UpdateDashboardCardConfigDto,
+  UpdateDashboardCardTitleDto,
+} from "lib";
 
 // hooks
 import { useTransactionTypeResume } from "hooks";
@@ -18,14 +31,29 @@ import { useTransactionTypeResume } from "hooks";
 import { Currency } from "../../../../Currencies";
 import { BaseCard } from "../BaseCard";
 import { ConfigFormDialog } from "./ConfigFormDialog";
+import { ActiveFilters } from "./ActiveFilters";
+
+// styles
 import "../TypeResume/styles.css";
 
 // types
-import { WeeklySpentFormType, WeeklySpentPropsType } from "./types";
+import {
+  WeeklySpentFormType,
+  WeeklySpentPropsType,
+  FilterWeeklyConfigType,
+} from "./types";
+
+// utils
+import { formToDto } from "./utils";
 
 // providers
 import { useManager } from "providers";
-import { formToDto } from "./utils";
+
+const defaultConfig: WeeklySpentFormType = {
+  type: TransactionType.In,
+  accounts: [],
+  categories: [],
+};
 
 const getCurrentWeekRange = () => {
   const today = new Date();
@@ -48,10 +76,26 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
   const { showErrorNotification } = useNotification();
   const manager = useManager();
 
-  const parsedConfig = useMemo(() => {
-    const defaultConfig = {} as { account?: number[] };
+  const formConfig = useMemo(() => {
     try {
-      return config ? JSON.parse(config) : defaultConfig;
+      return (config ? JSON.parse(config) : {}) as WeeklySpentFormType;
+    } catch (err) {
+      console.error(err);
+      return defaultConfig;
+    }
+  }, [config]);
+
+  const filterConfig = useMemo(() => {
+    try {
+      const parsed = (config ? JSON.parse(config) : {}) as WeeklySpentFormType;
+      const transformed: FilterWeeklyConfigType = {
+        type: parsed.type,
+      };
+
+      transformed.accounts =
+        parsed.accounts?.map((account) => account.id) ?? [];
+
+      return transformed;
     } catch (err) {
       console.error(err);
       return defaultConfig;
@@ -61,9 +105,8 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
   const range = useMemo(() => getCurrentWeekRange(), []);
 
   const { data, isLoading } = useTransactionTypeResume({
-    type: TransactionType.Out,
+    ...filterConfig,
     date: { start: range.start, end: range.end },
-    account: parsedConfig?.account,
   });
 
   const [showFilters, setShowFilters] = useState(false);
@@ -76,7 +119,11 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
   }, [titleSuccess]);
 
   const debounced = useDebouncedCallback((value: string) => {
-    updateTitle.mutate({ id, title: value, userId: user?.id } as UpdateDashboardCardTitleDto);
+    updateTitle.mutate({
+      id,
+      title: value,
+      userId: user?.id,
+    } as UpdateDashboardCardTitleDto);
   }, 500);
 
   useEffect(() => {
@@ -85,7 +132,8 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
 
   const updateTitle = useMutation<number, Error, UpdateDashboardCardTitleDto>({
     mutationFn: (data) => manager.Dashboard.updateCardTitle(data),
-    onError: (error: Error) => showErrorNotification({ message: error.message }),
+    onError: (error: Error) =>
+      showErrorNotification({ message: error.message }),
     onSuccess: () => setTitleSuccess(true),
   });
 
@@ -95,7 +143,7 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
     number,
     WeeklySpentFormType
   >({
-    defaultValues: parsedConfig,
+    defaultValues: formConfig,
     formToDto: (data: WeeklySpentFormType) =>
       formToDto({ ...data, userId: user?.id ?? 0, id }),
     mutationFn: async (data: UpdateDashboardCardConfigDto) =>
@@ -113,13 +161,15 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
   const name = data?.account?.currency?.name ?? "";
 
   return (
-    <BaseCard>
+    <BaseCard className="type-resume-main">
       {isLoading ? <Loading className="type-resume-main-loading" /> : null}
       <div className="type-resume-header">
         <input
           className="type-resume-title poppins"
           value={cardTitle ?? ""}
-          placeholder={t("_pages:home.dashboard.transactionTypeResume.placeholder")}
+          placeholder={t(
+            "_pages:home.dashboard.transactionTypeResume.placeholder"
+          )}
           onChange={(e) => {
             debounced(e.target.value);
             setCardTitle(e.target.value);
@@ -127,17 +177,40 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
         />
         {updateTitle.isPending ? <Loading className="mt-1" /> : null}
         {titleSuccess ? (
-          <FontAwesomeIcon icon={faCheckCircle} className="mt-1 text-bg-success" />
+          <FontAwesomeIcon
+            icon={faCheckCircle}
+            className="mt-1 text-bg-success"
+          />
         ) : null}
-        <IconButton disabled={globalLoading} onClick={() => setShowFilters(!showFilters)} icon={faFilter} />
-        <IconButton disabled={globalLoading} onClick={onDelete} className={`error`} icon={faTrash} />
+        <IconButton
+          disabled={globalLoading}
+          onClick={() => setShowFilters(!showFilters)}
+          icon={faFilter}
+        />
+        <IconButton
+          disabled={globalLoading}
+          onClick={onDelete}
+          className={`error`}
+          icon={faTrash}
+        />
       </div>
+
+      <ActiveFilters
+        {...formConfig}
+        clearAccounts={() =>
+          configFormProps.onSubmit({ ...formConfig, accounts: [] })
+        }
+      />
 
       <p className="!text-4xl font-bold self-end poppins !text-bg-error">
         {isLoading ? "…" : amount} <Currency name={name} symbol={symbol} />
       </p>
 
-      <ConfigFormDialog open={showFilters} handleClose={() => setShowFilters(false)} {...configFormProps} />
+      <ConfigFormDialog
+        open={showFilters}
+        handleClose={() => setShowFilters(false)}
+        {...configFormProps}
+      />
     </BaseCard>
   );
 };

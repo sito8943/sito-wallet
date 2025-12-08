@@ -4,7 +4,12 @@ import { FieldValues } from "react-hook-form";
 import { DialogPropsType, FormPropsType } from "@sito/dashboard-app";
 
 // lib
-import { CommonAccountDto, DashboardDto, UpdateDashboardCardConfigDto } from "lib";
+import {
+  CommonAccountDto,
+  DashboardDto,
+  TransactionType,
+  UpdateDashboardCardConfigDto,
+} from "lib";
 
 export interface WeeklySpentPropsType extends DashboardDto {
   onDelete: () => void;
@@ -17,8 +22,21 @@ export interface ConfigFormDialogPropsType<
     Omit<DialogPropsType, "title"> {}
 
 export interface WeeklySpentFormType
-  extends UpdateDashboardCardConfigDto,
+  extends Omit<UpdateDashboardCardConfigDto, "config" | "userId" | "id">,
     FieldValues {
   accounts: CommonAccountDto[];
+  type: TransactionType
 }
 
+export type FilterWeeklyConfigType = {
+  accounts?: number[];
+  type: TransactionType;
+};
+
+export type ActiveFiltersPropsType = {
+  accounts?: CommonAccountDto[];
+  clearAccounts: () => void;
+  startDate?: string;
+  endDate?: string;
+  type: TransactionType;
+};
