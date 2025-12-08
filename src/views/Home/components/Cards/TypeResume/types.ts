@@ -27,15 +27,15 @@ export interface ConfigFormDialogPropsType<
     Omit<DialogPropsType, "title"> {}
 
 export interface TypeResumeTypeFormType
-  extends UpdateDashboardCardConfigDto,
+  extends Omit<UpdateDashboardCardConfigDto, "config" | "userId" | "id">,
     FieldValues {
   accounts: CommonAccountDto[];
-  date: { starT: string; end: string };
+  date?: { start: string; end: string };
   categories: CommonTransactionCategoryDto[];
   type: TransactionType;
 }
 
-export type TypeResumeConfigType = {
+export type FilterTypeResumeConfigType = {
   accounts?: number[];
   categories?: number[];
   type: TransactionType;

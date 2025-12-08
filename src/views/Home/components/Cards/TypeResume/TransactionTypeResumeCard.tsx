@@ -43,7 +43,7 @@ import "./styles.css";
 // types
 import {
   TransactionTypePropsType,
-  TypeResumeConfigType,
+  FilterTypeResumeConfigType,
   TypeResumeTypeFormType,
 } from "./types";
 
@@ -51,8 +51,10 @@ import {
 import { useManager } from "providers";
 import { formToDto } from "./utils";
 
-const defaultConfig: TypeResumeConfigType = {
+const defaultConfig: TypeResumeTypeFormType = {
   type: TransactionType.In,
+  accounts: [],
+  categories: [],
 };
 
 export const TransactionTypeResume = (props: TransactionTypePropsType) => {
@@ -62,21 +64,30 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const { showErrorNotification } = useNotification();
   const manager = useManager();
 
-  const [parsedConfig, setParsedConfig] =
-    useState<TypeResumeConfigType>(defaultConfig);
-  useEffect(() => {
+  const filterConfig = useMemo(() => {
     try {
-      setParsedConfig(
-        config ? (JSON.parse(config) as TypeResumeConfigType) : defaultConfig
-      );
+      const parsed = config
+        ? (JSON.parse(config) as TypeResumeTypeFormType)
+        : defaultConfig;
+      const transformed: FilterTypeResumeConfigType = {
+        type: parsed.type,
+      };
+
+      transformed.accounts =
+        parsed.accounts?.map((account) => account.id) ?? [];
+      transformed.categories =
+        parsed.categories?.map((category) => category.id) ?? [];
+      transformed.date = parsed.date;
+
+      return parsed;
     } catch (err) {
       console.error(err);
-      setParsedConfig(defaultConfig);
+      return defaultConfig;
     }
   }, [config]);
 
   const { data, isLoading } = useTransactionTypeResume({
-    ...parsedConfig,
+    ...filterConfig,
   });
 
   const [showFilters, setShowFilters] = useState(false);
@@ -122,13 +133,24 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
     },
   });
 
+  const formConfig = useMemo(() => {
+    try {
+      return config
+        ? (JSON.parse(config) as TypeResumeTypeFormType)
+        : defaultConfig;
+    } catch (err) {
+      console.error(err);
+      return defaultConfig;
+    }
+  }, [config]);
+
   const configFormProps = usePostForm<
     UpdateDashboardCardConfigDto,
     UpdateDashboardCardConfigDto,
     number,
     TypeResumeTypeFormType
   >({
-    defaultValues: parsedConfig,
+    defaultValues: formConfig,
     formToDto: (data: TypeResumeTypeFormType) =>
       formToDto({
         ...data,
@@ -188,8 +210,8 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
       </div>
 
       <ActiveFilters
-        {...parsedConfig}
-        clearAccounts={() => setParsedConfig({ ...parsedConfig, accounts: [] })}
+        {...formConfig}
+        clearAccounts={() => configFormProps}
         clearCategories={() =>
           setParsedConfig({ ...parsedConfig, categories: [] })
         }
