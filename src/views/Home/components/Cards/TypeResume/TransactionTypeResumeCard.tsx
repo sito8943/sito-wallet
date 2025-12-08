@@ -211,23 +211,25 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
 
       <ActiveFilters
         {...formConfig}
-        clearAccounts={() => configFormProps}
-        clearCategories={() =>
-          setParsedConfig({ ...parsedConfig, categories: [] })
+        clearAccounts={() =>
+          configFormProps.onSubmit({ ...formConfig, accounts: [] })
         }
-        clearDate={() => setParsedConfig({ ...parsedConfig, date: undefined })}
+        clearCategories={() =>
+          configFormProps.onSubmit({ ...formConfig, categories: [] })
+        }
+        clearDate={() => configFormProps.onSubmit({ ...formConfig, date: undefined })}
       />
       <FontAwesomeIcon
-        icon={icons[(parsedConfig.type ?? 0) as keyof typeof icons]}
+        icon={icons[(formConfig.type ?? 0) as keyof typeof icons]}
         className={`text-lg mt-2 self-end ${
-          Number(parsedConfig.type) === TransactionType.In
+          Number(formConfig.type) === TransactionType.In
             ? "inverted-success"
             : "inverted-error"
         }`}
       />
       <p
         className={`!text-4xl font-bold self-end poppins ${
-          parsedConfig.type === TransactionType.In
+          formConfig.type === TransactionType.In
             ? "!text-bg-success"
             : "!text-bg-error"
         }`}
