@@ -157,6 +157,9 @@
     "cards": {
       "weeklySpent": {
         "title": "This week's spending"
+      },
+      "weeklyIncoming": {
+        "title": "This week's income"
       }
     },
     "add": "Add a transaction",

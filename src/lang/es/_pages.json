@@ -152,6 +152,9 @@
     "cards": {
       "weeklySpent": {
         "title": "Gasto de esta semana"
+      },
+      "weeklyIncoming": {
+        "title": "Ingresos de esta semana"
       }
     },
     "add": "Agregar una transacción",

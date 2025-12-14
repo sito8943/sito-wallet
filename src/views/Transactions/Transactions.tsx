@@ -38,6 +38,7 @@ import {
   TransactionTable,
 } from "./components";
 import { WeeklySpentCard } from "./components/WeeklySpentCard";
+import { WeeklyIncomingCard } from "./components/WeeklyIncomingCard";
 import { AddAccountDialog } from "../Accounts";
 
 // lib
@@ -212,9 +213,14 @@ export function Transactions() {
       }}
       queryKey={TransactionsQueryKeys.all().queryKey}
     >
-      {/* Weekly spent summary */}
-      <div className="mb-4">
+      {/* Weekly summary cards */}
+      <div className="mb-4 grid grid-cols-2 gap-4 max-md:grid-cols-1">
         <WeeklySpentCard
+          accountId={selectedAccount?.id}
+          currencyName={selectedAccount?.currency?.name}
+          currencySymbol={selectedAccount?.currency?.symbol}
+        />
+        <WeeklyIncomingCard
           accountId={selectedAccount?.id}
           currencyName={selectedAccount?.currency?.name}
           currencySymbol={selectedAccount?.currency?.symbol}
