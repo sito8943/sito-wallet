@@ -12,6 +12,8 @@ import {
   AddTransactionDto,
   TransactionTypeResumeDto,
   FilterTransactionTypeResumeDto,
+  TransactionWeeklySpentDto,
+  FilterWeeklyTransactionDto,
 } from "lib";
 
 // utils
@@ -40,6 +42,24 @@ export default class TransactionClient extends BaseClient<
     >(`${Tables.Transactions}/type-resume`, undefined, filters);
 
     return await this.api.doQuery<TransactionTypeResumeDto>(
+      builtUrl,
+      Methods.GET,
+      null,
+      {
+        ...this.api.defaultTokenAcquirer(),
+      }
+    );
+  }
+
+  async weekly(
+    filters: FilterWeeklyTransactionDto
+  ): Promise<TransactionWeeklySpentDto> {
+    const builtUrl = parseQueries<
+      TransactionWeeklySpentDto,
+      FilterTransactionDto
+    >(`${Tables.Transactions}/weekly`, undefined, filters);
+
+    return await this.api.doQuery<TransactionWeeklySpentDto>(
       builtUrl,
       Methods.GET,
       null,

@@ -26,6 +26,8 @@ import {
   Tables,
   TransactionTypeResumeDto,
   TransactionType,
+  FilterTransactionTypeResumeDto,
+  TransactionWeeklySpentDto,
 } from "lib";
 import { useTranslation } from "react-i18next";
 
@@ -42,6 +44,10 @@ export const TransactionsQueryKeys = {
   typeResume: (filters: FilterTransactionDto) => ({
     queryKey: [...TransactionsQueryKeys.all().queryKey, "typeResume", filters],
     enabled: !!filters.type,
+  }),
+  weekly: (filters: FilterTransactionDto) => ({
+    queryKey: [...TransactionsQueryKeys.all().queryKey, "weekly", filters],
+    enabled: !!filters.accountId,
   }),
 };
 
@@ -139,6 +145,41 @@ export function useTransactionTypeResume(
           account: filters?.account,
           category: filters?.category,
           date: filters?.date,
+        });
+
+        return result;
+      } catch (error) {
+        throw new Error(
+          `${t("_accessibility:errors.unknownError")} ${
+            (error as Error).message
+          }`
+        );
+      }
+    },
+  });
+}
+
+export function useWeekly(
+  props: FilterTransactionTypeResumeDto
+): UseQueryResult<TransactionWeeklySpentDto> {
+  const filters = props;
+  const { t } = useTranslation();
+
+  const manager = useManager();
+  const { account } = useAuth();
+
+  return useQuery({
+    ...TransactionsQueryKeys.weekly({
+      userId: account?.id,
+      ...filters,
+    }),
+    enabled: !!account?.id,
+    queryFn: async () => {
+      try {
+        const result = await manager.Transactions.weekly({
+          type: filters?.type ?? TransactionType.In,
+          userId: account?.id ?? 0,
+          account: filters?.account,
         });
 
         return result;

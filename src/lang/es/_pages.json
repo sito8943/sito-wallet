@@ -150,6 +150,7 @@
     "title": "Transacciones",
     "empty": "No hay transacciones para mostrar",
     "cards": {
+      "lastWeek": "Semana pasada",
       "weeklySpent": {
         "title": "Gasto de esta semana"
       },

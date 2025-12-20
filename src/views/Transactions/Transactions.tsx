@@ -37,12 +37,16 @@ import {
   TransactionGrid,
   TransactionTable,
 } from "./components";
-import { WeeklySpentCard } from "./components/WeeklySpentCard";
-import { WeeklyIncomingCard } from "./components/WeeklyIncomingCard";
+import { WeeklyCard } from "./components/WeeklyCard";
 import { AddAccountDialog } from "../Accounts";
 
 // lib
-import { FilterTransactionDto, Tables, TransactionDto } from "lib";
+import {
+  FilterTransactionDto,
+  Tables,
+  TransactionDto,
+  TransactionType,
+} from "lib";
 
 // providers
 import { useManager } from "providers";
@@ -215,12 +219,16 @@ export function Transactions() {
     >
       {/* Weekly summary cards */}
       <div className="mb-4 grid grid-cols-2 gap-4 max-md:grid-cols-1">
-        <WeeklySpentCard
+        <WeeklyCard
+          type={TransactionType.Out}
+          title={t("_pages:transactions.cards.weeklySpent.title")}
           accountId={selectedAccount?.id}
           currencyName={selectedAccount?.currency?.name}
           currencySymbol={selectedAccount?.currency?.symbol}
         />
-        <WeeklyIncomingCard
+        <WeeklyCard
+          type={TransactionType.In}
+          title={t("_pages:transactions.cards.weeklyIncoming.title")}
           accountId={selectedAccount?.id}
           currencyName={selectedAccount?.currency?.name}
           currencySymbol={selectedAccount?.currency?.symbol}
