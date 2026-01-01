@@ -1,174 +1,50 @@
-# Guía de estilos — sito-wallet
+# Style Guide — sito-wallet
 
-Breve: esta guía describe cómo se organizan los estilos en el proyecto, las convenciones actuales y cómo añadir/editar CSS para mantener coherencia.
+What this covers: how we organize CSS and Tailwind v4 in the project, conventions, and patterns to keep visual consistency.
 
-## Resumen rápido
-- Stack de CSS: Tailwind (utilidades), hojas CSS co-locadas por componente y reglas globales.
-- Variables y tokens: `src/styles/variables.css` define variables de color / breakpoints.
-- Estilos globales: `src/index.css` importa `variables.css`, `dashboard.css` y `components.css` y declara reglas globales y animaciones.
-- Convención: cada componente que necesita estilos tiene un `styles.css` en su carpeta y normalmente importa `../../styles/variables.css`.
-- Tipografías: Poppins y Roboto se importan en `src/main.tsx` con `@fontsource`.
+## Quick Overview
+- CSS stack: Tailwind v4 (utilities) + co-located component CSS + global rules.
+- Tokens and theme: `src/styles/variables.css` defines colors and breakpoints via `@theme`.
+- Global: `src/index.css` imports `variables.css`, `dashboard.css`, `components.css` and adds utilities/animations.
+- Co-location: each component/view with custom styles has a `styles.css` file in its folder.
+- Fonts: Poppins and Roboto via `@fontsource` in `src/main.tsx`.
 
-## Estructura del proyecto (árbol visual)
+## Relevant Structure
 
 ```
-sito-wallet/
-├── 📄 package.json                    # Dependencias y scripts
-├── 📄 vite.config.ts                  # Configuración Vite
-├── 📄 tsconfig.json                   # Configuración TypeScript
-├── 📄 eslint.config.js                # Configuración ESLint
-├── 📄 index.html                      # HTML principal
-├── 📄 README.md
-├── 📄 STYLE_GUIDE.md                  # Esta guía
-├── 📁 public/
-│   └── 📄 vite.svg
-└── 📁 src/                            # Código fuente principal
-    ├── 📄 main.tsx                    # Punto de entrada (fuentes, estilos, providers)
-    ├── 📄 App.tsx                     # Componente principal (onboarding, rutas)
-    ├── 📄 Routes.tsx                  # Definición de rutas
-    ├── 📄 index.css                   # Estilos globales (importa styles/*)
-    ├── 📄 config.ts                   # Configuración de la app (proviente del .env)
-    ├── 📄 i18.ts                      # Configuración i18n
-    ├── 📄 globals.d.ts                # Definiciones TypeScript globales (Requerido para solucionar Issue con Fontsource)
-    ├── 📄 vite-env.d.ts               # Tipos de Vite (Requerido en Vite con TypeScript)
-    │
-    ├── 📁 assets/                     # Recursos estáticos (Imágenes, Audios, etc.)
-    │   └── 📄 react.svg
-    │
-    ├── 📁 styles/                     # Estilos centralizados
-    │   ├── 📄 variables.css           # Tokens CSS (colores, breakpoints)
-    │   ├── 📄 components.css          # Utilidades de componentes (.button, .input, etc.)
-    │   └── 📄 dashboard.css           # Estilos de para @sito/dashboard
-    │
-    ├── 📁 components/                 # Componentes UI reutilizables
-    │   ├── 📄 index.ts                # Barrel exports
-    │   ├── 📁 Actions/                # Botones de acción
-    │   │   ├── 📄 Action.tsx
-    │   │   ├── 📄 Actions.tsx
-    │   │   ├── 📄 ActionsDropdown.tsx
-    │   │   ├── 📄 styles.css          # Estilos específicos del componente
-    │   │   ├── 📄 types.ts
-    │   │   └── 📄 index.ts
-    │   ├── 📁 Card/                   # Tarjetas
-    │   │   ├── 📄 ItemCard.tsx
-    │   │   ├── 📄 ItemCardTitle.tsx
-    │   │   ├── 📄 styles.css
-    │   │   ├── 📄 types.ts
-    │   │   └── 📄 index.ts
-    │   ├── 📁 Dialog/                 # Diálogos y modales
-    │   │   ├── 📄 Dialog.tsx
-    │   │   ├── 📄 ConfirmationDialog.tsx
-    │   │   ├── 📄 FormDialog.tsx
-    │   │   ├── 📄 styles.css
-    │   │   ├── 📄 types.ts
-    │   │   └── 📄 index.ts
-    │   ├── 📁 Form/                   # Componentes de formulario
-    │   │   ├── 📄 FormContainer.tsx
-    │   │   ├── 📄 ParagraphInput.tsx
-    │   │   ├── 📄 PasswordInput.tsx
-    │   │   ├── 📄 styles.css
-    │   │   ├── 📄 types.ts
-    │   │   └── 📄 index.ts
-    │   ├── 📁 Navbar/                 # Barra de navegación
-    │   │   ├── 📄 Navbar.tsx
-    │   │   ├── 📄 Clock.tsx
-    │   │   ├── 📄 styles.css
-    │   │   ├── 📄 types.ts
-    │   │   └── 📄 index.ts
-    │   ├── 📁 Loading/                # Estados de carga
-    │   │   ├── 📄 Loading.tsx
-    │   │   ├── 📄 SplashScreen.tsx
-    │   │   ├── 📄 types.ts
-    │   │   └── 📄 index.ts
-    │   └── 📁 ... (otros componentes)
-    │       ├── Chip/
-    │       ├── Drawer/
-    │       ├── Dropdown/
-    │       ├── Error/
-    │       ├── Notification/
-    │       ├── Onboarding/
-    │       ├── Page/
-    │       ├── PrettyGrid/
-    │       ├── TabsLayout/
-    │       └── WalletTable/
-    │
-    ├── 📁 hooks/                      # Custom hooks
-    │   ├── 📄 index.ts
-    │   ├── 📄 useScrollTrigger.tsx
-    │   ├── 📄 useTimeAge.tsx
-    │   ├── 📁 actions/
-    │   ├── 📁 dialogs/
-    │   ├── 📁 forms/
-    │   ├── 📁 mutate/
-    │   └── 📁 queries/
-    │
-    ├── 📁 providers/                  # Context providers
-    │   ├── 📄 index.ts
-    │   ├── 📄 AuthProvider.tsx        # Autenticación
-    │   ├── 📄 LocalCacheProvider.tsx  # Cache local
-    │   ├── 📄 ManagerProvider.tsx     # Gestión estado global
-    │   ├── 📄 NotificationProvider.tsx # Notificaciones
-    │   └── 📄 types.ts
-    │
-    ├── 📁 views/                      # Pantallas/vistas principales
-    │   ├── 📄 index.ts
-    │   ├── 📄 menuMap.tsx             # Mapa de menús
-    │   ├── 📄 sitemap.tsx             # Mapa del sitio
-    │   ├── 📄 NotFound.tsx            # 404
-    │   ├── 📄 types.ts
-    │   ├── 📁 Accounts/               # Gestión de cuentas
-    │   ├── 📁 Auth/                   # Autenticación (login, signup)
-    │   ├── 📁 Currencies/             # Monedas
-    │   ├── 📁 Home/                   # Pantalla principal
-    │   ├── 📁 Info/                   # Información
-    │   ├── 📁 TransactionCategories/  # Categorías de transacciones
-    │   └── 📁 Transactions/           # Transacciones
-    │
-    ├── 📁 layouts/                    # Layouts de página (Componentes que no cambian en una vista)
-    │   ├── 📄 index.ts
-    │   ├── 📁 Auth/                   # Layout para autenticación
-    │   └── 📁 View/                   # Layout principal de vistas
-    │
-    ├── 📁 lib/                        # Utilidades y helpers
-    │   ├── 📄 index.ts
-    │   ├── 📄 Notification.ts         # Sistema de notificaciones
-    │   ├── 📄 ServiceError.ts         # Manejo de errores de servicio
-    │   ├── 📄 ValidationError.ts      # Errores de validación
-    │   ├── 📁 api/                    # Wrappers de API
-    │   ├── 📁 entities/               # Entidades/modelos
-    │   └── 📁 utils/                  # Utilidades generales
-    │
-    └── 📁 lang/                       # Internacionalización
-        ├── 📄 nameSpaces.ts           # Definición de namespaces i18n
-        ├── 📁 en/                     # Traducciones en inglés
-        └── 📁 es/                     # Traducciones en español
+src/
+├─ index.css                 # Global + utilities
+├─ styles/
+│  ├─ variables.css          # @theme (colors, breakpoints)
+│  ├─ components.css         # Semantic classes (inputs, links, etc.)
+│  └─ dashboard.css          # Adjustments for @sito/dashboard
+├─ components/               # Reusable UI (Accordion, Card, Search, ...)
+├─ views/                    # Pages with subcomponents and co-located CSS
+└─ layouts/                  # App and auth shells
 ```
 
-## Cómo se usan Tailwind y CSS juntos
+## Tailwind + CSS Usage
+- Tailwind v4 is imported in `variables.css` via `@import "tailwindcss";`.
+- Tokens live under `@theme { --color-... }` and are consumed through the project's semantic classes (e.g., `bg-base`, `text-text`, `bg-bg-primary`, `text-bg-success`).
+- In `components.css`, use `@reference "./variables.css";` and `@apply` to compose utilities into reusable classes.
+- In component `styles.css`, import tokens at the top: `@import "../../styles/variables.css";` (adjust the relative path to depth).
 
-- Tailwind está instalado y se utiliza principalmente mediante `@apply` dentro de hojas CSS. Ejemplo en `src/styles/components.css`:
-  - `.button { @apply text-text bg-base hover:bg-base-light ... }`
-- Además de `@apply`, hay clases CSS propias (p. ej. `.dialog`, `.chip`) que combinan utilidades y reglas personalizadas.
-- `variables.css` importa `tailwindcss` y define una sección `@theme { --color-... }` con tokens. El proyecto usa clases semánticas como `bg-base`, `text-text`, `bg-bg-primary` que probablemente están mapeadas en la configuración de Tailwind (busca `tailwind.config.*` si necesitas cambiar utilidades).
+Examples (real excerpts):
+- `src/styles/components.css:1`: `@reference "./variables.css";`
+- `src/index.css:36`: `main { @apply bg-base-dark ... }`
 
-## Convenciones de estilos (recomendadas y observadas)
+## Conventions
+- Semantic names: short, clear class names (`.input`, `.error`, `.success`, `.elevated`).
+- Modifiers: additional classes for states (`.input.error`, `.inverted-success`).
+- Avoid deep cascades: flat selectors; one root class per component.
+- Prefer `@apply` in CSS to compose utilities; avoid long utility chains inline in JSX when reusable.
+- Responsiveness: use Tailwind responsive utilities. Add breakpoints in `@theme` as needed (e.g., `--breakpoint-xs`).
 
-- Co-locación: cada componente que necesita CSS tiene `styles.css` en su carpeta y el componente importa sólo la clase raíz.
-- Importar tokens: en la cabecera de cada `styles.css` se hace `@import "../../styles/variables.css";`.
-- Nombres de clase: se usan nombres cortos y semánticos (p. ej. `.button`, `.chip`, `.dialog`) y modificadores con clases adicionales (p. ej. `.chip.primary`, `.input.error`). Mantener esa forma evita reglas muy específicas.
-- Uso de Tailwind: preferir `@apply` para componer utilidades en reglas reutilizables; en el JSX usar clases semánticas en vez de mezclar muchas utilidades inline.
-- Responsividad: se observan utilidades como `min-xs:` y `max-xs:` en los CSS; mantenerlas en las hojas de estilos cuando la modificación afecta al componente.
-
-## Patrón para añadir un nuevo componente con CSS
-
-1. Crear carpeta del componente en `src/components/MyComponent/`.
-2. Añadir `MyComponent.tsx` y `styles.css`.
-3. En `styles.css` empezar por importar tokens: `@import "../../styles/variables.css";`.
-4. Declarar una clase raíz, p. ej. `.my-component { @apply flex gap-2 p-4 bg-base; }`.
-5. Añadir modificadores si se requiere: `.my-component.primary { @apply bg-bg-primary text-base; }`.
-6. En el `tsx` usar sólo la clase raíz y los modificadores: `<div className="my-component primary">...</div>`.
-
-Ejemplo mínimo de `styles.css`:
+## Pattern: New Component with CSS
+1. Create `src/components/MyComponent/`.
+2. Add `MyComponent.tsx` and `styles.css`.
+3. In `styles.css`, import tokens: `@import "../../styles/variables.css";`.
+4. Define a root class and modifiers:
 
 ```css
 @import "../../styles/variables.css";
@@ -182,36 +58,32 @@ Ejemplo mínimo de `styles.css`:
 }
 ```
 
-## Tokens y cómo tematizar
+Usage in JSX:
 
-- Cambiar paleta: editar `src/styles/variables.css` (ahí están `--color-...`).
-- Si necesitas exponer nuevos utilitarios semánticos (`bg-base`, `text-text`, etc.), revisa `tailwind.config.js` (si existe) para mapear variables o extender theme.
-- Para modo oscuro, recomendamos añadir un bloque `:root[data-theme='dark'] { ... }` en `variables.css` y aprovechar las mismas clases semánticas.
+```tsx
+<div className="my-component primary">Content</div>
+```
 
-## Tipos de reglas vistas en el repo
+## Tokens and Theming
+- Colors/spacing/breakpoints: edit `src/styles/variables.css` under `@theme`.
+- If you need new semantic utilities, compose them in `src/styles/components.css` using `@apply`.
+- Dark mode: you can add `:root[data-theme='dark'] { ... }` in `variables.css` while preserving semantic naming.
 
-- Reglas globales (en `index.css`): tipografías por elemento, animaciones (apparition, appear, disappear), utilidades genéricas (`.chip`, `.elevated`).
-- Componentes: reglas co-locadas que combinan `@apply` con selectores simples y clases `opened/closed` para estados.
+## Rule Types in the Repo
+- Global: element typography, animations (`opacity`, `appear`, `disappear`, `fancy-appear`, `blur-appear`), utilities (`.elevated`, `.success`, `.error`). See `src/index.css:1`.
+- Components/views: co-located CSS mixing `@apply` with simple selectors. Example: `src/views/Home/components/.../styles.css` and `src/components/*/styles.css` when present.
 
-## Recomendaciones y buenas prácticas
+## Best Practices
+- Keep co-location and semantic class names.
+- Avoid highly specific selectors; favor reuse via `@apply`.
+- Document new tokens in `variables.css` with a short comment.
+- Check `components.css` before adding another duplicate utility.
 
-- Mantener la co-locación: evita un `styles` global con reglas específicas de componente.
-- Mantener clases pequeñas y semánticas; evita reglas CSS profundamente anidadas.
-- Evitar mezclar demasiadas utilidades Tailwind en JSX; centraliza estilos reusables con `@apply`.
-- Documentar cualquier nuevo token en `variables.css` con un comentario y ejemplo de uso.
-- Añadir pruebas visuales mínimas (sandbox story o snapshot) para componentes con estilos complejos.
-
-## Dónde tocar para cambiar cosas comunes
-
-- Colores y tokens: `src/styles/variables.css`
-- Reglas base / animaciones: `src/index.css`
-- Componentes reutilizables (botones, inputs): `src/styles/components.css`
-- Estilo de un componente concreto: `src/components/<Nombre>/styles.css`
-
-## Siguientes pasos sugeridos
-
-- (Opcional) Buscar `tailwind.config.*` si quieres mapear utilidades nuevas o cambiar breakpoints.
-- (Opcional) Añadir `CONTRIBUTING.md` con un pequeño apartado de `styles` para el equipo.
+## Where to Change Common Things
+- Tokens/colors: `src/styles/variables.css:1`
+- Global/utilities/animations: `src/index.css:1`
+- Input/link utilities: `src/styles/components.css:1`
+- A specific component’s style: `src/components/<Name>/styles.css`
 
 ---
-Guía generada a partir de los archivos leídos: `package.json`, `src/main.tsx`, `src/App.tsx`, `src/index.css`, `src/styles/variables.css`, `src/styles/components.css` y muestras de `styles.css` de componentes.
+This guide reflects the current repository state (Tailwind v4, `src/` structure, semantic classes, co-located styles).
