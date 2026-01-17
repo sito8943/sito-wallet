@@ -84,10 +84,7 @@ export const SearchResult = (props: SearchResultPropsType) => {
       )}
       {isLoading && (
         <div className="flex gap-2 items-center justify-start pl-1">
-          <Loading className="mt-0.5" />
-          <p className="italic text-sm text-text-muted/50">
-            {t("_accessibility:labels.searching")}
-          </p>
+          <Loading className="mt-0.5" loaderClass="w-10 h-10" />
         </div>
       )}
       {!!items.length && !!searching.length && (
