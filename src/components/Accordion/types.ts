@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 
 export type AccordionPropsType = {
-  open: boolean;
+  open?: boolean;
+  defaultOpen?: boolean;
   children: ReactNode;
   className?: string;
   contentClassName?: string;
