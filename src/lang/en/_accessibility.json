@@ -83,7 +83,7 @@
       "500": "An authentication error has occurred"
     },
     "signUp": {
-      "401": "Email is already in use",
+      "422": "Email is already in use",
       "404": "Unexpected Error. Resource not found",
       "500": "An authentication error has occurred"
     }
