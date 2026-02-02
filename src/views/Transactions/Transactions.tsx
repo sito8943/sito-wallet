@@ -15,6 +15,8 @@ import {
   useTableOptions,
   Empty,
   GlobalActions,
+  useImportDialog,
+  ImportDialog,
 } from "@sito/dashboard-app";
 
 // icons
@@ -124,6 +126,12 @@ export function Transactions() {
     mutationFn: () => manager.Transactions.export(filters),
   });
 
+  const importTransactions = useImportDialog({
+    entity: Tables.Transactions,
+    mutationFn: (data) => manager.Transactions.import(data),
+    ...TransactionsQueryKeys.all(),
+  });
+
   // #endregion
 
   const getTableActions = useCallback(
@@ -193,12 +201,14 @@ export function Transactions() {
   }, [accountDesktopTabs, location]);
 
   const pageToolbar = useMemo(() => {
-    return [exportTransactions.action()];
-  }, [exportTransactions]);
+    return [exportTransactions.action(), importTransactions.action()];
+  }, [exportTransactions, importTransactions]);
 
   const noAccounts = useMemo(() => {
     return accountDesktopTabs.length === 0 || accountMobileTabs.length === 0;
   }, [accountDesktopTabs, accountMobileTabs]);
+
+  const [open, setOpen] = useState(false);
 
   return (
     <Page
@@ -273,6 +283,9 @@ export function Transactions() {
       <AddTransactionDialog {...addTransaction} />
       <ConfirmationDialog {...deleteTransaction} />
       <ConfirmationDialog {...restoreTransaction} />
+      <ImportDialog {...importTransactions}>
+        <p className="mt-2">Choose a file and confirm.</p>
+      </ImportDialog>
 
       {/* Category Dialogs */}
       {/* <EditTransactionDialog /> */}
