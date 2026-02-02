@@ -78,6 +78,7 @@
     "invalidCredentials": "Wrong user or password",
     "500": "An error has occurred in the server",
     "signIn": {
+      "401": "Invalid credentials",
       "403": "Access denied",
       "404": "User not found",
       "500": "An authentication error has occurred"
