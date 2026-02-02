@@ -98,6 +98,7 @@
     },
     "signUp": {
       "401": "El correo electrónico ya está en uso",
+      "404": "Error inesperado. Recurso no encontrado",
       "500": "Ha ocurrido un error de autenticación"
     }
   },

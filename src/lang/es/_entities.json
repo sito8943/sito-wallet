@@ -45,6 +45,11 @@
     }
   },
   "user": {
+    "name": {
+      "label": "Nombre",
+      "placeholder": "Ej: Juan Pérez",
+      "required": "El nombre es requerido"
+    },
     "email": {
       "label": "Correo electrónico",
       "placeholder": "Ej: email@provider.com",
