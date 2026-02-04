@@ -76,19 +76,21 @@
     "unknownError": "An error has occurred",
     "differentPasswords": "Passwords do not match",
     "invalidCredentials": "Wrong user or password",
-    "500": "An error has ocurrred in the server",
+    "500": "An error has occurred in the server",
     "signIn": {
+      "401": "Invalid credentials",
       "403": "Access denied",
       "404": "User not found",
       "500": "An authentication error has occurred"
     },
     "signUp": {
-      "401": "Email is already in use",
+      "422": "Email is already in use",
+      "404": "Unexpected Error. Resource not found",
       "500": "An authentication error has occurred"
     }
   },
   "messages": {
-    "saved": "Saved successful",
+    "saved": "Saved successfully",
     "message": "Nothing to show"
   },
   "components": {

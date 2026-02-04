@@ -94,10 +94,12 @@
     "signIn": {
       "500": "Ha ocurrido un error de autenticación",
       "404": "Usuario no encontrado",
-      "403": "Acceso denegado"
+      "403": "Acceso denegado",
+      "401": "Credenciales inválidas"
     },
     "signUp": {
-      "401": "El correo electrónico ya está en uso",
+      "422": "El correo electrónico ya está en uso",
+      "404": "Error inesperado. Recurso no encontrado",
       "500": "Ha ocurrido un error de autenticación"
     }
   },

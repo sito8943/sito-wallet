@@ -45,6 +45,11 @@
     }
   },
   "user": {
+    "name": {
+      "label": "Name",
+      "placeholder": "Ex: John Doe",
+      "required": "Name is required"
+    },
     "email": {
       "label": "Email",
       "placeholder": "Ex: email@provider.com",

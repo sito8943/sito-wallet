@@ -37,13 +37,15 @@ export function SignUp() {
 
   const navigate = useNavigate();
 
+  type RegisterWithName = RegisterDto & { name: string };
+
   const { handleSubmit, control, onSubmit, isLoading } = usePostForm<
-    RegisterDto,
-    RegisterDto,
+    RegisterWithName,
+    RegisterWithName,
     SessionDto,
-    RegisterDto
+    RegisterWithName
   >({
-    formToDto: (data: RegisterDto) => {
+    formToDto: (data: RegisterWithName) => {
       if (data.password !== data.rPassword) {
         showErrorNotification({
           message: t("_accessibility:errors.differentPasswords"),
@@ -52,7 +54,8 @@ export function SignUp() {
       }
       return data;
     },
-    mutationFn: async (data: RegisterDto) => await manager.Auth.register(data),
+    mutationFn: async (data: RegisterWithName) =>
+      await manager.Auth.register(data),
     onSuccess: (data) => {
       logUser(data);
       navigate("/");
@@ -85,6 +88,30 @@ export function SignUp() {
           {t("_pages:auth.signUp.title")}
         </h1>
         <div className="form-container w-full">
+          <div
+            className={`w-full transition-all duration-500 ease-in-out delay-250 ${
+              appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+            }`}
+          >
+            <Controller
+              control={control}
+              disabled={isLoading}
+              name="name"
+              render={({ field, fieldState }) => (
+                <TextInput
+                  {...field}
+                  type="text"
+                  id="name"
+                  className={`text-input peer`}
+                  label={t("_entities:user.name.label")}
+                  required
+                  helperText={fieldState.error?.message}
+                  state={fieldState.error ? State.error : State.default}
+                />
+              )}
+              rules={{ required: `${t("_entities:user.name.required")}` }}
+            />
+          </div>
           <div
             className={`w-full transition-all duration-500 ease-in-out delay-300 ${
               appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
@@ -183,7 +210,12 @@ export function SignUp() {
             aria-label={t("_accessibility:buttons.submit")}
           >
             {isLoading && (
-              <Loading className="!w-auto" color="stroke-base" loaderClass="!w-6" strokeWidth="6" />
+              <Loading
+                className="!w-auto"
+                color="stroke-base"
+                loaderClass="!w-6"
+                strokeWidth="6"
+              />
             )}
             {t("_pages:auth.signUp.submit")}
           </Button>
