@@ -12,6 +12,7 @@ import {
   Empty,
   Error,
   ConfirmationDialog,
+  useImportDialog,
 } from "@sito/dashboard-app";
 
 // icons
@@ -26,6 +27,7 @@ import {
   AddCurrencyDialog,
   CurrencyCard,
   EditCurrencyDialog,
+  ImportCurrencyDialog,
 } from "./components";
 
 // hooks
@@ -63,6 +65,12 @@ export function Currencies() {
     mutationFn: () => manager.Currencies.export(),
   });
 
+  const importCurrencies = useImportDialog({
+    entity: Tables.Currencies,
+    mutationFn: (data) => manager.Currencies.import(data),
+    ...CurrenciesQueryKeys.all(),
+  });
+
   // #endregion
 
   const getActions = useCallback(
@@ -74,8 +82,8 @@ export function Currencies() {
   );
 
   const pageToolbar = useMemo(() => {
-    return [exportCurrency.action()];
-  }, [exportCurrency]);
+    return [exportCurrency.action(), importCurrencies.action()];
+  }, [exportCurrency, importCurrencies]);
 
   return (
     <Page
@@ -122,6 +130,7 @@ export function Currencies() {
           <EditCurrencyDialog {...editCurrency} />
           <ConfirmationDialog {...deleteCurrency} />
           <ConfirmationDialog {...restoreCurrency} />
+          <ImportCurrencyDialog {...importCurrencies} />
         </>
       ) : (
         <Error error={error} />

@@ -208,8 +208,6 @@ export function Transactions() {
     return accountDesktopTabs.length === 0 || accountMobileTabs.length === 0;
   }, [accountDesktopTabs, accountMobileTabs]);
 
-  const [open, setOpen] = useState(false);
-
   return (
     <Page
       title={t("_pages:transactions.title")}
