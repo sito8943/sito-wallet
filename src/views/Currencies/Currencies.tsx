@@ -12,7 +12,6 @@ import {
   Empty,
   Error,
   ConfirmationDialog,
-  useImportDialog,
 } from "@sito/dashboard-app";
 
 // icons
@@ -27,15 +26,15 @@ import {
   AddCurrencyDialog,
   CurrencyCard,
   EditCurrencyDialog,
-  ImportCurrencyDialog,
 } from "./components";
 
 // hooks
-import { useCurrenciesList, CurrenciesQueryKeys } from "hooks";
+import { useCurrenciesList, CurrenciesQueryKeys, useImportDialog } from "hooks";
 import { useAddCurrency, useEditCurrency } from "./hooks";
 
 // types
-import { CurrencyDto, Tables } from "lib";
+import { CurrencyDto, CurrencyImportDto, Tables } from "lib";
+import { ImportDialog } from "../../components/Dialog/ImportDialog";
 
 export function Currencies() {
   const { t } = useTranslation();
@@ -65,8 +64,9 @@ export function Currencies() {
     mutationFn: () => manager.Currencies.export(),
   });
 
-  const importCurrencies = useImportDialog({
+  const importCurrencies = useImportDialog<CurrencyDto, CurrencyImportDto>({
     entity: Tables.Currencies,
+    fileProcessor: (file) => manager.Currencies.processImport(file),
     mutationFn: (data) => manager.Currencies.import(data),
     ...CurrenciesQueryKeys.all(),
   });
@@ -130,7 +130,7 @@ export function Currencies() {
           <EditCurrencyDialog {...editCurrency} />
           <ConfirmationDialog {...deleteCurrency} />
           <ConfirmationDialog {...restoreCurrency} />
-          <ImportCurrencyDialog {...importCurrencies} />
+          <ImportDialog {...importCurrencies} />
         </>
       ) : (
         <Error error={error} />

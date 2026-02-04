@@ -10,6 +10,7 @@ import {
   UpdateCurrencyDto,
   FilterCurrencyDto,
   AddCurrencyDto,
+  parseJSONFile,
 } from "lib";
 
 // config
@@ -27,5 +28,9 @@ export default class CurrencyClient extends BaseClient<
    */
   constructor() {
     super(Tables.Currencies, config.apiUrl, config.auth.user);
+  }
+
+  processImport(file: File): Promise<CurrencyDto[]> {
+    return parseJSONFile<CurrencyDto>(file);
   }
 }
