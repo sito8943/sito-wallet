@@ -1,6 +1,7 @@
 @reference "./variables.css";
 
-a, button {
+a,
+button {
   @apply text-sm font-medium;
 }
 
@@ -20,4 +21,35 @@ svg.primary,
 p.primary,
 a.primary {
   @apply hover:text-hover-primary;
+}
+
+.primary {
+  @apply text-primary;
+}
+
+.secondary {
+  @apply text-secondary;
+}
+
+.tertiary {
+  @apply text-tertiary;
+}
+
+.quaternary {
+  @apply text-quaternary;
+}
+.real-primary {
+  @apply bg-primary;
+}
+
+.real-secondary {
+  @apply bg-secondary;
+}
+
+.real-tertiary {
+  @apply bg-tertiary;
+}
+
+.real-quaternary {
+  @apply bg-quaternary;
 }

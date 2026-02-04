@@ -20,6 +20,12 @@ import {
 // providers
 import { useManager } from "providers";
 
+// lib
+import { randomBackgroundColor } from "lib";
+
+const color: "primary" | "secondary" | "tertiary" | "quaternary" =
+  randomBackgroundColor();
+
 /**
  * Sign Page
  * @returns Sign component
@@ -70,14 +76,18 @@ export function SignIn() {
         onSubmit={handleSubmit(onSubmit)}
         className={`${appear ? "bg-base blur-appear" : ""} auth-form`}
       >
-        {/* LOGO */}
         <h1
-          className={`w-full text-2xl md:text-3xl mb-8 transition-all duration-500 ease-in-out delay-200 ${
+          className={`w-full text-2xl md:text-3xl mb-1 transition-all duration-500 ease-in-out delay-200 ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
           {t("_pages:auth.signIn.title")}
         </h1>
+        <div
+          className={`mb-8 p-0.5 rounded-xl w-full real-${color} transition-all duration-500 ease-in-out delay-200 ${
+            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+          }`}
+        ></div>
         <div className="form-container w-full">
           <div
             className={`w-full transition-all duration-500 ease-in-out delay-300 ${
@@ -164,7 +174,8 @@ export function SignIn() {
         >
           <Button
             type="submit"
-            color="primary"
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            color={color as any}
             variant="submit"
             className="!px-8"
             disabled={isLoading}
