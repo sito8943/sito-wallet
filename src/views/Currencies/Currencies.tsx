@@ -33,7 +33,12 @@ import { useCurrenciesList, CurrenciesQueryKeys, useImportDialog } from "hooks";
 import { useAddCurrency, useEditCurrency } from "./hooks";
 
 // types
-import { CurrencyDto, CurrencyImportDto, Tables } from "lib";
+import {
+  CurrencyDto,
+  CurrencyImportDto,
+  ImportPreviewCurrencyDto,
+  Tables,
+} from "lib";
 import { ImportDialog } from "../../components/Dialog/ImportDialog";
 
 export function Currencies() {
@@ -64,7 +69,11 @@ export function Currencies() {
     mutationFn: () => manager.Currencies.export(),
   });
 
-  const importCurrencies = useImportDialog<CurrencyDto, CurrencyImportDto>({
+  const importCurrencies = useImportDialog<
+    CurrencyDto,
+    ImportPreviewCurrencyDto,
+    CurrencyImportDto
+  >({
     entity: Tables.Currencies,
     fileProcessor: (file, options) =>
       manager.Currencies.processImport(file, options?.override),

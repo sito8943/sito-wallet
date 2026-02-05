@@ -9,39 +9,45 @@ import {
   queryClient,
   ValidationError,
   BaseEntityDto,
-  ImportDto,
   ActionType,
 } from "@sito/dashboard-app";
+import { ImportDto, ImportPreviewDto } from "lib";
+
+// componentes
 import { ImportDialogPropsType } from "../components/Dialog/ImportDialog";
 
 export type NewUseImportDialogPropsType<
-  EntityDto extends BaseEntityDto,
-  EntityImportDto extends ImportDto
+  PreviewEntityDto extends ImportPreviewDto,
+  EntityImportDto extends ImportDto<PreviewEntityDto>
 > = Omit<UseImportDialogPropsType, "mutationFn"> & {
   mutationFn: MutationFunction<number, EntityImportDto>;
   fileProcessor?: (
     file: File,
     options?: { override?: boolean }
-  ) => Promise<EntityDto[]>;
+  ) => Promise<PreviewEntityDto[]>;
 };
 
-export type UseImportDialogReturnType<EntityDto extends BaseEntityDto> =
-  ImportDialogPropsType<EntityDto> & {
-    action: () => ActionType<EntityDto>;
-  };
+export type UseImportDialogReturnType<
+  EntityDto extends BaseEntityDto,
+  PreviewEntityDto extends ImportPreviewDto
+> = ImportDialogPropsType<PreviewEntityDto> & {
+  action: () => ActionType<EntityDto>;
+};
 
 export function useImportDialog<
   EntityDto extends BaseEntityDto,
-  EntityImportDto extends ImportDto
+  PreviewEntityDto extends ImportPreviewDto,
+  EntityImportDto extends ImportDto<PreviewEntityDto>
 >(
-  props: NewUseImportDialogPropsType<EntityDto, EntityImportDto>
-): UseImportDialogReturnType<EntityDto> {
+  props: NewUseImportDialogPropsType<PreviewEntityDto, EntityImportDto>
+): UseImportDialogReturnType<EntityDto, PreviewEntityDto> {
   const { t } = useTranslation();
 
   const { queryKey, mutationFn, entity, fileProcessor } = props;
 
   const [showDialog, setShowDialog] = useState(false);
-  const [items, setItems] = useState<EntityDto[] | null>(null);
+  const [items, setItems] = useState<PreviewEntityDto[] | null>(null);
+  const [override, setOverride] = useState<boolean>(false);
 
   const importMutation = useMutation<number, ValidationError, EntityImportDto>({
     mutationFn,
@@ -61,20 +67,21 @@ export function useImportDialog<
     handleSubmit: async () => {
       if (!items || items.length === 0) return;
       try {
-        const cleaned = items.map((it) => {
-          const { ...rest } = (it as unknown as { existing?: boolean }) || {};
-          return rest as EntityDto;
-        });
-        await importMutation.mutateAsync({ items: cleaned } as unknown as EntityImportDto);
+        await importMutation.mutateAsync({
+          items,
+          override,
+        } as unknown as EntityImportDto);
         setShowDialog(false);
         setItems(null);
+        setOverride(false);
       } catch (e) {
         console.error(e);
       }
     },
     isLoading: importMutation.isPending,
     fileProcessor,
-    onFileProcessed: (parsed: EntityDto[]) => setItems(parsed),
+    onFileProcessed: (parsed: PreviewEntityDto[]) => setItems(parsed),
+    onOverrideChange: (value: boolean) => setOverride(value),
     open: showDialog,
     title: t("_pages:common.actions.import.dialog.title", {
       entity: t(`_pages:${entity}.title`),

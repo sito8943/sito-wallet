@@ -1,12 +1,15 @@
-import { BaseEntityDto, useTranslation } from "@sito/dashboard-app";
+import { useTranslation } from "@sito/dashboard-app";
 
-type ImportDialogPreviewProps<EntityDto extends BaseEntityDto> = {
+// lib
+import { ImportPreviewDto } from "lib";
+
+type ImportDialogPreviewProps<EntityDto extends ImportPreviewDto> = {
   items: EntityDto[];
   max?: number;
   className?: string;
 };
 
-export function ImportDialogPreview<EntityDto extends BaseEntityDto>(
+export function ImportDialogPreview<EntityDto extends ImportPreviewDto>(
   props: ImportDialogPreviewProps<EntityDto>
 ) {
   const { items, max = 5, className = "" } = props;
@@ -30,4 +33,3 @@ export function ImportDialogPreview<EntityDto extends BaseEntityDto>(
     </div>
   );
 }
-

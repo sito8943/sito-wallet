@@ -1,6 +1,4 @@
-import { ImportDto } from "@sito/dashboard-app";
-import { CurrencyDto } from "./CurrencyDto";
+import { ImportPreviewCurrencyDto } from "./ImportPreviewCurrencyDto";
+import { ImportDto } from "../ImportDto";
 
-export interface CurrencyImportDto extends ImportDto {
-  items: CurrencyDto[];
-}
+export type CurrencyImportDto = ImportDto<ImportPreviewCurrencyDto>;

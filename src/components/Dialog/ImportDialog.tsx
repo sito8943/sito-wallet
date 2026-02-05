@@ -1,17 +1,23 @@
+import { useCallback, useEffect, useState } from "react";
+
+// @sito-dashboard
 import {
   useTranslation,
   Dialog,
   DialogActions,
   DialogPropsType,
-  BaseEntityDto,
 } from "@sito/dashboard-app";
-import { useCallback, useEffect, useState } from "react";
+
+// components
 import { FileInput } from "../FileInput/FileInput";
 import { ImportDialogLoading } from "./ImportDialog/Loading";
 import { ImportDialogError } from "./ImportDialog/Error";
 import { ImportDialogPreview } from "./ImportDialog/Preview";
 
-export interface ImportDialogPropsType<EntityDto extends BaseEntityDto>
+// lib
+import { ImportPreviewDto } from "lib";
+
+export interface ImportDialogPropsType<EntityDto extends ImportPreviewDto>
   extends DialogPropsType {
   handleSubmit: () => void;
   isLoading?: boolean;
@@ -20,9 +26,10 @@ export interface ImportDialogPropsType<EntityDto extends BaseEntityDto>
     options?: { override?: boolean }
   ) => Promise<EntityDto[]>;
   onFileProcessed?: (items: EntityDto[]) => void;
+  onOverrideChange?: (override: boolean) => void;
 }
 
-export const ImportDialog = <EntityDto extends BaseEntityDto>(
+export const ImportDialog = <EntityDto extends ImportPreviewDto>(
   props: ImportDialogPropsType<EntityDto>
 ) => {
   const { t } = useTranslation();
@@ -39,6 +46,7 @@ export const ImportDialog = <EntityDto extends BaseEntityDto>(
     isLoading = false,
     fileProcessor,
     onFileProcessed,
+    onOverrideChange,
     open,
     ...rest
   } = props;
@@ -77,6 +85,7 @@ export const ImportDialog = <EntityDto extends BaseEntityDto>(
 
   useEffect(() => {
     handleFileProcessed();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file, overrideExisting]);
 
   return (
@@ -106,7 +115,11 @@ export const ImportDialog = <EntityDto extends BaseEntityDto>(
         <input
           type="checkbox"
           checked={overrideExisting}
-          onChange={(e) => setOverrideExisting(e.target.checked)}
+          onChange={(e) => {
+            const value = e.target.checked;
+            setOverrideExisting(value);
+            onOverrideChange?.(value);
+          }}
         />
         <span>
           {t("_pages:common.actions.import.override", {
