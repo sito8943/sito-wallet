@@ -55,6 +55,7 @@
     "signIn": "Iniciar sesión"
   },
   "labels": {
+    "file": "Elige un archivo para subir",
     "colorPicker": "Selecciona un color",
     "justNow": "Justo ahora",
     "minute": "Minuto",

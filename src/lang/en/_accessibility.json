@@ -56,6 +56,7 @@
     "signIn": "Sign in"
   },
   "labels": {
+    "file": "Choose a file to upload",
     "colorPicker": "Pick a color",
     "justNow": "Right now",
     "minute": "Minute",

@@ -71,7 +71,17 @@
       },
       "import": {
         "text": "Importar",
-        "successMessage": "Importado correctamente"
+        "successMessage": "Importado correctamente",
+        "form": {
+          "inputs": {
+            "file": {
+              "label": "Selecciona el archivo para importar"
+            }
+          }
+        },
+        "dialog": {
+          "title": "Importar {{entity}}"
+        }
       }
     }
   },

@@ -29,11 +29,17 @@ import {
 } from "./components";
 
 // hooks
-import { useCurrenciesList, CurrenciesQueryKeys } from "hooks";
+import { useCurrenciesList, CurrenciesQueryKeys, useImportDialog } from "hooks";
 import { useAddCurrency, useEditCurrency } from "./hooks";
 
 // types
-import { CurrencyDto, Tables } from "lib";
+import {
+  CurrencyDto,
+  CurrencyImportDto,
+  ImportPreviewCurrencyDto,
+  Tables,
+} from "lib";
+import { ImportDialog } from "../../components/Dialog/ImportDialog";
 
 export function Currencies() {
   const { t } = useTranslation();
@@ -63,6 +69,18 @@ export function Currencies() {
     mutationFn: () => manager.Currencies.export(),
   });
 
+  const importCurrencies = useImportDialog<
+    CurrencyDto,
+    ImportPreviewCurrencyDto,
+    CurrencyImportDto
+  >({
+    entity: Tables.Currencies,
+    fileProcessor: (file, options) =>
+      manager.Currencies.processImport(file, options?.override),
+    mutationFn: (data) => manager.Currencies.import(data),
+    ...CurrenciesQueryKeys.all(),
+  });
+
   // #endregion
 
   const getActions = useCallback(
@@ -74,8 +92,8 @@ export function Currencies() {
   );
 
   const pageToolbar = useMemo(() => {
-    return [exportCurrency.action()];
-  }, [exportCurrency]);
+    return [exportCurrency.action(), importCurrencies.action()];
+  }, [exportCurrency, importCurrencies]);
 
   return (
     <Page
@@ -122,6 +140,7 @@ export function Currencies() {
           <EditCurrencyDialog {...editCurrency} />
           <ConfirmationDialog {...deleteCurrency} />
           <ConfirmationDialog {...restoreCurrency} />
+          <ImportDialog {...importCurrencies} />
         </>
       ) : (
         <Error error={error} />
