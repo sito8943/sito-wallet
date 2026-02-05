@@ -10,8 +10,8 @@ export function ImportDialogLoading(props: ImportDialogLoadingProps) {
   const { t } = useTranslation();
 
   return (
-    <div className={`mt-4 flex items-center gap-3 text-sm text-gray-600 ${className}`}>
-      <Loading loaderClass="w-5 h-5" />
+    <div className={`my-4 mx-auto flex items-center gap-3 text-sm text-gray-600 ${className}`}>
+      <Loading loaderClass="w-5 h-5" className="!w-auto" />
       <span>{message ?? t("_messages:loading.processingFile", { defaultValue: "Processing file..." })}</span>
     </div>
   );

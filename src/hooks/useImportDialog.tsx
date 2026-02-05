@@ -19,7 +19,10 @@ export type NewUseImportDialogPropsType<
   EntityImportDto extends ImportDto
 > = Omit<UseImportDialogPropsType, "mutationFn"> & {
   mutationFn: MutationFunction<number, EntityImportDto>;
-  fileProcessor?: (file: File) => Promise<EntityDto[]>;
+  fileProcessor?: (
+    file: File,
+    options?: { override?: boolean }
+  ) => Promise<EntityDto[]>;
 };
 
 export type UseImportDialogReturnType<EntityDto extends BaseEntityDto> =
@@ -56,10 +59,13 @@ export function useImportDialog<
 
   return {
     handleSubmit: async () => {
-      // Only submit if there are parsed items
       if (!items || items.length === 0) return;
       try {
-        await importMutation.mutateAsync({ items } as unknown as EntityImportDto);
+        const cleaned = items.map((it) => {
+          const { ...rest } = (it as unknown as { existing?: boolean }) || {};
+          return rest as EntityDto;
+        });
+        await importMutation.mutateAsync({ items: cleaned } as unknown as EntityImportDto);
         setShowDialog(false);
         setItems(null);
       } catch (e) {

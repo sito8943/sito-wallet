@@ -11,6 +11,7 @@ import {
   FilterCurrencyDto,
   AddCurrencyDto,
   parseJSONFile,
+  ImportPreviewCurrencyDto,
 } from "lib";
 
 // config
@@ -30,10 +31,10 @@ export default class CurrencyClient extends BaseClient<
     super(Tables.Currencies, config.apiUrl, config.auth.user);
   }
 
-  async processImport(file: File): Promise<CurrencyDto[]> {
+  async processImport(file: File, override?: boolean): Promise<ImportPreviewCurrencyDto[]> {
     const items = await parseJSONFile<CurrencyDto>(file);
-    return await this.api.doQuery<CurrencyDto[]>(
-      `${this.table}/import/process`,
+    return await this.api.doQuery<ImportPreviewCurrencyDto[]>(
+      `${this.table}/import/process${override ? `?override=true` : ""}`,
       Methods.POST,
       items,
       {

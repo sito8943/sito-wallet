@@ -66,7 +66,8 @@ export function Currencies() {
 
   const importCurrencies = useImportDialog<CurrencyDto, CurrencyImportDto>({
     entity: Tables.Currencies,
-    fileProcessor: (file) => manager.Currencies.processImport(file),
+    fileProcessor: (file, options) =>
+      manager.Currencies.processImport(file, options?.override),
     mutationFn: (data) => manager.Currencies.import(data),
     ...CurrenciesQueryKeys.all(),
   });
