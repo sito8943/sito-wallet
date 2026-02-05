@@ -7,10 +7,13 @@ import {
 } from "@sito/dashboard-app";
 import { useEffect, useState } from "react";
 import { FileInput } from "../FileInput/FileInput";
+import { ImportDialogLoading } from "./ImportDialog/Loading";
+import { ImportDialogError } from "./ImportDialog/Error";
+import { ImportDialogPreview } from "./ImportDialog/Preview";
 
 export interface ImportDialogPropsType<EntityDto extends BaseEntityDto>
   extends DialogPropsType {
-  handleSubmit: (file: File) => void;
+  handleSubmit: () => void;
   isLoading?: boolean;
   fileProcessor?: (file: File) => Promise<EntityDto[]>;
   onFileProcessed?: (items: EntityDto[]) => void;
@@ -23,6 +26,7 @@ export const ImportDialog = <EntityDto extends BaseEntityDto>(
   const [file, setFile] = useState<File | null>(null);
   const [previewItems, setPreviewItems] = useState<EntityDto[] | null>(null);
   const [parseError, setParseError] = useState<string | null>(null);
+  const [processing, setProcessing] = useState<boolean>(false);
 
   const {
     children,
@@ -42,6 +46,7 @@ export const ImportDialog = <EntityDto extends BaseEntityDto>(
       setFile(null);
       setPreviewItems(null);
       setParseError(null);
+      setProcessing(false);
       setInputKey((k) => k + 1);
     }
   }, [open]);
@@ -54,6 +59,7 @@ export const ImportDialog = <EntityDto extends BaseEntityDto>(
           setFile(null);
           setPreviewItems(null);
           setParseError(null);
+          setProcessing(false);
         }}
         onChange={(e) => {
           const file = (e.target as HTMLInputElement).files?.[0];
@@ -61,9 +67,11 @@ export const ImportDialog = <EntityDto extends BaseEntityDto>(
             setFile(null);
             setPreviewItems(null);
             setParseError(null);
+            setProcessing(false);
             return;
           }
           if (fileProcessor) {
+            setProcessing(true);
             fileProcessor(file)
               .then((items) => {
                 setPreviewItems(items ?? []);
@@ -76,28 +84,17 @@ export const ImportDialog = <EntityDto extends BaseEntityDto>(
                 const message =
                   err instanceof Error ? err.message : "Failed to parse file";
                 setParseError(message);
-              });
+              })
+              .finally(() => setProcessing(false));
           }
           setFile(file);
         }}
         label={t("_accessibility:labels.file")}
       />
-      {!!parseError && (
-        <p className="text-red-600 text-sm mt-2">{parseError}</p>
-      )}
+      <ImportDialogError message={parseError ?? undefined} />
+      {processing && <ImportDialogLoading />}
       {!!previewItems && previewItems.length > 0 && (
-        <div className="mt-4">
-          <p className="text-sm text-gray-600">
-            Preview: {previewItems.length} items
-          </p>
-          <pre className="mt-2 max-h-56 overflow-auto rounded bg-gray-100 p-3 text-xs">
-            {(() => {
-              // Show only the first 5 items to keep it compact
-              const limited = previewItems.slice(0, 5);
-              return JSON.stringify(limited, null, 2);
-            })()}
-          </pre>
-        </div>
+        <ImportDialogPreview items={previewItems} />
       )}
       {children}
       <DialogActions
@@ -106,11 +103,15 @@ export const ImportDialog = <EntityDto extends BaseEntityDto>(
         onPrimaryClick={() => {
           const canSubmit =
             !fileProcessor || (!!previewItems && previewItems.length > 0);
-          if (canSubmit && file) handleSubmit(file);
+          if (canSubmit) handleSubmit();
         }}
         onCancel={handleClose}
         isLoading={isLoading}
-        disabled={!!isLoading}
+        disabled={
+          !!isLoading ||
+          !!processing ||
+          (!!fileProcessor && (!previewItems || previewItems.length === 0))
+        }
         primaryType="button"
         containerClassName="mt-5"
         primaryName={t("_accessibility:buttons.ok")}

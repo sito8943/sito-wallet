@@ -1,4 +1,4 @@
-import { BaseClient } from "@sito/dashboard-app";
+import { BaseClient, Methods } from "@sito/dashboard-app";
 
 // enum
 import { Tables } from "./types";
@@ -30,7 +30,15 @@ export default class CurrencyClient extends BaseClient<
     super(Tables.Currencies, config.apiUrl, config.auth.user);
   }
 
-  processImport(file: File): Promise<CurrencyDto[]> {
-    return parseJSONFile<CurrencyDto>(file);
+  async processImport(file: File): Promise<CurrencyDto[]> {
+    const items = await parseJSONFile<CurrencyDto>(file);
+    return await this.api.doQuery<CurrencyDto[]>(
+      `${this.table}/import/process`,
+      Methods.POST,
+      items,
+      {
+        ...this.api.defaultTokenAcquirer(),
+      }
+    );
   }
 }
