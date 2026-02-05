@@ -111,7 +111,7 @@ select > option {
 }
 
 .submit.primary {
-  @apply bg-bg-primary hover:bg-primary text-base hover:text-text;
+  @apply bg-bg-primary hover:bg-primary text-base hover:text-base;
 }
 
 .outlined.secondary {
@@ -119,11 +119,11 @@ select > option {
 }
 
 .submit.secondary {
-  @apply bg-bg-secondary hover:bg-secondary text-base hover:text-text;
+  @apply bg-bg-secondary hover:bg-secondary text-base hover:text-base;
 }
 
 .submit.tertiary {
-  @apply bg-bg-tertiary hover:bg-tertiary text-base hover:text-text;
+  @apply bg-bg-tertiary hover:bg-tertiary text-base hover:text-base;
 }
 
 .outlined.tertiary {
@@ -131,7 +131,7 @@ select > option {
 }
 
 .submit.quaternary {
-  @apply bg-bg-quaternary hover:bg-quaternary text-base hover:text-text;
+  @apply bg-bg-quaternary hover:bg-quaternary text-base hover:text-base;
 }
 
 .outlined.quaternary {
