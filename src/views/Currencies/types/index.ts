@@ -13,11 +13,10 @@ import { CurrencyDto } from "lib";
 export interface CurrencyCardPropsType extends CurrencyDto {
   actions: ActionType<CurrencyDto>[];
   onClick: (id: number) => void;
-  deleted: boolean;
 }
 
 export interface CurrencyFormType
-  extends Omit<CurrencyDto, "deleted" | "createdAt" | "updatedAt" | "user">,
+  extends Omit<CurrencyDto, "deletedAt" | "createdAt" | "updatedAt" | "user">,
     FieldValues {
   userId: number;
 }

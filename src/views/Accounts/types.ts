@@ -13,11 +13,10 @@ import { AccountDto } from "lib";
 export interface AccountCardPropsType extends AccountDto {
   actions: ActionType<AccountDto>[];
   onClick: (id: number) => void;
-  deleted: boolean;
 }
 
 export interface AccountFormType
-  extends Omit<AccountDto, "deleted" | "createdAt" | "updatedAt" | "user">,
+  extends Omit<AccountDto, "deletedAt" | "createdAt" | "updatedAt" | "user">,
     FieldValues {
   userId: number;
 }

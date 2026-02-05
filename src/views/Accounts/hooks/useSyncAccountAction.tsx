@@ -25,8 +25,8 @@ export const useSyncAccountAction = (
   const action = useCallback(
     (record: AccountDto): ActionType<AccountDto> => ({
       id: AccountActions.SyncAccount,
-      hidden: record.deleted || hidden,
-      disabled: record.deleted,
+      hidden: !!record.deletedAt || hidden,
+      disabled: !!record.deletedAt,
       icon: (
         <FontAwesomeIcon
           className={`text-bg-primary ${isLoading ? "rotate" : ""}`}

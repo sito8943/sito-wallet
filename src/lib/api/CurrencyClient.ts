@@ -24,7 +24,8 @@ export default class CurrencyClient extends BaseClient<
   CommonCurrencyDto,
   AddCurrencyDto,
   UpdateCurrencyDto,
-  FilterCurrencyDto
+  FilterCurrencyDto,
+  ImportPreviewCurrencyDto
 > {
   /**
    */
@@ -47,10 +48,7 @@ export default class CurrencyClient extends BaseClient<
     );
   }
 
-  async import(data: {
-    items: ImportDto<ImportPreviewCurrencyDto>[];
-    override?: boolean;
-  }): Promise<number> {
+  async import(data: ImportDto<ImportPreviewCurrencyDto>): Promise<number> {
     return await this.api.post(`${this.table}/import`, data);
   }
 }

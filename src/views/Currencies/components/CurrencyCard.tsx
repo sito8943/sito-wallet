@@ -9,7 +9,8 @@ import { CurrencyCardPropsType } from "../types";
 export function CurrencyCard(props: CurrencyCardPropsType) {
   const { t } = useTranslation();
 
-  const { id, onClick, actions, name, description, symbol, deleted } = props;
+  const { id, onClick, actions, name, description, symbol, deletedAt } = props;
+  const deleted = !!deletedAt;
 
   return (
     <ItemCard

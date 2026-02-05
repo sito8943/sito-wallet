@@ -29,8 +29,9 @@ export function TransactionCard(props: TransactionCardPropsType) {
     amount,
     category,
     account,
-    deleted,
+    deletedAt,
   } = props;
+  const deleted = !!deletedAt;
 
   const { timeAge } = useTimeAge();
 

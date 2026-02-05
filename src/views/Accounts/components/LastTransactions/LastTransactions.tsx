@@ -16,7 +16,7 @@ export const LastTransactions = (props: LastTransactionsPropsType) => {
   const { isLoading, data } = useTransactionsList({
     filters: {
       accountId,
-      deleted: false,
+      deletedAt: false as unknown as any,
     },
     query: {
       pageSize: 2,

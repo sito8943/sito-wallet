@@ -62,7 +62,7 @@ export function useTransactionsList(
     filters: tableFilters,
   } = useTableOptions();
 
-  const { filters = { deleted: false }, query } = props;
+  const { filters = { deletedAt: false as unknown as any }, query } = props;
 
   const manager = useManager();
   const { account } = useAuth();
@@ -207,7 +207,7 @@ export function useTransactionsCommon(
     queryFn: async () => {
       try {
         const result = await manager.Transactions.commonGet({
-          deleted: false,
+          deletedAt: false as unknown as any,
           userId: account?.id,
           ...filters,
         });

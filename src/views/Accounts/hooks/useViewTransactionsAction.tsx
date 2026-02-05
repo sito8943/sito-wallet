@@ -30,8 +30,8 @@ export const useViewTransactionsAction = (
   const action = useCallback(
     (record: AccountDto): ActionType<AccountDto> => ({
       id: AccountActions.ViewTransactions,
-      hidden: record.deleted || hidden,
-      disabled: record.deleted,
+      hidden: !!record.deletedAt || hidden,
+      disabled: !!record.deletedAt,
       icon: <FontAwesomeIcon className="text-bg-primary" icon={faClock} />,
       tooltip: t("_pages:accounts.actions.viewTransactions.text"),
       onClick: () => {

@@ -25,8 +25,9 @@ export function TransactionCategoryCard(
 ) {
   const { t } = useTranslation();
 
-  const { id, onClick, actions, name, description, type, deleted, initial } =
+  const { id, onClick, actions, name, description, type, deletedAt, initial } =
     props;
+  const deleted = !!deletedAt;
 
   const parsedDescription = useMemo(() => {
     if (!description?.length) return t("_entities:base.description.empty");

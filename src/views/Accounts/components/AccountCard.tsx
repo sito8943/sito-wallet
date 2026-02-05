@@ -27,9 +27,10 @@ export function AccountCard(props: AccountCardPropsType) {
     description,
     type,
     currency,
-    deleted,
+    deletedAt,
     balance,
   } = props;
+  const deleted = !!deletedAt;
 
   return (
     <ItemCard

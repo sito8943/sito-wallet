@@ -17,10 +17,9 @@ import { ImportDto, ImportPreviewDto } from "lib";
 import { ImportDialogPropsType } from "../components/Dialog/ImportDialog";
 
 export type NewUseImportDialogPropsType<
-  PreviewEntityDto extends ImportPreviewDto,
-  EntityImportDto extends ImportDto<PreviewEntityDto>
+  PreviewEntityDto extends ImportPreviewDto
 > = Omit<UseImportDialogPropsType, "mutationFn"> & {
-  mutationFn: MutationFunction<number, EntityImportDto>;
+  mutationFn: MutationFunction<number, ImportDto<PreviewEntityDto>>;
   fileProcessor?: (
     file: File,
     options?: { override?: boolean }
@@ -36,10 +35,9 @@ export type UseImportDialogReturnType<
 
 export function useImportDialog<
   EntityDto extends BaseEntityDto,
-  PreviewEntityDto extends ImportPreviewDto,
-  EntityImportDto extends ImportDto<PreviewEntityDto>
+  PreviewEntityDto extends ImportPreviewDto
 >(
-  props: NewUseImportDialogPropsType<PreviewEntityDto, EntityImportDto>
+  props: NewUseImportDialogPropsType<PreviewEntityDto>
 ): UseImportDialogReturnType<EntityDto, PreviewEntityDto> {
   const { t } = useTranslation();
 
@@ -49,7 +47,11 @@ export function useImportDialog<
   const [items, setItems] = useState<PreviewEntityDto[] | null>(null);
   const [override, setOverride] = useState<boolean>(false);
 
-  const importMutation = useMutation<number, ValidationError, EntityImportDto>({
+  const importMutation = useMutation<
+    number,
+    ValidationError,
+    ImportDto<PreviewEntityDto>
+  >({
     mutationFn,
     onError: (error: ValidationError) => {
       console.error(error);
@@ -70,7 +72,7 @@ export function useImportDialog<
         await importMutation.mutateAsync({
           items,
           override,
-        } as unknown as EntityImportDto);
+        } as unknown as ImportDto<PreviewEntityDto>);
         setShowDialog(false);
         setItems(null);
         setOverride(false);

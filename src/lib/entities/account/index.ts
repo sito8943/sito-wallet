@@ -4,3 +4,4 @@ export * from "./FilterAccountDto";
 export * from "./CommonAccountDto";
 export * from "./AccountDto";
 export * from "./AccountType";
+export * from "./ImportPreviewAccountDto";

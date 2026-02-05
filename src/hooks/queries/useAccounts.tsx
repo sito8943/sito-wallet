@@ -30,7 +30,7 @@ export const AccountsQueryKeys = {
 export function useAccountsList(
   props: UseFetchPropsType<AccountDto, FilterAccountDto>
 ): UseQueryResult<QueryResult<AccountDto>> {
-  const { filters = { deleted: false } } = props;
+  const { filters = { deletedAt: false as unknown as any } } = props;
 
   const manager = useManager();
   const { account } = useAuth();
@@ -73,7 +73,7 @@ export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
     queryFn: async () => {
       try {
         const result = await manager.Accounts.commonGet({
-          deleted: false,
+          deletedAt: false as unknown as any,
           userId: account?.id,
         });
         if (!inCache(Tables.Accounts)) updateCache(Tables.Accounts, result);

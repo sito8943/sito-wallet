@@ -14,6 +14,7 @@ import {
   FilterTransactionTypeResumeDto,
   TransactionWeeklySpentDto,
   FilterWeeklyTransactionDto,
+  ImportPreviewTransactionDto,
 } from "lib";
 
 // utils
@@ -25,7 +26,8 @@ export default class TransactionClient extends BaseClient<
   CommonTransactionDto,
   AddTransactionDto,
   UpdateTransactionDto,
-  FilterTransactionDto
+  FilterTransactionDto,
+  ImportPreviewTransactionDto
 > {
   /**
    */

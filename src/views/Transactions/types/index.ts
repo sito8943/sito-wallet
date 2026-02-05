@@ -15,13 +15,12 @@ import { CommonAccountDto, TransactionDto } from "lib";
 export interface TransactionCardPropsType extends TransactionDto {
   actions: ActionType<TransactionDto>[];
   onClick: (id: number) => void;
-  deleted: boolean;
 }
 
 export interface TransactionFormType
   extends Omit<
       TransactionDto,
-      "currency" | "deleted" | "createdAt" | "updatedAt" | "user"
+      "currency" | "deletedAt" | "createdAt" | "updatedAt" | "user"
     >,
     FieldValues {}
 

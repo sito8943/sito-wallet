@@ -10,6 +10,7 @@ import {
   UpdateAccountDto,
   FilterAccountDto,
   AddAccountDto,
+  ImportPreviewAccountDto,
 } from "lib";
 
 // config
@@ -21,7 +22,8 @@ export default class AccountClient extends BaseClient<
   CommonAccountDto,
   AddAccountDto,
   UpdateAccountDto,
-  FilterAccountDto
+  FilterAccountDto,
+  ImportPreviewAccountDto
 > {
   /**
    */

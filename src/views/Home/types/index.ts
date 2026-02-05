@@ -13,11 +13,10 @@ import { DashboardDto } from "lib";
 export interface DashboardCardPropsType extends DashboardDto {
   actions: ActionType<DashboardDto>[];
   onClick: (id: number) => void;
-  deleted: boolean;
 }
 
 export interface DashboardFormType
-  extends Omit<DashboardDto, "deleted" | "createdAt" | "updatedAt" | "user">,
+  extends Omit<DashboardDto, "deletedAt" | "createdAt" | "updatedAt" | "user">,
     FieldValues {
   userId: number;
 }

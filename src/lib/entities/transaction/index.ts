@@ -8,3 +8,4 @@ export * from "./TransactionTypeResumeDto";
 export * from "./FilterTransactionTypeResumeDto";
 export * from "./TransactionWeeklySpentDto"
 export * from "./FilterWeeklyTransactionDto"
+export * from "./ImportPreviewTransactionDto"

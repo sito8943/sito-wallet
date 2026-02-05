@@ -10,6 +10,7 @@ import {
   UpdateTransactionCategoryDto,
   FilterTransactionCategoryDto,
   AddTransactionCategoryDto,
+  ImportPreviewTransactionCategoryDto,
 } from "lib";
 
 // config
@@ -21,7 +22,8 @@ export default class TransactionCategoryClient extends BaseClient<
   CommonTransactionCategoryDto,
   AddTransactionCategoryDto,
   UpdateTransactionCategoryDto,
-  FilterTransactionCategoryDto
+  FilterTransactionCategoryDto,
+  ImportPreviewTransactionCategoryDto
 > {
   /**
    */

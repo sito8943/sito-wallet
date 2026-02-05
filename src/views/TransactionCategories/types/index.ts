@@ -16,13 +16,12 @@ export interface TransactionCategoryCardPropsType
   extends TransactionCategoryDto {
   actions: ActionType<TransactionCategoryDto>[];
   onClick: (id: number) => void;
-  deleted: boolean;
 }
 
 export interface TransactionCategoryFormType
   extends Omit<
       TransactionCategoryDto,
-      "deleted" | "createdAt" | "updatedAt" | "user"
+      "deletedAt" | "createdAt" | "updatedAt" | "user"
     >,
     FieldValues {
   userId: number;

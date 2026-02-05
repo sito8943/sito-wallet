@@ -22,7 +22,7 @@ export const DashboardsQueryKeys = {
 export function useDashboardsList(
   props: UseFetchPropsType<DashboardDto>
 ): UseQueryResult<QueryResult<DashboardDto>> {
-  const { filters = { deleted: false } } = props;
+  const { filters = { deletedAt: false as unknown as any } } = props;
 
   const manager = useManager();
   const { account } = useAuth();

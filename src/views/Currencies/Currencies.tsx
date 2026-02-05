@@ -71,8 +71,7 @@ export function Currencies() {
 
   const importCurrencies = useImportDialog<
     CurrencyDto,
-    ImportPreviewCurrencyDto,
-    CurrencyImportDto
+    ImportPreviewCurrencyDto
   >({
     entity: Tables.Currencies,
     fileProcessor: (file, options) =>

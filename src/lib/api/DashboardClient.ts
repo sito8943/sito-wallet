@@ -11,6 +11,7 @@ import {
   FilterDashboardDto,
   UpdateDashboardCardTitleDto,
   UpdateDashboardCardConfigDto,
+  ImportPreviewDashboardDto,
 } from "lib";
 
 // config
@@ -22,7 +23,8 @@ export default class DashboardClient extends BaseClient<
   BaseCommonEntityDto,
   AddDashboardDto,
   UpdateDashboardDto,
-  FilterDashboardDto
+  FilterDashboardDto,
+  ImportPreviewDashboardDto
 > {
   /**
    */
