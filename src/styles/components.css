@@ -53,3 +53,19 @@ a.primary {
 .real-quaternary {
   @apply bg-quaternary;
 }
+
+.text-primary {
+  @apply text-primary;
+}
+
+.text-secondary {
+  @apply text-secondary;
+}
+
+.text-tertiary {
+  @apply text-tertiary;
+}
+
+.text-quaternary {
+  @apply text-quaternary;
+}

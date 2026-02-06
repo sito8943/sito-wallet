@@ -17,7 +17,7 @@ function Logo(props: LogoProps) {
       viewBox="0 0 192 192"
       {...restProps}
     >
-      <g id="Capa_1-2" data-name="Capa 1">
+      <g>
         <rect fill={colorVariant} width="192" height="192" />
         <path
           fill="#fbfbfb"

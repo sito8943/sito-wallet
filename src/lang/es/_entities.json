@@ -122,6 +122,7 @@
     "name": {
       "label": "Nombre",
       "placeholder": "Ej: Alimentos",
+      "unique": "Ya existe una categoría con ese nombre",
       "init": "Transacción inicial"
     },
     "description": {
@@ -139,7 +140,7 @@
   },
   "currency": {
     "name": {
-      "unique": "Ya existe una currency con ese nombre",
+      "unique": "Ya existe una moneda con ese nombre",
       "placeholder": "Ej: CUP"
     },
     "symbol": {

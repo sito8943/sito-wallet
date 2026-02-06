@@ -2,7 +2,11 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { useFormDialog } from "@sito/dashboard-app";
+import {
+  isHttpError,
+  useFormDialog,
+  useNotification,
+} from "@sito/dashboard-app";
 
 // providers
 import { useManager } from "providers";
@@ -21,7 +25,7 @@ import { CurrencyFormType } from "../types";
 
 export function useAddCurrency() {
   const { t } = useTranslation();
-
+  const { showErrorNotification } = useNotification();
   const manager = useManager();
 
   const queryKey = useMemo(() => CurrenciesQueryKeys.all().queryKey, []);
@@ -38,6 +42,18 @@ export function useAddCurrency() {
     mutationFn: (data) => manager.Currencies.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:currencies.forms.add"),
+    onError: (error) => {
+      console.log("Error adding currency", error);
+      if (isHttpError(error) && error.status === 409) {
+        return showErrorNotification({
+          message: t("_entities:currency.name.unique"),
+        });
+      }
+
+      return showErrorNotification({
+        message: t("_accessibility:errors.500"),
+      });
+    },
     queryKey,
   });
 
