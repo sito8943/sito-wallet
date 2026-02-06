@@ -48,8 +48,6 @@ export const FileInput = forwardRef(function (
     });
   };
 
-  console.log(files);
-
   return (
     <div className={`file-input-container ${containerClassName}`}>
       {files.length === 0 && (

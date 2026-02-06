@@ -43,7 +43,6 @@ export function useAddCurrency() {
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:currencies.forms.add"),
     onError: (error) => {
-      console.log("Error adding currency", error);
       if (isHttpError(error) && error.status === 409) {
         return showErrorNotification({
           message: t("_entities:currency.name.unique"),
