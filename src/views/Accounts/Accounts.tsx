@@ -12,8 +12,6 @@ import {
   Empty,
   Error,
   ConfirmationDialog,
-  ImportDialog,
-  useImportDialog,
 } from "@sito/dashboard-app";
 
 // providers
@@ -27,7 +25,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AddAccountDialog, AccountCard, EditAccountDialog } from "./components";
 
 // hooks
-import { useAccountsList, AccountsQueryKeys } from "hooks";
+import { useAccountsList, AccountsQueryKeys, useImportDialog } from "hooks";
 import {
   useAddAccountDialog,
   useEditAccountDialog,
@@ -36,7 +34,8 @@ import {
 } from "./hooks";
 
 // types
-import { AccountDto, Tables } from "lib";
+import { AccountDto, Tables, ImportPreviewAccountDto } from "lib";
+import { ImportDialog } from "../../components/Dialog/ImportDialog";
 
 export function Accounts() {
   const { t } = useTranslation();
@@ -68,8 +67,10 @@ export function Accounts() {
     mutationFn: () => manager.Accounts.export(),
   });
 
-  const importAccounts = useImportDialog({
+  const importAccounts = useImportDialog<AccountDto, ImportPreviewAccountDto>({
     entity: Tables.Accounts,
+    fileProcessor: (file, options) =>
+      manager.Accounts.processImport(file, options?.override),
     mutationFn: (data) => manager.Accounts.import(data),
     ...AccountsQueryKeys.all(),
   });

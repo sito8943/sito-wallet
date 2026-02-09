@@ -43,7 +43,6 @@ export function useAccountsList(
       try {
         const result = await manager.Accounts.get(undefined, {
           ...filters,
-          userId: account?.id,
         });
 
         updateCache(Tables.Accounts, result.items);
@@ -74,7 +73,6 @@ export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
       try {
         const result = await manager.Accounts.commonGet({
           deletedAt: false as unknown as any,
-          userId: account?.id,
         });
         if (!inCache(Tables.Accounts)) updateCache(Tables.Accounts, result);
         return result;

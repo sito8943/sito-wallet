@@ -35,7 +35,6 @@ export function useDashboardsList(
       try {
         const result = await manager.Dashboard.get(undefined, {
           ...filters,
-          userId: account?.id,
         });
 
         updateCache(Tables.UserDashboardConfig, result.items);

@@ -47,7 +47,6 @@ export function useTransactionCategoriesList(
       try {
         const result = await manager.TransactionCategories.get(undefined, {
           ...filters,
-          userId: account?.id,
         });
         if (!inCache(Tables.TransactionCategories))
           updateCache(Tables.TransactionCategories, result.items);
@@ -80,7 +79,6 @@ export function useTransactionCategoriesCommon(): UseQueryResult<
       try {
         const result = await manager.TransactionCategories.commonGet({
           deletedAt: false as unknown as any,
-          userId: account?.id,
         });
         updateCache(Tables.TransactionCategories, result);
         return result;

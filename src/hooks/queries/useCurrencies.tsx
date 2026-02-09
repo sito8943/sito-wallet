@@ -43,7 +43,6 @@ export function useCurrenciesList(
       try {
         const result = await manager.Currencies.get(undefined, {
           ...filters,
-          userId: account?.id,
         });
         updateCache(Tables.Currencies, result.items);
         return result;
@@ -73,7 +72,6 @@ export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
       try {
         const result = await manager.Currencies.commonGet({
           deletedAt: false as unknown as any,
-          userId: account?.id,
         });
         if (!inCache(Tables.Currencies)) updateCache(Tables.Currencies, result);
         return result;

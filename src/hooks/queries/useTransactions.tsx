@@ -72,9 +72,8 @@ export function useTransactionsList(
     () => ({
       ...tableFilters,
       ...filters,
-      userId: account?.id,
     }),
-    [account?.id, filters, tableFilters]
+    [filters, tableFilters]
   );
 
   const parsedQueries = useMemo(
@@ -133,7 +132,6 @@ export function useTransactionTypeResume(
 
   return useQuery({
     ...TransactionsQueryKeys.typeResume({
-      userId: account?.id,
       ...filters,
     }),
     enabled: !!account?.id,
@@ -141,7 +139,6 @@ export function useTransactionTypeResume(
       try {
         const result = await manager.Transactions.getTypeResume({
           type: filters?.type ?? TransactionType.In,
-          userId: account?.id ?? 0,
           account: filters?.account,
           category: filters?.category,
           date: filters?.date,
@@ -170,7 +167,6 @@ export function useWeekly(
 
   return useQuery({
     ...TransactionsQueryKeys.weekly({
-      userId: account?.id,
       ...filters,
     }),
     enabled: !!account?.id,
@@ -178,7 +174,6 @@ export function useWeekly(
       try {
         const result = await manager.Transactions.weekly({
           type: filters?.type ?? TransactionType.In,
-          userId: account?.id ?? 0,
           account: filters?.account,
         });
 
@@ -208,7 +203,6 @@ export function useTransactionsCommon(
       try {
         const result = await manager.Transactions.commonGet({
           deletedAt: false as unknown as any,
-          userId: account?.id,
           ...filters,
         });
         if (!inCache(Tables.Transactions))
