@@ -23,7 +23,7 @@ export function CurrencyCard(props: CurrencyCardPropsType) {
     >
       <p
         className={`${description ? "" : "!text-xs italic"} text-start ${
-          deleted ? "!text-secondary" : ""
+          deleted ? "!text-bg-error" : ""
         }`}
       >
         {description ? description : t("_entities:base.description.empty")}

@@ -52,7 +52,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
     >
       <p
         className={`${description ? "" : "!text-xs italic"} text-start mb-2 ${
-          deleted ? "!text-secondary" : ""
+          deleted ? "!text-bg-error" : ""
         }`}
       >
         {parsedDescription}

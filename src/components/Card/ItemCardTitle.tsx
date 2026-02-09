@@ -6,7 +6,7 @@ export const ItemCardTitle = (props: ItemCardTitlePropsType) => {
   return (
     <h3
       className={`text-lg ${
-        deleted ? "!text-secondary" : "!text-text"
+        deleted ? "!text-bg-error" : "!text-text"
       } text-start`}
     >
       {children}

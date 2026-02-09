@@ -33,12 +33,7 @@ import { useCurrenciesList, CurrenciesQueryKeys, useImportDialog } from "hooks";
 import { useAddCurrency, useEditCurrency } from "./hooks";
 
 // types
-import {
-  CurrencyDto,
-  CurrencyImportDto,
-  ImportPreviewCurrencyDto,
-  Tables,
-} from "lib";
+import { CurrencyDto, ImportPreviewCurrencyDto, Tables } from "lib";
 import { ImportDialog } from "../../components/Dialog/ImportDialog";
 
 export function Currencies() {
