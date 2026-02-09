@@ -32,6 +32,7 @@ import {
 import {
   useTransactionCategoriesList,
   TransactionCategoriesQueryKeys,
+  useImportDialog,
 } from "hooks";
 import {
   useAddTransactionCategoryDialog,
@@ -39,7 +40,12 @@ import {
 } from "./hooks";
 
 // types
-import { Tables, TransactionCategoryDto } from "lib";
+import {
+  Tables,
+  TransactionCategoryDto,
+  ImportPreviewTransactionCategoryDto,
+} from "lib";
+import { ImportDialog } from "../../components/Dialog/ImportDialog";
 
 export function TransactionCategories() {
   const { t } = useTranslation();
@@ -69,6 +75,17 @@ export function TransactionCategories() {
     mutationFn: () => manager.TransactionCategories.export(),
   });
 
+  const importTransactionCategories = useImportDialog<
+    TransactionCategoryDto,
+    ImportPreviewTransactionCategoryDto
+  >({
+    entity: Tables.TransactionCategories,
+    fileProcessor: (file, options) =>
+      manager.TransactionCategories.processImport(file, options?.override),
+    mutationFn: (data) => manager.TransactionCategories.import(data),
+    ...TransactionCategoriesQueryKeys.all(),
+  });
+
   // #endregion
 
   const getActions = useCallback(
@@ -80,8 +97,11 @@ export function TransactionCategories() {
   );
 
   const pageToolbar = useMemo(() => {
-    return [exportTransactionCategory.action()];
-  }, [exportTransactionCategory]);
+    return [
+      exportTransactionCategory.action(),
+      importTransactionCategories.action(),
+    ];
+  }, [exportTransactionCategory, importTransactionCategories]);
 
   return (
     <Page
@@ -128,6 +148,7 @@ export function TransactionCategories() {
           <EditTransactionCategoryDialog {...editTransactionCategory} />
           <ConfirmationDialog {...deleteTransactionCategory} />
           <ConfirmationDialog {...restoreTransactionCategory} />
+          <ImportDialog {...importTransactionCategories} />
         </>
       ) : (
         <Error error={error} />
