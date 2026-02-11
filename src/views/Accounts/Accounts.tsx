@@ -12,6 +12,8 @@ import {
   Empty,
   Error,
   ConfirmationDialog,
+  useImportDialog,
+  ImportDialog,
 } from "@sito/dashboard-app";
 
 // providers
@@ -25,7 +27,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AddAccountDialog, AccountCard, EditAccountDialog } from "./components";
 
 // hooks
-import { useAccountsList, AccountsQueryKeys, useImportDialog } from "hooks";
+import { useAccountsList, AccountsQueryKeys } from "hooks";
 import {
   useAddAccountDialog,
   useEditAccountDialog,
@@ -35,7 +37,6 @@ import {
 
 // types
 import { AccountDto, Tables, ImportPreviewAccountDto } from "lib";
-import { ImportDialog } from "../../components/Dialog/ImportDialog";
 
 export function Accounts() {
   const { t } = useTranslation();

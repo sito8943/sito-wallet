@@ -12,6 +12,8 @@ import {
   useExportActionMutate,
   GlobalActions,
   ConfirmationDialog,
+  ImportDialog,
+  useImportDialog,
 } from "@sito/dashboard-app";
 
 // icons
@@ -32,7 +34,6 @@ import {
 import {
   useTransactionCategoriesList,
   TransactionCategoriesQueryKeys,
-  useImportDialog,
 } from "hooks";
 import {
   useAddTransactionCategoryDialog,
@@ -46,7 +47,6 @@ import {
   ImportPreviewTransactionCategoryDto,
   TablesCamelCase,
 } from "lib";
-import { ImportDialog } from "../../components/Dialog/ImportDialog";
 
 export function TransactionCategories() {
   const { t } = useTranslation();
