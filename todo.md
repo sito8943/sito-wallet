@@ -24,12 +24,13 @@
 - [x] Guardar en una tabla config las tarjetas
 - [x] Una vez seleccionada una categoria no te deja borrar en el input del filtro
 - [x] Una vez seleccionada una categoria al darle en el delete del chip se rompe, filtro
+- [x] Arreglar los css para que no reinporten el tailwindcss
 - [ ] Creas un home card, le pones titulo, te vas y vuelves la home y sale sin nombre, pero el nombre viene de la bd
 - [ ] Guardar los filtros de las cards en config
 - [ ] Revisar que el LastTransactions si ya existe un cache actualizado no sobreescribir
 - [ ] En los rangos de fecha poder selecionar por mes (incluid mes actual), dia (hoy) o año (actual)
-- [ ] Arreglar los css para que no reinporten el tailwindcss
 - [ ] Agregar Que los tabs y columns de Transactions sean stickis al scrollear
+- [ ] El card del transaction category debe poder mostrarte la cantidad de productos q tiene, si clikeas en ese chip te debe abrir una tabla de transacciones filtradas por esa categoria
 - [ ] Transaccion puede incluir foto
 - [ ] Transaccion puede incluir listado de productos
 - [ ] Revisar hay que hacer que el scroll de la tabla se vea sin hacer scroll del body

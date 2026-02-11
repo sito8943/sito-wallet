@@ -11,14 +11,19 @@ import {
   BaseEntityDto,
   ActionType,
 } from "@sito/dashboard-app";
+
+// lib
 import { ImportDto, ImportPreviewDto } from "lib";
 
-// componentes
+// components
 import { ImportDialogPropsType } from "../components/Dialog/ImportDialog";
 
 export type NewUseImportDialogPropsType<
   PreviewEntityDto extends ImportPreviewDto
-> = Omit<UseImportDialogPropsType, "mutationFn"> & {
+> = Omit<
+  UseImportDialogPropsType<PreviewEntityDto, ImportDto<PreviewEntityDto>>,
+  "mutationFn"
+> & {
   mutationFn: MutationFunction<number, ImportDto<PreviewEntityDto>>;
   fileProcessor?: (
     file: File,
@@ -46,6 +51,8 @@ export function useImportDialog<
   const [showDialog, setShowDialog] = useState(false);
   const [items, setItems] = useState<PreviewEntityDto[] | null>(null);
   const [override, setOverride] = useState<boolean>(false);
+
+  console.log(showDialog);
 
   const importMutation = useMutation<
     number,
@@ -89,6 +96,7 @@ export function useImportDialog<
       entity: t(`_pages:${entity}.title`),
     }),
     handleClose: () => {
+      console.log("hola?")
       setShowDialog(false);
       setItems(null);
     },

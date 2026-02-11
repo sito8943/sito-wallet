@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 // @sito-dashboard
 import {
@@ -51,7 +51,19 @@ export const ImportDialog = <EntityDto extends ImportPreviewDto>(
     ...rest
   } = props;
 
+  console.log(handleClose);
+
   const [inputKey, setInputKey] = useState(0);
+  const processedCallbackRef = useRef(onFileProcessed);
+  const fileProcessorRef = useRef(fileProcessor);
+
+  useEffect(() => {
+    processedCallbackRef.current = onFileProcessed;
+  }, [onFileProcessed]);
+
+  useEffect(() => {
+    fileProcessorRef.current = fileProcessor;
+  }, [fileProcessor]);
 
   useEffect(() => {
     if (!open) {
@@ -65,13 +77,15 @@ export const ImportDialog = <EntityDto extends ImportPreviewDto>(
   }, [open]);
 
   const handleFileProcessed = useCallback(async () => {
-    if (fileProcessor && file) {
+    if (fileProcessorRef.current && file) {
       setProcessing(true);
       try {
-        const items = await fileProcessor(file, { override: overrideExisting });
+        const items = await fileProcessorRef.current(file, {
+          override: overrideExisting,
+        });
         setPreviewItems(items ?? []);
         setParseError(null);
-        onFileProcessed?.(items ?? []);
+        processedCallbackRef.current?.(items ?? []);
       } catch (err) {
         console.error(err);
         setPreviewItems(null);
@@ -81,12 +95,11 @@ export const ImportDialog = <EntityDto extends ImportPreviewDto>(
       }
       setProcessing(false);
     }
-  }, [file, fileProcessor, onFileProcessed, overrideExisting]);
+  }, [file, overrideExisting]);
 
   useEffect(() => {
     handleFileProcessed();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [file, overrideExisting]);
+  }, [handleFileProcessed]);
 
   return (
     <Dialog {...rest} open={open} handleClose={handleClose}>
@@ -97,6 +110,7 @@ export const ImportDialog = <EntityDto extends ImportPreviewDto>(
           setPreviewItems(null);
           setParseError(null);
           setProcessing(false);
+          processedCallbackRef.current?.([]);
         }}
         onChange={(e) => {
           const file = (e.target as HTMLInputElement).files?.[0];
@@ -105,6 +119,7 @@ export const ImportDialog = <EntityDto extends ImportPreviewDto>(
             setPreviewItems(null);
             setParseError(null);
             setProcessing(false);
+            processedCallbackRef.current?.([]);
             return;
           }
           setFile(file);
@@ -140,14 +155,12 @@ export const ImportDialog = <EntityDto extends ImportPreviewDto>(
           const canSubmit =
             !fileProcessor || (!!previewItems && previewItems.length > 0);
           if (canSubmit) handleSubmit();
+          else {
+            // throw error notification of required file o items to process
+          }
         }}
         onCancel={handleClose}
         isLoading={isLoading}
-        disabled={
-          !!isLoading ||
-          !!processing ||
-          (!!fileProcessor && (!previewItems || previewItems.length === 0))
-        }
         primaryType="button"
         containerClassName="mt-5"
         primaryName={t("_accessibility:buttons.ok")}

@@ -15,6 +15,8 @@ import {
   TransactionWeeklySpentDto,
   FilterWeeklyTransactionDto,
   ImportPreviewTransactionDto,
+  ImportDto,
+  parseJSONFile,
 } from "lib";
 
 // utils
@@ -69,5 +71,24 @@ export default class TransactionClient extends BaseClient<
         ...this.api.defaultTokenAcquirer(),
       }
     );
+  }
+
+  async processImport(
+    file: File,
+    override?: boolean
+  ): Promise<ImportPreviewTransactionDto[]> {
+    const items = await parseJSONFile<TransactionDto>(file);
+    return await this.api.doQuery<ImportPreviewTransactionDto[]>(
+      `${this.table}/import/process${override ? `?override=true` : ""}`,
+      Methods.POST,
+      items,
+      {
+        ...this.api.defaultTokenAcquirer(),
+      }
+    );
+  }
+
+  async import(data: ImportDto<ImportPreviewTransactionDto>): Promise<number> {
+    return await this.api.post(`${this.table}/import`, data);
   }
 }

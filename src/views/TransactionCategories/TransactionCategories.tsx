@@ -44,6 +44,7 @@ import {
   Tables,
   TransactionCategoryDto,
   ImportPreviewTransactionCategoryDto,
+  TablesCamelCase,
 } from "lib";
 import { ImportDialog } from "../../components/Dialog/ImportDialog";
 
@@ -79,7 +80,7 @@ export function TransactionCategories() {
     TransactionCategoryDto,
     ImportPreviewTransactionCategoryDto
   >({
-    entity: Tables.TransactionCategories,
+    entity: TablesCamelCase.TransactionCategories,
     fileProcessor: (file, options) =>
       manager.TransactionCategories.processImport(file, options?.override),
     mutationFn: (data) => manager.TransactionCategories.import(data),

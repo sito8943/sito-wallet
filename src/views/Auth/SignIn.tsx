@@ -15,6 +15,7 @@ import {
   Button,
   State,
   TextInput,
+  isHttpError,
 } from "@sito/dashboard-app";
 
 // providers
@@ -51,6 +52,7 @@ export function SignIn() {
     SessionDto,
     AuthDto
   >({
+    queryKey: [""],
     formToDto: (data: AuthDto) => data,
     mutationFn: async (data: AuthDto) => await manager.Auth.login(data),
     onSuccess: (data) => {
@@ -59,9 +61,10 @@ export function SignIn() {
       navigate("/");
     },
     onError: (error) => {
-      showErrorNotification({
-        message: t(`_accessibility:errors.signIn.${error.message}`),
-      });
+      if (isHttpError(error))
+        showErrorNotification({
+          message: t(`_accessibility:errors.signIn.${error.status}`),
+        });
     },
   });
 

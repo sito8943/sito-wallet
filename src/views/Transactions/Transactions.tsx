@@ -15,8 +15,8 @@ import {
   useTableOptions,
   Empty,
   GlobalActions,
-  useImportDialog,
   ImportDialog,
+  useImportDialog,
 } from "@sito/dashboard-app";
 
 // icons
@@ -48,6 +48,7 @@ import {
   Tables,
   TransactionDto,
   TransactionType,
+  ImportPreviewTransactionDto,
 } from "lib";
 
 // providers
@@ -126,8 +127,18 @@ export function Transactions() {
     mutationFn: () => manager.Transactions.export(filters),
   });
 
-  const importTransactions = useImportDialog({
+  const handleTransactionProcess = useCallback(
+    (file: File, options?: { override?: boolean }) =>
+      manager.Transactions.processImport(file, options?.override),
+    [manager]
+  );
+
+  const importTransactions = useImportDialog<
+    TransactionDto,
+    ImportPreviewTransactionDto
+  >({
     entity: Tables.Transactions,
+    fileProcessor: handleTransactionProcess,
     mutationFn: (data) => manager.Transactions.import(data),
     ...TransactionsQueryKeys.all(),
   });
@@ -281,9 +292,7 @@ export function Transactions() {
       <AddTransactionDialog {...addTransaction} />
       <ConfirmationDialog {...deleteTransaction} />
       <ConfirmationDialog {...restoreTransaction} />
-      <ImportDialog {...importTransactions}>
-        <p className="mt-2">Choose a file and confirm.</p>
-      </ImportDialog>
+      <ImportDialog {...importTransactions} />
 
       {/* Category Dialogs */}
       {/* <EditTransactionDialog /> */}

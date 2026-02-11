@@ -6,6 +6,7 @@ export * from "./TransactionDto";
 export * from "./TransactionType";
 export * from "./TransactionTypeResumeDto";
 export * from "./FilterTransactionTypeResumeDto";
-export * from "./TransactionWeeklySpentDto"
-export * from "./FilterWeeklyTransactionDto"
-export * from "./ImportPreviewTransactionDto"
+export * from "./TransactionWeeklySpentDto";
+export * from "./FilterWeeklyTransactionDto";
+export * from "./ImportPreviewTransactionDto";
+export * from "./ImportTransactionDto";

@@ -90,7 +90,7 @@ export function Accounts() {
   );
 
   const pageToolbar = useMemo(() => {
-    return [importAccounts.action(), exportAccounts.action()];
+    return [exportAccounts.action(), importAccounts.action()];
   }, [exportAccounts, importAccounts]);
 
   return (
