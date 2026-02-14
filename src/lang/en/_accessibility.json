@@ -96,6 +96,9 @@
   },
   "components": {
     "table": {
+      "selectedCount": "Selected {{count}} items",
+      "selectRow": "Select row",
+      "selectAllRows": "Select all visible rows",
       "filters": {
         "title": "Filters",
         "range": {

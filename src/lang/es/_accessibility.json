@@ -71,6 +71,9 @@
   "tooltips": {},
   "components": {
     "table": {
+      "selectedCount": "{{count}} elementos seleccionados",
+      "selectRow": "Seleccionar fila",
+      "selectAllRows": "Seleccionar todas las filas visibles",
       "filters": {
         "title": "Filtros",
         "range": {
