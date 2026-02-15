@@ -11,3 +11,4 @@ export * from "./FilterWeeklyTransactionDto";
 export * from "./ImportPreviewTransactionDto";
 export * from "./ImportTransactionDto";
 export * from "./AssignTransactionAccountDto";
+export * from "./AssignTransactionCategoryDto";

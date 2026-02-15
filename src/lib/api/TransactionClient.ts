@@ -18,6 +18,7 @@ import {
   ImportDto,
   parseJSONFile,
   AssignTransactionAccountDto,
+  AssignTransactionCategoryDto,
 } from "lib";
 
 // utils
@@ -95,5 +96,9 @@ export default class TransactionClient extends BaseClient<
 
   async assignAccount(data: AssignTransactionAccountDto): Promise<number> {
     return await this.api.patch(`${this.table}/assign-account`, data);
+  }
+
+  async assignCategory(data: AssignTransactionCategoryDto): Promise<number> {
+    return await this.api.patch(`${this.table}/assign-category`, data);
   }
 }

@@ -169,6 +169,11 @@
         "text": "Assign to account",
         "title": "Assign transactions to account",
         "successMessage": "Transactions updated successfully"
+      },
+      "assignCategory": {
+        "text": "Assign category",
+        "title": "Assign transactions to category",
+        "successMessage": "Transactions updated successfully"
       }
     },
     "forms": {

@@ -135,6 +135,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
       isLoading={isLoading}
       entity={EntityName.Transaction}
       columns={columns}
+      contentClassName="transactions-table-body"
       filterOptions={{
         button: {
           hide: true,

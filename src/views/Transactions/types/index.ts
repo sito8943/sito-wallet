@@ -11,7 +11,11 @@ import {
 } from "@sito/dashboard-app";
 
 // types
-import { CommonAccountDto, TransactionDto } from "lib";
+import {
+  CommonAccountDto,
+  CommonTransactionCategoryDto,
+  TransactionDto,
+} from "lib";
 
 export interface TransactionCardPropsType extends TransactionDto {
   actions: ActionType<TransactionDto>[];
@@ -62,6 +66,15 @@ export type AssignTransactionAccountDialogPropsType = TriggerFormDialogPropsType
   ValidationError
 >;
 
+export interface AssignTransactionCategoryFormType extends FieldValues {
+  category: CommonTransactionCategoryDto | null;
+  transactionIds: number[];
+}
+
+export type AssignTransactionCategoryDialogPropsType =
+  TriggerFormDialogPropsType<AssignTransactionCategoryFormType, ValidationError>;
+
 export enum TransactionActions {
   AssignAccount = "assignAccount",
+  AssignCategory = "assignCategory",
 }

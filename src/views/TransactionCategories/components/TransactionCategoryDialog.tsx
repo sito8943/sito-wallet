@@ -85,7 +85,7 @@ export function TransactionCategoryForm(
         render={({ field: { value, ...rest } }) => (
           <TextInput
             required
-            maxLength={20}
+            maxLength={25}
             value={value ?? ""}
             autoComplete={`${Tables.TransactionCategories}-${t(
               "_entities:base.name.label"

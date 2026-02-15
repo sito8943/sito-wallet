@@ -28,6 +28,7 @@ import {
   useAddTransaction,
   useEditTransaction,
   useAssignTransactionAccountAction,
+  useAssignTransactionCategoryAction,
 } from "./hooks";
 import { useAddAccountDialog } from "../Accounts/hooks";
 import {
@@ -40,6 +41,7 @@ import {
 import {
   AddTransactionDialog,
   AssignAccountDialog,
+  AssignCategoryDialog,
   EditTransactionDialog,
   TransactionGrid,
   TransactionTable,
@@ -126,6 +128,7 @@ export function Transactions() {
   const editTransaction = useEditTransaction();
 
   const assignTransactionAccount = useAssignTransactionAccountAction();
+  const assignTransactionCategory = useAssignTransactionCategoryAction();
 
   const { filters } = useTableOptions();
 
@@ -154,12 +157,14 @@ export function Transactions() {
 
   const getTableActions = useCallback(
     (record: TransactionDto) => [
+      assignTransactionCategory.action(record),
       assignTransactionAccount.action(record),
       editTransaction.action(record),
       deleteTransaction.action(record),
       restoreTransaction.action(record),
     ],
     [
+      assignTransactionCategory,
       assignTransactionAccount,
       deleteTransaction,
       editTransaction,
@@ -169,11 +174,17 @@ export function Transactions() {
 
   const getGridActions = useCallback(
     (record: TransactionDto) => [
+      assignTransactionCategory.action(record),
       assignTransactionAccount.action(record),
       deleteTransaction.action(record),
       restoreTransaction.action(record),
     ],
-    [assignTransactionAccount, deleteTransaction, restoreTransaction]
+    [
+      assignTransactionAccount,
+      assignTransactionCategory,
+      deleteTransaction,
+      restoreTransaction,
+    ]
   );
 
   const accountDesktopTabs = useMemo(() => {
@@ -308,6 +319,7 @@ export function Transactions() {
       <ConfirmationDialog {...restoreTransaction} />
       <ImportDialog {...importTransactions} />
       <AssignAccountDialog {...assignTransactionAccount} />
+      <AssignCategoryDialog {...assignTransactionCategory} />
 
     </Page>
   );
