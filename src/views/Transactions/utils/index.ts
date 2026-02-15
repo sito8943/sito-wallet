@@ -7,9 +7,11 @@ import {
   TransactionType,
   UpdateTransactionDto,
   AssignTransactionAccountDto,
+  AssignTransactionCategoryDto,
 } from "lib";
 import {
   AssignTransactionAccountFormType,
+  AssignTransactionCategoryFormType,
   TransactionFormType,
 } from "../types";
 
@@ -65,5 +67,17 @@ export const assignAccountFormToDto = (
   form: AssignTransactionAccountFormType
 ): AssignTransactionAccountDto => ({
   accountId: form.account?.id ?? 0,
+  transactionIds: form.transactionIds ?? [],
+});
+
+export const emptyAssignCategoryForm = (): AssignTransactionCategoryFormType => ({
+  category: null,
+  transactionIds: [],
+});
+
+export const assignCategoryFormToDto = (
+  form: AssignTransactionCategoryFormType
+): AssignTransactionCategoryDto => ({
+  categoryId: form.category?.id ?? 0,
   transactionIds: form.transactionIds ?? [],
 });
