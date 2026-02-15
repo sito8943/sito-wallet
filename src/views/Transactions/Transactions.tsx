@@ -134,7 +134,11 @@ export function Transactions() {
 
   const exportTransactions = useExportActionMutate({
     entity: Tables.Transactions,
-    mutationFn: () => manager.Transactions.export(filters),
+    mutationFn: () =>
+      manager.Transactions.export({
+        ...filters,
+        accountId: selectedAccount?.id,
+      }),
   });
 
   const handleTransactionProcess = useCallback(
@@ -320,7 +324,6 @@ export function Transactions() {
       <ImportDialog {...importTransactions} />
       <AssignAccountDialog {...assignTransactionAccount} />
       <AssignCategoryDialog {...assignTransactionCategory} />
-
     </Page>
   );
 }
