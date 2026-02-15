@@ -7,6 +7,7 @@ import {
   UseActionDialog,
   ValidationError,
   FormDialogPropsType,
+  TriggerFormDialogPropsType,
 } from "@sito/dashboard-app";
 
 // types
@@ -50,3 +51,17 @@ export type UseAddTransactionActionDialog<TDto extends BaseEntityDto> =
 export type UseAddTransactionDialogActionPropsType = {
   account: CommonAccountDto | null;
 };
+
+export interface AssignTransactionAccountFormType extends FieldValues {
+  account: CommonAccountDto | null;
+  transactionIds: number[];
+}
+
+export type AssignTransactionAccountDialogPropsType = TriggerFormDialogPropsType<
+  AssignTransactionAccountFormType,
+  ValidationError
+>;
+
+export enum TransactionActions {
+  AssignAccount = "assignAccount",
+}

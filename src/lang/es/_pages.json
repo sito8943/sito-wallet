@@ -169,6 +169,13 @@
       }
     },
     "add": "Agregar una transacción",
+    "actions": {
+      "assignAccount": {
+        "text": "Asignar a cuenta",
+        "title": "Asignar cuenta a transacciones",
+        "successMessage": "Transacciones actualizadas correctamente"
+      }
+    },
     "forms": {
       "add": "Nueva transacción",
       "edit": "Editar transacción",

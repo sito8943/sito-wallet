@@ -164,6 +164,13 @@
       }
     },
     "add": "Add a transaction",
+    "actions": {
+      "assignAccount": {
+        "text": "Assign to account",
+        "title": "Assign transactions to account",
+        "successMessage": "Transactions updated successfully"
+      }
+    },
     "forms": {
       "add": "New transaction",
       "edit": "Edit transaction",

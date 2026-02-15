@@ -10,3 +10,4 @@ export * from "./TransactionWeeklySpentDto";
 export * from "./FilterWeeklyTransactionDto";
 export * from "./ImportPreviewTransactionDto";
 export * from "./ImportTransactionDto";
+export * from "./AssignTransactionAccountDto";

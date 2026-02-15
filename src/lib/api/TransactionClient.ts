@@ -17,6 +17,7 @@ import {
   ImportPreviewTransactionDto,
   ImportDto,
   parseJSONFile,
+  AssignTransactionAccountDto,
 } from "lib";
 
 // utils
@@ -90,5 +91,9 @@ export default class TransactionClient extends BaseClient<
 
   async import(data: ImportDto<ImportPreviewTransactionDto>): Promise<number> {
     return await this.api.post(`${this.table}/import`, data);
+  }
+
+  async assignAccount(data: AssignTransactionAccountDto): Promise<number> {
+    return await this.api.patch(`${this.table}/assign-account`, data);
   }
 }

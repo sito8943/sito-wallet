@@ -24,7 +24,11 @@ import { faAdd, faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // hooks
-import { useAddTransaction, useEditTransaction } from "./hooks";
+import {
+  useAddTransaction,
+  useEditTransaction,
+  useAssignTransactionAccountAction,
+} from "./hooks";
 import { useAddAccountDialog } from "../Accounts/hooks";
 import {
   TransactionsQueryKeys,
@@ -35,6 +39,7 @@ import {
 // components
 import {
   AddTransactionDialog,
+  AssignAccountDialog,
   EditTransactionDialog,
   TransactionGrid,
   TransactionTable,
@@ -120,6 +125,8 @@ export function Transactions() {
 
   const editTransaction = useEditTransaction();
 
+  const assignTransactionAccount = useAssignTransactionAccountAction();
+
   const { filters } = useTableOptions();
 
   const exportTransactions = useExportActionMutate({
@@ -147,19 +154,26 @@ export function Transactions() {
 
   const getTableActions = useCallback(
     (record: TransactionDto) => [
+      assignTransactionAccount.action(record),
       editTransaction.action(record),
       deleteTransaction.action(record),
       restoreTransaction.action(record),
     ],
-    [deleteTransaction, editTransaction, restoreTransaction]
+    [
+      assignTransactionAccount,
+      deleteTransaction,
+      editTransaction,
+      restoreTransaction,
+    ]
   );
 
   const getGridActions = useCallback(
     (record: TransactionDto) => [
+      assignTransactionAccount.action(record),
       deleteTransaction.action(record),
       restoreTransaction.action(record),
     ],
-    [deleteTransaction, restoreTransaction]
+    [assignTransactionAccount, deleteTransaction, restoreTransaction]
   );
 
   const accountDesktopTabs = useMemo(() => {
@@ -293,9 +307,8 @@ export function Transactions() {
       <ConfirmationDialog {...deleteTransaction} />
       <ConfirmationDialog {...restoreTransaction} />
       <ImportDialog {...importTransactions} />
+      <AssignAccountDialog {...assignTransactionAccount} />
 
-      {/* Category Dialogs */}
-      {/* <EditTransactionDialog /> */}
     </Page>
   );
 }
