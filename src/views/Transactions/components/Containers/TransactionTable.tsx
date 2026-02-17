@@ -67,25 +67,11 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
           ),
       },
       {
-        key: "description",
-        label: t("_entities:base.description.label"),
-        filterOptions: {
-          type: FilterTypes.text,
-          placeholder: t("_entities:base.description.placeholder"),
-        },
-        renderBody: (value: string, entity: TransactionDto) => (
-          <span className="truncate">
-            {entity.initial
-              ? t("_entities:transactionCategory.name.init")
-              : renderEmpty(value)}
-          </span>
-        ),
-      },
-      {
         key: "amount",
         filterOptions: { type: FilterTypes.number },
         renderBody: (value: number, entity: TransactionDto) => (
           <p>
+            {entity?.category?.type === TransactionType.Out ? "- " : ""}
             {value}{" "}
             <Currency
               name={entity.account?.currency?.name}
@@ -93,11 +79,6 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
             />
           </p>
         ),
-      },
-      {
-        key: "date",
-        filterOptions: { type: FilterTypes.date },
-        renderBody: (value: string) => <p>{getFormattedDateTime(value)}</p>,
       },
       {
         key: "type",
@@ -117,6 +98,26 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
             <Type type={entity?.category?.type ?? TransactionType.In} />
           </div>
         ),
+      },
+      {
+        key: "description",
+        label: t("_entities:base.description.label"),
+        filterOptions: {
+          type: FilterTypes.text,
+          placeholder: t("_entities:base.description.placeholder"),
+        },
+        renderBody: (value: string, entity: TransactionDto) => (
+          <span className="truncate">
+            {entity.initial
+              ? t("_entities:transactionCategory.name.init")
+              : renderEmpty(value)}
+          </span>
+        ),
+      },
+      {
+        key: "date",
+        filterOptions: { type: FilterTypes.date },
+        renderBody: (value: string) => <p>{getFormattedDateTime(value)}</p>,
       },
     ],
     EntityName.Transaction,
