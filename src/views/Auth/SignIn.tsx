@@ -185,7 +185,7 @@ export function SignIn() {
             aria-label={t("_accessibility:buttons.submit")}
           >
             {isLoading && (
-              <Loading color="stroke-base" loaderClass="!w-6" strokeWidth="6" />
+              <Loading color="stroke-base" loaderClass="!w-6"  className="!w-auto"  strokeWidth="6" />
             )}
             {t("_pages:auth.signIn.submit")}
           </Button>
