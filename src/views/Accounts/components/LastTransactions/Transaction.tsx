@@ -48,8 +48,8 @@ export const Transaction = (props: TransactionPropsType) => {
         </div>
         <p className="!text-xs">{parsedDescription}</p>
       </div>
-      <p className="flex items-center gap-1 !text-lg">
-        {isIn ? "+" : "-"}
+      <p className="flex items-center gap-1 !text-lg text-nowrap">
+        {isIn ? "+ " : "- "}
         {amount}
         <Currency {...currency} />
       </p>

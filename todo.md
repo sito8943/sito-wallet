@@ -20,6 +20,7 @@
 ### 💸 Transactions
 
 - [x] Export table as JSON
+- [x] Pintar en el frontend un '-' si es una salida
 - [ ] Transacción puede incluir foto
 - [ ] Transacción puede incluir listado de productos
 - [ ] Tabs y columns de Transactions deben ser sticky al hacer scroll
@@ -60,6 +61,8 @@
 
 ## 🐞 BUGS
 
+- [ ] Cuando el backend falla en un query de manera silenciosa se toma del cache en vez de notificar
+
 ### 🏠 Home
 
 - [ ] Crear Home Card: el título no persiste al volver (aunque viene de la BD)
@@ -68,10 +71,13 @@
 ### 🔍 Filtros
 
 - [x] Al eliminar chip de categoría se rompe el filtro
+- [x] Una vez seleccionada una categoría no deja borrar en el input del filtro
+- [ ] Escribir en el autocomplete de categoria no hace nada
+- [x] Filtro por rango de cantidad no funciona
+- [ ] Filtro por descripcion esta roto
 - [ ] Filtrar por una categoria no funciona
 - [ ] Guardar filtros de las cards en config
 - [ ] Filtrar por Nombre y Tipo devuelve resultados incorrectos
-- [ ] Una vez seleccionada una categoría no deja borrar en el input del filtro
 
 ### 💸 Transactions
 
