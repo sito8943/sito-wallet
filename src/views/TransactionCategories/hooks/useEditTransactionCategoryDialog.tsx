@@ -35,7 +35,7 @@ export function useEditTransactionCategoryDialog() {
     getFunction: (id) => manager.TransactionCategories.getById(id),
     mutationFn: (data) => manager.TransactionCategories.update(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
-    title: t("_pages:accounts.forms.edit"),
+    title: t("_pages:transactionCategories.forms.edit"),
     ...TransactionCategoriesQueryKeys.all(),
   });
 }

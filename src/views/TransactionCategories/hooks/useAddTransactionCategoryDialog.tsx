@@ -34,7 +34,7 @@ export function useAddTransactionCategoryDialog() {
     defaultValues: addEmptyTransactionCategory,
     mutationFn: (data) => manager.TransactionCategories.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
-    title: t("_pages:accounts.forms.add"),
+    title: t("_pages:transactionCategories.forms.add"),
     ...TransactionCategoriesQueryKeys.all(),
   });
 
