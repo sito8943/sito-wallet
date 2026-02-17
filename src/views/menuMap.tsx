@@ -1,17 +1,17 @@
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faClock,
   faCoins,
   faCreditCard,
   faHome,
   faCircleInfo,
-  faLayerGroup,
   faRightFromBracket,
   faRightToBracket,
   faCookieBite,
   faShieldHalved,
   faScroll,
+  faTags,
+  faFileInvoice,
 } from "@fortawesome/free-solid-svg-icons";
 
 // types
@@ -42,12 +42,12 @@ export const menuMap: MenuItemType[] = [
   {
     page: MenuKeys.Transactions,
     path: "/transactions",
-    icon: <FontAwesomeIcon icon={faClock} />,
+    icon: <FontAwesomeIcon icon={faFileInvoice} />,
   },
   {
     page: MenuKeys.TransactionCategories,
     path: "/transaction-categories",
-    icon: <FontAwesomeIcon icon={faLayerGroup} />,
+    icon: <FontAwesomeIcon icon={faTags} />,
   },
   {
     page: MenuKeys.Accounts,
