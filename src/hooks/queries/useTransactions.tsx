@@ -13,10 +13,7 @@ import {
 import { useLocalCache, useManager } from "providers";
 
 // types
-import {
-  UseFetchPropsType,
-  UseTransactionTypeResumePropsType,
-} from "./types.ts";
+import { UseTransactionTypeResumePropsType } from "./types.ts";
 
 // lib
 import {
@@ -51,9 +48,10 @@ export const TransactionsQueryKeys = {
   }),
 };
 
-export function useTransactionsList(
-  props: UseFetchPropsType<TransactionDto, FilterTransactionDto>
-): UseQueryResult<QueryResult<TransactionDto>> {
+export function useTransactionsList(props: {
+  filters: FilterTransactionDto;
+  query: QueryParam<TransactionDto>;
+}): UseQueryResult<QueryResult<TransactionDto>> {
   const {
     sortingBy,
     sortingOrder,
@@ -62,7 +60,7 @@ export function useTransactionsList(
     filters: tableFilters,
   } = useTableOptions();
 
-  const { filters = { deletedAt: false as unknown as any }, query } = props;
+  const { filters = { deletedAt: false as unknown as Date }, query } = props;
 
   const manager = useManager();
   const { account } = useAuth();
@@ -190,10 +188,11 @@ export function useWeekly(
 }
 
 export function useTransactionsCommon(
+  //TODO FIX THIS
   props: UseTransactionTypeResumePropsType
 ): UseQueryResult<CommonTransactionDto[]> {
   const manager = useManager();
-  const { account } = useAuth();
+
   const filters = props;
   const { loadCache, updateCache, inCache } = useLocalCache();
 
@@ -202,7 +201,7 @@ export function useTransactionsCommon(
     queryFn: async () => {
       try {
         const result = await manager.Transactions.commonGet({
-          deletedAt: false as unknown as any,
+          deletedAt: false as unknown as Date,
           ...filters,
         });
         if (!inCache(Tables.Transactions))
