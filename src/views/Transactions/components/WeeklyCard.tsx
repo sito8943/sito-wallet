@@ -29,12 +29,12 @@ export const WeeklyCard = (props: WeeklyCardProps) => {
   const name = currencyName ?? data?.account?.currency?.name ?? "";
 
   return (
-    <BaseCard className="!h-auto">
+    <BaseCard className="!h-auto !py-2 ">
       <div className="flex flex-col gap-2 w-full">
-        <h3 className="text-xl poppins">{title}</h3>
+        <h3 className="text-lg poppins">{title}</h3>
         <div className="flex flex-wrap gap-1 items-end">
           <p
-            className={`text-4xl font-bold self-start poppins ${
+            className={`text-2xl font-bold self-start poppins ${
               type === TransactionType.Out ? "text-bg-error" : "text-bg-success"
             }`}
           >
