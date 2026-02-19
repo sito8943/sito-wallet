@@ -46,7 +46,8 @@ export function useImportDialog<
 ): UseImportDialogReturnType<EntityDto, PreviewEntityDto> {
   const { t } = useTranslation();
 
-  const { queryKey, mutationFn, entity, fileProcessor } = props;
+  const { queryKey, mutationFn, entity, fileProcessor, renderCustomPreview } =
+    props;
 
   const [showDialog, setShowDialog] = useState(false);
   const [items, setItems] = useState<PreviewEntityDto[] | null>(null);
@@ -89,6 +90,7 @@ export function useImportDialog<
     },
     isLoading: importMutation.isPending,
     fileProcessor,
+    renderCustomPreview,
     onFileProcessed: (parsed: PreviewEntityDto[]) => setItems(parsed),
     onOverrideChange: (value: boolean) => setOverride(value),
     open: showDialog,

@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 // @sito-dashboard
 import {
@@ -27,6 +33,7 @@ export interface ImportDialogPropsType<EntityDto extends ImportPreviewDto>
   ) => Promise<EntityDto[]>;
   onFileProcessed?: (items: EntityDto[]) => void;
   onOverrideChange?: (override: boolean) => void;
+  renderCustomPreview?: (items?: EntityDto[] | null) => ReactNode;
 }
 
 export const ImportDialog = <EntityDto extends ImportPreviewDto>(
@@ -48,6 +55,7 @@ export const ImportDialog = <EntityDto extends ImportPreviewDto>(
     onFileProcessed,
     onOverrideChange,
     open,
+    renderCustomPreview,
     ...rest
   } = props;
 
@@ -101,6 +109,12 @@ export const ImportDialog = <EntityDto extends ImportPreviewDto>(
     handleFileProcessed();
   }, [handleFileProcessed]);
 
+  const previewContent = renderCustomPreview
+    ? renderCustomPreview(previewItems)
+    : !!previewItems && previewItems.length > 0 ? (
+        <ImportDialogPreview items={previewItems} />
+      ) : null;
+
   return (
     <Dialog {...rest} open={open} handleClose={handleClose}>
       <FileInput
@@ -144,9 +158,7 @@ export const ImportDialog = <EntityDto extends ImportPreviewDto>(
       </label>
       <ImportDialogError message={parseError ?? undefined} />
       {processing && <ImportDialogLoading />}
-      {!!previewItems && previewItems.length > 0 && (
-        <ImportDialogPreview items={previewItems} />
-      )}
+      {previewContent}
       {children}
       <DialogActions
         primaryText={t("_accessibility:buttons.ok")}

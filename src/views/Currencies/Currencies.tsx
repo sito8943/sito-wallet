@@ -26,6 +26,7 @@ import {
   AddCurrencyDialog,
   CurrencyCard,
   EditCurrencyDialog,
+  CurrencyTable,
 } from "./components";
 
 // hooks
@@ -72,6 +73,7 @@ export function Currencies() {
     fileProcessor: (file, options) =>
       manager.Currencies.processImport(file, options?.override),
     mutationFn: (data) => manager.Currencies.import(data),
+    renderCustomPreview: (items) => <CurrencyTable items={items} />,
     ...CurrenciesQueryKeys.all(),
   });
 

@@ -171,3 +171,13 @@ select > option {
 .drawer {
   @apply rounded-none;
 }
+
+.page-header .action {
+  @apply bg-base/30 text-white hover:bg-secondary;
+}
+
+.header .icon-button,
+.navbar-menu {
+  @apply text-white hover:bg-secondary;
+}
+
