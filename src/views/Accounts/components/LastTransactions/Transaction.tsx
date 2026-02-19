@@ -44,7 +44,7 @@ export const Transaction = (props: TransactionPropsType) => {
           ) : (
             <p>{category?.name}</p>
           )}
-          <p>- {timeAge(new Date(date))}</p>
+          <p className="lowercase">- {timeAge(new Date(date))}</p>
         </div>
         <p className="!text-xs">{parsedDescription}</p>
       </div>

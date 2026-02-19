@@ -40,7 +40,7 @@ export function AccountCard(props: AccountCardPropsType) {
       aria-label={t("_pages:accounts.forms.editAria")}
       onClick={() => (!deleted ? onClick(id) : {})}
       actions={actions}
-      containerClassName="w-100"
+      containerClassName="md:w-100 w-full"
     >
       <p
         className={`${description ? "" : "!text-xs italic"} text-start mb-2 ${

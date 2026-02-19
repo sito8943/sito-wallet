@@ -1,5 +1,5 @@
 @reference "../../../../styles/variables.css";
 
 .base-card {
-  @apply relative items-center justify-start flex flex-col gap-3 border-border border-2 p-5 rounded-2xl h-58 min-w-60;
+  @apply relative items-center justify-start flex flex-col gap-3 p-5 h-58 min-w-60;
 }

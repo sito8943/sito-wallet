@@ -4,6 +4,10 @@
   @apply rounded-4xl;
 }
 
+.page-header {
+  @apply bg-base-dark;
+}
+
 .chip-main {
   @apply py-1;
 }
@@ -143,6 +147,27 @@ select > option {
   transform: translateY(-50%);
 }
 
-/* .drawer-links {
-  @apply
-} */
+.tabs-container {
+  @apply xs:mb-0;
+}
+
+.tabs-layout-main {
+  @apply xs:h-[60vh];
+}
+
+.pretty-grid-item {
+  min-height: auto;
+}
+
+.page-header,
+.header {
+  @apply bg-primary text-white;
+}
+
+.header h1 {
+  @apply text-white;
+}
+
+.drawer {
+  @apply rounded-none;
+}

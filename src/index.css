@@ -54,7 +54,7 @@ label,
 main {
   height: 100%;
   width: 100%;
-  @apply bg-base-dark flex flex-col flex-1;
+  @apply flex flex-col flex-1;
 }
 
 .opacity {
@@ -180,4 +180,8 @@ main {
     filter: blur(0);
     transform: scale(1);
   }
+}
+
+.base-border {
+  @apply border-hover-primary/20 border-1 rounded-xl;
 }
