@@ -73,7 +73,9 @@ export function Currencies() {
     fileProcessor: (file, options) =>
       manager.Currencies.processImport(file, options?.override),
     mutationFn: (data) => manager.Currencies.import(data),
-    renderCustomPreview: (items) => <CurrencyTable items={items} />,
+    renderCustomPreview: (items: ImportPreviewCurrencyDto[] | null | undefined) => (
+      <CurrencyTable items={items} />
+    ),
     ...CurrenciesQueryKeys.all(),
   });
 

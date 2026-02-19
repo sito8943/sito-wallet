@@ -50,7 +50,7 @@ export const TransactionsQueryKeys = {
 
 export function useTransactionsList(props: {
   filters: FilterTransactionDto;
-  query: QueryParam<TransactionDto>;
+  query?: QueryParam<TransactionDto>;
 }): UseQueryResult<QueryResult<TransactionDto>> {
   const {
     sortingBy,
@@ -60,7 +60,10 @@ export function useTransactionsList(props: {
     filters: tableFilters,
   } = useTableOptions();
 
-  const { filters = { deletedAt: false as unknown as Date }, query } = props;
+  const {
+    filters = { deletedAt: false as unknown as Date },
+    query = {} as QueryParam<TransactionDto>,
+  } = props;
 
   const manager = useManager();
   const { account } = useAuth();

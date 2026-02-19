@@ -32,15 +32,23 @@ export const prefabBaseColumns = <
     key: "updatedAt",
     className: "w-56",
     filterOptions: { type: FilterTypes.date, defaultValue: "" },
-    renderBody: (updatedAt: string) =>
-      new Date(updatedAt).toLocaleDateString(navigator.language || "es-ES"),
+    renderBody: (value: unknown) => {
+      const dateValue = value instanceof Date ? value : new Date(String(value));
+      return Number.isNaN(dateValue.getTime())
+        ? ""
+        : dateValue.toLocaleDateString(navigator.language || "es-ES");
+    },
     pos: -1,
   },
   {
     key: "createdAt",
     filterOptions: { type: FilterTypes.date, defaultValue: "" },
-    renderBody: (createdAt: string) =>
-      new Date(createdAt).toLocaleDateString(navigator.language || "es-ES"),
+    renderBody: (value: unknown) => {
+      const dateValue = value instanceof Date ? value : new Date(String(value));
+      return Number.isNaN(dateValue.getTime())
+        ? ""
+        : dateValue.toLocaleDateString(navigator.language || "es-ES");
+    },
     pos: -2,
   },
   {
@@ -51,8 +59,8 @@ export const prefabBaseColumns = <
       label: t("_entities:base.deleted.filter"),
     },
     display: "none",
-    renderBody: (deletedAt: string | null) =>
-      deletedAt
+    renderBody: (value: unknown) =>
+      value
         ? t("_accessibility:buttons.yes")
         : t("_accessibility:buttons.no"),
     pos: -3,

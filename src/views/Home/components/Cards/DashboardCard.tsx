@@ -13,7 +13,15 @@ import { useMutation } from "@tanstack/react-query";
 import { useDebouncedCallback } from "use-debounce";
 
 // @sito/dashboard-app
-import { IconButton, Loading, useNotification, usePostForm, DialogPropsType, FormPropsType } from "@sito/dashboard-app";
+import {
+  IconButton,
+  Loading,
+  useNotification,
+  usePostForm,
+  DialogPropsType,
+  FormPropsType,
+  ValidationError as DashboardValidationError,
+} from "@sito/dashboard-app";
 
 // lib
 import { UpdateDashboardCardConfigDto, UpdateDashboardCardTitleDto } from "lib";
@@ -25,8 +33,11 @@ import { BaseCard } from "./BaseCard";
 import { useManager } from "providers";
 
 // local types
-type GenericConfigDialogProps<TForm extends FieldValues, ValidationError extends Error> =
-  FormPropsType<TForm, ValidationError> & Omit<DialogPropsType, "title">;
+type GenericConfigDialogProps<TForm extends FieldValues> = FormPropsType<
+  TForm,
+  DashboardValidationError
+> &
+  Omit<DialogPropsType, "title">;
 
 type Common = {
   id: number;
@@ -48,17 +59,17 @@ type ChildrenArgs<TForm> = {
   formConfig: TForm;
 };
 
-export type DashboardCardProps<TForm extends FieldValues, ValidationError extends Error> = Common & {
+export type DashboardCardProps<TForm extends FieldValues> = Common & {
   parseFormConfig: (config?: string | null) => TForm;
   formToDto: (data: TForm & { userId: number; id: number }) => UpdateDashboardCardConfigDto;
   onConfigSaved?: () => void;
-  ConfigFormDialog: (props: GenericConfigDialogProps<TForm, ValidationError>) => JSX.Element;
+  ConfigFormDialog: (props: GenericConfigDialogProps<TForm>) => JSX.Element;
   renderActiveFilters?: (args: RenderFiltersArgs<TForm>) => JSX.Element | null;
   children?: (args: ChildrenArgs<TForm>) => JSX.Element | null;
 };
 
-export const DashboardCard = <TForm extends FieldValues, ValidationError extends Error>(
-  props: DashboardCardProps<TForm, ValidationError>
+export const DashboardCard = <TForm extends FieldValues>(
+  props: DashboardCardProps<TForm>
 ) => {
   const {
     id,
@@ -100,7 +111,7 @@ export const DashboardCard = <TForm extends FieldValues, ValidationError extends
   );
 
   const debounced = useDebouncedCallback((value: string) => {
-    updateTitle.mutate({ id, title: value, userId });
+    updateTitle.mutate({ id, title: value, userId: userId ?? 0 });
   }, 500);
 
   useEffect(() => {
@@ -112,6 +123,7 @@ export const DashboardCard = <TForm extends FieldValues, ValidationError extends
 
   const formProps = usePostForm<UpdateDashboardCardConfigDto, UpdateDashboardCardConfigDto, number, TForm>({
     defaultValues: formConfig as DefaultValues<TForm>,
+    queryKey: ["dashboards", "card-config", id],
     formToDto: (data: TForm) => formToDto({ ...(data as TForm), userId: userId ?? 0, id }),
     mutationFn: async (data: UpdateDashboardCardConfigDto) => await manager.Dashboard.updateCardConfig(data),
     onSuccess: () => {

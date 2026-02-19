@@ -30,7 +30,7 @@ export const CurrenciesQueryKeys = {
 export function useCurrenciesList(
   props: UseFetchPropsType<CurrencyDto, FilterCurrencyDto>
 ): UseQueryResult<QueryResult<CurrencyDto>> {
-  const { filters = { deletedAt: false as unknown as any } } = props;
+  const { filters = { deletedAt: false as unknown as FilterCurrencyDto["deletedAt"] } } = props;
 
   const manager = useManager();
   const { account } = useAuth();
@@ -71,7 +71,7 @@ export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
     queryFn: async () => {
       try {
         const result = await manager.Currencies.commonGet({
-          deletedAt: false as unknown as any,
+          deletedAt: false as unknown as FilterCurrencyDto["deletedAt"],
         });
         if (!inCache(Tables.Currencies)) updateCache(Tables.Currencies, result);
         return result;

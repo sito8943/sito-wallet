@@ -27,8 +27,8 @@ import { ConfigFormDialogPropsType, TypeResumeTypeFormType } from "./types";
 // utils
 import { icons } from "../../../../Transactions/components/utils";
 
-export const ConfigFormDialog = <ValidationError extends Error>(
-  props: ConfigFormDialogPropsType<TypeResumeTypeFormType, ValidationError>
+export const ConfigFormDialog = (
+  props: ConfigFormDialogPropsType<TypeResumeTypeFormType>
 ) => {
   const { control, isLoading, setValue } = props;
 

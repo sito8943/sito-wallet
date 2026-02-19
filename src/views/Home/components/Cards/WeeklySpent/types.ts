@@ -1,7 +1,11 @@
 import { FieldValues } from "react-hook-form";
 
 // @sito/dashboard-app
-import { DialogPropsType, FormPropsType } from "@sito/dashboard-app";
+import {
+  DialogPropsType,
+  FormPropsType,
+  ValidationError as DashboardValidationError,
+} from "@sito/dashboard-app";
 
 // lib
 import {
@@ -15,10 +19,8 @@ export interface WeeklySpentPropsType extends DashboardDto {
   onDelete: () => void;
 }
 
-export interface ConfigFormDialogPropsType<
-  TFormType extends FieldValues,
-  ValidationError extends Error
-> extends FormPropsType<TFormType, ValidationError>,
+export interface ConfigFormDialogPropsType<TFormType extends FieldValues>
+  extends FormPropsType<TFormType, DashboardValidationError>,
     Omit<DialogPropsType, "title"> {}
 
 export interface WeeklySpentFormType

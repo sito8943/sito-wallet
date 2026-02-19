@@ -46,15 +46,21 @@ export function SignIn() {
   const manager = useManager();
   const navigate = useNavigate();
 
+  type SignInFormType = {
+    email: string;
+    password: string;
+  };
+
   const { handleSubmit, control, onSubmit, isLoading } = usePostForm<
-    AuthDto,
-    AuthDto,
+    SignInFormType,
+    SignInFormType,
     SessionDto,
-    AuthDto
+    SignInFormType
   >({
-    queryKey: [""],
-    formToDto: (data: AuthDto) => data,
-    mutationFn: async (data: AuthDto) => await manager.Auth.login(data),
+    queryKey: ["auth", "sign-in"],
+    formToDto: (data: SignInFormType) => data,
+    mutationFn: async (data: SignInFormType) =>
+      await manager.Auth.login(data as unknown as AuthDto),
     onSuccess: (data) => {
       logUser(data);
       setGuestMode(false);

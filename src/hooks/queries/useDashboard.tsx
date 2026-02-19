@@ -8,7 +8,7 @@ import { QueryResult, useAuth } from "@sito/dashboard-app"
 import { UseFetchPropsType } from "./types.ts";
 
 // lib
-import { DashboardDto, Tables } from "lib";
+import { DashboardDto, FilterDashboardDto, Tables } from "lib";
 
 export const DashboardsQueryKeys = {
   all: () => ({
@@ -20,9 +20,9 @@ export const DashboardsQueryKeys = {
 };
 
 export function useDashboardsList(
-  props: UseFetchPropsType<DashboardDto>
+  props: UseFetchPropsType<DashboardDto, FilterDashboardDto>
 ): UseQueryResult<QueryResult<DashboardDto>> {
-  const { filters = { deletedAt: false as unknown as any } } = props;
+  const { filters = { deletedAt: false as unknown as FilterDashboardDto["deletedAt"] } } = props;
 
   const manager = useManager();
   const { account } = useAuth();

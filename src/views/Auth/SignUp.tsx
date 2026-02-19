@@ -43,7 +43,12 @@ export function SignUp() {
 
   const navigate = useNavigate();
 
-  type RegisterWithName = RegisterDto & { name: string };
+  type RegisterWithName = {
+    name: string;
+    email: string;
+    password: string;
+    rPassword: string;
+  };
 
   const { handleSubmit, control, onSubmit, isLoading } = usePostForm<
     RegisterWithName,
@@ -51,6 +56,7 @@ export function SignUp() {
     SessionDto,
     RegisterWithName
   >({
+    queryKey: ["auth", "sign-up"],
     formToDto: (data: RegisterWithName) => {
       if (data.password !== data.rPassword) {
         showErrorNotification({
@@ -61,7 +67,7 @@ export function SignUp() {
       return data;
     },
     mutationFn: async (data: RegisterWithName) =>
-      await manager.Auth.register(data),
+      await manager.Auth.register(data as unknown as RegisterDto),
     onSuccess: (data) => {
       logUser(data);
       navigate("/");

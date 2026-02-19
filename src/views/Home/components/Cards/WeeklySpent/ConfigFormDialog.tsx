@@ -26,8 +26,8 @@ import { ConfigFormDialogPropsType, WeeklySpentFormType } from "./types";
 // utils
 import { icons } from "../../../../Transactions/components/utils";
 
-export const ConfigFormDialog = <ValidationError extends Error>(
-  props: ConfigFormDialogPropsType<WeeklySpentFormType, ValidationError>
+export const ConfigFormDialog = (
+  props: ConfigFormDialogPropsType<WeeklySpentFormType>
 ) => {
   const { control, isLoading, setValue } = props;
   const { t } = useTranslation();

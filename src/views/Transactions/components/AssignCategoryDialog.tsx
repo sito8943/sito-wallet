@@ -41,7 +41,17 @@ export function AssignCategoryDialog(
       <Controller
         control={control}
         name="transactionIds"
-        render={({ field }) => <input {...field} type="hidden" />}
+        render={({ field }) => (
+          <input
+            {...field}
+            type="hidden"
+            value={
+              Array.isArray(field.value)
+                ? field.value.join(",")
+                : String(field.value ?? "")
+            }
+          />
+        )}
       />
       <Controller
         control={control}

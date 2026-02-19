@@ -34,7 +34,7 @@ export const TransactionCategoriesQueryKeys = {
 export function useTransactionCategoriesList(
   props: UseFetchPropsType<TransactionCategoryDto, FilterTransactionCategoryDto>
 ): UseQueryResult<QueryResult<TransactionCategoryDto>> {
-  const { filters = { deletedAt: false as unknown as any } } = props;
+  const { filters = { deletedAt: false as unknown as FilterTransactionCategoryDto["deletedAt"] } } = props;
 
   const manager = useManager();
   const { account } = useAuth();
@@ -78,7 +78,7 @@ export function useTransactionCategoriesCommon(): UseQueryResult<
     queryFn: async () => {
       try {
         const result = await manager.TransactionCategories.commonGet({
-          deletedAt: false as unknown as any,
+          deletedAt: false as unknown as FilterTransactionCategoryDto["deletedAt"],
         });
         updateCache(Tables.TransactionCategories, result);
         return result;

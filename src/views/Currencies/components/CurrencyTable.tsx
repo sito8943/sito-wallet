@@ -32,29 +32,34 @@ export const CurrencyTable = (props: CurrencyTableProps) => {
     [
       {
         key: "name",
-        renderBody: (value: string, entity: ImportPreviewCurrencyDto) => (
-          <div className="flex flex-col">
-            <span className="font-medium text-gray-900">{value}</span>
-            {entity.symbol && (
-              <span className="text-xs text-gray-500">{entity.symbol}</span>
-            )}
-          </div>
-        ),
+        renderBody: (value: unknown, entity: ImportPreviewCurrencyDto) => {
+          const parsedValue = typeof value === "string" ? value : "";
+          return (
+            <div className="flex flex-col">
+              <span className="font-medium text-gray-900">{parsedValue}</span>
+              {entity.symbol && (
+                <span className="text-xs text-gray-500">{entity.symbol}</span>
+              )}
+            </div>
+          );
+        },
       },
       {
         key: "symbol",
-        renderBody: (value?: string | null) => value || "—",
+        renderBody: (value: unknown) =>
+          typeof value === "string" && value.length ? value : "—",
       },
       {
         key: "description",
-        renderBody: (value?: string | null) => renderDescription(value),
+        renderBody: (value: unknown) =>
+          renderDescription(typeof value === "string" ? value : null),
       },
       {
         key: "existing",
         label: t("_pages:common.actions.import.previewExisting", {
           defaultValue: "Already exists",
         }),
-        renderBody: (value?: boolean) =>
+        renderBody: (value: unknown) =>
           value
             ? t("_accessibility:buttons.yes")
             : t("_accessibility:buttons.no"),
