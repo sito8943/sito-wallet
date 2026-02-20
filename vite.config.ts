@@ -4,9 +4,113 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import mkcert from "vite-plugin-mkcert";
 
+const projectRoot = path.resolve(__dirname);
+
+function shouldBlockFsRequest(requestPath: string): boolean {
+  const normalizedRequestPath = requestPath.split(path.sep).join("/").toLowerCase();
+
+  const isSensitiveFile =
+    /(^|\/)\.env($|[./])/.test(normalizedRequestPath) ||
+    normalizedRequestPath.endsWith(".pem") ||
+    normalizedRequestPath.endsWith(".crt") ||
+    normalizedRequestPath.endsWith(".key");
+
+  const isGitPath = normalizedRequestPath.includes("/.git/");
+
+  if (isSensitiveFile || isGitPath) return true;
+
+  const relativeToRoot = path.relative(projectRoot, requestPath);
+  const isOutsideProject =
+    relativeToRoot.startsWith("..") || path.isAbsolute(relativeToRoot);
+
+  return isOutsideProject;
+}
+
+function rawFsDenyGuard() {
+  return {
+    name: "raw-fs-deny-guard",
+    configureServer(server: {
+      middlewares: {
+        use: (
+          fn: (
+            req: { url?: string | undefined },
+            res: {
+              statusCode: number;
+              setHeader: (name: string, value: string) => void;
+              end: (body?: string) => void;
+            },
+            next: () => void,
+          ) => void,
+        ) => void;
+      };
+    }) {
+      server.middlewares.use((req, res, next) => {
+        const reqUrl = req.url;
+        if (!reqUrl) return next();
+
+        const [pathname, rawSearch = ""] = reqUrl.split("?");
+        const searchParams = new URLSearchParams(rawSearch);
+        const hasRaw = searchParams.has("raw");
+        const hasInline = searchParams.has("inline");
+        const hasImport = searchParams.has("import");
+        const hasUrl = searchParams.has("url");
+
+        const decodedPathname = decodeURIComponent(pathname);
+        const normalizedPathname = decodedPathname.replace(/\\/g, "/");
+        const pathnameSegments = normalizedPathname.split("/");
+        const hasBackslashInPath =
+          decodedPathname.includes("\\") || /%5c/i.test(pathname);
+        const hasPathTraversal =
+          pathnameSegments.includes("..") ||
+          normalizedPathname.includes("/../");
+        const hasCurrentDirSegment =
+          pathnameSegments.includes(".") || normalizedPathname.includes("/./");
+        const isSvgRequest = normalizedPathname.toLowerCase().endsWith(".svg");
+        const touchesFs = normalizedPathname.startsWith("/@fs/");
+        const isPotentialBypassQuery = hasRaw || hasInline || hasImport || hasUrl;
+        const shouldInspectRequest =
+          isPotentialBypassQuery ||
+          hasPathTraversal ||
+          hasCurrentDirSegment ||
+          hasBackslashInPath ||
+          isSvgRequest ||
+          touchesFs;
+        if (!shouldInspectRequest) return next();
+
+        const fsPath = touchesFs
+          ? (() => {
+              const rawFsPath = normalizedPathname.slice("/@fs/".length);
+              if (/^[a-z]:\//i.test(rawFsPath)) return rawFsPath;
+              return `/${rawFsPath.replace(/^\/+/, "")}`;
+            })()
+          : path.resolve(projectRoot, `.${normalizedPathname}`);
+        const resolvedFsPath = path.resolve(fsPath);
+
+        if (
+          !hasPathTraversal &&
+          !hasBackslashInPath &&
+          !shouldBlockFsRequest(resolvedFsPath)
+        ) {
+          return next();
+        }
+
+        res.statusCode = 403;
+        res.setHeader("Content-Type", "text/plain; charset=utf-8");
+        res.end("Forbidden");
+      });
+    },
+  };
+}
+
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), mkcert()],
+  plugins: [react(), tailwindcss(), mkcert(), rawFsDenyGuard()],
+  server: {
+    fs: {
+      strict: true,
+      deny: [".env", ".env.*", "*.pem", "*.crt", "*.key", ".git/**"],
+    },
+  },
   build: {
     rollupOptions: {
       output: {
