@@ -50,4 +50,10 @@ export default tseslint.config(
       'react-hooks/rules-of-hooks': 'error',
     },
   },
+  {
+    files: ['src/test/**/*.{ts,tsx}'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
 )
