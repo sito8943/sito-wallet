@@ -75,12 +75,16 @@ export const ImportDialog = <EntityDto extends ImportPreviewDto>(
 
   useEffect(() => {
     if (!open) {
-      setFile(null);
-      setPreviewItems(null);
-      setParseError(null);
-      setProcessing(false);
-      setOverrideExisting(false);
-      setInputKey((k) => k + 1);
+      const resetTimer = window.setTimeout(() => {
+        setFile(null);
+        setPreviewItems(null);
+        setParseError(null);
+        setProcessing(false);
+        setOverrideExisting(false);
+        setInputKey((k) => k + 1);
+      }, 0);
+
+      return () => window.clearTimeout(resetTimer);
     }
   }, [open]);
 

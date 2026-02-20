@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { parseQueries } from "some-javascript-utils/browser";
 
@@ -69,7 +69,12 @@ export function Transactions() {
 
   const location = useLocation();
 
-  const [tabValue, setTabValue] = useState<number>();
+  const [tabValue] = useState<number | undefined>(() => {
+    const queries = parseQueries(location.search) as FilterTransactionDto;
+    return queries.accountId && !isNaN(queries.accountId)
+      ? Number(queries.accountId)
+      : undefined;
+  });
 
   const manager = useManager();
 
@@ -229,16 +234,6 @@ export function Transactions() {
       ),
     })) ?? []) as TabsType[];
   }, [accounts.data, editTransaction, getGridActions, parsedCategories]);
-
-  useEffect(() => {
-    const queries = parseQueries(location.search) as FilterTransactionDto;
-
-    if (queries.accountId && !isNaN(queries.accountId)) {
-      const accountId = Number(queries.accountId);
-      if (accountDesktopTabs.find((tab) => tab.id === accountId))
-        setTabValue(accountId);
-    }
-  }, [accountDesktopTabs, location]);
 
   const pageToolbar = useMemo(() => {
     return [exportTransactions.action(), importTransactions.action()];

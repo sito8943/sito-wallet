@@ -38,18 +38,18 @@ export function View() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showOnboarding] = useState(() => !fromLocal(config.onboarding));
 
   useEffect(() => {
-    const onboarding = fromLocal(config.onboarding);
-
-    if (!onboarding) {
-      setShowOnboarding(true);
+    if (showOnboarding) {
       toLocal(config.onboarding, true);
     }
-    if (!account.email && !isInGuestMode() && onboarding)
+
+    const onboarding = fromLocal(config.onboarding);
+    if (!account.email && !isInGuestMode() && onboarding) {
       navigate("/auth/sign-in");
-  }, [account.email, isInGuestMode, navigate]);
+    }
+  }, [account.email, isInGuestMode, navigate, showOnboarding]);
 
   return (
     <ConfigProvider

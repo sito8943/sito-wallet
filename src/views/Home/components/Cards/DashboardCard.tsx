@@ -94,7 +94,13 @@ export const DashboardCard = <TForm extends FieldValues>(
 
   // Local title state + update
   const [cardTitle, setCardTitle] = useState(title ?? "");
-  useEffect(() => setCardTitle(title ?? ""), [title]);
+  useEffect(() => {
+    const syncTitleTimer = window.setTimeout(() => {
+      setCardTitle(title ?? "");
+    }, 0);
+
+    return () => window.clearTimeout(syncTitleTimer);
+  }, [title]);
 
   const [titleSuccess, setTitleSuccess] = useState(false);
   useEffect(() => {

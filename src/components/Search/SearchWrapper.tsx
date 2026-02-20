@@ -95,7 +95,6 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
   );
 
   useEffect(() => {
-    setLoading(true);
     debounced(searching);
   }, [searching, debounced]);
 
@@ -126,7 +125,10 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
           if (!showResults) setShowResults(true);
         }}
         searching={searching}
-        setSearching={setSearching}
+        setSearching={(value) => {
+          setLoading(true);
+          setSearching(value);
+        }}
       />
       <SearchResult
         isModal={isModal}
