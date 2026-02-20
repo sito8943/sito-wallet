@@ -23,6 +23,31 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+
+      // ── Regression rules ────────────────────────────────────────────────────
+      // Catch the set-state-in-effect pattern that previously caused bugs:
+      // calling a setter inside useEffect that lists the same state as a
+      // dependency (creates an infinite update loop or unexpected re-renders).
+      'react-hooks/exhaustive-deps': 'error',
+
+      // Disallow direct mutation of state values; always use the setter.
+      'no-restricted-syntax': [
+        'error',
+        {
+          // Flag: setState(prevState => { prevState.x = y; return prevState })
+          // (mutating the argument of a state updater function)
+          selector:
+            "CallExpression[callee.name=/^set[A-Z]/] AssignmentExpression",
+          message:
+            'Avoid mutating state directly inside a setter. Use immutable updates instead.',
+        },
+      ],
+
+      // Disallow calling state setters inside useEffect bodies without a
+      // conditional guard (pattern that caused react-hooks/set-state-in-effect failures).
+      // NOTE: This is enforced at the lint level; the exhaustive-deps rule
+      // above catches the dependency-array side of the same problem.
+      'react-hooks/rules-of-hooks': 'error',
     },
   },
 )

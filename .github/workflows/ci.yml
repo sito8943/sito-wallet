@@ -26,10 +26,57 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Test
+      - name: Unit & Integration Tests
+        run: npm run test
+
+  e2e:
+    runs-on: ubuntu-latest
+    # E2E only runs on push to main (not on every PR to save CI minutes)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: lint-and-test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Build app
+        run: npm run build
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          VITE_THIS_URL: ${{ secrets.VITE_THIS_URL }}
+          VITE_LANGUAGE: en
+          VITE_BASIC_KEY: ${{ secrets.VITE_BASIC_KEY }}
+          VITE_ACCEPT_COOKIE: ${{ secrets.VITE_ACCEPT_COOKIE }}
+          VITE_DECLINE_COOKIE: ${{ secrets.VITE_DECLINE_COOKIE }}
+          VITE_REMEMBER: ${{ secrets.VITE_REMEMBER }}
+          VITE_USER: ${{ secrets.VITE_USER }}
+          VITE_VALIDATION_COOKIE: ${{ secrets.VITE_VALIDATION_COOKIE }}
+          VITE_RECOVERING_COOKIE: ${{ secrets.VITE_RECOVERING_COOKIE }}
+          VITE_CRYPTO: ${{ secrets.VITE_CRYPTO }}
+          VITE_SUPABASE_CO: ${{ secrets.VITE_SUPABASE_CO }}
+          VITE_SUPABASE_ANON: ${{ secrets.VITE_SUPABASE_ANON }}
+          VITE_CACHE: ${{ secrets.VITE_CACHE }}
+          VITE_ONBOARDING: ${{ secrets.VITE_ONBOARDING }}
+          VITE_GUEST_MODE: ${{ secrets.VITE_GUEST_MODE }}
+          VITE_RECENT_SEARCHES: ${{ secrets.VITE_RECENT_SEARCHES }}
+
+      - name: Serve and run E2E smoke tests
         run: |
-          if node -e "const p=require('./package.json'); process.exit(p.scripts?.test ? 0 : 1)"; then
-            npm run test
-          else
-            echo "No test script found in package.json, skipping tests."
-          fi
+          npx vite preview --port 5173 &
+          npx wait-on http://localhost:5173 --timeout 30000
+          E2E_BASE_URL=http://localhost:5173 \
+          E2E_EMAIL=${{ secrets.E2E_EMAIL }} \
+          E2E_PASSWORD=${{ secrets.E2E_PASSWORD }} \
+          npm run test:e2e
