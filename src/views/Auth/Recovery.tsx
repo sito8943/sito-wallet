@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import "./styles.css";
 /* import { createCookie } from "some-javascript-utils/browser"; */
 
 // @sito/dashboard-app

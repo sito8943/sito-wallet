@@ -31,6 +31,7 @@
   - Año (actual)
 - [ ] Revisar que el scroll de la tabla funcione sin hacer scroll del body
 - [ ] Permitir type resume sin cuenta
+- [ ] Importar desde un csv y exportar a un csv
 
 ### 🏷️ Categories
 

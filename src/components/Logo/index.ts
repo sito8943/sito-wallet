@@ -1,3 +1,4 @@
 import Logo from "./Logo";
-
-export { Logo };
+import TextLogo from "./TextLogo";
+import Vector from "./Vector";
+export { Logo, TextLogo, Vector };

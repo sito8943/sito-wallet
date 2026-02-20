@@ -14,7 +14,7 @@ import { AccountCardPropsType } from "../types";
 import { AccountType } from "lib";
 
 // views
-import { Currency } from "views";
+import { Currency } from "views/Currencies/components/Currency";
 
 export function AccountCard(props: AccountCardPropsType) {
   const { t } = useTranslation();

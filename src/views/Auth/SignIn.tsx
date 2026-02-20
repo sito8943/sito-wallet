@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
+import "./styles.css";
 
 // @sito/dashboard-app
 import {
@@ -23,7 +24,9 @@ import { useManager } from "providers";
 
 // lib
 import { randomBackgroundColor } from "lib";
-import TextLogo from "../../components/Logo/TextLogo";
+
+// components
+import { TextLogo } from "components";
 
 const color: "primary" | "secondary" | "tertiary" | "quaternary" =
   randomBackgroundColor();
@@ -191,7 +194,12 @@ export function SignIn() {
             aria-label={t("_accessibility:buttons.submit")}
           >
             {isLoading && (
-              <Loading color="stroke-base" loaderClass="!w-6"  className="!w-auto"  strokeWidth="6" />
+              <Loading
+                color="stroke-base"
+                loaderClass="!w-6"
+                className="!w-auto"
+                strokeWidth="6"
+              />
             )}
             {t("_pages:auth.signIn.submit")}
           </Button>

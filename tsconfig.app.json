@@ -28,6 +28,7 @@
       "hooks": ["./src/hooks"],
       "layouts": ["./src/layouts"],
       "views": ["./src/views"],
+      "views/*": ["./src/views/*"],
       "providers": ["./src/providers"],
       "db": ["./src/db"],
       "lang": ["./src/lang"]

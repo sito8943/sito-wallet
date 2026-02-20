@@ -5,8 +5,10 @@ import "react-tooltip/dist/react-tooltip.css";
 import App from "./App";
 
 // fonts
-import "@fontsource/poppins";
-import "@fontsource/roboto";
+import "@fontsource/poppins/latin-400.css";
+import "@fontsource/poppins/latin-ext-400.css";
+import "@fontsource/roboto/latin-400.css";
+import "@fontsource/roboto/latin-ext-400.css";
 
 // styles
 import "./index.css";
@@ -15,10 +17,15 @@ import "./index.css";
 import { SitoWalletProvider } from "providers";
 
 // i18
-import "./i18";
+import { initI18n } from "./i18";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <SitoWalletProvider>
-    <App />
-  </SitoWalletProvider>
-);
+const bootstrap = async () => {
+  await initI18n();
+  ReactDOM.createRoot(document.getElementById("root")!).render(
+    <SitoWalletProvider>
+      <App />
+    </SitoWalletProvider>
+  );
+};
+
+bootstrap();

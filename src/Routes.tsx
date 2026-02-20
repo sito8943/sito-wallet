@@ -6,77 +6,79 @@ import { BrowserRouter, Routes as ReactRoutes, Route } from "react-router-dom";
 
 // auth
 const SignUp = loadable(() =>
-  import("views").then((module) => ({
+  import("views/Auth/SignUp").then((module) => ({
     default: module.SignUp,
   }))
 );
 const SignIn = loadable(() =>
-  import("views").then((module) => ({
+  import("views/Auth/SignIn").then((module) => ({
     default: module.SignIn,
   }))
 );
 const SignOut = loadable(() =>
-  import("views").then((module) => ({
+  import("views/Auth/SignOut").then((module) => ({
     default: module.SignOut,
   }))
 );
 const UpdatePassword = loadable(() =>
-  import("views").then((module) => ({
+  import("views/Auth/UpdatePassword").then((module) => ({
     default: module.UpdatePassword,
   }))
 );
 const Recovery = loadable(() =>
-  import("views").then((module) => ({
+  import("views/Auth/Recovery").then((module) => ({
     default: module.Recovery,
   }))
 );
 // view
 const Home = loadable(() =>
-  import("views").then((module) => ({
+  import("views/Home/Home").then((module) => ({
     default: module.Home,
   }))
 );
 const NotFound = loadable(() =>
-  import("views").then((module) => ({
+  import("views/NotFound").then((module) => ({
     default: module.NotFound,
   }))
 );
 const TransactionCategories = loadable(() =>
-  import("views").then((module) => ({ default: module.TransactionCategories }))
+  import("views/TransactionCategories/TransactionCategories").then((module) => ({
+    default: module.TransactionCategories,
+  }))
 );
 const Transactions = loadable(() =>
-  import("views").then((module) => ({
+  import("views/Transactions/Transactions").then((module) => ({
     default: module.Transactions,
   }))
 );
 const Accounts = loadable(() =>
-  import("views").then((module) => ({
+  import("views/Accounts/Accounts").then((module) => ({
     default: module.Accounts,
   }))
 );
 const Currencies = loadable(() =>
-  import("views").then((module) => ({
+  import("views/Currencies/Currencies").then((module) => ({
     default: module.Currencies,
   }))
 );
 // Info
 const About = loadable(() =>
-  import("views").then((module) => ({
+  import("views/Info/About").then((module) => ({
     default: module.About,
   }))
 );
 const CookiesPolicy = loadable(() =>
-  import("views").then((module) => ({
+  import("views/Info/CookiesPolicy").then((module) => ({
     default: module.CookiesPolicy,
   }))
 );
 const PrivacyPolicy = loadable(() =>
-  import("views").then((module) => ({
+  import("views/Info/PrivacyPolicy").then((module) => ({
     default: module.PrivacyPolicy,
   }))
 );
 const TermsAndConditions = loadable(() =>
-  import("views").then((module) => ({
+  import("views/Info/TermsAndConditions").then((module) => ({
     default: module.TermsAndConditions,
   }))
 );

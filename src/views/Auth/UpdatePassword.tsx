@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 /* import { Controller,  useForm } from "react-hook-form"; */
 import { useTranslation } from "react-i18next";
+import "./styles.css";
 /* import { Link, useNavigate } from "react-router-dom";
 import { deleteCookie } from "some-javascript-utils/browser"; */
 

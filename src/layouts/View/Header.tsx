@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Navbar, Drawer } from "@sito/dashboard-app";
 
 // menu
-import { menuMap } from "views";
+import { menuMap } from "views/menuMap";
 
 function Header() {
   const [showDrawer, setShowDrawer] = useState(false);
