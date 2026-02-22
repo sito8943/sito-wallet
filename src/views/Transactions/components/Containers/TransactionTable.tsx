@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
@@ -37,8 +38,10 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
 
   const { t } = useTranslation();
 
+  const listFilters = useMemo(() => ({ accountId }), [accountId]);
+
   const { data, isLoading, error } = useTransactionsList({
-    filters: { accountId },
+    filters: listFilters,
   });
 
   // #region columns
@@ -50,8 +53,8 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
     return t("_entities:base.description.empty");
   };
 
-  const { columns } = useParseColumns<TransactionDto>(
-    [
+  const columnDefs = useMemo(
+    () => [
       {
         key: "category",
         label: t("_entities:transaction.category.label"),
@@ -97,7 +100,6 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
             value: t(`_entities:transactionCategory:type.values.${item.key}`),
           })) as Option[],
         },
-
         renderBody: (_: unknown, entity: TransactionDto) => (
           <div className="w-fit">
             <Type type={entity?.category?.type ?? TransactionType.In} />
@@ -131,8 +133,26 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
         ),
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [categories, t]
+  );
+
+  const toIgnore = useMemo(() => ["createdAt", "updatedAt"], []);
+
+  const { columns } = useParseColumns<TransactionDto>(
+    columnDefs,
     EntityName.Transaction,
-    ["createdAt", "updatedAt"]
+    toIgnore
+  );
+
+  const filterOptions = useMemo(
+    () => ({
+      button: { hide: true as const },
+      dropdown: setShowFilters
+        ? { opened: showFilters ?? false, setOpened: setShowFilters }
+        : undefined,
+    }),
+    [showFilters, setShowFilters]
   );
 
   // #endregion
@@ -148,18 +168,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
       entity={EntityName.Transaction}
       columns={columns}
       contentClassName="transactions-table-body base-border"
-      filterOptions={{
-        button: {
-          hide: true,
-        },
-        dropdown:
-          setShowFilters && !!showFilters
-            ? {
-                opened: showFilters,
-                setOpened: setShowFilters,
-              }
-            : undefined,
-      }}
+      filterOptions={filterOptions}
     />
   );
 };

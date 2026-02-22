@@ -69,12 +69,12 @@ export function Transactions() {
 
   const location = useLocation();
 
-  const [tabValue] = useState<number | undefined>(() => {
+  const tabValue = useMemo(() => {
     const queries = parseQueries(location.search) as FilterTransactionDto;
     return queries.accountId && !isNaN(queries.accountId)
       ? Number(queries.accountId)
       : undefined;
-  });
+  }, [location.search]);
 
   const manager = useManager();
 
@@ -254,7 +254,10 @@ export function Transactions() {
         tooltip: t("_pages:transactions.add"),
       }}
       filterOptions={{
-        onClick: () => setShowFilters(!showFilters),
+        onClick: () => {
+          if (!showFilters) setTimeout(() => setShowFilters(true), 0);
+          else setShowFilters(false);
+        },
         disabled: accounts.isLoading,
         tooltip: t("_accessibility:buttons.filters"),
       }}

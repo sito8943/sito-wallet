@@ -14,7 +14,8 @@ export const WalletTable = <TRow extends BaseEntityDto>(
 
   useEffect(() => {
     setTotal(props.total);
-  }, [props.total, setTotal]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.total]);
 
   return <Table {...props} />;
 };

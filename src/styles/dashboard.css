@@ -98,7 +98,7 @@ select > option {
   @apply w-12 h-12 fixed right-4 bottom-4 text-lg;
 }
 
-.contained {
+.submit {
   @apply bg-base hover:bg-base-light;
 }
 
