@@ -181,3 +181,6 @@ select > option {
   @apply text-white hover:bg-secondary;
 }
 
+.filter-dropdown-backdrop.opened {
+  @apply border-hover-primary/20 border-1 rounded-xl;
+}
