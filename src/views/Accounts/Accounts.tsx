@@ -110,7 +110,7 @@ export function Accounts() {
         <>
           <PrettyGrid
             data={data?.items}
-            itemClassName="w-full"
+            itemClassName="max-md:w-full w-auto"
             emptyComponent={
               <Empty
                 message={t("_pages:accounts.empty")}
