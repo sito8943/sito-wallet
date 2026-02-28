@@ -46,7 +46,7 @@ export function AccountForm(props: AccountFormPropsType) {
 
   const currencyOptions = useMemo(
     () => [...(currencies?.data ?? [])] as Option[],
-    [currencies.data]
+    [currencies.data],
   );
 
   const typeOptions = useMemo(
@@ -56,7 +56,7 @@ export function AccountForm(props: AccountFormPropsType) {
         name: t(`_entities:account.type.values.${key}`),
       })) ?? []),
     ],
-    [t]
+    [t],
   );
 
   const { type, id } = useWatch({ control });
@@ -82,11 +82,12 @@ export function AccountForm(props: AccountFormPropsType) {
         disabled={isLoading}
         render={({ field: { value, ...rest } }) => (
           <TextInput
+            id="name"
             required
             maxLength={20}
             value={value ?? ""}
             autoComplete={`${Tables.Accounts}-${t(
-              "_entities:base.name.label"
+              "_entities:base.name.label",
             )}`}
             label={t("_entities:base.name.label")}
             placeholder={t("_entities:account.name.placeholder")}
@@ -104,12 +105,13 @@ export function AccountForm(props: AccountFormPropsType) {
           disabled={isLoading}
           render={({ field: { value, ...rest } }) => (
             <TextInput
+              id="balance"
               required
               maxLength={20}
               value={value ?? ""}
               type="number"
               autoComplete={`${Tables.Accounts}-${t(
-                "_entities:account.balance.initial"
+                "_entities:account.balance.initial",
               )}`}
               label={t("_entities:account.balance.initial")}
               placeholder={t("_entities:account.balance.placeholder")}
@@ -125,6 +127,7 @@ export function AccountForm(props: AccountFormPropsType) {
           disabled={isLoading}
           render={({ field: { value, onChange, ...rest } }) => (
             <SelectInput
+              id="type"
               required
               options={typeOptions}
               value={value}
@@ -146,11 +149,12 @@ export function AccountForm(props: AccountFormPropsType) {
           disabled={isLoading}
           render={({ field: { value, onChange, ...rest } }) => (
             <AutocompleteInput
+              id="currency"
               required
               options={currencyOptions}
               value={value}
               autoComplete={`${Tables.Accounts}-${t(
-                "_entities:account.currency.label"
+                "_entities:account.currency.label",
               )}`}
               onChange={(v) => onChange(v)}
               label={t("_entities:account.currency.label")}
@@ -166,10 +170,11 @@ export function AccountForm(props: AccountFormPropsType) {
         disabled={isLoading}
         render={({ field: { value, ...rest } }) => (
           <ParagraphInput
+            id="description"
             maxLength={60}
             value={value ?? ""}
             autoComplete={`${Tables.Accounts}-${t(
-              "_entities:base.description.label"
+              "_entities:base.description.label",
             )}`}
             label={t("_entities:base.description.label")}
             placeholder={t("_entities:base.description.placeholder")}
