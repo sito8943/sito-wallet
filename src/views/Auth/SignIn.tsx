@@ -115,7 +115,7 @@ export function SignIn() {
                   {...field}
                   type="email"
                   id="email"
-                  className={`text-input peer`}
+                  inputClassName="peer"
                   label={t("_entities:user.email.label")}
                   required
                   helperText={fieldState.error?.message}
@@ -138,7 +138,7 @@ export function SignIn() {
                 <PasswordInput
                   {...field}
                   id="password"
-                  className={`text-input peer`}
+                  inputClassName="peer"
                   label={t("_entities:user.password.label")}
                   required
                   helperText={fieldState.error?.message}
