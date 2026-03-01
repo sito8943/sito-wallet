@@ -8,6 +8,7 @@
 - [ ] Modo offline
 - [ ] Implementar card/dashboard para saber cuánto se ha gastado en un rango de fecha
 - [ ] OCR: subir foto de recibo y reconocer amount, fecha, lugar, etc.
+- [ ] Resumenes Mensuales, Diarios, Semanales y Anuales
 
 ### 💳 Accounts
 
