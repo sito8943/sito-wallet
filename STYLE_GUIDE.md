@@ -31,7 +31,7 @@ src/
 
 Examples (real excerpts):
 - `src/styles/components.css:1`: `@reference "./variables.css";`
-- `src/index.css:36`: `main { @apply bg-base-dark ... }`
+- `src/index.css:54`: `main { @apply flex flex-col flex-1; }`
 
 ## Conventions
 - Semantic names: short, clear class names (`.input`, `.error`, `.success`, `.elevated`).
@@ -67,10 +67,10 @@ Usage in JSX:
 ## Tokens and Theming
 - Colors/spacing/breakpoints: edit `src/styles/variables.css` under `@theme`.
 - If you need new semantic utilities, compose them in `src/styles/components.css` using `@apply`.
-- Dark mode: you can add `:root[data-theme='dark'] { ... }` in `variables.css` while preserving semantic naming.
+- Dark mode: the project uses `darkMode: 'class'` (Tailwind). Add dark overrides with the `.dark` selector: `.dark .my-component { ... }` in the co-located `styles.css`.
 
 ## Rule Types in the Repo
-- Global: element typography, animations (`opacity`, `appear`, `disappear`, `fancy-appear`, `blur-appear`), utilities (`.elevated`, `.success`, `.error`). See `src/index.css:1`.
+- Global: element typography, animations (`.animated`, `.rotate`, `.opacity`, `.appear`, `.disappear`, `.fancy-appear`, `.blur-appear`, `.quick-blur-appear`), utilities (`.elevated`, `.success`, `.error`, `.inverted-success`, `.inverted-error`, `.base-border`). See `src/index.css:1`.
 - Components/views: co-located CSS mixing `@apply` with simple selectors. Example: `src/views/Home/components/.../styles.css` and `src/components/*/styles.css` when present.
 
 ## Best Practices
