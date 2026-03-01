@@ -161,6 +161,12 @@ select > option {
   @apply bg-primary text-white;
 }
 
+@media (max-width: 28rem) {
+  .page-header {
+    display: none;
+  }
+}
+
 .header h1 {
   @apply text-white;
 }

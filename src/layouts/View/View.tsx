@@ -12,6 +12,7 @@ import {
   ToTop,
   Onboarding,
   TableOptionsProvider,
+  NavbarProvider,
 } from "@sito/dashboard-app";
 
 // providers
@@ -58,17 +59,19 @@ export function View() {
       linkComponent={Link as unknown as ComponentType<BaseLinkPropsType>}
       searchComponent={SearchModal}
     >
-      {showOnboarding && <Onboarding steps={steps} />}
-      <ToTop />
-      <Header />
-      <ErrorBoundary FallbackComponent={Error}>
-        <TableOptionsProvider>
-          <Outlet />
-        </TableOptionsProvider>
-      </ErrorBoundary>
-      <Footer />
-      <Notification />
-      <Tooltip id="tooltip" />
+      <NavbarProvider>
+        {showOnboarding && <Onboarding steps={steps} />}
+        <ToTop />
+        <Header />
+        <ErrorBoundary FallbackComponent={Error}>
+          <TableOptionsProvider>
+            <Outlet />
+          </TableOptionsProvider>
+        </ErrorBoundary>
+        <Footer />
+        <Notification />
+        <Tooltip id="tooltip" />
+      </NavbarProvider>
     </ConfigProvider>
   );
 }

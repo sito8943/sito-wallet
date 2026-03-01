@@ -30,7 +30,7 @@ import {
 } from "./components";
 
 // hooks
-import { useCurrenciesList, CurrenciesQueryKeys, useImportDialog } from "hooks";
+import { useCurrenciesList, CurrenciesQueryKeys, useImportDialog, useMobileNavbar } from "hooks";
 import { useAddCurrency, useEditCurrency } from "./hooks";
 
 // types
@@ -92,6 +92,8 @@ export function Currencies() {
   const pageToolbar = useMemo(() => {
     return [exportCurrency.action(), importCurrencies.action()];
   }, [exportCurrency, importCurrencies]);
+
+  useMobileNavbar(t("_pages:currencies.title"), pageToolbar);
 
   return (
     <Page

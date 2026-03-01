@@ -27,7 +27,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AddAccountDialog, AccountCard, EditAccountDialog } from "./components";
 
 // hooks
-import { useAccountsList, AccountsQueryKeys } from "hooks";
+import { useAccountsList, AccountsQueryKeys, useMobileNavbar } from "hooks";
 import {
   useAddAccountDialog,
   useEditAccountDialog,
@@ -93,6 +93,8 @@ export function Accounts() {
   const pageToolbar = useMemo(() => {
     return [exportAccounts.action(), importAccounts.action()];
   }, [exportAccounts, importAccounts]);
+
+  useMobileNavbar(t("_pages:accounts.title"), pageToolbar);
 
   return (
     <Page

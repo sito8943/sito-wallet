@@ -34,6 +34,7 @@ import {
 import {
   useTransactionCategoriesList,
   TransactionCategoriesQueryKeys,
+  useMobileNavbar,
 } from "hooks";
 import {
   useAddTransactionCategoryDialog,
@@ -103,6 +104,8 @@ export function TransactionCategories() {
       importTransactionCategories.action(),
     ];
   }, [exportTransactionCategory, importTransactionCategories]);
+
+  useMobileNavbar(t("_pages:transactionCategories.title"), pageToolbar);
 
   return (
     <Page

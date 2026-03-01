@@ -35,6 +35,7 @@ import {
   TransactionsQueryKeys,
   useAccountsCommon,
   useTransactionCategoriesCommon,
+  useMobileNavbar,
 } from "hooks";
 
 // components
@@ -238,6 +239,8 @@ export function Transactions() {
   const pageToolbar = useMemo(() => {
     return [exportTransactions.action(), importTransactions.action()];
   }, [exportTransactions, importTransactions]);
+
+  useMobileNavbar(t("_pages:transactions.title"), pageToolbar);
 
   const noAccounts = useMemo(() => {
     return accountDesktopTabs.length === 0 || accountMobileTabs.length === 0;
