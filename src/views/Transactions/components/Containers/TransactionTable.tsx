@@ -120,7 +120,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
               : renderEmpty(
                   typeof value === "string" || value == null
                     ? value
-                    : String(value)
+                    : String(value),
                 )}
           </span>
         ),
@@ -134,15 +134,15 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [categories, t]
+    [categories, t],
   );
 
-  const toIgnore = useMemo(() => ["createdAt", "updatedAt"], []);
+  const toIgnore = useMemo(() => ["id", "createdAt", "updatedAt"], []);
 
   const { columns } = useParseColumns<TransactionDto>(
     columnDefs,
     EntityName.Transaction,
-    toIgnore
+    toIgnore,
   );
 
   const filterOptions = useMemo(
@@ -152,7 +152,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
         ? { opened: showFilters ?? false, setOpened: setShowFilters }
         : undefined,
     }),
-    [showFilters, setShowFilters]
+    [showFilters, setShowFilters],
   );
 
   // #endregion
