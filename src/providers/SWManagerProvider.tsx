@@ -1,11 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { ManagerProvider } from "@sito/dashboard-app";
 
 // types
@@ -24,8 +18,8 @@ const OfflineManagerContext = createContext<OfflineManager | null>(null);
 export const SWManagerProvider = (props: BasicProviderPropTypes) => {
   const { children } = props;
 
-  const onlineManagerRef = useRef(new Manager());
-  const offlineManagerRef = useRef(new OfflineManager());
+  const [onlineManager] = useState(() => new Manager());
+  const [offlineManager] = useState(() => new OfflineManager());
 
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
@@ -40,12 +34,10 @@ export const SWManagerProvider = (props: BasicProviderPropTypes) => {
     };
   }, []);
 
-  const activeManager = isOnline
-    ? onlineManagerRef.current
-    : offlineManagerRef.current;
+  const activeManager = isOnline ? onlineManager : offlineManager;
 
   return (
-    <OfflineManagerContext.Provider value={offlineManagerRef.current}>
+    <OfflineManagerContext.Provider value={offlineManager}>
       <ManagerProvider manager={activeManager}>{children}</ManagerProvider>
     </OfflineManagerContext.Provider>
   );
