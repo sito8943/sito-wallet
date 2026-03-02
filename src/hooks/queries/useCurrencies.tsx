@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 // providers
-import { useLocalCache, useManager } from "providers";
+import { useLocalCache, useManager, useOfflineManager } from "providers";
 import { QueryResult, useAuth } from "@sito/dashboard-app"
 
 // types
@@ -33,6 +33,7 @@ export function useCurrenciesList(
   const { filters = { deletedAt: false as unknown as FilterCurrencyDto["deletedAt"] } } = props;
 
   const manager = useManager();
+  const offlineManager = useOfflineManager();
   const { account } = useAuth();
   const { loadCache, updateCache } = useLocalCache();
 
@@ -45,6 +46,7 @@ export function useCurrenciesList(
           ...filters,
         });
         updateCache(Tables.Currencies, result.items);
+        offlineManager.Currencies.seed(result.items).catch(() => {});
         return result;
       } catch (error) {
         console.warn("API failed, loading currencies from cache", error);
@@ -62,6 +64,7 @@ export function useCurrenciesList(
 
 export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
   const manager = useManager();
+  const offlineManager = useOfflineManager();
   const { account } = useAuth();
   const { loadCache, updateCache, inCache } = useLocalCache();
 
@@ -73,7 +76,10 @@ export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
         const result = await manager.Currencies.commonGet({
           deletedAt: false as unknown as FilterCurrencyDto["deletedAt"],
         });
-        if (!inCache(Tables.Currencies)) updateCache(Tables.Currencies, result);
+        if (!inCache(Tables.Currencies)) {
+          updateCache(Tables.Currencies, result);
+          offlineManager.Currencies.seed(result as unknown as CurrencyDto[]).catch(() => {});
+        }
         return result;
       } catch (error) {
         console.warn("API failed, loading currencies from cache", error);

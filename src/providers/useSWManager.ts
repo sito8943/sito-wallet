@@ -1,17 +1,18 @@
 import { useManager as useBaseManager } from "@sito/dashboard-app";
 
 // lib
-import { Manager } from "lib";
+import { Manager, OfflineManager } from "lib";
 
 /**
- * Typed hook that returns the concrete Manager instance.
- * Wraps the base `useManager` from `@sito/dashboard-app` and
- * narrows the type to our local `Manager` implementation.
+ * Typed hook that returns the active manager instance (online or offline).
+ * Wraps the base `useManager` from `@sito/dashboard-app` and narrows the type.
  */
-export function useSWManager(): Manager {
-  return useBaseManager() as Manager;
+export function useSWManager(): Manager | OfflineManager {
+  return useBaseManager() as Manager | OfflineManager;
 }
 
-// Optional: convenient alias if you prefer importing `useManager` from `providers`.
 export const useManager = useSWManager;
+
+// Re-export for convenience
+export { useOfflineManager } from "./SWManagerProvider";
 

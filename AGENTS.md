@@ -1,0 +1,128 @@
+# AGENTS.md — sito-wallet/web
+
+Project-specific rules for AI agents. These override or extend the guidelines in `.sito/dashboard.md` and `.sito/dashboard-app.md`.
+
+---
+
+## Styling
+
+### Use semantic color tokens — never raw Tailwind palette colors
+
+The project defines all status/brand colors in `src/styles/variables.css` under `@theme`.
+Always use the semantic token classes, **not** raw Tailwind palette utilities.
+
+| Situation | ✅ Correct | ❌ Wrong |
+|-----------|-----------|---------|
+| Warning background + text | `bg-bg-warning text-warning` | `bg-yellow-400 text-yellow-900` |
+| Error background + text | `bg-bg-error text-error` | `bg-red-500 text-white` |
+| Success background + text | `bg-bg-success text-success` | `bg-green-500 text-white` |
+| Info background + text | `bg-bg-info text-info` | `bg-blue-500 text-white` |
+| Brand primary bg | `bg-bg-primary` | `bg-blue-900` |
+| Hover state | `hover:bg-hover-primary` | `hover:bg-blue-700` |
+| Muted text | `text-text-muted` | `text-gray-500` |
+| Base background | `bg-base` | `bg-gray-100` |
+| Border | `border-border` | `border-gray-300` |
+
+**Full token reference:** `src/styles/variables.css`
+
+Available status classes (from `src/index.css`):
+- `.success` → `bg-bg-success text-success`
+- `.error` → `bg-bg-error text-error`
+- `.inverted-success` → `text-bg-success`
+- `.inverted-error` → `text-bg-error`
+
+There is **no `.warning` semantic class** yet — use `bg-bg-warning text-warning` inline or add it to `src/styles/components.css`.
+
+---
+
+### New component with custom styles: co-locate a styles.css
+
+```
+src/components/MyComponent/
+├─ MyComponent.tsx
+├─ index.ts
+└─ styles.css          ← import tokens + define root class
+```
+
+```css
+/* styles.css */
+@import "../../styles/variables.css";   /* adjust depth */
+
+.my-component {
+  @apply flex items-center gap-2 bg-base p-3 rounded-2xl;
+}
+
+.my-component.warning {
+  @apply bg-bg-warning text-warning;
+}
+```
+
+Import `styles.css` in the component file, not in `index.css`.
+
+---
+
+## Icons
+
+### Always use FontAwesome — never emojis or raw Unicode characters
+
+The project uses `@fortawesome/react-fontawesome` with `@fortawesome/free-solid-svg-icons`.
+
+```tsx
+// ✅ correct
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWarning } from "@fortawesome/free-solid-svg-icons";
+
+<FontAwesomeIcon icon={faWarning} />
+
+// ❌ wrong — never use emojis in JSX
+<span>⚠</span>
+```
+
+Common icon/situation mapping:
+| Situation | Icon |
+|-----------|------|
+| Warning / offline | `faWarning` |
+| Success / check | `faCheckCircle` |
+| Error | `faCircleExclamation` |
+| Delete | `faTrash` |
+| Edit | `faPencil` |
+| Sync / restore | `faRotateLeft` |
+| Download / export | `faCloudArrowDown` |
+| Upload / import | `faCloudUpload` |
+| Filter | `faFilter` |
+| Search | `faMagnifyingGlass` |
+
+For `IconButton` specifically, use `@sito/dashboard-app`'s `IconButton` which expects `icon: IconDefinition`.
+
+---
+
+## Conditional rendering guards
+
+When a component renders only in a specific state, place the early-return guard **before** the JSX:
+
+```tsx
+// ✅ correct — banner only shows when offline
+if (isOnline) return null;
+
+// ❌ wrong — inverted logic
+if (!isOnline) return null;
+```
+
+---
+
+## Offline / IndexedDB
+
+- All IndexedDB clients live in `src/lib/api/offline/` and extend `IndexedDBClient` from `@sito/dashboard-app`.
+- All custom methods that are unavailable offline (e.g. `processImport`, `getTypeResume`) must be stubbed to return empty/zero values.
+- Seeding from API results uses `.seed(items).catch(() => {})` — fire-and-forget, never block the query.
+- The offline manager is accessed via `useOfflineManager()` from `providers` — never instantiate `OfflineManager` directly in a component.
+- Never call `useOfflineManager()` in SSR or Node contexts.
+
+---
+
+## General
+
+- Follow all rules in `.sito/dashboard.md` and `.sito/dashboard-app.md`.
+- Never import from internal `@sito/dashboard-app` paths.
+- Use `useNotification()` for all user-facing feedback.
+- Never add `any` types.

@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 // providers
-import { useLocalCache, useManager } from "providers";
+import { useLocalCache, useManager, useOfflineManager } from "providers";
 import { QueryResult, useAuth } from "@sito/dashboard-app";
 
 // types
@@ -37,6 +37,7 @@ export function useTransactionCategoriesList(
   const { filters = { deletedAt: false as unknown as FilterTransactionCategoryDto["deletedAt"] } } = props;
 
   const manager = useManager();
+  const offlineManager = useOfflineManager();
   const { account } = useAuth();
   const { loadCache, updateCache, inCache } = useLocalCache();
 
@@ -50,6 +51,7 @@ export function useTransactionCategoriesList(
         });
         if (!inCache(Tables.TransactionCategories))
           updateCache(Tables.TransactionCategories, result.items);
+        offlineManager.TransactionCategories.seed(result.items).catch(() => {});
         return result;
       } catch (error) {
         console.warn("API failed, loading categories from cache", error);
@@ -69,6 +71,7 @@ export function useTransactionCategoriesCommon(): UseQueryResult<
   CommonTransactionCategoryDto[]
 > {
   const manager = useManager();
+  const offlineManager = useOfflineManager();
   const { account } = useAuth();
   const { loadCache, updateCache } = useLocalCache();
 
@@ -81,6 +84,7 @@ export function useTransactionCategoriesCommon(): UseQueryResult<
           deletedAt: false as unknown as FilterTransactionCategoryDto["deletedAt"],
         });
         updateCache(Tables.TransactionCategories, result);
+        offlineManager.TransactionCategories.seed(result as unknown as TransactionCategoryDto[]).catch(() => {});
         return result;
       } catch (error) {
         console.warn("API failed, loading categories from cache", error);

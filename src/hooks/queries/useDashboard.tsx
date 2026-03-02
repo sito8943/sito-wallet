@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 // providers
-import { useLocalCache, useManager } from "providers";
+import { useLocalCache, useManager, useOfflineManager } from "providers";
 import { QueryResult, useAuth } from "@sito/dashboard-app"
 
 // types
@@ -25,6 +25,7 @@ export function useDashboardsList(
   const { filters = { deletedAt: false as unknown as FilterDashboardDto["deletedAt"] } } = props;
 
   const manager = useManager();
+  const offlineManager = useOfflineManager();
   const { account } = useAuth();
   const { loadCache, updateCache } = useLocalCache();
 
@@ -38,6 +39,7 @@ export function useDashboardsList(
         });
 
         updateCache(Tables.UserDashboardConfig, result.items);
+        offlineManager.Dashboard.seed(result.items).catch(() => {});
         return result;
       } catch (error) {
         console.warn("API failed, loading dashboards from cache", error);

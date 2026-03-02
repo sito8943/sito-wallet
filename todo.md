@@ -30,7 +30,7 @@
   - Mes (incluyendo mes actual)
   - Día (hoy)
   - Año (actual)
-- [ ] Revisar que el scroll de la tabla funcione sin hacer scroll del body
+- [x] Revisar que el scroll de la tabla funcione sin hacer scroll del body
 - [ ] Permitir type resume sin cuenta
 - [ ] Importar desde un csv y exportar a un csv
 
@@ -44,10 +44,12 @@
 - [ ] Desde autocomplete de category poder agregar una nueva
 - [ ] Tooltip en categoría de la descripción (o nueva columna)
 - [ ] Revisar que al editar una transaction con init salga init en el select
+- [ ] Mobile el listado de categories, mas simple y con checkboxes para las acciones multiples
 
 ### 💱 Currency
 
 - [ ] Desde autocomplete de monedas poder agregar una nueva
+- [ ] Mobile el listado de monedas, mas simple y con checkboxes para las acciones multiples
 
 ### 🎛️ UI / UX Improvements
 
@@ -74,10 +76,10 @@
 
 - [x] Al eliminar chip de categoría se rompe el filtro
 - [x] Una vez seleccionada una categoría no deja borrar en el input del filtro
-- [ ] Escribir en el autocomplete de categoria no hace nada
+- [x] Escribir en el autocomplete de categoria no hace nada
 - [x] Filtro por rango de cantidad no funciona
 - [ ] Filtro por descripcion esta roto
-- [ ] Filtrar por una categoria no funciona
+- [x] Filtrar por una categoria no funciona
 - [ ] Guardar filtros de las cards en config
 - [ ] Filtrar por Nombre y Tipo devuelve resultados incorrectos
 

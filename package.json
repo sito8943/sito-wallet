@@ -56,7 +56,7 @@
     "@types/react-dom": "18.2.14",
     "@vitejs/plugin-react-swc": "3.7.2",
     "@vitest/coverage-v8": "^4.0.18",
-    "eslint": "^10.0.0",
+    "eslint": "^9.39.3",
     "eslint-plugin-react-hooks": "^7.1.0-canary-2ba30655-20260219",
     "eslint-plugin-react-refresh": "0.4.18",
     "globals": "15.14.0",

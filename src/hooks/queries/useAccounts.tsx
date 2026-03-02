@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 // providers
-import { useLocalCache, useManager } from "providers";
+import { useLocalCache, useManager, useOfflineManager } from "providers";
 import { QueryResult, useAuth } from "@sito/dashboard-app"
 
 // types
@@ -33,6 +33,7 @@ export function useAccountsList(
   const { filters = { deletedAt: false as unknown as FilterAccountDto["deletedAt"] } } = props;
 
   const manager = useManager();
+  const offlineManager = useOfflineManager();
   const { account } = useAuth();
   const { loadCache, updateCache } = useLocalCache();
 
@@ -46,6 +47,7 @@ export function useAccountsList(
         });
 
         updateCache(Tables.Accounts, result.items);
+        offlineManager.Accounts.seed(result.items).catch(() => {});
         return result;
       } catch (error) {
         console.warn("API failed, loading accounts from cache", error);
@@ -63,6 +65,7 @@ export function useAccountsList(
 
 export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
   const manager = useManager();
+  const offlineManager = useOfflineManager();
   const { account } = useAuth();
   const { loadCache, updateCache, inCache } = useLocalCache();
 
@@ -74,7 +77,10 @@ export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
         const result = await manager.Accounts.commonGet({
           deletedAt: false as unknown as FilterAccountDto["deletedAt"],
         });
-        if (!inCache(Tables.Accounts)) updateCache(Tables.Accounts, result);
+        if (!inCache(Tables.Accounts)) {
+          updateCache(Tables.Accounts, result);
+          offlineManager.Accounts.seed(result as unknown as AccountDto[]).catch(() => {});
+        }
         return result;
       } catch (error) {
         console.warn("API failed, loading accounts from cache", error);

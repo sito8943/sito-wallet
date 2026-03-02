@@ -10,7 +10,7 @@ import {
 } from "@sito/dashboard-app";
 
 // providers
-import { useLocalCache, useManager } from "providers";
+import { useLocalCache, useManager, useOfflineManager } from "providers";
 
 // types
 import { UseTransactionTypeResumePropsType } from "./types.ts";
@@ -66,6 +66,7 @@ export function useTransactionsList(props: {
   } = props;
 
   const manager = useManager();
+  const offlineManager = useOfflineManager();
   const { account } = useAuth();
   const { loadCache, updateCache } = useLocalCache();
 
@@ -104,6 +105,7 @@ export function useTransactionsList(props: {
           `${Tables.Transactions}_${filters?.accountId ?? 0}`,
           result.items
         );
+        offlineManager.Transactions.seed(result.items).catch(() => {});
         return result;
       } catch (error) {
         console.warn("API failed, loading transactions from cache", error);
