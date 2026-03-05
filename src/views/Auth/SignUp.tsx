@@ -34,7 +34,7 @@ const color: "primary" | "secondary" | "tertiary" | "quaternary" =
 export function SignUp() {
   const { t } = useTranslation();
 
-  const { logUser } = useAuth();
+  const { logUser, setGuestMode } = useAuth();
 
   const [appear, setAppear] = useState(false);
 
@@ -90,7 +90,7 @@ export function SignUp() {
     <div className="w-full h-screen flex items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={`${appear ? "bg-base blur-appear" : ""} auth-form`}
+        className={`${appear ? "blur-appear" : ""} auth-form`}
       >
         <h1
           className={`w-full text-2xl md:text-3xl mb-1 transition-all duration-500 ease-in-out delay-200 ${
@@ -119,7 +119,7 @@ export function SignUp() {
                   {...field}
                   type="text"
                   id="name"
-                  className={`text-input peer`}
+                  inputClassName="peer"
                   label={t("_entities:user.name.label")}
                   required
                   helperText={fieldState.error?.message}
@@ -143,7 +143,7 @@ export function SignUp() {
                   {...field}
                   type="email"
                   id="email"
-                  className={`text-input peer`}
+                  inputClassName="peer"
                   label={t("_entities:user.email.label")}
                   required
                   helperText={fieldState.error?.message}
@@ -166,7 +166,7 @@ export function SignUp() {
                 <PasswordInput
                   {...field}
                   id="password"
-                  className={`text-input peer`}
+                  inputClassName="peer"
                   label={t("_entities:user.password.label")}
                   required
                   helperText={fieldState.error?.message}
@@ -189,7 +189,7 @@ export function SignUp() {
                 <PasswordInput
                   {...field}
                   id="rPassword"
-                  className={`text-input peer`}
+                  inputClassName="peer"
                   label={t("_entities:user.rPassword.label")}
                   helperText={fieldState.error?.message}
                   state={fieldState.error ? State.error : State.default}
@@ -214,7 +214,7 @@ export function SignUp() {
           </p>
         </div>
         <div
-          className={`flex gap-3 mt-6 w-full duration-500 ease-in-out delay-[600ms] ${
+          className={`flex max-xs:flex-col gap-3 mt-6 w-full duration-500 ease-in-out delay-[600ms] ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
@@ -236,6 +236,17 @@ export function SignUp() {
               />
             )}
             {t("_pages:auth.signUp.submit")}
+          </Button>
+          <Button
+            type="button"
+            variant="outlined"
+            onClick={() => {
+              setGuestMode(true);
+              navigate("/");
+            }}
+            aria-label={t("_pages:auth.signUp.guest")}
+          >
+            {t("_pages:auth.signUp.guest")}
           </Button>
         </div>
       </form>

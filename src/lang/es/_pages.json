@@ -110,6 +110,7 @@
   "auth": {
     "signIn": {
       "submit": "Entrar",
+      "guest": "Entrar como invitado",
       "title": "Iniciar sesión",
       "accountRecovery": {
         "question": "¿Problemas con tu cuenta?",
@@ -122,6 +123,7 @@
     },
     "signUp": {
       "submit": "Crear cuenta",
+      "guest": "Entrar como invitado",
       "title": "Registrarse",
       "toLogin": {
         "question": "¿Ya tienes cuenta?",

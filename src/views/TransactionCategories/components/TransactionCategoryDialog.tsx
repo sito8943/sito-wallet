@@ -113,7 +113,7 @@ export function TransactionCategoryForm(
             >
               <FontAwesomeIcon
                 icon={icons[(type ?? 0) as keyof typeof icons]}
-                className={`absolute left-2 top-3.5 -translate-y-[50%] text-text text-sm ${
+                className={`absolute left-2 top-[50%] -translate-y-[50%] text-text text-sm ${
                   Number(type) === TransactionType.In
                     ? "inverted-success"
                     : "inverted-error"

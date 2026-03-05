@@ -203,6 +203,17 @@ export function SignIn() {
             )}
             {t("_pages:auth.signIn.submit")}
           </Button>
+          <Button
+            type="button"
+            variant="outlined"
+            onClick={() => {
+              setGuestMode(true);
+              navigate("/");
+            }}
+            aria-label={t("_pages:auth.signIn.guest")}
+          >
+            {t("_pages:auth.signIn.guest")}
+          </Button>
         </div>
       </form>
     </div>

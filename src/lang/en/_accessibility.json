@@ -90,6 +90,9 @@
       "500": "An authentication error has occurred"
     }
   },
+  "offline": {
+    "banner": " You're offline. Your data is saved locally."
+  },
   "messages": {
     "saved": "Saved successfully",
     "message": "Nothing to show"

@@ -110,6 +110,8 @@
   "auth": {
     "signIn": {
       "title": "Sign In",
+      "submit": "Sign In",
+      "guest": "Enter as Guest",
       "accountRecovery": {
         "question": "Trouble accessing your account?",
         "link": "Recover it here"
@@ -121,6 +123,8 @@
     },
     "signUp": {
       "title": "Sign Up",
+      "submit": "Create Account",
+      "guest": "Enter as Guest",
       "toLogin": {
         "question": "Already registered?",
         "link": "Sign In"
