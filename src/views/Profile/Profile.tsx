@@ -1,4 +1,4 @@
-import { ChangeEvent, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
@@ -20,12 +20,6 @@ import { useManager } from "providers";
 
 // hooks
 import { ProfileQueryKeys, useMyProfile, useMobileNavbar } from "hooks";
-
-// types
-import { ProfileDto } from "lib";
-
-const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
-const FIVE_MB = 5 * 1024 * 1024;
 
 const getErrorMessage = (error: unknown, fallback: string): string => {
   if (error instanceof Error) return error.message;
@@ -65,7 +59,6 @@ export function Profile() {
   const { showErrorNotification, showSuccessNotification } = useNotification();
 
   const [nameDraft, setNameDraft] = useState<string | null>(null);
-  const inputFileRef = useRef<HTMLInputElement>(null);
 
   const profileQuery = useMyProfile({
     ensure: true,
@@ -92,40 +85,6 @@ export function Profile() {
     },
   });
 
-  const uploadPhoto = useMutation<
-    ProfileDto,
-    unknown,
-    { id: number; file: File }
-  >({
-    mutationFn: ({ id, file }) => manager.Profiles.updatePhoto(id, file),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ ...ProfileQueryKeys.all() });
-      showSuccessNotification({
-        message: t("_pages:profile.messages.photoUpdated"),
-      });
-    },
-    onError: (error) => {
-      showErrorNotification({
-        message: getErrorMessage(error, t("_accessibility:errors.500")),
-      });
-    },
-  });
-
-  const removePhoto = useMutation<ProfileDto, unknown, number>({
-    mutationFn: (id) => manager.Profiles.deletePhoto(id),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ ...ProfileQueryKeys.all() });
-      showSuccessNotification({
-        message: t("_pages:profile.messages.photoDeleted"),
-      });
-    },
-    onError: (error) => {
-      showErrorNotification({
-        message: getErrorMessage(error, t("_accessibility:errors.500")),
-      });
-    },
-  });
-
   const normalizedName = name.trim();
 
   const nameError = useMemo(() => {
@@ -134,41 +93,7 @@ export function Profile() {
     return "";
   }, [normalizedName, t]);
 
-  const canSaveName = useMemo(() => {
-    if (!profile) return false;
-    if (nameError.length) return false;
-    return normalizedName !== profile.name;
-  }, [nameError, normalizedName, profile]);
-
-  const busy =
-    profileQuery.isLoading ||
-    saveName.isPending ||
-    uploadPhoto.isPending ||
-    removePhoto.isPending;
-
-  const handlePhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file || !profile) return;
-
-    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
-      showErrorNotification({
-        message: t("_pages:profile.errors.fileType"),
-      });
-      e.currentTarget.value = "";
-      return;
-    }
-
-    if (file.size > FIVE_MB) {
-      showErrorNotification({
-        message: t("_pages:profile.errors.fileSize"),
-      });
-      e.currentTarget.value = "";
-      return;
-    }
-
-    uploadPhoto.mutate({ id: profile.id, file });
-    e.currentTarget.value = "";
-  };
+  const busy = profileQuery.isLoading || saveName.isPending;
 
   useMobileNavbar(t("_pages:profile.title"));
 
@@ -190,9 +115,9 @@ export function Profile() {
           <Loading />
         </div>
       ) : (
-        <div className="w-full max-w-2xl self-center base-border bg-base p-6 rounded-2xl flex flex-col gap-6">
+        <div className="w-full max-w-2xl self-center sm:base-border sm:bg-base sm:p-6 rounded-2xl flex flex-col gap-6">
           <section className="flex max-sm:flex-col max-sm:items-start items-center gap-4">
-            <div className="h-16 w-16 rounded-full bg-primary text-base flex items-center justify-center text-xl">
+            <div className="h-16 sm:w-16 w-full sm:rounded-full rounded-xl max-sm:m-auto bg-primary text-base flex items-center justify-center text-xl">
               {getInitials(profile.name)}
             </div>
             <div className="flex flex-col gap-1">
@@ -208,7 +133,7 @@ export function Profile() {
             </div>
           </section>
 
-          <section className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3">
             <TextInput
               id="profile-name"
               required
@@ -223,11 +148,13 @@ export function Profile() {
               }
             />
 
-            <div className="flex max-sm:flex-col gap-2">
+            <div className="flex">
               <Button
                 type="button"
+                variant="submit"
+                color="primary"
                 className="max-sm:w-full"
-                disabled={!canSaveName || busy}
+                disabled={busy}
                 onClick={() =>
                   saveName.mutate({
                     id: profile.id,
@@ -237,42 +164,8 @@ export function Profile() {
               >
                 {t("_pages:profile.actions.save")}
               </Button>
-              <Button
-                type="button"
-                variant="outlined"
-                className="max-sm:w-full"
-                disabled={busy}
-                onClick={() => inputFileRef.current?.click()}
-              >
-                {t("_pages:profile.actions.uploadPhoto")}
-              </Button>
-              <Button
-                type="button"
-                variant="outlined"
-                className="max-sm:w-full"
-                disabled={busy || !profile.photo}
-                onClick={() => removePhoto.mutate(profile.id)}
-              >
-                {t("_pages:profile.actions.deletePhoto")}
-              </Button>
             </div>
-
-            <input
-              ref={inputFileRef}
-              type="file"
-              name="profile-photo"
-              accept={ALLOWED_IMAGE_TYPES.join(",")}
-              onChange={handlePhotoChange}
-              disabled={busy}
-            />
-            <p className="text-sm text-text-muted">
-              {t("_pages:profile.labels.photo")}:{" "}
-              {profile.photo ?? t("_pages:profile.messages.noPhoto")}
-            </p>
-            <p className="text-xs text-text-muted">
-              {t("_pages:profile.helper.photo")}
-            </p>
-          </section>
+          </div>
         </div>
       )}
     </Page>
