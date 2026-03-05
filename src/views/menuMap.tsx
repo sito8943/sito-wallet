@@ -12,6 +12,7 @@ import {
   faScroll,
   faTags,
   faFileInvoice,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 // types
@@ -27,6 +28,7 @@ export enum MenuKeys {
   Movements = "movements",
   SignOut = "signOut",
   SignIn = "auth.signIn",
+  Profile = "profile",
   About = "about",
   CookiesPolicy = "cookiesPolicy",
   TermsAndConditions = "termsAndConditions",
@@ -81,6 +83,12 @@ export const menuMap: MenuItemType[] = [
     icon: <FontAwesomeIcon icon={faShieldHalved} />,
   },
   { type: "divider" },
+  {
+    page: MenuKeys.Profile,
+    path: "/profile",
+    auth: true,
+    icon: <FontAwesomeIcon icon={faUser} />,
+  },
   {
     page: MenuKeys.SignOut,
     path: "/sign-out",

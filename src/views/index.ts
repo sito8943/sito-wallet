@@ -4,6 +4,7 @@ export * from "./Transactions";
 export * from "./TransactionCategories";
 export * from "./Auth";
 export * from "./Home";
+export * from "./Profile";
 export * from "./NotFound";
 export * from "./sitemap";
 export * from "./menuMap";

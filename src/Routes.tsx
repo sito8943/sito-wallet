@@ -61,6 +61,11 @@ const Currencies = loadable(() =>
     default: module.Currencies,
   }))
 );
+const Profile = loadable(() =>
+  import("views/Profile/Profile").then((module) => ({
+    default: module.Profile,
+  }))
+);
 // Info
 const About = loadable(() =>
   import("views/Info/About").then((module) => ({
@@ -104,6 +109,7 @@ export const Routes = () => {
           />
           <Route path="/accounts" element={<Accounts />} />
           <Route path="/currencies" element={<Currencies />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/about-us" element={<About />} />
           <Route path="/cookies-policy" element={<CookiesPolicy />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

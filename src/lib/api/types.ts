@@ -4,6 +4,7 @@ export enum Tables {
   Transactions = "transactions",
   TransactionCategories = "transaction-categories",
   UserDashboardConfig = "user-dashboard-config",
+  Profiles = "profiles",
 }
 
 export enum TablesCamelCase {
@@ -12,6 +13,7 @@ export enum TablesCamelCase {
   Transactions = "transactions",
   TransactionCategories = "transactionCategories",
   UserDashboardConfig = "userDashboardConfig",
+  Profiles = "profiles",
 }
 
 export enum EntityName {
@@ -20,4 +22,5 @@ export enum EntityName {
   Transaction = "transaction",
   TransactionCategory = "transactionCategory",
   UserDashboardConfig = "userDashboardConfig",
+  Profile = "profile",
 }
