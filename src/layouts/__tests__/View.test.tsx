@@ -47,6 +47,9 @@ vi.mock("@sito/dashboard-app", () => ({
   TableOptionsProvider: ({ children }: { children: React.ReactNode }) => (
     <>{children}</>
   ),
+  NavbarProvider: ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  ),
   Error: ({ error }: { error: Error }) => (
     <div data-testid="error-ui">{error?.message}</div>
   ),
