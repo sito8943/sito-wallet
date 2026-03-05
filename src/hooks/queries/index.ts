@@ -4,3 +4,4 @@ export * from "./useCurrencies";
 export * from "./useTransactions";
 export * from "./useTransactionCategories";
 export * from "./useDashboard";
+export * from "./useProfile";

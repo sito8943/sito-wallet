@@ -1,6 +1,7 @@
 {
   "pages": {
     "home": "Home",
+    "profile": "Profile",
     "accounts": "Accounts",
     "transactions": "Transactions",
     "transactionCategories": "Categories",
@@ -36,6 +37,34 @@
       "addCard": {
         "title": "Select Card Type"
       }
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "actions": {
+      "save": "Save changes",
+      "uploadPhoto": "Upload photo",
+      "deletePhoto": "Delete photo"
+    },
+    "labels": {
+      "username": "Username",
+      "updatedAt": "Updated at",
+      "photo": "Photo"
+    },
+    "helper": {
+      "photo": "Allowed types: JPG, PNG, WEBP. Max size: 5 MB."
+    },
+    "messages": {
+      "updated": "Profile updated successfully",
+      "photoUpdated": "Photo updated successfully",
+      "photoDeleted": "Photo deleted successfully",
+      "noPhoto": "No photo uploaded"
+    },
+    "errors": {
+      "nameRequired": "Name is required",
+      "nameMax": "Name must be at most 120 characters",
+      "fileType": "Only JPG, PNG or WEBP files are allowed",
+      "fileSize": "Image must be 5 MB or less"
     }
   },
   "common": {

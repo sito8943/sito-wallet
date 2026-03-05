@@ -3,3 +3,4 @@ export * from "./WalletTable"
 export * from "./Accordion";
 export * from "./Search";
 export * from "./Logo";
+export * from "./Image";

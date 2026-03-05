@@ -34,6 +34,7 @@ const mockAccountsCommon = vi.fn(() => ({
   ],
   isLoading: false,
 }));
+const mockUseMobileNavbar = vi.fn();
 
 vi.mock("hooks", () => ({
   useAccountsCommon: () => mockAccountsCommon(),
@@ -41,6 +42,7 @@ vi.mock("hooks", () => ({
     data: [{ id: 1, name: "Food", initial: false }],
     isLoading: false,
   }),
+  useMobileNavbar: (...args: unknown[]) => mockUseMobileNavbar(...args),
   TransactionsQueryKeys: {
     all: () => ({ queryKey: ["transactions"] }),
     list: () => ({ queryKey: ["transactions", "list"] }),
