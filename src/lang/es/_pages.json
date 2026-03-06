@@ -1,6 +1,7 @@
 {
   "pages": {
     "home": "Inicio",
+    "profile": "Perfil",
     "accounts": "Cuentas",
     "transactions": "Transacciones",
     "transactionCategories": "Categorías",
@@ -36,6 +37,34 @@
       "addCard": {
         "title": "Seleccionar tipo de tarjeta"
       }
+    }
+  },
+  "profile": {
+    "title": "Perfil",
+    "actions": {
+      "save": "Guardar cambios",
+      "uploadPhoto": "Subir foto",
+      "deletePhoto": "Eliminar foto"
+    },
+    "labels": {
+      "username": "Usuario",
+      "updatedAt": "Actualizado en",
+      "photo": "Foto"
+    },
+    "helper": {
+      "photo": "Tipos permitidos: JPG, PNG, WEBP. Tamaño máximo: 5 MB."
+    },
+    "messages": {
+      "updated": "Perfil actualizado correctamente",
+      "photoUpdated": "Foto actualizada correctamente",
+      "photoDeleted": "Foto eliminada correctamente",
+      "noPhoto": "Sin foto subida"
+    },
+    "errors": {
+      "nameRequired": "El nombre es requerido",
+      "nameMax": "El nombre debe tener como máximo 120 caracteres",
+      "fileType": "Solo se permiten archivos JPG, PNG o WEBP",
+      "fileSize": "La imagen debe pesar 5 MB o menos"
     }
   },
   "common": {

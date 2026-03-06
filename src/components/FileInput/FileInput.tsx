@@ -51,7 +51,7 @@ export const FileInput = forwardRef(function (
   return (
     <div className={`file-input-container ${containerClassName}`}>
       {files.length === 0 && (
-        <label htmlFor={rest.name} className={`${labelClassName}`}>
+        <label htmlFor={rest.id} className={`${labelClassName}`}>
           {label}
           <input
             type="file"
