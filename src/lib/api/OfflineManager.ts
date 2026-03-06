@@ -7,6 +7,7 @@ import {
   TransactionIndexedDBClient,
   TransactionCategoryIndexedDBClient,
   DashboardIndexedDBClient,
+  ProfileIndexedDBClient
 } from "./offline";
 
 // config
@@ -19,6 +20,7 @@ export class OfflineManager extends IManager {
   transactionCategories: TransactionCategoryIndexedDBClient =
     new TransactionCategoryIndexedDBClient();
   dashboard: DashboardIndexedDBClient = new DashboardIndexedDBClient();
+  profiles: ProfileIndexedDBClient = new ProfileIndexedDBClient();
 
   constructor() {
     super("", config.auth.user);
@@ -42,5 +44,9 @@ export class OfflineManager extends IManager {
 
   get Dashboard(): DashboardIndexedDBClient {
     return this.dashboard;
+  }
+
+  get Profiles(): ProfileIndexedDBClient {
+    return this.profiles;
   }
 }

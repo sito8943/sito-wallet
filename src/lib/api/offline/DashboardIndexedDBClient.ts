@@ -14,7 +14,8 @@ import {
   UpdateDashboardCardConfigDto,
 } from "lib";
 
-const DB_NAME = "sito-wallet-db";
+// config
+import { config } from "../../../config";
 
 export class DashboardIndexedDBClient extends IndexedDBClient<
   Tables,
@@ -26,12 +27,12 @@ export class DashboardIndexedDBClient extends IndexedDBClient<
   ImportPreviewDashboardDto
 > {
   constructor() {
-    super(Tables.UserDashboardConfig, DB_NAME);
+    super(Tables.UserDashboardConfig, config.indexedDBName);
   }
 
   async seed(items: DashboardDto[]): Promise<void> {
     return new Promise((resolve, reject) => {
-      const request = indexedDB.open(DB_NAME);
+      const request = indexedDB.open(config.indexedDBName);
       request.onsuccess = (event) => {
         const db = (event.target as IDBOpenDBRequest).result;
         const tx = db.transaction(Tables.UserDashboardConfig, "readwrite");
@@ -50,15 +51,11 @@ export class DashboardIndexedDBClient extends IndexedDBClient<
     });
   }
 
-  async updateCardTitle(
-    _data: UpdateDashboardCardTitleDto
-  ): Promise<number> {
+  async updateCardTitle(_data: UpdateDashboardCardTitleDto): Promise<number> {
     return 0;
   }
 
-  async updateCardConfig(
-    _data: UpdateDashboardCardConfigDto
-  ): Promise<number> {
+  async updateCardConfig(_data: UpdateDashboardCardConfigDto): Promise<number> {
     return 0;
   }
 

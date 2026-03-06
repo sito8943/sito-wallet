@@ -13,7 +13,8 @@ import {
   ImportPreviewCurrencyDto,
 } from "lib";
 
-const DB_NAME = "sito-wallet-db";
+// config
+import { config } from "../../../config";
 
 export class CurrencyIndexedDBClient extends IndexedDBClient<
   Tables,
@@ -25,12 +26,12 @@ export class CurrencyIndexedDBClient extends IndexedDBClient<
   ImportPreviewCurrencyDto
 > {
   constructor() {
-    super(Tables.Currencies, DB_NAME);
+    super(Tables.Currencies, config.indexedDBName);
   }
 
   async seed(items: CurrencyDto[]): Promise<void> {
     return new Promise((resolve, reject) => {
-      const request = indexedDB.open(DB_NAME);
+      const request = indexedDB.open(config.indexedDBName);
       request.onsuccess = (event) => {
         const db = (event.target as IDBOpenDBRequest).result;
         const tx = db.transaction(Tables.Currencies, "readwrite");

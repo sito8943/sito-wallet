@@ -1,9 +1,5 @@
 import { BaseEntityDto } from "@sito/dashboard-app";
-
-export interface CommonUserProfileDto {
-  id: number;
-  username: string;
-}
+import { CommonUserProfileDto } from "./CommonUserProfileDto";
 
 export interface ProfileDto extends BaseEntityDto {
   name: string;

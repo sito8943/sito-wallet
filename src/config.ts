@@ -16,6 +16,7 @@ const {
   VITE_ONBOARDING,
   VITE_GUEST_MODE,
   VITE_RECENT_SEARCHES,
+  VITE_INDEXED_DB_NAME
 } = import.meta.env;
 
 export const config = {
@@ -36,6 +37,7 @@ export const config = {
   supabaseAnon: VITE_SUPABASE_ANON,
   onboarding: VITE_ONBOARDING,
   guestMode: VITE_GUEST_MODE,
+  indexedDBName: VITE_INDEXED_DB_NAME,
   auth: {
     user: VITE_USER,
     guestMode: VITE_GUEST_MODE,

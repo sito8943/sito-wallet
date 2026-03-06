@@ -13,7 +13,8 @@ import {
   ImportPreviewAccountDto,
 } from "lib";
 
-const DB_NAME = "sito-wallet-db";
+// config
+import { config } from "../../../config";
 
 export class AccountIndexedDBClient extends IndexedDBClient<
   Tables,
@@ -25,12 +26,12 @@ export class AccountIndexedDBClient extends IndexedDBClient<
   ImportPreviewAccountDto
 > {
   constructor() {
-    super(Tables.Accounts, DB_NAME);
+    super(Tables.Accounts, config.indexedDBName);
   }
 
   async seed(items: AccountDto[]): Promise<void> {
     return new Promise((resolve, reject) => {
-      const request = indexedDB.open(DB_NAME);
+      const request = indexedDB.open(config.indexedDBName);
       request.onsuccess = (event) => {
         const db = (event.target as IDBOpenDBRequest).result;
         const tx = db.transaction(Tables.Accounts, "readwrite");
