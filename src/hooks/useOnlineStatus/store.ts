@@ -44,11 +44,6 @@ const updateSnapshot = (nextValues: Partial<OnlineStatusSnapshot>) => {
     nextValues.isServerReachable ?? snapshot.isServerReachable;
   const nextOnline = nextBrowserOnline && nextServerReachable;
 
-  console.log(
-    "Updating online status snapshot:",
-    { nextBrowserOnline, nextServerReachable, nextOnline },
-    { current: snapshot },
-  );
   if (
     snapshot.isBrowserOnline === nextBrowserOnline &&
     snapshot.isServerReachable === nextServerReachable &&

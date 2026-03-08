@@ -11,8 +11,6 @@ export function OfflineBanner({ forceVisible = false }: OfflineBannerProps) {
   const isOnline = useOnlineStatus();
   const { t } = useTranslation();
 
-  console.log("isOnline", isOnline);
-
   if (isOnline && !forceVisible) return null;
 
   return (

@@ -54,8 +54,6 @@ export const ImportDialog = <EntityDto extends ImportPreviewDto>(
     ...rest
   } = props;
 
-  console.log(handleClose);
-
   const [inputKey, setInputKey] = useState(0);
   const processedCallbackRef = useRef(onFileProcessed);
   const fileProcessorRef = useRef(fileProcessor);
