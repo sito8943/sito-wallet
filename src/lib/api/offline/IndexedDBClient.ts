@@ -11,6 +11,21 @@ import {
 // lib
 import { ImportDto, ImportPreviewDto } from "lib";
 
+export const matchesFilterValue = (
+  key: string,
+  itemValue: unknown,
+  filterValue: unknown,
+): boolean => {
+  if (filterValue === undefined) return true;
+
+  if (key === "deletedAt" && typeof filterValue === "boolean") {
+    const isDeleted = itemValue !== null && itemValue !== undefined;
+    return filterValue ? isDeleted : !isDeleted;
+  }
+
+  return itemValue === filterValue;
+};
+
 export class IndexedDBClient<
   Tables extends string,
   TDto extends BaseEntityDto,
@@ -97,7 +112,7 @@ export class IndexedDBClient<
   ): Promise<QueryResult<TDto>> {
     const store = await this.transaction("readonly");
     const all: TDto[] = await this.request(store.getAll());
-
+    console.log("all items from store", all);
     const filtered = this.applyFilter(all, filters as Record<string, unknown>);
 
     const sortBy = (query?.sortingBy ?? "id") as keyof TDto;
@@ -196,8 +211,11 @@ export class IndexedDBClient<
     return items.filter((item) =>
       Object.keys(filters).every(
         (key) =>
-          filters[key] === undefined ||
-          (item as Record<string, unknown>)[key] === filters[key],
+          matchesFilterValue(
+            key,
+            (item as Record<string, unknown>)[key],
+            filters[key],
+          ),
       ),
     );
   }

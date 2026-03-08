@@ -28,6 +28,7 @@ const authRememberKey = VITE_REMEMBER || "remember";
 const authRefreshTokenKey = VITE_REFRESH_TOKEN_KEY || "refreshToken";
 const authAccessTokenExpiresAtKey =
   VITE_ACCESS_TOKEN_EXPIRES_AT_KEY || "accessTokenExpiresAt";
+const authAccountSnapshotKey = `${authUserKey}:account`;
 
 export const config = {
   apiUrl: VITE_API_URL,
@@ -57,6 +58,7 @@ export const config = {
     remember: authRememberKey,
     refreshTokenKey: authRefreshTokenKey,
     accessTokenExpiresAtKey: authAccessTokenExpiresAtKey,
+    accountSnapshotKey: authAccountSnapshotKey,
     guestMode: VITE_GUEST_MODE,
   },
 };

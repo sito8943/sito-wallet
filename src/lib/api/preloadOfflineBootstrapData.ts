@@ -50,19 +50,18 @@ export async function fetchCurrenciesList(
   filters: FilterCurrencyDto,
 ): Promise<QueryResult<CurrencyDto>> {
   try {
+    console.log("fetching currencies from API with filters", filters);
     const result = await manager.Currencies.get(undefined, {
       ...filters,
     });
-
+    console.log("result", result);
     offlineManager.Currencies.seed(result.items).catch(() => {});
     return result;
   } catch (error) {
     console.warn("API failed, loading currencies from IndexedDB", error);
-    const a = await offlineManager.Currencies.get(undefined, {
+    return await offlineManager.Currencies.get(undefined, {
       ...filters,
     });
-    console.log("loaded from offline manager", a);
-    return a;
   }
 }
 

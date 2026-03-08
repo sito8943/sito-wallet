@@ -29,13 +29,15 @@ export const CurrenciesQueryKeys = {
 };
 
 export function useCurrenciesList(
-  props: UseFetchPropsType<CurrencyDto, FilterCurrencyDto>
+  props: UseFetchPropsType<CurrencyDto, FilterCurrencyDto>,
 ): UseQueryResult<QueryResult<CurrencyDto>> {
   const { filters = defaultCurrenciesListFilters } = props;
 
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
+
+  console.log("currencies", account);
 
   return useQuery({
     ...CurrenciesQueryKeys.list(filters),
@@ -60,7 +62,7 @@ export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
       } catch (error) {
         console.warn(
           "API failed, loading common currencies from IndexedDB",
-          error
+          error,
         );
         return await offlineManager.Currencies.commonGet({
           deletedAt: false as unknown as FilterCurrencyDto["deletedAt"],

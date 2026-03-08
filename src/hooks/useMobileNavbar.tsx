@@ -23,9 +23,9 @@ export function useMobileNavbar(title: string, actions?: ActionsDropdownActions)
   const actionsRef = useRef<ActionsDropdownActions>(actions ?? []);
   const actionsSignatureRef = useRef("");
 
-  useEffect(() => {
+  /* useEffect(() => {
     setTitle(title);
-  }, [title, setTitle]);
+  }, [title, setTitle]); */
 
   useEffect(() => {
     actionsRef.current = actions ?? [];

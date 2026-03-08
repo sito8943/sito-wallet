@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 // providers
 import { useAuth, SplashScreen } from "@sito/dashboard-app";
 
+// lib
+import { clearPersistedPublicSessionAccount } from "lib";
+
 /**
  * SignOut page
  * @returns SignOut page component
@@ -15,6 +18,7 @@ export function SignOut() {
 
   const logic = useCallback(async () => {
     await logoutUser();
+    clearPersistedPublicSessionAccount();
     setTimeout(() => {
       navigate("/auth/sign-in");
     }, 1000);
