@@ -1,8 +1,10 @@
 VITE_API_URL="http://localhost:8080/"
 VITE_THIS_URL="http://localhost:5173/"
+VITE_APP_VERSION="0.0.1"
 
 VITE_BASIC_KEY="basic_wallet"
 VITE_CACHE="cache_wallet"
+VITE_INDEXED_DB_NAME="sito_wallet_indexed_db"
 VITE_VALIDATION_COOKIE="validation_wallet"
 VITE_RECOVERING_COOKIE="recovering_wallet"
 VITE_CRYPTO='api.wallet.com'

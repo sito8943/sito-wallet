@@ -15,6 +15,7 @@ import {
 
 // config
 import { config } from "../../../config";
+import { queueSyncOperation } from "../sync";
 
 export class AccountIndexedDBClient extends IndexedDBClient<
   Tables,
@@ -48,6 +49,64 @@ export class AccountIndexedDBClient extends IndexedDBClient<
       };
       request.onerror = () => reject(request.error);
     });
+  }
+
+  async insert(value: AddAccountDto): Promise<AccountDto> {
+    const created = await super.insert(value);
+
+    await queueSyncOperation(
+      "accounts",
+      "CREATE",
+      {
+        name: value.name,
+        description: value.description,
+        type: value.type,
+        currencyId: value.currencyId,
+        balance: value.balance,
+      },
+      created.id
+    );
+
+    return created;
+  }
+
+  async update(value: UpdateAccountDto): Promise<AccountDto> {
+    const updated = await super.update(value);
+
+    await queueSyncOperation(
+      "accounts",
+      "UPDATE",
+      {
+        id: value.id,
+        name: value.name,
+        description: value.description,
+        type: value.type,
+        currencyId: value.currencyId,
+      },
+      value.id
+    );
+
+    return updated;
+  }
+
+  async softDelete(ids: number[]): Promise<number> {
+    const deleted = await super.softDelete(ids);
+
+    await Promise.all(
+      ids.map((id) => queueSyncOperation("accounts", "DELETE", { id }, id))
+    );
+
+    return deleted;
+  }
+
+  async restore(ids: number[]): Promise<number> {
+    const restored = await super.restore(ids);
+
+    await Promise.all(
+      ids.map((id) => queueSyncOperation("accounts", "RESTORE", { id }, id))
+    );
+
+    return restored;
   }
 
   async sync(_accountId: number): Promise<number> {

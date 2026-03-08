@@ -334,6 +334,16 @@ const { filters } = useTableOptions();
 // filters is a flat object: { name: "John", role: "admin" }
 ```
 
+### 4.6 Expand Indicator Behavior
+
+When `onRowExpand` is provided, each expandable row shows a chevron in the first visible column:
+
+- `ChevronDown` (`↓`) when collapsed
+- `ChevronUp` (`↑`) when expanded
+
+The full row remains clickable for expand/collapse, while controls such as row checkbox and action buttons
+keep stopping event propagation so they do not toggle expansion accidentally.
+
 ---
 
 ## 5. Actions Components
@@ -402,6 +412,9 @@ import { ActionsDropdown } from "@sito/dashboard";
   ]}
 />;
 ```
+
+When `ActionsDropdown` is used inside `Table` rows, opening or clicking the actions trigger/menu does **not**
+expand or collapse the row.
 
 ---
 
@@ -730,6 +743,7 @@ export default function ProductsPage() {
 | Pass `isLoading` while fetching                                                                        | Table shows spinner; do not pass an empty `data=[]` while loading without this     |
 | Re-fetch when `currentPage`, `pageSize`, `sortingBy`, `sortingOrder`, or `filters` change              | These are the only source of truth for query params                                |
 | `actions()` receives the row — use it for conditional `hidden`/`disabled`                              | Avoids stale closures                                                              |
+| In expandable rows, the actions dropdown trigger should not toggle row expansion                       | Trigger/menu clicks stop propagation from reaching the row click handler           |
 | `softDeleteProperty` defaults to `"deletedAt"` — rows with a truthy value there are styled differently | Override with `softDeleteProperty="archivedAt"` if your model uses a different key |
 | Do **not** manage pagination state yourself                                                            | `TableOptionsProvider` owns it; read-only access via `useTableOptions()`           |
 
@@ -775,4 +789,11 @@ export type { FilterType, FiltersValue, WidgetFilterProps };
 
 ---
 
-_Last updated: 2026-03-01 — library version 0.0.67_
+## 17. Storybook Scenarios
+
+- `WithPagination`: exercises page navigation and page-size switching with in-memory paged data.
+- `WithCompleteFeatures`: combines sticky + dropdown row actions, pagination, single-row expansion, and column filters in one scenario.
+
+---
+
+_Last updated: 2026-03-08 — library version 0.0.68_

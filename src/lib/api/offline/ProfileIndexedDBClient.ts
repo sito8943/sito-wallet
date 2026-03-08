@@ -13,6 +13,7 @@ import { ProfileDto, AddProfileDto, UpdateProfileDto } from "lib";
 
 // config
 import { config } from "../../../config";
+import { queueSyncOperation } from "../sync";
 
 export class ProfileIndexedDBClient extends IndexedDBClient<
   Tables,
@@ -46,6 +47,58 @@ export class ProfileIndexedDBClient extends IndexedDBClient<
       };
       request.onerror = () => reject(request.error);
     });
+  }
+
+  async insert(value: AddProfileDto): Promise<ProfileDto> {
+    const created = await super.insert(value);
+
+    await queueSyncOperation(
+      "profile",
+      "CREATE",
+      {
+        name: value.name,
+      },
+      created.id
+    );
+
+    return created;
+  }
+
+  async update(value: UpdateProfileDto): Promise<ProfileDto> {
+    const updated = await super.update(value);
+
+    await queueSyncOperation(
+      "profile",
+      "UPDATE",
+      {
+        id: value.id,
+        name: value.name,
+      },
+      value.id
+    );
+
+    return updated;
+  }
+
+  async me(): Promise<ProfileDto> {
+    const result = await this.get(undefined, {
+      deletedAt: false as unknown as BaseFilterDto["deletedAt"],
+    });
+    const firstItem = result.items[0];
+
+    if (!firstItem) throw new Error("Profile not found");
+    return firstItem;
+  }
+
+  async ensureMine(defaultName: string): Promise<ProfileDto> {
+    try {
+      return await this.me();
+    } catch {
+      const parsedDefaultName = defaultName.trim().slice(0, 120);
+      if (!parsedDefaultName) throw new Error("Profile not found");
+
+      return await this.insert({ name: parsedDefaultName });
+    }
   }
 
   async delete(_ids: number[]): Promise<number> {

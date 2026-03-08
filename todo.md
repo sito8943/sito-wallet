@@ -10,6 +10,7 @@
 - [ ] OCR: subir foto de recibo y reconocer amount, fecha, lugar, etc.
 - [ ] Resumenes Mensuales, Diarios, Semanales y Anuales
 - [ ] Subscription Tracker
+- [ ] Si estas trabajando con un Form Dialog y de repente das click afuera, deberia salir un confirmation dialog de decirte q perderas los cambios
 
 ### 💳 Accounts
 

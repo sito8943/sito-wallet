@@ -11,6 +11,7 @@ import { type BasicProviderPropTypes } from "./types";
 
 import { SWManagerProvider } from "./SWManagerProvider";
 import { LocalCacheProvider } from "./LocalCacheProvider";
+import { OfflineSyncProvider } from "./OfflineSyncProvider";
 
 // config
 import { config } from "../config";
@@ -25,7 +26,9 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
       <LocalCacheProvider>
         <TranslationProvider t={t} language={i18n.language}>
           <NotificationProvider>
-            <AuthProvider {...authConfig}>{children}</AuthProvider>
+            <AuthProvider {...authConfig}>
+              <OfflineSyncProvider>{children}</OfflineSyncProvider>
+            </AuthProvider>
           </NotificationProvider>
         </TranslationProvider>
       </LocalCacheProvider>

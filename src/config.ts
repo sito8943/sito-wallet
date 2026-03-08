@@ -16,7 +16,8 @@ const {
   VITE_ONBOARDING,
   VITE_GUEST_MODE,
   VITE_RECENT_SEARCHES,
-  VITE_INDEXED_DB_NAME
+  VITE_INDEXED_DB_NAME,
+  VITE_APP_VERSION
 } = import.meta.env;
 
 export const config = {
@@ -30,6 +31,7 @@ export const config = {
   user: VITE_USER,
   localCache: VITE_CACHE,
   recentSearches: VITE_RECENT_SEARCHES,
+  appVersion: VITE_APP_VERSION,
   validationCookie: VITE_VALIDATION_COOKIE,
   recoveringCookie: VITE_RECOVERING_COOKIE,
   crypto: VITE_CRYPTO,

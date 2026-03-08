@@ -115,8 +115,20 @@ if (!isOnline) return null;
 - All IndexedDB clients live in `src/lib/api/offline/` and extend `IndexedDBClient` from `@sito/dashboard-app`.
 - All custom methods that are unavailable offline (e.g. `processImport`, `getTypeResume`) must be stubbed to return empty/zero values.
 - Seeding from API results uses `.seed(items).catch(() => {})` — fire-and-forget, never block the query.
-- The offline manager is accessed via `useOfflineManager()` from `providers` — never instantiate `OfflineManager` directly in a component.
+- The offline manager is accessed via `useOfflineManager()` from `providers`.
+- `OfflineManager` must only be instantiated in `src/providers/SWManagerProvider.tsx` (provider composition); do not instantiate it in feature components, hooks, or views.
 - Never call `useOfflineManager()` in SSR or Node contexts.
+
+---
+
+## Offline Sync (/sync + /ws)
+
+- Sync infrastructure lives in `src/lib/api/sync/`.
+- Use the shared services exported from `lib` (`offlineSyncService`, `syncSocketService`); do not create ad-hoc sync clients in components.
+- HTTP sync flow must stay aligned with backend contract: `status -> session/start -> bulk/{entity} -> session/finish` (or `session/cancel` on abort/error).
+- WebSocket sync uses STOMP handshake at `/ws` and user destination `/user/queue/sync-status`.
+- Socket event handling in UI must be centralized in `OfflineSyncProvider`; avoid duplicating socket subscriptions in view components.
+- Keep sync queue payloads backend-compatible and strongly typed (no `any`, no implicit shape assumptions).
 
 ---
 
