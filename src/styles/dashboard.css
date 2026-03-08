@@ -4,6 +4,10 @@
   @apply rounded-4xl;
 }
 
+.table-row-cell {
+  @apply whitespace-nowrap;
+}
+
 .page-header {
   @apply bg-base-dark;
 }
@@ -194,5 +198,5 @@ select > option {
 }
 
 .action-dropdown-item {
-  @apply rounded-lg
+  @apply rounded-lg;
 }

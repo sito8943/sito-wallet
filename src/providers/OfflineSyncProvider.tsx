@@ -13,6 +13,7 @@ import { BasicProviderPropTypes } from "./types";
 // lib
 import {
   offlineSyncService,
+  syncClient,
   syncSocketService,
   SyncSocketEvent,
   toSyncHttpError,
@@ -30,14 +31,28 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
   const lastAttemptKeyRef = useRef("");
   const shouldNotifySocketDisconnectRef = useRef(false);
   const socketDisconnectedNotifiedRef = useRef(false);
+  const socketHealthCheckInProgressRef = useRef(false);
 
-  const notifyServerUnavailable = useCallback(() => {
+  const notifyServerUnavailable = useCallback(async () => {
     if (socketDisconnectedNotifiedRef.current) return;
+    if (socketHealthCheckInProgressRef.current) return;
 
-    socketDisconnectedNotifiedRef.current = true;
-    showErrorNotification({
-      message: t("_pages:sync.errors.serverUnavailable"),
-    });
+    socketHealthCheckInProgressRef.current = true;
+
+    try {
+      await syncClient.status();
+      return;
+    } catch (error) {
+      const parsedError = toSyncHttpError(error);
+      if (parsedError.status !== 500) return;
+
+      socketDisconnectedNotifiedRef.current = true;
+      showErrorNotification({
+        message: t("_pages:sync.errors.serverUnavailable"),
+      });
+    } finally {
+      socketHealthCheckInProgressRef.current = false;
+    }
   }, [showErrorNotification, t]);
 
   const handleSocketEvent = useCallback(
@@ -72,11 +87,11 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
       },
       onDisconnect: () => {
         if (!shouldNotifySocketDisconnectRef.current) return;
-        notifyServerUnavailable();
+        notifyServerUnavailable().catch(() => undefined);
       },
       onStompError: () => {
         if (!shouldNotifySocketDisconnectRef.current) return;
-        notifyServerUnavailable();
+        notifyServerUnavailable().catch(() => undefined);
       },
       onEvent: (event) => {
         handleSocketEvent(event).catch(() => undefined);
