@@ -28,6 +28,17 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
 
   const syncInProgressRef = useRef(false);
   const lastAttemptKeyRef = useRef("");
+  const shouldNotifySocketDisconnectRef = useRef(false);
+  const socketDisconnectedNotifiedRef = useRef(false);
+
+  const notifyServerUnavailable = useCallback(() => {
+    if (socketDisconnectedNotifiedRef.current) return;
+
+    socketDisconnectedNotifiedRef.current = true;
+    showErrorNotification({
+      message: t("_pages:sync.errors.serverUnavailable"),
+    });
+  }, [showErrorNotification, t]);
 
   const handleSocketEvent = useCallback(
     async (event: SyncSocketEvent): Promise<void> => {
@@ -47,20 +58,42 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
 
   useEffect(() => {
     if (!isOnline || !account?.id || isInGuestMode()) {
+      shouldNotifySocketDisconnectRef.current = false;
+      socketDisconnectedNotifiedRef.current = false;
       syncSocketService.disconnect();
       return;
     }
 
+    shouldNotifySocketDisconnectRef.current = true;
+
     syncSocketService.connect({
+      onConnect: () => {
+        socketDisconnectedNotifiedRef.current = false;
+      },
+      onDisconnect: () => {
+        if (!shouldNotifySocketDisconnectRef.current) return;
+        notifyServerUnavailable();
+      },
+      onStompError: () => {
+        if (!shouldNotifySocketDisconnectRef.current) return;
+        notifyServerUnavailable();
+      },
       onEvent: (event) => {
         handleSocketEvent(event).catch(() => undefined);
       },
     });
 
     return () => {
+      shouldNotifySocketDisconnectRef.current = false;
       syncSocketService.disconnect();
     };
-  }, [account?.id, handleSocketEvent, isInGuestMode, isOnline]);
+  }, [
+    account?.id,
+    handleSocketEvent,
+    isInGuestMode,
+    isOnline,
+    notifyServerUnavailable,
+  ]);
 
   useEffect(() => {
     if (!isOnline) {

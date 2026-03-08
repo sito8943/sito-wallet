@@ -21,6 +21,7 @@ import {
 // config
 import { config } from "../../../config";
 import { queueSyncOperation } from "../sync";
+import { seedStore } from "./seedStore";
 
 type TransactionCreateInput = AddTransactionDto &
   Partial<Pick<UpdateTransactionDto, "categoryId">>;
@@ -39,24 +40,7 @@ export class TransactionIndexedDBClient extends IndexedDBClient<
   }
 
   async seed(items: TransactionDto[]): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open(config.indexedDBName);
-      request.onsuccess = (event) => {
-        const db = (event.target as IDBOpenDBRequest).result;
-        const tx = db.transaction(Tables.Transactions, "readwrite");
-        const store = tx.objectStore(Tables.Transactions);
-        items.forEach((item) => store.put(item));
-        tx.oncomplete = () => {
-          db.close();
-          resolve();
-        };
-        tx.onerror = () => {
-          db.close();
-          reject(tx.error);
-        };
-      };
-      request.onerror = () => reject(request.error);
-    });
+    await seedStore(config.indexedDBName, Tables.Transactions, items);
   }
 
   async insert(value: AddTransactionDto): Promise<TransactionDto> {

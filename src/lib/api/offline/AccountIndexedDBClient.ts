@@ -16,6 +16,7 @@ import {
 // config
 import { config } from "../../../config";
 import { queueSyncOperation } from "../sync";
+import { seedStore } from "./seedStore";
 
 export class AccountIndexedDBClient extends IndexedDBClient<
   Tables,
@@ -31,24 +32,7 @@ export class AccountIndexedDBClient extends IndexedDBClient<
   }
 
   async seed(items: AccountDto[]): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open(config.indexedDBName);
-      request.onsuccess = (event) => {
-        const db = (event.target as IDBOpenDBRequest).result;
-        const tx = db.transaction(Tables.Accounts, "readwrite");
-        const store = tx.objectStore(Tables.Accounts);
-        items.forEach((item) => store.put(item));
-        tx.oncomplete = () => {
-          db.close();
-          resolve();
-        };
-        tx.onerror = () => {
-          db.close();
-          reject(tx.error);
-        };
-      };
-      request.onerror = () => reject(request.error);
-    });
+    await seedStore(config.indexedDBName, Tables.Accounts, items);
   }
 
   async insert(value: AddAccountDto): Promise<AccountDto> {
