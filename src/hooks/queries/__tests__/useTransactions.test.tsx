@@ -3,16 +3,16 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode } from "react";
 
-// ─── Module mocks ──────────────────────────────────────────────────────────────
-
 const mockTransactionsGet = vi.fn();
 const mockTransactionsCommonGet = vi.fn();
 const mockTransactionsGetTypeResume = vi.fn();
 const mockTransactionsWeekly = vi.fn();
+const mockOfflineTransactionsGet = vi.fn();
+const mockOfflineTransactionsCommonGet = vi.fn();
+const mockOfflineTransactionsGetTypeResume = vi.fn();
+const mockOfflineTransactionsWeekly = vi.fn();
 const mockTransactionsSeed = vi.fn(() => Promise.resolve());
-const mockLoadCache = vi.fn(() => null);
-const mockUpdateCache = vi.fn();
-const mockInCache = vi.fn(() => false);
+const mockUseAuth = vi.fn();
 
 vi.mock("providers", () => ({
   useManager: () => ({
@@ -25,38 +25,36 @@ vi.mock("providers", () => ({
   }),
   useOfflineManager: () => ({
     Transactions: {
+      get: mockOfflineTransactionsGet,
+      commonGet: mockOfflineTransactionsCommonGet,
+      getTypeResume: mockOfflineTransactionsGetTypeResume,
+      weekly: mockOfflineTransactionsWeekly,
       seed: mockTransactionsSeed,
     },
-  }),
-  useLocalCache: () => ({
-    loadCache: mockLoadCache,
-    updateCache: mockUpdateCache,
-    inCache: mockInCache,
   }),
 }));
 
 vi.mock("@sito/dashboard-app", () => ({
-  useAuth: vi.fn(() => ({ account: { id: 1, email: "test@example.com" } })),
-  useTableOptions: vi.fn(() => ({
+  useAuth: () => mockUseAuth(),
+  useTableOptions: () => ({
     sortingBy: "date",
     sortingOrder: "desc",
     currentPage: 1,
     pageSize: 10,
     filters: {},
-  })),
+  }),
   QueryParam: class {},
   QueryResult: class {},
 }));
 
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
-    t: (k: string) => k,
+    t: (key: string) => key,
   }),
 }));
 
 vi.mock("lib", () => ({
   TransactionType: { In: "in", Out: "out" },
-  Tables: { Transactions: "transactions", Accounts: "accounts" },
   TransactionDto: class {},
   CommonTransactionDto: class {},
   FilterTransactionDto: class {},
@@ -73,20 +71,17 @@ import {
   TransactionsQueryKeys,
 } from "../useTransactions";
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
 function makeWrapper(qc?: QueryClient) {
   const client =
     qc ??
     new QueryClient({
       defaultOptions: { queries: { retry: false, gcTime: 0 } },
     });
+
   return ({ children }: { children: ReactNode }) => (
     <QueryClientProvider client={client}>{children}</QueryClientProvider>
   );
 }
-
-// ─── Tests ────────────────────────────────────────────────────────────────────
 
 describe("TransactionsQueryKeys", () => {
   it('all() returns queryKey with ["transactions"]', () => {
@@ -120,146 +115,120 @@ describe("TransactionsQueryKeys", () => {
 
 describe("useTransactionsList", () => {
   beforeEach(() => {
+    mockUseAuth.mockReturnValue({
+      account: { id: 1, email: "test@example.com" },
+    });
     mockTransactionsGet.mockReset();
-    mockLoadCache.mockReturnValue(null);
-    mockUpdateCache.mockReset();
+    mockOfflineTransactionsGet.mockReset();
     mockTransactionsSeed.mockClear();
   });
 
-  it("is disabled when account.id is falsy", async () => {
-    // Temporarily override useAuth to return no account
-    const { useAuth } = await import("@sito/dashboard-app");
-    vi.mocked(useAuth).mockReturnValueOnce({ account: null as unknown as { id: number; email: string }, isInGuestMode: vi.fn() });
+  it("is disabled when account.id is falsy", () => {
+    mockUseAuth.mockReturnValueOnce({ account: null });
 
-    const { result } = renderHook(
-      () => useTransactionsList({ filters: {} }),
-      { wrapper: makeWrapper() }
-    );
+    const { result } = renderHook(() => useTransactionsList({ filters: {} }), {
+      wrapper: makeWrapper(),
+    });
 
     expect(result.current.fetchStatus).toBe("idle");
   });
 
-  it("calls manager.Transactions.get and updates cache on success", async () => {
+  it("fetches transactions list and seeds IndexedDB", async () => {
     const data = { items: [{ id: 1, amount: 100 }], total: 1 };
     mockTransactionsGet.mockResolvedValue(data);
 
-    const { result } = renderHook(
-      () => useTransactionsList({ filters: {} }),
-      { wrapper: makeWrapper() }
-    );
+    const { result } = renderHook(() => useTransactionsList({ filters: {} }), {
+      wrapper: makeWrapper(),
+    });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data).toEqual(data);
-    expect(mockUpdateCache).toHaveBeenCalledWith(
-      expect.stringContaining("transactions"),
-      data.items
+    expect(mockTransactionsSeed).toHaveBeenCalledWith(data.items);
+    expect(mockOfflineTransactionsGet).not.toHaveBeenCalled();
+  });
+
+  it("falls back to IndexedDB when API fails", async () => {
+    const fallback = { items: [{ id: 1, amount: 50 }], total: 1 };
+    mockTransactionsGet.mockRejectedValue(new Error("Network error"));
+    mockOfflineTransactionsGet.mockResolvedValue(fallback);
+
+    const { result } = renderHook(() => useTransactionsList({ filters: {} }), {
+      wrapper: makeWrapper(),
+    });
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data).toEqual(fallback);
+    expect(mockOfflineTransactionsGet).toHaveBeenCalledWith(
+      expect.objectContaining({
+        sortingBy: "date",
+        sortingOrder: "desc",
+        currentPage: 1,
+        pageSize: 10,
+      }),
+      {}
     );
   });
 
-  it("falls back to cache when API fails", async () => {
-    const cached = [{ id: 1, amount: 50 }];
+  it("throws when API and IndexedDB both fail", async () => {
     mockTransactionsGet.mockRejectedValue(new Error("Network error"));
-    mockLoadCache.mockReturnValue(cached);
+    mockOfflineTransactionsGet.mockRejectedValue(new Error("IndexedDB error"));
 
-    const { result } = renderHook(
-      () => useTransactionsList({ filters: {} }),
-      { wrapper: makeWrapper() }
-    );
-
-    await waitFor(() =>
-      expect(result.current.isSuccess || result.current.isError).toBe(true)
-    );
-
-    if (result.current.isSuccess) {
-      expect(result.current.data?.items).toEqual(cached);
-    }
-  });
-
-  it("throws when API fails and no cache is available", async () => {
-    mockTransactionsGet.mockRejectedValue(new Error("Network error"));
-    mockLoadCache.mockReturnValue(null);
-
-    const { result } = renderHook(
-      () => useTransactionsList({ filters: {} }),
-      { wrapper: makeWrapper() }
-    );
+    const { result } = renderHook(() => useTransactionsList({ filters: {} }), {
+      wrapper: makeWrapper(),
+    });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
-    expect(result.current.error?.message).toMatch(
-      /No cached transactions available/
-    );
+    expect(result.current.error?.message).toMatch(/IndexedDB error/);
   });
 });
 
 describe("useTransactionsCommon", () => {
   beforeEach(() => {
+    mockUseAuth.mockReturnValue({
+      account: { id: 1, email: "test@example.com" },
+    });
     mockTransactionsCommonGet.mockReset();
-    mockLoadCache.mockReturnValue(null);
-    mockUpdateCache.mockReset();
-    mockInCache.mockReturnValue(false);
+    mockOfflineTransactionsCommonGet.mockReset();
     mockTransactionsSeed.mockClear();
   });
 
-  it("fetches and maps common transactions", async () => {
+  it("fetches common transactions without reseeding partial DTOs", async () => {
     const data = [{ id: 1, updatedAt: "2024-01-01" }];
     mockTransactionsCommonGet.mockResolvedValue(data);
 
-    const { result } = renderHook(
-      () => useTransactionsCommon({}),
-      { wrapper: makeWrapper() }
-    );
+    const { result } = renderHook(() => useTransactionsCommon({}), {
+      wrapper: makeWrapper(),
+    });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data).toEqual(data);
+    expect(mockTransactionsSeed).not.toHaveBeenCalled();
   });
 
-  it("updates cache only if not already in cache", async () => {
-    mockInCache.mockReturnValue(false);
-    const data = [{ id: 1, updatedAt: "2024-01-01" }];
-    mockTransactionsCommonGet.mockResolvedValue(data);
-
-    const { result } = renderHook(
-      () => useTransactionsCommon({}),
-      { wrapper: makeWrapper() }
-    );
-
-    await waitFor(() => expect(result.current.isSuccess).toBe(true));
-    expect(mockUpdateCache).toHaveBeenCalledWith("transactions", data);
-  });
-
-  it("does not update cache when data is already cached", async () => {
-    mockInCache.mockReturnValue([{ id: 1 }]); // truthy = in cache
-    mockTransactionsCommonGet.mockResolvedValue([{ id: 1, updatedAt: "2024" }]);
-
-    const { result } = renderHook(
-      () => useTransactionsCommon({}),
-      { wrapper: makeWrapper() }
-    );
-
-    await waitFor(() => expect(result.current.isSuccess).toBe(true));
-    expect(mockUpdateCache).not.toHaveBeenCalled();
-  });
-
-  it("falls back to cache on API error and maps { id, updatedAt }", async () => {
-    const cached = [
-      { id: 1, updatedAt: "2024-01-01", amount: 100, extra: "ignore" },
-    ];
+  it("falls back to IndexedDB for common transactions", async () => {
+    const fallback = [{ id: 1, updatedAt: "2024-01-01" }];
     mockTransactionsCommonGet.mockRejectedValue(new Error("fail"));
-    mockLoadCache.mockReturnValue(cached);
+    mockOfflineTransactionsCommonGet.mockResolvedValue(fallback);
 
-    const { result } = renderHook(
-      () => useTransactionsCommon({}),
-      { wrapper: makeWrapper() }
-    );
+    const { result } = renderHook(() => useTransactionsCommon({}), {
+      wrapper: makeWrapper(),
+    });
 
-    await waitFor(() =>
-      expect(result.current.isSuccess || result.current.isError).toBe(true)
-    );
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data).toEqual(fallback);
   });
 });
 
 describe("useTransactionTypeResume", () => {
-  it("fetches data when type filter and account are provided", async () => {
+  beforeEach(() => {
+    mockUseAuth.mockReturnValue({
+      account: { id: 1, email: "test@example.com" },
+    });
+    mockTransactionsGetTypeResume.mockReset();
+    mockOfflineTransactionsGetTypeResume.mockReset();
+  });
+
+  it("fetches data when the API succeeds", async () => {
     const data = { total: 200, type: "in" };
     mockTransactionsGetTypeResume.mockResolvedValue(data);
 
@@ -272,17 +241,26 @@ describe("useTransactionTypeResume", () => {
     expect(result.current.data).toEqual(data);
   });
 
-  it("is disabled when account.id is falsy", async () => {
-    const { useAuth } = await import("@sito/dashboard-app");
-    vi.mocked(useAuth).mockReturnValueOnce({
-      account: null as unknown as { id: number; email: string },
-      isInGuestMode: vi.fn(),
-    });
+  it("falls back to IndexedDB when the API fails", async () => {
+    const fallback = { total: 0, type: "in" };
+    mockTransactionsGetTypeResume.mockRejectedValue(new Error("fail"));
+    mockOfflineTransactionsGetTypeResume.mockResolvedValue(fallback);
 
     const { result } = renderHook(
-      () => useTransactionTypeResume({}),
+      () => useTransactionTypeResume({ type: "in" }),
       { wrapper: makeWrapper() }
     );
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data).toEqual(fallback);
+  });
+
+  it("is disabled when account.id is falsy", () => {
+    mockUseAuth.mockReturnValueOnce({ account: null });
+
+    const { result } = renderHook(() => useTransactionTypeResume({}), {
+      wrapper: makeWrapper(),
+    });
 
     expect(result.current.fetchStatus).toBe("idle");
     expect(mockTransactionsGetTypeResume).not.toHaveBeenCalled();
@@ -290,7 +268,15 @@ describe("useTransactionTypeResume", () => {
 });
 
 describe("useWeekly", () => {
-  it("fetches weekly data when accountId and account are provided", async () => {
+  beforeEach(() => {
+    mockUseAuth.mockReturnValue({
+      account: { id: 1, email: "test@example.com" },
+    });
+    mockTransactionsWeekly.mockReset();
+    mockOfflineTransactionsWeekly.mockReset();
+  });
+
+  it("fetches weekly data when the API succeeds", async () => {
     const data = { days: [] };
     mockTransactionsWeekly.mockResolvedValue(data);
 
@@ -303,17 +289,26 @@ describe("useWeekly", () => {
     expect(result.current.data).toEqual(data);
   });
 
-  it("is disabled when account.id is falsy", async () => {
-    const { useAuth } = await import("@sito/dashboard-app");
-    vi.mocked(useAuth).mockReturnValueOnce({
-      account: null as unknown as { id: number; email: string },
-      isInGuestMode: vi.fn(),
-    });
+  it("falls back to IndexedDB when the API fails", async () => {
+    const fallback = { days: [] };
+    mockTransactionsWeekly.mockRejectedValue(new Error("fail"));
+    mockOfflineTransactionsWeekly.mockResolvedValue(fallback);
 
     const { result } = renderHook(
-      () => useWeekly({ type: "in" }),
+      () => useWeekly({ type: "in", accountId: 1 }),
       { wrapper: makeWrapper() }
     );
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data).toEqual(fallback);
+  });
+
+  it("is disabled when account.id is falsy", () => {
+    mockUseAuth.mockReturnValueOnce({ account: null });
+
+    const { result } = renderHook(() => useWeekly({ type: "in" }), {
+      wrapper: makeWrapper(),
+    });
 
     expect(result.current.fetchStatus).toBe("idle");
     expect(mockTransactionsWeekly).not.toHaveBeenCalled();

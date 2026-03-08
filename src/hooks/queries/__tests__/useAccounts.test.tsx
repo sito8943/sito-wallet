@@ -3,17 +3,12 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode } from "react";
 
-// ─── Module mocks ──────────────────────────────────────────────────────────────
-
 const mockAccountsGet = vi.fn();
 const mockAccountsCommonGet = vi.fn();
+const mockOfflineAccountsGet = vi.fn();
+const mockOfflineAccountsCommonGet = vi.fn();
 const mockAccountsSeed = vi.fn(() => Promise.resolve());
-const mockLoadCache = vi.fn(() => null);
-const mockUpdateCache = vi.fn();
-const mockInCache = vi.fn(() => false);
-const mockUseAuth = vi.fn(() => ({
-  account: { id: 1, email: "test@example.com" },
-}));
+const mockUseAuth = vi.fn();
 
 vi.mock("providers", () => ({
   useManager: () => ({
@@ -24,13 +19,10 @@ vi.mock("providers", () => ({
   }),
   useOfflineManager: () => ({
     Accounts: {
+      get: mockOfflineAccountsGet,
+      commonGet: mockOfflineAccountsCommonGet,
       seed: mockAccountsSeed,
     },
-  }),
-  useLocalCache: () => ({
-    loadCache: mockLoadCache,
-    updateCache: mockUpdateCache,
-    inCache: mockInCache,
   }),
 }));
 
@@ -40,7 +32,6 @@ vi.mock("@sito/dashboard-app", () => ({
 }));
 
 vi.mock("lib", () => ({
-  Tables: { Accounts: "accounts" },
   AccountDto: class {},
   CommonAccountDto: class {},
   FilterAccountDto: class {},
@@ -52,18 +43,15 @@ import {
   AccountsQueryKeys,
 } from "../useAccounts";
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
 function makeWrapper() {
   const qc = new QueryClient({
     defaultOptions: { queries: { retry: false, gcTime: 0 } },
   });
+
   return ({ children }: { children: ReactNode }) => (
     <QueryClientProvider client={qc}>{children}</QueryClientProvider>
   );
 }
-
-// ─── Tests ────────────────────────────────────────────────────────────────────
 
 describe("AccountsQueryKeys", () => {
   it('all() returns ["accounts"]', () => {
@@ -85,13 +73,15 @@ describe("AccountsQueryKeys", () => {
 
 describe("useAccountsList", () => {
   beforeEach(() => {
+    mockUseAuth.mockReturnValue({
+      account: { id: 1, email: "test@example.com" },
+    });
     mockAccountsGet.mockReset();
-    mockLoadCache.mockReturnValue(null);
-    mockUpdateCache.mockReset();
+    mockOfflineAccountsGet.mockReset();
     mockAccountsSeed.mockClear();
   });
 
-  it("is disabled when account.id is falsy", async () => {
+  it("is disabled when account.id is falsy", () => {
     mockUseAuth.mockReturnValueOnce({ account: null });
 
     const { result } = renderHook(
@@ -102,7 +92,7 @@ describe("useAccountsList", () => {
     expect(result.current.fetchStatus).toBe("idle");
   });
 
-  it("fetches accounts list and updates cache", async () => {
+  it("fetches accounts list and seeds IndexedDB", async () => {
     const data = {
       items: [{ id: 1, name: "Wallet" }],
       total: 1,
@@ -116,78 +106,61 @@ describe("useAccountsList", () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data).toEqual(data);
-    expect(mockUpdateCache).toHaveBeenCalledWith("accounts", data.items);
+    expect(mockAccountsSeed).toHaveBeenCalledWith(data.items);
+    expect(mockOfflineAccountsGet).not.toHaveBeenCalled();
   });
 
-  it("falls back to cache when API fails", async () => {
-    const cached = [{ id: 1, name: "Wallet" }];
+  it("falls back to IndexedDB when API fails", async () => {
+    const fallback = {
+      items: [{ id: 1, name: "Wallet" }],
+      total: 1,
+    };
     mockAccountsGet.mockRejectedValue(new Error("Network error"));
-    mockLoadCache.mockReturnValue(cached);
+    mockOfflineAccountsGet.mockResolvedValue(fallback);
 
-    const { result } = renderHook(
-      () => useAccountsList({ filters: {} }),
-      { wrapper: makeWrapper() }
-    );
+    const { result } = renderHook(() => useAccountsList({ filters: {} }), {
+      wrapper: makeWrapper(),
+    });
 
-    await waitFor(() =>
-      expect(result.current.isSuccess || result.current.isError).toBe(true)
-    );
-
-    if (result.current.isSuccess) {
-      expect(result.current.data?.items).toEqual(cached);
-      expect(result.current.data?.total).toBe(cached.length);
-    }
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data).toEqual(fallback);
+    expect(mockOfflineAccountsGet).toHaveBeenCalledWith(undefined, {});
   });
 
-  it("throws when API fails and cache is empty", async () => {
+  it("throws when API and IndexedDB both fail", async () => {
     mockAccountsGet.mockRejectedValue(new Error("Network error"));
-    mockLoadCache.mockReturnValue(null);
+    mockOfflineAccountsGet.mockRejectedValue(new Error("IndexedDB error"));
 
-    const { result } = renderHook(
-      () => useAccountsList({ filters: {} }),
-      { wrapper: makeWrapper() }
-    );
+    const { result } = renderHook(() => useAccountsList({ filters: {} }), {
+      wrapper: makeWrapper(),
+    });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
-    expect(result.current.error?.message).toMatch(
-      /No cached accounts available/
-    );
-  });
-
-  it("throws when API fails and cache is not an array", async () => {
-    mockAccountsGet.mockRejectedValue(new Error("fail"));
-    mockLoadCache.mockReturnValue("invalid");
-
-    const { result } = renderHook(
-      () => useAccountsList({ filters: {} }),
-      { wrapper: makeWrapper() }
-    );
-
-    await waitFor(() => expect(result.current.isError).toBe(true));
+    expect(result.current.error?.message).toMatch(/IndexedDB error/);
   });
 });
 
 describe("useAccountsCommon", () => {
   beforeEach(() => {
+    mockUseAuth.mockReturnValue({
+      account: { id: 1, email: "test@example.com" },
+    });
     mockAccountsCommonGet.mockReset();
-    mockLoadCache.mockReturnValue(null);
-    mockUpdateCache.mockReset();
-    mockInCache.mockReturnValue(false);
+    mockOfflineAccountsCommonGet.mockReset();
     mockAccountsSeed.mockClear();
   });
 
-  it("is disabled when account.id is falsy", async () => {
+  it("is disabled when account.id is falsy", () => {
     mockUseAuth.mockReturnValueOnce({ account: { id: 0, email: "" } });
 
     const { result } = renderHook(() => useAccountsCommon(), {
       wrapper: makeWrapper(),
     });
 
-    // enabled: !!account?.id → false when id=0
     expect(result.current.fetchStatus).toBe("idle");
   });
 
-  it("fetches common accounts and maps { id, name, updatedAt, currency }", async () => {
+  it("fetches common accounts without reseeding partial DTOs", async () => {
     const data = [
       { id: 1, name: "Wallet", updatedAt: "2024-01-01", currency: { id: 1 } },
     ];
@@ -199,77 +172,21 @@ describe("useAccountsCommon", () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data).toEqual(data);
+    expect(mockAccountsSeed).not.toHaveBeenCalled();
   });
 
-  it("updates cache when not already cached", async () => {
-    mockInCache.mockReturnValue(false);
-    const data = [{ id: 1, name: "Wallet", updatedAt: "2024", currency: {} }];
-    mockAccountsCommonGet.mockResolvedValue(data);
-
-    const { result } = renderHook(() => useAccountsCommon(), {
-      wrapper: makeWrapper(),
-    });
-
-    await waitFor(() => expect(result.current.isSuccess).toBe(true));
-    expect(mockUpdateCache).toHaveBeenCalledWith("accounts", data);
-  });
-
-  it("does not update cache when already cached", async () => {
-    mockInCache.mockReturnValue([{ id: 1 }]); // truthy
-    mockAccountsCommonGet.mockResolvedValue([
-      { id: 1, name: "Wallet", updatedAt: "2024", currency: {} },
-    ]);
-
-    const { result } = renderHook(() => useAccountsCommon(), {
-      wrapper: makeWrapper(),
-    });
-
-    await waitFor(() => expect(result.current.isSuccess).toBe(true));
-    expect(mockUpdateCache).not.toHaveBeenCalled();
-  });
-
-  it("falls back to cache on API error and maps { id, name, updatedAt, currency }", async () => {
-    const cached = [
-      {
-        id: 1,
-        name: "Wallet",
-        updatedAt: "2024-01-01",
-        currency: { id: 1 },
-        extra: "ignore",
-      },
+  it("falls back to IndexedDB for common accounts", async () => {
+    const fallback = [
+      { id: 1, name: "Wallet", updatedAt: "2024-01-01", currency: { id: 1 } },
     ];
     mockAccountsCommonGet.mockRejectedValue(new Error("fail"));
-    mockLoadCache.mockReturnValue(cached);
+    mockOfflineAccountsCommonGet.mockResolvedValue(fallback);
 
     const { result } = renderHook(() => useAccountsCommon(), {
       wrapper: makeWrapper(),
     });
 
-    await waitFor(() =>
-      expect(result.current.isSuccess || result.current.isError).toBe(true)
-    );
-
-    if (result.current.isSuccess) {
-      expect(result.current.data?.[0]).toMatchObject({
-        id: 1,
-        name: "Wallet",
-        updatedAt: "2024-01-01",
-        currency: { id: 1 },
-      });
-    }
-  });
-
-  it("throws on API error when cache is empty", async () => {
-    mockAccountsCommonGet.mockRejectedValue(new Error("fail"));
-    mockLoadCache.mockReturnValue(null);
-
-    const { result } = renderHook(() => useAccountsCommon(), {
-      wrapper: makeWrapper(),
-    });
-
-    await waitFor(() => expect(result.current.isError).toBe(true));
-    expect(result.current.error?.message).toMatch(
-      /No cached accounts available/
-    );
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data).toEqual(fallback);
   });
 });

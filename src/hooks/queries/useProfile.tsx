@@ -1,7 +1,7 @@
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 
 // providers
-import { useManager } from "providers";
+import { useManager, useOfflineManager } from "providers";
 
 // @sito/dashboard-app
 import { useAuth } from "@sito/dashboard-app";
@@ -32,25 +32,48 @@ export function useMyProfile(
   const { ensure = false, defaultName = "" } = props;
 
   const manager = useManager();
+  const offlineManager = useOfflineManager();
   const { account } = useAuth();
 
   return useQuery({
     ...ProfileQueryKeys.me(),
     enabled: !!account?.id,
-    queryFn: async () =>
-      ensure
-        ? await manager.Profiles.ensureMine(defaultName)
-        : await manager.Profiles.me(),
+    queryFn: async () => {
+      try {
+        const result = ensure
+          ? await manager.Profiles.ensureMine(defaultName)
+          : await manager.Profiles.me();
+
+        offlineManager.Profiles.seed([result]).catch(() => {});
+        return result;
+      } catch (error) {
+        console.warn("API failed, loading profile from IndexedDB", error);
+        return ensure
+          ? await offlineManager.Profiles.ensureMine(defaultName)
+          : await offlineManager.Profiles.me();
+      }
+    },
   });
 }
 
 export function useProfileById(id?: number): UseQueryResult<ProfileDto> {
   const manager = useManager();
+  const offlineManager = useOfflineManager();
   const { account } = useAuth();
 
   return useQuery({
     ...(id ? ProfileQueryKeys.byId(id) : ProfileQueryKeys.all()),
     enabled: !!account?.id && !!id,
-    queryFn: async () => await manager.Profiles.getById(id as number),
+    queryFn: async () => {
+      try {
+        const result = await manager.Profiles.getById(id as number);
+
+        offlineManager.Profiles.seed([result]).catch(() => {});
+        return result;
+      } catch (error) {
+        console.warn("API failed, loading profile by id from IndexedDB", error);
+        return await offlineManager.Profiles.getById(id as number);
+      }
+    },
   });
 }

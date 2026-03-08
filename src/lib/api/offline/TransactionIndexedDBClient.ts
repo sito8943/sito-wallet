@@ -10,6 +10,8 @@ import {
   AddTransactionDto,
   UpdateTransactionDto,
   FilterTransactionDto,
+  FilterTransactionTypeResumeDto,
+  FilterWeeklyTransactionDto,
   ImportPreviewTransactionDto,
   TransactionTypeResumeDto,
   TransactionWeeklySpentDto,
@@ -103,11 +105,15 @@ export class TransactionIndexedDBClient extends IndexedDBClient<
     return restored;
   }
 
-  async getTypeResume(): Promise<TransactionTypeResumeDto> {
+  async getTypeResume(
+    _filters: FilterTransactionTypeResumeDto
+  ): Promise<TransactionTypeResumeDto> {
     return {} as TransactionTypeResumeDto;
   }
 
-  async weekly(): Promise<TransactionWeeklySpentDto> {
+  async weekly(
+    _filters: FilterWeeklyTransactionDto
+  ): Promise<TransactionWeeklySpentDto> {
     return {} as TransactionWeeklySpentDto;
   }
 

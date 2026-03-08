@@ -1,11 +1,7 @@
 import { FieldValues } from "react-hook-form";
 
 // @sito/dashboard-app
-import {
-  ActionType,
-  ValidationError,
-  FormDialogPropsType,
-} from "@sito/dashboard-app";
+import { ActionType, FormDialogPropsType } from "@sito/dashboard-app";
 
 // lib
 import { DashboardDto } from "lib";
@@ -16,22 +12,16 @@ export interface DashboardCardPropsType extends DashboardDto {
 }
 
 export interface DashboardFormType
-  extends Omit<DashboardDto, "deletedAt" | "createdAt" | "updatedAt" | "user">,
+  extends
+    Omit<DashboardDto, "deletedAt" | "createdAt" | "updatedAt" | "user">,
     FieldValues {
   userId: number;
 }
 
-export type DashboardFormPropsType = FormDialogPropsType<
-  DashboardFormType,
-  ValidationError
->;
+export type DashboardFormPropsType = FormDialogPropsType<DashboardFormType>;
 
-export type AddDashboardDialogPropsType = FormDialogPropsType<
-  DashboardFormType,
-  ValidationError
->;
+export type AddDashboardDialogPropsType =
+  FormDialogPropsType<DashboardFormType>;
 
-export type EditDashboardDialogPropsType = FormDialogPropsType<
-  DashboardFormType,
-  ValidationError
->;
+export type EditDashboardDialogPropsType =
+  FormDialogPropsType<DashboardFormType>;

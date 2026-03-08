@@ -1,11 +1,7 @@
 import { FieldValues } from "react-hook-form";
 
 // @sito/dashboard-app
-import {
-  DialogPropsType,
-  FormPropsType,
-  ValidationError as DashboardValidationError,
-} from "@sito/dashboard-app";
+import { DialogPropsType, FormPropsType } from "@sito/dashboard-app";
 
 // lib
 import {
@@ -20,14 +16,14 @@ export interface WeeklySpentPropsType extends DashboardDto {
 }
 
 export interface ConfigFormDialogPropsType<TFormType extends FieldValues>
-  extends FormPropsType<TFormType, DashboardValidationError>,
-    Omit<DialogPropsType, "title"> {}
+  extends FormPropsType<TFormType>, Omit<DialogPropsType, "title"> {}
 
 export interface WeeklySpentFormType
-  extends Omit<UpdateDashboardCardConfigDto, "config" | "userId" | "id">,
+  extends
+    Omit<UpdateDashboardCardConfigDto, "config" | "userId" | "id">,
     FieldValues {
   accounts: CommonAccountDto[];
-  type: TransactionType
+  type: TransactionType;
 }
 
 export type FilterWeeklyConfigType = {

@@ -1,8 +1,8 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 // providers
-import { useLocalCache, useManager, useOfflineManager } from "providers";
-import { QueryResult, useAuth } from "@sito/dashboard-app"
+import { useManager, useOfflineManager } from "providers";
+import { QueryResult, useAuth } from "@sito/dashboard-app";
 
 // types
 import { UseFetchPropsType } from "./types.ts";
@@ -12,7 +12,6 @@ import {
   CurrencyDto,
   CommonCurrencyDto,
   FilterCurrencyDto,
-  Tables,
 } from "lib";
 
 export const CurrenciesQueryKeys = {
@@ -35,7 +34,6 @@ export function useCurrenciesList(
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
-  const { loadCache, updateCache } = useLocalCache();
 
   return useQuery({
     ...CurrenciesQueryKeys.list(filters),
@@ -45,18 +43,14 @@ export function useCurrenciesList(
         const result = await manager.Currencies.get(undefined, {
           ...filters,
         });
-        updateCache(Tables.Currencies, result.items);
+
         offlineManager.Currencies.seed(result.items).catch(() => {});
         return result;
       } catch (error) {
-        console.warn("API failed, loading currencies from cache", error);
-        const cached = loadCache(Tables.Currencies);
-        if (!cached || !Array.isArray(cached))
-          throw new Error("No cached currencies available");
-        return {
-          items: cached as unknown as CurrencyDto,
-          total: cached?.length,
-        } as unknown as QueryResult<CurrencyDto>;
+        console.warn("API failed, loading currencies from IndexedDB", error);
+        return await offlineManager.Currencies.get(undefined, {
+          ...filters,
+        });
       }
     },
   });
@@ -66,34 +60,23 @@ export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
-  const { loadCache, updateCache, inCache } = useLocalCache();
 
   return useQuery({
     ...CurrenciesQueryKeys.common(),
     enabled: !!account?.id,
     queryFn: async () => {
       try {
-        const result = await manager.Currencies.commonGet({
+        return await manager.Currencies.commonGet({
           deletedAt: false as unknown as FilterCurrencyDto["deletedAt"],
         });
-        if (!inCache(Tables.Currencies)) {
-          updateCache(Tables.Currencies, result);
-          offlineManager.Currencies.seed(result as unknown as CurrencyDto[]).catch(() => {});
-        }
-        return result;
       } catch (error) {
-        console.warn("API failed, loading currencies from cache", error);
-        const cached = loadCache(Tables.Currencies) as CommonCurrencyDto[];
-        if (!cached || !Array.isArray(cached))
-          throw new Error("No cached currencies available");
-        return cached.map(
-          ({ id, name, updatedAt, symbol }: CommonCurrencyDto) => ({
-            id,
-            name,
-            symbol,
-            updatedAt,
-          })
+        console.warn(
+          "API failed, loading common currencies from IndexedDB",
+          error
         );
+        return await offlineManager.Currencies.commonGet({
+          deletedAt: false as unknown as FilterCurrencyDto["deletedAt"],
+        });
       }
     },
   });

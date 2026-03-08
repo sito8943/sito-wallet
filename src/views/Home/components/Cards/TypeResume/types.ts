@@ -5,7 +5,6 @@ import {
   DialogPropsType,
   FormPropsType,
   RangeValue,
-  ValidationError as DashboardValidationError,
 } from "@sito/dashboard-app";
 
 // lib
@@ -22,11 +21,11 @@ export interface TransactionTypePropsType extends DashboardDto {
 }
 
 export interface ConfigFormDialogPropsType<TFormType extends FieldValues>
-  extends FormPropsType<TFormType, DashboardValidationError>,
-    Omit<DialogPropsType, "title"> {}
+  extends FormPropsType<TFormType>, Omit<DialogPropsType, "title"> {}
 
 export interface TypeResumeTypeFormType
-  extends Omit<UpdateDashboardCardConfigDto, "config" | "userId" | "id">,
+  extends
+    Omit<UpdateDashboardCardConfigDto, "config" | "userId" | "id">,
     FieldValues {
   accounts: CommonAccountDto[];
   date?: { start: string; end: string };

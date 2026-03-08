@@ -1,14 +1,14 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 // providers
-import { useLocalCache, useManager, useOfflineManager } from "providers";
-import { QueryResult, useAuth } from "@sito/dashboard-app"
+import { useManager, useOfflineManager } from "providers";
+import { QueryResult, useAuth } from "@sito/dashboard-app";
 
 // types
 import { UseFetchPropsType } from "./types.ts";
 
 // lib
-import { DashboardDto, FilterDashboardDto, Tables } from "lib";
+import { DashboardDto, FilterDashboardDto } from "lib";
 
 export const DashboardsQueryKeys = {
   all: () => ({
@@ -27,7 +27,6 @@ export function useDashboardsList(
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
-  const { loadCache, updateCache } = useLocalCache();
 
   return useQuery({
     ...DashboardsQueryKeys.list(),
@@ -38,18 +37,13 @@ export function useDashboardsList(
           ...filters,
         });
 
-        updateCache(Tables.UserDashboardConfig, result.items);
         offlineManager.Dashboard.seed(result.items).catch(() => {});
         return result;
       } catch (error) {
-        console.warn("API failed, loading dashboards from cache", error);
-        const cached = loadCache(Tables.UserDashboardConfig);
-        if (!cached || !Array.isArray(cached))
-          throw new Error("No cached dashboards available");
-        return {
-          items: cached as unknown as DashboardDto,
-          total: cached?.length,
-        } as unknown as QueryResult<DashboardDto>;
+        console.warn("API failed, loading dashboards from IndexedDB", error);
+        return await offlineManager.Dashboard.get(undefined, {
+          ...filters,
+        });
       }
     },
   });

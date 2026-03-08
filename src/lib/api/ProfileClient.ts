@@ -7,7 +7,7 @@ import { Tables } from "./types";
 import { config } from "../../config";
 
 // types
-import { CreateProfileDto, ProfileDto, UpdateProfileDto } from "lib";
+import { AddProfileDto, ProfileDto, UpdateProfileDto } from "lib";
 
 type APIErrorShape = {
   status: number;
@@ -57,8 +57,8 @@ export default class ProfileClient {
     accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
   });
 
-  async create(data: CreateProfileDto): Promise<number> {
-    return await this.api.post<number, CreateProfileDto>(this.table, data);
+  async create(data: AddProfileDto): Promise<number> {
+    return await this.api.post<number, AddProfileDto>(this.table, data);
   }
 
   async update(id: number, data: UpdateProfileDto): Promise<number> {

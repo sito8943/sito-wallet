@@ -165,6 +165,10 @@ select > option {
   @apply bg-primary text-white;
 }
 
+.page-main-content {
+  @apply max-xs:px-3
+}
+
 @media (max-width: 28rem) {
   .page-header {
     display: none;

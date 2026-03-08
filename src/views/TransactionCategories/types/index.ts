@@ -1,25 +1,21 @@
 import { FieldValues } from "react-hook-form";
 
 // @sito/dashboard-app
-import {
-  ActionType,
-  ValidationError,
-  FormDialogPropsType,
-} from "@sito/dashboard-app";
+import { ActionType, FormDialogPropsType } from "@sito/dashboard-app";
 
 // lib
 import { TransactionCategoryDto } from "lib";
 
 export * from "./actions";
 
-export interface TransactionCategoryCardPropsType
-  extends TransactionCategoryDto {
+export interface TransactionCategoryCardPropsType extends TransactionCategoryDto {
   actions: ActionType<TransactionCategoryDto>[];
   onClick: (id: number) => void;
 }
 
 export interface TransactionCategoryFormType
-  extends Omit<
+  extends
+    Omit<
       TransactionCategoryDto,
       "deletedAt" | "createdAt" | "updatedAt" | "user"
     >,
@@ -27,17 +23,11 @@ export interface TransactionCategoryFormType
   userId: number;
 }
 
-export type TransactionCategoryFormPropsType = FormDialogPropsType<
-  TransactionCategoryFormType,
-  ValidationError
->;
+export type TransactionCategoryFormPropsType =
+  FormDialogPropsType<TransactionCategoryFormType>;
 
-export type AddTransactionCategoryDialogPropsType = FormDialogPropsType<
-  TransactionCategoryFormType,
-  ValidationError
->;
+export type AddTransactionCategoryDialogPropsType =
+  FormDialogPropsType<TransactionCategoryFormType>;
 
-export type EditTransactionCategoryDialogPropsType = FormDialogPropsType<
-  TransactionCategoryFormType,
-  ValidationError
->;
+export type EditTransactionCategoryDialogPropsType =
+  FormDialogPropsType<TransactionCategoryFormType>;

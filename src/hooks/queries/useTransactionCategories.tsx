@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 // providers
-import { useLocalCache, useManager, useOfflineManager } from "providers";
+import { useManager, useOfflineManager } from "providers";
 import { QueryResult, useAuth } from "@sito/dashboard-app";
 
 // types
@@ -12,7 +12,6 @@ import {
   TransactionCategoryDto,
   CommonTransactionCategoryDto,
   FilterTransactionCategoryDto,
-  Tables,
 } from "lib";
 
 export const TransactionCategoriesQueryKeys = {
@@ -39,7 +38,6 @@ export function useTransactionCategoriesList(
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
-  const { loadCache, updateCache, inCache } = useLocalCache();
 
   return useQuery({
     ...TransactionCategoriesQueryKeys.list(filters),
@@ -49,19 +47,14 @@ export function useTransactionCategoriesList(
         const result = await manager.TransactionCategories.get(undefined, {
           ...filters,
         });
-        if (!inCache(Tables.TransactionCategories))
-          updateCache(Tables.TransactionCategories, result.items);
+
         offlineManager.TransactionCategories.seed(result.items).catch(() => {});
         return result;
       } catch (error) {
-        console.warn("API failed, loading categories from cache", error);
-        const cached = loadCache(Tables.TransactionCategories);
-        if (!cached || !Array.isArray(cached))
-          throw new Error("No cached categories available");
-        return {
-          items: cached as unknown as TransactionCategoryDto,
-          total: cached?.length,
-        } as unknown as QueryResult<TransactionCategoryDto>;
+        console.warn("API failed, loading categories from IndexedDB", error);
+        return await offlineManager.TransactionCategories.get(undefined, {
+          ...filters,
+        });
       }
     },
   });
@@ -73,41 +66,23 @@ export function useTransactionCategoriesCommon(): UseQueryResult<
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
-  const { loadCache, updateCache } = useLocalCache();
 
   return useQuery({
     ...TransactionCategoriesQueryKeys.common(),
     enabled: !!account?.id,
     queryFn: async () => {
       try {
-        const result = await manager.TransactionCategories.commonGet({
+        return await manager.TransactionCategories.commonGet({
           deletedAt: false as unknown as FilterTransactionCategoryDto["deletedAt"],
         });
-        updateCache(Tables.TransactionCategories, result);
-        offlineManager.TransactionCategories.seed(result as unknown as TransactionCategoryDto[]).catch(() => {});
-        return result;
       } catch (error) {
-        console.warn("API failed, loading categories from cache", error);
-        const cached = loadCache(
-          Tables.TransactionCategories
-        ) as CommonTransactionCategoryDto[];
-        if (!cached || !Array.isArray(cached))
-          throw new Error("No cached categories available");
-        return cached.map(
-          ({
-            id,
-            name,
-            type,
-            updatedAt,
-            initial,
-          }: CommonTransactionCategoryDto) => ({
-            id,
-            name,
-            type,
-            updatedAt,
-            initial,
-          })
+        console.warn(
+          "API failed, loading common categories from IndexedDB",
+          error
         );
+        return await offlineManager.TransactionCategories.commonGet({
+          deletedAt: false as unknown as FilterTransactionCategoryDto["deletedAt"],
+        });
       }
     },
   });

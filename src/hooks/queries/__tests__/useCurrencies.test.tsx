@@ -3,17 +3,12 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode } from "react";
 
-// ─── Module mocks ──────────────────────────────────────────────────────────────
-
 const mockCurrenciesGet = vi.fn();
 const mockCurrenciesCommonGet = vi.fn();
+const mockOfflineCurrenciesGet = vi.fn();
+const mockOfflineCurrenciesCommonGet = vi.fn();
 const mockCurrenciesSeed = vi.fn(() => Promise.resolve());
-const mockLoadCache = vi.fn(() => null);
-const mockUpdateCache = vi.fn();
-const mockInCache = vi.fn(() => false);
-const mockUseAuth = vi.fn(() => ({
-  account: { id: 1, email: "test@example.com" },
-}));
+const mockUseAuth = vi.fn();
 
 vi.mock("providers", () => ({
   useManager: () => ({
@@ -24,13 +19,10 @@ vi.mock("providers", () => ({
   }),
   useOfflineManager: () => ({
     Currencies: {
+      get: mockOfflineCurrenciesGet,
+      commonGet: mockOfflineCurrenciesCommonGet,
       seed: mockCurrenciesSeed,
     },
-  }),
-  useLocalCache: () => ({
-    loadCache: mockLoadCache,
-    updateCache: mockUpdateCache,
-    inCache: mockInCache,
   }),
 }));
 
@@ -40,7 +32,6 @@ vi.mock("@sito/dashboard-app", () => ({
 }));
 
 vi.mock("lib", () => ({
-  Tables: { Currencies: "currencies" },
   CurrencyDto: class {},
   CommonCurrencyDto: class {},
   FilterCurrencyDto: class {},
@@ -52,18 +43,15 @@ import {
   CurrenciesQueryKeys,
 } from "../useCurrencies";
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
 function makeWrapper() {
   const qc = new QueryClient({
     defaultOptions: { queries: { retry: false, gcTime: 0 } },
   });
+
   return ({ children }: { children: ReactNode }) => (
     <QueryClientProvider client={qc}>{children}</QueryClientProvider>
   );
 }
-
-// ─── Tests ────────────────────────────────────────────────────────────────────
 
 describe("CurrenciesQueryKeys", () => {
   it('all() returns ["currencies"]', () => {
@@ -85,13 +73,15 @@ describe("CurrenciesQueryKeys", () => {
 
 describe("useCurrenciesList", () => {
   beforeEach(() => {
+    mockUseAuth.mockReturnValue({
+      account: { id: 1, email: "test@example.com" },
+    });
     mockCurrenciesGet.mockReset();
-    mockLoadCache.mockReturnValue(null);
-    mockUpdateCache.mockReset();
+    mockOfflineCurrenciesGet.mockReset();
     mockCurrenciesSeed.mockClear();
   });
 
-  it("is disabled when account.id is falsy", async () => {
+  it("is disabled when account.id is falsy", () => {
     mockUseAuth.mockReturnValueOnce({ account: { id: 0, email: "" } });
 
     const { result } = renderHook(
@@ -102,9 +92,9 @@ describe("useCurrenciesList", () => {
     expect(result.current.fetchStatus).toBe("idle");
   });
 
-  it("fetches currencies list and updates cache", async () => {
+  it("fetches currencies list and seeds IndexedDB", async () => {
     const data = {
-      items: [{ id: 1, name: "Euro", symbol: "€" }],
+      items: [{ id: 1, name: "Euro", symbol: "EUR" }],
       total: 1,
     };
     mockCurrenciesGet.mockResolvedValue(data);
@@ -116,54 +106,51 @@ describe("useCurrenciesList", () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data).toEqual(data);
-    expect(mockUpdateCache).toHaveBeenCalledWith("currencies", data.items);
+    expect(mockCurrenciesSeed).toHaveBeenCalledWith(data.items);
+    expect(mockOfflineCurrenciesGet).not.toHaveBeenCalled();
   });
 
-  it("falls back to cache when API fails", async () => {
-    const cached = [{ id: 1, name: "Euro", symbol: "€" }];
+  it("falls back to IndexedDB when API fails", async () => {
+    const fallback = {
+      items: [{ id: 1, name: "Euro", symbol: "EUR" }],
+      total: 1,
+    };
     mockCurrenciesGet.mockRejectedValue(new Error("Network error"));
-    mockLoadCache.mockReturnValue(cached);
+    mockOfflineCurrenciesGet.mockResolvedValue(fallback);
 
-    const { result } = renderHook(
-      () => useCurrenciesList({ filters: {} }),
-      { wrapper: makeWrapper() }
-    );
+    const { result } = renderHook(() => useCurrenciesList({ filters: {} }), {
+      wrapper: makeWrapper(),
+    });
 
-    await waitFor(() =>
-      expect(result.current.isSuccess || result.current.isError).toBe(true)
-    );
-
-    if (result.current.isSuccess) {
-      expect(result.current.data?.items).toEqual(cached);
-    }
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data).toEqual(fallback);
+    expect(mockOfflineCurrenciesGet).toHaveBeenCalledWith(undefined, {});
   });
 
-  it("throws when API fails and no cache is available", async () => {
-    mockCurrenciesGet.mockRejectedValue(new Error("fail"));
-    mockLoadCache.mockReturnValue(null);
+  it("throws when API and IndexedDB both fail", async () => {
+    mockCurrenciesGet.mockRejectedValue(new Error("Network error"));
+    mockOfflineCurrenciesGet.mockRejectedValue(new Error("IndexedDB error"));
 
-    const { result } = renderHook(
-      () => useCurrenciesList({ filters: {} }),
-      { wrapper: makeWrapper() }
-    );
+    const { result } = renderHook(() => useCurrenciesList({ filters: {} }), {
+      wrapper: makeWrapper(),
+    });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
-    expect(result.current.error?.message).toMatch(
-      /No cached currencies available/
-    );
+    expect(result.current.error?.message).toMatch(/IndexedDB error/);
   });
 });
 
 describe("useCurrenciesCommon", () => {
   beforeEach(() => {
+    mockUseAuth.mockReturnValue({
+      account: { id: 1, email: "test@example.com" },
+    });
     mockCurrenciesCommonGet.mockReset();
-    mockLoadCache.mockReturnValue(null);
-    mockUpdateCache.mockReset();
-    mockInCache.mockReturnValue(false);
+    mockOfflineCurrenciesCommonGet.mockReset();
     mockCurrenciesSeed.mockClear();
   });
 
-  it("is disabled when account.id is falsy", async () => {
+  it("is disabled when account.id is falsy", () => {
     mockUseAuth.mockReturnValueOnce({ account: { id: 0, email: "" } });
 
     const { result } = renderHook(() => useCurrenciesCommon(), {
@@ -173,9 +160,9 @@ describe("useCurrenciesCommon", () => {
     expect(result.current.fetchStatus).toBe("idle");
   });
 
-  it("fetches and returns common currencies", async () => {
+  it("fetches common currencies without reseeding partial DTOs", async () => {
     const data = [
-      { id: 1, name: "Euro", symbol: "€", updatedAt: "2024-01-01" },
+      { id: 1, name: "Euro", symbol: "EUR", updatedAt: "2024-01-01" },
     ];
     mockCurrenciesCommonGet.mockResolvedValue(data);
 
@@ -185,81 +172,21 @@ describe("useCurrenciesCommon", () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data).toEqual(data);
+    expect(mockCurrenciesSeed).not.toHaveBeenCalled();
   });
 
-  it("updates cache when not already cached", async () => {
-    mockInCache.mockReturnValue(false);
-    const data = [{ id: 1, name: "Euro", symbol: "€", updatedAt: "2024" }];
-    mockCurrenciesCommonGet.mockResolvedValue(data);
-
-    const { result } = renderHook(() => useCurrenciesCommon(), {
-      wrapper: makeWrapper(),
-    });
-
-    await waitFor(() => expect(result.current.isSuccess).toBe(true));
-    expect(mockUpdateCache).toHaveBeenCalledWith("currencies", data);
-  });
-
-  it("does not update cache when already cached", async () => {
-    mockInCache.mockReturnValue([{ id: 1 }]); // truthy
-    mockCurrenciesCommonGet.mockResolvedValue([
-      { id: 1, name: "Euro", symbol: "€", updatedAt: "2024" },
-    ]);
-
-    const { result } = renderHook(() => useCurrenciesCommon(), {
-      wrapper: makeWrapper(),
-    });
-
-    await waitFor(() => expect(result.current.isSuccess).toBe(true));
-    expect(mockUpdateCache).not.toHaveBeenCalled();
-  });
-
-  it("falls back to cache and maps { id, name, symbol, updatedAt }", async () => {
-    const cached = [
-      {
-        id: 1,
-        name: "Euro",
-        symbol: "€",
-        updatedAt: "2024-01-01",
-        extra: "ignore",
-      },
+  it("falls back to IndexedDB for common currencies", async () => {
+    const fallback = [
+      { id: 1, name: "Euro", symbol: "EUR", updatedAt: "2024-01-01" },
     ];
     mockCurrenciesCommonGet.mockRejectedValue(new Error("fail"));
-    mockLoadCache.mockReturnValue(cached);
+    mockOfflineCurrenciesCommonGet.mockResolvedValue(fallback);
 
     const { result } = renderHook(() => useCurrenciesCommon(), {
       wrapper: makeWrapper(),
     });
 
-    await waitFor(() =>
-      expect(result.current.isSuccess || result.current.isError).toBe(true)
-    );
-
-    if (result.current.isSuccess) {
-      expect(result.current.data?.[0]).toMatchObject({
-        id: 1,
-        name: "Euro",
-        symbol: "€",
-        updatedAt: "2024-01-01",
-      });
-      // extra field should NOT be present
-      expect(
-        Object.keys(result.current.data?.[0] ?? {})
-      ).not.toContain("extra");
-    }
-  });
-
-  it("throws on API error when cache is empty", async () => {
-    mockCurrenciesCommonGet.mockRejectedValue(new Error("fail"));
-    mockLoadCache.mockReturnValue(null);
-
-    const { result } = renderHook(() => useCurrenciesCommon(), {
-      wrapper: makeWrapper(),
-    });
-
-    await waitFor(() => expect(result.current.isError).toBe(true));
-    expect(result.current.error?.message).toMatch(
-      /No cached currencies available/
-    );
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data).toEqual(fallback);
   });
 });

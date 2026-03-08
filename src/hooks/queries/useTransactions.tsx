@@ -10,7 +10,7 @@ import {
 } from "@sito/dashboard-app";
 
 // providers
-import { useLocalCache, useManager, useOfflineManager } from "providers";
+import { useManager, useOfflineManager } from "providers";
 
 // types
 import { UseTransactionTypeResumePropsType } from "./types.ts";
@@ -20,7 +20,6 @@ import {
   TransactionDto,
   CommonTransactionDto,
   FilterTransactionDto,
-  Tables,
   TransactionTypeResumeDto,
   TransactionType,
   FilterTransactionTypeResumeDto,
@@ -68,7 +67,6 @@ export function useTransactionsList(props: {
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
-  const { loadCache, updateCache } = useLocalCache();
 
   const parsedFilters = useMemo(
     () => ({
@@ -101,24 +99,14 @@ export function useTransactionsList(props: {
           parsedFilters
         );
 
-        updateCache(
-          `${Tables.Transactions}_${filters?.accountId ?? 0}`,
-          result.items
-        );
         offlineManager.Transactions.seed(result.items).catch(() => {});
         return result;
       } catch (error) {
-        console.warn("API failed, loading transactions from cache", error);
-
-        const cached = loadCache(
-          `${Tables.Transactions}_${filters?.accountId ?? 0}`
+        console.warn("API failed, loading transactions from IndexedDB", error);
+        return await offlineManager.Transactions.get(
+          parsedQueries,
+          parsedFilters
         );
-        if (!cached || !Array.isArray(cached))
-          throw new Error("No cached transactions available");
-        return {
-          items: cached as unknown as TransactionDto,
-          total: cached?.length,
-        } as unknown as QueryResult<TransactionDto>;
       }
     },
   });
@@ -131,6 +119,7 @@ export function useTransactionTypeResume(
   const { t } = useTranslation();
 
   const manager = useManager();
+  const offlineManager = useOfflineManager();
   const { account } = useAuth();
 
   return useQuery({
@@ -139,21 +128,30 @@ export function useTransactionTypeResume(
     }),
     enabled: !!account?.id,
     queryFn: async () => {
-      try {
-        const result = await manager.Transactions.getTypeResume({
-          type: filters?.type ?? TransactionType.In,
-          account: filters?.account,
-          category: filters?.category,
-          date: filters?.date,
-        });
+      const query = {
+        type: filters?.type ?? TransactionType.In,
+        account: filters?.account,
+        category: filters?.category,
+        date: filters?.date,
+      };
 
-        return result;
+      try {
+        return await manager.Transactions.getTypeResume(query);
       } catch (error) {
-        throw new Error(
-          `${t("_accessibility:errors.unknownError")} ${
-            (error as Error).message
-          }`
+        console.warn(
+          "API failed, loading transaction type resume from IndexedDB",
+          error
         );
+
+        try {
+          return await offlineManager.Transactions.getTypeResume(query);
+        } catch (offlineError) {
+          throw new Error(
+            `${t("_accessibility:errors.unknownError")} ${
+              (offlineError as Error).message
+            }`
+          );
+        }
       }
     },
   });
@@ -166,6 +164,7 @@ export function useWeekly(
   const { t } = useTranslation();
 
   const manager = useManager();
+  const offlineManager = useOfflineManager();
   const { account } = useAuth();
 
   return useQuery({
@@ -174,19 +173,25 @@ export function useWeekly(
     }),
     enabled: !!account?.id,
     queryFn: async () => {
-      try {
-        const result = await manager.Transactions.weekly({
-          type: filters?.type ?? TransactionType.In,
-          account: filters?.account,
-        });
+      const query = {
+        type: filters?.type ?? TransactionType.In,
+        account: filters?.account,
+      };
 
-        return result;
+      try {
+        return await manager.Transactions.weekly(query);
       } catch (error) {
-        throw new Error(
-          `${t("_accessibility:errors.unknownError")} ${
-            (error as Error).message
-          }`
-        );
+        console.warn("API failed, loading weekly transactions from IndexedDB", error);
+
+        try {
+          return await offlineManager.Transactions.weekly(query);
+        } catch (offlineError) {
+          throw new Error(
+            `${t("_accessibility:errors.unknownError")} ${
+              (offlineError as Error).message
+            }`
+          );
+        }
       }
     },
   });
@@ -197,30 +202,27 @@ export function useTransactionsCommon(
   props: UseTransactionTypeResumePropsType
 ): UseQueryResult<CommonTransactionDto[]> {
   const manager = useManager();
+  const offlineManager = useOfflineManager();
 
   const filters = props;
-  const { loadCache, updateCache, inCache } = useLocalCache();
 
   return useQuery({
     ...TransactionsQueryKeys.common(filters),
     queryFn: async () => {
       try {
-        const result = await manager.Transactions.commonGet({
+        return await manager.Transactions.commonGet({
           deletedAt: false as unknown as Date,
           ...filters,
         });
-        if (!inCache(Tables.Transactions))
-          updateCache(Tables.Transactions, result);
-        return result;
       } catch (error) {
-        console.warn("API failed, loading transactions from cache", error);
-        const cached = loadCache(Tables.Transactions) as CommonTransactionDto[];
-        if (!cached || !Array.isArray(cached))
-          throw new Error("No cached transactions available");
-        return cached.map(({ id, updatedAt }) => ({
-          id,
-          updatedAt,
-        }));
+        console.warn(
+          "API failed, loading common transactions from IndexedDB",
+          error
+        );
+        return await offlineManager.Transactions.commonGet({
+          deletedAt: false as unknown as Date,
+          ...filters,
+        });
       }
     },
   });

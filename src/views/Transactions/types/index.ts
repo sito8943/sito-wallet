@@ -5,7 +5,6 @@ import {
   ActionType,
   BaseEntityDto,
   UseActionDialog,
-  ValidationError,
   FormDialogPropsType,
   TriggerFormDialogPropsType,
 } from "@sito/dashboard-app";
@@ -23,20 +22,19 @@ export interface TransactionCardPropsType extends TransactionDto {
 }
 
 export interface TransactionFormType
-  extends Omit<
+  extends
+    Omit<
       TransactionDto,
       "currency" | "deletedAt" | "createdAt" | "updatedAt" | "user"
     >,
     FieldValues {}
 
-export type TransactionFormPropsType = FormDialogPropsType<
-  TransactionFormType,
-  ValidationError
-> & {
-  lockCategory?: boolean;
-  lockAccount?: boolean;
-  account?: CommonAccountDto | null;
-};
+export type TransactionFormPropsType =
+  FormDialogPropsType<TransactionFormType> & {
+    lockCategory?: boolean;
+    lockAccount?: boolean;
+    account?: CommonAccountDto | null;
+  };
 
 export interface TriggerTransactionPropsType extends TransactionFormPropsType {
   openDialog: (id?: number) => void;
@@ -61,10 +59,8 @@ export interface AssignTransactionAccountFormType extends FieldValues {
   transactionIds: number[];
 }
 
-export type AssignTransactionAccountDialogPropsType = TriggerFormDialogPropsType<
-  AssignTransactionAccountFormType,
-  ValidationError
->;
+export type AssignTransactionAccountDialogPropsType =
+  TriggerFormDialogPropsType<AssignTransactionAccountFormType>;
 
 export interface AssignTransactionCategoryFormType extends FieldValues {
   category: CommonTransactionCategoryDto | null;
@@ -72,7 +68,7 @@ export interface AssignTransactionCategoryFormType extends FieldValues {
 }
 
 export type AssignTransactionCategoryDialogPropsType =
-  TriggerFormDialogPropsType<AssignTransactionCategoryFormType, ValidationError>;
+  TriggerFormDialogPropsType<AssignTransactionCategoryFormType>;
 
 export enum TransactionActions {
   AssignAccount = "assignAccount",
