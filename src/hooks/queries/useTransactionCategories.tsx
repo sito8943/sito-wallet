@@ -12,6 +12,8 @@ import {
   TransactionCategoryDto,
   CommonTransactionCategoryDto,
   FilterTransactionCategoryDto,
+  defaultTransactionCategoriesListFilters,
+  fetchTransactionCategoriesList,
 } from "lib";
 
 export const TransactionCategoriesQueryKeys = {
@@ -33,7 +35,7 @@ export const TransactionCategoriesQueryKeys = {
 export function useTransactionCategoriesList(
   props: UseFetchPropsType<TransactionCategoryDto, FilterTransactionCategoryDto>
 ): UseQueryResult<QueryResult<TransactionCategoryDto>> {
-  const { filters = { deletedAt: false as unknown as FilterTransactionCategoryDto["deletedAt"] } } = props;
+  const { filters = defaultTransactionCategoriesListFilters } = props;
 
   const manager = useManager();
   const offlineManager = useOfflineManager();
@@ -42,21 +44,8 @@ export function useTransactionCategoriesList(
   return useQuery({
     ...TransactionCategoriesQueryKeys.list(filters),
     enabled: !!account?.id,
-    queryFn: async () => {
-      try {
-        const result = await manager.TransactionCategories.get(undefined, {
-          ...filters,
-        });
-
-        offlineManager.TransactionCategories.seed(result.items).catch(() => {});
-        return result;
-      } catch (error) {
-        console.warn("API failed, loading categories from IndexedDB", error);
-        return await offlineManager.TransactionCategories.get(undefined, {
-          ...filters,
-        });
-      }
-    },
+    queryFn: () =>
+      fetchTransactionCategoriesList(manager, offlineManager, filters),
   });
 }
 

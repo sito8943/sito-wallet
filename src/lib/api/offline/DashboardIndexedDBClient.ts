@@ -1,4 +1,5 @@
-import { IndexedDBClient, BaseCommonEntityDto } from "@sito/dashboard-app";
+import { BaseCommonEntityDto } from "@sito/dashboard-app";
+import { IndexedDBClient } from "./IndexedDBClient";
 
 // enum
 import { Tables } from "../types";
@@ -15,8 +16,8 @@ import {
 } from "lib";
 
 // config
-import { config } from "../../../config";
 import { queueSyncOperation } from "../sync";
+import { getOfflineStoreDbName } from "./getOfflineStoreDbName";
 import { seedStore } from "./seedStore";
 
 const getTitleFromCreateInput = (value: AddDashboardDto): string => {
@@ -35,11 +36,18 @@ export class DashboardIndexedDBClient extends IndexedDBClient<
   ImportPreviewDashboardDto
 > {
   constructor() {
-    super(Tables.UserDashboardConfig, config.indexedDBName);
+    super(
+      Tables.UserDashboardConfig,
+      getOfflineStoreDbName(Tables.UserDashboardConfig),
+    );
   }
 
   async seed(items: DashboardDto[]): Promise<void> {
-    await seedStore(config.indexedDBName, Tables.UserDashboardConfig, items);
+    await seedStore(
+      getOfflineStoreDbName(Tables.UserDashboardConfig),
+      Tables.UserDashboardConfig,
+      items,
+    );
   }
 
   async insert(value: AddDashboardDto): Promise<DashboardDto> {
@@ -54,14 +62,14 @@ export class DashboardIndexedDBClient extends IndexedDBClient<
         config: value.config,
         position: value.position,
       },
-      created.id
+      created.id,
     );
 
     return created;
   }
 
-  async update(value: UpdateDashboardDto): Promise<DashboardDto> {
-    const updated = await super.update(value);
+  async update(_: number, value: UpdateDashboardDto): Promise<DashboardDto> {
+    const updated = await super.update(_, value);
 
     await queueSyncOperation(
       "userDashboardConfigs",
@@ -72,7 +80,7 @@ export class DashboardIndexedDBClient extends IndexedDBClient<
         config: value.config,
         position: value.position,
       },
-      value.id
+      value.id,
     );
 
     return updated;
@@ -83,8 +91,8 @@ export class DashboardIndexedDBClient extends IndexedDBClient<
 
     await Promise.all(
       ids.map((id) =>
-        queueSyncOperation("userDashboardConfigs", "DELETE", { id }, id)
-      )
+        queueSyncOperation("userDashboardConfigs", "DELETE", { id }, id),
+      ),
     );
 
     return deleted;
@@ -97,7 +105,7 @@ export class DashboardIndexedDBClient extends IndexedDBClient<
       title: _data.title,
     };
 
-    await super.update(merged as unknown as UpdateDashboardDto);
+    await super.update(_data.id, merged as unknown as UpdateDashboardDto);
 
     await queueSyncOperation(
       "userDashboardConfigs",
@@ -108,7 +116,7 @@ export class DashboardIndexedDBClient extends IndexedDBClient<
         config: current.config ?? "",
         position: current.position,
       },
-      _data.id
+      _data.id,
     );
 
     return 1;
@@ -121,7 +129,7 @@ export class DashboardIndexedDBClient extends IndexedDBClient<
       config: _data.config,
     };
 
-    await super.update(merged as unknown as UpdateDashboardDto);
+    await super.update(_data.id, merged as unknown as UpdateDashboardDto);
 
     await queueSyncOperation(
       "userDashboardConfigs",
@@ -132,7 +140,7 @@ export class DashboardIndexedDBClient extends IndexedDBClient<
         config: _data.config,
         position: current.position,
       },
-      _data.id
+      _data.id,
     );
 
     return 1;

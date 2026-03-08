@@ -44,6 +44,8 @@ export function Currencies() {
 
   const { data, isLoading, error } = useCurrenciesList({});
 
+  console.log("currencies", { data, isLoading, error });
+
   // #region actions
 
   const deleteCurrency = useDeleteDialog({

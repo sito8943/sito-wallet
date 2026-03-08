@@ -35,6 +35,22 @@ vi.mock("lib", () => ({
   AccountDto: class {},
   CommonAccountDto: class {},
   FilterAccountDto: class {},
+  defaultAccountsListFilters: {
+    deletedAt: false as unknown as Date,
+  },
+  fetchAccountsList: async (
+    _manager: unknown,
+    _offlineManager: unknown,
+    filters: Record<string, unknown>
+  ) => {
+    try {
+      const result = await mockAccountsGet(undefined, { ...filters });
+      mockAccountsSeed(result.items).catch(() => {});
+      return result;
+    } catch {
+      return await mockOfflineAccountsGet(undefined, { ...filters });
+    }
+  },
 }));
 
 import {

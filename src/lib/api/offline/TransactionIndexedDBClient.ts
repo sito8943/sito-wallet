@@ -1,4 +1,4 @@
-import { IndexedDBClient } from "@sito/dashboard-app";
+import { IndexedDBClient } from "./IndexedDBClient";
 
 // enum
 import { Tables } from "../types";
@@ -21,8 +21,8 @@ import {
 } from "lib";
 
 // config
-import { config } from "../../../config";
 import { queueSyncOperation } from "../sync";
+import { getOfflineStoreDbName } from "./getOfflineStoreDbName";
 import { seedStore } from "./seedStore";
 
 type TransactionCreateInput = AddTransactionDto &
@@ -38,11 +38,15 @@ export class TransactionIndexedDBClient extends IndexedDBClient<
   ImportPreviewTransactionDto
 > {
   constructor() {
-    super(Tables.Transactions, config.indexedDBName);
+    super(Tables.Transactions, getOfflineStoreDbName(Tables.Transactions));
   }
 
   async seed(items: TransactionDto[]): Promise<void> {
-    await seedStore(config.indexedDBName, Tables.Transactions, items);
+    await seedStore(
+      getOfflineStoreDbName(Tables.Transactions),
+      Tables.Transactions,
+      items,
+    );
   }
 
   async insert(value: AddTransactionDto): Promise<TransactionDto> {
@@ -59,14 +63,14 @@ export class TransactionIndexedDBClient extends IndexedDBClient<
         date: parsed.date,
         description: parsed.description,
       },
-      created.id
+      created.id,
     );
 
     return created;
   }
 
-  async update(value: UpdateTransactionDto): Promise<TransactionDto> {
-    const updated = await super.update(value);
+  async update(_: number, value: UpdateTransactionDto): Promise<TransactionDto> {
+    const updated = await super.update(_, value);
 
     await queueSyncOperation(
       "transactions",
@@ -79,7 +83,7 @@ export class TransactionIndexedDBClient extends IndexedDBClient<
         date: value.date,
         description: value.description,
       },
-      value.id
+      value.id,
     );
 
     return updated;
@@ -89,7 +93,7 @@ export class TransactionIndexedDBClient extends IndexedDBClient<
     const deleted = await super.softDelete(ids);
 
     await Promise.all(
-      ids.map((id) => queueSyncOperation("transactions", "DELETE", { id }, id))
+      ids.map((id) => queueSyncOperation("transactions", "DELETE", { id }, id)),
     );
 
     return deleted;
@@ -99,20 +103,22 @@ export class TransactionIndexedDBClient extends IndexedDBClient<
     const restored = await super.restore(ids);
 
     await Promise.all(
-      ids.map((id) => queueSyncOperation("transactions", "RESTORE", { id }, id))
+      ids.map((id) =>
+        queueSyncOperation("transactions", "RESTORE", { id }, id),
+      ),
     );
 
     return restored;
   }
 
   async getTypeResume(
-    _filters: FilterTransactionTypeResumeDto
+    _filters: FilterTransactionTypeResumeDto,
   ): Promise<TransactionTypeResumeDto> {
     return {} as TransactionTypeResumeDto;
   }
 
   async weekly(
-    _filters: FilterWeeklyTransactionDto
+    _filters: FilterWeeklyTransactionDto,
   ): Promise<TransactionWeeklySpentDto> {
     return {} as TransactionWeeklySpentDto;
   }

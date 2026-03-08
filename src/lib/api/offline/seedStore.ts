@@ -43,6 +43,22 @@ const openDatabaseWithStore = async (
   dbName: string,
   storeName: string,
 ): Promise<IDBDatabase> => {
+  try {
+    const initialDb = await openDatabase(dbName, 1, (upgradeDb) => {
+      createObjectStoreIfMissing(upgradeDb, storeName);
+    });
+
+    if (initialDb.objectStoreNames.contains(storeName)) {
+      return initialDb;
+    }
+
+    initialDb.close();
+  } catch (error) {
+    if (!(error instanceof DOMException) || error.name !== "VersionError") {
+      throw error;
+    }
+  }
+
   let db = await openDatabase(dbName);
 
   for (let attempt = 0; attempt < 3; attempt += 1) {

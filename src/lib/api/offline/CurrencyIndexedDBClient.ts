@@ -1,4 +1,4 @@
-import { IndexedDBClient } from "@sito/dashboard-app";
+import { IndexedDBClient } from "./IndexedDBClient";
 
 // enum
 import { Tables } from "../types";
@@ -14,8 +14,8 @@ import {
 } from "lib";
 
 // config
-import { config } from "../../../config";
 import { queueSyncOperation } from "../sync";
+import { getOfflineStoreDbName } from "./getOfflineStoreDbName";
 import { seedStore } from "./seedStore";
 
 export class CurrencyIndexedDBClient extends IndexedDBClient<
@@ -28,11 +28,15 @@ export class CurrencyIndexedDBClient extends IndexedDBClient<
   ImportPreviewCurrencyDto
 > {
   constructor() {
-    super(Tables.Currencies, config.indexedDBName);
+    super(Tables.Currencies, getOfflineStoreDbName(Tables.Currencies));
   }
 
   async seed(items: CurrencyDto[]): Promise<void> {
-    await seedStore(config.indexedDBName, Tables.Currencies, items);
+    await seedStore(
+      getOfflineStoreDbName(Tables.Currencies),
+      Tables.Currencies,
+      items,
+    );
   }
 
   async insert(value: AddCurrencyDto): Promise<CurrencyDto> {
@@ -46,14 +50,14 @@ export class CurrencyIndexedDBClient extends IndexedDBClient<
         description: value.description,
         symbol: value.symbol,
       },
-      created.id
+      created.id,
     );
 
     return created;
   }
 
-  async update(value: UpdateCurrencyDto): Promise<CurrencyDto> {
-    const updated = await super.update(value);
+  async update(_: number, value: UpdateCurrencyDto): Promise<CurrencyDto> {
+    const updated = await super.update(_, value);
 
     await queueSyncOperation(
       "currencies",
@@ -64,7 +68,7 @@ export class CurrencyIndexedDBClient extends IndexedDBClient<
         description: value.description,
         symbol: value.symbol,
       },
-      value.id
+      value.id,
     );
 
     return updated;
@@ -74,7 +78,7 @@ export class CurrencyIndexedDBClient extends IndexedDBClient<
     const deleted = await super.softDelete(ids);
 
     await Promise.all(
-      ids.map((id) => queueSyncOperation("currencies", "DELETE", { id }, id))
+      ids.map((id) => queueSyncOperation("currencies", "DELETE", { id }, id)),
     );
 
     return deleted;
@@ -84,7 +88,7 @@ export class CurrencyIndexedDBClient extends IndexedDBClient<
     const restored = await super.restore(ids);
 
     await Promise.all(
-      ids.map((id) => queueSyncOperation("currencies", "RESTORE", { id }, id))
+      ids.map((id) => queueSyncOperation("currencies", "RESTORE", { id }, id)),
     );
 
     return restored;

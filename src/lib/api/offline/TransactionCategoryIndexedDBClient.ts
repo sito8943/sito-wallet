@@ -1,4 +1,4 @@
-import { IndexedDBClient } from "@sito/dashboard-app";
+import { IndexedDBClient } from "./IndexedDBClient";
 
 // enum
 import { Tables } from "../types";
@@ -15,8 +15,8 @@ import {
 } from "lib";
 
 // config
-import { config } from "../../../config";
 import { queueSyncOperation } from "../sync";
+import { getOfflineStoreDbName } from "./getOfflineStoreDbName";
 import { seedStore } from "./seedStore";
 
 export class TransactionCategoryIndexedDBClient extends IndexedDBClient<
@@ -29,14 +29,23 @@ export class TransactionCategoryIndexedDBClient extends IndexedDBClient<
   ImportPreviewTransactionCategoryDto
 > {
   constructor() {
-    super(Tables.TransactionCategories, config.indexedDBName);
+    super(
+      Tables.TransactionCategories,
+      getOfflineStoreDbName(Tables.TransactionCategories),
+    );
   }
 
   async seed(items: TransactionCategoryDto[]): Promise<void> {
-    await seedStore(config.indexedDBName, Tables.TransactionCategories, items);
+    await seedStore(
+      getOfflineStoreDbName(Tables.TransactionCategories),
+      Tables.TransactionCategories,
+      items,
+    );
   }
 
-  async insert(value: AddTransactionCategoryDto): Promise<TransactionCategoryDto> {
+  async insert(
+    value: AddTransactionCategoryDto,
+  ): Promise<TransactionCategoryDto> {
     const created = await super.insert(value);
 
     await queueSyncOperation(
@@ -47,14 +56,17 @@ export class TransactionCategoryIndexedDBClient extends IndexedDBClient<
         description: value.description,
         type: value.type,
       },
-      created.id
+      created.id,
     );
 
     return created;
   }
 
-  async update(value: UpdateTransactionCategoryDto): Promise<TransactionCategoryDto> {
-    const updated = await super.update(value);
+  async update(
+    _: number,
+    value: UpdateTransactionCategoryDto,
+  ): Promise<TransactionCategoryDto> {
+    const updated = await super.update(_, value);
 
     await queueSyncOperation(
       "transactionCategories",
@@ -65,7 +77,7 @@ export class TransactionCategoryIndexedDBClient extends IndexedDBClient<
         description: value.description,
         type: value.type,
       },
-      value.id
+      value.id,
     );
 
     return updated;
@@ -76,8 +88,8 @@ export class TransactionCategoryIndexedDBClient extends IndexedDBClient<
 
     await Promise.all(
       ids.map((id) =>
-        queueSyncOperation("transactionCategories", "DELETE", { id }, id)
-      )
+        queueSyncOperation("transactionCategories", "DELETE", { id }, id),
+      ),
     );
 
     return deleted;
@@ -88,8 +100,8 @@ export class TransactionCategoryIndexedDBClient extends IndexedDBClient<
 
     await Promise.all(
       ids.map((id) =>
-        queueSyncOperation("transactionCategories", "RESTORE", { id }, id)
-      )
+        queueSyncOperation("transactionCategories", "RESTORE", { id }, id),
+      ),
     );
 
     return restored;

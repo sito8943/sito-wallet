@@ -1,4 +1,3 @@
-import { IndexedDBClient } from "@sito/dashboard-app";
 
 // enum
 import { Tables } from "../types";
@@ -14,9 +13,10 @@ import {
 } from "lib";
 
 // config
-import { config } from "../../../config";
 import { queueSyncOperation } from "../sync";
+import { getOfflineStoreDbName } from "./getOfflineStoreDbName";
 import { seedStore } from "./seedStore";
+import { IndexedDBClient } from "./IndexedDBClient";
 
 export class AccountIndexedDBClient extends IndexedDBClient<
   Tables,
@@ -28,11 +28,11 @@ export class AccountIndexedDBClient extends IndexedDBClient<
   ImportPreviewAccountDto
 > {
   constructor() {
-    super(Tables.Accounts, config.indexedDBName);
+    super(Tables.Accounts, getOfflineStoreDbName(Tables.Accounts));
   }
 
   async seed(items: AccountDto[]): Promise<void> {
-    await seedStore(config.indexedDBName, Tables.Accounts, items);
+    await seedStore(getOfflineStoreDbName(Tables.Accounts), Tables.Accounts, items);
   }
 
   async insert(value: AddAccountDto): Promise<AccountDto> {
@@ -54,8 +54,8 @@ export class AccountIndexedDBClient extends IndexedDBClient<
     return created;
   }
 
-  async update(value: UpdateAccountDto): Promise<AccountDto> {
-    const updated = await super.update(value);
+  async update(_:number, value: UpdateAccountDto): Promise<AccountDto> {
+    const updated = await super.update(_, value);
 
     await queueSyncOperation(
       "accounts",

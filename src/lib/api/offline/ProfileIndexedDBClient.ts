@@ -1,9 +1,9 @@
 import {
-  IndexedDBClient,
   BaseCommonEntityDto,
   BaseFilterDto,
   ImportPreviewDto,
 } from "@sito/dashboard-app";
+import { IndexedDBClient } from "./IndexedDBClient";
 
 // enum
 import { Tables } from "../types";
@@ -12,8 +12,8 @@ import { Tables } from "../types";
 import { ProfileDto, AddProfileDto, UpdateProfileDto } from "lib";
 
 // config
-import { config } from "../../../config";
 import { queueSyncOperation } from "../sync";
+import { getOfflineStoreDbName } from "./getOfflineStoreDbName";
 import { seedStore } from "./seedStore";
 
 export class ProfileIndexedDBClient extends IndexedDBClient<
@@ -26,11 +26,15 @@ export class ProfileIndexedDBClient extends IndexedDBClient<
   ImportPreviewDto
 > {
   constructor() {
-    super(Tables.Profiles, config.indexedDBName);
+    super(Tables.Profiles, getOfflineStoreDbName(Tables.Profiles));
   }
 
   async seed(items: ProfileDto[]): Promise<void> {
-    await seedStore(config.indexedDBName, Tables.Profiles, items);
+    await seedStore(
+      getOfflineStoreDbName(Tables.Profiles),
+      Tables.Profiles,
+      items,
+    );
   }
 
   async insert(value: AddProfileDto): Promise<ProfileDto> {
@@ -42,14 +46,14 @@ export class ProfileIndexedDBClient extends IndexedDBClient<
       {
         name: value.name,
       },
-      created.id
+      created.id,
     );
 
     return created;
   }
 
   async update(id: number, value: UpdateProfileDto): Promise<ProfileDto> {
-    const updated = await super.update(value);
+    const updated = await super.update(id, value);
 
     await queueSyncOperation(
       "profile",
@@ -58,7 +62,7 @@ export class ProfileIndexedDBClient extends IndexedDBClient<
         id: value.id,
         name: value.name,
       },
-      value.id
+      value.id,
     );
 
     return updated;

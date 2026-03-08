@@ -35,6 +35,22 @@ vi.mock("lib", () => ({
   CurrencyDto: class {},
   CommonCurrencyDto: class {},
   FilterCurrencyDto: class {},
+  defaultCurrenciesListFilters: {
+    deletedAt: false as unknown as Date,
+  },
+  fetchCurrenciesList: async (
+    _manager: unknown,
+    _offlineManager: unknown,
+    filters: Record<string, unknown>
+  ) => {
+    try {
+      const result = await mockCurrenciesGet(undefined, { ...filters });
+      mockCurrenciesSeed(result.items).catch(() => {});
+      return result;
+    } catch {
+      return await mockOfflineCurrenciesGet(undefined, { ...filters });
+    }
+  },
 }));
 
 import {

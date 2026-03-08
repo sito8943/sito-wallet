@@ -12,6 +12,8 @@ import {
   CurrencyDto,
   CommonCurrencyDto,
   FilterCurrencyDto,
+  defaultCurrenciesListFilters,
+  fetchCurrenciesList,
 } from "lib";
 
 export const CurrenciesQueryKeys = {
@@ -29,7 +31,7 @@ export const CurrenciesQueryKeys = {
 export function useCurrenciesList(
   props: UseFetchPropsType<CurrencyDto, FilterCurrencyDto>
 ): UseQueryResult<QueryResult<CurrencyDto>> {
-  const { filters = { deletedAt: false as unknown as FilterCurrencyDto["deletedAt"] } } = props;
+  const { filters = defaultCurrenciesListFilters } = props;
 
   const manager = useManager();
   const offlineManager = useOfflineManager();
@@ -38,21 +40,7 @@ export function useCurrenciesList(
   return useQuery({
     ...CurrenciesQueryKeys.list(filters),
     enabled: !!account?.id,
-    queryFn: async () => {
-      try {
-        const result = await manager.Currencies.get(undefined, {
-          ...filters,
-        });
-
-        offlineManager.Currencies.seed(result.items).catch(() => {});
-        return result;
-      } catch (error) {
-        console.warn("API failed, loading currencies from IndexedDB", error);
-        return await offlineManager.Currencies.get(undefined, {
-          ...filters,
-        });
-      }
-    },
+    queryFn: () => fetchCurrenciesList(manager, offlineManager, filters),
   });
 }
 

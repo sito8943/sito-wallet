@@ -12,6 +12,8 @@ import {
   AccountDto,
   CommonAccountDto,
   FilterAccountDto,
+  defaultAccountsListFilters,
+  fetchAccountsList,
 } from "lib";
 
 export const AccountsQueryKeys = {
@@ -29,7 +31,7 @@ export const AccountsQueryKeys = {
 export function useAccountsList(
   props: UseFetchPropsType<AccountDto, FilterAccountDto>
 ): UseQueryResult<QueryResult<AccountDto>> {
-  const { filters = { deletedAt: false as unknown as FilterAccountDto["deletedAt"] } } = props;
+  const { filters = defaultAccountsListFilters } = props;
 
   const manager = useManager();
   const offlineManager = useOfflineManager();
@@ -38,21 +40,7 @@ export function useAccountsList(
   return useQuery({
     ...AccountsQueryKeys.list(filters),
     enabled: !!account?.id,
-    queryFn: async () => {
-      try {
-        const result = await manager.Accounts.get(undefined, {
-          ...filters,
-        });
-
-        offlineManager.Accounts.seed(result.items).catch(() => {});
-        return result;
-      } catch (error) {
-        console.warn("API failed, loading accounts from IndexedDB", error);
-        return await offlineManager.Accounts.get(undefined, {
-          ...filters,
-        });
-      }
-    },
+    queryFn: () => fetchAccountsList(manager, offlineManager, filters),
   });
 }
 
