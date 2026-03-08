@@ -32,7 +32,7 @@ export const Transaction = (props: TransactionPropsType) => {
   return (
     <li className={"flex items-center gap-2 w-full"}>
       <Type
-        className={`text-xl`}
+        className={`text-xl max-sm:text-lg`}
         noText
         filled={false}
         type={category?.type ?? TransactionType.In}
