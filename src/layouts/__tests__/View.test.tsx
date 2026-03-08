@@ -53,7 +53,6 @@ vi.mock("@sito/dashboard-app", () => ({
   Error: ({ error }: { error: Error }) => (
     <div data-testid="error-ui">{error?.message}</div>
   ),
-  Notification: () => <div data-testid="notification" />,
   ToTop: () => <div data-testid="to-top" />,
   Onboarding: ({ steps }: { steps: string[] }) => (
     <div data-testid="onboarding" data-steps={steps.join(",")} />
@@ -127,23 +126,6 @@ describe("View layout", () => {
     mockIsInGuestMode.mockReturnValue(false);
   });
 
-  describe("authentication redirect", () => {
-    it("redirects to /auth/sign-in when not authenticated and onboarding was done", () => {
-      renderView({ email: "", guestMode: false, onboardingDone: true });
-      expect(mockNavigate).toHaveBeenCalledWith("/auth/sign-in");
-    });
-
-    it("does NOT redirect when user is authenticated", () => {
-      renderView({ email: "user@example.com", onboardingDone: true });
-      expect(mockNavigate).not.toHaveBeenCalledWith("/auth/sign-in");
-    });
-
-    it("does NOT redirect when in guest mode", () => {
-      renderView({ email: "", guestMode: true, onboardingDone: true });
-      expect(mockNavigate).not.toHaveBeenCalledWith("/auth/sign-in");
-    });
-  });
-
   describe("onboarding", () => {
     it("shows Onboarding when localStorage key is not set (first visit)", () => {
       mockFromLocal.mockReturnValue(null);
@@ -184,9 +166,9 @@ describe("View layout", () => {
       expect(screen.getByTestId("home-page")).toBeInTheDocument();
     });
 
-    it("renders the Notification component", () => {
+    it("does not trigger navigation during render", () => {
       renderView({ email: "user@example.com" });
-      expect(screen.getByTestId("notification")).toBeInTheDocument();
+      expect(mockNavigate).not.toHaveBeenCalled();
     });
 
     it("renders the ToTop button", () => {

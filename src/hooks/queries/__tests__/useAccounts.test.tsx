@@ -7,6 +7,7 @@ import { ReactNode } from "react";
 
 const mockAccountsGet = vi.fn();
 const mockAccountsCommonGet = vi.fn();
+const mockAccountsSeed = vi.fn(() => Promise.resolve());
 const mockLoadCache = vi.fn(() => null);
 const mockUpdateCache = vi.fn();
 const mockInCache = vi.fn(() => false);
@@ -19,6 +20,11 @@ vi.mock("providers", () => ({
     Accounts: {
       get: mockAccountsGet,
       commonGet: mockAccountsCommonGet,
+    },
+  }),
+  useOfflineManager: () => ({
+    Accounts: {
+      seed: mockAccountsSeed,
     },
   }),
   useLocalCache: () => ({
@@ -82,6 +88,7 @@ describe("useAccountsList", () => {
     mockAccountsGet.mockReset();
     mockLoadCache.mockReturnValue(null);
     mockUpdateCache.mockReset();
+    mockAccountsSeed.mockClear();
   });
 
   it("is disabled when account.id is falsy", async () => {
@@ -166,6 +173,7 @@ describe("useAccountsCommon", () => {
     mockLoadCache.mockReturnValue(null);
     mockUpdateCache.mockReset();
     mockInCache.mockReturnValue(false);
+    mockAccountsSeed.mockClear();
   });
 
   it("is disabled when account.id is falsy", async () => {

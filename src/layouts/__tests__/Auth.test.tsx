@@ -23,7 +23,6 @@ const mockUseAuth = vi.fn(() => ({
 
 vi.mock("@sito/dashboard-app", () => ({
   useAuth: () => mockUseAuth(),
-  Notification: () => <div data-testid="notification" />,
   Error: ({ error }: { error: Error }) => (
     <div data-testid="error-ui">{error?.message}</div>
   ),
@@ -101,14 +100,6 @@ describe("Auth layout", () => {
       renderAuth({ email: "" });
 
       expect(screen.getByTestId("sign-in-page")).toBeInTheDocument();
-    });
-  });
-
-  describe("renders Notification", () => {
-    it("always renders Notification component", () => {
-      renderAuth({ email: "" });
-
-      expect(screen.getByTestId("notification")).toBeInTheDocument();
     });
   });
 });

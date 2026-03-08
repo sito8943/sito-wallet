@@ -9,6 +9,7 @@ const mockTransactionsGet = vi.fn();
 const mockTransactionsCommonGet = vi.fn();
 const mockTransactionsGetTypeResume = vi.fn();
 const mockTransactionsWeekly = vi.fn();
+const mockTransactionsSeed = vi.fn(() => Promise.resolve());
 const mockLoadCache = vi.fn(() => null);
 const mockUpdateCache = vi.fn();
 const mockInCache = vi.fn(() => false);
@@ -20,6 +21,11 @@ vi.mock("providers", () => ({
       commonGet: mockTransactionsCommonGet,
       getTypeResume: mockTransactionsGetTypeResume,
       weekly: mockTransactionsWeekly,
+    },
+  }),
+  useOfflineManager: () => ({
+    Transactions: {
+      seed: mockTransactionsSeed,
     },
   }),
   useLocalCache: () => ({
@@ -116,6 +122,8 @@ describe("useTransactionsList", () => {
   beforeEach(() => {
     mockTransactionsGet.mockReset();
     mockLoadCache.mockReturnValue(null);
+    mockUpdateCache.mockReset();
+    mockTransactionsSeed.mockClear();
   });
 
   it("is disabled when account.id is falsy", async () => {
@@ -187,7 +195,9 @@ describe("useTransactionsCommon", () => {
   beforeEach(() => {
     mockTransactionsCommonGet.mockReset();
     mockLoadCache.mockReturnValue(null);
+    mockUpdateCache.mockReset();
     mockInCache.mockReturnValue(false);
+    mockTransactionsSeed.mockClear();
   });
 
   it("fetches and maps common transactions", async () => {

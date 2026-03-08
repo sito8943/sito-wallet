@@ -91,7 +91,7 @@
     }
   },
   "offline": {
-    "banner": " Estás sin conexión. Tus datos se guardan localmente."
+    "banner": " Modo offline activo. Tus datos se guardan localmente."
   },
   "errors": {
     "unknownError": "Ha ocurrido un error",

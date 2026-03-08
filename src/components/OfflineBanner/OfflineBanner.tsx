@@ -3,17 +3,27 @@ import { useOnlineStatus } from "hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWarning } from "@fortawesome/free-solid-svg-icons";
 
-export function OfflineBanner() {
+type OfflineBannerProps = {
+  forceVisible?: boolean;
+};
+
+export function OfflineBanner({ forceVisible = false }: OfflineBannerProps) {
   const isOnline = useOnlineStatus();
   const { t } = useTranslation();
 
-  if (isOnline) return null;
+  console.log("isOnline", isOnline);
+
+  if (isOnline && !forceVisible) return null;
 
   return (
-    <div className="group px-4 py-1 transition-all duration-300 overflow-hidden h-0 hover:h-9 sticky top-0 z-50 flex items-center justify-center gap-2 bg-bg-warning text-warning text-sm font-medium">
-      <p className="group-hover:opacity-100 opacity-0 transition duration-300">
+    <div
+      aria-live="polite"
+      className="sticky top-0 z-10 flex items-center justify-center gap-2 bg-bg-warning px-4 py-2 text-sm font-medium text-warning"
+      role="status"
+    >
+      <p className="flex items-center gap-2">
         <FontAwesomeIcon icon={faWarning} />
-        <span>{t("_accessibility:offline.banner")}</span>
+        <span className="text-xs">{t("_accessibility:offline.banner")}</span>
       </p>
     </div>
   );

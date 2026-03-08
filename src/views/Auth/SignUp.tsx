@@ -118,6 +118,7 @@ export function SignUp() {
                 <TextInput
                   {...field}
                   type="text"
+                  value={field.value ?? ""}
                   id="name"
                   inputClassName="peer"
                   label={t("_entities:user.name.label")}
@@ -142,6 +143,7 @@ export function SignUp() {
                 <TextInput
                   {...field}
                   type="email"
+                  value={field.value ?? ""}
                   id="email"
                   inputClassName="peer"
                   label={t("_entities:user.email.label")}
@@ -166,6 +168,7 @@ export function SignUp() {
                 <PasswordInput
                   {...field}
                   id="password"
+                  value={field.value ?? ""}
                   inputClassName="peer"
                   label={t("_entities:user.password.label")}
                   required
@@ -188,6 +191,7 @@ export function SignUp() {
               render={({ field, fieldState }) => (
                 <PasswordInput
                   {...field}
+                  value={field.value ?? ""}
                   id="rPassword"
                   inputClassName="peer"
                   label={t("_entities:user.rPassword.label")}

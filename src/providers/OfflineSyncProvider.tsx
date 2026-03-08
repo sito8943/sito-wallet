@@ -5,7 +5,12 @@ import { useTranslation } from "react-i18next";
 import { queryClient, useAuth, useNotification } from "@sito/dashboard-app";
 
 // hooks
-import { useOnlineStatus } from "hooks";
+import {
+  probeServerReachability,
+  setServerReachable,
+  useOnlineStatus,
+  useOnlineStatusSnapshot,
+} from "hooks";
 
 // types
 import { BasicProviderPropTypes } from "./types";
@@ -13,7 +18,6 @@ import { BasicProviderPropTypes } from "./types";
 // lib
 import {
   offlineSyncService,
-  syncClient,
   syncSocketService,
   SyncSocketEvent,
   toSyncHttpError,
@@ -24,6 +28,7 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
 
   const { t } = useTranslation();
   const isOnline = useOnlineStatus();
+  const { isBrowserOnline } = useOnlineStatusSnapshot();
   const { account, isInGuestMode } = useAuth();
   const { showErrorNotification, showSuccessNotification } = useNotification();
 
@@ -33,6 +38,10 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
   const socketDisconnectedNotifiedRef = useRef(false);
   const socketHealthCheckInProgressRef = useRef(false);
 
+  const isServerUnavailableError = useCallback((status: number) => {
+    return status >= 500;
+  }, []);
+
   const notifyServerUnavailable = useCallback(async () => {
     if (socketDisconnectedNotifiedRef.current) return;
     if (socketHealthCheckInProgressRef.current) return;
@@ -40,20 +49,18 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
     socketHealthCheckInProgressRef.current = true;
 
     try {
-      await syncClient.status();
-      return;
-    } catch (error) {
-      const parsedError = toSyncHttpError(error);
-      if (parsedError.status !== 500) return;
+      const isServerReachable = await probeServerReachability();
+      if (isServerReachable) {
+        setServerReachable(true);
+        return;
+      }
 
       socketDisconnectedNotifiedRef.current = true;
-      showErrorNotification({
-        message: t("_pages:sync.errors.serverUnavailable"),
-      });
+      setServerReachable(false);
     } finally {
       socketHealthCheckInProgressRef.current = false;
     }
-  }, [showErrorNotification, t]);
+  }, []);
 
   const handleSocketEvent = useCallback(
     async (event: SyncSocketEvent): Promise<void> => {
@@ -72,9 +79,10 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
   );
 
   useEffect(() => {
-    if (!isOnline || !account?.id || isInGuestMode()) {
+    if (!isBrowserOnline || !account?.id || isInGuestMode()) {
       shouldNotifySocketDisconnectRef.current = false;
       socketDisconnectedNotifiedRef.current = false;
+      setServerReachable(true);
       syncSocketService.disconnect();
       return;
     }
@@ -84,6 +92,7 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
     syncSocketService.connect({
       onConnect: () => {
         socketDisconnectedNotifiedRef.current = false;
+        setServerReachable(true);
       },
       onDisconnect: () => {
         if (!shouldNotifySocketDisconnectRef.current) return;
@@ -100,13 +109,14 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
 
     return () => {
       shouldNotifySocketDisconnectRef.current = false;
+      setServerReachable(true);
       syncSocketService.disconnect();
     };
   }, [
     account?.id,
     handleSocketEvent,
+    isBrowserOnline,
     isInGuestMode,
-    isOnline,
     notifyServerUnavailable,
   ]);
 
@@ -136,6 +146,8 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
         const result = await offlineSyncService.syncPendingOperations();
         if (isCancelled) return;
 
+        setServerReachable(true);
+
         if (result.syncedOperations > 0) {
           await queryClient.invalidateQueries();
         }
@@ -156,6 +168,11 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
         if (isCancelled) return;
 
         const parsedError = toSyncHttpError(error);
+        if (isServerUnavailableError(parsedError.status)) {
+          setServerReachable(false);
+          return;
+        }
+
         if (parsedError.status === 409) {
           showErrorNotification({
             message: t("_pages:sync.errors.deviceConflict"),
@@ -187,6 +204,7 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
     account?.id,
     isInGuestMode,
     isOnline,
+    isServerUnavailableError,
     showErrorNotification,
     showSuccessNotification,
     t,

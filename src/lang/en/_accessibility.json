@@ -91,7 +91,7 @@
     }
   },
   "offline": {
-    "banner": " You're offline. Your data is saved locally."
+    "banner": " Offline mode is active. Your data is saved locally."
   },
   "messages": {
     "saved": "Saved successfully",

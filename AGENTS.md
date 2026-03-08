@@ -139,3 +139,4 @@ if (!isOnline) return null;
 - Use `useNotification()` for all user-facing feedback.
 - Never add `any` types.
 - In `.tsx` files, do not use `t("key", { defaultValue: "..." })`; always add/update the translation key in `src/lang/*/*.json` and call `t("key")`.
+- Put types in types.ts files

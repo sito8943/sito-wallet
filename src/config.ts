@@ -19,7 +19,9 @@ const {
   VITE_INDEXED_DB_NAME,
   VITE_APP_VERSION,
   VITE_REFRESH_TOKEN_KEY,
-  VITE_ACCESS_TOKEN_EXPIRES_AT_KEY
+  VITE_ACCESS_TOKEN_EXPIRES_AT_KEY,
+  VITE_SERVER_PROBE_INTERVAL,
+  VITE_SERVER_STATUS_PATH
 } = import.meta.env;
 
 const authUserKey = VITE_USER || "user";
@@ -48,6 +50,10 @@ export const config = {
   onboarding: VITE_ONBOARDING,
   guestMode: VITE_GUEST_MODE,
   indexedDBName: VITE_INDEXED_DB_NAME,
+  server: {
+    probeInterval: Number(VITE_SERVER_PROBE_INTERVAL) || 15000,
+    statusPath: VITE_SERVER_STATUS_PATH || "/sync/status",
+  },
   auth: {
     user: authUserKey,
     remember: authRememberKey,

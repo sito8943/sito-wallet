@@ -7,6 +7,7 @@ import { ReactNode } from "react";
 
 const mockCurrenciesGet = vi.fn();
 const mockCurrenciesCommonGet = vi.fn();
+const mockCurrenciesSeed = vi.fn(() => Promise.resolve());
 const mockLoadCache = vi.fn(() => null);
 const mockUpdateCache = vi.fn();
 const mockInCache = vi.fn(() => false);
@@ -19,6 +20,11 @@ vi.mock("providers", () => ({
     Currencies: {
       get: mockCurrenciesGet,
       commonGet: mockCurrenciesCommonGet,
+    },
+  }),
+  useOfflineManager: () => ({
+    Currencies: {
+      seed: mockCurrenciesSeed,
     },
   }),
   useLocalCache: () => ({
@@ -82,6 +88,7 @@ describe("useCurrenciesList", () => {
     mockCurrenciesGet.mockReset();
     mockLoadCache.mockReturnValue(null);
     mockUpdateCache.mockReset();
+    mockCurrenciesSeed.mockClear();
   });
 
   it("is disabled when account.id is falsy", async () => {
@@ -153,6 +160,7 @@ describe("useCurrenciesCommon", () => {
     mockLoadCache.mockReturnValue(null);
     mockUpdateCache.mockReset();
     mockInCache.mockReturnValue(false);
+    mockCurrenciesSeed.mockClear();
   });
 
   it("is disabled when account.id is falsy", async () => {

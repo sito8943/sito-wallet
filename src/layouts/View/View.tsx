@@ -8,7 +8,6 @@ import {
   BaseLinkPropsType,
   ConfigProvider,
   Error,
-  Notification,
   ToTop,
   Onboarding,
   TableOptionsProvider,
@@ -45,11 +44,6 @@ export function View() {
     if (showOnboarding) {
       toLocal(config.onboarding, true);
     }
-
-    const onboarding = fromLocal(config.onboarding);
-    if (!account.email && !isInGuestMode() && onboarding) {
-      navigate("/auth/sign-in");
-    }
   }, [account.email, isInGuestMode, navigate, showOnboarding]);
 
   return (
@@ -69,7 +63,6 @@ export function View() {
           </TableOptionsProvider>
         </ErrorBoundary>
         <Footer />
-        <Notification />
         <Tooltip id="tooltip" />
       </NavbarProvider>
     </ConfigProvider>
