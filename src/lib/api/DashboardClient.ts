@@ -29,7 +29,11 @@ export default class DashboardClient extends BaseClient<
   /**
    */
   constructor() {
-    super(Tables.UserDashboardConfig, config.apiUrl, config.auth.user);
+    super(Tables.UserDashboardConfig, config.apiUrl, config.auth.user, true, {
+      rememberKey: config.auth.remember,
+      refreshTokenKey: config.auth.refreshTokenKey,
+      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
+    });
   }
 
   async updateCardTitle(data: UpdateDashboardCardTitleDto): Promise<number> {

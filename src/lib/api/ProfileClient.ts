@@ -51,7 +51,11 @@ const parseErrorMessage = (payload: unknown, fallback: string): string => {
 
 export default class ProfileClient {
   table: Tables = Tables.Profiles;
-  api: APIClient = new APIClient(config.apiUrl, config.auth.user);
+  api: APIClient = new APIClient(config.apiUrl, config.auth.user, true, undefined, {
+    rememberKey: config.auth.remember,
+    refreshTokenKey: config.auth.refreshTokenKey,
+    accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
+  });
 
   async create(data: CreateProfileDto): Promise<number> {
     return await this.api.post<number, CreateProfileDto>(this.table, data);

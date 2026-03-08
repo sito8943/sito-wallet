@@ -13,8 +13,7 @@ export function ImportDialogError(props: ImportDialogErrorProps) {
 
   return (
     <p className={`text-red-600 text-sm mt-2 ${className}`}>
-      {message || t("_messages:errors.parseFile", { defaultValue: "Failed to process file" })}
+      {message || t("_messages:errors.parseFile")}
     </p>
   );
 }
-

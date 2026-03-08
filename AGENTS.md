@@ -138,3 +138,4 @@ if (!isOnline) return null;
 - Never import from internal `@sito/dashboard-app` paths.
 - Use `useNotification()` for all user-facing feedback.
 - Never add `any` types.
+- In `.tsx` files, do not use `t("key", { defaultValue: "..." })`; always add/update the translation key in `src/lang/*/*.json` and call `t("key")`.

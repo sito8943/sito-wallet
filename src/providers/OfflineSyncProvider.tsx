@@ -38,13 +38,11 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
 
       if (event.event === "SYNC_SESSION_ERROR") {
         showErrorNotification({
-          message: event.message || t("_pages:sync.errors.generic", {
-            defaultValue: "Could not synchronize offline changes.",
-          }),
+          message: event.message || t("_pages:sync.errors.generic"),
         });
       }
     },
-    [showErrorNotification, t]
+    [showErrorNotification, t],
   );
 
   useEffect(() => {
@@ -81,7 +79,8 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
     let isCancelled = false;
 
     const runSync = async () => {
-      const hasPendingOperations = await offlineSyncService.hasPendingOperations();
+      const hasPendingOperations =
+        await offlineSyncService.hasPendingOperations();
       if (!hasPendingOperations || isCancelled) return;
 
       syncInProgressRef.current = true;
@@ -95,19 +94,14 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
 
         if (result.failedOperations > 0 || result.state === "partial") {
           showErrorNotification({
-            message: t("_pages:sync.messages.partial", {
-              defaultValue:
-                "Some offline changes could not be synchronized. They will be retried automatically.",
-            }),
+            message: t("_pages:sync.messages.partial"),
           });
           return;
         }
 
         if (result.state === "synced" && result.syncedOperations > 0) {
           showSuccessNotification({
-            message: t("_pages:sync.messages.success", {
-              defaultValue: "Offline changes synchronized successfully.",
-            }),
+            message: t("_pages:sync.messages.success"),
           });
         }
       } catch (error) {
@@ -116,28 +110,20 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
         const parsedError = toSyncHttpError(error);
         if (parsedError.status === 409) {
           showErrorNotification({
-            message: t("_pages:sync.errors.deviceConflict", {
-              defaultValue:
-                "Synchronization blocked due to device conflict. Please verify this account on your current device.",
-            }),
+            message: t("_pages:sync.errors.deviceConflict"),
           });
           return;
         }
 
         if (parsedError.status === 401) {
           showErrorNotification({
-            message: t("_pages:sync.errors.unauthorized", {
-              defaultValue:
-                "Session expired. Sign in again to synchronize offline changes.",
-            }),
+            message: t("_pages:sync.errors.unauthorized"),
           });
           return;
         }
 
         showErrorNotification({
-          message: t("_pages:sync.errors.generic", {
-            defaultValue: "Could not synchronize offline changes.",
-          }),
+          message: t("_pages:sync.errors.generic"),
         });
       } finally {
         syncInProgressRef.current = false;

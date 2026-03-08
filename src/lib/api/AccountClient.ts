@@ -30,7 +30,11 @@ export default class AccountClient extends BaseClient<
   /**
    */
   constructor() {
-    super(Tables.Accounts, config.apiUrl, config.auth.user);
+    super(Tables.Accounts, config.apiUrl, config.auth.user, true, {
+      rememberKey: config.auth.remember,
+      refreshTokenKey: config.auth.refreshTokenKey,
+      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
+    });
   }
 
   async sync(accountId: number): Promise<number> {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
@@ -49,10 +49,10 @@ export function SignIn() {
   const manager = useManager();
   const navigate = useNavigate();
 
-  type SignInFormType = {
-    email: string;
-    password: string;
-  };
+  type SignInFormType = AuthDto<{
+    rememberMe: boolean;
+  }>;
+  const rememberMeRef = useRef(false);
 
   const { handleSubmit, control, onSubmit, isLoading } = usePostForm<
     SignInFormType,
@@ -61,11 +61,18 @@ export function SignIn() {
     SignInFormType
   >({
     queryKey: ["auth", "sign-in"],
+    defaultValues: {
+      email: "",
+      password: "",
+      rememberMe: false,
+    },
     formToDto: (data: SignInFormType) => data,
-    mutationFn: async (data: SignInFormType) =>
-      await manager.Auth.login(data as unknown as AuthDto),
+    mutationFn: async (data: SignInFormType) => {
+      rememberMeRef.current = data.rememberMe;
+      return await manager.Auth.login(data);
+    },
     onSuccess: (data) => {
-      logUser(data);
+      logUser(data, rememberMeRef.current);
       setGuestMode(false);
       navigate("/");
     },
@@ -150,6 +157,32 @@ export function SignIn() {
               rules={{ required: `${t("_entities:user.password.required")}` }}
             />
           </div>
+        </div>
+        <div
+          className={`self-start mt-1 transition-all duration-500 ease-in-out delay-[450ms] ${
+            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+          }`}
+        >
+          <Controller
+            control={control}
+            disabled={isLoading}
+            name="rememberMe"
+            render={({ field }) => (
+              <label htmlFor="rememberMe" className="ml-1 flex items-center gap-2">
+                <input
+                  id="rememberMe"
+                  type="checkbox"
+                  name={field.name}
+                  checked={!!field.value}
+                  onBlur={field.onBlur}
+                  onChange={(event) => field.onChange(event.target.checked)}
+                />
+                <span className="text-sm">
+                  {t("_pages:auth.signIn.remember")}
+                </span>
+              </label>
+            )}
+          />
         </div>
         <div
           className={`self-start transition-all duration-500 ease-in-out delay-[500ms] ${

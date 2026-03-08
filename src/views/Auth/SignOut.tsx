@@ -14,7 +14,7 @@ export function SignOut() {
   const navigate = useNavigate();
 
   const logic = useCallback(async () => {
-    logoutUser();
+    await logoutUser();
     setTimeout(() => {
       navigate("/auth/sign-in");
     }, 1000);

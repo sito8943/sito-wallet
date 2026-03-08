@@ -21,7 +21,11 @@ export class Manager extends IManager {
   profiles: ProfileClient = new ProfileClient();
 
   constructor() {
-    super(config.apiUrl, config.auth.user);
+    super(config.apiUrl, config.auth.user, {
+      rememberKey: config.auth.remember,
+      refreshTokenKey: config.auth.refreshTokenKey,
+      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
+    });
   }
 
   get TransactionCategories(): TransactionCategoryClient {

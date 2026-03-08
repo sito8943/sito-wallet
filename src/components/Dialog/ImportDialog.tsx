@@ -1,10 +1,4 @@
-import {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 
 // @sito-dashboard
 import {
@@ -23,13 +17,14 @@ import { ImportDialogPreview } from "./ImportDialog/Preview";
 // lib
 import { ImportPreviewDto } from "lib";
 
-export interface ImportDialogPropsType<EntityDto extends ImportPreviewDto>
-  extends DialogPropsType {
+export interface ImportDialogPropsType<
+  EntityDto extends ImportPreviewDto,
+> extends DialogPropsType {
   handleSubmit: () => void;
   isLoading?: boolean;
   fileProcessor?: (
     file: File,
-    options?: { override?: boolean }
+    options?: { override?: boolean },
   ) => Promise<EntityDto[]>;
   onFileProcessed?: (items: EntityDto[]) => void;
   onOverrideChange?: (override: boolean) => void;
@@ -37,7 +32,7 @@ export interface ImportDialogPropsType<EntityDto extends ImportPreviewDto>
 }
 
 export const ImportDialog = <EntityDto extends ImportPreviewDto>(
-  props: ImportDialogPropsType<EntityDto>
+  props: ImportDialogPropsType<EntityDto>,
 ) => {
   const { t } = useTranslation();
   const [file, setFile] = useState<File | null>(null);
@@ -113,11 +108,11 @@ export const ImportDialog = <EntityDto extends ImportPreviewDto>(
     handleFileProcessed();
   }, [handleFileProcessed]);
 
-  const previewContent = renderCustomPreview
-    ? renderCustomPreview(previewItems)
-    : !!previewItems && previewItems.length > 0 ? (
-        <ImportDialogPreview items={previewItems} />
-      ) : null;
+  const previewContent = renderCustomPreview ? (
+    renderCustomPreview(previewItems)
+  ) : !!previewItems && previewItems.length > 0 ? (
+    <ImportDialogPreview items={previewItems} />
+  ) : null;
 
   return (
     <Dialog {...rest} open={open} handleClose={handleClose}>
@@ -154,11 +149,7 @@ export const ImportDialog = <EntityDto extends ImportPreviewDto>(
             onOverrideChange?.(value);
           }}
         />
-        <span>
-          {t("_pages:common.actions.import.override", {
-            defaultValue: "Override existing items",
-          })}
-        </span>
+        <span>{t("_pages:common.actions.import.override")}</span>
       </label>
       <ImportDialogError message={parseError ?? undefined} />
       {processing && <ImportDialogLoading />}

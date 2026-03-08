@@ -10,7 +10,7 @@ type ImportDialogPreviewProps<EntityDto extends ImportPreviewDto> = {
 };
 
 export function ImportDialogPreview<EntityDto extends ImportPreviewDto>(
-  props: ImportDialogPreviewProps<EntityDto>
+  props: ImportDialogPreviewProps<EntityDto>,
 ) {
   const { items, max = 5, className = "" } = props;
   const { t } = useTranslation();
@@ -24,7 +24,6 @@ export function ImportDialogPreview<EntityDto extends ImportPreviewDto>(
       <p className="text-sm text-gray-600">
         {t("_pages:common.actions.import.previewCount", {
           count: items.length,
-          defaultValue: `Preview: ${items.length} items`,
         })}
       </p>
       <pre className="mt-2 max-h-56 overflow-auto rounded bg-gray-100 p-3 text-xs">

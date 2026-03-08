@@ -110,7 +110,9 @@
         },
         "dialog": {
           "title": "Import {{entity}}"
-        }
+        },
+        "previewExisting": "Already exists",
+        "previewCount": "Preview: {{count}} items"
       }
     }
   },
@@ -141,6 +143,7 @@
       "title": "Sign In",
       "submit": "Sign In",
       "guest": "Enter as Guest",
+      "remember": "Keep me signed in",
       "accountRecovery": {
         "question": "Trouble accessing your account?",
         "link": "Recover it here"
@@ -162,6 +165,17 @@
   },
   "signOut": {
     "title": "Sign out"
+  },
+  "sync": {
+    "messages": {
+      "partial": "Some offline changes could not be synchronized. They will be retried automatically.",
+      "success": "Offline changes synchronized successfully."
+    },
+    "errors": {
+      "deviceConflict": "Synchronization blocked due to device conflict. Please verify this account on your current device.",
+      "unauthorized": "Session expired. Sign in again to synchronize offline changes.",
+      "generic": "Could not synchronize offline changes."
+    }
   },
   "accounts": {
     "title": "Accounts",

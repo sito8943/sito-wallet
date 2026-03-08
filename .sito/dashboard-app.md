@@ -59,7 +59,18 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
-const manager = new IManager(import.meta.env.VITE_API_URL);
+const authStorageKeys = {
+  user: "user",
+  remember: "remember",
+  refreshTokenKey: "refreshToken",
+  accessTokenExpiresAtKey: "accessTokenExpiresAt",
+};
+
+const manager = new IManager(import.meta.env.VITE_API_URL, authStorageKeys.user, {
+  rememberKey: authStorageKeys.remember,
+  refreshTokenKey: authStorageKeys.refreshTokenKey,
+  accessTokenExpiresAtKey: authStorageKeys.accessTokenExpiresAtKey,
+});
 
 function App() {
   return (
@@ -70,7 +81,12 @@ function App() {
         linkComponent={MyLinkComponent}
       >
         <ManagerProvider manager={manager}>
-          <AuthProvider>
+          <AuthProvider
+            user={authStorageKeys.user}
+            remember={authStorageKeys.remember}
+            refreshTokenKey={authStorageKeys.refreshTokenKey}
+            accessTokenExpiresAtKey={authStorageKeys.accessTokenExpiresAtKey}
+          >
             <NotificationProvider>
               <DrawerMenuProvider>
                 {/* app routes */}
@@ -83,6 +99,9 @@ function App() {
   );
 }
 ```
+
+If your app wraps providers in custom components, keep the same effective order:
+`ManagerProvider` must stay above `AuthProvider`.
 
 ### Provider responsibilities
 
@@ -398,15 +417,24 @@ class ProductsClient extends BaseClient<
 - If refresh fails, local auth storage is cleared (`user`, `remember`, `refreshToken`, `accessTokenExpiresAt`).
 - Legacy fallback is preserved: if `refreshToken` or `accessTokenExpiresAt` is missing, requests behave as before.
 
-You can customize auth storage keys centrally through `IManager`/`BaseClient` via `APIClientAuthConfig`.
+You can customize auth storage keys centrally through `IManager`/`BaseClient` via
+`APIClientAuthConfig`. Use one shared source of truth and pass it to both
+`IManager` and `AuthProvider`.
 
 ```ts
 import { IManager } from "@sito/dashboard-app";
 
-const manager = new IManager(import.meta.env.VITE_API_URL, "user", {
-  rememberKey: "remember",
+const authStorageKeys = {
+  user: "user",
+  remember: "remember",
   refreshTokenKey: "refreshToken",
   accessTokenExpiresAtKey: "accessTokenExpiresAt",
+};
+
+const manager = new IManager(import.meta.env.VITE_API_URL, authStorageKeys.user, {
+  rememberKey: authStorageKeys.remember,
+  refreshTokenKey: authStorageKeys.refreshTokenKey,
+  accessTokenExpiresAtKey: authStorageKeys.accessTokenExpiresAtKey,
 });
 ```
 
@@ -568,14 +596,22 @@ import type { SessionDto } from "@sito/dashboard-app";
 // includes: id, username, email, token, refreshToken?, accessTokenExpiresAt?
 ```
 
-`AuthProvider` supports configurable storage keys (defaults shown):
+`AuthProvider` supports configurable storage keys (defaults shown). These values
+must match the auth config used by `IManager`/`BaseClient`:
 
 ```tsx
+const authStorageKeys = {
+  user: "user",
+  remember: "remember",
+  refreshTokenKey: "refreshToken",
+  accessTokenExpiresAtKey: "accessTokenExpiresAt",
+};
+
 <AuthProvider
-  user="user"
-  remember="remember"
-  refreshTokenKey="refreshToken"
-  accessTokenExpiresAtKey="accessTokenExpiresAt"
+  user={authStorageKeys.user}
+  remember={authStorageKeys.remember}
+  refreshTokenKey={authStorageKeys.refreshTokenKey}
+  accessTokenExpiresAtKey={authStorageKeys.accessTokenExpiresAtKey}
 >
   {children}
 </AuthProvider>

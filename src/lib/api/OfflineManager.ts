@@ -23,7 +23,11 @@ export class OfflineManager extends IManager {
   profiles: ProfileIndexedDBClient = new ProfileIndexedDBClient();
 
   constructor() {
-    super("", config.auth.user);
+    super("", config.auth.user, {
+      rememberKey: config.auth.remember,
+      refreshTokenKey: config.auth.refreshTokenKey,
+      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
+    });
   }
 
   get TransactionCategories(): TransactionCategoryIndexedDBClient {

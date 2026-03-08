@@ -22,11 +22,7 @@ export const CurrencyTable = (props: CurrencyTableProps) => {
   const data = useMemo(() => items ?? [], [items]);
 
   const renderDescription = (value?: string | null) =>
-    value && value.length
-      ? value
-      : t("_entities:base.description.empty", {
-          defaultValue: "No description",
-        });
+    value && value.length ? value : t("_entities:base.description.empty");
 
   const { columns } = useParseColumns<ImportPreviewCurrencyDto>(
     [
@@ -56,9 +52,7 @@ export const CurrencyTable = (props: CurrencyTableProps) => {
       },
       {
         key: "existing",
-        label: t("_pages:common.actions.import.previewExisting", {
-          defaultValue: "Already exists",
-        }),
+        label: t("_pages:common.actions.import.previewExisting"),
         renderBody: (value: unknown) =>
           value
             ? t("_accessibility:buttons.yes")
@@ -76,7 +70,6 @@ export const CurrencyTable = (props: CurrencyTableProps) => {
       <p className="text-sm text-gray-600">
         {t("_pages:common.actions.import.previewCount", {
           count: data.length,
-          defaultValue: `Preview: ${data.length} items`,
         })}
       </p>
       <div className="mt-2 rounded border border-gray-200">

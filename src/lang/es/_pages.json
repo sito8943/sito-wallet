@@ -110,7 +110,9 @@
         },
         "dialog": {
           "title": "Importar {{entity}}"
-        }
+        },
+        "previewExisting": "Ya existe",
+        "previewCount": "Vista previa: {{count}} elementos"
       }
     }
   },
@@ -141,6 +143,7 @@
       "submit": "Entrar",
       "guest": "Entrar como invitado",
       "title": "Iniciar sesión",
+      "remember": "Mantener sesión iniciada",
       "accountRecovery": {
         "question": "¿Problemas con tu cuenta?",
         "link": "Recupérala aquí"
@@ -162,6 +165,17 @@
   },
   "signOut": {
     "title": "Cerrar sesión"
+  },
+  "sync": {
+    "messages": {
+      "partial": "No se pudieron sincronizar algunos cambios offline. Se reintentará automáticamente.",
+      "success": "Cambios offline sincronizados correctamente."
+    },
+    "errors": {
+      "deviceConflict": "Sincronización bloqueada por conflicto de dispositivo. Verifica esta cuenta en tu dispositivo actual.",
+      "unauthorized": "La sesión expiró. Inicia sesión de nuevo para sincronizar los cambios offline.",
+      "generic": "No se pudieron sincronizar los cambios offline."
+    }
   },
   "accounts": {
     "title": "Cuentas",

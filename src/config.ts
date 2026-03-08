@@ -17,8 +17,16 @@ const {
   VITE_GUEST_MODE,
   VITE_RECENT_SEARCHES,
   VITE_INDEXED_DB_NAME,
-  VITE_APP_VERSION
+  VITE_APP_VERSION,
+  VITE_REFRESH_TOKEN_KEY,
+  VITE_ACCESS_TOKEN_EXPIRES_AT_KEY
 } = import.meta.env;
+
+const authUserKey = VITE_USER || "user";
+const authRememberKey = VITE_REMEMBER || "remember";
+const authRefreshTokenKey = VITE_REFRESH_TOKEN_KEY || "refreshToken";
+const authAccessTokenExpiresAtKey =
+  VITE_ACCESS_TOKEN_EXPIRES_AT_KEY || "accessTokenExpiresAt";
 
 export const config = {
   apiUrl: VITE_API_URL,
@@ -27,8 +35,8 @@ export const config = {
   basicKey: VITE_BASIC_KEY,
   acceptCookie: VITE_ACCEPT_COOKIE,
   declineCookie: VITE_DECLINE_COOKIE,
-  remember: VITE_REMEMBER,
-  user: VITE_USER,
+  remember: authRememberKey,
+  user: authUserKey,
   localCache: VITE_CACHE,
   recentSearches: VITE_RECENT_SEARCHES,
   appVersion: VITE_APP_VERSION,
@@ -41,7 +49,10 @@ export const config = {
   guestMode: VITE_GUEST_MODE,
   indexedDBName: VITE_INDEXED_DB_NAME,
   auth: {
-    user: VITE_USER,
+    user: authUserKey,
+    remember: authRememberKey,
+    refreshTokenKey: authRefreshTokenKey,
+    accessTokenExpiresAtKey: authAccessTokenExpiresAtKey,
     guestMode: VITE_GUEST_MODE,
   },
 };

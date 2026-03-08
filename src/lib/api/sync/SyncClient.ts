@@ -17,7 +17,17 @@ import {
 const SYNC_BASE_PATH = "/sync";
 
 export class SyncClient {
-  private readonly api: APIClient = new APIClient(config.apiUrl, config.auth.user);
+  private readonly api: APIClient = new APIClient(
+    config.apiUrl,
+    config.auth.user,
+    true,
+    undefined,
+    {
+      rememberKey: config.auth.remember,
+      refreshTokenKey: config.auth.refreshTokenKey,
+      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
+    }
+  );
 
   private get authHeaders(): HeadersInit {
     return {
@@ -81,4 +91,3 @@ export class SyncClient {
 }
 
 export const syncClient = new SyncClient();
-
