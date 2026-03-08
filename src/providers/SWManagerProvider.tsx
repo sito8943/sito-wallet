@@ -1,5 +1,4 @@
-/* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ManagerProvider } from "@sito/dashboard-app";
 
 // types
@@ -7,8 +6,7 @@ import { BasicProviderPropTypes } from "./types";
 
 // lib
 import { Manager, OfflineManager } from "lib";
-
-const OfflineManagerContext = createContext<OfflineManager | null>(null);
+import { OfflineManagerContext } from "./OfflineManagerContext";
 
 /**
  * Manager Provider
@@ -41,13 +39,4 @@ export const SWManagerProvider = (props: BasicProviderPropTypes) => {
       <ManagerProvider manager={activeManager}>{children}</ManagerProvider>
     </OfflineManagerContext.Provider>
   );
-};
-
-export const useOfflineManager = (): OfflineManager => {
-  const ctx = useContext(OfflineManagerContext);
-  if (!ctx)
-    throw new Error(
-      "useOfflineManager must be used within SWManagerProvider"
-    );
-  return ctx;
 };

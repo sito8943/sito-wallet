@@ -4,6 +4,7 @@
 
 - [ ] Guardar los filtros de las cards en config
 - [x] Big Search en Home
+- [ ] al salir una sola fila se pone inmensa
 - [ ] Add calendar
 - [ ] Modo offline
 - [ ] Implementar card/dashboard para saber cuánto se ha gastado en un rango de fecha

@@ -200,3 +200,11 @@ select > option {
 .action-dropdown-item {
   @apply rounded-lg;
 }
+
+.active-filters-main {
+  @apply mb-4;
+}
+
+.table-content {
+  height: auto;
+}

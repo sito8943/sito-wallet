@@ -1,5 +1,4 @@
-/* eslint-disable react-refresh/only-export-components */
-import { createContext, useCallback, useContext, useState } from "react";
+import { useCallback, useState } from "react";
 
 // @sito/dashboard
 import { BaseEntityDto, fromLocal, toLocal } from "@sito/dashboard-app";
@@ -10,9 +9,10 @@ import { config } from "../config.ts";
 // types
 import {
   BasicProviderPropTypes,
-  LocalCacheProviderContextType,
   FileDataType,
 } from "./types.ts";
+
+import { LocalCacheContext } from "./LocalCacheContext";
 
 // lib
 import {
@@ -22,8 +22,6 @@ import {
   TransactionCategoryDto,
   TransactionDto,
 } from "lib";
-
-const LocalCacheContext = createContext({} as LocalCacheProviderContextType);
 
 const LocalCacheProvider = (props: BasicProviderPropTypes) => {
   const { children } = props;
@@ -75,12 +73,4 @@ const LocalCacheProvider = (props: BasicProviderPropTypes) => {
   );
 };
 
-const useLocalCache = () => {
-  const context = useContext(LocalCacheContext);
-
-  if (context === undefined)
-    throw new Error("configContext must be used within a Provider");
-  return context;
-};
-
-export { LocalCacheProvider, useLocalCache };
+export { LocalCacheProvider };

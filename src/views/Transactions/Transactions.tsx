@@ -304,13 +304,13 @@ export function Transactions() {
           <TabsLayout
             defaultTab={tabValue}
             tabs={accountDesktopTabs}
-            className="h-full max-xs:hidden"
+            className="max-xs:hidden"
             tabsContainerClassName="account-tabs"
           />
           <TabsLayout
             defaultTab={tabValue}
             tabs={accountMobileTabs}
-            className="h-full min-xs:hidden"
+            className="min-xs:hidden"
             tabsContainerClassName="account-tabs"
           />
         </>
