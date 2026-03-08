@@ -30,7 +30,12 @@ import {
 } from "./components";
 
 // hooks
-import { useCurrenciesList, CurrenciesQueryKeys, useImportDialog, useMobileNavbar } from "hooks";
+import {
+  useCurrenciesList,
+  CurrenciesQueryKeys,
+  useImportDialog,
+  useMobileNavbar,
+} from "hooks";
 import { useAddCurrency, useEditCurrency } from "./hooks";
 
 // types
@@ -43,8 +48,6 @@ export function Currencies() {
   const manager = useManager();
 
   const { data, isLoading, error } = useCurrenciesList({});
-
-  console.log("currencies", { data, isLoading, error });
 
   // #region actions
 
@@ -75,9 +78,9 @@ export function Currencies() {
     fileProcessor: (file, options) =>
       manager.Currencies.processImport(file, options?.override),
     mutationFn: (data) => manager.Currencies.import(data),
-    renderCustomPreview: (items: ImportPreviewCurrencyDto[] | null | undefined) => (
-      <CurrencyTable items={items} />
-    ),
+    renderCustomPreview: (
+      items: ImportPreviewCurrencyDto[] | null | undefined,
+    ) => <CurrencyTable items={items} />,
     ...CurrenciesQueryKeys.all(),
   });
 
@@ -88,7 +91,7 @@ export function Currencies() {
       deleteCurrency.action(record),
       restoreCurrency.action(record),
     ],
-    [deleteCurrency, restoreCurrency]
+    [deleteCurrency, restoreCurrency],
   );
 
   const pageToolbar = useMemo(() => {

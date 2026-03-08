@@ -112,7 +112,6 @@ export class IndexedDBClient<
   ): Promise<QueryResult<TDto>> {
     const store = await this.transaction("readonly");
     const all: TDto[] = await this.request(store.getAll());
-    console.log("all items from store", all);
     const filtered = this.applyFilter(all, filters as Record<string, unknown>);
 
     const sortBy = (query?.sortingBy ?? "id") as keyof TDto;
@@ -209,13 +208,12 @@ export class IndexedDBClient<
   private applyFilter<T>(items: T[], filters?: Record<string, unknown>): T[] {
     if (!filters) return items;
     return items.filter((item) =>
-      Object.keys(filters).every(
-        (key) =>
-          matchesFilterValue(
-            key,
-            (item as Record<string, unknown>)[key],
-            filters[key],
-          ),
+      Object.keys(filters).every((key) =>
+        matchesFilterValue(
+          key,
+          (item as Record<string, unknown>)[key],
+          filters[key],
+        ),
       ),
     );
   }

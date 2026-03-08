@@ -37,8 +37,6 @@ export function useCurrenciesList(
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
 
-  console.log("currencies", account);
-
   return useQuery({
     ...CurrenciesQueryKeys.list(filters),
     enabled: !!account?.id,
