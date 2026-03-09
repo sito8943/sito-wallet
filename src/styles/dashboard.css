@@ -103,48 +103,88 @@ select > option {
   @apply w-12 h-12 fixed right-4 bottom-4 text-lg;
 }
 
-.submit {
-  @apply bg-base hover:bg-base-light;
+.button.submit {
+  @apply bg-base;
 }
 
-.text {
-  @apply hover:bg-base;
+.button.submit:enabled:hover {
+  @apply bg-base-light;
 }
 
-.outlined {
-  @apply bg-base border-border text-text border-2 hover:bg-border;
+.button.text:enabled:hover {
+  @apply bg-base;
 }
 
-.outlined.primary {
-  @apply border-bg-primary hover:bg-primary hover:border-primary hover:text-base;
+.button.outlined {
+  @apply bg-base border-border text-text border-2;
 }
 
-.submit.primary {
-  @apply bg-bg-primary hover:bg-primary text-base hover:text-base;
+.button.outlined:enabled:hover {
+  @apply bg-border;
 }
 
-.outlined.secondary {
-  @apply border-bg-secondary hover:bg-secondary hover:border-secondary hover:text-base;
+.button.outlined.primary {
+  @apply border-bg-primary;
 }
 
-.submit.secondary {
-  @apply bg-bg-secondary hover:bg-secondary text-base hover:text-base;
+.button.outlined.primary:enabled:hover {
+  @apply bg-primary border-primary text-base;
 }
 
-.submit.tertiary {
-  @apply bg-bg-tertiary hover:bg-tertiary text-base hover:text-base;
+.button.submit.primary {
+  @apply bg-bg-primary text-base;
 }
 
-.outlined.tertiary {
-  @apply border-bg-tertiary hover:bg-tertiary hover:border-tertiary hover:text-base;
+.button.submit.primary:enabled:hover {
+  @apply bg-primary text-base;
 }
 
-.submit.quaternary {
-  @apply bg-bg-quaternary hover:bg-quaternary text-base hover:text-base;
+.button.outlined.secondary {
+  @apply border-bg-secondary;
 }
 
-.outlined.quaternary {
-  @apply border-bg-quaternary hover:bg-quaternary hover:border-quaternary hover:text-base;
+.button.outlined.secondary:enabled:hover {
+  @apply bg-secondary border-secondary text-base;
+}
+
+.button.submit.secondary {
+  @apply bg-bg-secondary text-base;
+}
+
+.button.submit.secondary:enabled:hover {
+  @apply bg-secondary text-base;
+}
+
+.button.submit.tertiary {
+  @apply bg-bg-tertiary text-base;
+}
+
+.button.submit.tertiary:enabled:hover {
+  @apply bg-tertiary text-base;
+}
+
+.button.outlined.tertiary {
+  @apply border-bg-tertiary;
+}
+
+.button.outlined.tertiary:enabled:hover {
+  @apply bg-tertiary border-tertiary text-base;
+}
+
+.button.submit.quaternary {
+  @apply bg-bg-quaternary text-base;
+}
+
+.button.submit.quaternary:enabled:hover {
+  @apply bg-quaternary text-base;
+}
+
+.button.outlined.quaternary {
+  @apply border-bg-quaternary;
+}
+
+.button.outlined.quaternary:enabled:hover {
+  @apply bg-quaternary border-quaternary text-base;
 }
 
 .password-icon {
