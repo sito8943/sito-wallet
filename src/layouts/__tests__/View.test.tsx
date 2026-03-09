@@ -2,6 +2,11 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 
+type MockOnboardingStep = {
+  title: string;
+  body: string;
+};
+
 // ─── Hoisted mocks ─────────────────────────────────────────────────────────────
 const {
   mockNavigate,
@@ -9,8 +14,10 @@ const {
   mockToLocal,
   mockIsInGuestMode,
   mockUseAuth,
+  mockTranslate,
 } = vi.hoisted(() => {
   const mockIsInGuestMode = vi.fn(() => false);
+  const mockTranslate = vi.fn((key: string) => key);
   const mockUseAuth = vi.fn(() => ({
     account: { email: "" },
     isInGuestMode: mockIsInGuestMode,
@@ -21,6 +28,7 @@ const {
     mockToLocal: vi.fn(),
     mockIsInGuestMode,
     mockUseAuth,
+    mockTranslate,
   };
 });
 
@@ -54,10 +62,19 @@ vi.mock("@sito/dashboard-app", () => ({
     <div data-testid="error-ui">{error?.message}</div>
   ),
   ToTop: () => <div data-testid="to-top" />,
-  Onboarding: ({ steps }: { steps: string[] }) => (
-    <div data-testid="onboarding" data-steps={steps.join(",")} />
+  Onboarding: ({ steps }: { steps: MockOnboardingStep[] }) => (
+    <div
+      data-testid="onboarding"
+      data-steps={steps.map((step) => `${step.title}|${step.body}`).join(",")}
+    />
   ),
   BaseLinkPropsType: class {},
+}));
+
+vi.mock("react-i18next", () => ({
+  useTranslation: () => ({
+    t: mockTranslate,
+  }),
 }));
 
 vi.mock("components", () => ({
@@ -124,6 +141,7 @@ describe("View layout", () => {
     mockFromLocal.mockReset().mockReturnValue(null);
     mockToLocal.mockReset();
     mockIsInGuestMode.mockReturnValue(false);
+    mockTranslate.mockReset().mockImplementation((key: string) => key);
   });
 
   describe("onboarding", () => {
@@ -153,10 +171,11 @@ describe("View layout", () => {
         screen
           .getByTestId("onboarding")
           .getAttribute("data-steps")
-          ?.split(",") ?? [];
+          ?.split(",")
+          .map((step) => step.split("|")[0]) ?? [];
       expect(steps).toHaveLength(5);
-      expect(steps).toContain("welcome");
-      expect(steps).toContain("get_started");
+      expect(steps).toContain("_pages:onboarding.welcome.title");
+      expect(steps).toContain("_pages:onboarding.get_started.title");
     });
   });
 

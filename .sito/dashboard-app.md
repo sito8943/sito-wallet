@@ -143,8 +143,8 @@ import { Page } from "@sito/dashboard-app/src/components/Page/Page";
 | `Navbar` | Application navigation bar |
 | `Drawer` | Side drawer navigation |
 | `Notification` | Toast notification component |
-| `Onboarding` | Multi-step onboarding flow |
-| `TabsLayout` | Tabbed page layout; uses links by default and can switch to buttons with `useLinks={false}` + `tabButtonProps` |
+| `Onboarding` | Multi-step onboarding flow built on top of a controlled `TabsLayout`; each step accepts `title`, `body`, optional `content`, and optional `image`/`alt` |
+| `TabsLayout` | Tabbed page layout; supports uncontrolled (`defaultTab`) and controlled (`currentTab` + `onTabChange`) usage, uses links by default, and can switch to buttons with `useLinks={false}` + `tabButtonProps` |
 | `PrettyGrid` | Data grid/table |
 | `Empty` | Empty state placeholder |
 | `Error` | Error display with default icon/message/retry or fully custom content via `children` |
@@ -189,6 +189,50 @@ For non-routing tab switches, disable links:
 ```
 
 `tabButtonProps` customizes each tab button when `useLinks` is `false`. Its `onClick` and `children` are controlled internally by `TabsLayout`.
+
+### `TabsLayout` controlled vs uncontrolled state
+
+Use `defaultTab` when `TabsLayout` owns its own active state and you only need an initial selection.
+Use `currentTab` + `onTabChange` when the parent owns the active tab state, such as onboarding flows, wizards, or any tab UI that advances programmatically.
+
+```tsx
+const [step, setStep] = useState(1);
+
+<TabsLayout
+  currentTab={step}
+  onTabChange={(id) => setStep(Number(id))}
+  useLinks={false}
+  tabs={tabs}
+/>
+```
+
+`Onboarding` already uses the controlled pattern internally so its next-step transitions remain in sync with the rendered tab content.
+
+### `Onboarding` step content
+
+`Onboarding` no longer reads step copy from internal translation keys.
+Pass each step as structured content from the consumer:
+
+```tsx
+<Onboarding
+  steps={[
+    {
+      title: "Welcome",
+      body: "This flow explains the main features.",
+    },
+    {
+      title: "Set up your workspace",
+      body: "You can inject extra UI below the body when needed.",
+      content: <WorkspaceChecklist />,
+      image: "/images/onboarding-workspace.png",
+      alt: "Workspace setup preview",
+    },
+  ]}
+/>
+```
+
+Use `content` for extra custom UI below the body.
+Handle any step-level i18n in the consumer app before passing `title`, `body`, or `content`.
 
 ---
 
@@ -442,7 +486,7 @@ const manager = new IManager(import.meta.env.VITE_API_URL, authStorageKeys.user,
 
 ## Offline / IndexedDB Client
 
-`IndexedDBClient` is a drop-in offline alternative to `BaseClient`. It has the **exact same generic parameters and method signatures** but persists data in the browser's IndexedDB instead of calling a remote API.
+`IndexedDBClient` is a drop-in offline alternative to `BaseClient`. It mirrors the same generic shape and CRUD/export/import capabilities, but persists data in the browser's IndexedDB instead of calling a remote API.
 
 ### When to use
 
@@ -510,6 +554,7 @@ useEffect(() => {
 - Browser-only: do not instantiate in SSR or Node environments.
 - Filtering in `get` / `export` / `commonGet` uses **exact equality** on each filter key — no range or partial-match queries.
 - `import` with `override: false` uses `store.add` (throws on duplicate key); `override: true` uses `store.put` (upsert).
+- Keep consumer-facing behavior aligned with your `BaseClient` implementation; do not couple UI code to raw IndexedDB details.
 
 ---
 
@@ -657,6 +702,7 @@ Namespace keys used internally:
 - `_pages:common.actions.*`
 
 Consumer projects must provide translations for these namespaces.
+`Onboarding` step copy (`title`, `body`, `content`) is consumer-provided and is not read from `_pages:onboarding.*`.
 
 ---
 
@@ -674,9 +720,11 @@ Consumer projects must provide translations for these namespaces.
 10. **Respect the styling system** — use `State` enum and `*StateClassName` utilities for stateful inputs; do not override with inline styles.
 11. **Do not add `any` types** — the library is fully typed; if types seem missing, check for the correct DTO or utility type.
 12. **`IconButton` is overridden** — the export from this library wraps FontAwesome and expects `icon: IconDefinition`, not a React node.
-13. **Use `IndexedDBClient` as offline fallback** — when building offline-capable features, extend `IndexedDBClient` instead of writing custom storage logic. It shares the same interface as `BaseClient`, so components and hooks that consume a client work without modification. Never instantiate `IndexedDBClient` in SSR/Node contexts.
+13. **Use `IndexedDBClient` as offline fallback** — when building offline-capable features, extend `IndexedDBClient` instead of writing custom storage logic. Keep its consumer-facing behavior aligned with your `BaseClient` implementation, and never instantiate it in SSR/Node contexts.
 14. **Sign-in should send `rememberMe` when the UI exposes a remember option.**
 15. **Do not implement ad-hoc token refresh in consumer apps** — rely on the centralized refresh/retry behavior in `APIClient`/`BaseClient`.
 16. **Keep auth storage key config aligned** — if custom keys are used in `AuthProvider`, configure the same keys in manager/client auth config (`rememberKey`, `refreshTokenKey`, `accessTokenExpiresAtKey`).
 17. **Use `Error` in one mode at a time** — either default props (`error/message/icon/retry`) or `children` for custom content.
 18. **Use `TabsLayout` navigation mode intentionally** — keep default links for route-driven tabs; use `useLinks={false}` (+ `tabButtonProps`) for local state tabs.
+19. **Use `TabsLayout` as a controlled component when the parent owns step state** — prefer `currentTab` + `onTabChange` for onboarding, wizard, or programmatic flows; reserve `defaultTab` for uncontrolled initial selection.
+20. **Use structured `Onboarding` steps** — pass `title`, `body`, and optional `content`/`image`/`alt`; do not rely on internal `_pages:onboarding.*` translation keys.

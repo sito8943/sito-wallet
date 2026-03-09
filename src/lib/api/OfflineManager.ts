@@ -7,7 +7,8 @@ import {
   TransactionIndexedDBClient,
   TransactionCategoryIndexedDBClient,
   DashboardIndexedDBClient,
-  ProfileIndexedDBClient
+  ProfileIndexedDBClient,
+  clearOfflineIndexedDatabases,
 } from "./offline";
 
 // config
@@ -52,5 +53,16 @@ export class OfflineManager extends IManager {
 
   get Profiles(): ProfileIndexedDBClient {
     return this.profiles;
+  }
+
+  async clearIndexedDatabases(): Promise<void> {
+    this.accounts.close();
+    this.currencies.close();
+    this.transactions.close();
+    this.transactionCategories.close();
+    this.dashboard.close();
+    this.profiles.close();
+
+    await clearOfflineIndexedDatabases();
   }
 }

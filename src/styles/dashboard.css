@@ -1,5 +1,9 @@
 @reference "./variables.css";
 
+.onboarding-main .tabs-layout-main {
+  @apply h-auto;
+}
+
 .table-headers-cell {
   @apply rounded-4xl;
 }
@@ -166,7 +170,7 @@ select > option {
 }
 
 .page-main-content {
-  @apply max-xs:px-3
+  @apply max-xs:px-3;
 }
 
 @media (max-width: 28rem) {

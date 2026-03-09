@@ -46,6 +46,13 @@ export class IndexedDBClient<
     this.version = version;
   }
 
+  close(): void {
+    if (!this.db) return;
+
+    this.db.close();
+    this.db = null;
+  }
+
   private open(): Promise<IDBDatabase> {
     if (this.db) return Promise.resolve(this.db);
 
@@ -64,6 +71,9 @@ export class IndexedDBClient<
 
       request.onsuccess = (event) => {
         this.db = (event.target as IDBOpenDBRequest).result;
+        this.db.onversionchange = () => {
+          this.close();
+        };
         resolve(this.db);
       };
 

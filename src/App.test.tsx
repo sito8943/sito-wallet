@@ -1,9 +1,11 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import { act } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockLogUser = vi.fn();
 const mockLogoutUser = vi.fn(() => Promise.resolve());
 const mockGetSession = vi.fn();
+const mockClearIndexedDatabases = vi.fn(() => Promise.resolve());
 const mockUseOnlineStatus = vi.fn();
 const mockReadStoredSessionFromSnapshot = vi.fn();
 const mockReadStoredRememberMe = vi.fn();
@@ -22,7 +24,7 @@ vi.mock("@sito/dashboard-app", () => ({
     typeof (error as { status?: unknown }).status === "number",
 }));
 
-vi.mock("hooks", () => ({
+vi.mock("./hooks/useOnlineStatus", () => ({
   useOnlineStatus: () => mockUseOnlineStatus(),
 }));
 
@@ -31,6 +33,9 @@ vi.mock("providers", () => ({
     Auth: {
       getSession: mockGetSession,
     },
+  }),
+  useOfflineManager: () => ({
+    clearIndexedDatabases: mockClearIndexedDatabases,
   }),
 }));
 
@@ -53,6 +58,7 @@ describe("App auth bootstrap", () => {
     mockLogUser.mockReset();
     mockLogoutUser.mockReset();
     mockGetSession.mockReset();
+    mockClearIndexedDatabases.mockReset();
     mockUseOnlineStatus.mockReset();
     mockReadStoredSessionFromSnapshot.mockReset();
     mockReadStoredRememberMe.mockReset();
@@ -94,7 +100,46 @@ describe("App auth bootstrap", () => {
 
     await waitFor(() => expect(mockLogoutUser).toHaveBeenCalled());
     expect(mockClearPersistedPublicSessionAccount).toHaveBeenCalled();
+    expect(mockClearIndexedDatabases).toHaveBeenCalled();
 
     expect(await screen.findByTestId("routes")).toBeInTheDocument();
+  });
+
+  it("finishes bootstrapping when the online status changes during session restore", async () => {
+    vi.useFakeTimers();
+
+    let isOnline = true;
+    let rejectSessionRestore:
+      | ((error: { status: number; message: string }) => void)
+      | undefined;
+
+    mockUseOnlineStatus.mockImplementation(() => isOnline);
+    mockReadStoredSessionFromSnapshot.mockReturnValue(null);
+    mockReadStoredRememberMe.mockReturnValue(false);
+    mockGetSession.mockReturnValue(
+      new Promise((_, reject: (error: { status: number; message: string }) => void) => {
+        rejectSessionRestore = reject;
+      }),
+    );
+
+    const { rerender } = render(<App />);
+
+    isOnline = false;
+    rerender(<App />);
+
+    await act(async () => {
+      rejectSessionRestore?.({ status: 500, message: "Failed to fetch" });
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    expect(mockLogoutUser).toHaveBeenCalled();
+    expect(mockClearIndexedDatabases).toHaveBeenCalled();
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(300);
+    });
+
+    expect(screen.getByTestId("routes")).toBeInTheDocument();
   });
 });

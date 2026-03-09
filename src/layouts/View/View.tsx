@@ -1,7 +1,8 @@
 import { Outlet, useNavigate, useLocation, Link, To } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
-import { ComponentType, useEffect, useState } from "react";
+import { ComponentType, useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
 import {
@@ -12,6 +13,7 @@ import {
   Onboarding,
   TableOptionsProvider,
   NavbarProvider,
+  OnboardingStepType,
 } from "@sito/dashboard-app";
 
 // providers
@@ -25,7 +27,7 @@ import Footer from "./Footer";
 // config
 import { config } from "../../config";
 
-const steps = [
+const onboardingStepKeys = [
   "welcome",
   "currencies",
   "accounts",
@@ -35,10 +37,19 @@ const steps = [
 
 export function View() {
   const { account, isInGuestMode } = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
   const [showOnboarding] = useState(() => !fromLocal(config.onboarding));
+  const onboardingSteps = useMemo<OnboardingStepType[]>(
+    () =>
+      onboardingStepKeys.map((stepKey) => ({
+        title: t(`_pages:onboarding.${stepKey}.title`),
+        body: t(`_pages:onboarding.${stepKey}.body`),
+      })),
+    [t],
+  );
 
   useEffect(() => {
     if (showOnboarding) {
@@ -54,7 +65,7 @@ export function View() {
       searchComponent={SearchModal}
     >
       <NavbarProvider>
-        {showOnboarding && <Onboarding steps={steps} />}
+        {showOnboarding && <Onboarding steps={onboardingSteps} />}
         <ToTop />
         <Header />
         <ErrorBoundary FallbackComponent={Error}>
