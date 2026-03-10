@@ -9,7 +9,7 @@ import { useOnlineStatus } from "hooks";
 
 // lib
 import { Manager, OfflineManager } from "lib";
-import { OfflineManagerContext } from "./OfflineManagerContext";
+import { OfflineManagerContext } from "./Offline/OfflineManagerContext";
 
 /**
  * Manager Provider

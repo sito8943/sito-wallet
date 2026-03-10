@@ -11,8 +11,8 @@ import { type BasicProviderPropTypes } from "./types";
 
 import { SWManagerProvider } from "./SWManagerProvider";
 import { AuthAccountPersistenceProvider } from "./AuthAccountPersistenceProvider";
-import { OfflineSyncProvider } from "./OfflineSyncProvider";
-import { FeatureFlagsProvider } from "./FeatureFlagsProvider";
+import { OfflineSyncProvider } from "./Offline/OfflineSyncProvider";
+import { FeatureFlagsProvider } from "./FeatureFlags/FeatureFlagsProvider";
 
 // config
 import { config } from "../config";

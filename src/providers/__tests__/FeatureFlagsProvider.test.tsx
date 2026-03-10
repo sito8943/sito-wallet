@@ -3,55 +3,120 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ReactNode } from "react";
 
 import { config } from "../../config";
-import { FeatureFlagsProvider, useFeatureFlags } from "../FeatureFlagsProvider";
 
-const mockGetFeatures = vi.fn();
+const { mockGetFeatures, mockUseManager, mockUseAuth } = vi.hoisted(() => {
+  const mockGetFeatures = vi.fn();
+  const mockUseManager = vi.fn(() => ({
+    FeatureFlags: {
+      getFeatures: mockGetFeatures,
+    },
+  }));
+  const mockUseAuth = vi.fn(() => ({
+    account: { id: 1 },
+  }));
 
-const mockUseManager = vi.fn(() => ({
-  FeatureFlags: {
-    getFeatures: mockGetFeatures,
-  },
-}));
-
-let mockAccount: { id?: number } | null = { id: 1 };
+  return {
+    mockGetFeatures,
+    mockUseManager,
+    mockUseAuth,
+  };
+});
 
 vi.mock("../useSWManager", () => ({
   useManager: () => mockUseManager(),
 }));
 
-vi.mock("@sito/dashboard-app", async () => {
-  const actual = await vi.importActual<typeof import("@sito/dashboard-app")>(
-    "@sito/dashboard-app",
-  );
+vi.mock("providers/useSWManager", () => ({
+  useManager: () => mockUseManager(),
+}));
+
+vi.mock("/src/providers/useSWManager", () => ({
+  useManager: () => mockUseManager(),
+}));
+
+vi.mock("/src/providers/useSWManager.ts", () => ({
+  useManager: () => mockUseManager(),
+}));
+
+vi.mock("@sito/dashboard-app", () => {
+  class APIClient {
+    api = {
+      get: async () => ({}),
+      post: async () => ({}),
+      patch: async () => ({}),
+      doQuery: async () => ({}),
+      defaultTokenAcquirer: () => ({}),
+    };
+  }
+
+  class BaseClient extends APIClient {
+    table = "";
+
+    constructor(table?: string) {
+      super();
+      this.table = table ?? "";
+    }
+  }
+
+  class AuthClient extends APIClient {}
+
+  class IManager {
+    auth: AuthClient = new AuthClient();
+  }
 
   return {
-    ...actual,
-    useAuth: () => ({
-      account: mockAccount,
-    }),
+    APIClient,
+    BaseClient,
+    AuthClient,
+    IManager,
+    Methods: {
+      GET: "GET",
+      POST: "POST",
+      PUT: "PUT",
+      PATCH: "PATCH",
+      DELETE: "DELETE",
+    },
+    parseQueries: () => ({}),
+    useManager: () => mockUseManager(),
+    useAuth: () => mockUseAuth(),
+    fromLocal: (key: string) => {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    },
+    toLocal: (key: string, value: unknown) => {
+      localStorage.setItem(key, JSON.stringify(value));
+    },
+    removeFromLocal: (key: string) => {
+      localStorage.removeItem(key);
+    },
   };
 });
 
-const Wrapper = ({ children }: { children: ReactNode }) => (
-  <FeatureFlagsProvider>{children}</FeatureFlagsProvider>
-);
+const loadFeatureFlagsModule = async () => import("../FeatureFlags");
 
 describe("FeatureFlagsProvider", () => {
   beforeEach(() => {
     localStorage.clear();
     mockGetFeatures.mockReset();
     mockUseManager.mockClear();
-    mockAccount = { id: 1 };
+    mockUseAuth.mockReturnValue({
+      account: { id: 1 },
+    });
   });
 
-  it("hydrates features from localStorage merged over env defaults", () => {
+  it("hydrates features from localStorage merged over env defaults", async () => {
+    const { FeatureFlagsProvider, useFeatureFlags } = await loadFeatureFlagsModule();
+    const wrapper = ({ children }: { children: ReactNode }) => (
+      <FeatureFlagsProvider>{children}</FeatureFlagsProvider>
+    );
+
     localStorage.setItem(
       config.featureFlags.storageKey,
       JSON.stringify({ currenciesEnabled: false }),
     );
 
     const { result } = renderHook(() => useFeatureFlags(), {
-      wrapper: Wrapper,
+      wrapper,
     });
 
     expect(result.current.features).toEqual({
@@ -61,13 +126,18 @@ describe("FeatureFlagsProvider", () => {
   });
 
   it("refreshes features from backend and persists them", async () => {
+    const { FeatureFlagsProvider, useFeatureFlags } = await loadFeatureFlagsModule();
+    const wrapper = ({ children }: { children: ReactNode }) => (
+      <FeatureFlagsProvider>{children}</FeatureFlagsProvider>
+    );
+
     mockGetFeatures.mockResolvedValue({
       transactionsEnabled: false,
       accountsEnabled: false,
     });
 
     const { result } = renderHook(() => useFeatureFlags(), {
-      wrapper: Wrapper,
+      wrapper,
     });
 
     await act(async () => {
@@ -87,13 +157,18 @@ describe("FeatureFlagsProvider", () => {
   });
 
   it("clears persisted flags and restores env defaults", async () => {
+    const { FeatureFlagsProvider, useFeatureFlags } = await loadFeatureFlagsModule();
+    const wrapper = ({ children }: { children: ReactNode }) => (
+      <FeatureFlagsProvider>{children}</FeatureFlagsProvider>
+    );
+
     localStorage.setItem(
       config.featureFlags.storageKey,
       JSON.stringify({ currenciesEnabled: false }),
     );
 
     const { result } = renderHook(() => useFeatureFlags(), {
-      wrapper: Wrapper,
+      wrapper,
     });
 
     act(() => {
@@ -108,18 +183,25 @@ describe("FeatureFlagsProvider", () => {
   });
 
   it("auto-clears feature flags when user logs out", async () => {
+    const { FeatureFlagsProvider, useFeatureFlags } = await loadFeatureFlagsModule();
+    const wrapper = ({ children }: { children: ReactNode }) => (
+      <FeatureFlagsProvider>{children}</FeatureFlagsProvider>
+    );
+
     localStorage.setItem(
       config.featureFlags.storageKey,
       JSON.stringify({ accountsEnabled: false }),
     );
 
     const { result, rerender } = renderHook(() => useFeatureFlags(), {
-      wrapper: Wrapper,
+      wrapper,
     });
 
     expect(result.current.features.accountsEnabled).toBe(false);
 
-    mockAccount = null;
+    mockUseAuth.mockReturnValue({
+      account: null,
+    });
     rerender();
 
     await waitFor(() => {

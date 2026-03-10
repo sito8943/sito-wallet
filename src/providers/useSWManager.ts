@@ -2,7 +2,7 @@ import { useManager as useBaseManager } from "@sito/dashboard-app";
 
 // lib
 import { Manager, OfflineManager } from "lib";
-import { useOfflineManager } from "./OfflineManagerContext";
+import { useOfflineManager } from "./Offline/OfflineManagerContext";
 
 /**
  * Typed hook that returns the active manager instance (online or offline).

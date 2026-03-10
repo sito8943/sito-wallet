@@ -26,6 +26,7 @@ vi.mock("@sito/dashboard-app", () => ({
   Error: ({ error }: { error: Error }) => (
     <div data-testid="error-ui">{error?.message}</div>
   ),
+  Notification: () => <div data-testid="notification" />,
 }));
 
 import { Auth } from "../../layouts/Auth/Auth";

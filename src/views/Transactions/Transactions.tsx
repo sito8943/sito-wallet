@@ -88,16 +88,12 @@ export function Transactions() {
 
   const categories = useTransactionCategoriesCommon();
 
-  const parsedCategories = useMemo(
-    () =>
-      categories?.data?.map((category) => ({
-        ...category,
-        name: category.initial
-          ? t("_entities:transactionCategory.name.init")
-          : category.name,
-      })),
-    [categories?.data, t]
-  );
+  const parsedCategories = categories.data?.map((category) => ({
+    ...category,
+    name: category.initial
+      ? t("_entities:transactionCategory.name.init")
+      : category.name,
+  }));
 
   // #endregion categories
 

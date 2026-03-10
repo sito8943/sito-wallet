@@ -1,11 +1,17 @@
 import { useEffect } from "react";
+
+// @sito/dashboard-app
 import { useAuth } from "@sito/dashboard-app";
 
-import { useOnlineStatus } from "hooks";
+// lib
 import { preloadOfflineBootstrapData } from "lib";
 
-import { BasicProviderPropTypes } from "./types";
-import { useManager } from "./useSWManager";
+// types
+import { BasicProviderPropTypes } from "../types";
+
+// hooks
+import { useOnlineStatus } from "hooks";
+import { useManager } from "../useSWManager";
 import { useOfflineManager } from "./OfflineManagerContext";
 
 export const OfflineDataPreloadProvider = ({

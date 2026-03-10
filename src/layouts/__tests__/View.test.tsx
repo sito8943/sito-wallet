@@ -69,6 +69,7 @@ vi.mock("@sito/dashboard-app", () => ({
     <div data-testid="error-ui">{error?.message}</div>
   ),
   ToTop: () => <div data-testid="to-top" />,
+  Notification: () => <div data-testid="notification" />,
   Onboarding: ({ steps }: { steps: MockOnboardingStep[] }) => (
     <div
       data-testid="onboarding"

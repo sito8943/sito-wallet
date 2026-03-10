@@ -1,4 +1,16 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+const storage = new Map<string, unknown>();
+
+vi.mock("@sito/dashboard-app", () => ({
+  fromLocal: (key: string) => storage.get(key) ?? null,
+  toLocal: (key: string, value: unknown) => {
+    storage.set(key, value);
+  },
+  removeFromLocal: (key: string) => {
+    storage.delete(key);
+  },
+}));
 
 import type { AppFeatures } from "../../api/featureFlags/types";
 import {
@@ -20,6 +32,7 @@ const defaults: AppFeatures = {
 describe("featureFlags utils", () => {
   beforeEach(() => {
     localStorage.clear();
+    storage.clear();
   });
 
   it("sanitizes unknown payload values", () => {

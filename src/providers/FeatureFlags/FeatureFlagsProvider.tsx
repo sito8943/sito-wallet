@@ -1,15 +1,9 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+// @sito/dashboard-app
 import { useAuth } from "@sito/dashboard-app";
 
+// lib
 import {
   clearPersistedFeatureFlags,
   isFeatureEnabledByDependencies,
@@ -18,14 +12,16 @@ import {
   readPersistedFeatureFlags,
 } from "lib";
 
-import { config } from "../config";
-import { useManager } from "./useSWManager";
+// types
+import type { FeatureFlagsContextType } from "./types";
+import { BasicProviderPropTypes } from "../types";
 
-import type { FeatureFlagsContextType, BasicProviderPropTypes } from "./types";
+// hooks
+import { useManager } from "../useSWManager";
+import { FeatureFlagsContext } from "./useFeatureFlags";
 
-const FeatureFlagsContext = createContext<FeatureFlagsContextType | undefined>(
-  undefined,
-);
+// config
+import { config } from "../../config";
 
 export const FeatureFlagsProvider = (props: BasicProviderPropTypes) => {
   const { children } = props;
@@ -67,10 +63,9 @@ export const FeatureFlagsProvider = (props: BasicProviderPropTypes) => {
     }
   }, [defaults, manager, storageKey]);
 
-  const isFeatureEnabled = useCallback<FeatureFlagsContextType["isFeatureEnabled"]>(
-    (key) => isFeatureEnabledByDependencies(features, key),
-    [features],
-  );
+  const isFeatureEnabled = useCallback<
+    FeatureFlagsContextType["isFeatureEnabled"]
+  >((key) => isFeatureEnabledByDependencies(features, key), [features]);
 
   const previousAccountIdRef = useRef<number | undefined>(account?.id);
 
@@ -100,14 +95,4 @@ export const FeatureFlagsProvider = (props: BasicProviderPropTypes) => {
       {children}
     </FeatureFlagsContext.Provider>
   );
-};
-
-export const useFeatureFlags = (): FeatureFlagsContextType => {
-  const context = useContext(FeatureFlagsContext);
-
-  if (!context) {
-    throw new Error("useFeatureFlags must be used within FeatureFlagsProvider");
-  }
-
-  return context;
 };
