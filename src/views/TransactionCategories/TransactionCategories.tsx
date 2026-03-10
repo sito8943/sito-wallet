@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 // @sito-dashboard
 import {
   Page,
-  PrettyGrid,
   Empty,
   Error,
   useDeleteDialog,
@@ -25,6 +24,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useManager } from "providers";
 
 // components]
+import { PrettyGrid } from "components";
 import {
   AddTransactionCategoryDialog,
   TransactionCategoryCard,
@@ -33,7 +33,7 @@ import {
 
 // hooks
 import {
-  useTransactionCategoriesList,
+  useInfiniteTransactionCategoriesList,
   TransactionCategoriesQueryKeys,
   useMobileNavbar,
 } from "hooks";
@@ -57,7 +57,19 @@ export function TransactionCategories() {
 
   const manager = useManager();
 
-  const { data, isLoading, error } = useTransactionCategoriesList({});
+  const {
+    data,
+    isLoading,
+    error,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useInfiniteTransactionCategoriesList({});
+
+  const items = useMemo(
+    () => data?.pages?.flatMap((page) => page.items) ?? [],
+    [data?.pages]
+  );
 
   useEffect(() => {
     if (!isFeatureDisabledBusinessError(error)) return;
@@ -133,7 +145,13 @@ export function TransactionCategories() {
       {!error ? (
         <>
           <PrettyGrid
-            data={data?.items}
+            data={items}
+            hasMore={!!hasNextPage}
+            loadingMore={isFetchingNextPage}
+            onLoadMore={() => {
+              if (!hasNextPage || isFetchingNextPage) return;
+              void fetchNextPage();
+            }}
             emptyComponent={
               <Empty
                 message={t("_pages:transactionCategories.empty")}

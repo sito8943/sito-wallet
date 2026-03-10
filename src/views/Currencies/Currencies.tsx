@@ -8,7 +8,6 @@ import {
   useExportActionMutate,
   GlobalActions,
   Page,
-  PrettyGrid,
   Empty,
   Error,
   ConfirmationDialog,
@@ -23,6 +22,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useManager } from "providers";
 
 // components
+import { PrettyGrid } from "components";
 import {
   AddCurrencyDialog,
   CurrencyCard,
@@ -32,7 +32,7 @@ import {
 
 // hooks
 import {
-  useCurrenciesList,
+  useInfiniteCurrenciesList,
   CurrenciesQueryKeys,
   useImportDialog,
   useMobileNavbar,
@@ -54,7 +54,19 @@ export function Currencies() {
 
   const manager = useManager();
 
-  const { data, isLoading, error } = useCurrenciesList({});
+  const {
+    data,
+    isLoading,
+    error,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useInfiniteCurrenciesList({});
+
+  const items = useMemo(
+    () => data?.pages?.flatMap((page) => page.items) ?? [],
+    [data?.pages]
+  );
 
   useEffect(() => {
     if (!isFeatureDisabledBusinessError(error)) return;
@@ -130,7 +142,13 @@ export function Currencies() {
       {!error ? (
         <>
           <PrettyGrid
-            data={data?.items}
+            data={items}
+            hasMore={!!hasNextPage}
+            loadingMore={isFetchingNextPage}
+            onLoadMore={() => {
+              if (!hasNextPage || isFetchingNextPage) return;
+              void fetchNextPage();
+            }}
             emptyComponent={
               <Empty
                 message={t("_pages:currencies.empty")}

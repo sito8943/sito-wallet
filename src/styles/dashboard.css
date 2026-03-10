@@ -221,8 +221,7 @@ select > option {
   @apply rounded-none;
 }
 
-
-.navbar-right .actions-container .actions-container-item .action ,
+.navbar-right .actions-container .actions-container-item .action,
 .page-header .action {
   @apply bg-base/30 text-white hover:bg-secondary;
 }
@@ -255,4 +254,8 @@ select > option {
 
 .navbar-right .actions-container .actions-container-item .action {
   @apply w-7.5 h-7.5;
+}
+
+.fab {
+  @apply z-1 bottom-12;
 }

@@ -9,7 +9,6 @@ import {
   BaseLinkPropsType,
   ConfigProvider,
   Error,
-  ToTop,
   Onboarding,
   TableOptionsProvider,
   NavbarProvider,
@@ -72,7 +71,6 @@ export function View() {
     >
       <NavbarProvider>
         {showOnboarding && <Onboarding steps={onboardingSteps} />}
-        <ToTop />
         <Header />
         <ErrorBoundary FallbackComponent={Error}>
           <TableOptionsProvider>

@@ -38,8 +38,8 @@ export const Type = (props: TypePropsType) => {
           {!noText &&
             t(
               `_entities:transactionCategory:type.values.${String(
-                TransactionType[type ?? 0]
-              )}`
+                TransactionType[type ?? 0],
+              )}`,
             )}
         </div>
       }

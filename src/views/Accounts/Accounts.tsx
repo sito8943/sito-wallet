@@ -7,7 +7,6 @@ import {
   useRestoreDialog,
   useExportActionMutate,
   GlobalActions,
-  PrettyGrid,
   Page,
   Empty,
   Error,
@@ -25,10 +24,15 @@ import { faAdd, faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
+import { PrettyGrid } from "components";
 import { AddAccountDialog, AccountCard, EditAccountDialog } from "./components";
 
 // hooks
-import { useAccountsList, AccountsQueryKeys, useMobileNavbar } from "hooks";
+import {
+  useInfiniteAccountsList,
+  AccountsQueryKeys,
+  useMobileNavbar,
+} from "hooks";
 import {
   useAddAccountDialog,
   useEditAccountDialog,
@@ -50,7 +54,19 @@ export function Accounts() {
 
   const manager = useManager();
 
-  const { data, isLoading, error } = useAccountsList({});
+  const {
+    data,
+    isLoading,
+    error,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useInfiniteAccountsList({});
+
+  const items = useMemo(
+    () => data?.pages?.flatMap((page) => page.items) ?? [],
+    [data?.pages]
+  );
 
   useEffect(() => {
     if (!isFeatureDisabledBusinessError(error)) return;
@@ -126,8 +142,14 @@ export function Accounts() {
       {!error ? (
         <>
           <PrettyGrid
-            data={data?.items}
+            data={items}
             itemClassName="max-md:w-full w-auto"
+            hasMore={!!hasNextPage}
+            loadingMore={isFetchingNextPage}
+            onLoadMore={() => {
+              if (!hasNextPage || isFetchingNextPage) return;
+              void fetchNextPage();
+            }}
             emptyComponent={
               <Empty
                 message={t("_pages:accounts.empty")}

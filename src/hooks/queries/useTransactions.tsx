@@ -1,5 +1,9 @@
 import { useMemo } from "react";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  UseQueryResult,
+} from "@tanstack/react-query";
 
 // @sito/dashboard-app
 import {
@@ -33,6 +37,17 @@ export const TransactionsQueryKeys = {
   }),
   list: (query: QueryParam<TransactionDto>, filters: FilterTransactionDto) => ({
     queryKey: [...TransactionsQueryKeys.all().queryKey, "list", query, filters],
+  }),
+  infiniteList: (
+    query: Omit<QueryParam<TransactionDto>, "currentPage">,
+    filters: FilterTransactionDto
+  ) => ({
+    queryKey: [
+      ...TransactionsQueryKeys.all().queryKey,
+      "infinite-list",
+      query,
+      filters,
+    ],
   }),
   common: (filters: FilterTransactionDto) => ({
     queryKey: [...TransactionsQueryKeys.all().queryKey, "common", filters],
@@ -108,6 +123,64 @@ export function useTransactionsList(props: {
           parsedFilters
         );
       }
+    },
+  });
+}
+
+export function useInfiniteTransactionsList(props: {
+  filters: FilterTransactionDto;
+  query?: Omit<QueryParam<TransactionDto>, "currentPage">;
+}) {
+  const {
+    filters = { deletedAt: false as unknown as Date },
+    query = {} as Omit<QueryParam<TransactionDto>, "currentPage">,
+  } = props;
+
+  const manager = useManager();
+  const offlineManager = useOfflineManager();
+  const { account } = useAuth();
+
+  const parsedFilters = useMemo(
+    () => ({
+      ...filters,
+    }),
+    [filters]
+  );
+
+  const parsedQueries = useMemo(
+    () => ({
+      sortingBy: query.sortingBy as keyof TransactionDto,
+      sortingOrder: query.sortingOrder,
+      pageSize: query.pageSize ?? 20,
+    }),
+    [query.pageSize, query.sortingBy, query.sortingOrder]
+  );
+
+  return useInfiniteQuery({
+    ...TransactionsQueryKeys.infiniteList(parsedQueries, parsedFilters),
+    enabled: !!account?.id,
+    initialPageParam: 0,
+    queryFn: async ({ pageParam }) => {
+      const currentPage = typeof pageParam === "number" ? pageParam : 0;
+      const requestQuery = {
+        ...parsedQueries,
+        currentPage,
+      };
+
+      try {
+        const result = await manager.Transactions.get(requestQuery, parsedFilters);
+
+        offlineManager.Transactions.seed(result.items).catch(() => {});
+        return result;
+      } catch (error) {
+        console.warn("API failed, loading transactions from IndexedDB", error);
+        return await offlineManager.Transactions.get(requestQuery, parsedFilters);
+      }
+    },
+    getNextPageParam: (lastPage) => {
+      const nextPage = lastPage.currentPage + 1;
+      if (nextPage >= lastPage.totalPages) return undefined;
+      return nextPage;
     },
   });
 }
