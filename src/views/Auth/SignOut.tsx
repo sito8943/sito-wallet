@@ -1,8 +1,10 @@
 import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-// providers
+// @sito/dashboard-app
 import { useAuth, SplashScreen } from "@sito/dashboard-app";
+
+// providers
 import { useOfflineManager } from "providers";
 
 // lib
