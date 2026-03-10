@@ -15,10 +15,12 @@ import {
   NavbarProvider,
   OnboardingStepType,
   Notification,
+  SplashScreen,
 } from "@sito/dashboard-app";
 
 // providers
 import { useAuth, fromLocal, toLocal } from "@sito/dashboard-app";
+import { useAppPreload } from "hooks";
 
 // components
 import { SearchModal } from "components";
@@ -38,6 +40,7 @@ const onboardingStepKeys = [
 
 export function View() {
   const { account, isInGuestMode } = useAuth();
+  const { loading: preloadLoading } = useAppPreload();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -57,6 +60,8 @@ export function View() {
       toLocal(config.onboarding, true);
     }
   }, [account.email, isInGuestMode, navigate, showOnboarding]);
+
+  if (preloadLoading) return <SplashScreen />;
 
   return (
     <ConfigProvider
