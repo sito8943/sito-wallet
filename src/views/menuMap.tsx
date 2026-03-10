@@ -16,7 +16,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // types
-import { MenuItemType } from "./types";
+import type { MenuItemType, IsFeatureEnabled } from "./types";
+import type { FeatureFlagKey } from "lib";
 
 export enum MenuKeys {
   Home = "home",
@@ -102,3 +103,34 @@ export const menuMap: MenuItemType[] = [
     icon: <FontAwesomeIcon icon={faRightToBracket} />,
   },
 ];
+
+const menuFeatureDependencies: Partial<Record<MenuKeys, FeatureFlagKey>> = {
+  [MenuKeys.Transactions]: "transactionsEnabled",
+  [MenuKeys.TransactionCategories]: "transactionCategoriesEnabled",
+  [MenuKeys.Accounts]: "accountsEnabled",
+  [MenuKeys.Currencies]: "currenciesEnabled",
+};
+
+export const getFeatureFilteredMenuMap = (
+  isFeatureEnabled: IsFeatureEnabled,
+): MenuItemType[] => {
+  const filtered = menuMap.filter((item) => {
+    if (!item.page) return true;
+
+    const dependency = menuFeatureDependencies[item.page];
+    if (!dependency) return true;
+
+    return isFeatureEnabled(dependency);
+  });
+
+  return filtered.filter((item, index, items) => {
+    if (item.type !== "divider") return true;
+
+    const previous = items[index - 1];
+    const next = items[index + 1];
+
+    if (!previous || !next) return false;
+
+    return previous.type !== "divider" && next.type !== "divider";
+  });
+};

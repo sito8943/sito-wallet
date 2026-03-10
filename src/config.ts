@@ -1,3 +1,5 @@
+import type { AppFeatures } from "./lib/api/featureFlags/types";
+
 const {
   VITE_API_URL,
   VITE_THIS_URL,
@@ -20,8 +22,30 @@ const {
   VITE_REFRESH_TOKEN_KEY,
   VITE_ACCESS_TOKEN_EXPIRES_AT_KEY,
   VITE_SERVER_PROBE_INTERVAL,
-  VITE_SERVER_STATUS_PATH
+  VITE_SERVER_STATUS_PATH,
+  VITE_FEATURE_FLAGS_STORAGE_KEY,
+  VITE_FEATURE_BALANCE_GREATER_THAN_ZERO_DEFAULT,
+  VITE_FEATURE_CURRENCIES_ENABLED_DEFAULT,
+  VITE_FEATURE_ACCOUNTS_ENABLED_DEFAULT,
+  VITE_FEATURE_TRANSACTIONS_ENABLED_DEFAULT,
 } = import.meta.env;
+
+const parseStrictBoolean = (value: string | undefined, key: string): boolean => {
+  if (value === "true") return true;
+  if (value === "false") return false;
+
+  throw new Error(
+    `[config] ${key} must be explicitly set to "true" or "false". Received "${String(
+      value,
+    )}"`,
+  );
+};
+
+const requireEnvString = (value: string | undefined, key: string): string => {
+  if (value && value.length > 0) return value;
+
+  throw new Error(`[config] ${key} is required.`);
+};
 
 const authUserKey = VITE_USER || "user";
 const authRememberKey = VITE_REMEMBER || "remember";
@@ -29,6 +53,24 @@ const authRefreshTokenKey = VITE_REFRESH_TOKEN_KEY || "refreshToken";
 const authAccessTokenExpiresAtKey =
   VITE_ACCESS_TOKEN_EXPIRES_AT_KEY || "accessTokenExpiresAt";
 const authAccountSnapshotKey = `${authUserKey}:account`;
+const featureFlagsDefaults: AppFeatures = {
+  balanceGreaterThanZero: parseStrictBoolean(
+    VITE_FEATURE_BALANCE_GREATER_THAN_ZERO_DEFAULT,
+    "VITE_FEATURE_BALANCE_GREATER_THAN_ZERO_DEFAULT",
+  ),
+  currenciesEnabled: parseStrictBoolean(
+    VITE_FEATURE_CURRENCIES_ENABLED_DEFAULT,
+    "VITE_FEATURE_CURRENCIES_ENABLED_DEFAULT",
+  ),
+  accountsEnabled: parseStrictBoolean(
+    VITE_FEATURE_ACCOUNTS_ENABLED_DEFAULT,
+    "VITE_FEATURE_ACCOUNTS_ENABLED_DEFAULT",
+  ),
+  transactionsEnabled: parseStrictBoolean(
+    VITE_FEATURE_TRANSACTIONS_ENABLED_DEFAULT,
+    "VITE_FEATURE_TRANSACTIONS_ENABLED_DEFAULT",
+  ),
+};
 
 export const config = {
   apiUrl: VITE_API_URL,
@@ -52,6 +94,13 @@ export const config = {
   server: {
     probeInterval: Number(VITE_SERVER_PROBE_INTERVAL) || 15000,
     statusPath: VITE_SERVER_STATUS_PATH || "/sync/status",
+  },
+  featureFlags: {
+    storageKey: requireEnvString(
+      VITE_FEATURE_FLAGS_STORAGE_KEY,
+      "VITE_FEATURE_FLAGS_STORAGE_KEY",
+    ),
+    defaults: featureFlagsDefaults,
   },
   auth: {
     user: authUserKey,

@@ -166,6 +166,20 @@
   "signOut": {
     "title": "Cerrar sesión"
   },
+  "featureFlags": {
+    "moduleUnavailable": "Este módulo no está disponible actualmente.",
+    "route": {
+      "title": "Módulo no disponible",
+      "body": "El módulo de {{module}} está deshabilitado por configuración.",
+      "cta": "Volver al inicio"
+    },
+    "modules": {
+      "accounts": "cuentas",
+      "currencies": "monedas",
+      "transactions": "transacciones",
+      "transactionCategories": "categorías de transacciones"
+    }
+  },
   "sync": {
     "messages": {
       "partial": "No se pudieron sincronizar algunos cambios offline. Se reintentará automáticamente.",

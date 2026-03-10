@@ -4,8 +4,6 @@
 
 - [ ] Guardar los filtros de las cards en config
 - [x] Big Search en Home
-- [x] al salir una sola fila se pone inmensa
-- [ ] Bug el Onboarding no funciona
 - [ ] Add calendar
 - [ ] Modo offline
 - [ ] Implementar card/dashboard para saber cuánto se ha gastado en un rango de fecha
@@ -70,6 +68,10 @@
 ## 🐞 BUGS
 
 - [ ] Cuando el backend falla en un query de manera silenciosa se toma del cache en vez de notificar
+- [x] al salir una sola fila se pone inmensa
+- [x] Bug el Onboarding no funciona
+- [ ] Al pasar del modo online al offline, se reordenan los elementos
+- [ ] Al pasar al modo offline se pierden las transactions, posiblemente es porque no estaban en el indexed db
 
 ### 🏠 Home
 
@@ -94,6 +96,6 @@
 
 ### 📊 Scroll & Layout
 
-- [ ] Scroll de tabla depende del body (debe independizarse)
+- [x] Scroll de tabla depende del body (debe independizarse)
 - [x] No puedes hacer scroll si estás en un dialog
 - [x] Fixed Footer comportamiento incorrecto

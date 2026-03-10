@@ -1,7 +1,8 @@
 import { t } from "i18next";
 
 // types
-import { NamedViewPageType, ViewPageType } from "./types";
+import type { NamedViewPageType, ViewPageType, IsFeatureEnabled } from "./types";
+import type { FeatureFlagKey } from "lib";
 
 export enum PageId {
   Home = "home",
@@ -54,6 +55,43 @@ export const sitemap: ViewPageType[] = [
   { key: PageId.TermsAndConditions, path: "/termns-and-conditions" },
   { key: PageId.PrivacyPolicy, path: "/privacy-policy" },
 ];
+
+const pageFeatureDependencies: Partial<Record<PageId, FeatureFlagKey>> = {
+  [PageId.Transactions]: "transactionsEnabled",
+  [PageId.TransactionCategories]: "transactionCategoriesEnabled",
+  [PageId.Accounts]: "accountsEnabled",
+  [PageId.Currencies]: "currenciesEnabled",
+};
+
+const isPageFeatureEnabled = (
+  page: ViewPageType,
+  isFeatureEnabled: IsFeatureEnabled
+): boolean => {
+  const dependency = pageFeatureDependencies[page.key];
+  if (!dependency) return true;
+
+  return isFeatureEnabled(dependency);
+};
+
+const filterSitemapByFeatures = (
+  routes: ViewPageType[],
+  isFeatureEnabled: IsFeatureEnabled
+): ViewPageType[] => {
+  return routes
+    .filter((route) => isPageFeatureEnabled(route, isFeatureEnabled))
+    .map((route) => ({
+      ...route,
+      children: route.children
+        ? filterSitemapByFeatures(route.children, isFeatureEnabled)
+        : undefined,
+    }));
+};
+
+export const getFeatureFilteredSitemap = (
+  isFeatureEnabled: IsFeatureEnabled
+): ViewPageType[] => {
+  return filterSitemapByFeatures(sitemap, isFeatureEnabled);
+};
 
 /**
  *

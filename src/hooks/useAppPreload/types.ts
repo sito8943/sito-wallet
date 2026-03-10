@@ -1,7 +1,7 @@
 export type AppPreloadTask = {
   key: string;
   enabled: boolean;
-  run: () => Promise<void>;
+  run: () => Promise<unknown>;
 };
 
 export type UseAppPreloadOptions = {

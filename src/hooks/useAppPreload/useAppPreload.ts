@@ -7,7 +7,7 @@ import { useAuth } from "@sito/dashboard-app";
 import { preloadOfflineBootstrapData } from "lib";
 
 // providers
-import { useManager, useOfflineManager } from "providers";
+import { useFeatureFlags, useManager, useOfflineManager } from "providers";
 
 // hooks
 import { useOnlineStatus } from "../useOnlineStatus";
@@ -28,6 +28,8 @@ export function useAppPreload(
   const { account, isInGuestMode } = useAuth();
   const manager = useManager();
   const offlineManager = useOfflineManager();
+
+  const { refreshFeatures } = useFeatureFlags();
   const isOnline = useOnlineStatus();
   const isGuestMode = isInGuestMode();
 
@@ -42,10 +44,23 @@ export function useAppPreload(
     [account?.id, isGuestMode, isOnline, manager, offlineManager],
   );
 
-  const requiredTasks = useMemo(
-    () => [...extraTasks, offlineBootstrapTask].filter((task) => task.enabled),
-    [extraTasks, offlineBootstrapTask],
+  const tasksToRefreshFeatures = useMemo<AppPreloadTask>(
+    () => ({
+      key: "refresh-features",
+      enabled: Boolean(account?.id) && !isGuestMode,
+      run: async () => refreshFeatures(),
+    }),
+    [account?.id, isGuestMode, refreshFeatures],
   );
+
+  const requiredTasks = useMemo(
+    () =>
+      [...extraTasks, offlineBootstrapTask, tasksToRefreshFeatures].filter(
+        (task) => task.enabled,
+      ),
+    [extraTasks, offlineBootstrapTask, tasksToRefreshFeatures],
+  );
+
   const requiredTasksSignature = useMemo(
     () =>
       [

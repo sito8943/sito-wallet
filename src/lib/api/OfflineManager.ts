@@ -1,5 +1,6 @@
 import { IManager } from "@sito/dashboard-app";
 import { OfflineAuthClient } from "./OfflineAuthClient";
+import { OfflineFeatureFlagClient } from "./OfflineFeatureFlagClient";
 
 // offline clients
 import {
@@ -23,6 +24,7 @@ export class OfflineManager extends IManager {
     new TransactionCategoryIndexedDBClient();
   dashboard: DashboardIndexedDBClient = new DashboardIndexedDBClient();
   profiles: ProfileIndexedDBClient = new ProfileIndexedDBClient();
+  featureFlags: OfflineFeatureFlagClient = new OfflineFeatureFlagClient();
 
   constructor() {
     const authConfig = {
@@ -57,6 +59,10 @@ export class OfflineManager extends IManager {
 
   get Profiles(): ProfileIndexedDBClient {
     return this.profiles;
+  }
+
+  get FeatureFlags(): OfflineFeatureFlagClient {
+    return this.featureFlags;
   }
 
   async clearIndexedDatabases(): Promise<void> {
