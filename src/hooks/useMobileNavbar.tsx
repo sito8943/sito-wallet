@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useNavbar, ActionsDropdown } from "@sito/dashboard-app";
+import { useNavbar, ActionsDropdown, Actions } from "@sito/dashboard-app";
 import type { ActionPropsType, BaseDto } from "@sito/dashboard";
 
 type ActionsDropdownActions<TRow extends BaseDto> = ActionPropsType<TRow>[];
@@ -16,7 +16,7 @@ const getActionsSignature = <TRow extends BaseDto>(
       (action) =>
         `${action.id}|${action.tooltip}|${action.disabled ? "1" : "0"}|${
           action.hidden ? "1" : "0"
-        }`
+        }`,
     )
     .join(";");
 };
@@ -56,10 +56,15 @@ export function useMobileNavbar<TRow extends BaseDto>(
 
     setRightContent(
       proxiedActions.length ? (
-        <div className="xs:hidden">
-          <ActionsDropdown actions={proxiedActions} />
-        </div>
-      ) : null
+        <>
+          <div className="max-xs:hidden">
+            <Actions actions={proxiedActions} />
+          </div>
+          <div className="xs:hidden">
+            <ActionsDropdown actions={proxiedActions} />
+          </div>
+        </>
+      ) : null,
     );
   }, [actions, setRightContent]);
 

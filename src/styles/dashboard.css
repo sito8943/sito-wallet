@@ -13,7 +13,7 @@
 }
 
 .page-header {
-  @apply bg-base-dark;
+  @apply bg-base-dark max-sm:hidden;
 }
 
 .chip-main {
@@ -213,12 +213,6 @@ select > option {
   @apply max-xs:px-3;
 }
 
-@media (max-width: 28rem) {
-  .page-header {
-    display: none;
-  }
-}
-
 .header h1 {
   @apply text-white;
 }
@@ -227,6 +221,8 @@ select > option {
   @apply rounded-none;
 }
 
+
+.navbar-right .actions-container .actions-container-item .action ,
 .page-header .action {
   @apply bg-base/30 text-white hover:bg-secondary;
 }
@@ -255,4 +251,8 @@ select > option {
 
 .table-content {
   height: auto;
+}
+
+.navbar-right .actions-container .actions-container-item .action {
+  @apply w-7.5 h-7.5;
 }
