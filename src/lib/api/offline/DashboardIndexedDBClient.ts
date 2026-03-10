@@ -68,8 +68,8 @@ export class DashboardIndexedDBClient extends IndexedDBClient<
     return created;
   }
 
-  async update(_: number, value: UpdateDashboardDto): Promise<DashboardDto> {
-    const updated = await super.update(_, value);
+  async update(value: UpdateDashboardDto): Promise<DashboardDto> {
+    const updated = await super.update(value);
 
     await queueSyncOperation(
       "userDashboardConfigs",
@@ -105,7 +105,7 @@ export class DashboardIndexedDBClient extends IndexedDBClient<
       title: _data.title,
     };
 
-    await super.update(_data.id, merged as unknown as UpdateDashboardDto);
+    await super.update(merged as unknown as UpdateDashboardDto);
 
     await queueSyncOperation(
       "userDashboardConfigs",
@@ -129,7 +129,7 @@ export class DashboardIndexedDBClient extends IndexedDBClient<
       config: _data.config,
     };
 
-    await super.update(_data.id, merged as unknown as UpdateDashboardDto);
+    await super.update(merged as unknown as UpdateDashboardDto);
 
     await queueSyncOperation(
       "userDashboardConfigs",

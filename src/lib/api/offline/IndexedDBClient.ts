@@ -110,7 +110,7 @@ export class IndexedDBClient<
     return { ...(data[data.length - 1] as object), id: lastId } as TDto;
   }
 
-  async update(_: number, value: TUpdateDto): Promise<TDto> {
+  async update(value: TUpdateDto): Promise<TDto> {
     const store = await this.transaction("readwrite");
     await this.request(store.put(value as object));
     return value as unknown as TDto;

@@ -11,7 +11,7 @@ import {
 
 let hasWindowListeners = false;
 let hasProbeListeners = false;
-let probeIntervalId: ReturnType<typeof setInterval> | null = null;
+let probeIntervalId: number | null = null;
 
 const handleBrowserOnline = () => {
   setBrowserOnline(true);

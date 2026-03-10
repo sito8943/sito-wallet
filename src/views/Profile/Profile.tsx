@@ -68,9 +68,10 @@ export function Profile() {
   const profile = profileQuery.data;
   const name = nameDraft ?? profile?.name ?? "";
 
-  const saveName = useMutation<number, unknown, { id: number; name: string }>({
-    mutationFn: ({ id, name: profileName }) =>
-      manager.Profiles.update(id, { name: profileName }),
+  const saveName = useMutation<void, unknown, { id: number; name: string }>({
+    mutationFn: async ({ id, name: profileName }) => {
+      await manager.Profiles.update({ id, name: profileName });
+    },
     onSuccess: async () => {
       setNameDraft(null);
       await queryClient.invalidateQueries({ ...ProfileQueryKeys.all() });

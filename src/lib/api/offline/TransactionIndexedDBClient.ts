@@ -69,8 +69,8 @@ export class TransactionIndexedDBClient extends IndexedDBClient<
     return created;
   }
 
-  async update(_: number, value: UpdateTransactionDto): Promise<TransactionDto> {
-    const updated = await super.update(_, value);
+  async update(value: UpdateTransactionDto): Promise<TransactionDto> {
+    const updated = await super.update(value);
 
     await queueSyncOperation(
       "transactions",

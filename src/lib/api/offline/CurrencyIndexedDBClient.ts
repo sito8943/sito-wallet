@@ -56,8 +56,8 @@ export class CurrencyIndexedDBClient extends IndexedDBClient<
     return created;
   }
 
-  async update(_: number, value: UpdateCurrencyDto): Promise<CurrencyDto> {
-    const updated = await super.update(_, value);
+  async update(value: UpdateCurrencyDto): Promise<CurrencyDto> {
+    const updated = await super.update(value);
 
     await queueSyncOperation(
       "currencies",

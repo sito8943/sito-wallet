@@ -1,11 +1,14 @@
 import { useEffect, useRef } from "react";
-import type { ComponentProps } from "react";
 import { useNavbar, ActionsDropdown } from "@sito/dashboard-app";
+import type { ActionPropsType, BaseDto } from "@sito/dashboard";
 
-type ActionsDropdownActions = ComponentProps<typeof ActionsDropdown>["actions"];
-type ActionsDropdownAction = ActionsDropdownActions[number];
+type ActionsDropdownActions<TRow extends BaseDto> = ActionPropsType<TRow>[];
+type ActionsDropdownAction<TRow extends BaseDto> =
+  ActionsDropdownActions<TRow>[number];
 
-const getActionsSignature = (actions: ActionsDropdownActions | undefined) => {
+const getActionsSignature = <TRow extends BaseDto>(
+  actions: ActionsDropdownActions<TRow> | undefined,
+) => {
   if (!actions?.length) return "";
 
   return actions
@@ -18,14 +21,17 @@ const getActionsSignature = (actions: ActionsDropdownActions | undefined) => {
     .join(";");
 };
 
-export function useMobileNavbar(title: string, actions?: ActionsDropdownActions) {
+export function useMobileNavbar<TRow extends BaseDto>(
+  title: string,
+  actions?: ActionsDropdownActions<TRow>,
+) {
   const { setTitle, setRightContent } = useNavbar();
-  const actionsRef = useRef<ActionsDropdownActions>(actions ?? []);
+  const actionsRef = useRef<ActionsDropdownActions<TRow>>(actions ?? []);
   const actionsSignatureRef = useRef("");
 
-  /* useEffect(() => {
+  useEffect(() => {
     setTitle(title);
-  }, [title, setTitle]); */
+  }, [setTitle, title]);
 
   useEffect(() => {
     actionsRef.current = actions ?? [];
@@ -38,7 +44,7 @@ export function useMobileNavbar(title: string, actions?: ActionsDropdownActions)
     actionsSignatureRef.current = nextSignature;
 
     const proxiedActions = actionsRef.current.map((action, index) => {
-      const proxiedAction: ActionsDropdownAction = {
+      const proxiedAction: ActionsDropdownAction<TRow> = {
         ...action,
         onClick: (entity) => {
           actionsRef.current[index]?.onClick(entity);

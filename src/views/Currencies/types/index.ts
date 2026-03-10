@@ -3,7 +3,6 @@ import { FieldValues } from "react-hook-form";
 // @sito/dashboard-app
 import {
   ActionType,
-  ValidationError,
   FormDialogPropsType,
 } from "@sito/dashboard-app";
 
@@ -21,17 +20,8 @@ export interface CurrencyFormType
   userId: number;
 }
 
-export type CurrencyFormPropsType = FormDialogPropsType<
-  CurrencyFormType,
-  ValidationError
->;
+export type CurrencyFormPropsType = FormDialogPropsType<CurrencyFormType>;
 
-export type AddCurrencyDialogPropsType = FormDialogPropsType<
-  CurrencyFormType,
-  ValidationError
->;
+export type AddCurrencyDialogPropsType = FormDialogPropsType<CurrencyFormType>;
 
-export type EditCurrencyDialogPropsType = FormDialogPropsType<
-  CurrencyFormType,
-  ValidationError
->;
+export type EditCurrencyDialogPropsType = FormDialogPropsType<CurrencyFormType>;

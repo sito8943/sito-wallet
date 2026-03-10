@@ -54,8 +54,8 @@ export class AccountIndexedDBClient extends IndexedDBClient<
     return created;
   }
 
-  async update(_:number, value: UpdateAccountDto): Promise<AccountDto> {
-    const updated = await super.update(_, value);
+  async update(value: UpdateAccountDto): Promise<AccountDto> {
+    const updated = await super.update(value);
 
     await queueSyncOperation(
       "accounts",

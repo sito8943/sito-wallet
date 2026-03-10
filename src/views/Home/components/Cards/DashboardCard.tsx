@@ -20,7 +20,6 @@ import {
   usePostForm,
   DialogPropsType,
   FormPropsType,
-  ValidationError as DashboardValidationError,
 } from "@sito/dashboard-app";
 
 // lib
@@ -33,10 +32,7 @@ import { BaseCard } from "./BaseCard";
 import { useManager } from "providers";
 
 // local types
-type GenericConfigDialogProps<TForm extends FieldValues> = FormPropsType<
-  TForm,
-  DashboardValidationError
-> &
+type GenericConfigDialogProps<TForm extends FieldValues> = FormPropsType<TForm> &
   Omit<DialogPropsType, "title">;
 
 type Common = {

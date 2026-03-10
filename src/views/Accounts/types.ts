@@ -3,7 +3,6 @@ import { FieldValues } from "react-hook-form";
 // @sito/dashboard-app
 import {
   ActionType,
-  ValidationError,
   FormDialogPropsType,
 } from "@sito/dashboard-app";
 
@@ -21,20 +20,11 @@ export interface AccountFormType
   userId: number;
 }
 
-export type AccountFormPropsType = FormDialogPropsType<
-  AccountFormType,
-  ValidationError
->;
+export type AccountFormPropsType = FormDialogPropsType<AccountFormType>;
 
-export type AddAccountDialogPropsType = FormDialogPropsType<
-  AccountFormType,
-  ValidationError
->;
+export type AddAccountDialogPropsType = FormDialogPropsType<AccountFormType>;
 
-export type EditAccountDialogPropsType = FormDialogPropsType<
-  AccountFormType,
-  ValidationError
->;
+export type EditAccountDialogPropsType = FormDialogPropsType<AccountFormType>;
 
 export enum AccountActions {
   ViewTransactions = "viewTransactions",

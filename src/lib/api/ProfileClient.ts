@@ -51,20 +51,26 @@ const parseErrorMessage = (payload: unknown, fallback: string): string => {
 
 export default class ProfileClient {
   table: Tables = Tables.Profiles;
-  api: APIClient = new APIClient(config.apiUrl, config.auth.user, true, undefined, {
-    rememberKey: config.auth.remember,
-    refreshTokenKey: config.auth.refreshTokenKey,
-    accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-  });
+  api: APIClient = new APIClient(
+    config.apiUrl,
+    config.auth.user,
+    true,
+    undefined,
+    {
+      rememberKey: config.auth.remember,
+      refreshTokenKey: config.auth.refreshTokenKey,
+      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
+    },
+  );
 
   async create(data: AddProfileDto): Promise<number> {
     return await this.api.post<number, AddProfileDto>(this.table, data);
   }
 
-  async update(id: number, data: UpdateProfileDto): Promise<number> {
+  async update(data: UpdateProfileDto): Promise<number> {
     return await this.api.patch<number, UpdateProfileDto>(
-      `${this.table}/${id}`,
-      data
+      `${this.table}/${data.id}`,
+      data,
     );
   }
 
@@ -75,7 +81,7 @@ export default class ProfileClient {
       undefined,
       {
         ...this.api.defaultTokenAcquirer(),
-      }
+      },
     );
   }
 
@@ -108,7 +114,7 @@ export default class ProfileClient {
       undefined,
       {
         ...this.api.defaultTokenAcquirer(),
-      }
+      },
     );
   }
 
@@ -157,7 +163,7 @@ export default class ProfileClient {
       undefined,
       {
         ...this.api.defaultTokenAcquirer(),
-      }
+      },
     );
   }
 }

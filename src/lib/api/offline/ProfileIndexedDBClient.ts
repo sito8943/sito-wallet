@@ -52,8 +52,8 @@ export class ProfileIndexedDBClient extends IndexedDBClient<
     return created;
   }
 
-  async update(id: number, value: UpdateProfileDto): Promise<ProfileDto> {
-    const updated = await super.update(id, value);
+  async update(value: UpdateProfileDto): Promise<ProfileDto> {
+    const updated = await super.update(value);
 
     await queueSyncOperation(
       "profile",
