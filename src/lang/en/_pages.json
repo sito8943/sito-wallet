@@ -166,6 +166,20 @@
   "signOut": {
     "title": "Sign out"
   },
+  "featureFlags": {
+    "moduleUnavailable": "This module is currently unavailable.",
+    "route": {
+      "title": "Module unavailable",
+      "body": "The {{module}} module is disabled by configuration.",
+      "cta": "Back to home"
+    },
+    "modules": {
+      "accounts": "accounts",
+      "currencies": "currencies",
+      "transactions": "transactions",
+      "transactionCategories": "transaction categories"
+    }
+  },
   "sync": {
     "messages": {
       "partial": "Some offline changes could not be synchronized. They will be retried automatically.",

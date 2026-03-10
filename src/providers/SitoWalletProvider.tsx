@@ -11,8 +11,8 @@ import { type BasicProviderPropTypes } from "./types";
 
 import { SWManagerProvider } from "./SWManagerProvider";
 import { AuthAccountPersistenceProvider } from "./AuthAccountPersistenceProvider";
-import { OfflineDataPreloadProvider } from "./OfflineDataPreloadProvider";
-import { OfflineSyncProvider } from "./OfflineSyncProvider";
+import { OfflineSyncProvider } from "./Offline/OfflineSyncProvider";
+import { FeatureFlagsProvider } from "./FeatureFlags/FeatureFlagsProvider";
 
 // config
 import { config } from "../config";
@@ -28,9 +28,9 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
         <NotificationProvider>
           <AuthProvider {...authConfig}>
             <AuthAccountPersistenceProvider>
-              <OfflineDataPreloadProvider>
+              <FeatureFlagsProvider>
                 <OfflineSyncProvider>{children}</OfflineSyncProvider>
-              </OfflineDataPreloadProvider>
+              </FeatureFlagsProvider>
             </AuthAccountPersistenceProvider>
           </AuthProvider>
         </NotificationProvider>

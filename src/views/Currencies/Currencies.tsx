@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
@@ -12,6 +12,7 @@ import {
   Empty,
   Error,
   ConfirmationDialog,
+  useNotification,
 } from "@sito/dashboard-app";
 
 // icons
@@ -39,15 +40,29 @@ import {
 import { useAddCurrency, useEditCurrency } from "./hooks";
 
 // types
-import { CurrencyDto, ImportPreviewCurrencyDto, Tables } from "lib";
+import {
+  CurrencyDto,
+  ImportPreviewCurrencyDto,
+  Tables,
+  isFeatureDisabledBusinessError,
+} from "lib";
 import { ImportDialog } from "../../components/Dialog/ImportDialog";
 
 export function Currencies() {
   const { t } = useTranslation();
+  const { showErrorNotification } = useNotification();
 
   const manager = useManager();
 
   const { data, isLoading, error } = useCurrenciesList({});
+
+  useEffect(() => {
+    if (!isFeatureDisabledBusinessError(error)) return;
+
+    showErrorNotification({
+      message: t("_pages:featureFlags.moduleUnavailable"),
+    });
+  }, [error, showErrorNotification, t]);
 
   // #region actions
 

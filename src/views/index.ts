@@ -6,6 +6,7 @@ export * from "./Auth";
 export * from "./Home";
 export * from "./Profile";
 export * from "./NotFound";
+export * from "./FeatureUnavailable";
 export * from "./sitemap";
 export * from "./menuMap";
 export * from "./Info";

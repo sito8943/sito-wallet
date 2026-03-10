@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockLogoutUser = vi.fn(() => Promise.resolve());
 const mockClearIndexedDatabases = vi.fn(() => Promise.resolve());
+const mockClearFeatures = vi.fn();
 const mockClearPersistedPublicSessionAccount = vi.fn();
 const mockNavigate = vi.fn();
 
@@ -17,6 +18,9 @@ vi.mock("@sito/dashboard-app", () => ({
 vi.mock("providers", () => ({
   useOfflineManager: () => ({
     clearIndexedDatabases: mockClearIndexedDatabases,
+  }),
+  useFeatureFlags: () => ({
+    clearFeatures: mockClearFeatures,
   }),
 }));
 
@@ -36,6 +40,7 @@ describe("SignOut", () => {
     vi.useFakeTimers();
     mockLogoutUser.mockReset();
     mockClearIndexedDatabases.mockReset();
+    mockClearFeatures.mockReset();
     mockClearPersistedPublicSessionAccount.mockReset();
     mockNavigate.mockReset();
   });
@@ -49,6 +54,7 @@ describe("SignOut", () => {
     });
 
     expect(mockClearPersistedPublicSessionAccount).toHaveBeenCalled();
+    expect(mockClearFeatures).toHaveBeenCalled();
     expect(mockClearIndexedDatabases).toHaveBeenCalled();
     expect(mockLogoutUser).toHaveBeenCalled();
 

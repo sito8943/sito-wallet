@@ -15,12 +15,18 @@ const {
   mockIsInGuestMode,
   mockUseAuth,
   mockTranslate,
+  mockUseAppPreload,
 } = vi.hoisted(() => {
   const mockIsInGuestMode = vi.fn(() => false);
   const mockTranslate = vi.fn((key: string) => key);
   const mockUseAuth = vi.fn(() => ({
     account: { email: "" },
     isInGuestMode: mockIsInGuestMode,
+  }));
+  const mockUseAppPreload = vi.fn(() => ({
+    loading: false,
+    completedTaskKeys: [],
+    failedTaskKeys: [],
   }));
   return {
     mockNavigate: vi.fn(),
@@ -29,6 +35,7 @@ const {
     mockIsInGuestMode,
     mockUseAuth,
     mockTranslate,
+    mockUseAppPreload,
   };
 });
 
@@ -62,12 +69,14 @@ vi.mock("@sito/dashboard-app", () => ({
     <div data-testid="error-ui">{error?.message}</div>
   ),
   ToTop: () => <div data-testid="to-top" />,
+  Notification: () => <div data-testid="notification" />,
   Onboarding: ({ steps }: { steps: MockOnboardingStep[] }) => (
     <div
       data-testid="onboarding"
       data-steps={steps.map((step) => `${step.title}|${step.body}`).join(",")}
     />
   ),
+  SplashScreen: () => <div data-testid="splash-screen" />,
   BaseLinkPropsType: class {},
 }));
 
@@ -75,6 +84,10 @@ vi.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: mockTranslate,
   }),
+}));
+
+vi.mock("hooks", () => ({
+  useAppPreload: () => mockUseAppPreload(),
 }));
 
 vi.mock("components", () => ({
@@ -142,6 +155,11 @@ describe("View layout", () => {
     mockToLocal.mockReset();
     mockIsInGuestMode.mockReturnValue(false);
     mockTranslate.mockReset().mockImplementation((key: string) => key);
+    mockUseAppPreload.mockReset().mockReturnValue({
+      loading: false,
+      completedTaskKeys: [],
+      failedTaskKeys: [],
+    });
   });
 
   describe("onboarding", () => {
@@ -180,6 +198,18 @@ describe("View layout", () => {
   });
 
   describe("layout structure", () => {
+    it("shows SplashScreen while preload is running", () => {
+      mockUseAppPreload.mockReturnValue({
+        loading: true,
+        completedTaskKeys: [],
+        failedTaskKeys: [],
+      });
+
+      renderView({ email: "user@example.com" });
+      expect(screen.getByTestId("splash-screen")).toBeInTheDocument();
+      expect(screen.queryByTestId("home-page")).toBeNull();
+    });
+
     it("renders the Outlet (child routes)", () => {
       renderView({ email: "user@example.com" });
       expect(screen.getByTestId("home-page")).toBeInTheDocument();

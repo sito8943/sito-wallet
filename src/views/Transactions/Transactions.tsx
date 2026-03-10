@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { parseQueries } from "some-javascript-utils/browser";
 
@@ -17,6 +17,7 @@ import {
   GlobalActions,
   ImportDialog,
   useImportDialog,
+  useNotification,
 } from "@sito/dashboard-app";
 
 // icons
@@ -57,6 +58,7 @@ import {
   TransactionDto,
   TransactionType,
   ImportPreviewTransactionDto,
+  isFeatureDisabledBusinessError,
 } from "lib";
 
 // providers
@@ -67,6 +69,7 @@ import "./styles.css";
 
 export function Transactions() {
   const { t } = useTranslation();
+  const { showErrorNotification } = useNotification();
 
   const location = useLocation();
 
@@ -85,22 +88,31 @@ export function Transactions() {
 
   const categories = useTransactionCategoriesCommon();
 
-  const parsedCategories = useMemo(
-    () =>
-      categories?.data?.map((category) => ({
-        ...category,
-        name: category.initial
-          ? t("_entities:transactionCategory.name.init")
-          : category.name,
-      })),
-    [categories?.data, t]
-  );
+  const parsedCategories = categories.data?.map((category) => ({
+    ...category,
+    name: category.initial
+      ? t("_entities:transactionCategory.name.init")
+      : category.name,
+  }));
 
   // #endregion categories
 
   // #region accounts
 
   const accounts = useAccountsCommon();
+
+  useEffect(() => {
+    if (
+      !isFeatureDisabledBusinessError(accounts.error) &&
+      !isFeatureDisabledBusinessError(categories.error)
+    ) {
+      return;
+    }
+
+    showErrorNotification({
+      message: t("_pages:featureFlags.moduleUnavailable"),
+    });
+  }, [accounts.error, categories.error, showErrorNotification, t]);
 
   const selectedAccount = useMemo(
     () =>

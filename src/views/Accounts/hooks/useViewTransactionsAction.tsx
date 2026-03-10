@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
 import { ActionType } from "@sito/dashboard-app";
+import { useFeatureFlags } from "providers";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,14 +25,16 @@ export const useViewTransactionsAction = (
 ) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { isFeatureEnabled } = useFeatureFlags();
+  const transactionsEnabled = isFeatureEnabled("transactionsEnabled");
 
   const { hidden = false } = props;
 
   const action = useCallback(
     (record: AccountDto): ActionType<AccountDto> => ({
       id: AccountActions.ViewTransactions,
-      hidden: !!record.deletedAt || hidden,
-      disabled: !!record.deletedAt,
+      hidden: !!record.deletedAt || hidden || !transactionsEnabled,
+      disabled: !!record.deletedAt || !transactionsEnabled,
       icon: <FontAwesomeIcon className="text-bg-primary" icon={faClock} />,
       tooltip: t("_pages:accounts.actions.viewTransactions.text"),
       onClick: () => {
@@ -39,7 +42,7 @@ export const useViewTransactionsAction = (
         navigate(`${url}?accountId=${record.id}`);
       },
     }),
-    [hidden, navigate, t]
+    [hidden, navigate, t, transactionsEnabled]
   );
 
   return {

@@ -147,6 +147,10 @@ vi.mock("@sito/dashboard-app", () => ({
     currentPage: 1,
     pageSize: 10,
   }),
+  useNotification: () => ({
+    showErrorNotification: vi.fn(),
+    showSuccessNotification: vi.fn(),
+  }),
   ConfirmationDialog: () => null,
   ImportDialog: () => null,
   TabsType: {},
@@ -191,6 +195,7 @@ vi.mock("lib", () => ({
   FilterTransactionDto: class {},
   TransactionDto: class {},
   ImportPreviewTransactionDto: class {},
+  isFeatureDisabledBusinessError: () => false,
 }));
 
 import { Transactions } from "../Transactions";

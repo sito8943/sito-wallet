@@ -1,9 +1,10 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
+import type { FeatureFlagKey } from "lib";
 
 // lib
 
-import { PageId } from "./sitemap";
-import { MenuKeys } from "./menuMap";
+import type { PageId } from "./sitemap";
+import type { MenuKeys } from "./menuMap";
 
 export type ViewPageType = {
   key: PageId;
@@ -29,3 +30,5 @@ export type MenuItemType = {
   auth?: boolean;
   child?: SubMenuItemType[];
 };
+
+export type IsFeatureEnabled = (key: FeatureFlagKey) => boolean;

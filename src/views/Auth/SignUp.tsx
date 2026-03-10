@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
+
+// styles
 import "./styles.css";
 
 // @sito/dashboard-app

@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito-dashboard
@@ -14,6 +14,7 @@ import {
   ConfirmationDialog,
   ImportDialog,
   useImportDialog,
+  useNotification,
 } from "@sito/dashboard-app";
 
 // icons
@@ -47,14 +48,24 @@ import {
   TransactionCategoryDto,
   ImportPreviewTransactionCategoryDto,
   TablesCamelCase,
+  isFeatureDisabledBusinessError,
 } from "lib";
 
 export function TransactionCategories() {
   const { t } = useTranslation();
+  const { showErrorNotification } = useNotification();
 
   const manager = useManager();
 
   const { data, isLoading, error } = useTransactionCategoriesList({});
+
+  useEffect(() => {
+    if (!isFeatureDisabledBusinessError(error)) return;
+
+    showErrorNotification({
+      message: t("_pages:featureFlags.moduleUnavailable"),
+    });
+  }, [error, showErrorNotification, t]);
 
   // #region actions
 

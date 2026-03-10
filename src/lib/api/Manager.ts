@@ -4,6 +4,7 @@ import TransactionClient from "./TransactionClient";
 import TransactionCategoryClient from "./TransactionCategoryClient";
 import DashboardClient from "./DashboardClient";
 import ProfileClient from "./ProfileClient";
+import FeatureFlagClient from "./FeatureFlagClient";
 
 // @sito/dashboard-app
 import { IManager } from "@sito/dashboard-app";
@@ -19,6 +20,7 @@ export class Manager extends IManager {
     new TransactionCategoryClient();
   dashboard: DashboardClient = new DashboardClient();
   profiles: ProfileClient = new ProfileClient();
+  featureFlags: FeatureFlagClient = new FeatureFlagClient();
 
   constructor() {
     super(config.apiUrl, config.auth.user, {
@@ -65,5 +67,12 @@ export class Manager extends IManager {
    */
   get Profiles(): ProfileClient {
     return this.profiles;
+  }
+
+  /**
+   * @returns app feature flags client
+   */
+  get FeatureFlags(): FeatureFlagClient {
+    return this.featureFlags;
   }
 }

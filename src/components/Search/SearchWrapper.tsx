@@ -5,13 +5,14 @@ import { stringSimilarity } from "string-similarity-js";
 
 // "@sito/dashboard
 import { useTimeAge, isMac, toLocal, fromLocal } from "@sito/dashboard-app";
+import { useFeatureFlags } from "providers";
 
 // components
 import { SearchResult } from "./SearchResult";
 import { SearchInput } from "./SearchInput";
 
 // sitemap
-import { flattenSitemap, sitemap } from "../../views/sitemap";
+import { flattenSitemap, getFeatureFilteredSitemap } from "../../views/sitemap";
 
 // types
 import { SearchResultType, SearchWrapperPropsType } from "./types";
@@ -38,13 +39,17 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
   const [searchResults, setSearchResults] = useState<SearchResultType[]>([]);
 
   const navigate = useNavigate();
+  const { isFeatureEnabled } = useFeatureFlags();
 
   const { timeAge } = useTimeAge();
 
   const searchableSitemap = useMemo(() => {
-    const routes = flattenSitemap(sitemap, "");
+    const routes = flattenSitemap(
+      getFeatureFilteredSitemap(isFeatureEnabled),
+      ""
+    );
     return routes ?? [];
-  }, []);
+  }, [isFeatureEnabled]);
 
   const searchOnRoutes = useCallback(
     (searchInput: string) => {

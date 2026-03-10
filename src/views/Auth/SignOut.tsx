@@ -1,9 +1,11 @@
 import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-// providers
+// @sito/dashboard-app
 import { useAuth, SplashScreen } from "@sito/dashboard-app";
-import { useOfflineManager } from "providers";
+
+// providers
+import { useFeatureFlags, useOfflineManager } from "providers";
 
 // lib
 import { clearPersistedPublicSessionAccount } from "lib";
@@ -14,18 +16,20 @@ import { clearPersistedPublicSessionAccount } from "lib";
  */
 export function SignOut() {
   const { logoutUser } = useAuth();
+  const { clearFeatures } = useFeatureFlags();
   const offlineManager = useOfflineManager();
 
   const navigate = useNavigate();
 
   const logic = useCallback(async () => {
     clearPersistedPublicSessionAccount();
+    clearFeatures();
     await offlineManager.clearIndexedDatabases();
     await logoutUser();
     setTimeout(() => {
       navigate("/auth/sign-in");
     }, 1000);
-  }, [logoutUser, navigate, offlineManager]);
+  }, [clearFeatures, logoutUser, navigate, offlineManager]);
 
   useEffect(() => {
     logic();

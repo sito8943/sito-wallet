@@ -3,6 +3,7 @@ import loadable from "@loadable/component";
 // layouts
 import { View, Auth } from "./layouts";
 import { BrowserRouter, Routes as ReactRoutes, Route } from "react-router-dom";
+import { useFeatureFlags } from "providers";
 
 // auth
 const SignUp = loadable(() =>
@@ -66,6 +67,11 @@ const Profile = loadable(() =>
     default: module.Profile,
   }))
 );
+const FeatureUnavailable = loadable(() =>
+  import("views/FeatureUnavailable").then((module) => ({
+    default: module.FeatureUnavailable,
+  }))
+);
 // Info
 const About = loadable(() =>
   import("views/Info/About").then((module) => ({
@@ -89,6 +95,8 @@ const TermsAndConditions = loadable(() =>
 );
 
 export const Routes = () => {
+  const { isFeatureEnabled } = useFeatureFlags();
+
   return (
     <BrowserRouter>
       <ReactRoutes>
@@ -102,13 +110,46 @@ export const Routes = () => {
         <Route path="/sign-out" element={<SignOut />} />
         <Route path="/" element={<View />}>
           <Route index element={<Home />} />
-          <Route path="/transactions" element={<Transactions />} />
+          <Route
+            path="/transactions"
+            element={
+              isFeatureEnabled("transactionsEnabled") ? (
+                <Transactions />
+              ) : (
+                <FeatureUnavailable module="transactions" />
+              )
+            }
+          />
           <Route
             path="/transaction-categories"
-            element={<TransactionCategories />}
+            element={
+              isFeatureEnabled("transactionCategoriesEnabled") ? (
+                <TransactionCategories />
+              ) : (
+                <FeatureUnavailable module="transactionCategories" />
+              )
+            }
           />
-          <Route path="/accounts" element={<Accounts />} />
-          <Route path="/currencies" element={<Currencies />} />
+          <Route
+            path="/accounts"
+            element={
+              isFeatureEnabled("accountsEnabled") ? (
+                <Accounts />
+              ) : (
+                <FeatureUnavailable module="accounts" />
+              )
+            }
+          />
+          <Route
+            path="/currencies"
+            element={
+              isFeatureEnabled("currenciesEnabled") ? (
+                <Currencies />
+              ) : (
+                <FeatureUnavailable module="currencies" />
+              )
+            }
+          />
           <Route path="/profile" element={<Profile />} />
           <Route path="/about-us" element={<About />} />
           <Route path="/cookies-policy" element={<CookiesPolicy />} />

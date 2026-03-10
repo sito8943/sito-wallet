@@ -93,12 +93,18 @@ vi.mock("../SearchInput", () => ({
 }));
 
 vi.mock("../../../views/sitemap", () => ({
-  sitemap: [],
+  getFeatureFilteredSitemap: () => [],
   flattenSitemap: () => [
     { key: "home", path: "/", name: "Home", role: undefined },
     { key: "transactions", path: "/transactions", name: "Transactions", role: undefined },
     { key: "accounts", path: "/accounts", name: "Accounts", role: undefined },
   ],
+}));
+
+vi.mock("providers", () => ({
+  useFeatureFlags: () => ({
+    isFeatureEnabled: () => true,
+  }),
 }));
 
 vi.mock("string-similarity-js", () => ({

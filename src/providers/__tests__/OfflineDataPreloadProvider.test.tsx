@@ -35,11 +35,11 @@ vi.mock("../useSWManager", () => ({
   useManager: () => mockManager,
 }));
 
-vi.mock("../OfflineManagerContext", () => ({
+vi.mock("../Offline/OfflineManagerContext", () => ({
   useOfflineManager: () => mockOfflineManager,
 }));
 
-import { OfflineDataPreloadProvider } from "../OfflineDataPreloadProvider";
+import { OfflineDataPreloadProvider } from "../Offline";
 
 describe("OfflineDataPreloadProvider", () => {
   beforeEach(() => {

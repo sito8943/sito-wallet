@@ -13,7 +13,7 @@ import {
 } from "hooks";
 
 // types
-import { BasicProviderPropTypes } from "./types";
+import { BasicProviderPropTypes } from "../types";
 
 // lib
 import {
