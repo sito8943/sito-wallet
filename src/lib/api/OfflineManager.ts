@@ -1,4 +1,5 @@
 import { IManager } from "@sito/dashboard-app";
+import { OfflineAuthClient } from "./OfflineAuthClient";
 
 // offline clients
 import {
@@ -24,11 +25,14 @@ export class OfflineManager extends IManager {
   profiles: ProfileIndexedDBClient = new ProfileIndexedDBClient();
 
   constructor() {
-    super("", config.auth.user, {
+    const authConfig = {
       rememberKey: config.auth.remember,
       refreshTokenKey: config.auth.refreshTokenKey,
       accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-    });
+    };
+
+    super("", config.auth.user, authConfig);
+    this.auth = new OfflineAuthClient(config.auth.user, authConfig);
   }
 
   get TransactionCategories(): TransactionCategoryIndexedDBClient {

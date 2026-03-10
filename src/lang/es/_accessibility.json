@@ -102,7 +102,8 @@
       "500": "Ha ocurrido un error de autenticación",
       "404": "Usuario no encontrado",
       "403": "Acceso denegado",
-      "401": "Credenciales inválidas"
+      "401": "Credenciales inválidas",
+      "503": "Sin conexión. Revisa tu red e inténtalo de nuevo."
     },
     "signUp": {
       "422": "El correo electrónico ya está en uso",

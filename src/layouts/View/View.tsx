@@ -14,6 +14,7 @@ import {
   TableOptionsProvider,
   NavbarProvider,
   OnboardingStepType,
+  Notification,
 } from "@sito/dashboard-app";
 
 // providers
@@ -75,6 +76,7 @@ export function View() {
         </ErrorBoundary>
         <Footer />
         <Tooltip id="tooltip" />
+        <Notification />
       </NavbarProvider>
     </ConfigProvider>
   );

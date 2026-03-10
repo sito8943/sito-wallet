@@ -82,6 +82,7 @@
       "401": "Invalid credentials",
       "403": "Access denied",
       "404": "User not found",
+      "503": "No connection. Please check your network and try again.",
       "500": "An authentication error has occurred"
     },
     "signUp": {

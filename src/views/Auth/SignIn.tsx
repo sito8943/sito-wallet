@@ -168,7 +168,10 @@ export function SignIn() {
             disabled={isLoading}
             name="rememberMe"
             render={({ field }) => (
-              <label htmlFor="rememberMe" className="ml-1 flex items-center gap-2">
+              <label
+                htmlFor="rememberMe"
+                className="ml-1 flex items-center gap-2"
+              >
                 <input
                   id="rememberMe"
                   type="checkbox"
