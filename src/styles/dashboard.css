@@ -1,19 +1,11 @@
 @reference "./variables.css";
 
-.onboarding-main .tabs-layout-main {
-  @apply h-auto;
-}
-
 .table-headers-cell {
   @apply rounded-4xl;
 }
 
 .table-row-cell {
   @apply whitespace-nowrap;
-}
-
-.page-header {
-  @apply bg-base-dark max-sm:hidden;
 }
 
 .chip-main {
@@ -97,10 +89,6 @@ select > option {
 
 .button.close {
   @apply hover:bg-red-500;
-}
-
-.fab {
-  @apply w-12 h-12 fixed right-4 bottom-4 text-lg;
 }
 
 .button.submit {
@@ -187,51 +175,6 @@ select > option {
   @apply bg-quaternary border-quaternary text-base;
 }
 
-.password-icon {
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.tabs-container {
-  @apply xs:mb-0;
-}
-
-.tabs-layout-main {
-  @apply xs:h-[60vh];
-}
-
-.pretty-grid-item {
-  min-height: auto;
-}
-
-.page-header,
-.header {
-  @apply bg-primary text-white;
-}
-
-.page-main-content {
-  @apply max-xs:px-3;
-}
-
-.header h1 {
-  @apply text-white;
-}
-
-.drawer {
-  @apply rounded-none;
-}
-
-.navbar-right .actions-container .actions-container-item .action,
-.page-header .action {
-  @apply bg-base/30 text-white hover:bg-secondary;
-}
-
-.page-header-actions-mobile .actions-dropdown-trigger,
-.header .icon-button,
-.navbar-menu {
-  @apply text-white hover:!bg-secondary;
-}
-
 .filter-dropdown-backdrop.opened {
   @apply border-hover-primary/20 border-1 rounded-xl;
 }
@@ -250,12 +193,4 @@ select > option {
 
 .table-content {
   height: auto;
-}
-
-.navbar-right .actions-container .actions-container-item .action {
-  @apply w-7.5 h-7.5;
-}
-
-.fab {
-  @apply z-1 bottom-12;
 }

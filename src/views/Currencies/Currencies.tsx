@@ -11,6 +11,8 @@ import {
   Empty,
   Error,
   ConfirmationDialog,
+  ImportDialog,
+  useImportDialog,
   useNotification,
 } from "@sito/dashboard-app";
 
@@ -34,7 +36,6 @@ import {
 import {
   useInfiniteCurrenciesList,
   CurrenciesQueryKeys,
-  useImportDialog,
   useMobileNavbar,
 } from "hooks";
 import { useAddCurrency, useEditCurrency } from "./hooks";
@@ -46,7 +47,6 @@ import {
   Tables,
   isFeatureDisabledBusinessError,
 } from "lib";
-import { ImportDialog } from "../../components/Dialog/ImportDialog";
 
 export function Currencies() {
   const { t } = useTranslation();
@@ -65,7 +65,7 @@ export function Currencies() {
 
   const items = useMemo(
     () => data?.pages?.flatMap((page) => page.items) ?? [],
-    [data?.pages]
+    [data?.pages],
   );
 
   useEffect(() => {
