@@ -4,6 +4,14 @@ Project-specific rules for AI agents. These override or extend the guidelines in
 
 ---
 
+## Documentation First
+
+- Before writing code or proposing an implementation plan, read and account for all documentation under `.sito/*`.
+- Treat `.sito/*` as a required source of truth for architecture, conventions, and workflows.
+- If documentation in `.sito/*` conflicts with older references (including `.sito/dashboard.md` and `.sito/dashboard-app.md`), prioritize the files that currently exist in `.sito/*`.
+
+---
+
 ## Styling
 
 ### Use semantic color tokens — never raw Tailwind palette colors

@@ -1,11 +1,11 @@
 import { ItemCardTitlePropsType } from "./types";
 
 export const ItemCardTitle = (props: ItemCardTitlePropsType) => {
-  const { children, deleted = false } = props;
+  const { children, deleted = false, className = "" } = props;
 
   return (
     <h3
-      className={`text-lg ${
+      className={`text-lg ${className} ${
         deleted ? "!text-bg-error" : "!text-text"
       } text-start`}
     >

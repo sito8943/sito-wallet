@@ -17,4 +17,5 @@ export type ItemCardPropsType<TEntity extends BaseEntityDto> = {
 export type ItemCardTitlePropsType = {
   children: ReactNode;
   deleted?: boolean;
+  className?: string;
 };

@@ -43,10 +43,10 @@ export function TransactionCard(props: TransactionCardPropsType) {
       name={t("_pages:transactions.forms.edit")}
       aria-label={t("_pages:transactions.forms.editAria")}
       onClick={() => (!deleted ? onClick(id) : {})}
-      className={`flex justify-between items-center gap-2 w-full min-w-0 overflow-hidden ${
+      className={`transition flex justify-between items-center gap-2 w-full min-w-0 overflow-hidden ${
         deleted
           ? "!border-bg-error border-2 opacity-60"
-          : "bg-base hover:!border-hover-primary"
+          : "bg-base hover:!bg-hover-primary hover:!text-white"
       } p-2 pr-3 rounded-lg`}
     >
       <Type
