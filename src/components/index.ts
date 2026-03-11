@@ -1,7 +1,6 @@
 export * from "./Card";
 export * from "./WalletTable";
 export * from "./Accordion";
-export * from "./PrettyGrid";
 export * from "./Search";
 export * from "./Logo";
 export * from "./OfflineBanner";

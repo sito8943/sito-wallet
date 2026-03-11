@@ -279,7 +279,7 @@ export function Transactions() {
       queryKey={TransactionsQueryKeys.all().queryKey}
     >
       {/* Weekly summary cards */}
-      <div className="mb-4 grid grid-cols-2 gap-4 max-md:grid-cols-1">
+      <div className="mb-4 grid grid-cols-2 gap-4 max-md:grid-cols-1 max-sm:hidden">
         <WeeklyCard
           type={TransactionType.Out}
           title={t("_pages:transactions.cards.weeklySpent.title")}
@@ -316,14 +316,14 @@ export function Transactions() {
           <TabsLayout
             defaultTab={tabValue}
             tabs={accountDesktopTabs}
-            className="max-xs:hidden"
+            className="max-sm:hidden"
             tabsContainerClassName="account-tabs"
           />
           <TabsLayout
             defaultTab={tabValue}
             tabs={accountMobileTabs}
-            className="min-xs:hidden"
-            tabsContainerClassName="account-tabs"
+            className="min-sm:hidden"
+            tabsContainerClassName="mobile-account-tabs"
           />
         </>
       )}

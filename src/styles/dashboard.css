@@ -194,3 +194,7 @@ select > option {
 .table-content {
   height: auto;
 }
+
+.page-header {
+  @apply max-sm:hidden;
+}

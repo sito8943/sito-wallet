@@ -14,6 +14,7 @@ import {
   useImportDialog,
   ImportDialog,
   useNotification,
+  PrettyGrid,
 } from "@sito/dashboard-app";
 
 // providers
@@ -24,7 +25,6 @@ import { faAdd, faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
-import { PrettyGrid } from "components";
 import { AddAccountDialog, AccountCard, EditAccountDialog } from "./components";
 
 // hooks
@@ -65,7 +65,7 @@ export function Accounts() {
 
   const items = useMemo(
     () => data?.pages?.flatMap((page) => page.items) ?? [],
-    [data?.pages]
+    [data?.pages],
   );
 
   useEffect(() => {
@@ -118,7 +118,7 @@ export function Accounts() {
       deleteAccount.action(record),
       restoreAccount.action(record),
     ],
-    [deleteAccount, restoreAccount, syncAccount, viewTransactions]
+    [deleteAccount, restoreAccount, syncAccount, viewTransactions],
   );
 
   const pageToolbar = useMemo(() => {

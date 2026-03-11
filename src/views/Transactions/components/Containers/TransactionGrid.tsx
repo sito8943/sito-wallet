@@ -2,10 +2,9 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
-import { Error, SortOrder, Loading } from "@sito/dashboard-app";
+import { Error, SortOrder, Loading, PrettyGrid } from "@sito/dashboard-app";
 
 // components
-import { PrettyGrid } from "components";
 import { TransactionCard } from "../TransactionCard";
 
 // types
@@ -46,6 +45,7 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
     <PrettyGrid
       data={items}
       itemClassName="w-full min-w-0"
+      className="mt-2"
       emptyMessage={t("_pages:transactions.empty")}
       loading={isLoading}
       hasMore={!!hasNextPage}

@@ -3,7 +3,7 @@ import {
   BaseFilterDto,
   ImportPreviewDto,
 } from "@sito/dashboard-app";
-import { IndexedDBClient } from "./IndexedDBClient";
+import { IndexedDBClient } from "@sito/dashboard-app";
 
 // enum
 import { Tables } from "../types";
@@ -52,17 +52,34 @@ export class ProfileIndexedDBClient extends IndexedDBClient<
     return created;
   }
 
-  async update(value: UpdateProfileDto): Promise<ProfileDto> {
-    const updated = await super.update(value);
+  async update(value: UpdateProfileDto): Promise<ProfileDto>;
+  async update(id: number, value: UpdateProfileDto): Promise<ProfileDto>;
+  async update(
+    idOrValue: number | UpdateProfileDto,
+    value?: UpdateProfileDto,
+  ): Promise<ProfileDto> {
+    let updateValue: UpdateProfileDto;
+
+    if (typeof idOrValue === "number") {
+      if (!value) {
+        throw new Error("IndexedDB update requires a value payload");
+      }
+
+      updateValue = { ...value, id: value.id ?? idOrValue };
+    } else {
+      updateValue = idOrValue;
+    }
+
+    const updated = await super.update(updateValue);
 
     await queueSyncOperation(
       "profile",
       "UPDATE",
       {
-        id: value.id,
-        name: value.name,
+        id: updateValue.id,
+        name: updateValue.name,
       },
-      value.id,
+      updateValue.id,
     );
 
     return updated;

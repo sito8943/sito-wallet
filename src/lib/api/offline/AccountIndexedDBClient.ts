@@ -16,7 +16,7 @@ import {
 import { queueSyncOperation } from "../sync";
 import { getOfflineStoreDbName } from "./getOfflineStoreDbName";
 import { seedStore } from "./seedStore";
-import { IndexedDBClient } from "./IndexedDBClient";
+import { IndexedDBClient } from "@sito/dashboard-app";
 
 export class AccountIndexedDBClient extends IndexedDBClient<
   Tables,
@@ -54,20 +54,37 @@ export class AccountIndexedDBClient extends IndexedDBClient<
     return created;
   }
 
-  async update(value: UpdateAccountDto): Promise<AccountDto> {
-    const updated = await super.update(value);
+  async update(value: UpdateAccountDto): Promise<AccountDto>;
+  async update(id: number, value: UpdateAccountDto): Promise<AccountDto>;
+  async update(
+    idOrValue: number | UpdateAccountDto,
+    value?: UpdateAccountDto
+  ): Promise<AccountDto> {
+    let updateValue: UpdateAccountDto;
+
+    if (typeof idOrValue === "number") {
+      if (!value) {
+        throw new Error("IndexedDB update requires a value payload");
+      }
+
+      updateValue = { ...value, id: value.id ?? idOrValue };
+    } else {
+      updateValue = idOrValue;
+    }
+
+    const updated = await super.update(updateValue);
 
     await queueSyncOperation(
       "accounts",
       "UPDATE",
       {
-        id: value.id,
-        name: value.name,
-        description: value.description,
-        type: value.type,
-        currencyId: value.currencyId,
+        id: updateValue.id,
+        name: updateValue.name,
+        description: updateValue.description,
+        type: updateValue.type,
+        currencyId: updateValue.currencyId,
       },
-      value.id
+      updateValue.id
     );
 
     return updated;

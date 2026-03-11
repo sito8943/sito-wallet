@@ -4,6 +4,10 @@
   overflow: auto;
 }
 
+.mobile-account-tabs {
+  @apply sticky top-14 z-10 bg-base-light;
+}
+
 .transactions-table-body {
   max-height: calc(100vh - 320px);
   overflow-y: auto;
@@ -13,4 +17,8 @@
   .transactions-table-body {
     max-height: none;
   }
+}
+
+.tabs-layout-main {
+  @apply !h-auto;
 }

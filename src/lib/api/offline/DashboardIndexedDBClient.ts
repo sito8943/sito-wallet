@@ -1,5 +1,5 @@
 import { BaseCommonEntityDto } from "@sito/dashboard-app";
-import { IndexedDBClient } from "./IndexedDBClient";
+import { IndexedDBClient } from "@sito/dashboard-app";
 
 // enum
 import { Tables } from "../types";
@@ -68,19 +68,36 @@ export class DashboardIndexedDBClient extends IndexedDBClient<
     return created;
   }
 
-  async update(value: UpdateDashboardDto): Promise<DashboardDto> {
-    const updated = await super.update(value);
+  async update(value: UpdateDashboardDto): Promise<DashboardDto>;
+  async update(id: number, value: UpdateDashboardDto): Promise<DashboardDto>;
+  async update(
+    idOrValue: number | UpdateDashboardDto,
+    value?: UpdateDashboardDto,
+  ): Promise<DashboardDto> {
+    let updateValue: UpdateDashboardDto;
+
+    if (typeof idOrValue === "number") {
+      if (!value) {
+        throw new Error("IndexedDB update requires a value payload");
+      }
+
+      updateValue = { ...value, id: value.id ?? idOrValue };
+    } else {
+      updateValue = idOrValue;
+    }
+
+    const updated = await super.update(updateValue);
 
     await queueSyncOperation(
       "userDashboardConfigs",
       "UPDATE",
       {
-        id: value.id,
-        title: value.title,
-        config: value.config,
-        position: value.position,
+        id: updateValue.id,
+        title: updateValue.title,
+        config: updateValue.config,
+        position: updateValue.position,
       },
-      value.id,
+      updateValue.id,
     );
 
     return updated;

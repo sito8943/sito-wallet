@@ -57,7 +57,7 @@ export function useMobileNavbar<TRow extends BaseDto>(
     setRightContent(
       proxiedActions.length ? (
         <>
-          <div className="max-xs:hidden">
+          <div className="max-xs:hidden sm:hidden">
             <Actions actions={proxiedActions} />
           </div>
           <div className="xs:hidden">

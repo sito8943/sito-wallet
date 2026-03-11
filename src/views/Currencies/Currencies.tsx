@@ -13,6 +13,7 @@ import {
   ConfirmationDialog,
   ImportDialog,
   useImportDialog,
+  PrettyGrid,
   useNotification,
 } from "@sito/dashboard-app";
 
@@ -24,7 +25,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useManager } from "providers";
 
 // components
-import { PrettyGrid } from "components";
 import {
   AddCurrencyDialog,
   CurrencyCard,

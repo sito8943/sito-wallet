@@ -13,6 +13,7 @@ import {
   ConfirmationDialog,
   ImportDialog,
   useImportDialog,
+  PrettyGrid,
   useNotification,
 } from "@sito/dashboard-app";
 
@@ -23,8 +24,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // providers
 import { useManager } from "providers";
 
-// components]
-import { PrettyGrid } from "components";
+// components]=
 import {
   AddTransactionCategoryDialog,
   TransactionCategoryCard,
@@ -68,7 +68,7 @@ export function TransactionCategories() {
 
   const items = useMemo(
     () => data?.pages?.flatMap((page) => page.items) ?? [],
-    [data?.pages]
+    [data?.pages],
   );
 
   useEffect(() => {
@@ -118,7 +118,7 @@ export function TransactionCategories() {
       deleteTransactionCategory.action(record),
       restoreTransactionCategory.action(record),
     ],
-    [deleteTransactionCategory, restoreTransactionCategory]
+    [deleteTransactionCategory, restoreTransactionCategory],
   );
 
   const pageToolbar = useMemo(() => {

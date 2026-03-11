@@ -1,4 +1,4 @@
-import { IndexedDBClient } from "./IndexedDBClient";
+import { IndexedDBClient } from "@sito/dashboard-app";
 
 // enum
 import { Tables } from "../types";
@@ -64,19 +64,39 @@ export class TransactionCategoryIndexedDBClient extends IndexedDBClient<
 
   async update(
     value: UpdateTransactionCategoryDto,
+  ): Promise<TransactionCategoryDto>;
+  async update(
+    id: number,
+    value: UpdateTransactionCategoryDto,
+  ): Promise<TransactionCategoryDto>;
+  async update(
+    idOrValue: number | UpdateTransactionCategoryDto,
+    value?: UpdateTransactionCategoryDto,
   ): Promise<TransactionCategoryDto> {
-    const updated = await super.update(value);
+    let updateValue: UpdateTransactionCategoryDto;
+
+    if (typeof idOrValue === "number") {
+      if (!value) {
+        throw new Error("IndexedDB update requires a value payload");
+      }
+
+      updateValue = { ...value, id: value.id ?? idOrValue };
+    } else {
+      updateValue = idOrValue;
+    }
+
+    const updated = await super.update(updateValue);
 
     await queueSyncOperation(
       "transactionCategories",
       "UPDATE",
       {
-        id: value.id,
-        name: value.name,
-        description: value.description,
-        type: value.type,
+        id: updateValue.id,
+        name: updateValue.name,
+        description: updateValue.description,
+        type: updateValue.type,
       },
-      value.id,
+      updateValue.id,
     );
 
     return updated;

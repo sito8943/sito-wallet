@@ -1,4 +1,4 @@
-import { IndexedDBClient } from "./IndexedDBClient";
+import { IndexedDBClient } from "@sito/dashboard-app";
 
 // enum
 import { Tables } from "../types";
@@ -56,19 +56,36 @@ export class CurrencyIndexedDBClient extends IndexedDBClient<
     return created;
   }
 
-  async update(value: UpdateCurrencyDto): Promise<CurrencyDto> {
-    const updated = await super.update(value);
+  async update(value: UpdateCurrencyDto): Promise<CurrencyDto>;
+  async update(id: number, value: UpdateCurrencyDto): Promise<CurrencyDto>;
+  async update(
+    idOrValue: number | UpdateCurrencyDto,
+    value?: UpdateCurrencyDto,
+  ): Promise<CurrencyDto> {
+    let updateValue: UpdateCurrencyDto;
+
+    if (typeof idOrValue === "number") {
+      if (!value) {
+        throw new Error("IndexedDB update requires a value payload");
+      }
+
+      updateValue = { ...value, id: value.id ?? idOrValue };
+    } else {
+      updateValue = idOrValue;
+    }
+
+    const updated = await super.update(updateValue);
 
     await queueSyncOperation(
       "currencies",
       "UPDATE",
       {
-        id: value.id,
-        name: value.name,
-        description: value.description,
-        symbol: value.symbol,
+        id: updateValue.id,
+        name: updateValue.name,
+        description: updateValue.description,
+        symbol: updateValue.symbol,
       },
-      value.id,
+      updateValue.id,
     );
 
     return updated;
