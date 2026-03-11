@@ -45,7 +45,6 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
     <PrettyGrid
       data={items}
       itemClassName="w-full min-w-0"
-      className="mt-2"
       emptyMessage={t("_pages:transactions.empty")}
       loading={isLoading}
       hasMore={!!hasNextPage}

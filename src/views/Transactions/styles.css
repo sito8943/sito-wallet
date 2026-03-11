@@ -5,7 +5,7 @@
 }
 
 .mobile-account-tabs {
-  @apply sticky top-14 z-10 bg-base-light;
+  @apply sticky top-14 z-10 bg-base-light py-3;
 }
 
 .transactions-table-body {
