@@ -37,6 +37,7 @@ import {
   useAccountsCommon,
   useTransactionCategoriesCommon,
   useMobileNavbar,
+  usePersistedTableOptions,
 } from "hooks";
 
 // components
@@ -122,6 +123,8 @@ export function Transactions() {
         : accounts.data?.[0] ?? null,
     [accounts.data, tabValue]
   );
+
+  usePersistedTableOptions("transactions", selectedAccount?.id);
 
   const addAccount = useAddAccountDialog();
 

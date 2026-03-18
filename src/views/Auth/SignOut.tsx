@@ -8,7 +8,7 @@ import { useAuth, SplashScreen } from "@sito/dashboard-app";
 import { useFeatureFlags, useOfflineManager } from "providers";
 
 // lib
-import { clearPersistedPublicSessionAccount } from "lib";
+import { clearPersistedPublicSessionAccount, clearAllTableOptions } from "lib";
 
 /**
  * SignOut page
@@ -24,6 +24,7 @@ export function SignOut() {
   const logic = useCallback(async () => {
     try {
       clearPersistedPublicSessionAccount();
+      clearAllTableOptions();
       clearFeatures();
       await offlineManager.clearIndexedDatabases();
       await logoutUser();

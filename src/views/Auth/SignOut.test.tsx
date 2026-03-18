@@ -24,9 +24,12 @@ vi.mock("providers", () => ({
   }),
 }));
 
+const mockClearAllTableOptions = vi.fn();
+
 vi.mock("lib", () => ({
   clearPersistedPublicSessionAccount: () =>
     mockClearPersistedPublicSessionAccount(),
+  clearAllTableOptions: () => mockClearAllTableOptions(),
 }));
 
 vi.mock("react-router-dom", () => ({
@@ -42,6 +45,7 @@ describe("SignOut", () => {
     mockClearIndexedDatabases.mockReset();
     mockClearFeatures.mockReset();
     mockClearPersistedPublicSessionAccount.mockReset();
+    mockClearAllTableOptions.mockReset();
     mockNavigate.mockReset();
   });
 
@@ -54,6 +58,7 @@ describe("SignOut", () => {
     });
 
     expect(mockClearPersistedPublicSessionAccount).toHaveBeenCalled();
+    expect(mockClearAllTableOptions).toHaveBeenCalled();
     expect(mockClearFeatures).toHaveBeenCalled();
     expect(mockClearIndexedDatabases).toHaveBeenCalled();
     expect(mockLogoutUser).toHaveBeenCalled();

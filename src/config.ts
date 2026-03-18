@@ -102,6 +102,7 @@ export const config = {
     ),
     defaults: featureFlagsDefaults,
   },
+  tableOptions: "sito-wallet:table-options",
   auth: {
     user: authUserKey,
     remember: authRememberKey,

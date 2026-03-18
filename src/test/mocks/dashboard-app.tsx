@@ -31,6 +31,17 @@ export const mockUseTableOptions = vi.fn(() => ({
   currentPage: 1,
   pageSize: 10,
   filters: {},
+  setSortingBy: vi.fn(),
+  setSortingOrder: vi.fn(),
+  onFilterApply: vi.fn(),
+  clearFilters: vi.fn(),
+  setCurrentPage: vi.fn(),
+  setTotal: vi.fn(),
+  setPageSize: vi.fn(),
+  onSort: vi.fn(),
+  total: 0,
+  pageSizes: [20, 50, 100],
+  countOfFilters: 0,
 }));
 export const mockUsePostForm = vi.fn(() => ({
   control: {},

@@ -3,3 +3,4 @@ export * from "./useMobileNavbar";
 export * from "./useOnlineStatus";
 export * from "./useAppSession";
 export * from "./useAppPreload";
+export * from "./usePersistedTableOptions";
