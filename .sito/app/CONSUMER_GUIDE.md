@@ -14,7 +14,6 @@ Install peer dependencies in the consumer project as well:
 npm install \
   react@18.3.1 react-dom@18.3.1 \
   @sito/dashboard@^0.0.68 \
-  @emotion/css@11.13.5 \
   @tanstack/react-query@5.83.0 \
   react-hook-form@7.61.1 \
   @fortawesome/fontawesome-svg-core@7.0.0 \
@@ -36,6 +35,7 @@ Recommended order:
 6. `NavbarProvider` (if you use dynamic navbar state)
 
 `ManagerProvider` already mounts an internal `QueryClientProvider`.
+If you need custom React Query defaults, pass your own client with `queryClient={queryClient}`.
 
 ```tsx
 import type { ReactNode } from "react";

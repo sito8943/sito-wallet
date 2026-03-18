@@ -30,12 +30,12 @@ export const Transaction = (props: TransactionPropsType) => {
   const isIn = useMemo(() => category?.type === TransactionType.In, [category]);
 
   return (
-    <li className={"flex items-center gap-2 w-full"}>
+    <li className={"rounded-lg bg-base-light p-2 pr-3 flex items-center gap-2 w-full"}>
       <Type
-        className={`text-xl max-sm:text-lg`}
-        noText
-        filled={false}
+        className="bg-base-dark px-3 py-3.5 rounded-full"
         type={category?.type ?? TransactionType.In}
+        filled={false}
+        noText
       />
       <div className="flex flex-col items-start justify-start w-full">
         <div className="flex items-center gap-1 max-xs:!text-xs">

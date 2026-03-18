@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
+import { useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
@@ -8,10 +9,10 @@ import {
   Error as ErrorView,
   Loading,
   Page,
-  queryClient,
   State,
   TextInput,
   useAuth,
+  queryClient,
   useNotification,
 } from "@sito/dashboard-app";
 
@@ -20,6 +21,12 @@ import { useManager } from "providers";
 
 // hooks
 import { ProfileQueryKeys, useMyProfile, useMobileNavbar } from "hooks";
+
+// lib
+import { UpdateProfileDto } from "lib";
+
+// types
+import { ProfileFormType } from "./types";
 
 const getErrorMessage = (error: unknown, fallback: string): string => {
   if (error instanceof Error) return error.message;
@@ -53,12 +60,10 @@ const getInitials = (name: string) => {
 
 export function Profile() {
   const { t } = useTranslation();
-
   const manager = useManager();
-  const { account } = useAuth();
   const { showErrorNotification, showSuccessNotification } = useNotification();
 
-  const [nameDraft, setNameDraft] = useState<string | null>(null);
+  const { account } = useAuth();
 
   const profileQuery = useMyProfile({
     ensure: true,
@@ -66,37 +71,67 @@ export function Profile() {
   });
 
   const profile = profileQuery.data;
-  const name = nameDraft ?? profile?.name ?? "";
 
-  const saveName = useMutation<void, unknown, { id: number; name: string }>({
-    mutationFn: async ({ id, name: profileName }) => {
-      await manager.Profiles.update({ id, name: profileName });
-    },
-    onSuccess: async () => {
-      setNameDraft(null);
-      await queryClient.invalidateQueries({ ...ProfileQueryKeys.all() });
-      showSuccessNotification({
-        message: t("_pages:profile.messages.updated"),
-      });
-    },
-    onError: (error) => {
-      showErrorNotification({
-        message: getErrorMessage(error, t("_accessibility:errors.500")),
-      });
+  useMobileNavbar(t("_pages:profile.title"));
+
+  const { control, formState, handleSubmit, reset } =
+    useForm<ProfileFormType>({
+      defaultValues: {
+        name: "",
+        hideDeletedEntities: false,
+      },
+    });
+
+  const updateProfile = useMutation<void, unknown, UpdateProfileDto>({
+    mutationFn: async (data) => {
+      await manager.Profiles.update(data);
     },
   });
 
-  const normalizedName = name.trim();
+  useEffect(() => {
+    if (!profile) return;
+    reset({
+      name: profile.name ?? "",
+      hideDeletedEntities: !!profile.hideDeletedEntities,
+    });
+  }, [profile, reset]);
 
-  const nameError = useMemo(() => {
-    if (!normalizedName.length) return t("_pages:profile.errors.nameRequired");
-    if (normalizedName.length > 120) return t("_pages:profile.errors.nameMax");
-    return "";
-  }, [normalizedName, t]);
+  const currentName = useWatch({ control, name: "name" }) ?? "";
+  const currentHideDeletedEntities =
+    !!useWatch({ control, name: "hideDeletedEntities" });
+  const normalizedName = currentName.trim();
+  const formDisabled = profileQuery.isLoading || updateProfile.isPending;
+  const saveDisabled =
+    formDisabled ||
+    !formState.isDirty ||
+    !normalizedName.length ||
+    normalizedName.length > 120;
 
-  const busy = profileQuery.isLoading || saveName.isPending;
+  const onSubmit = handleSubmit(async (values) => {
+    if (!profile) return;
 
-  useMobileNavbar(t("_pages:profile.title"));
+    const payload: UpdateProfileDto = {
+      id: profile.id,
+      name: values.name.trim(),
+      hideDeletedEntities: values.hideDeletedEntities,
+    };
+
+    try {
+      await updateProfile.mutateAsync(payload);
+      await queryClient.invalidateQueries({ ...ProfileQueryKeys.all() });
+      reset({
+        name: payload.name ?? "",
+        hideDeletedEntities: !!payload.hideDeletedEntities,
+      });
+      showSuccessNotification({
+        message: t("_pages:profile.messages.updated"),
+      });
+    } catch (error) {
+      showErrorNotification({
+        message: getErrorMessage(error, t("_accessibility:errors.500")),
+      });
+    }
+  });
 
   return (
     <Page
@@ -116,57 +151,139 @@ export function Profile() {
           <Loading />
         </div>
       ) : (
-        <div className="w-full max-w-2xl self-center sm:base-border sm:bg-base sm:p-6 rounded-2xl flex flex-col gap-6">
-          <section className="flex max-sm:flex-col max-sm:items-start items-center gap-4">
-            <div className="h-16 sm:w-16 w-full sm:rounded-full rounded-xl max-sm:m-auto bg-primary text-base flex items-center justify-center text-xl">
-              {getInitials(profile.name)}
-            </div>
-            <div className="flex flex-col gap-1">
-              <h3 className="text-xl">{profile.name}</h3>
-              <p className="text-sm text-text-muted">
-                {t("_pages:profile.labels.username")}:{" "}
-                {profile.user?.username ?? "-"}
-              </p>
-              <p className="text-sm text-text-muted">
-                {t("_pages:profile.labels.updatedAt")}:{" "}
-                {toDateLabel(profile.updatedAt)}
-              </p>
-            </div>
-          </section>
+        <div className="w-full max-w-2xl self-center base-border sm:p-6 p-2 rounded-2xl flex flex-col gap-6">
+          <form
+            className="flex flex-col gap-6"
+            onSubmit={(event) => {
+              event.preventDefault();
+              void onSubmit(event);
+            }}
+          >
+            <section id="personal" className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1">
+                <h3 className="text-xs uppercase tracking-wide text-text-muted">
+                  {t("_pages:profile.sections.personal")}
+                </h3>
+              </div>
 
-          <div className="flex flex-col gap-3">
-            <TextInput
-              id="profile-name"
-              required
-              maxLength={120}
-              label={t("_entities:base.name.label")}
-              value={name}
-              helperText={nameError}
-              state={nameError ? State.error : State.default}
-              disabled={busy}
-              onChange={(e) =>
-                setNameDraft((e.target as HTMLInputElement).value)
-              }
-            />
+              <div className="flex max-sm:flex-col max-sm:items-start items-center gap-4">
+                <div className="flex items-center justify-start gap-4">
+                  <div className="h-16 w-16 rounded-full max-sm:m-auto bg-primary text-base flex items-center justify-center text-xl">
+                    {getInitials(currentName || profile.name || "")}
+                  </div>
+                  <div className="flex flex-col">
+                    <h3 className="text-xl">
+                      {currentName || profile.name || ""}
+                    </h3>
+                    <p className="text-sm text-text-muted">
+                      {t("_pages:profile.labels.username")}:{" "}
+                      {profile.user?.username ?? "-"}
+                    </p>
+                    <p className="text-sm text-text-muted">
+                      {t("_pages:profile.labels.updatedAt")}:{" "}
+                      {toDateLabel(profile.updatedAt)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <Controller
+                control={control}
+                name="name"
+                disabled={formDisabled}
+                rules={{
+                  validate: (value: string) => {
+                    const parsedValue = value.trim();
+                    if (!parsedValue.length) {
+                      return t("_pages:profile.errors.nameRequired");
+                    }
+                    if (parsedValue.length > 120) {
+                      return t("_pages:profile.errors.nameMax");
+                    }
+                    return true;
+                  },
+                }}
+                render={({ field, fieldState }) => (
+                  <TextInput
+                    id="profile-name"
+                    required
+                    maxLength={120}
+                    label={t("_entities:base.name.label")}
+                    value={field.value ?? ""}
+                    helperText={
+                      typeof fieldState.error?.message === "string"
+                        ? fieldState.error.message
+                        : ""
+                    }
+                    state={fieldState.error ? State.error : State.default}
+                    disabled={formDisabled}
+                    onBlur={field.onBlur}
+                    onChange={(event) =>
+                      field.onChange((event.target as HTMLInputElement).value)
+                    }
+                  />
+                )}
+              />
+            </section>
+
+            <div className="w-full border-t border-border" />
+
+            <section id="data" className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1">
+                <h3 className="text-xs uppercase tracking-wide text-text-muted">
+                  {t("_pages:profile.sections.data")}
+                </h3>
+                <p className="text-sm text-text-muted">
+                  {t("_pages:profile.helper.hideDeletedEntities")}
+                </p>
+              </div>
+
+              <label
+                htmlFor="hide-deleted-entities"
+                className="flex items-center justify-between gap-3 rounded-xl border border-border bg-base-light p-3"
+              >
+                <div className="flex flex-col gap-1">
+                  <span>{t("_pages:profile.labels.hideDeletedEntities")}</span>
+                  <span className="text-sm text-text-muted">
+                    {currentHideDeletedEntities
+                      ? t("_pages:profile.values.enabled")
+                      : t("_pages:profile.values.disabled")}
+                  </span>
+                </div>
+
+                <Controller
+                  control={control}
+                  name="hideDeletedEntities"
+                  disabled={formDisabled}
+                  render={({ field }) => (
+                    <input
+                      id="hide-deleted-entities"
+                      type="checkbox"
+                      checked={!!field.value}
+                      disabled={formDisabled}
+                      onBlur={field.onBlur}
+                      onChange={(event) => field.onChange(event.target.checked)}
+                      className="h-4 w-4 accent-bg-primary"
+                    />
+                  )}
+                />
+              </label>
+            </section>
+
+            <div className="w-full border-t border-border" />
 
             <div className="flex">
               <Button
-                type="button"
+                type="submit"
                 variant="submit"
                 color="primary"
                 className="max-sm:w-full"
-                disabled={busy}
-                onClick={() =>
-                  saveName.mutate({
-                    id: profile.id,
-                    name: normalizedName,
-                  })
-                }
+                disabled={saveDisabled}
               >
                 {t("_pages:profile.actions.save")}
               </Button>
             </div>
-          </div>
+          </form>
         </div>
       )}
     </Page>

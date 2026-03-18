@@ -143,6 +143,7 @@ export function Currencies() {
         <>
           <PrettyGrid
             data={items}
+            className="full-grid"
             hasMore={!!hasNextPage}
             loadingMore={isFetchingNextPage}
             onLoadMore={() => {

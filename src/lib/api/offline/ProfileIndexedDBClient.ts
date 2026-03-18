@@ -40,12 +40,21 @@ export class ProfileIndexedDBClient extends IndexedDBClient<
   async insert(value: AddProfileDto): Promise<ProfileDto> {
     const created = await super.insert(value);
 
+    const payload: {
+      name: string;
+      hideDeletedEntities?: boolean;
+    } = {
+      name: value.name,
+    };
+
+    if (typeof value.hideDeletedEntities === "boolean") {
+      payload.hideDeletedEntities = value.hideDeletedEntities;
+    }
+
     await queueSyncOperation(
       "profile",
       "CREATE",
-      {
-        name: value.name,
-      },
+      payload,
       created.id,
     );
 
@@ -72,13 +81,26 @@ export class ProfileIndexedDBClient extends IndexedDBClient<
 
     const updated = await super.update(updateValue);
 
+    const payload: {
+      id: number;
+      name?: string;
+      hideDeletedEntities?: boolean;
+    } = {
+      id: updateValue.id,
+    };
+
+    if (typeof updateValue.name === "string") {
+      payload.name = updateValue.name;
+    }
+
+    if (typeof updateValue.hideDeletedEntities === "boolean") {
+      payload.hideDeletedEntities = updateValue.hideDeletedEntities;
+    }
+
     await queueSyncOperation(
       "profile",
       "UPDATE",
-      {
-        id: updateValue.id,
-        name: updateValue.name,
-      },
+      payload,
       updateValue.id,
     );
 

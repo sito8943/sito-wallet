@@ -61,20 +61,29 @@ export const useAppSession = (): boolean => {
       }
 
       try {
-        const session = await bootstrapContextRef.current.manager.Auth.getSession();
+        const session =
+          await bootstrapContextRef.current.manager.Auth.getSession();
+
         if (!isMounted) return;
 
         bootstrapContextRef.current.logUser(session, rememberMe);
       } catch (error) {
         if (!isMounted) return;
 
-        if (rememberedSession && (!isHttpError(error) || error.status !== 401)) {
-          bootstrapContextRef.current.logUser(rememberedSession, rememberMe);
-        } else {
-          clearPersistedPublicSessionAccount();
-          bootstrapContextRef.current.clearFeatures();
-          await bootstrapContextRef.current.clearIndexedDatabases();
-          await bootstrapContextRef.current.logoutUser();
+        try {
+          if (
+            rememberedSession &&
+            (!isHttpError(error) || error.status !== 401)
+          ) {
+            bootstrapContextRef.current.logUser(rememberedSession, rememberMe);
+          } else {
+            clearPersistedPublicSessionAccount();
+            bootstrapContextRef.current.clearFeatures();
+            bootstrapContextRef.current.clearIndexedDatabases();
+            bootstrapContextRef.current.logoutUser();
+          }
+        } catch (err) {
+          console.error("Error during session bootstrap cleanup:", err);
         }
       } finally {
         finishLoading();

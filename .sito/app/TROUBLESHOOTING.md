@@ -195,7 +195,7 @@ interface ProductUpdateDto extends DeleteDto {
 ### 4.1 Check installed peers
 
 ```bash
-npm ls react react-dom @sito/dashboard @tanstack/react-query react-hook-form @emotion/css @fortawesome/react-fontawesome
+npm ls react react-dom @sito/dashboard @tanstack/react-query react-hook-form @fortawesome/react-fontawesome
 ```
 
 ### 4.2 Check library versions

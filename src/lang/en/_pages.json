@@ -41,6 +41,10 @@
   },
   "profile": {
     "title": "Profile",
+    "sections": {
+      "personal": "Personal",
+      "data": "Data"
+    },
     "actions": {
       "save": "Save changes",
       "uploadPhoto": "Upload photo",
@@ -49,16 +53,22 @@
     "labels": {
       "username": "Username",
       "updatedAt": "Updated at",
-      "photo": "Photo"
+      "photo": "Photo",
+      "hideDeletedEntities": "Hide deleted items"
     },
     "helper": {
-      "photo": "Allowed types: JPG, PNG, WEBP. Max size: 5 MB."
+      "photo": "Allowed types: JPG, PNG, WEBP. Max size: 5 MB.",
+      "hideDeletedEntities": "When enabled, deleted items will not be shown in list views."
     },
     "messages": {
       "updated": "Profile updated successfully",
       "photoUpdated": "Photo updated successfully",
       "photoDeleted": "Photo deleted successfully",
       "noPhoto": "No photo uploaded"
+    },
+    "values": {
+      "enabled": "Enabled",
+      "disabled": "Disabled"
     },
     "errors": {
       "nameRequired": "Name is required",

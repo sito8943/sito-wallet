@@ -15,6 +15,8 @@ import { AccountType } from "lib";
 
 // views
 import { Currency } from "views/Currencies/components/Currency";
+import { icons } from "./utils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function AccountCard(props: AccountCardPropsType) {
   const { t } = useTranslation();
@@ -51,13 +53,34 @@ export function AccountCard(props: AccountCardPropsType) {
       </p>
       <div className="chip-container">
         <Chip
-          text={t(`_entities:account.type.values.${String(AccountType[type])}`)}
+          className="max-sm:!px-2"
+          text={
+            <>
+              <span className="max-sm:hidden">
+                {t(
+                  `_entities:account.type.values.${String(AccountType[type])}`,
+                )}
+              </span>
+              <span className="sm:hidden">
+                <FontAwesomeIcon icon={icons[type]} />
+              </span>
+            </>
+          }
         />
-        <Chip text={currency?.name} />
+        <Chip
+          className="max-sm:!px-3"
+          text={
+            <>
+              <span className="max-sm:hidden">{currency?.name}</span>
+              <span className="sm:hidden">{currency?.symbol}</span>
+            </>
+          }
+        />
         <Chip
           text={
             <>
-              {`${t("_entities:account.balance.label")}: ${balance}`}{" "}
+              <span className="max-sm:hidden">{`${t("_entities:account.balance.label")}: `}</span>
+              <span>{balance} </span>
               <Currency name={currency?.name} symbol={currency?.symbol} />
             </>
           }

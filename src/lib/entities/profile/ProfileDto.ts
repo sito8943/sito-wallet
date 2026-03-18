@@ -6,4 +6,5 @@ export interface ProfileDto extends BaseEntityDto {
   description: string | null;
   photo: string | null;
   user: CommonUserProfileDto | null;
+  hideDeletedEntities?: boolean;
 }

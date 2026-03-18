@@ -41,6 +41,10 @@
   },
   "profile": {
     "title": "Perfil",
+    "sections": {
+      "personal": "Personal",
+      "data": "Datos"
+    },
     "actions": {
       "save": "Guardar cambios",
       "uploadPhoto": "Subir foto",
@@ -49,16 +53,22 @@
     "labels": {
       "username": "Usuario",
       "updatedAt": "Actualizado en",
-      "photo": "Foto"
+      "photo": "Foto",
+      "hideDeletedEntities": "Ocultar elementos eliminados"
     },
     "helper": {
-      "photo": "Tipos permitidos: JPG, PNG, WEBP. Tamaño máximo: 5 MB."
+      "photo": "Tipos permitidos: JPG, PNG, WEBP. Tamaño máximo: 5 MB.",
+      "hideDeletedEntities": "Si está activo, no se mostrarán elementos eliminados en los listados."
     },
     "messages": {
       "updated": "Perfil actualizado correctamente",
       "photoUpdated": "Foto actualizada correctamente",
       "photoDeleted": "Foto eliminada correctamente",
       "noPhoto": "Sin foto subida"
+    },
+    "values": {
+      "enabled": "Activo",
+      "disabled": "Inactivo"
     },
     "errors": {
       "nameRequired": "El nombre es requerido",

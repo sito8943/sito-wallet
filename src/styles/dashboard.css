@@ -199,6 +199,6 @@ select > option {
   @apply max-sm:hidden;
 }
 
-.pretty-grid-main{
-  @apply grid grid-cols-5 max-lg:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2 max-xs:grid-cols-1
+.full-grid.pretty-grid-main {
+  @apply grid grid-cols-5 max-lg:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2 max-xs:grid-cols-1;
 }

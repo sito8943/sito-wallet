@@ -146,6 +146,7 @@ export function TransactionCategories() {
         <>
           <PrettyGrid
             data={items}
+            className="full-grid"
             hasMore={!!hasNextPage}
             loadingMore={isFetchingNextPage}
             onLoadMore={() => {

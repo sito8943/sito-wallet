@@ -22,10 +22,16 @@ export function SignOut() {
   const navigate = useNavigate();
 
   const logic = useCallback(async () => {
-    clearPersistedPublicSessionAccount();
-    clearFeatures();
-    await offlineManager.clearIndexedDatabases();
-    await logoutUser();
+    try {
+      clearPersistedPublicSessionAccount();
+      clearFeatures();
+      await offlineManager.clearIndexedDatabases();
+      await logoutUser();
+    } catch (error) {
+      // do nothing, we want to try to clear as much as possible even if some steps fail
+      console.error("Error during sign out:", error);
+    }
+
     setTimeout(() => {
       navigate("/auth/sign-in");
     }, 1000);
