@@ -114,7 +114,7 @@ export function useTransactionsList(props: {
           parsedFilters
         );
 
-        offlineManager.Transactions.seed(result.items).catch(() => {});
+        await offlineManager.Transactions.seed(result.items).catch(() => {});
         return result;
       } catch (error) {
         console.warn("API failed, loading transactions from IndexedDB", error);
@@ -170,7 +170,7 @@ export function useInfiniteTransactionsList(props: {
       try {
         const result = await manager.Transactions.get(requestQuery, parsedFilters);
 
-        offlineManager.Transactions.seed(result.items).catch(() => {});
+        await offlineManager.Transactions.seed(result.items).catch(() => {});
         return result;
       } catch (error) {
         console.warn("API failed, loading transactions from IndexedDB", error);

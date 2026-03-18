@@ -6,7 +6,9 @@ import {
   FilterAccountDto,
   FilterCurrencyDto,
   FilterTransactionCategoryDto,
+  FilterTransactionDto,
   TransactionCategoryDto,
+  TransactionDto,
 } from "../entities";
 
 import { Manager } from "./Manager";
@@ -22,6 +24,10 @@ export const defaultCurrenciesListFilters = {
 
 export const defaultTransactionCategoriesListFilters = {
   deletedAt: false as unknown as FilterTransactionCategoryDto["deletedAt"],
+};
+
+export const defaultTransactionsListFilters = {
+  deletedAt: false as unknown as FilterTransactionDto["deletedAt"],
 };
 
 export async function fetchAccountsList(
@@ -83,6 +89,26 @@ export async function fetchTransactionCategoriesList(
   }
 }
 
+export async function fetchTransactionsList(
+  manager: Manager | OfflineManager,
+  offlineManager: OfflineManager,
+  filters: FilterTransactionDto,
+): Promise<QueryResult<TransactionDto>> {
+  try {
+    const result = await manager.Transactions.get(undefined, {
+      ...filters,
+    });
+
+    offlineManager.Transactions.seed(result.items).catch(() => {});
+    return result;
+  } catch (error) {
+    console.warn("API failed, loading transactions from IndexedDB", error);
+    return await offlineManager.Transactions.get(undefined, {
+      ...filters,
+    });
+  }
+}
+
 export async function preloadOfflineBootstrapData(
   manager: Manager | OfflineManager,
   offlineManager: OfflineManager,
@@ -94,6 +120,11 @@ export async function preloadOfflineBootstrapData(
       manager,
       offlineManager,
       defaultTransactionCategoriesListFilters,
+    ),
+    fetchTransactionsList(
+      manager,
+      offlineManager,
+      defaultTransactionsListFilters,
     ),
   ]);
 }

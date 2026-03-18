@@ -73,6 +73,7 @@ export function useAppPreload(
     [account?.id, account?.token, isGuestMode, isOnline, requiredTasks],
   );
 
+  const [hasSettledOnce, setHasSettledOnce] = useState(false);
   const [lastSettledSignature, setLastSettledSignature] = useState("");
   const [completedTaskKeys, setCompletedTaskKeys] = useState<string[]>([]);
   const [failedTaskKeys, setFailedTaskKeys] = useState<string[]>([]);
@@ -96,6 +97,7 @@ export function useAppPreload(
           .filter((_, index) => results[index]?.status === "rejected")
           .map((task) => task.key);
 
+        setHasSettledOnce(true);
         setCompletedTaskKeys(completed);
         setFailedTaskKeys(failed);
         setLastSettledSignature(runSignature);
@@ -108,7 +110,9 @@ export function useAppPreload(
   }, [lastSettledSignature, requiredTasks, requiredTasksSignature]);
 
   const loading =
-    requiredTasks.length > 0 && lastSettledSignature !== requiredTasksSignature;
+    !hasSettledOnce &&
+    requiredTasks.length > 0 &&
+    lastSettledSignature !== requiredTasksSignature;
   const visibleCompletedTaskKeys =
     requiredTasks.length > 0 ? completedTaskKeys : EMPTY_TASK_KEYS;
   const visibleFailedTaskKeys =
