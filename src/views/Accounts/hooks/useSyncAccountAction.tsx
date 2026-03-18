@@ -6,7 +6,7 @@ import { ActionType } from "@sito/dashboard-app";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleNotch, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
+import { faCircleNotch, faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
 
 // types
 import { UseSingleActionPropTypes } from "@sito/dashboard-app";
@@ -30,7 +30,7 @@ export const useSyncAccountAction = (
       icon: (
         <FontAwesomeIcon
           className={`text-bg-primary ${isLoading ? "rotate" : ""}`}
-          icon={isLoading ? faCircleNotch : faRotateLeft}
+          icon={isLoading ? faCircleNotch : faArrowsRotate}
         />
       ),
       tooltip: t("_pages:accounts.actions.sync.text"),
