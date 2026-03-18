@@ -12,4 +12,5 @@ export interface FilterTransactionDto extends BaseFilterDto {
   date?: RangeValue<string>;
   currencyId?: number;
   type?: TransactionType;
+  description?: string;
 }
