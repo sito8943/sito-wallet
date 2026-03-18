@@ -27,6 +27,7 @@ import { UpdateProfileDto } from "lib";
 
 // types
 import { ProfileFormType } from "./types";
+import SectionDivider from "./SectionDivider";
 
 const getErrorMessage = (error: unknown, fallback: string): string => {
   if (error instanceof Error) return error.message;
@@ -74,13 +75,12 @@ export function Profile() {
 
   useMobileNavbar(t("_pages:profile.title"));
 
-  const { control, formState, handleSubmit, reset } =
-    useForm<ProfileFormType>({
-      defaultValues: {
-        name: "",
-        hideDeletedEntities: false,
-      },
-    });
+  const { control, formState, handleSubmit, reset } = useForm<ProfileFormType>({
+    defaultValues: {
+      name: "",
+      hideDeletedEntities: false,
+    },
+  });
 
   const updateProfile = useMutation<void, unknown, UpdateProfileDto>({
     mutationFn: async (data) => {
@@ -97,8 +97,10 @@ export function Profile() {
   }, [profile, reset]);
 
   const currentName = useWatch({ control, name: "name" }) ?? "";
-  const currentHideDeletedEntities =
-    !!useWatch({ control, name: "hideDeletedEntities" });
+  const currentHideDeletedEntities = !!useWatch({
+    control,
+    name: "hideDeletedEntities",
+  });
   const normalizedName = currentName.trim();
   const formDisabled = profileQuery.isLoading || updateProfile.isPending;
   const saveDisabled =
@@ -226,7 +228,7 @@ export function Profile() {
               />
             </section>
 
-            <div className="w-full border-t border-border" />
+            <SectionDivider />
 
             <section id="data" className="flex flex-col gap-4">
               <div className="flex flex-col gap-1">
@@ -270,7 +272,7 @@ export function Profile() {
               </label>
             </section>
 
-            <div className="w-full border-t border-border" />
+            <SectionDivider />
 
             <div className="flex">
               <Button
