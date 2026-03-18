@@ -71,7 +71,7 @@
 - [x] al salir una sola fila se pone inmensa
 - [x] Bug el Onboarding no funciona
 - [ ] Al pasar del modo online al offline, se reordenan los elementos
-- [ ] Al pasar al modo offline se pierden las transactions, posiblemente es porque no estaban en el indexed db
+- [x] Al pasar al modo offline se pierden las transactions, posiblemente es porque no estaban en el indexed db
 
 ### 🏠 Home
 
