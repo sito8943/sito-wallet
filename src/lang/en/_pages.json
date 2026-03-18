@@ -34,6 +34,11 @@
         "title": "{{transactionType}} per range",
         "placeholder": "Type the title"
       },
+      "currentBalance": {
+        "placeholder": "Type the title",
+        "refresh": "Refresh balance",
+        "noAccount": "Select an account"
+      },
       "addCard": {
         "title": "Select Card Type"
       }

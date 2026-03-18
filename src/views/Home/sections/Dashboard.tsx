@@ -12,6 +12,7 @@ import {
   AddCard,
   TransactionTypeResume,
   WeeklySpentCard,
+  CurrentBalanceCard,
 } from "../components/Cards";
 import { AddDashboardCardDialog } from "../components";
 
@@ -65,6 +66,18 @@ export const Dashboard = () => {
           return (
             <li key={item.id}>
               <WeeklySpentCard
+                onDelete={() => {
+                  deleteDashboardCard.onClick([item.id]);
+                }}
+                key={item.id}
+                {...item}
+              />
+            </li>
+          );
+        case DashboardCardType.CurrentBalance:
+          return (
+            <li key={item.id}>
+              <CurrentBalanceCard
                 onDelete={() => {
                   deleteDashboardCard.onClick([item.id]);
                 }}
