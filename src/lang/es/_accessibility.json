@@ -97,6 +97,7 @@
     "unknownError": "Ha ocurrido un error",
     "differentPasswords": "Las contraseñas no coinciden",
     "invalidCredentials": "Usuario o contraseña incorrectos",
+    "409": "No se pudo completar la operación porque entra en conflicto con el estado actual. Actualiza e inténtalo de nuevo.",
     "500": "Ha ocurrido un error en el servidor",
     "signIn": {
       "500": "Ha ocurrido un error de autenticación",
