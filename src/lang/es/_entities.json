@@ -102,7 +102,7 @@
       "required": "La cantidad es requerida"
     },
     "description": {
-      "init": "Creada automáticamente por el saldo inicial"
+      "init": "Creada automáticamente"
     },
     "category": {
       "label": "Categoria",
@@ -124,10 +124,10 @@
       "label": "Nombre",
       "placeholder": "Ej: Alimentos",
       "unique": "Ya existe una categoría con ese nombre",
-      "init": "Transacción inicial"
+      "init": "Creada automáticamente"
     },
     "description": {
-      "init": "Creada automáticamente por el saldo inicial"
+      "init": "Creada automáticamente"
     },
     "type": {
       "label": "Tipo",

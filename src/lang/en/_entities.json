@@ -102,7 +102,7 @@
       "required": "Amount is required"
     },
     "description": {
-      "init": "Automatically created by initial balance"
+      "init": "Automatically created"
     },
     "category": {
       "label": "Category",
@@ -122,11 +122,11 @@
   "transactionCategory": {
     "name": {
       "label": "Name",
-      "init": "Initial Transaction",
+      "init": "Automatically created",
       "placeholder": "Ex: Food"
     },
     "description": {
-      "init": "Automatically created by initial balance"
+      "init": "Automatically created"
     },
     "type": {
       "label": "Type",
