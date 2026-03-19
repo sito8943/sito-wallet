@@ -4,6 +4,7 @@ import { FieldValues } from "react-hook-form";
 import {
   ActionType,
   FormDialogPropsType,
+  TriggerFormDialogPropsType,
 } from "@sito/dashboard-app";
 
 // lib
@@ -25,6 +26,16 @@ export type AccountFormPropsType = FormDialogPropsType<AccountFormType>;
 export type AddAccountDialogPropsType = FormDialogPropsType<AccountFormType>;
 
 export type EditAccountDialogPropsType = FormDialogPropsType<AccountFormType>;
+
+export interface AdjustBalanceFormType {
+  newBalance: string;
+  description: string;
+}
+
+export interface AdjustBalanceDialogPropsType
+  extends TriggerFormDialogPropsType<AdjustBalanceFormType> {
+  selectedAccount: AccountDto | null;
+}
 
 export enum AccountActions {
   ViewTransactions = "viewTransactions",

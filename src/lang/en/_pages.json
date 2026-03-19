@@ -228,7 +228,8 @@
           "title": "Adjust Balance",
           "currentBalance": "Current balance",
           "newBalance": "New balance",
-          "submit": "Save"
+          "submit": "Save",
+          "sameBalance": "New balance must be different from current balance"
         }
       }
     },

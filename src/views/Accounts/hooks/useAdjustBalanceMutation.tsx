@@ -1,9 +1,8 @@
 import { useState, useCallback } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { useNotification, queryClient } from "@sito/dashboard-app";
+import { useFormDialog, queryClient } from "@sito/dashboard-app";
 
 // hooks
 import { useAdjustBalanceAction } from "./useAdjustBalanceAction";
@@ -15,57 +14,53 @@ import { useManager } from "providers";
 // lib
 import { AccountDto, AdjustBalanceDto, TransactionDto } from "lib";
 
+// types
+import { AdjustBalanceFormType } from "../types";
+
+const defaultValues: AdjustBalanceFormType = {
+  newBalance: "",
+  description: "",
+};
+
+const formToDto = (data: AdjustBalanceFormType): AdjustBalanceDto => ({
+  newBalance: Number(data.newBalance),
+  description: data.description || undefined,
+});
+
 export const useAdjustBalanceMutation = () => {
   const { t } = useTranslation();
 
   const manager = useManager();
 
-  const { showErrorNotification, showSuccessNotification } = useNotification();
-
   const [selectedAccount, setSelectedAccount] = useState<AccountDto | null>(
     null
   );
-  const [open, setOpen] = useState(false);
 
-  const mutate = useMutation<
+  const formDialog = useFormDialog<
     TransactionDto,
-    Error,
-    { accountId: number; data: AdjustBalanceDto }
+    AdjustBalanceDto,
+    TransactionDto,
+    AdjustBalanceFormType
   >({
-    mutationFn: ({ accountId, data }) =>
-      manager.Accounts.adjustBalance(accountId, data),
-    onError: (error: Error) => {
-      showErrorNotification({ message: error.message });
-    },
+    formToDto,
+    defaultValues,
+    mutationFn: (data) =>
+      manager.Accounts.adjustBalance(selectedAccount?.id ?? 0, data),
+    onSuccessMessage: t("_pages:accounts.actions.adjustBalance.successMessage"),
     onSuccess: async () => {
-      await Promise.all([
-        queryClient.invalidateQueries({ ...AccountsQueryKeys.all() }),
-        queryClient.invalidateQueries({ ...TransactionsQueryKeys.all() }),
-      ]);
-      showSuccessNotification({
-        message: t("_pages:accounts.actions.adjustBalance.successMessage"),
-      });
-      setOpen(false);
+      await queryClient.invalidateQueries({ ...TransactionsQueryKeys.all() });
       setSelectedAccount(null);
     },
+    title: t("_pages:accounts.actions.adjustBalance.dialog.title"),
+    ...AccountsQueryKeys.all(),
   });
 
-  const handleOpen = useCallback((record: AccountDto) => {
-    setSelectedAccount(record);
-    setOpen(true);
-  }, []);
-
-  const handleClose = useCallback(() => {
-    setOpen(false);
-    setSelectedAccount(null);
-  }, []);
-
-  const handleSubmit = useCallback(
-    (data: AdjustBalanceDto) => {
-      if (!selectedAccount) return;
-      mutate.mutate({ accountId: selectedAccount.id, data });
+  const handleOpen = useCallback(
+    (record: AccountDto) => {
+      setSelectedAccount(record);
+      formDialog.openDialog();
     },
-    [selectedAccount, mutate]
+    [formDialog]
   );
 
   const { action } = useAdjustBalanceAction({
@@ -73,11 +68,8 @@ export const useAdjustBalanceMutation = () => {
   });
 
   return {
+    ...formDialog,
     action,
-    open,
     selectedAccount,
-    isLoading: mutate.isPending,
-    onClose: handleClose,
-    onSubmit: handleSubmit,
   };
 };

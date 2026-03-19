@@ -140,6 +140,78 @@ if (!isOnline) return null;
 
 ---
 
+## Form Dialogs (`useFormDialog` + `FormDialog`)
+
+All form dialogs **must** follow this pattern from `@sito/dashboard-app`:
+
+### 1. Hook returns flat props
+
+The hook must call `useFormDialog<TDto, TMutationDto, TMutationOutputDto, TFormType>(...)` and return its result **spread at the top level**, not nested inside a property. Any extra state (e.g. `selectedAccount`) is added alongside the spread.
+
+```tsx
+// ✅ correct — flat return
+export function useMyDialog() {
+  const formDialog = useFormDialog<...>({ ... });
+  return { ...formDialog, extraProp };
+}
+
+// ❌ wrong — nested return
+export function useMyDialog() {
+  const formDialog = useFormDialog<...>({ ... });
+  return { formDialog, extraProp };
+}
+```
+
+### 2. Dialog component receives flat props and spreads into `FormDialog`
+
+The dialog component receives **one props object** that extends `FormDialogPropsType<TFormType>` (or `TriggerFormDialogPropsType<TFormType>`) with any extra props. It spreads those props directly into `<FormDialog {...props}>`.
+
+```tsx
+// ✅ correct
+export function MyDialog(props: MyDialogPropsType) {
+  return (
+    <FormDialog {...props}>
+      <MyForm {...props} />
+    </FormDialog>
+  );
+}
+
+// ❌ wrong — destructuring a nested formDialog
+export function MyDialog({ formDialog, extra }: ...) {
+  return <FormDialog {...formDialog}>...</FormDialog>;
+}
+```
+
+### 3. Parent passes hook result with spread
+
+```tsx
+// ✅ correct
+const myDialog = useMyDialog();
+<MyDialog {...myDialog} />
+
+// ❌ wrong — passing named props
+<MyDialog formDialog={myDialog.formDialog} extra={myDialog.extra} />
+```
+
+### 4. Props type extends `FormDialogPropsType` or `TriggerFormDialogPropsType`
+
+Define the dialog's props type in `types.ts`. If it needs extra props beyond the form dialog, extend the base type:
+
+```tsx
+export interface MyDialogPropsType
+  extends TriggerFormDialogPropsType<MyFormType> {
+  extraProp: SomeType;
+}
+```
+
+For standard dialogs with no extra props, use a type alias:
+
+```tsx
+export type MyDialogPropsType = FormDialogPropsType<MyFormType>;
+```
+
+---
+
 ## General
 
 - Follow all rules in `.sito/dashboard.md` and `.sito/dashboard-app.md`.
