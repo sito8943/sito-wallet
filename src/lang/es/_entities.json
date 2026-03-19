@@ -91,6 +91,7 @@
       "initial": "Saldo inicial",
       "label": "Saldo",
       "placeholder": "ej: 600",
+      "required": "El saldo es requerido",
       "greaterThan0": "Saldo insuficiente"
     }
   },

@@ -223,6 +223,16 @@
       "addTransaction": {
         "text": "Añadir transacción",
         "successMessage": "Guardado correctamente"
+      },
+      "adjustBalance": {
+        "text": "Ajustar saldo",
+        "successMessage": "Saldo ajustado correctamente",
+        "dialog": {
+          "title": "Ajustar saldo",
+          "currentBalance": "Saldo actual",
+          "newBalance": "Nuevo saldo",
+          "submit": "Guardar"
+        }
       }
     },
     "forms": {

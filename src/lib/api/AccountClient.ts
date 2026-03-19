@@ -11,6 +11,7 @@ import {
   FilterAccountDto,
   AddAccountDto,
   ImportPreviewAccountDto,
+  AdjustBalanceDto,
   ImportDto,
   parseJSONFile,
 } from "lib";
@@ -53,6 +54,16 @@ export default class AccountClient extends BaseClient<
       {
         ...this.api.defaultTokenAcquirer(),
       }
+    );
+  }
+
+  async adjustBalance(
+    accountId: number,
+    data: AdjustBalanceDto
+  ): Promise<number> {
+    return await this.api.patch(
+      `${this.table}/${accountId}/adjust-balance`,
+      data
     );
   }
 

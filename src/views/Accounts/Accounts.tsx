@@ -25,7 +25,12 @@ import { faAdd, faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
-import { AddAccountDialog, AccountCard, EditAccountDialog } from "./components";
+import {
+  AddAccountDialog,
+  AccountCard,
+  EditAccountDialog,
+  AdjustBalanceDialog,
+} from "./components";
 
 // hooks
 import {
@@ -38,6 +43,7 @@ import {
   useEditAccountDialog,
   useSyncAccountMutation,
   useViewTransactionsAction,
+  useAdjustBalanceMutation,
 } from "./hooks";
 
 // types
@@ -109,16 +115,19 @@ export function Accounts() {
 
   const syncAccount = useSyncAccountMutation();
 
+  const adjustBalance = useAdjustBalanceMutation();
+
   // #endregion
 
   const getActions = useCallback(
     (record: AccountDto) => [
       viewTransactions.action(record),
+      adjustBalance.action(record),
       syncAccount.action(record),
       deleteAccount.action(record),
       restoreAccount.action(record),
     ],
-    [deleteAccount, restoreAccount, syncAccount, viewTransactions],
+    [adjustBalance, deleteAccount, restoreAccount, syncAccount, viewTransactions],
   );
 
   const pageToolbar = useMemo(() => {
@@ -180,6 +189,7 @@ export function Accounts() {
           <ConfirmationDialog {...deleteAccount} />
           <ConfirmationDialog {...restoreAccount} />
           <ImportDialog {...importAccounts} />
+          <AdjustBalanceDialog {...adjustBalance} />
         </>
       ) : (
         <Error error={error} />

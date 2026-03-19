@@ -220,6 +220,16 @@
       "addTransaction": {
         "text": "Add transaction",
         "successMessage": "Saved successful"
+      },
+      "adjustBalance": {
+        "text": "Adjust balance",
+        "successMessage": "Balance adjusted successfully",
+        "dialog": {
+          "title": "Adjust Balance",
+          "currentBalance": "Current balance",
+          "newBalance": "New balance",
+          "submit": "Save"
+        }
       }
     },
     "forms": {

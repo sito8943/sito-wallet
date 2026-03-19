@@ -1,19 +1,22 @@
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 // icons
 import {
   faArrowsRotate,
   faCircleNotch,
+  faScaleBalanced,
 } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
-import { IconButton, queryClient } from "@sito/dashboard-app";
+import { IconButton, queryClient, useNotification } from "@sito/dashboard-app";
 
 // hooks
 import { AccountsQueryKeys, DashboardsQueryKeys, useAccountsList } from "hooks";
 
 // components
 import { Currency } from "../../../../Currencies";
+import { AdjustBalanceDialog } from "../../../../Accounts/components/AdjustBalanceDialog";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { ActiveFilters } from "./ActiveFilters";
 import { DashboardCard } from "../DashboardCard";
@@ -23,6 +26,9 @@ import "../TypeResume/styles.css";
 
 // types
 import { CurrentBalanceFormType, CurrentBalancePropsType } from "./types";
+
+// lib
+import { AdjustBalanceDto } from "lib";
 
 // utils
 import { formToDto } from "./utils";
@@ -36,7 +42,9 @@ const defaultConfig: CurrentBalanceFormType = {
 
 export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
   const { title, config, id, user, onDelete } = props;
+  const { t } = useTranslation();
   const manager = useManager();
+  const { showErrorNotification, showSuccessNotification } = useNotification();
 
   const parseFormConfig = (cfg?: string | null): CurrentBalanceFormType => {
     try {
@@ -68,6 +76,27 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
   const currencyName = account?.currency?.name ?? "";
 
   const [isSyncing, setIsSyncing] = useState(false);
+  const [adjustOpen, setAdjustOpen] = useState(false);
+  const [isAdjusting, setIsAdjusting] = useState(false);
+
+  const handleAdjustBalance = async (data: AdjustBalanceDto) => {
+    if (!account) return;
+    setIsAdjusting(true);
+    try {
+      await manager.Accounts.adjustBalance(account.id, data);
+      await queryClient.invalidateQueries({ ...AccountsQueryKeys.all() });
+      showSuccessNotification({
+        message: t("_pages:accounts.actions.adjustBalance.successMessage"),
+      });
+      setAdjustOpen(false);
+    } catch (error) {
+      showErrorNotification({
+        message: error instanceof Error ? error.message : String(error),
+      });
+    } finally {
+      setIsAdjusting(false);
+    }
+  };
 
   const handleRefresh = async () => {
     if (!account) return;
@@ -83,6 +112,7 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
   };
 
   return (
+    <>
     <DashboardCard
       id={id}
       userId={user?.id ?? 0}
@@ -108,15 +138,33 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
             <Currency name={currencyName} symbol={symbol} />
           </p>
           {account && (
-            <IconButton
-              disabled={isSyncing}
-              onClick={handleRefresh}
-              icon={isSyncing ? faCircleNotch : faArrowsRotate}
-              className={isSyncing ? "rotate" : ""}
-            />
+            <div className="flex items-center gap-1">
+              <IconButton
+                disabled={isAdjusting}
+                onClick={() => setAdjustOpen(true)}
+                icon={faScaleBalanced}
+                aria-label={t("_pages:accounts.actions.adjustBalance.text")}
+              />
+              <IconButton
+                disabled={isSyncing}
+                onClick={handleRefresh}
+                icon={isSyncing ? faCircleNotch : faArrowsRotate}
+                className={isSyncing ? "rotate" : ""}
+              />
+            </div>
           )}
         </div>
       )}
     </DashboardCard>
+    {account && (
+      <AdjustBalanceDialog
+        open={adjustOpen}
+        selectedAccount={account}
+        isLoading={isAdjusting}
+        onClose={() => setAdjustOpen(false)}
+        onSubmit={handleAdjustBalance}
+      />
+    )}
+    </>
   );
 };

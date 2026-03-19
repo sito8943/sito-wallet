@@ -10,6 +10,7 @@ import {
   UpdateAccountDto,
   FilterAccountDto,
   ImportPreviewAccountDto,
+  AdjustBalanceDto,
 } from "lib";
 
 // config
@@ -108,6 +109,20 @@ export class AccountIndexedDBClient extends IndexedDBClient<
     );
 
     return restored;
+  }
+
+  async adjustBalance(
+    accountId: number,
+    data: AdjustBalanceDto
+  ): Promise<number> {
+    await queueSyncOperation(
+      "accounts",
+      "ADJUST_BALANCE",
+      { newBalance: data.newBalance, description: data.description },
+      accountId
+    );
+
+    return accountId;
   }
 
   async sync(_accountId: number): Promise<number> {
