@@ -24,10 +24,12 @@ import { TableOptionsProvider, TranslationProvider } from "@sito/dashboard";
 const translations: Record<string, string> = {
   "_accessibility:buttons.applyFilters": "Apply filters",
   "_accessibility:buttons.clear": "Clear",
+  "_accessibility:buttons.columns": "Columns",
   "_accessibility:buttons.filters": "Filters",
   "_accessibility:buttons.next": "Next",
   "_accessibility:buttons.openActions": "Open actions",
   "_accessibility:buttons.previous": "Previous",
+  "_accessibility:buttons.reset": "Reset",
   "_accessibility:components.table.empty": "No results",
   "_accessibility:components.table.filters.range.end": "To",
   "_accessibility:components.table.filters.range.start": "From",
@@ -179,6 +181,14 @@ export function UsersTable() {
 - `sortingOrder`: `SortOrder.DESC`
 - `filters`: `{}`
 - `total`: `0`
+- `hiddenColumns`: `[]` (or `defaultHiddenColumns` if provided)
+
+### Provider Props
+
+| Prop                   | Type        | Description                                  |
+| ---------------------- | ----------- | -------------------------------------------- |
+| `children`             | `ReactNode` | Required.                                    |
+| `defaultHiddenColumns` | `string[]`  | Column keys hidden on mount and after reset. |
 
 ## 6. Key `Table` Props
 
@@ -201,6 +211,8 @@ export function UsersTable() {
 | `softDeleteProperty`        | `keyof TRow`                               | Soft-delete marker field (`"deletedAt"` by default). |
 | `className`                 | `string`                                   | Main wrapper class.                                  |
 | `contentClassName`          | `string`                                   | Scrollable table body class.                         |
+| `canHideColumns`            | `boolean`                                  | Show column visibility menu in header.               |
+| `canReset`                  | `boolean`                                  | Show reset button in header.                         |
 
 ## 7. Actions: Sticky vs Dropdown vs Bulk
 
@@ -254,7 +266,43 @@ Global filter control (`Table.filterOptions`) to control dropdown visibility:
 />
 ```
 
-## 9. Form Components (Quick API)
+## 9. Column Visibility & Reset
+
+Columns can be hidden/shown at runtime via a dropdown menu, and table state can be reset to defaults.
+
+### Enable column visibility
+
+```tsx
+<TableOptionsProvider defaultHiddenColumns={["email"]}>
+  <Table<User> data={rows} columns={columns} canHideColumns canReset />
+</TableOptionsProvider>
+```
+
+### `ColumnType` visibility props
+
+| Prop       | Type                  | Description                                              |
+| ---------- | --------------------- | -------------------------------------------------------- |
+| `display`  | `"visible" \| "none"` | Static visibility — `"none"` columns are always hidden.  |
+| `hideable` | `boolean`             | If `false`, column is excluded from the visibility menu. |
+
+### Reset behavior
+
+When the reset button is clicked (`canReset`), the following state is restored:
+
+- `hiddenColumns` → `defaultHiddenColumns` (or `[]`)
+- `sortingBy` → `"id"`
+- `sortingOrder` → `SortOrder.DESC`
+- `filters` → `{}`
+- `currentPage` → `0`
+
+### Programmatic access
+
+```tsx
+const { hiddenColumns, toggleColumn, setHiddenColumns, resetTableOptions } =
+  useTableOptions();
+```
+
+## 10. Form Components (Quick API)
 
 All inputs expose style hooks (`containerClassName`, `inputClassName`, etc.).
 
@@ -319,7 +367,7 @@ type Option = {
 };
 ```
 
-## 10. Quick UI Components (Outside Table)
+## 11. Quick UI Components (Outside Table)
 
 ```tsx
 import {
@@ -406,7 +454,7 @@ function ExampleDropdown() {
 <Loading className="h-20" />;
 ```
 
-## 11. Integration Checklist
+## 12. Integration Checklist
 
 1. Install `@sito/dashboard` and verify peer dependencies.
 2. Wrap the app with `TranslationProvider`.

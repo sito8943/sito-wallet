@@ -35,7 +35,8 @@ Recommended order:
 6. `NavbarProvider` (if you use dynamic navbar state)
 
 `ManagerProvider` already mounts an internal `QueryClientProvider`.
-If you need custom React Query defaults, pass your own client with `queryClient={queryClient}`.
+By default, each `ManagerProvider` instance creates its own isolated `QueryClient`.
+If you need custom React Query defaults, or you intentionally want multiple trees to share cache state, pass your own client with `queryClient={queryClient}`.
 
 ```tsx
 import type { ReactNode } from "react";

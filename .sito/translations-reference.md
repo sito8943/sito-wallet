@@ -40,6 +40,13 @@ If a component that calls `useTranslation()` is rendered without the provider, i
 | ------------------------------------ | ----------------- | ------------------------------------------------- |
 | `_accessibility:buttons.openActions` | `ActionsDropdown` | Aria label/name/tooltip for actions menu trigger. |
 
+### Required when column visibility or reset is used (`canHideColumns` / `canReset`)
+
+| Key                              | Where used             | Purpose                                       |
+| -------------------------------- | ---------------------- | --------------------------------------------- |
+| `_accessibility:buttons.columns` | `ColumnVisibilityMenu` | Aria label for column visibility menu button. |
+| `_accessibility:buttons.reset`   | `TableHeader`          | Aria label for reset table options button.    |
+
 ### Required when filters UI is used (`filterOptions` or column filters)
 
 | Key                                   | Where used                      | Purpose                       |
@@ -73,10 +80,12 @@ Example expected output:
 const translations: Record<string, string> = {
   "_accessibility:buttons.applyFilters": "Apply filters",
   "_accessibility:buttons.clear": "Clear",
+  "_accessibility:buttons.columns": "Columns",
   "_accessibility:buttons.filters": "Filters",
   "_accessibility:buttons.next": "Next",
   "_accessibility:buttons.openActions": "Open actions",
   "_accessibility:buttons.previous": "Previous",
+  "_accessibility:buttons.reset": "Reset",
   "_accessibility:components.table.empty": "No results",
   "_accessibility:components.table.filters.range.end": "To",
   "_accessibility:components.table.filters.range.start": "From",
@@ -96,6 +105,7 @@ For fast maintenance, these keys are currently referenced in:
 
 - `src/components/Actions/ActionsDropdown.tsx`
 - `src/components/Table/components/Columns.tsx`
+- `src/components/Table/components/ColumnVisibilityMenu.tsx`
 - `src/components/Table/components/Filters/FilterDropdown/FilterDropdown.tsx`
 - `src/components/Table/components/Footer/CountOfTotal.tsx`
 - `src/components/Table/components/Footer/JumpToPage.tsx`

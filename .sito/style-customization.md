@@ -134,6 +134,11 @@ If you need high granularity, you can override internal library classes.
 - `.table-footer`
 - `.table-headers-row`
 - `.table-headers-cell`
+- `.column-visibility-menu`
+- `.column-visibility-trigger`
+- `.column-visibility-dropdown`
+- `.column-visibility-item`
+- `.reset-table-icon`
 
 ### Filters
 
