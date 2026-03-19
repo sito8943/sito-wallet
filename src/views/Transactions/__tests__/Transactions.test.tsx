@@ -39,7 +39,7 @@ const mockUseMobileNavbar = vi.fn();
 vi.mock("hooks", () => ({
   useAccountsCommon: () => mockAccountsCommon(),
   useTransactionCategoriesCommon: () => ({
-    data: [{ id: 1, name: "Food", initial: false }],
+    data: [{ id: 1, name: "Food", auto: false }],
     isLoading: false,
   }),
   useMobileNavbar: (...args: unknown[]) => mockUseMobileNavbar(...args),

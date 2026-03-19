@@ -104,7 +104,7 @@ const mockAccountsCommon = vi.fn(() => ({
   isLoading: false,
 }));
 const mockCategoriesCommon = vi.fn(() => ({
-  data: [{ id: 1, name: "Food", initial: false }],
+  data: [{ id: 1, name: "Food", auto: false }],
   isLoading: false,
 }));
 
@@ -157,7 +157,7 @@ function TransactionFormWrapper({
       amount: "",
       date: "",
       description: "",
-      initial: false,
+      auto: false,
     },
   });
   return (
@@ -232,7 +232,7 @@ describe("TransactionForm", () => {
       isLoading: false,
     });
     mockCategoriesCommon.mockReturnValue({
-      data: [{ id: 1, name: "Food", initial: false }],
+      data: [{ id: 1, name: "Food", auto: false }],
       isLoading: false,
     });
   });
@@ -288,9 +288,9 @@ describe("TransactionForm", () => {
     expect(accountEl).toBeDisabled();
   });
 
-  it("renders initial category name via t() for initial categories", () => {
+  it("renders initial category name via t() for auto categories", () => {
     mockCategoriesCommon.mockReturnValue({
-      data: [{ id: 1, name: "Initial", initial: true }],
+      data: [{ id: 1, name: "Initial", auto: true }],
       isLoading: false,
     });
 

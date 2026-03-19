@@ -11,6 +11,7 @@ import {
   FilterAccountDto,
   ImportPreviewAccountDto,
   AdjustBalanceDto,
+  TransactionDto,
 } from "lib";
 
 // config
@@ -114,7 +115,7 @@ export class AccountIndexedDBClient extends IndexedDBClient<
   async adjustBalance(
     accountId: number,
     data: AdjustBalanceDto
-  ): Promise<number> {
+  ): Promise<TransactionDto> {
     await queueSyncOperation(
       "accounts",
       "ADJUST_BALANCE",
@@ -122,7 +123,7 @@ export class AccountIndexedDBClient extends IndexedDBClient<
       accountId
     );
 
-    return accountId;
+    return { id: accountId } as TransactionDto;
   }
 
   async sync(_accountId: number): Promise<number> {

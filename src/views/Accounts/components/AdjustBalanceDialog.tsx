@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 
 // @sito/dashboard-app
 import { Dialog, TextInput, ParagraphInput } from "@sito/dashboard-app";
@@ -47,6 +47,12 @@ export function AdjustBalanceDialog(props: AdjustBalanceDialogPropsType) {
       });
     }
   }, [open, selectedAccount, reset]);
+
+  const newBalanceValue = useWatch({ control, name: "newBalance" });
+
+  const isSameBalance =
+    selectedAccount != null &&
+    Number(newBalanceValue) === selectedAccount.balance;
 
   const handleFormSubmit = useCallback(
     (data: AdjustBalanceFormType) => {
@@ -120,7 +126,7 @@ export function AdjustBalanceDialog(props: AdjustBalanceDialogPropsType) {
         />
         <button
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading || isSameBalance}
           className="button submit primary mt-2"
         >
           {t("_pages:accounts.actions.adjustBalance.dialog.submit")}

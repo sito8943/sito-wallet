@@ -7,13 +7,13 @@ import { useNotification, queryClient } from "@sito/dashboard-app";
 
 // hooks
 import { useAdjustBalanceAction } from "./useAdjustBalanceAction";
-import { AccountsQueryKeys } from "hooks";
+import { AccountsQueryKeys, TransactionsQueryKeys } from "hooks";
 
 // providers
 import { useManager } from "providers";
 
 // lib
-import { AccountDto, AdjustBalanceDto } from "lib";
+import { AccountDto, AdjustBalanceDto, TransactionDto } from "lib";
 
 export const useAdjustBalanceMutation = () => {
   const { t } = useTranslation();
@@ -28,7 +28,7 @@ export const useAdjustBalanceMutation = () => {
   const [open, setOpen] = useState(false);
 
   const mutate = useMutation<
-    number,
+    TransactionDto,
     Error,
     { accountId: number; data: AdjustBalanceDto }
   >({
@@ -38,7 +38,10 @@ export const useAdjustBalanceMutation = () => {
       showErrorNotification({ message: error.message });
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ ...AccountsQueryKeys.all() });
+      await Promise.all([
+        queryClient.invalidateQueries({ ...AccountsQueryKeys.all() }),
+        queryClient.invalidateQueries({ ...TransactionsQueryKeys.all() }),
+      ]);
       showSuccessNotification({
         message: t("_pages:accounts.actions.adjustBalance.successMessage"),
       });

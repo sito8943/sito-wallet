@@ -21,7 +21,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
     id,
     onClick,
     description,
-    initial,
+    auto,
     date,
     amount,
     category,
@@ -34,9 +34,9 @@ export function TransactionCard(props: TransactionCardPropsType) {
 
   const parsedDescription = useMemo(() => {
     if (!description?.length) return t("_entities:base.description.empty");
-    if (initial) return t("_entities:transactionCategory.description.init");
+    if (auto) return t("_entities:transactionCategory.description.init");
     return description;
-  }, [description, initial, t]);
+  }, [description, auto, t]);
 
   return (
     <button

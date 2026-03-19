@@ -28,7 +28,7 @@ export function AssignCategoryDialog(
       [
         ...(categories?.data?.map((category) => ({
           ...category,
-          name: category.initial
+          name: category.auto
             ? t("_entities:transactionCategory.name.init")
             : category.name,
         })) ?? []),

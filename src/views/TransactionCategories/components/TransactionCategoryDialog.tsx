@@ -51,17 +51,17 @@ export function TransactionCategoryForm(
 
   const { type } = useWatch({ control });
 
-  const initial = useWatch({ control, name: "initial" });
+  const auto = useWatch({ control, name: "auto" });
 
   useEffect(() => {
-    if (initial && setValue) {
+    if (auto && setValue) {
       setValue("name", t("_entities:transactionCategory.name.init"));
       setValue(
         "description",
         t("_entities:transactionCategory.description.init")
       );
     }
-  }, [open, initial, setValue, t]);
+  }, [open, auto, setValue, t]);
 
   return (
     <>

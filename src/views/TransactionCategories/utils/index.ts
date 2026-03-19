@@ -36,7 +36,7 @@ export const addEmptyTransactionCategory: Omit<
   description: "",
   type: TransactionType.In,
   userId: 0,
-  initial: false,
+  auto: false,
 };
 
 export const emptyTransactionCategory: TransactionCategoryFormType = {
@@ -45,5 +45,5 @@ export const emptyTransactionCategory: TransactionCategoryFormType = {
   description: "",
   type: TransactionType.In,
   userId: 0,
-  initial: false,
+  auto: false,
 };

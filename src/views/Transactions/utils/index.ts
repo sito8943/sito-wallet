@@ -38,7 +38,7 @@ export const dtoToForm = (dto: TransactionDto): TransactionFormType => ({
 export const addEmptyTransaction = (
   account: CommonAccountDto | null = null
 ): Omit<TransactionFormType, "id"> => ({
-  initial: false,
+  auto: false,
   description: "",
   account,
   category: null,
@@ -50,7 +50,7 @@ export const emptyTransaction = (
   account: CommonAccountDto | null = null
 ): TransactionFormType => ({
   id: 0,
-  initial: false,
+  auto: false,
   description: "",
   account,
   category: null,

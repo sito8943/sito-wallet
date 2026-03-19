@@ -12,7 +12,7 @@ import {
 import { IconButton, queryClient, useNotification } from "@sito/dashboard-app";
 
 // hooks
-import { AccountsQueryKeys, DashboardsQueryKeys, useAccountsList } from "hooks";
+import { AccountsQueryKeys, DashboardsQueryKeys, TransactionsQueryKeys, useAccountsList } from "hooks";
 
 // components
 import { Currency } from "../../../../Currencies";
@@ -84,7 +84,10 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
     setIsAdjusting(true);
     try {
       await manager.Accounts.adjustBalance(account.id, data);
-      await queryClient.invalidateQueries({ ...AccountsQueryKeys.all() });
+      await Promise.all([
+        queryClient.invalidateQueries({ ...AccountsQueryKeys.all() }),
+        queryClient.invalidateQueries({ ...TransactionsQueryKeys.all() }),
+      ]);
       showSuccessNotification({
         message: t("_pages:accounts.actions.adjustBalance.successMessage"),
       });
