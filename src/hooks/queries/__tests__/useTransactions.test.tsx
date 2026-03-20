@@ -104,12 +104,12 @@ describe("TransactionsQueryKeys", () => {
     expect(key.enabled).toBe(true);
   });
 
-  it("weekly() has enabled=false when accountId is missing", () => {
+  it("weekly() has enabled=false when account is missing", () => {
     expect(TransactionsQueryKeys.weekly({}).enabled).toBe(false);
   });
 
-  it("weekly() has enabled=true when accountId is provided", () => {
-    expect(TransactionsQueryKeys.weekly({ accountId: 1 }).enabled).toBe(true);
+  it("weekly() has enabled=true when account is provided", () => {
+    expect(TransactionsQueryKeys.weekly({ account: [1] }).enabled).toBe(true);
   });
 });
 
@@ -280,13 +280,16 @@ describe("useWeekly", () => {
     const data = { days: [] };
     mockTransactionsWeekly.mockResolvedValue(data);
 
-    const { result } = renderHook(
-      () => useWeekly({ type: "in", accountId: 1 }),
-      { wrapper: makeWrapper() }
-    );
+    const { result } = renderHook(() => useWeekly({ type: "in", account: [1] }), {
+      wrapper: makeWrapper(),
+    });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data).toEqual(data);
+    expect(mockTransactionsWeekly).toHaveBeenCalledWith({
+      type: "in",
+      account: [1],
+    });
   });
 
   it("falls back to IndexedDB when the API fails", async () => {
@@ -294,10 +297,9 @@ describe("useWeekly", () => {
     mockTransactionsWeekly.mockRejectedValue(new Error("fail"));
     mockOfflineTransactionsWeekly.mockResolvedValue(fallback);
 
-    const { result } = renderHook(
-      () => useWeekly({ type: "in", accountId: 1 }),
-      { wrapper: makeWrapper() }
-    );
+    const { result } = renderHook(() => useWeekly({ type: "in", account: [1] }), {
+      wrapper: makeWrapper(),
+    });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data).toEqual(fallback);

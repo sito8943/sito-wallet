@@ -54,7 +54,7 @@ export default class TransactionClient extends BaseClient<
     return await this.api.doQuery<TransactionTypeResumeDto>(
       builtUrl,
       Methods.GET,
-      null,
+      undefined,
       {
         ...this.api.defaultTokenAcquirer(),
       }
@@ -72,7 +72,7 @@ export default class TransactionClient extends BaseClient<
     return await this.api.doQuery<TransactionWeeklySpentDto>(
       builtUrl,
       Methods.GET,
-      null,
+      undefined,
       {
         ...this.api.defaultTokenAcquirer(),
       }

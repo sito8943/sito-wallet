@@ -192,8 +192,23 @@ vi.mock("../components", () => ({
 }));
 
 vi.mock("../components/WeeklyCard", () => ({
-  WeeklyCard: ({ type }: { type: string }) => (
-    <div data-testid={`weekly-card-${type}`} />
+  WeeklyCard: ({
+    type,
+    accountId,
+    currencyName,
+    currencySymbol,
+  }: {
+    type: string;
+    accountId?: number;
+    currencyName?: string;
+    currencySymbol?: string;
+  }) => (
+    <div
+      data-testid={`weekly-card-${type}`}
+      data-account-id={accountId}
+      data-currency-name={currencyName}
+      data-currency-symbol={currencySymbol}
+    />
   ),
 }));
 
@@ -307,6 +322,31 @@ describe("Transactions", () => {
 
       expect(screen.getByTestId("weekly-card-out")).toBeInTheDocument();
       expect(screen.getByTestId("weekly-card-in")).toBeInTheDocument();
+    });
+
+    it("passes selected account data to weekly cards", () => {
+      renderTransactions();
+
+      expect(screen.getByTestId("weekly-card-out")).toHaveAttribute(
+        "data-account-id",
+        "1"
+      );
+      expect(screen.getByTestId("weekly-card-out")).toHaveAttribute(
+        "data-currency-name",
+        "EUR"
+      );
+      expect(screen.getByTestId("weekly-card-out")).toHaveAttribute(
+        "data-currency-symbol",
+        "€"
+      );
+    });
+
+    it("does not render weekly cards when there are no accounts", () => {
+      mockAccountsCommon.mockReturnValue({ data: [], isLoading: false });
+      renderTransactions();
+
+      expect(screen.queryByTestId("weekly-card-out")).toBeNull();
+      expect(screen.queryByTestId("weekly-card-in")).toBeNull();
     });
   });
 

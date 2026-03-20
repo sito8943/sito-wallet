@@ -27,6 +27,7 @@ import {
   TransactionTypeResumeDto,
   TransactionType,
   FilterTransactionTypeResumeDto,
+  FilterWeeklyTransactionDto,
   TransactionWeeklySpentDto,
 } from "lib";
 import { useTranslation } from "react-i18next";
@@ -56,9 +57,9 @@ export const TransactionsQueryKeys = {
     queryKey: [...TransactionsQueryKeys.all().queryKey, "typeResume", filters],
     enabled: !!filters.type,
   }),
-  weekly: (filters: FilterTransactionDto) => ({
+  weekly: (filters: FilterWeeklyTransactionDto) => ({
     queryKey: [...TransactionsQueryKeys.all().queryKey, "weekly", filters],
-    enabled: !!filters.accountId,
+    enabled: Array.isArray(filters.account) && filters.account.length > 0,
   }),
 };
 
@@ -239,7 +240,7 @@ export function useWeekly(
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
-
+  console.log(account)
   return useQuery({
     ...TransactionsQueryKeys.weekly({
       ...filters,
