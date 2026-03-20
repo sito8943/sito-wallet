@@ -1,6 +1,7 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ReactNode } from "react";
+import type { AppFeatures } from "../../lib/api/featureFlags/types";
 
 import { config } from "../../config";
 
@@ -37,6 +38,59 @@ vi.mock("/src/providers/useSWManager", () => ({
 vi.mock("/src/providers/useSWManager.ts", () => ({
   useManager: () => mockUseManager(),
 }));
+
+vi.mock("lib", () => {
+  const sanitize = (value: unknown): Partial<AppFeatures> => {
+    if (typeof value !== "object" || value === null) return {};
+
+    const next: Partial<AppFeatures> = {};
+    for (const key of [
+      "balanceGreaterThanZero",
+      "currenciesEnabled",
+      "accountsEnabled",
+      "transactionsEnabled",
+    ] as const) {
+      if (typeof value[key] === "boolean") {
+        next[key] = value[key];
+      }
+    }
+
+    return next;
+  };
+
+  return {
+    readPersistedFeatureFlags: (storageKey: string) => {
+      const raw = localStorage.getItem(storageKey);
+      return raw ? sanitize(JSON.parse(raw)) : null;
+    },
+    persistFeatureFlags: (storageKey: string, features: AppFeatures) => {
+      localStorage.setItem(storageKey, JSON.stringify(features));
+    },
+    clearPersistedFeatureFlags: (storageKey: string) => {
+      localStorage.removeItem(storageKey);
+    },
+    mergeAppFeatures: ({
+      defaults,
+      persisted,
+      payload,
+    }: {
+      defaults: AppFeatures;
+      persisted?: Partial<AppFeatures> | null;
+      payload?: Partial<AppFeatures> | null;
+    }) => ({
+      ...defaults,
+      ...sanitize(persisted),
+      ...sanitize(payload),
+    }),
+    isFeatureEnabledByDependencies: (features: AppFeatures, key: string) => {
+      if (key === "transactionCategoriesEnabled") {
+        return features.transactionsEnabled;
+      }
+
+      return features[key as keyof AppFeatures];
+    },
+  };
+});
 
 vi.mock("@sito/dashboard-app", () => {
   class APIClient {

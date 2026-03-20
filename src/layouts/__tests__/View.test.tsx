@@ -103,7 +103,11 @@ vi.mock("../../layouts/View/Header", () => ({
 }));
 
 vi.mock("../../layouts/View/Footer", () => ({
-  default: () => <footer data-testid="footer" />,
+  default: () => (
+    <footer data-testid="footer">
+      <div data-testid="to-top" />
+    </footer>
+  ),
 }));
 
 import { View } from "../../layouts/View/View";
