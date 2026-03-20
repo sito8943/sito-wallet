@@ -6,6 +6,8 @@ type ActionsDropdownActions<TRow extends BaseDto> = ActionPropsType<TRow>[];
 type ActionsDropdownAction<TRow extends BaseDto> =
   ActionsDropdownActions<TRow>[number];
 
+const MOBILE_NAVBAR_MEDIA_QUERY = "(max-width: 639px)";
+
 const getActionsSignature = <TRow extends BaseDto>(
   actions: ActionsDropdownActions<TRow> | undefined,
 ) => {
@@ -30,7 +32,27 @@ export function useMobileNavbar<TRow extends BaseDto>(
   const actionsSignatureRef = useRef("");
 
   useEffect(() => {
-    setTitle(title);
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia(MOBILE_NAVBAR_MEDIA_QUERY);
+
+    const syncTitle = (matches: boolean) => {
+      setTitle(matches ? title : "");
+    };
+
+    syncTitle(mediaQuery.matches);
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      syncTitle(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
   }, [setTitle, title]);
 
   useEffect(() => {
