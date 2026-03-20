@@ -15,7 +15,12 @@ export const SYNC_ENTITY_ORDER: SyncEntity[] = [
   "profile",
 ];
 
-export type SyncOperationType = "CREATE" | "UPDATE" | "DELETE" | "RESTORE";
+export type SyncOperationType =
+  | "CREATE"
+  | "UPDATE"
+  | "DELETE"
+  | "RESTORE"
+  | "ADJUST_BALANCE";
 
 export type SyncPayload = Record<string, unknown> | number;
 

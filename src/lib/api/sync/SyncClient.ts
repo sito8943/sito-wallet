@@ -16,6 +16,11 @@ import {
 
 const SYNC_BASE_PATH = "/sync";
 
+type RequestOptions = {
+  headers?: HeadersInit;
+  credentials?: RequestCredentials;
+};
+
 export class SyncClient {
   private readonly api: APIClient = new APIClient(
     config.apiUrl,
@@ -29,10 +34,8 @@ export class SyncClient {
     }
   );
 
-  private get authHeaders(): HeadersInit {
-    return {
-      ...this.api.defaultTokenAcquirer(),
-    };
+  private get requestConfig(): RequestOptions | HeadersInit {
+    return this.api.defaultTokenAcquirer() ?? {};
   }
 
   async status(): Promise<SyncStatusResponse> {
@@ -40,7 +43,7 @@ export class SyncClient {
       `${SYNC_BASE_PATH}/status`,
       Methods.GET,
       undefined,
-      this.authHeaders
+      this.requestConfig
     );
   }
 
@@ -51,7 +54,7 @@ export class SyncClient {
       `${SYNC_BASE_PATH}/session/start`,
       Methods.POST,
       data,
-      this.authHeaders
+      this.requestConfig
     );
   }
 
@@ -63,7 +66,7 @@ export class SyncClient {
       `${SYNC_BASE_PATH}/bulk/${entity}`,
       Methods.POST,
       data,
-      this.authHeaders
+      this.requestConfig
     );
   }
 
@@ -74,7 +77,7 @@ export class SyncClient {
       `${SYNC_BASE_PATH}/session/finish`,
       Methods.POST,
       data,
-      this.authHeaders
+      this.requestConfig
     );
   }
 
@@ -85,7 +88,7 @@ export class SyncClient {
       `${SYNC_BASE_PATH}/session/cancel`,
       Methods.POST,
       data,
-      this.authHeaders
+      this.requestConfig
     );
   }
 }

@@ -14,6 +14,22 @@ type APIErrorShape = {
   message: string;
 };
 
+type RequestConfig = HeadersInit | RequestOptions;
+
+type RequestOptions = {
+  headers?: HeadersInit;
+  credentials?: RequestCredentials;
+};
+
+const isRequestOptions = (value: RequestConfig | undefined): value is RequestOptions =>
+  Boolean(
+    value &&
+      typeof value === "object" &&
+      !Array.isArray(value) &&
+      !(value instanceof Headers) &&
+      ("headers" in value || "credentials" in value),
+  );
+
 const toApiError = (error: unknown): APIErrorShape => {
   if (typeof error === "object" && error !== null) {
     const maybeError = error as { status?: number; message?: string };
@@ -121,12 +137,15 @@ export default class ProfileClient {
   async updatePhoto(id: number, file: File): Promise<ProfileDto> {
     const formData = new FormData();
     formData.append("file", file);
+    const tokenConfig = this.api.defaultTokenAcquirer();
+    const requestConfig: RequestOptions = isRequestOptions(tokenConfig)
+      ? tokenConfig
+      : { headers: tokenConfig };
 
     const response = await fetch(`${config.apiUrl}${this.table}/${id}/photo`, {
       method: Methods.PATCH,
-      headers: {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      headers: requestConfig.headers,
+      credentials: requestConfig.credentials,
       body: formData,
     });
 
