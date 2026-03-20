@@ -140,7 +140,6 @@ export class TransactionIndexedDBClient extends IndexedDBClient<
   async weekly(
     _filters: FilterWeeklyTransactionDto,
   ): Promise<TransactionWeeklySpentDto> {
-    console.log("hola?")
     return {} as TransactionWeeklySpentDto;
   }
 

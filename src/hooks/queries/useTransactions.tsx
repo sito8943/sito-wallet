@@ -41,7 +41,7 @@ export const TransactionsQueryKeys = {
   }),
   infiniteList: (
     query: Omit<QueryParam<TransactionDto>, "currentPage">,
-    filters: FilterTransactionDto
+    filters: FilterTransactionDto,
   ) => ({
     queryKey: [
       ...TransactionsQueryKeys.all().queryKey,
@@ -89,7 +89,7 @@ export function useTransactionsList(props: {
       ...tableFilters,
       ...filters,
     }),
-    [filters, tableFilters]
+    [filters, tableFilters],
   );
 
   const parsedQueries = useMemo(
@@ -100,7 +100,7 @@ export function useTransactionsList(props: {
       pageSize,
       ...query,
     }),
-    [currentPage, pageSize, query, sortingBy, sortingOrder]
+    [currentPage, pageSize, query, sortingBy, sortingOrder],
   );
 
   return useQuery({
@@ -112,7 +112,7 @@ export function useTransactionsList(props: {
       try {
         const result = await manager.Transactions.get(
           parsedQueries,
-          parsedFilters
+          parsedFilters,
         );
 
         await offlineManager.Transactions.seed(result.items).catch(() => {});
@@ -121,7 +121,7 @@ export function useTransactionsList(props: {
         console.warn("API failed, loading transactions from IndexedDB", error);
         return await offlineManager.Transactions.get(
           parsedQueries,
-          parsedFilters
+          parsedFilters,
         );
       }
     },
@@ -145,7 +145,7 @@ export function useInfiniteTransactionsList(props: {
     () => ({
       ...filters,
     }),
-    [filters]
+    [filters],
   );
 
   const parsedQueries = useMemo(
@@ -154,7 +154,7 @@ export function useInfiniteTransactionsList(props: {
       sortingOrder: query.sortingOrder,
       pageSize: query.pageSize ?? 20,
     }),
-    [query.pageSize, query.sortingBy, query.sortingOrder]
+    [query.pageSize, query.sortingBy, query.sortingOrder],
   );
 
   return useInfiniteQuery({
@@ -169,13 +169,19 @@ export function useInfiniteTransactionsList(props: {
       };
 
       try {
-        const result = await manager.Transactions.get(requestQuery, parsedFilters);
+        const result = await manager.Transactions.get(
+          requestQuery,
+          parsedFilters,
+        );
 
         await offlineManager.Transactions.seed(result.items).catch(() => {});
         return result;
       } catch (error) {
         console.warn("API failed, loading transactions from IndexedDB", error);
-        return await offlineManager.Transactions.get(requestQuery, parsedFilters);
+        return await offlineManager.Transactions.get(
+          requestQuery,
+          parsedFilters,
+        );
       }
     },
     getNextPageParam: (lastPage) => {
@@ -187,7 +193,7 @@ export function useInfiniteTransactionsList(props: {
 }
 
 export function useTransactionTypeResume(
-  props: UseTransactionTypeResumePropsType
+  props: UseTransactionTypeResumePropsType,
 ): UseQueryResult<TransactionTypeResumeDto> {
   const filters = props;
   const { t } = useTranslation();
@@ -214,7 +220,7 @@ export function useTransactionTypeResume(
       } catch (error) {
         console.warn(
           "API failed, loading transaction type resume from IndexedDB",
-          error
+          error,
         );
 
         try {
@@ -223,7 +229,7 @@ export function useTransactionTypeResume(
           throw new Error(
             `${t("_accessibility:errors.unknownError")} ${
               (offlineError as Error).message
-            }`
+            }`,
           );
         }
       }
@@ -232,7 +238,7 @@ export function useTransactionTypeResume(
 }
 
 export function useWeekly(
-  props: FilterTransactionTypeResumeDto
+  props: FilterTransactionTypeResumeDto,
 ): UseQueryResult<TransactionWeeklySpentDto> {
   const filters = props;
   const { t } = useTranslation();
@@ -240,7 +246,6 @@ export function useWeekly(
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
-  console.log(account)
   return useQuery({
     ...TransactionsQueryKeys.weekly({
       ...filters,
@@ -255,7 +260,10 @@ export function useWeekly(
       try {
         return await manager.Transactions.weekly(query);
       } catch (error) {
-        console.warn("API failed, loading weekly transactions from IndexedDB", error);
+        console.warn(
+          "API failed, loading weekly transactions from IndexedDB",
+          error,
+        );
 
         try {
           return await offlineManager.Transactions.weekly(query);
@@ -263,7 +271,7 @@ export function useWeekly(
           throw new Error(
             `${t("_accessibility:errors.unknownError")} ${
               (offlineError as Error).message
-            }`
+            }`,
           );
         }
       }
@@ -273,7 +281,7 @@ export function useWeekly(
 
 export function useTransactionsCommon(
   //TODO FIX THIS
-  props: UseTransactionTypeResumePropsType
+  props: UseTransactionTypeResumePropsType,
 ): UseQueryResult<CommonTransactionDto[]> {
   const manager = useManager();
   const offlineManager = useOfflineManager();
@@ -291,7 +299,7 @@ export function useTransactionsCommon(
       } catch (error) {
         console.warn(
           "API failed, loading common transactions from IndexedDB",
-          error
+          error,
         );
         return await offlineManager.Transactions.commonGet({
           deletedAt: false as unknown as Date,

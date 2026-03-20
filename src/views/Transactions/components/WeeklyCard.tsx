@@ -21,8 +21,6 @@ export const WeeklyCard = (props: WeeklyCardProps) => {
     account: accountId ? [accountId] : undefined,
   });
 
-  console.log(data);
-
   const difference = useMemo(() => {
     if (data) return Math.floor(data?.currentWeek - data?.previousWeek);
     return 0;
