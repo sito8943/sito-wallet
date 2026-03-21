@@ -67,6 +67,7 @@ import { useManager } from "providers";
 
 // styles
 import "./styles.css";
+import AccountCarousel from "./components/AccountCaruosel";
 
 export function Transactions() {
   const { t } = useTranslation();
@@ -118,10 +119,10 @@ export function Transactions() {
   const selectedAccount = useMemo(
     () =>
       tabValue
-        ? accounts.data?.find((account) => account.id === Number(tabValue)) ??
-          null
-        : accounts.data?.[0] ?? null,
-    [accounts.data, tabValue]
+        ? (accounts.data?.find((account) => account.id === Number(tabValue)) ??
+          null)
+        : (accounts.data?.[0] ?? null),
+    [accounts.data, tabValue],
   );
 
   usePersistedTableOptions("transactions", selectedAccount?.id);
@@ -165,7 +166,7 @@ export function Transactions() {
   const handleTransactionProcess = useCallback(
     (file: File, options?: { override?: boolean }) =>
       manager.Transactions.processImport(file, options?.override),
-    [manager]
+    [manager],
   );
 
   const importTransactions = useImportDialog<
@@ -194,7 +195,7 @@ export function Transactions() {
       deleteTransaction,
       editTransaction,
       restoreTransaction,
-    ]
+    ],
   );
 
   const getGridActions = useCallback(
@@ -209,7 +210,7 @@ export function Transactions() {
       assignTransactionCategory,
       deleteTransaction,
       restoreTransaction,
-    ]
+    ],
   );
 
   const accountDesktopTabs = useMemo(() => {
@@ -323,6 +324,7 @@ export function Transactions() {
             className="max-sm:hidden"
             tabsContainerClassName="account-tabs"
           />
+          <AccountCarousel className="sm:hidden mb-4" />
           <TabsLayout
             defaultTab={tabValue}
             tabs={accountMobileTabs}

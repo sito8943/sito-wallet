@@ -7,3 +7,7 @@ export type WeeklyCardProps = {
   title: string;
   type: TransactionType;
 };
+
+export type AccountCarouselPropsType = {
+  className?: string;
+};

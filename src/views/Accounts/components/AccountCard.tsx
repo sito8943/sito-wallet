@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @sito/dashboard-app
 import { Chip } from "@sito/dashboard-app";
@@ -15,8 +16,10 @@ import { AccountType } from "lib";
 
 // views
 import { Currency } from "views/Currencies/components/Currency";
+
+// utils
 import { icons } from "./utils";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TypeResume from "./TypeResume";
 
 export function AccountCard(props: AccountCardPropsType) {
   const { t } = useTranslation();
@@ -31,6 +34,9 @@ export function AccountCard(props: AccountCardPropsType) {
     currency,
     deletedAt,
     balance,
+    containerClassName,
+    showLastTransactions,
+    showTypeResume,
   } = props;
   const deleted = !!deletedAt;
 
@@ -42,7 +48,7 @@ export function AccountCard(props: AccountCardPropsType) {
       aria-label={t("_pages:accounts.forms.editAria")}
       onClick={() => (!deleted ? onClick(id) : {})}
       actions={actions}
-      containerClassName="md:w-100 max-md:w-full"
+      containerClassName={containerClassName ?? "md:w-100 max-md:w-full"}
     >
       <p
         className={`${description ? "" : "!text-xs italic"} text-start mb-2 ${
@@ -86,7 +92,10 @@ export function AccountCard(props: AccountCardPropsType) {
           }
         />
       </div>
-      <LastTransactions accountId={id} currency={currency} />
+      {showLastTransactions && (
+        <LastTransactions accountId={id} currency={currency} />
+      )}
+      {showTypeResume && <TypeResume accountId={id} currency={currency} />}
     </ItemCard>
   );
 }

@@ -13,10 +13,14 @@ import { AccountDto } from "lib";
 export interface AccountCardPropsType extends AccountDto {
   actions: ActionType<AccountDto>[];
   onClick: (id: number) => void;
+  containerClassName?: string;
+  showLastTransactions?: boolean;
+  showTypeResume?: boolean;
 }
 
 export interface AccountFormType
-  extends Omit<AccountDto, "deletedAt" | "createdAt" | "updatedAt" | "user">,
+  extends
+    Omit<AccountDto, "deletedAt" | "createdAt" | "updatedAt" | "user">,
     FieldValues {
   userId: number;
 }
@@ -32,8 +36,7 @@ export interface AdjustBalanceFormType {
   description: string;
 }
 
-export interface AdjustBalanceDialogPropsType
-  extends TriggerFormDialogPropsType<AdjustBalanceFormType> {
+export interface AdjustBalanceDialogPropsType extends TriggerFormDialogPropsType<AdjustBalanceFormType> {
   selectedAccount: AccountDto | null;
 }
 
