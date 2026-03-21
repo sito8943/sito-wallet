@@ -12,6 +12,8 @@ import {
   AddTransactionDto,
   TransactionTypeResumeDto,
   FilterTransactionTypeResumeDto,
+  TransactionTypeGroupedDto,
+  FilterTransactionGroupedByTypeDto,
   TransactionWeeklySpentDto,
   FilterWeeklyTransactionDto,
   ImportPreviewTransactionDto,
@@ -33,6 +35,27 @@ export default class TransactionClient extends BaseClient<
   FilterTransactionDto,
   ImportPreviewTransactionDto
 > {
+  private buildGroupedByTypeFilters(
+    filters?: string,
+    date?: FilterTransactionGroupedByTypeDto["date"],
+  ): string | undefined {
+    const values: string[] = [];
+
+    if (filters) {
+      values.push(filters);
+    }
+
+    if (date?.start) {
+      values.push(`date>=${date.start}`);
+    }
+
+    if (date?.end) {
+      values.push(`date<=${date.end}`);
+    }
+
+    return values.length ? values.join(",") : undefined;
+  }
+
   /**
    */
   constructor() {
@@ -44,7 +67,7 @@ export default class TransactionClient extends BaseClient<
   }
 
   async getTypeResume(
-    filters: FilterTransactionTypeResumeDto
+    filters: FilterTransactionTypeResumeDto,
   ): Promise<TransactionTypeResumeDto> {
     const builtUrl = parseQueries<
       TransactionTypeResumeDto,
@@ -57,12 +80,33 @@ export default class TransactionClient extends BaseClient<
       undefined,
       {
         ...this.api.defaultTokenAcquirer(),
-      }
+      },
+    );
+  }
+
+  async getGroupedByType(
+    filters: FilterTransactionGroupedByTypeDto,
+  ): Promise<TransactionTypeGroupedDto> {
+    const builtUrl = parseQueries<
+      TransactionTypeGroupedDto,
+      FilterTransactionGroupedByTypeDto
+    >(`${Tables.Transactions}/grouped-by-type`, undefined, {
+      accountId: filters.accountId,
+      userId: filters.userId,
+      filters: this.buildGroupedByTypeFilters(filters.filters, filters.date),
+    });
+    return await this.api.doQuery<TransactionTypeGroupedDto>(
+      builtUrl,
+      Methods.GET,
+      undefined,
+      {
+        ...this.api.defaultTokenAcquirer(),
+      },
     );
   }
 
   async weekly(
-    filters: FilterWeeklyTransactionDto
+    filters: FilterWeeklyTransactionDto,
   ): Promise<TransactionWeeklySpentDto> {
     const builtUrl = parseQueries<
       TransactionWeeklySpentDto,
@@ -75,13 +119,13 @@ export default class TransactionClient extends BaseClient<
       undefined,
       {
         ...this.api.defaultTokenAcquirer(),
-      }
+      },
     );
   }
 
   async processImport(
     file: File,
-    override?: boolean
+    override?: boolean,
   ): Promise<ImportPreviewTransactionDto[]> {
     const items = await parseJSONFile<TransactionDto>(file);
     return await this.api.doQuery<ImportPreviewTransactionDto[]>(
@@ -90,7 +134,7 @@ export default class TransactionClient extends BaseClient<
       items,
       {
         ...this.api.defaultTokenAcquirer(),
-      }
+      },
     );
   }
 

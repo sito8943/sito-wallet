@@ -30,7 +30,11 @@ import {
 
 const AccountCarousel = (props: AccountCarouselPropsType) => {
   const { className } = props;
-  const { data, isLoading, error } = useAccountsList({});
+  const { data, isLoading, error } = useAccountsList({
+    filters: {
+      deletedAt: null,
+    },
+  });
 
   // #region actions
 

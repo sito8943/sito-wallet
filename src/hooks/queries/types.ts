@@ -4,7 +4,10 @@ import { UseQueryResult } from "@tanstack/react-query";
 import { BaseEntityDto, BaseFilterDto, QueryParam, QueryResult } from "@sito/dashboard-app";
 
 // lib
-import { FilterTransactionTypeResumeDto } from "lib";
+import {
+  FilterTransactionGroupedByTypeDto,
+  FilterTransactionTypeResumeDto,
+} from "lib";
 
 export type UseFetchPropsType<TRow, TFilterDto = BaseFilterDto> = {
   filters?: TFilterDto;
@@ -21,3 +24,5 @@ export interface ApiQueryResult<TResponseDto extends BaseEntityDto>
 }
 
 export type UseTransactionTypeResumePropsType = FilterTransactionTypeResumeDto;
+export type UseTransactionsGroupedByTypePropsType =
+  FilterTransactionGroupedByTypeDto;

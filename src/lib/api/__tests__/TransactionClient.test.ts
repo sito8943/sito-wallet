@@ -52,6 +52,8 @@ vi.mock("lib", () => ({
   AddTransactionDto: class {},
   TransactionTypeResumeDto: class {},
   FilterTransactionTypeResumeDto: class {},
+  TransactionTypeGroupedDto: class {},
+  FilterTransactionGroupedByTypeDto: class {},
   TransactionWeeklySpentDto: class {},
   FilterWeeklyTransactionDto: class {},
   ImportPreviewTransactionDto: class {},
@@ -104,6 +106,34 @@ describe("TransactionClient", () => {
       "GET",
       undefined,
       { Authorization: "Bearer token" },
+    );
+  });
+
+  it("calls getGroupedByType without request body on GET", async () => {
+    mockDoQuery.mockResolvedValue({
+      incomeTotal: 120.5,
+      expenseTotal: 35.25,
+    });
+
+    const client = new TransactionClient();
+    await client.getGroupedByType({
+      accountId: 15,
+      date: {
+        start: "2026-03-01T00:00:00",
+        end: "2026-03-31T23:59:59",
+      },
+    });
+
+    expect(mockDoQuery).toHaveBeenCalledWith(
+      expect.stringContaining("transactions/grouped-by-type"),
+      "GET",
+      undefined,
+      { Authorization: "Bearer token" },
+    );
+
+    expect(mockDoQuery.mock.calls[0][0]).toContain("accountId=15");
+    expect(mockDoQuery.mock.calls[0][0]).toContain(
+      "filters=date%3E%3D2026-03-01T00%3A00%3A00%2Cdate%3C%3D2026-03-31T23%3A59%3A59",
     );
   });
 });

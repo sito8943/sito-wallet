@@ -11,9 +11,11 @@ import {
   UpdateTransactionDto,
   FilterTransactionDto,
   FilterTransactionTypeResumeDto,
+  FilterTransactionGroupedByTypeDto,
   FilterWeeklyTransactionDto,
   ImportPreviewTransactionDto,
   TransactionTypeResumeDto,
+  TransactionTypeGroupedDto,
   TransactionWeeklySpentDto,
   AssignTransactionAccountDto,
   AssignTransactionCategoryDto,
@@ -135,6 +137,15 @@ export class TransactionIndexedDBClient extends IndexedDBClient<
     _filters: FilterTransactionTypeResumeDto,
   ): Promise<TransactionTypeResumeDto> {
     return {} as TransactionTypeResumeDto;
+  }
+
+  async getGroupedByType(
+    _filters: FilterTransactionGroupedByTypeDto,
+  ): Promise<TransactionTypeGroupedDto> {
+    return {
+      incomeTotal: 0,
+      expenseTotal: 0,
+    };
   }
 
   async weekly(

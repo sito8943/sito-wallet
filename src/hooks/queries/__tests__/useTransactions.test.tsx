@@ -6,10 +6,12 @@ import { ReactNode } from "react";
 const mockTransactionsGet = vi.fn();
 const mockTransactionsCommonGet = vi.fn();
 const mockTransactionsGetTypeResume = vi.fn();
+const mockTransactionsGetGroupedByType = vi.fn();
 const mockTransactionsWeekly = vi.fn();
 const mockOfflineTransactionsGet = vi.fn();
 const mockOfflineTransactionsCommonGet = vi.fn();
 const mockOfflineTransactionsGetTypeResume = vi.fn();
+const mockOfflineTransactionsGetGroupedByType = vi.fn();
 const mockOfflineTransactionsWeekly = vi.fn();
 const mockTransactionsSeed = vi.fn(() => Promise.resolve());
 const mockUseAuth = vi.fn();
@@ -20,6 +22,7 @@ vi.mock("providers", () => ({
       get: mockTransactionsGet,
       commonGet: mockTransactionsCommonGet,
       getTypeResume: mockTransactionsGetTypeResume,
+      getGroupedByType: mockTransactionsGetGroupedByType,
       weekly: mockTransactionsWeekly,
     },
   }),
@@ -28,6 +31,7 @@ vi.mock("providers", () => ({
       get: mockOfflineTransactionsGet,
       commonGet: mockOfflineTransactionsCommonGet,
       getTypeResume: mockOfflineTransactionsGetTypeResume,
+      getGroupedByType: mockOfflineTransactionsGetGroupedByType,
       weekly: mockOfflineTransactionsWeekly,
       seed: mockTransactionsSeed,
     },
@@ -60,6 +64,8 @@ vi.mock("lib", () => ({
   FilterTransactionDto: class {},
   TransactionTypeResumeDto: class {},
   FilterTransactionTypeResumeDto: class {},
+  TransactionTypeGroupedDto: class {},
+  FilterTransactionGroupedByTypeDto: class {},
   TransactionWeeklySpentDto: class {},
 }));
 
@@ -67,6 +73,7 @@ import {
   useTransactionsList,
   useTransactionsCommon,
   useTransactionTypeResume,
+  useTransactionsGroupedByType,
   useWeekly,
   TransactionsQueryKeys,
 } from "../useTransactions";
@@ -110,6 +117,12 @@ describe("TransactionsQueryKeys", () => {
 
   it("weekly() has enabled=true when account is provided", () => {
     expect(TransactionsQueryKeys.weekly({ account: [1] }).enabled).toBe(true);
+  });
+
+  it("groupedByType() has enabled=true when accountId is provided", () => {
+    expect(TransactionsQueryKeys.groupedByType({ accountId: 1 }).enabled).toBe(
+      true,
+    );
   });
 });
 
@@ -314,5 +327,52 @@ describe("useWeekly", () => {
 
     expect(result.current.fetchStatus).toBe("idle");
     expect(mockTransactionsWeekly).not.toHaveBeenCalled();
+  });
+});
+
+describe("useTransactionsGroupedByType", () => {
+  beforeEach(() => {
+    mockUseAuth.mockReturnValue({
+      account: { id: 1, email: "test@example.com" },
+    });
+    mockTransactionsGetGroupedByType.mockReset();
+    mockOfflineTransactionsGetGroupedByType.mockReset();
+  });
+
+  it("fetches grouped totals when the API succeeds", async () => {
+    const data = { incomeTotal: 120.5, expenseTotal: 35.25 };
+    mockTransactionsGetGroupedByType.mockResolvedValue(data);
+
+    const { result } = renderHook(
+      () => useTransactionsGroupedByType({ accountId: 15 }),
+      { wrapper: makeWrapper() }
+    );
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data).toEqual(data);
+  });
+
+  it("falls back to IndexedDB when the API fails", async () => {
+    const fallback = { incomeTotal: 0, expenseTotal: 0 };
+    mockTransactionsGetGroupedByType.mockRejectedValue(new Error("fail"));
+    mockOfflineTransactionsGetGroupedByType.mockResolvedValue(fallback);
+
+    const { result } = renderHook(
+      () => useTransactionsGroupedByType({ accountId: 15 }),
+      { wrapper: makeWrapper() }
+    );
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data).toEqual(fallback);
+  });
+
+  it("is disabled when accountId is missing", () => {
+    const { result } = renderHook(
+      () => useTransactionsGroupedByType({ accountId: 0 }),
+      { wrapper: makeWrapper() }
+    );
+
+    expect(result.current.fetchStatus).toBe("idle");
+    expect(mockTransactionsGetGroupedByType).not.toHaveBeenCalled();
   });
 });
