@@ -67,7 +67,7 @@ import { useManager } from "providers";
 
 // styles
 import "./styles.css";
-import AccountCarousel from "./components/AccountCaruosel";
+import AccountShower from "./components/AccountShower";
 
 export function Transactions() {
   const { t } = useTranslation();
@@ -324,7 +324,7 @@ export function Transactions() {
             className="max-sm:hidden"
             tabsContainerClassName="account-tabs"
           />
-          <AccountCarousel className="sm:hidden mb-4" />
+          <AccountShower className="sm:hidden mb-4" />
           <TabsLayout
             defaultTab={tabValue}
             tabs={accountMobileTabs}

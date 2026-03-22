@@ -1,8 +1,10 @@
-import { useCallback } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { css } from "@emotion/css";
 
 // @sito/dashboard
-import { Loading } from "@sito/dashboard-app";
+import { AutocompleteInput, Loading } from "@sito/dashboard-app";
+
+// icons
 
 // hooks
 import { useAccountsList } from "hooks";
@@ -28,13 +30,21 @@ import {
   EditAccountDialog,
 } from "views/Accounts";
 
-const AccountCarousel = (props: AccountCarouselPropsType) => {
+const AccountShower = (props: AccountCarouselPropsType) => {
   const { className } = props;
   const { data, isLoading, error } = useAccountsList({
     filters: {
-      deletedAt: null,
+      deletedAt: false,
     },
   });
+
+  const accounts = useMemo(() => {
+    return data?.items;
+  }, [data]);
+
+  const [selectedAccount, setSelectedAccount] = useState(
+    accounts ? accounts[0] : null,
+  );
 
   // #region actions
 
@@ -58,29 +68,30 @@ const AccountCarousel = (props: AccountCarouselPropsType) => {
 
   return (
     <>
-      <div className={className}>
+      <div className={`${className} relative`}>
         {isLoading && (
           <div className="flex gap-2 items-center justify-start pl-1">
             <Loading className="mt-0.5" loaderClass="w-10 h-10" />
           </div>
         )}
         {error && <Error />}
-        <ul className="flex gap-4 overflow-auto">
-          {data?.items?.map((account) => (
-            <li key={account.id}>
-              <AccountCard
-                containerClassName={css({
-                  width: `${window.innerWidth - 24}px`,
-                })}
-                showLastTransactions={false}
-                showTypeResume
-                actions={getActions(account)}
-                onClick={(id: number) => editAccount.openDialog(id)}
-                {...account}
-              />
-            </li>
-          ))}
-        </ul>
+        <AutocompleteInput
+          value={selectedAccount}
+          onChange={(value) => value && setSelectedAccount(value as AccountDto)}
+          options={accounts ?? []}
+        />
+        {selectedAccount && (
+          <AccountCard
+            containerClassName={css({
+              width: `${window.innerWidth - 40}px`,
+            })}
+            showLastTransactions={false}
+            showTypeResume
+            actions={getActions(selectedAccount)}
+            onClick={(id: number) => editAccount.openDialog(id)}
+            {...selectedAccount}
+          />
+        )}
       </div>
       {/* Dialogs */}
       <AddAccountDialog {...addAccount} />
@@ -90,4 +101,4 @@ const AccountCarousel = (props: AccountCarouselPropsType) => {
   );
 };
 
-export default AccountCarousel;
+export default AccountShower;

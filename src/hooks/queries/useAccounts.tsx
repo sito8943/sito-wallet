@@ -30,9 +30,14 @@ export const AccountsQueryKeys = {
   }),
   infiniteList: (
     query: Omit<QueryParam<AccountDto>, "currentPage">,
-    filters: FilterAccountDto
+    filters: FilterAccountDto,
   ) => ({
-    queryKey: [...AccountsQueryKeys.all().queryKey, "infinite-list", query, filters],
+    queryKey: [
+      ...AccountsQueryKeys.all().queryKey,
+      "infinite-list",
+      query,
+      filters,
+    ],
   }),
   common: () => ({
     queryKey: [...AccountsQueryKeys.all().queryKey, "common"],
@@ -40,7 +45,7 @@ export const AccountsQueryKeys = {
 };
 
 export function useAccountsList(
-  props: UseFetchPropsType<AccountDto, FilterAccountDto>
+  props: UseFetchPropsType<AccountDto, FilterAccountDto>,
 ): UseQueryResult<QueryResult<AccountDto>> {
   const { filters = defaultAccountsListFilters } = props;
 
@@ -56,7 +61,7 @@ export function useAccountsList(
 }
 
 export function useInfiniteAccountsList(
-  props: UseFetchPropsType<AccountDto, FilterAccountDto>
+  props: UseFetchPropsType<AccountDto, FilterAccountDto>,
 ) {
   const {
     filters = defaultAccountsListFilters,
@@ -71,7 +76,7 @@ export function useInfiniteAccountsList(
     () => ({
       ...filters,
     }),
-    [filters]
+    [filters],
   );
 
   const parsedQueries = useMemo(
@@ -80,7 +85,7 @@ export function useInfiniteAccountsList(
       sortingOrder: query.sortingOrder,
       pageSize: query.pageSize ?? 20,
     }),
-    [query.pageSize, query.sortingBy, query.sortingOrder]
+    [query.pageSize, query.sortingBy, query.sortingOrder],
   );
 
   return useInfiniteQuery({
@@ -125,7 +130,10 @@ export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
           deletedAt: false as unknown as FilterAccountDto["deletedAt"],
         });
       } catch (error) {
-        console.warn("API failed, loading common accounts from IndexedDB", error);
+        console.warn(
+          "API failed, loading common accounts from IndexedDB",
+          error,
+        );
         return await offlineManager.Accounts.commonGet({
           deletedAt: false as unknown as FilterAccountDto["deletedAt"],
         });
