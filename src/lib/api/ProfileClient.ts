@@ -21,13 +21,15 @@ type RequestOptions = {
   credentials?: RequestCredentials;
 };
 
-const isRequestOptions = (value: RequestConfig | undefined): value is RequestOptions =>
+const isRequestOptions = (
+  value: RequestConfig | undefined,
+): value is RequestOptions =>
   Boolean(
     value &&
-      typeof value === "object" &&
-      !Array.isArray(value) &&
-      !(value instanceof Headers) &&
-      ("headers" in value || "credentials" in value),
+    typeof value === "object" &&
+    !Array.isArray(value) &&
+    !(value instanceof Headers) &&
+    ("headers" in value || "credentials" in value),
   );
 
 const toApiError = (error: unknown): APIErrorShape => {
@@ -148,13 +150,14 @@ export default class ProfileClient {
       credentials: requestConfig.credentials,
       body: formData,
     });
-
     const payloadText = await response.text();
     let payload: unknown = null;
+    let isText = false;
 
     try {
       payload = payloadText ? JSON.parse(payloadText) : null;
     } catch {
+      isText = true;
       payload = payloadText;
     }
 
@@ -163,6 +166,10 @@ export default class ProfileClient {
         status: response.status,
         message: parseErrorMessage(payload, response.statusText),
       } as APIErrorShape;
+    }
+
+    if (response.ok && isText) {
+      return { photo: payload as string } as unknown as ProfileDto;
     }
 
     if (!payload || typeof payload !== "object") {
