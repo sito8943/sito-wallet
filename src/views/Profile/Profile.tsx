@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -12,7 +12,6 @@ import {
   State,
   TextInput,
   useAuth,
-  queryClient,
   useNotification,
 } from "@sito/dashboard-app";
 
@@ -54,6 +53,7 @@ export function Profile() {
   const manager = useManager();
   const { showErrorNotification, showSuccessNotification } = useNotification();
 
+  const queryClient = useQueryClient();
   const { account } = useAuth();
 
   const profileQuery = useMyProfile({
@@ -67,7 +67,7 @@ export function Profile() {
 
   const handlePhotoUpdate = useCallback(() => {
     queryClient.invalidateQueries({ ...ProfileQueryKeys.all() });
-  }, []);
+  }, [queryClient]);
 
   const { isUploading, uploadPhoto, deletePhoto } = useProfilePhoto(
     profile?.id ?? 0,

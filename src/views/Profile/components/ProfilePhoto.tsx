@@ -84,7 +84,7 @@ export function ProfilePhoto({
             color="primary"
             data-tooltip-id="tooltip"
             data-tooltip-content={t("_pages:profile.photo.upload")}
-            className="absolute vertical-center horizontal-center"
+            className="top-1 right-1 absolute"
           />
         )}
         {hasPhoto && (

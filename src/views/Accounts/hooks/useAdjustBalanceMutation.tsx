@@ -1,8 +1,9 @@
 import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
-import { useFormDialog, queryClient } from "@sito/dashboard-app";
+import { useFormDialog } from "@sito/dashboard-app";
 
 // hooks
 import { useAdjustBalanceAction } from "./useAdjustBalanceAction";
@@ -31,6 +32,7 @@ export const useAdjustBalanceMutation = () => {
   const { t } = useTranslation();
 
   const manager = useManager();
+  const queryClient = useQueryClient();
 
   const [selectedAccount, setSelectedAccount] = useState<AccountDto | null>(
     null

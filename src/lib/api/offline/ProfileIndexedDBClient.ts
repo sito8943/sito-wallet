@@ -128,6 +128,14 @@ export class ProfileIndexedDBClient extends IndexedDBClient<
     }
   }
 
+  async updatePhoto(_id: number, _file: File): Promise<ProfileDto> {
+    throw new Error("Photo upload is not available offline");
+  }
+
+  async deletePhoto(_id: number): Promise<ProfileDto> {
+    throw new Error("Photo deletion is not available offline");
+  }
+
   async delete(_ids: number[]): Promise<number> {
     return 0;
   }

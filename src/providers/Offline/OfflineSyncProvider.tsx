@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
-import { queryClient, useAuth, useNotification } from "@sito/dashboard-app";
+import { useAuth, useNotification } from "@sito/dashboard-app";
 
 // hooks
 import {
@@ -27,6 +28,7 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
   const { children } = props;
 
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const isOnline = useOnlineStatus();
   const { isBrowserOnline } = useOnlineStatusSnapshot();
   const { account, isInGuestMode } = useAuth();
@@ -75,7 +77,7 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
         });
       }
     },
-    [showErrorNotification, t],
+    [queryClient, showErrorNotification, t],
   );
 
   useEffect(() => {
@@ -205,6 +207,7 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
     isInGuestMode,
     isOnline,
     isServerUnavailableError,
+    queryClient,
     showErrorNotification,
     showSuccessNotification,
     t,

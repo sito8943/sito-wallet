@@ -38,7 +38,14 @@ export function useProfilePhoto(
         setIsUploading(false);
       }
     },
-    [profileId, manager, onSuccess, showSuccessNotification, showErrorNotification, t],
+    [
+      profileId,
+      manager,
+      onSuccess,
+      showSuccessNotification,
+      showErrorNotification,
+      t,
+    ],
   );
 
   const deletePhoto = useCallback(async () => {
@@ -57,7 +64,14 @@ export function useProfilePhoto(
     } finally {
       setIsUploading(false);
     }
-  }, [profileId, manager, onSuccess, showSuccessNotification, showErrorNotification, t]);
+  }, [
+    profileId,
+    manager,
+    onSuccess,
+    showSuccessNotification,
+    showErrorNotification,
+    t,
+  ]);
 
   return { isUploading, uploadPhoto, deletePhoto };
 }

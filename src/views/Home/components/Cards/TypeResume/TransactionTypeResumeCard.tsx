@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-// @sito/dashboard-app
-import { queryClient } from "@sito/dashboard-app";
+import { useQueryClient } from "@tanstack/react-query";
 
 // lib
 import { TransactionType } from "lib";
@@ -38,6 +36,7 @@ const defaultConfig: TypeResumeTypeFormType = {
 
 export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const { title, config, id, user, onDelete } = props;
+  const queryClient = useQueryClient();
 
   const parseFormConfig = (cfg?: string | null): TypeResumeTypeFormType => {
     try {

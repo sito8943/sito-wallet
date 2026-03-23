@@ -8,8 +8,10 @@ import {
   faScaleBalanced,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { useQueryClient } from "@tanstack/react-query";
+
 // @sito/dashboard-app
-import { IconButton, queryClient } from "@sito/dashboard-app";
+import { IconButton } from "@sito/dashboard-app";
 
 // hooks
 import { AccountsQueryKeys, DashboardsQueryKeys, useAccountsList } from "hooks";
@@ -41,6 +43,7 @@ const defaultConfig: CurrentBalanceFormType = {
 export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
   const { title, config, id, user, onDelete } = props;
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const manager = useManager();
 
   const parseFormConfig = (cfg?: string | null): CurrentBalanceFormType => {

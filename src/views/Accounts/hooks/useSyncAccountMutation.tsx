@@ -1,9 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-
-import { useNotification, queryClient } from "@sito/dashboard-app";
+import { useNotification } from "@sito/dashboard-app";
 
 // hooks
 import { useSyncAccountAction } from "./useSyncAccountAction";
@@ -18,6 +17,7 @@ export const useSyncAccountMutation = () => {
   const { t } = useTranslation();
 
   const manager = useManager();
+  const queryClient = useQueryClient();
 
   const { showErrorNotification, showSuccessNotification } = useNotification();
 
