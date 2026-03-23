@@ -14,7 +14,7 @@ export function Home() {
   const { account, isInGuestMode } = useAuth();
 
   return (
-    <main className="items-center justify-start md:pt-20 max-md:pt-10 gap-10">
+    <main className="items-center justify-start md:pt-20 max-md:pt-10 max-sm:pt-5 gap-10 max-md:gap-5">
       <h2 className="self-center justify-self-center text-4xl max-md:text-3xl max-xs:text-2xl">
         {t("_pages:home.welcome", {
           user: isInGuestMode() ? t("_pages:home.guest") : account?.username,
