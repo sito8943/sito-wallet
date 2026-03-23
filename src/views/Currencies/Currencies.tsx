@@ -22,7 +22,7 @@ import { faAdd, faCoins } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // providers
-import { useManager } from "providers";
+import { useManager, useRegisterBottomNavAction } from "providers";
 
 // components
 import {
@@ -126,6 +126,10 @@ export function Currencies() {
   }, [exportCurrency, importCurrencies]);
 
   useMobileNavbar(t("_pages:currencies.title"), pageToolbar);
+
+  useRegisterBottomNavAction(
+    useCallback(() => addCurrency.openDialog(), [addCurrency]),
+  );
 
   return (
     <Page

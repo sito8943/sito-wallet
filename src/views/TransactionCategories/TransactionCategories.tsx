@@ -22,7 +22,7 @@ import { faAdd, faTags } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // providers
-import { useManager } from "providers";
+import { useManager, useRegisterBottomNavAction } from "providers";
 
 // components]=
 import {
@@ -129,6 +129,10 @@ export function TransactionCategories() {
   }, [exportTransactionCategory, importTransactionCategories]);
 
   useMobileNavbar(t("_pages:transactionCategories.title"), pageToolbar);
+
+  useRegisterBottomNavAction(
+    useCallback(() => addTransactionCategory.openDialog(), [addTransactionCategory]),
+  );
 
   return (
     <Page

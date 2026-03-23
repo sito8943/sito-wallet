@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 // @sito/dashboard-app
 import {
@@ -27,7 +27,7 @@ import { useAddDashboardCard } from "../hooks";
 import { DashboardCardType } from "lib";
 
 // providers
-import { useManager } from "providers";
+import { useManager, useRegisterBottomNavAction } from "providers";
 
 export const Dashboard = () => {
   const { data, isLoading, error } = useDashboardsList({});
@@ -89,6 +89,10 @@ export const Dashboard = () => {
       }
     });
   }, [data, deleteDashboardCard]);
+
+  useRegisterBottomNavAction(
+    useCallback(() => addDashboardCard.openDialog(), [addDashboardCard]),
+  );
 
   return !error ? (
     <section id="dashboard">

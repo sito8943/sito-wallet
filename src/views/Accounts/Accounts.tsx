@@ -18,7 +18,7 @@ import {
 } from "@sito/dashboard-app";
 
 // providers
-import { useManager } from "providers";
+import { useManager, useRegisterBottomNavAction } from "providers";
 
 // icons
 import { faAdd, faWallet } from "@fortawesome/free-solid-svg-icons";
@@ -127,7 +127,13 @@ export function Accounts() {
       deleteAccount.action(record),
       restoreAccount.action(record),
     ],
-    [adjustBalance, deleteAccount, restoreAccount, syncAccount, viewTransactions],
+    [
+      adjustBalance,
+      deleteAccount,
+      restoreAccount,
+      syncAccount,
+      viewTransactions,
+    ],
   );
 
   const pageToolbar = useMemo(() => {
@@ -135,6 +141,10 @@ export function Accounts() {
   }, [exportAccounts, importAccounts]);
 
   useMobileNavbar(t("_pages:accounts.title"), pageToolbar);
+
+  useRegisterBottomNavAction(
+    useCallback(() => addAccount.openDialog(), [addAccount]),
+  );
 
   return (
     <Page
