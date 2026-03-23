@@ -22,9 +22,12 @@ import { useAuth, fromLocal, toLocal } from "@sito/dashboard-app";
 import { useAppPreload } from "hooks";
 
 // components
-import { SearchModal } from "components";
+import { SearchModal, BottomNavigation } from "components";
 import Header from "./Header";
 import Footer from "./Footer";
+
+// providers
+import { BottomNavActionProvider } from "providers";
 
 // config
 import { config } from "../../config";
@@ -70,16 +73,19 @@ export function View() {
       searchComponent={SearchModal}
     >
       <NavbarProvider>
-        {showOnboarding && <Onboarding steps={onboardingSteps} />}
-        <Header />
-        <ErrorBoundary FallbackComponent={Error}>
-          <TableOptionsProvider>
-            <Outlet />
-          </TableOptionsProvider>
-        </ErrorBoundary>
-        <Footer />
-        <Tooltip id="tooltip" />
-        <Notification />
+        <BottomNavActionProvider>
+          {showOnboarding && <Onboarding steps={onboardingSteps} />}
+          <Header />
+          <ErrorBoundary FallbackComponent={Error}>
+            <TableOptionsProvider>
+              <Outlet />
+            </TableOptionsProvider>
+          </ErrorBoundary>
+          <Footer />
+          <BottomNavigation />
+          <Tooltip id="tooltip" />
+          <Notification />
+        </BottomNavActionProvider>
       </NavbarProvider>
     </ConfigProvider>
   );

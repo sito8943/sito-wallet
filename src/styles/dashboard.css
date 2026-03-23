@@ -206,3 +206,7 @@ select > option {
 .fab {
   @apply !hidden
 }
+
+.to-top {
+  @apply bottom-20
+}

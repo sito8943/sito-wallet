@@ -63,7 +63,7 @@ import {
 } from "lib";
 
 // providers
-import { useManager } from "providers";
+import { useRegisterBottomNavAdd, useManager } from "providers";
 
 // styles
 import "./styles.css";
@@ -257,6 +257,10 @@ export function Transactions() {
   }, [exportTransactions, importTransactions]);
 
   useMobileNavbar(t("_pages:transactions.title"), pageToolbar);
+
+  useRegisterBottomNavAdd(
+    useCallback(() => addTransaction.openDialog(), [addTransaction]),
+  );
 
   const noAccounts = useMemo(() => {
     return accountDesktopTabs.length === 0 || accountMobileTabs.length === 0;

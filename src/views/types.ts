@@ -32,3 +32,10 @@ export type MenuItemType = {
 };
 
 export type IsFeatureEnabled = (key: FeatureFlagKey) => boolean;
+
+export type BottomNavItemType = {
+  page: string;
+  path: string;
+  icon: ReactNode;
+  position: "left" | "right";
+};
