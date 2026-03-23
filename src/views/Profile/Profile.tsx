@@ -49,13 +49,6 @@ const toRenderableError = (error: unknown, fallback: string): Error => {
   return new Error(getErrorMessage(error, fallback));
 };
 
-const toDateLabel = (value: Date | string | null | undefined): string => {
-  if (!value) return "-";
-  const date = value instanceof Date ? value : new Date(value);
-  if (Number.isNaN(date.getTime())) return "-";
-  return date.toLocaleString();
-};
-
 export function Profile() {
   const { t } = useTranslation();
   const manager = useManager();
@@ -189,10 +182,6 @@ export function Profile() {
                     <p className="text-sm text-text-muted">
                       {t("_pages:profile.labels.username")}:{" "}
                       {profile.user?.username ?? "-"}
-                    </p>
-                    <p className="text-sm text-text-muted">
-                      {t("_pages:profile.labels.updatedAt")}:{" "}
-                      {toDateLabel(profile.updatedAt)}
                     </p>
                   </div>
                 </div>
