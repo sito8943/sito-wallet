@@ -32,10 +32,10 @@ export const Image = (props: ImagePropsType) => {
 
   const parsedUrl = useMemo(
     () => resolveUrl(endpoint, baseUrl ?? config.apiUrl),
-    [baseUrl, endpoint]
+    [baseUrl, endpoint],
   );
 
-  const parsedToken = token ?? account?.token ?? "";
+  const parsedToken = token ?? account?.token;
 
   useEffect(() => {
     let currentUrl: string | null = null;
@@ -50,7 +50,7 @@ export const Image = (props: ImagePropsType) => {
       });
     };
 
-    if (!parsedToken || !endpoint.length) {
+    if (!endpoint.length) {
       clearSource();
       return;
     }
@@ -59,10 +59,11 @@ export const Image = (props: ImagePropsType) => {
 
     (async () => {
       try {
+        const headers: HeadersInit = {};
+        if (parsedToken) headers.Authorization = `Bearer ${parsedToken}`;
+
         const response = await fetch(parsedUrl, {
-          headers: {
-            Authorization: `Bearer ${parsedToken}`,
-          },
+          headers,
           signal: controller.signal,
         });
 

@@ -16,11 +16,12 @@ import { IconButton } from "@sito/dashboard-app";
 // types
 import { ProfilePhotoPropsType } from "../types";
 
-// config
-import { config } from "../../../config";
-
 // components
 import { Image } from "components";
+
+const PhotoFallback = () => (
+  <FontAwesomeIcon icon={faUser} className="text-4xl text-text-muted" />
+);
 
 export function ProfilePhoto({
   profile,
@@ -46,28 +47,28 @@ export function ProfilePhoto({
     [onUpload],
   );
 
-  const photoUrl = profile.photo ? `${config.serverUrl}${profile.photo}` : null;
-
-  console.log(profile)
+  const hasPhoto = !!profile.photo;
 
   return (
     <div className="flex flex-col items-center gap-3">
       <div className="relative">
-        <div className="w-28 h-28 rounded-2xl overflow-hidden bg-base border-2 border-border flex items-center justify-center">
-          {photoUrl ? (
-            <img
-              src={photoUrl}
-              alt={profile.name}
+        <div
+          className={`w-28 h-28 rounded-2xl overflow-hidden bg-base border-2 border-border flex items-center justify-center${hasPhoto ? " cursor-pointer" : ""}`}
+          onClick={hasPhoto ? handleFileSelect : undefined}
+          title={hasPhoto ? t("_pages:profile.photo.upload") : undefined}
+        >
+          {hasPhoto ? (
+            <Image
+              endpoint={profile.photo!}
+              fallback={<PhotoFallback />}
               className="w-full h-full object-cover"
+              alt={profile.name}
             />
           ) : (
-            <FontAwesomeIcon
-              icon={faUser}
-              className="text-4xl text-text-muted"
-            />
+            <PhotoFallback />
           )}
           {isUploading && (
-            <div className="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center">
+            <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
               <FontAwesomeIcon
                 icon={faSpinner}
                 className="text-2xl text-white rotate"
@@ -75,16 +76,18 @@ export function ProfilePhoto({
             </div>
           )}
         </div>
-        <IconButton
-          icon={faCamera}
-          onClick={handleFileSelect}
-          disabled={isUploading}
-          color="primary"
-          data-tooltip-id="tooltip"
-          data-tooltip-content={t("_pages:profile.photo.upload")}
-          className="absolute vertical-center horizontal-center"
-        />
-        {profile.photo && (
+        {!hasPhoto && (
+          <IconButton
+            icon={faCamera}
+            onClick={handleFileSelect}
+            disabled={isUploading}
+            color="primary"
+            data-tooltip-id="tooltip"
+            data-tooltip-content={t("_pages:profile.photo.upload")}
+            className="absolute vertical-center horizontal-center"
+          />
+        )}
+        {hasPhoto && (
           <IconButton
             icon={faTrash}
             onClick={onDelete}
