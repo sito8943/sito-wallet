@@ -185,3 +185,11 @@ main {
 .base-border {
   @apply border-hover-primary/20 border-1 rounded-xl;
 }
+
+.horizontal-center {
+  @apply left-1/2 -translate-x-1/2;
+}
+
+.vertical-center {
+  @apply top-1/2 -translate-y-1/2;
+}

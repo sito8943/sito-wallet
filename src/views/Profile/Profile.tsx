@@ -56,13 +56,6 @@ const toDateLabel = (value: Date | string | null | undefined): string => {
   return date.toLocaleString();
 };
 
-const getInitials = (name: string) => {
-  const parts = name.trim().split(/\s+/).filter(Boolean).slice(0, 2);
-
-  if (!parts.length) return "P";
-  return parts.map((part) => part[0]?.toUpperCase() ?? "").join("");
-};
-
 export function Profile() {
   const { t } = useTranslation();
   const manager = useManager();
@@ -183,9 +176,12 @@ export function Profile() {
 
               <div className="flex max-sm:flex-col max-sm:items-start items-center gap-4">
                 <div className="flex items-center justify-start gap-4">
-                  <div className="h-16 w-16 rounded-full max-sm:m-auto bg-primary text-base flex items-center justify-center text-xl">
-                    {getInitials(currentName || profile.name || "")}
-                  </div>
+                  <ProfilePhoto
+                    profile={profile}
+                    isUploading={isUploading}
+                    onUpload={uploadPhoto}
+                    onDelete={deletePhoto}
+                  />
                   <div className="flex flex-col">
                     <h3 className="text-xl">
                       {currentName || profile.name || ""}
@@ -238,29 +234,6 @@ export function Profile() {
                     }
                   />
                 )}
-              />
-            </section>
-
-            <SectionDivider />
-
-            <section id="photo" className="flex flex-col gap-4">
-              <div className="flex flex-col gap-1">
-                <h3 className="text-xs uppercase tracking-wide text-text-muted">
-                  {t("_pages:profile.sections.photo")}
-                </h3>
-                <p className="text-sm text-text-muted">
-                  {t("_pages:profile.helper.photo")}
-                </p>
-                <p className="text-sm text-warning">
-                  {t("_pages:profile.helper.photoAdvice")}
-                </p>
-              </div>
-
-              <ProfilePhoto
-                profile={profile}
-                isUploading={isUploading}
-                onUpload={uploadPhoto}
-                onDelete={deletePhoto}
               />
             </section>
 

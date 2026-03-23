@@ -72,8 +72,11 @@ const featureFlagsDefaults: AppFeatures = {
   ),
 };
 
+const serverUrl = new URL(VITE_API_URL).origin;
+
 export const config = {
   apiUrl: VITE_API_URL,
+  serverUrl,
   thisUrl: VITE_THIS_URL,
   language: VITE_LANGUAGE,
   basicKey: VITE_BASIC_KEY,

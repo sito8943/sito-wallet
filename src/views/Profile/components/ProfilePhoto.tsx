@@ -19,6 +19,9 @@ import { ProfilePhotoPropsType } from "../types";
 // config
 import { config } from "../../../config";
 
+// components
+import { Image } from "components";
+
 export function ProfilePhoto({
   profile,
   isUploading,
@@ -43,14 +46,14 @@ export function ProfilePhoto({
     [onUpload],
   );
 
-  const photoUrl = profile.photo
-    ? `${config.apiUrl}${profile.photo}`
-    : null;
+  const photoUrl = profile.photo ? `${config.serverUrl}${profile.photo}` : null;
+
+  console.log(profile)
 
   return (
     <div className="flex flex-col items-center gap-3">
       <div className="relative">
-        <div className="w-28 h-28 rounded-full overflow-hidden bg-base border-2 border-border flex items-center justify-center">
+        <div className="w-28 h-28 rounded-2xl overflow-hidden bg-base border-2 border-border flex items-center justify-center">
           {photoUrl ? (
             <img
               src={photoUrl}
@@ -72,22 +75,24 @@ export function ProfilePhoto({
             </div>
           )}
         </div>
-      </div>
-      <div className="flex gap-2">
         <IconButton
           icon={faCamera}
           onClick={handleFileSelect}
           disabled={isUploading}
+          color="primary"
           data-tooltip-id="tooltip"
           data-tooltip-content={t("_pages:profile.photo.upload")}
+          className="absolute vertical-center horizontal-center"
         />
         {profile.photo && (
           <IconButton
             icon={faTrash}
             onClick={onDelete}
             disabled={isUploading}
+            color="error"
             data-tooltip-id="tooltip"
             data-tooltip-content={t("_pages:profile.photo.delete")}
+            className="top-1 right-1 absolute"
           />
         )}
       </div>
