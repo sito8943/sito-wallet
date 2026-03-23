@@ -14,14 +14,14 @@ export const useBottomNavAction = () => {
 };
 
 /**
- * Registers an "add" action for the bottom navigation.
+ * Registers an action for the bottom navigation center button.
  * Automatically clears the action on unmount.
  */
-export const useRegisterBottomNavAdd = (action: () => void) => {
-  const { setOnAdd } = useBottomNavAction();
+export const useRegisterBottomNavAction = (action: () => void) => {
+  const { setOnAction } = useBottomNavAction();
 
   useEffect(() => {
-    setOnAdd(action);
-    return () => setOnAdd(null);
-  }, [action, setOnAdd]);
+    setOnAction(action);
+    return () => setOnAction(null);
+  }, [action, setOnAction]);
 };

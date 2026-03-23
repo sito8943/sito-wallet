@@ -43,7 +43,7 @@ const NavLink = ({
 
 export const BottomNavigation = () => {
   const location = useLocation();
-  const { onAdd } = useBottomNavAction();
+  const { onAction } = useBottomNavAction();
 
   const isActive = (path: string) =>
     path === "/"
@@ -71,12 +71,12 @@ export const BottomNavigation = () => {
           />
         ))}
 
-        {onAdd ? (
+        {onAction ? (
           <div className="flex items-center justify-center flex-1">
             <Button
               variant="submit"
               color="primary"
-              onClick={onAdd}
+              onClick={onAction}
               className="!rounded-full !w-12 !h-12 !min-w-0 !p-0 flex items-center justify-center shadow-lg -mt-4"
               aria-label="Add"
             >

@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
 export type BottomNavActionContextType = {
-  onAdd: (() => void) | null;
-  setOnAdd: (action: (() => void) | null) => void;
+  onAction: (() => void) | null;
+  setOnAction: (action: (() => void) | null) => void;
 };
 
 export const BottomNavActionContext =

@@ -63,7 +63,7 @@ import {
 } from "lib";
 
 // providers
-import { useRegisterBottomNavAdd, useManager } from "providers";
+import { useRegisterBottomNavAction, useManager } from "providers";
 
 // styles
 import "./styles.css";
@@ -258,7 +258,7 @@ export function Transactions() {
 
   useMobileNavbar(t("_pages:transactions.title"), pageToolbar);
 
-  useRegisterBottomNavAdd(
+  useRegisterBottomNavAction(
     useCallback(() => addTransaction.openDialog(), [addTransaction]),
   );
 

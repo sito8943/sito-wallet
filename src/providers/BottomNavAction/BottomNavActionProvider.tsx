@@ -12,16 +12,16 @@ import {
 export const BottomNavActionProvider = ({
   children,
 }: BasicProviderPropTypes) => {
-  const [onAdd, setOnAddState] = useState<(() => void) | null>(null);
+  const [onAction, setOnActionState] = useState<(() => void) | null>(null);
 
-  const setOnAdd = useCallback(
-    (action: (() => void) | null) => setOnAddState(() => action),
+  const setOnAction = useCallback(
+    (action: (() => void) | null) => setOnActionState(() => action),
     [],
   );
 
   const value = useMemo<BottomNavActionContextType>(
-    () => ({ onAdd, setOnAdd }),
-    [onAdd, setOnAdd],
+    () => ({ onAction, setOnAction }),
+    [onAction, setOnAction],
   );
 
   return (

@@ -1,2 +1,2 @@
 export { BottomNavActionProvider } from "./BottomNavActionProvider";
-export { useBottomNavAction, useRegisterBottomNavAdd } from "./useBottomNavAction";
+export { useBottomNavAction, useRegisterBottomNavAction } from "./useBottomNavAction";
