@@ -48,6 +48,7 @@
     "title": "Perfil",
     "sections": {
       "personal": "Personal",
+      "photo": "Foto",
       "data": "Datos"
     },
     "actions": {
@@ -62,8 +63,9 @@
       "hideDeletedEntities": "Ocultar elementos eliminados"
     },
     "helper": {
-      "photo": "Tipos permitidos: JPG, PNG, WEBP. Tamaño máximo: 5 MB.",
-      "hideDeletedEntities": "Si está activo, no se mostrarán elementos eliminados en los listados."
+      "photo": "Tipos permitidos: JPG, PNG, WEBP. Tamaño maximo: 5 MB.",
+      "photoAdvice": "Por favor, evita subir fotos personales. Te recomendamos usar avatares o imagenes abstractas.",
+      "hideDeletedEntities": "Si esta activado, los elementos eliminados no se mostraran en las listas."
     },
     "messages": {
       "updated": "Perfil actualizado correctamente",
@@ -80,6 +82,14 @@
       "nameMax": "El nombre debe tener como máximo 120 caracteres",
       "fileType": "Solo se permiten archivos JPG, PNG o WEBP",
       "fileSize": "La imagen debe pesar 5 MB o menos"
+    },
+    "photo": {
+      "upload": "Subir foto",
+      "delete": "Eliminar foto",
+      "uploadSuccess": "Foto actualizada correctamente",
+      "uploadError": "Error al subir la foto",
+      "deleteSuccess": "Foto eliminada correctamente",
+      "deleteError": "Error al eliminar la foto"
     }
   },
   "common": {

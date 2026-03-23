@@ -48,6 +48,7 @@
     "title": "Profile",
     "sections": {
       "personal": "Personal",
+      "photo": "Photo",
       "data": "Data"
     },
     "actions": {
@@ -63,6 +64,7 @@
     },
     "helper": {
       "photo": "Allowed types: JPG, PNG, WEBP. Max size: 5 MB.",
+      "photoAdvice": "Please avoid uploading personal photos. We recommend using avatars or abstract images instead.",
       "hideDeletedEntities": "When enabled, deleted items will not be shown in list views."
     },
     "messages": {
@@ -80,6 +82,14 @@
       "nameMax": "Name must be at most 120 characters",
       "fileType": "Only JPG, PNG or WEBP files are allowed",
       "fileSize": "Image must be 5 MB or less"
+    },
+    "photo": {
+      "upload": "Upload photo",
+      "delete": "Delete photo",
+      "uploadSuccess": "Photo updated successfully",
+      "uploadError": "Failed to upload photo",
+      "deleteSuccess": "Photo deleted successfully",
+      "deleteError": "Failed to delete photo"
     }
   },
   "common": {

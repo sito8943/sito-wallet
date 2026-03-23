@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -21,6 +21,10 @@ import { useManager } from "providers";
 
 // hooks
 import { ProfileQueryKeys, useMyProfile, useMobileNavbar } from "hooks";
+import { useProfilePhoto } from "./hooks";
+
+// components
+import { ProfilePhoto } from "./components";
 
 // lib
 import { UpdateProfileDto } from "lib";
@@ -74,6 +78,15 @@ export function Profile() {
   const profile = profileQuery.data;
 
   useMobileNavbar(t("_pages:profile.title"));
+
+  const handlePhotoUpdate = useCallback(() => {
+    queryClient.invalidateQueries({ ...ProfileQueryKeys.all() });
+  }, []);
+
+  const { isUploading, uploadPhoto, deletePhoto } = useProfilePhoto(
+    profile?.id ?? 0,
+    handlePhotoUpdate,
+  );
 
   const { control, formState, handleSubmit, reset } = useForm<ProfileFormType>({
     defaultValues: {
@@ -225,6 +238,29 @@ export function Profile() {
                     }
                   />
                 )}
+              />
+            </section>
+
+            <SectionDivider />
+
+            <section id="photo" className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1">
+                <h3 className="text-xs uppercase tracking-wide text-text-muted">
+                  {t("_pages:profile.sections.photo")}
+                </h3>
+                <p className="text-sm text-text-muted">
+                  {t("_pages:profile.helper.photo")}
+                </p>
+                <p className="text-sm text-warning">
+                  {t("_pages:profile.helper.photoAdvice")}
+                </p>
+              </div>
+
+              <ProfilePhoto
+                profile={profile}
+                isUploading={isUploading}
+                onUpload={uploadPhoto}
+                onDelete={deletePhoto}
               />
             </section>
 
