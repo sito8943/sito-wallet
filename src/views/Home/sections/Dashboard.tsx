@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 // @sito/dashboard-app
 import {
@@ -90,9 +90,11 @@ export const Dashboard = () => {
     });
   }, [data, deleteDashboardCard]);
 
-  useRegisterBottomNavAction(
-    useCallback(() => addDashboardCard.openDialog(), [addDashboardCard]),
-  );
+  const openAddDashboardRef = useRef(addDashboardCard.openDialog);
+  useEffect(() => {
+    openAddDashboardRef.current = addDashboardCard.openDialog;
+  }, [addDashboardCard.openDialog]);
+  useRegisterBottomNavAction(useCallback(() => openAddDashboardRef.current(), []));
 
   return !error ? (
     <section id="dashboard">

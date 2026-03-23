@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
@@ -127,9 +127,11 @@ export function Currencies() {
 
   useMobileNavbar(t("_pages:currencies.title"), pageToolbar);
 
-  useRegisterBottomNavAction(
-    useCallback(() => addCurrency.openDialog(), [addCurrency]),
-  );
+  const openAddCurrencyRef = useRef(addCurrency.openDialog);
+  useEffect(() => {
+    openAddCurrencyRef.current = addCurrency.openDialog;
+  }, [addCurrency.openDialog]);
+  useRegisterBottomNavAction(useCallback(() => openAddCurrencyRef.current(), []));
 
   return (
     <Page

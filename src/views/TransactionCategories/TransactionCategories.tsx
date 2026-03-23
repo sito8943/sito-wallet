@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito-dashboard
@@ -130,9 +130,11 @@ export function TransactionCategories() {
 
   useMobileNavbar(t("_pages:transactionCategories.title"), pageToolbar);
 
-  useRegisterBottomNavAction(
-    useCallback(() => addTransactionCategory.openDialog(), [addTransactionCategory]),
-  );
+  const openAddCategoryRef = useRef(addTransactionCategory.openDialog);
+  useEffect(() => {
+    openAddCategoryRef.current = addTransactionCategory.openDialog;
+  }, [addTransactionCategory.openDialog]);
+  useRegisterBottomNavAction(useCallback(() => openAddCategoryRef.current(), []));
 
   return (
     <Page

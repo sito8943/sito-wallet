@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
@@ -142,9 +142,11 @@ export function Accounts() {
 
   useMobileNavbar(t("_pages:accounts.title"), pageToolbar);
 
-  useRegisterBottomNavAction(
-    useCallback(() => addAccount.openDialog(), [addAccount]),
-  );
+  const openAddAccountRef = useRef(addAccount.openDialog);
+  useEffect(() => {
+    openAddAccountRef.current = addAccount.openDialog;
+  }, [addAccount.openDialog]);
+  useRegisterBottomNavAction(useCallback(() => openAddAccountRef.current(), []));
 
   return (
     <Page

@@ -32,11 +32,7 @@ import {
 
 const AccountShower = (props: AccountCarouselPropsType) => {
   const { className } = props;
-  const { data, isLoading, error } = useAccountsList({
-    filters: {
-      deletedAt: false,
-    },
-  });
+  const { data, isLoading, error } = useAccountsList({});
 
   const accounts = useMemo(() => {
     return data?.items;
@@ -83,7 +79,7 @@ const AccountShower = (props: AccountCarouselPropsType) => {
         {selectedAccount && (
           <AccountCard
             containerClassName={css({
-              width: `${window.innerWidth - 40}px`,
+              width: `${window.innerWidth - 24}px`,
             })}
             showLastTransactions={false}
             showTypeResume

@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { parseQueries } from "some-javascript-utils/browser";
 
@@ -258,9 +258,11 @@ export function Transactions() {
 
   useMobileNavbar(t("_pages:transactions.title"), pageToolbar);
 
-  useRegisterBottomNavAction(
-    useCallback(() => addTransaction.openDialog(), [addTransaction]),
-  );
+  const openAddTransactionRef = useRef(addTransaction.openDialog);
+  useEffect(() => {
+    openAddTransactionRef.current = addTransaction.openDialog;
+  }, [addTransaction.openDialog]);
+  useRegisterBottomNavAction(useCallback(() => openAddTransactionRef.current(), []));
 
   const noAccounts = useMemo(() => {
     return accountDesktopTabs.length === 0 || accountMobileTabs.length === 0;
