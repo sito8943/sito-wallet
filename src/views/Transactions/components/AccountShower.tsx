@@ -71,7 +71,7 @@ const AccountShower = (props: AccountCarouselPropsType) => {
 
   return (
     <>
-      <div className={`${className} relative`}>
+      <div className={`${className}`}>
         {isLoading && (
           <div className="flex gap-2 items-center justify-start pl-1">
             <Loading className="mt-0.5" loaderClass="w-10 h-10" />
@@ -84,12 +84,15 @@ const AccountShower = (props: AccountCarouselPropsType) => {
           })}
           showLastTransactions={false}
           showTypeResume
+          showCurrency={false}
           actions={selectedAccount ? getActions(selectedAccount) : []}
           {...selectedAccount}
           hideDescription
           name={
-            <div className="mb-4 w-full">
+            <div className="mb-2 w-full sticky top-14 bg-base-light rounded-lg">
               <SelectInput
+                id="account-id"
+                name="account-id"
                 value={selectedAccount?.id}
                 onChange={(e) => {
                   onAccountChange(

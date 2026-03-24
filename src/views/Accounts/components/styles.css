@@ -1,5 +1,5 @@
 @reference "../../../styles/variables.css";
 
 .type-group {
-  @apply bg-base-light rounded-2xl p-3 flex flex-col items-start justify-start gap-2;
+  @apply bg-base-light rounded-xl p-2 px-3 flex flex-col items-start justify-start;
 }

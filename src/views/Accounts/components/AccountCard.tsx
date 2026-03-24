@@ -37,6 +37,7 @@ export function AccountCard(props: AccountCardPropsType) {
     containerClassName,
     showLastTransactions,
     showTypeResume,
+    showCurrency = true,
     hideDescription = false,
   } = props;
   const deleted = !!deletedAt;
@@ -76,15 +77,17 @@ export function AccountCard(props: AccountCardPropsType) {
             </>
           }
         />
-        <Chip
-          className="max-sm:!px-3"
-          text={
-            <>
-              <span className="max-sm:hidden">{currency?.name}</span>
-              <span className="sm:hidden">{currency?.symbol}</span>
-            </>
-          }
-        />
+        {showCurrency && (
+          <Chip
+            className="max-sm:!px-3"
+            text={
+              <>
+                <span className="max-sm:hidden">{currency?.name}</span>
+                <span className="sm:hidden">{currency?.symbol}</span>
+              </>
+            }
+          />
+        )}
         <Chip
           text={
             <>

@@ -27,6 +27,7 @@ export const TransactionsMobileSection = (
     tabs,
   } = props;
 
+  console.log("inside", tabValue);
   return (
     <>
       <AccountShower
@@ -38,7 +39,7 @@ export const TransactionsMobileSection = (
         className="sm:hidden mb-4"
       />
       <TabsLayout
-        defaultTab={tabValue}
+        currentTab={tabValue}
         tabs={tabs}
         className="min-sm:hidden"
         tabsContainerClassName="mobile-account-tabs"

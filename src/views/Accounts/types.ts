@@ -20,6 +20,7 @@ export interface AccountCardPropsType extends Omit<
   containerClassName?: string;
   showLastTransactions?: boolean;
   showTypeResume?: boolean;
+  showCurrency?: boolean;
   name: string | ReactNode;
   hideDescription?: boolean;
 }

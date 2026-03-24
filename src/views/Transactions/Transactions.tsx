@@ -94,6 +94,8 @@ export function Transactions() {
       : undefined;
   }, [location.search]);
 
+  console.log(tabValue);
+
   const manager = useManager();
 
   const [showFilters, setShowFilters] = useState(false);

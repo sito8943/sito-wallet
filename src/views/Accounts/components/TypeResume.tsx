@@ -27,8 +27,8 @@ const TypeResume = (props: TypeResumePropsType) => {
   const expenseTotal = data?.expenseTotal ?? 0;
 
   return (
-    <div className="w-full mt-4">
-      <div className="grid grid-cols-2 gap-3">
+    <div className="w-full my-2">
+      <div className="grid grid-cols-2 gap-2">
         <div className="type-group">
           <h4 className="text-sm text-text-muted">
             {t("_entities:transactionCategory:type.values.In")}
