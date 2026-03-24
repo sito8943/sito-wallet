@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { css } from "@emotion/css";
 
 // @sito/dashboard
-import { AutocompleteInput, Loading, useEditAction } from "@sito/dashboard-app";
+import { Loading, SelectInput, useEditAction } from "@sito/dashboard-app";
 
 // icons
 
@@ -89,10 +89,12 @@ const AccountShower = (props: AccountCarouselPropsType) => {
           hideDescription
           name={
             <div className="mb-4 w-full">
-              <AutocompleteInput
-                value={selectedAccount}
-                onChange={(value) => {
-                  onAccountChange(value as AccountDto);
+              <SelectInput
+                value={selectedAccount?.id}
+                onChange={(e) => {
+                  onAccountChange(
+                    Number((e.target as HTMLSelectElement).value),
+                  );
                 }}
                 options={accounts ?? []}
               />

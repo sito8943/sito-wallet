@@ -59,7 +59,6 @@ import {
   ImportPreviewTransactionDto,
   isFeatureDisabledBusinessError,
   CommonAccountDto,
-  AccountDto,
 } from "lib";
 
 // providers
@@ -67,7 +66,6 @@ import { useRegisterBottomNavAction, useManager } from "providers";
 
 // styles
 import "./styles.css";
-
 
 // lazy
 const WeeklySummarySection = loadable(
@@ -289,11 +287,11 @@ export function Transactions() {
   }, [accountDesktopTabs, accountMobileTabs]);
 
   const handleAccountChange = useCallback(
-    (account: AccountDto) => {
-      if (!account?.id) return;
+    (accountId: number) => {
+      if (!accountId) return;
 
       const nextSearch = new URLSearchParams(location.search);
-      nextSearch.set("accountId", String(account.id));
+      nextSearch.set("accountId", String(accountId));
 
       navigate(
         {

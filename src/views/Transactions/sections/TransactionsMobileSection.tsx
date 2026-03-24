@@ -9,7 +9,7 @@ type TransactionsMobileSectionProps = {
   selectedAccount?: AccountDto | null;
   isAccountLoading?: boolean;
   accountError: Error | null;
-  onAccountChange: (account: AccountDto) => void;
+  onAccountChange: (accountId: number) => void;
   tabValue?: number;
   tabs: TabsType[];
 };

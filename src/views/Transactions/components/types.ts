@@ -14,5 +14,5 @@ export type AccountCarouselPropsType = {
   selectedAccount?: AccountDto | null;
   isLoading?: boolean;
   error: Error | null;
-  onAccountChange: (account: AccountDto) => void;
+  onAccountChange: (accountId: number) => void;
 };
