@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { css } from "@emotion/css";
+import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
-import { Loading, SelectInput, useEditAction } from "@sito/dashboard-app";
+import { IconButton, Loading, SelectInput, useEditAction } from "@sito/dashboard-app";
 
 // icons
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
 // hooks
 import {
@@ -37,7 +39,9 @@ const AccountShower = (props: AccountCarouselPropsType) => {
     isLoading,
     error,
     onAccountChange,
+    onOpenFilters,
   } = props;
+  const { t } = useTranslation();
 
   const selectedAccount = useMemo(
     () => selectedAccountProp ?? (accounts ? accounts[0] : null),
@@ -99,6 +103,29 @@ const AccountShower = (props: AccountCarouselPropsType) => {
     };
   }, []);
 
+  const renderAccountSelector = (id: string, name: string) => (
+    <div className="flex items-center gap-2">
+      <div className="w-full">
+        <SelectInput
+          id={id}
+          name={name}
+          value={selectedAccount?.id}
+          onChange={(e) => {
+            onAccountChange(Number((e.target as HTMLSelectElement).value));
+          }}
+          options={accounts ?? []}
+        />
+      </div>
+      <IconButton
+        icon={faFilter}
+        onClick={() => onOpenFilters?.()}
+        name={t("_accessibility:buttons.filters")}
+        aria-label={t("_accessibility:ariaLabels.filters")}
+        className="!w-10 !h-10 !min-w-10"
+      />
+    </div>
+  );
+
   return (
     <>
       <div className={`${className}`}>
@@ -115,15 +142,7 @@ const AccountShower = (props: AccountCarouselPropsType) => {
               : "opacity-0 -translate-y-2 scale-95 pointer-events-none"
           }`}
         >
-          <SelectInput
-            id="account-id-fixed"
-            name="account-id-fixed"
-            value={selectedAccount?.id}
-            onChange={(e) => {
-              onAccountChange(Number((e.target as HTMLSelectElement).value));
-            }}
-            options={accounts ?? []}
-          />
+          {renderAccountSelector("account-id-fixed", "account-id-fixed")}
         </div>
         <AccountCard
           containerClassName={mobileCardWidthClass}
@@ -140,17 +159,7 @@ const AccountShower = (props: AccountCarouselPropsType) => {
                 showFixedAccountSelector ? "opacity-0 pointer-events-none" : ""
               }`}
             >
-              <SelectInput
-                id="account-id"
-                name="account-id"
-                value={selectedAccount?.id}
-                onChange={(e) => {
-                  onAccountChange(
-                    Number((e.target as HTMLSelectElement).value),
-                  );
-                }}
-                options={accounts ?? []}
-              />
+              {renderAccountSelector("account-id", "account-id")}
             </div>
           }
         />

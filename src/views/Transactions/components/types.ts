@@ -15,4 +15,5 @@ export type AccountCarouselPropsType = {
   isLoading?: boolean;
   error: Error | null;
   onAccountChange: (accountId: number) => void;
+  onOpenFilters?: () => void;
 };

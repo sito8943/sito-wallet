@@ -146,6 +146,12 @@ export function useInfiniteTransactionsList(props: {
   query?: Omit<QueryParam<TransactionDto>, "currentPage">;
 }) {
   const {
+    sortingBy,
+    sortingOrder,
+    filters: tableFilters,
+  } = useTableOptions();
+
+  const {
     filters = { deletedAt: false as unknown as Date },
     query = {} as Omit<QueryParam<TransactionDto>, "currentPage">,
   } = props;
@@ -156,18 +162,19 @@ export function useInfiniteTransactionsList(props: {
 
   const parsedFilters = useMemo(
     () => ({
+      ...tableFilters,
       ...filters,
     }),
-    [filters],
+    [filters, tableFilters],
   );
 
   const parsedQueries = useMemo(
     () => ({
-      sortingBy: query.sortingBy as keyof TransactionDto,
-      sortingOrder: query.sortingOrder,
+      sortingBy: (sortingBy as keyof TransactionDto) || query.sortingBy,
+      sortingOrder: sortingOrder || query.sortingOrder,
       pageSize: query.pageSize ?? 20,
     }),
-    [query.pageSize, query.sortingBy, query.sortingOrder],
+    [query.pageSize, query.sortingBy, query.sortingOrder, sortingBy, sortingOrder],
   );
 
   return useInfiniteQuery({

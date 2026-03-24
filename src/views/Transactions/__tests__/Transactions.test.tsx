@@ -27,20 +27,24 @@ vi.mock("react-i18next", () => ({
 }));
 
 // Accounts hook
-const mockAccountsCommon = vi.fn(() => ({
-  data: [
-    { id: 1, name: "Wallet", currency: { name: "EUR", symbol: "€" } },
-    { id: 2, name: "Savings", currency: { name: "USD", symbol: "$" } },
-  ],
+const mockAccountsList = vi.fn(() => ({
+  data: {
+    items: [
+      { id: 1, name: "Wallet", currency: { name: "EUR", symbol: "€" } },
+      { id: 2, name: "Savings", currency: { name: "USD", symbol: "$" } },
+    ],
+  },
   isLoading: false,
+  error: null,
 }));
 const mockUseMobileNavbar = vi.fn();
 
 vi.mock("hooks", () => ({
-  useAccountsCommon: () => mockAccountsCommon(),
+  useAccountsList: () => mockAccountsList(),
   useTransactionCategoriesCommon: () => ({
     data: [{ id: 1, name: "Food", auto: false }],
     isLoading: false,
+    error: null,
   }),
   useMobileNavbar: (...args: unknown[]) => mockUseMobileNavbar(...args),
   usePersistedTableOptions: vi.fn(),
@@ -61,6 +65,7 @@ vi.mock("providers", () => ({
       processImport: vi.fn().mockResolvedValue([]),
     },
   }),
+  useRegisterBottomNavAction: vi.fn(),
 }));
 
 // Local hooks
@@ -244,12 +249,15 @@ function renderTransactions(initialSearch = "") {
 // ─── Tests ────────────────────────────────────────────────────────────────────
 describe("Transactions", () => {
   beforeEach(() => {
-    mockAccountsCommon.mockReturnValue({
-      data: [
-        { id: 1, name: "Wallet", currency: { name: "EUR", symbol: "€" } },
-        { id: 2, name: "Savings", currency: { name: "USD", symbol: "$" } },
-      ],
+    mockAccountsList.mockReturnValue({
+      data: {
+        items: [
+          { id: 1, name: "Wallet", currency: { name: "EUR", symbol: "€" } },
+          { id: 2, name: "Savings", currency: { name: "USD", symbol: "$" } },
+        ],
+      },
       isLoading: false,
+      error: null,
     });
   });
 
@@ -302,14 +310,22 @@ describe("Transactions", () => {
 
   describe("empty state", () => {
     it("shows empty state when there are no accounts", () => {
-      mockAccountsCommon.mockReturnValue({ data: [], isLoading: false });
+      mockAccountsList.mockReturnValue({
+        data: { items: [] },
+        isLoading: false,
+        error: null,
+      });
       renderTransactions();
 
       expect(screen.getByTestId("empty-state")).toBeInTheDocument();
     });
 
     it("does not show tabs when accounts list is empty", () => {
-      mockAccountsCommon.mockReturnValue({ data: [], isLoading: false });
+      mockAccountsList.mockReturnValue({
+        data: { items: [] },
+        isLoading: false,
+        error: null,
+      });
       renderTransactions();
 
       expect(screen.queryByTestId("tab-1")).toBeNull();
@@ -342,7 +358,11 @@ describe("Transactions", () => {
     });
 
     it("does not render weekly cards when there are no accounts", () => {
-      mockAccountsCommon.mockReturnValue({ data: [], isLoading: false });
+      mockAccountsList.mockReturnValue({
+        data: { items: [] },
+        isLoading: false,
+        error: null,
+      });
       renderTransactions();
 
       expect(screen.queryByTestId("weekly-card-out")).toBeNull();

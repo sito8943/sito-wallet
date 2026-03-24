@@ -6,6 +6,7 @@ import { Error, SortOrder, Loading, PrettyGrid } from "@sito/dashboard-app";
 
 // components
 import { TransactionCard } from "../TransactionCard";
+import { TransactionsMobileFilters } from "../TransactionsFiltersDialog";
 
 // types
 import { TransactionContainerPropsType } from "./types";
@@ -16,7 +17,8 @@ import { useInfiniteTransactionsList } from "hooks";
 export const TransactionGrid = (props: TransactionContainerPropsType) => {
   const { t } = useTranslation();
 
-  const { accountId, getActions, editAction } = props;
+  const { accountId, categories, getActions, editAction, showFilters, setShowFilters } =
+    props;
 
   const {
     data,
@@ -42,25 +44,34 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
   return error ? (
     <Error error={error} />
   ) : (
-    <PrettyGrid
-      data={items}
-      itemClassName="w-full min-w-0"
-      emptyMessage={t("_pages:transactions.empty")}
-      loading={isLoading}
-      hasMore={!!hasNextPage}
-      loadingMore={isFetchingNextPage}
-      onLoadMore={() => {
-        if (!hasNextPage || isFetchingNextPage) return;
-        void fetchNextPage();
-      }}
-      loadMoreComponent={<Loading />}
-      renderComponent={(transaction) => (
-        <TransactionCard
-          actions={getActions(transaction)}
-          onClick={(id: number) => editAction.openDialog(id)}
-          {...transaction}
+    <>
+      {showFilters && (
+        <TransactionsMobileFilters
+          open={showFilters}
+          onClose={() => setShowFilters?.(false)}
+          categories={categories}
         />
       )}
-    />
+      <PrettyGrid
+        data={items}
+        itemClassName="w-full min-w-0"
+        emptyMessage={t("_pages:transactions.empty")}
+        loading={isLoading}
+        hasMore={!!hasNextPage}
+        loadingMore={isFetchingNextPage}
+        onLoadMore={() => {
+          if (!hasNextPage || isFetchingNextPage) return;
+          void fetchNextPage();
+        }}
+        loadMoreComponent={<Loading />}
+        renderComponent={(transaction) => (
+          <TransactionCard
+            actions={getActions(transaction)}
+            onClick={(id: number) => editAction.openDialog(id)}
+            {...transaction}
+          />
+        )}
+      />
+    </>
   );
 };

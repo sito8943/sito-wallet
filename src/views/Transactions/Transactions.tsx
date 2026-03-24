@@ -94,8 +94,6 @@ export function Transactions() {
       : undefined;
   }, [location.search]);
 
-  console.log(tabValue);
-
   const manager = useManager();
 
   const [showFilters, setShowFilters] = useState(false);
@@ -265,10 +263,19 @@ export function Transactions() {
           categories={parsedCategories ?? []}
           getActions={getGridActions}
           editAction={editTransaction}
+          showFilters={showFilters}
+          setShowFilters={setShowFilters}
         />
       ),
     })) ?? []) as TabsType[];
-  }, [accounts?.items, editTransaction, getGridActions, parsedCategories]);
+  }, [
+    accounts?.items,
+    editTransaction,
+    getGridActions,
+    parsedCategories,
+    showFilters,
+    setShowFilters,
+  ]);
 
   const pageToolbar = useMemo(() => {
     return [exportTransactions.action(), importTransactions.action()];
@@ -352,6 +359,7 @@ export function Transactions() {
               isAccountLoading={isAccountLoading}
               accountError={accountError}
               onAccountChange={handleAccountChange}
+              onOpenFilters={() => setShowFilters(true)}
               tabValue={tabValue}
               tabs={accountMobileTabs}
             />

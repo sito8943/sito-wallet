@@ -255,6 +255,15 @@
   "transactions": {
     "title": "Transacciones",
     "empty": "No hay transacciones para mostrar",
+    "mobileFilters": {
+      "sortBy": "Ordenar por",
+      "sortOrder": "Orden",
+      "any": "Cualquiera",
+      "order": {
+        "asc": "Ascendente",
+        "desc": "Descendente"
+      }
+    },
     "cards": {
       "lastWeek": "Semana pasada",
       "weeklySpent": {

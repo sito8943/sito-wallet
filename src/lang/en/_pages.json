@@ -252,6 +252,15 @@
   "transactions": {
     "title": "Transactions",
     "empty": "No transactions to load",
+    "mobileFilters": {
+      "sortBy": "Sort by",
+      "sortOrder": "Sort order",
+      "any": "Any",
+      "order": {
+        "asc": "Ascending",
+        "desc": "Descending"
+      }
+    },
     "cards": {
       "lastWeek": "Last week",
       "weeklySpent": {

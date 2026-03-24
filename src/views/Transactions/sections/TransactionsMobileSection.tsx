@@ -10,6 +10,7 @@ type TransactionsMobileSectionProps = {
   isAccountLoading?: boolean;
   accountError: Error | null;
   onAccountChange: (accountId: number) => void;
+  onOpenFilters: () => void;
   tabValue?: number;
   tabs: TabsType[];
 };
@@ -23,11 +24,11 @@ export const TransactionsMobileSection = (
     isAccountLoading,
     accountError,
     onAccountChange,
+    onOpenFilters,
     tabValue,
     tabs,
   } = props;
 
-  console.log("inside", tabValue);
   return (
     <>
       <AccountShower
@@ -35,6 +36,7 @@ export const TransactionsMobileSection = (
         selectedAccount={selectedAccount}
         isLoading={isAccountLoading}
         onAccountChange={onAccountChange}
+        onOpenFilters={onOpenFilters}
         error={accountError}
         className="sm:hidden mb-4"
       />
