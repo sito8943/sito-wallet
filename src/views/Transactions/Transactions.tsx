@@ -1,3 +1,4 @@
+import loadable from "@loadable/component";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -10,7 +11,6 @@ import {
   useExportActionMutate,
   useRestoreDialog,
   ConfirmationDialog,
-  TabsLayout,
   TabsType,
   useTableOptions,
   Empty,
@@ -49,7 +49,6 @@ import {
   TransactionGrid,
   TransactionTable,
 } from "./components";
-import { WeeklyCard } from "./components/WeeklyCard";
 import { AddAccountDialog } from "../Accounts";
 
 // lib
@@ -57,7 +56,6 @@ import {
   FilterTransactionDto,
   Tables,
   TransactionDto,
-  TransactionType,
   ImportPreviewTransactionDto,
   isFeatureDisabledBusinessError,
   CommonAccountDto,
@@ -69,7 +67,20 @@ import { useRegisterBottomNavAction, useManager } from "providers";
 
 // styles
 import "./styles.css";
-import AccountShower from "./components/AccountShower";
+
+
+// lazy
+const WeeklySummarySection = loadable(
+  () => import("./sections/WeeklySummarySection"),
+);
+const TransactionsDesktopSection = loadable(
+  () => import("./sections/TransactionsDesktopSection"),
+);
+const TransactionsMobileSection = loadable(
+  () => import("./sections/TransactionsMobileSection"),
+);
+
+const isMobile = window.innerWidth <= 640;
 
 export function Transactions() {
   const { t } = useTranslation();
@@ -315,24 +326,7 @@ export function Transactions() {
       }}
       queryKey={TransactionsQueryKeys.all().queryKey}
     >
-      {selectedAccount && (
-        <div className="mb-4 grid grid-cols-2 gap-4 max-md:grid-cols-1 max-sm:hidden">
-          <WeeklyCard
-            type={TransactionType.Out}
-            title={t("_pages:transactions.cards.weeklySpent.title")}
-            accountId={selectedAccount.id}
-            currencyName={selectedAccount.currency?.name}
-            currencySymbol={selectedAccount.currency?.symbol}
-          />
-          <WeeklyCard
-            type={TransactionType.In}
-            title={t("_pages:transactions.cards.weeklyIncoming.title")}
-            accountId={selectedAccount.id}
-            currencyName={selectedAccount.currency?.name}
-            currencySymbol={selectedAccount.currency?.symbol}
-          />
-        </div>
-      )}
+      <WeeklySummarySection selectedAccount={selectedAccount} />
 
       {noAccounts ? (
         <Empty
@@ -351,26 +345,22 @@ export function Transactions() {
         />
       ) : (
         <>
-          <TabsLayout
-            defaultTab={tabValue}
-            tabs={accountDesktopTabs}
-            className="max-sm:hidden"
-            tabsContainerClassName="account-tabs"
-          />
-          <AccountShower
-            accounts={accounts?.items ?? []}
-            selectedAccount={selectedAccount}
-            isLoading={isAccountLoading}
-            onAccountChange={handleAccountChange}
-            error={accountError}
-            className="sm:hidden mb-4"
-          />
-          <TabsLayout
-            defaultTab={tabValue}
-            tabs={accountMobileTabs}
-            className="min-sm:hidden"
-            tabsContainerClassName="mobile-account-tabs"
-          />
+          {isMobile ? (
+            <TransactionsMobileSection
+              accounts={accounts?.items ?? []}
+              selectedAccount={selectedAccount}
+              isAccountLoading={isAccountLoading}
+              accountError={accountError}
+              onAccountChange={handleAccountChange}
+              tabValue={tabValue}
+              tabs={accountMobileTabs}
+            />
+          ) : (
+            <TransactionsDesktopSection
+              tabValue={tabValue}
+              tabs={accountDesktopTabs}
+            />
+          )}
         </>
       )}
 
