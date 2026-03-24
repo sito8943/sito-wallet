@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Chip } from "@sito/dashboard-app";
 
 // components
+import TypeResume from "./TypeResume";
 import { ItemCard } from "components";
 import { LastTransactions } from "./LastTransactions";
 
@@ -19,7 +20,6 @@ import { Currency } from "views/Currencies/components/Currency";
 
 // utils
 import { icons } from "./utils";
-import TypeResume from "./TypeResume";
 
 export function AccountCard(props: AccountCardPropsType) {
   const { t } = useTranslation();
@@ -30,13 +30,14 @@ export function AccountCard(props: AccountCardPropsType) {
     actions,
     name,
     description,
-    type,
+    type = AccountType.Card,
     currency,
     deletedAt,
     balance,
     containerClassName,
     showLastTransactions,
     showTypeResume,
+    hideDescription = false,
   } = props;
   const deleted = !!deletedAt;
 
@@ -46,17 +47,19 @@ export function AccountCard(props: AccountCardPropsType) {
       deleted={deleted}
       name={t("_pages:accounts.forms.edit")}
       aria-label={t("_pages:accounts.forms.editAria")}
-      onClick={() => (!deleted ? onClick(id) : {})}
+      onClick={() => (!deleted && id ? onClick?.(id) : {})}
       actions={actions}
       containerClassName={containerClassName ?? "md:w-100 max-md:w-full"}
     >
-      <p
-        className={`${description ? "" : "!text-xs italic"} text-start mb-2 ${
-          deleted ? "!text-bg-error" : ""
-        }`}
-      >
-        {description ? description : t("_entities:base.description.empty")}
-      </p>
+      {!hideDescription && (
+        <p
+          className={`${description ? "" : "!text-xs italic"} text-start mb-2 ${
+            deleted ? "!text-bg-error" : ""
+          }`}
+        >
+          {description ? description : t("_entities:base.description.empty")}
+        </p>
+      )}
       <div className="chip-container">
         <Chip
           className="max-sm:!px-2"
@@ -92,10 +95,12 @@ export function AccountCard(props: AccountCardPropsType) {
           }
         />
       </div>
-      {showLastTransactions && (
+      {showLastTransactions && id && currency && (
         <LastTransactions accountId={id} currency={currency} />
       )}
-      {showTypeResume && <TypeResume accountId={id} currency={currency} />}
+      {showTypeResume && id && currency && (
+        <TypeResume accountId={id} currency={currency} />
+      )}
     </ItemCard>
   );
 }

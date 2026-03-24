@@ -1,13 +1,12 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { css } from "@emotion/css";
 
 // @sito/dashboard
-import { AutocompleteInput, Loading } from "@sito/dashboard-app";
+import { AutocompleteInput, Loading, useEditAction } from "@sito/dashboard-app";
 
 // icons
 
 // hooks
-import { useAccountsList } from "hooks";
 import {
   useAddAccountDialog,
   useEditAccountDialog,
@@ -31,22 +30,29 @@ import {
 } from "views/Accounts";
 
 const AccountShower = (props: AccountCarouselPropsType) => {
-  const { className } = props;
-  const { data, isLoading, error } = useAccountsList({});
+  const {
+    className,
+    accounts,
+    selectedAccount: selectedAccountProp,
+    isLoading,
+    error,
+    onAccountChange,
+  } = props;
 
-  const accounts = useMemo(() => {
-    return data?.items;
-  }, [data]);
-
-  const [selectedAccount, setSelectedAccount] = useState(
-    accounts ? accounts[0] : null,
+  const selectedAccount = useMemo(
+    () => selectedAccountProp ?? (accounts ? accounts[0] : null),
+    [accounts, selectedAccountProp],
   );
 
   // #region actions
 
   const addAccount = useAddAccountDialog();
 
-  const editAccount = useEditAccountDialog();
+  const editAccountDialog = useEditAccountDialog();
+
+  const editAccountAction = useEditAction<AccountDto>({
+    onClick: editAccountDialog.openDialog,
+  });
 
   const syncAccount = useSyncAccountMutation();
 
@@ -58,8 +64,9 @@ const AccountShower = (props: AccountCarouselPropsType) => {
     (record: AccountDto) => [
       adjustBalance.action(record),
       syncAccount.action(record),
+      editAccountAction.action(record),
     ],
-    [adjustBalance, syncAccount],
+    [adjustBalance, editAccountAction, syncAccount],
   );
 
   return (
@@ -71,27 +78,31 @@ const AccountShower = (props: AccountCarouselPropsType) => {
           </div>
         )}
         {error && <Error />}
-        <AutocompleteInput
-          value={selectedAccount}
-          onChange={(value) => value && setSelectedAccount(value as AccountDto)}
-          options={accounts ?? []}
+        <AccountCard
+          containerClassName={css({
+            width: `${window.innerWidth - 24}px`,
+          })}
+          showLastTransactions={false}
+          showTypeResume
+          actions={selectedAccount ? getActions(selectedAccount) : []}
+          {...selectedAccount}
+          hideDescription
+          name={
+            <div className="mb-4 w-full">
+              <AutocompleteInput
+                value={selectedAccount}
+                onChange={(value) => {
+                  onAccountChange(value as AccountDto);
+                }}
+                options={accounts ?? []}
+              />
+            </div>
+          }
         />
-        {selectedAccount && (
-          <AccountCard
-            containerClassName={css({
-              width: `${window.innerWidth - 24}px`,
-            })}
-            showLastTransactions={false}
-            showTypeResume
-            actions={getActions(selectedAccount)}
-            onClick={(id: number) => editAccount.openDialog(id)}
-            {...selectedAccount}
-          />
-        )}
       </div>
       {/* Dialogs */}
       <AddAccountDialog {...addAccount} />
-      <EditAccountDialog {...editAccount} />
+      <EditAccountDialog {...editAccountDialog} />
       <AdjustBalanceDialog {...adjustBalance} />
     </>
   );

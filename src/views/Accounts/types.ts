@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { FieldValues } from "react-hook-form";
 
 // @sito/dashboard-app
@@ -10,12 +11,17 @@ import {
 // lib
 import { AccountDto } from "lib";
 
-export interface AccountCardPropsType extends AccountDto {
+export interface AccountCardPropsType extends Omit<
+  Partial<AccountDto>,
+  "name"
+> {
   actions: ActionType<AccountDto>[];
-  onClick: (id: number) => void;
+  onClick?: (id: number) => void;
   containerClassName?: string;
   showLastTransactions?: boolean;
   showTypeResume?: boolean;
+  name: string | ReactNode;
+  hideDescription?: boolean;
 }
 
 export interface AccountFormType

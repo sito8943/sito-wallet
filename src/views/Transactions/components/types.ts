@@ -1,4 +1,4 @@
-import { TransactionType } from "lib";
+import { AccountDto, TransactionType } from "lib";
 
 export type WeeklyCardProps = {
   accountId?: number | null;
@@ -10,4 +10,9 @@ export type WeeklyCardProps = {
 
 export type AccountCarouselPropsType = {
   className?: string;
+  accounts: AccountDto[];
+  selectedAccount?: AccountDto | null;
+  isLoading?: boolean;
+  error: Error | null;
+  onAccountChange: (account: AccountDto) => void;
 };

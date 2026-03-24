@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { parseQueries } from "some-javascript-utils/browser";
@@ -34,10 +34,10 @@ import {
 import { useAddAccountDialog } from "../Accounts/hooks";
 import {
   TransactionsQueryKeys,
-  useAccountsCommon,
   useTransactionCategoriesCommon,
   useMobileNavbar,
   usePersistedTableOptions,
+  useAccountsList,
 } from "hooks";
 
 // components
@@ -60,6 +60,8 @@ import {
   TransactionType,
   ImportPreviewTransactionDto,
   isFeatureDisabledBusinessError,
+  CommonAccountDto,
+  AccountDto,
 } from "lib";
 
 // providers
@@ -74,6 +76,7 @@ export function Transactions() {
   const { showErrorNotification } = useNotification();
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const tabValue = useMemo(() => {
     const queries = parseQueries(location.search) as FilterTransactionDto;
@@ -101,11 +104,15 @@ export function Transactions() {
 
   // #region accounts
 
-  const accounts = useAccountsCommon();
+  const {
+    data: accounts,
+    isLoading: isAccountLoading,
+    error: accountError,
+  } = useAccountsList({});
 
   useEffect(() => {
     if (
-      !isFeatureDisabledBusinessError(accounts.error) &&
+      !isFeatureDisabledBusinessError(accountError) &&
       !isFeatureDisabledBusinessError(categories.error)
     ) {
       return;
@@ -114,16 +121,16 @@ export function Transactions() {
     showErrorNotification({
       message: t("_pages:featureFlags.moduleUnavailable"),
     });
-  }, [accounts.error, categories.error, showErrorNotification, t]);
+  }, [accountError, categories.error, showErrorNotification, t]);
 
-  const selectedAccount = useMemo(
-    () =>
-      tabValue
-        ? (accounts.data?.find((account) => account.id === Number(tabValue)) ??
-          null)
-        : (accounts.data?.[0] ?? null),
-    [accounts.data, tabValue],
-  );
+  const selectedAccount = useMemo(() => {
+    if (accounts) {
+      return tabValue
+        ? (accounts.items.find((account) => account.id === Number(tabValue)) ??
+            null)
+        : (accounts.items[0] ?? null);
+    }
+  }, [accounts, tabValue]);
 
   usePersistedTableOptions("transactions", selectedAccount?.id);
 
@@ -144,7 +151,7 @@ export function Transactions() {
   });
 
   const addTransaction = useAddTransaction({
-    account: selectedAccount,
+    account: selectedAccount as CommonAccountDto,
   });
 
   const editTransaction = useEditTransaction();
@@ -214,7 +221,7 @@ export function Transactions() {
   );
 
   const accountDesktopTabs = useMemo(() => {
-    return (accounts.data?.map((item) => ({
+    return (accounts?.items?.map((item) => ({
       id: item.id,
       label: item.name,
       to: `?accountId=${item.id}`,
@@ -230,7 +237,7 @@ export function Transactions() {
       ),
     })) ?? []) as TabsType[];
   }, [
-    accounts.data,
+    accounts?.items,
     editTransaction,
     getTableActions,
     parsedCategories,
@@ -238,7 +245,7 @@ export function Transactions() {
   ]);
 
   const accountMobileTabs = useMemo(() => {
-    return (accounts.data?.map((item) => ({
+    return (accounts?.items?.map((item) => ({
       id: item.id,
       label: item.name,
       content: (
@@ -250,7 +257,7 @@ export function Transactions() {
         />
       ),
     })) ?? []) as TabsType[];
-  }, [accounts.data, editTransaction, getGridActions, parsedCategories]);
+  }, [accounts?.items, editTransaction, getGridActions, parsedCategories]);
 
   const pageToolbar = useMemo(() => {
     return [exportTransactions.action(), importTransactions.action()];
@@ -262,20 +269,40 @@ export function Transactions() {
   useEffect(() => {
     openAddTransactionRef.current = addTransaction.openDialog;
   }, [addTransaction.openDialog]);
-  useRegisterBottomNavAction(useCallback(() => openAddTransactionRef.current(), []));
+  useRegisterBottomNavAction(
+    useCallback(() => openAddTransactionRef.current(), []),
+  );
 
   const noAccounts = useMemo(() => {
     return accountDesktopTabs.length === 0 || accountMobileTabs.length === 0;
   }, [accountDesktopTabs, accountMobileTabs]);
 
+  const handleAccountChange = useCallback(
+    (account: AccountDto) => {
+      if (!account?.id) return;
+
+      const nextSearch = new URLSearchParams(location.search);
+      nextSearch.set("accountId", String(account.id));
+
+      navigate(
+        {
+          pathname: location.pathname,
+          search: `?${nextSearch.toString()}`,
+        },
+        { replace: true },
+      );
+    },
+    [location.pathname, location.search, navigate],
+  );
+
   return (
     <Page
       title={t("_pages:transactions.title")}
-      isLoading={accounts.isLoading || categories.isLoading}
+      isLoading={isAccountLoading || categories.isLoading}
       actions={pageToolbar}
       addOptions={{
         onClick: () => addTransaction.openDialog(),
-        disabled: accounts.isLoading,
+        disabled: isAccountLoading,
         tooltip: t("_pages:transactions.add"),
       }}
       filterOptions={{
@@ -283,7 +310,7 @@ export function Transactions() {
           if (!showFilters) setTimeout(() => setShowFilters(true), 0);
           else setShowFilters(false);
         },
-        disabled: accounts.isLoading,
+        disabled: isAccountLoading,
         tooltip: t("_accessibility:buttons.filters"),
       }}
       queryKey={TransactionsQueryKeys.all().queryKey}
@@ -317,7 +344,7 @@ export function Transactions() {
           action={{
             icon: <FontAwesomeIcon icon={faAdd} />,
             id: GlobalActions.Add,
-            disabled: accounts.isLoading,
+            disabled: isAccountLoading,
             onClick: () => addAccount.openDialog(),
             tooltip: t("_pages:accounts.add"),
           }}
@@ -330,7 +357,14 @@ export function Transactions() {
             className="max-sm:hidden"
             tabsContainerClassName="account-tabs"
           />
-          <AccountShower className="sm:hidden mb-4" />
+          <AccountShower
+            accounts={accounts?.items ?? []}
+            selectedAccount={selectedAccount}
+            isLoading={isAccountLoading}
+            onAccountChange={handleAccountChange}
+            error={accountError}
+            className="sm:hidden mb-4"
+          />
           <TabsLayout
             defaultTab={tabValue}
             tabs={accountMobileTabs}
