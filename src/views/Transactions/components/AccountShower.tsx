@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { css } from "@emotion/css";
 
 // @sito/dashboard
@@ -69,6 +69,36 @@ const AccountShower = (props: AccountCarouselPropsType) => {
     [adjustBalance, editAccountAction, syncAccount],
   );
 
+  const mobileCardWidthClass = css({
+    width: `${window.innerWidth - 24}px`,
+  });
+  const accountNameRef = useRef<HTMLDivElement>(null);
+  const [showFixedAccountSelector, setShowFixedAccountSelector] = useState(false);
+  const stickyTopPx = 56;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const accountNameElement = accountNameRef.current;
+      if (!accountNameElement) {
+        setShowFixedAccountSelector(false);
+        return;
+      }
+
+      const { top } = accountNameElement.getBoundingClientRect();
+      setShowFixedAccountSelector(top <= stickyTopPx);
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, []);
+
   return (
     <>
       <div className={`${className}`}>
@@ -78,10 +108,25 @@ const AccountShower = (props: AccountCarouselPropsType) => {
           </div>
         )}
         {error && <Error />}
+        <div
+          className={`w-screen bg-base-light fixed left-0 top-12 z-30 px-4 py-2 origin-top transition-all duration-200 ease-out ${
+            showFixedAccountSelector
+              ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
+              : "opacity-0 -translate-y-2 scale-95 pointer-events-none"
+          }`}
+        >
+          <SelectInput
+            id="account-id-fixed"
+            name="account-id-fixed"
+            value={selectedAccount?.id}
+            onChange={(e) => {
+              onAccountChange(Number((e.target as HTMLSelectElement).value));
+            }}
+            options={accounts ?? []}
+          />
+        </div>
         <AccountCard
-          containerClassName={css({
-            width: `${window.innerWidth - 24}px`,
-          })}
+          containerClassName={mobileCardWidthClass}
           showLastTransactions={false}
           showTypeResume
           showCurrency={false}
@@ -89,7 +134,12 @@ const AccountShower = (props: AccountCarouselPropsType) => {
           {...selectedAccount}
           hideDescription
           name={
-            <div className="mb-2 w-full sticky top-14 bg-base-light rounded-lg">
+            <div
+              ref={accountNameRef}
+              className={`mb-2 w-full sticky top-14 bg-base-light rounded-lg transition-opacity duration-200 ${
+                showFixedAccountSelector ? "opacity-0 pointer-events-none" : ""
+              }`}
+            >
               <SelectInput
                 id="account-id"
                 name="account-id"
