@@ -13,12 +13,19 @@ import { TransactionContainerPropsType } from "./types";
 
 // hooks
 import { useInfiniteTransactionsList } from "hooks";
+import { useTransactionsMobileFiltersDialog } from "../../hooks";
 
 export const TransactionGrid = (props: TransactionContainerPropsType) => {
   const { t } = useTranslation();
 
-  const { accountId, categories, getActions, editAction, showFilters, setShowFilters } =
-    props;
+  const {
+    accountId,
+    categories,
+    getActions,
+    editAction,
+    showFilters = false,
+    setShowFilters,
+  } = props;
 
   const {
     data,
@@ -41,17 +48,17 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
     [data?.pages],
   );
 
+  const transactionMobileFilters = useTransactionsMobileFiltersDialog(
+    categories,
+    showFilters,
+    () => setShowFilters?.(false),
+  );
+
   return error ? (
     <Error error={error} />
   ) : (
     <>
-      {showFilters && (
-        <TransactionsMobileFilters
-          open={showFilters}
-          onClose={() => setShowFilters?.(false)}
-          categories={categories}
-        />
-      )}
+      <TransactionsMobileFilters {...transactionMobileFilters} />
       <PrettyGrid
         data={items}
         itemClassName="w-full min-w-0"

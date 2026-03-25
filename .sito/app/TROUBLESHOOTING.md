@@ -4,7 +4,7 @@ Quick diagnosis guide for common issues in consumer projects.
 
 ## 1. Quick checklist (60s)
 
-1. Verify peers are installed (`react`, `@sito/dashboard`, `react-hook-form`, `@tanstack/react-query`, FontAwesome, Emotion).
+1. Verify peers are installed (`react`, `@sito/dashboard`, `react-hook-form`, `@tanstack/react-query`, FontAwesome).
 2. Verify provider order (`ConfigProvider` > `ManagerProvider` > `AuthProvider` > `NotificationProvider` > `DrawerMenuProvider`).
 3. Ensure imports are only from `@sito/dashboard-app`.
 4. Ensure `AuthProvider` and `IManager` use the same storage keys.

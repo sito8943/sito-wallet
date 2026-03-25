@@ -13,7 +13,7 @@ Install peer dependencies in the consumer project as well:
 ```bash
 npm install \
   react@18.3.1 react-dom@18.3.1 \
-  @sito/dashboard@^0.0.71 \
+  @sito/dashboard@^0.0.72 \
   @tanstack/react-query@5.83.0 \
   react-hook-form@7.61.1 \
   @fortawesome/fontawesome-svg-core@7.0.0 \
@@ -110,25 +110,25 @@ export function AppProviders({ children }: { children: ReactNode }) {
 
 ## 4. Key Components and Props
 
-| Component                | Key props                                                                        | Recommended usage                                  |
-| ------------------------ | -------------------------------------------------------------------------------- | -------------------------------------------------- |
-| `Page<T>`                | `title`, `actions`, `addOptions`, `filterOptions`, `queryKey`, `isLoading`       | CRUD layout with standard header/actions           |
-| `PageHeader<T>`          | `title`, `actions`, `showBackButton`                                             | Reusable page header with desktop/mobile actions   |
-| `FormContainer<TForm>`   | `handleSubmit`, `onSubmit`, `reset`, `isLoading`, `buttonEnd`                    | Form wrapper with built-in submit/cancel           |
-| `ParagraphInput`         | `label`, `state`, `containerClassName`, `inputClassName`, `helperText`           | Textarea with state-aware styling                  |
-| `PasswordInput`          | `TextInputPropsType`                                                             | Password input with show/hide toggle               |
-| `TabsLayout`             | `tabs`, `defaultTab`, `currentTab`, `onTabChange`, `useLinks`, `tabButtonProps`  | Route tabs or local state tabs                     |
-| `Onboarding`             | `steps`                                                                          | Multi-step flow using controlled `TabsLayout`      |
-| `PrettyGrid<T>`          | `data`, `renderComponent`, `hasMore`, `onLoadMore`, `className`, `itemClassName` | Grid with empty state and optional infinite scroll |
-| `Error`                  | Default mode (`error`, `message`, `onRetry`) or custom mode (`children`)         | Reusable error fallback                            |
-| `Dialog`                 | `open`, `title`, `handleClose`, `containerClassName`, `className`                | Base modal                                         |
-| `FormDialog<TForm>`      | `Dialog` props + `FormContainer` props                                           | Form modal                                         |
-| `ConfirmationDialog`     | `open`, `title`, `handleSubmit`, `handleClose`                                   | Basic confirmation flows                           |
-| `ImportDialog<TPreview>` | `fileProcessor`, `onFileProcessed`, `renderCustomPreview`, `onOverrideChange`    | Import with preview + override                     |
-| `Drawer<MenuKeys>`       | `open`, `onClose`, `menuMap`, `logo`                                             | Side navigation                                    |
-| `Navbar`                 | `openDrawer`, `menuButtonProps`, `showSearch`                                    | Top bar with dynamic title/actions                 |
-| `ToTop`                  | `threshold`, `tooltip`, `scrollOnClick`, `className`                             | Floating scroll-to-top button                      |
-| `IconButton`             | `icon: IconDefinition` + visual props                                            | FontAwesome-only icon contract                     |
+| Component                | Key props                                                                                     | Recommended usage                                  |
+| ------------------------ | --------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| `Page<T>`                | `title`, `actions`, `addOptions`, `filterOptions`, `queryKey`, `isLoading`                    | CRUD layout with standard header/actions           |
+| `PageHeader<T>`          | `title`, `actions`, `showBackButton`                                                          | Reusable page header with desktop/mobile actions   |
+| `FormContainer<TForm>`   | `handleSubmit`, `onSubmit`, `reset`, `isLoading`, `buttonEnd`                                 | Form wrapper with built-in submit/cancel           |
+| `ParagraphInput`         | `label`, `state`, `containerClassName`, `inputClassName`, `helperText`                        | Textarea with state-aware styling                  |
+| `PasswordInput`          | `TextInputPropsType`                                                                          | Password input with show/hide toggle               |
+| `TabsLayout`             | `tabs`, `defaultTab`, `currentTab`, `onTabChange`, `useLinks`, `tabButtonProps`               | Route tabs or local state tabs                     |
+| `Onboarding`             | `steps`                                                                                       | Multi-step flow using controlled `TabsLayout`      |
+| `PrettyGrid<T>`          | `data`, `renderComponent`, `hasMore`, `onLoadMore`, `className`, `itemClassName`              | Grid with empty state and optional infinite scroll |
+| `Error`                  | Default mode (`error`, `message`, `onRetry`) or custom mode (`children`)                      | Reusable error fallback                            |
+| `Dialog`                 | `open`, `title`, `handleClose`, `containerClassName`, `className`                             | Base modal                                         |
+| `FormDialog<TForm>`      | `Dialog` props + `FormContainer` props + `extraActions`                                       | Form modal with optional secondary footer actions  |
+| `ConfirmationDialog`     | `open`, `title`, `handleSubmit`, `handleClose`, `isLoading`, `extraActions`                   | Basic confirmation flows                           |
+| `ImportDialog<TPreview>` | `fileProcessor`, `onFileProcessed`, `renderCustomPreview`, `onOverrideChange`, `extraActions` | Import with preview + override                     |
+| `Drawer<MenuKeys>`       | `open`, `onClose`, `menuMap`, `logo`                                                          | Side navigation                                    |
+| `Navbar`                 | `openDrawer`, `menuButtonProps`, `showSearch`                                                 | Top bar with dynamic title/actions                 |
+| `ToTop`                  | `threshold`, `tooltip`, `scrollOnClick`, `className`                                          | Floating scroll-to-top button                      |
+| `IconButton`             | `icon: IconDefinition` + visual props                                                         | FontAwesome-only icon contract                     |
 
 ## 5. Frequent Usage Examples
 
@@ -222,6 +222,38 @@ export function ProductsPage() {
   return <div>...</div>;
 }
 ```
+
+### 5.6 Dialogs with `extraActions`
+
+```tsx
+import type { ButtonPropsType } from "@sito/dashboard-app";
+import { ConfirmationDialog, FormDialog } from "@sito/dashboard-app";
+
+const extraActions: ButtonPropsType[] = [
+  {
+    id: "save-draft",
+    type: "button",
+    variant: "outlined",
+    color: "secondary",
+    children: "Save draft",
+    onClick: () => saveDraft(),
+  },
+];
+
+<ConfirmationDialog
+  open={open}
+  title="Confirm change"
+  handleSubmit={confirm}
+  handleClose={close}
+  extraActions={extraActions}
+/>;
+
+<FormDialog<ProductForm> {...dialog} extraActions={extraActions}>
+  {/* fields */}
+</FormDialog>;
+```
+
+Use `type: "button"` in `FormDialog` extra actions unless you want them to submit the form.
 
 ## 6. High-Level Hooks
 
@@ -420,7 +452,7 @@ showErrorNotification({ message: "Something failed" });
 
 Full token and CSS override reference is available at:
 
-- `docs/THEME_AND_CSS_ES.md`
+- `docs/THEME_AND_CSS.md`
 
 ## 10. Minimum i18n coverage
 

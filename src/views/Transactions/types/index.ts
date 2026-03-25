@@ -7,6 +7,8 @@ import {
   UseActionDialog,
   FormDialogPropsType,
   TriggerFormDialogPropsType,
+  SortOrder,
+  Option,
 } from "@sito/dashboard-app";
 
 // types
@@ -69,6 +71,23 @@ export interface AssignTransactionCategoryFormType extends FieldValues {
 
 export type AssignTransactionCategoryDialogPropsType =
   TriggerFormDialogPropsType<AssignTransactionCategoryFormType>;
+
+export interface TransactionsMobileFiltersFormType extends FieldValues {
+  category: Option[];
+  type: string;
+  description: string;
+  amount: string;
+  dateStart: string;
+  dateEnd: string;
+  sortingBy: string;
+  sortingOrder: SortOrder;
+}
+
+export interface TransactionsMobileFiltersDialogPropsType
+  extends TriggerFormDialogPropsType<TransactionsMobileFiltersFormType> {
+  categories: CommonTransactionCategoryDto[];
+  handleClear: () => void;
+}
 
 export enum TransactionActions {
   AssignAccount = "assignAccount",

@@ -24,7 +24,6 @@ import { Type } from "views/TransactionCategories/components/Type";
 export const getTransactionTypeOptions = (t: TFunction): Option[] =>
   enumToKeyValueArray(TransactionType)?.map((item) => ({
     id: item.value,
-    value: item.value,
     name: t(`_entities:transactionCategory:type.values.${item.key}`),
   })) as Option[];
 
