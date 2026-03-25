@@ -1,17 +1,22 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
 import {
   AutocompleteInput,
-  Dialog,
-  DialogActions,
+  Button,
+  FormDialog,
   Option,
   SelectInput,
   SortOrder,
   TextInput,
+  useFormDialog,
   useTableOptions,
 } from "@sito/dashboard-app";
+
+// hooks
+import { TransactionsQueryKeys } from "hooks";
 
 // lib
 import { CommonTransactionCategoryDto, TransactionType } from "lib";
@@ -23,6 +28,17 @@ type TransactionsMobileFiltersProps = {
   open: boolean;
   onClose: () => void;
   categories: CommonTransactionCategoryDto[];
+};
+
+type TransactionsMobileFiltersFormType = {
+  category: Option[];
+  type: string;
+  description: string;
+  amount: string;
+  dateStart: string;
+  dateEnd: string;
+  sortingBy: string;
+  sortingOrder: SortOrder;
 };
 
 const DEFAULT_SORTING_BY = "date";
@@ -114,70 +130,87 @@ export const TransactionsMobileFilters = (
     end?: string;
   };
 
-  const [category, setCategory] = useState<Option | Option[] | null>(
-    selectedCategories,
-  );
-  const [type, setType] = useState<string>(
-    filters?.type != null ? String(filters.type) : "",
-  );
-  const [description, setDescription] = useState<string>(
-    filters?.description ? String(filters.description) : "",
-  );
-  const [amount, setAmount] = useState<string>(
-    filters?.amount != null ? String(filters.amount) : "",
-  );
-  const [dateStart, setDateStart] = useState<string>(parsedDate.start ?? "");
-  const [dateEnd, setDateEnd] = useState<string>(parsedDate.end ?? "");
-  const [mobileSortingBy, setMobileSortingBy] = useState<string>(
-    sortingBy || DEFAULT_SORTING_BY,
-  );
-  const [mobileSortingOrder, setMobileSortingOrder] = useState<SortOrder>(
-    parseSortOrder(sortingOrder),
+  const defaultValues = useMemo<TransactionsMobileFiltersFormType>(
+    () => ({
+      category: selectedCategories,
+      type: filters?.type != null ? String(filters.type) : "",
+      description: filters?.description ? String(filters.description) : "",
+      amount: filters?.amount != null ? String(filters.amount) : "",
+      dateStart: parsedDate.start ?? "",
+      dateEnd: parsedDate.end ?? "",
+      sortingBy: sortingBy || DEFAULT_SORTING_BY,
+      sortingOrder: parseSortOrder(sortingOrder),
+    }),
+    [
+      filters?.amount,
+      filters?.description,
+      filters?.type,
+      parsedDate.end,
+      parsedDate.start,
+      selectedCategories,
+      sortingBy,
+      sortingOrder,
+    ],
   );
 
-  const handleApply = () => {
-    clearFilters();
+  const formDialog = useFormDialog<
+    TransactionsMobileFiltersFormType,
+    TransactionsMobileFiltersFormType,
+    TransactionsMobileFiltersFormType,
+    TransactionsMobileFiltersFormType
+  >({
+    defaultValues,
+    mutationFn: async (values) => {
+      clearFilters();
 
-    const nextFilters: Record<string, { value: unknown }> = {};
-    const selectedCategories = Array.isArray(category)
-      ? category
-      : category
-        ? [category]
+      const nextFilters: Record<string, { value: unknown }> = {};
+      const selectedCategoryValues = Array.isArray(values.category)
+        ? values.category
         : [];
 
-    if (selectedCategories.length > 0) {
-      nextFilters.category = {
-        value: selectedCategories.map((option) => Number(option.id)),
-      };
-    }
+      if (selectedCategoryValues.length > 0) {
+        nextFilters.category = {
+          value: selectedCategoryValues.map((option) => Number(option.id)),
+        };
+      }
 
-    if (type !== "") {
-      nextFilters.type = { value: Number(type) as TransactionType };
-    }
+      if (values.type !== "") {
+        nextFilters.type = { value: Number(values.type) as TransactionType };
+      }
 
-    if (description.trim().length > 0) {
-      nextFilters.description = { value: description.trim() };
-    }
+      if (values.description.trim().length > 0) {
+        nextFilters.description = { value: values.description.trim() };
+      }
 
-    if (amount !== "" && !Number.isNaN(Number(amount))) {
-      nextFilters.amount = { value: Number(amount) };
-    }
+      if (
+        values.amount !== "" &&
+        !Number.isNaN(Number(values.amount))
+      ) {
+        nextFilters.amount = { value: Number(values.amount) };
+      }
 
-    if (dateStart || dateEnd) {
-      nextFilters.date = {
-        value: {
-          start: dateStart || undefined,
-          end: dateEnd || undefined,
-        },
-      };
-    }
+      if (values.dateStart || values.dateEnd) {
+        nextFilters.date = {
+          value: {
+            start: values.dateStart || undefined,
+            end: values.dateEnd || undefined,
+          },
+        };
+      }
 
-    onFilterApply(nextFilters);
-    setSortingBy(mobileSortingBy || DEFAULT_SORTING_BY);
-    setSortingOrder(parseSortOrder(mobileSortingOrder));
-    setCurrentPage(0);
-    onClose();
-  };
+      onFilterApply(nextFilters);
+      setSortingBy(values.sortingBy || DEFAULT_SORTING_BY);
+      setSortingOrder(parseSortOrder(values.sortingOrder));
+      setCurrentPage(0);
+
+      return values;
+    },
+    onSuccess: () => onClose(),
+    title: t("_accessibility:buttons.filters"),
+    ...TransactionsQueryKeys.all(),
+  });
+
+  const { control } = formDialog;
 
   const handleClear = () => {
     clearFilters();
@@ -188,113 +221,151 @@ export const TransactionsMobileFilters = (
   };
 
   return (
-    <Dialog
-      open={open}
-      title={t("_accessibility:buttons.filters")}
-      handleClose={onClose}
-    >
+    <FormDialog {...formDialog} open={open} handleClose={onClose}>
       <div className="flex flex-col gap-3">
-        <AutocompleteInput
-          id="mobile-transaction-category-filter"
-          name="mobile-transaction-category-filter"
-          label={t("_entities:transaction.category.label")}
-          placeholder={t("_entities:transaction.category.placeholder")}
-          options={categoryOptions}
-          value={category}
-          onChange={(value) => setCategory(value)}
-          multiple
+        <Controller
+          control={control}
+          name="category"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <AutocompleteInput
+              id="mobile-transaction-category-filter"
+              label={t("_entities:transaction.category.label")}
+              placeholder={t("_entities:transaction.category.placeholder")}
+              options={categoryOptions}
+              value={value ?? []}
+              onChange={(nextValue) => onChange(nextValue)}
+              multiple
+              {...rest}
+            />
+          )}
         />
-        <SelectInput
-          id="mobile-transaction-type-filter"
-          name="mobile-transaction-type-filter"
-          label={t("_entities:transactionCategory.type.label")}
-          value={type}
-          onChange={(event) =>
-            setType((event.target as HTMLSelectElement).value)
-          }
-          options={[
-            {
-              id: "",
-              value: "",
-              name: t("_pages:transactions.mobileFilters.any"),
-            },
-            ...typeOptions,
-          ]}
+        <Controller
+          control={control}
+          name="type"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <SelectInput
+              id="mobile-transaction-type-filter"
+              label={t("_entities:transactionCategory.type.label")}
+              value={value ?? ""}
+              onChange={(event) =>
+                onChange((event.target as HTMLSelectElement).value)
+              }
+              options={[
+                {
+                  id: "",
+                  value: "",
+                  name: t("_pages:transactions.mobileFilters.any"),
+                },
+                ...typeOptions,
+              ]}
+              {...rest}
+            />
+          )}
         />
-        <TextInput
-          id="mobile-transaction-description-filter"
-          name="mobile-transaction-description-filter"
-          label={t("_entities:base.description.label")}
-          placeholder={t("_entities:base.description.placeholder")}
-          value={description}
-          onChange={(event) =>
-            setDescription((event.target as HTMLInputElement).value)
-          }
+        <Controller
+          control={control}
+          name="description"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <TextInput
+              id="mobile-transaction-description-filter"
+              label={t("_entities:base.description.label")}
+              placeholder={t("_entities:base.description.placeholder")}
+              value={value ?? ""}
+              onChange={(event) =>
+                onChange((event.target as HTMLInputElement).value)
+              }
+              {...rest}
+            />
+          )}
         />
-        <TextInput
-          id="mobile-transaction-amount-filter"
-          name="mobile-transaction-amount-filter"
-          type="number"
-          label={t("_entities:transaction.amount.label")}
-          placeholder={t("_entities:transaction.amount.placeholder")}
-          value={amount}
-          onChange={(event) =>
-            setAmount((event.target as HTMLInputElement).value)
-          }
+        <Controller
+          control={control}
+          name="amount"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <TextInput
+              id="mobile-transaction-amount-filter"
+              type="number"
+              label={t("_entities:transaction.amount.label")}
+              placeholder={t("_entities:transaction.amount.placeholder")}
+              value={value ?? ""}
+              onChange={(event) =>
+                onChange((event.target as HTMLInputElement).value)
+              }
+              {...rest}
+            />
+          )}
         />
         <div className="grid grid-cols-2 gap-2">
-          <TextInput
-            id="mobile-transaction-date-start-filter"
-            name="mobile-transaction-date-start-filter"
-            type="date"
-            label={t("_accessibility:components.table.filters.range.start")}
-            value={dateStart}
-            onChange={(event) =>
-              setDateStart((event.target as HTMLInputElement).value)
-            }
+          <Controller
+            control={control}
+            name="dateStart"
+            render={({ field: { value, onChange, ...rest } }) => (
+              <TextInput
+                id="mobile-transaction-date-start-filter"
+                type="date"
+                label={t("_accessibility:components.table.filters.range.start")}
+                value={value ?? ""}
+                onChange={(event) =>
+                  onChange((event.target as HTMLInputElement).value)
+                }
+                {...rest}
+              />
+            )}
           />
-          <TextInput
-            id="mobile-transaction-date-end-filter"
-            name="mobile-transaction-date-end-filter"
-            type="date"
-            label={t("_accessibility:components.table.filters.range.end")}
-            value={dateEnd}
-            onChange={(event) =>
-              setDateEnd((event.target as HTMLInputElement).value)
-            }
+          <Controller
+            control={control}
+            name="dateEnd"
+            render={({ field: { value, onChange, ...rest } }) => (
+              <TextInput
+                id="mobile-transaction-date-end-filter"
+                type="date"
+                label={t("_accessibility:components.table.filters.range.end")}
+                value={value ?? ""}
+                onChange={(event) =>
+                  onChange((event.target as HTMLInputElement).value)
+                }
+                {...rest}
+              />
+            )}
           />
         </div>
-        <SelectInput
-          id="mobile-transaction-sort-by"
-          name="mobile-transaction-sort-by"
-          label={t("_pages:transactions.mobileFilters.sortBy")}
-          value={mobileSortingBy}
-          onChange={(event) =>
-            setMobileSortingBy((event.target as HTMLSelectElement).value)
-          }
-          options={sortingByOptions}
+        <Controller
+          control={control}
+          name="sortingBy"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <SelectInput
+              id="mobile-transaction-sort-by"
+              label={t("_pages:transactions.mobileFilters.sortBy")}
+              value={value ?? DEFAULT_SORTING_BY}
+              onChange={(event) =>
+                onChange((event.target as HTMLSelectElement).value)
+              }
+              options={sortingByOptions}
+              {...rest}
+            />
+          )}
         />
-        <SelectInput
-          id="mobile-transaction-sort-order"
-          name="mobile-transaction-sort-order"
-          label={t("_pages:transactions.mobileFilters.sortOrder")}
-          value={mobileSortingOrder}
-          onChange={(event) =>
-            setMobileSortingOrder(
-              parseSortOrder((event.target as HTMLSelectElement).value),
-            )
-          }
-          options={sortingOrderOptions}
+        <Controller
+          control={control}
+          name="sortingOrder"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <SelectInput
+              id="mobile-transaction-sort-order"
+              label={t("_pages:transactions.mobileFilters.sortOrder")}
+              value={value ?? DEFAULT_SORTING_ORDER}
+              onChange={(event) =>
+                onChange(parseSortOrder((event.target as HTMLSelectElement).value))
+              }
+              options={sortingOrderOptions}
+              {...rest}
+            />
+          )}
         />
+        <Button type="button" variant="outlined" onClick={handleClear}>
+          {t("_accessibility:buttons.clear")}
+        </Button>
       </div>
-      <DialogActions
-        onCancel={handleClear}
-        onPrimaryClick={handleApply}
-        cancelText={t("_accessibility:buttons.clear")}
-        primaryText={t("_accessibility:buttons.applyFilters")}
-        alignEnd
-      />
-    </Dialog>
+    </FormDialog>
   );
 };
 
