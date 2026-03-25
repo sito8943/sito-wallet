@@ -151,7 +151,7 @@ export function ProductsPage() {
 }
 ```
 
-## 3. Create/edit form modal with `useFormDialog` + `FormDialog`
+## 3. Form modal patterns: state, create, and edit
 
 ```tsx
 import { useState } from "react";
@@ -159,6 +159,8 @@ import { Controller } from "react-hook-form";
 import {
   FormDialog,
   useFormDialog,
+  usePostDialog,
+  usePutDialog,
   type BaseEntityDto,
   type DeleteDto,
 } from "@sito/dashboard-app";
@@ -175,37 +177,90 @@ interface ProductDto extends BaseEntityDto {
 
 type UpsertProductDto = DeleteDto & ProductForm;
 
-export function ProductUpsertDialog() {
-  const [selectedProductId] = useState(0);
+type ProductFilters = {
+  search: string;
+  minPrice: number;
+};
 
-  const formDialog = useFormDialog<ProductDto, UpsertProductDto, ProductDto, ProductForm>({
-    title: "Edit product",
+export function ProductDialogs() {
+  const [tableFilters, setTableFilters] = useState<ProductFilters>({
+    search: "",
+    minPrice: 0,
+  });
+
+  // State/local-only dialog (filters)
+  const filtersDialog = useFormDialog<never, never, never, ProductFilters>({
+    mode: "state",
+    title: "Filters",
+    defaultValues: { search: "", minPrice: 0 },
+    reinitializeOnOpen: true,
+    mapIn: () => tableFilters,
+    onSubmit: (values) => setTableFilters(values),
+  });
+
+  // Create dialog (POST)
+  const createDialog = usePostDialog<
+    Omit<ProductDto, "id" | "createdAt" | "updatedAt" | "deletedAt">,
+    ProductDto,
+    ProductForm
+  >({
+    title: "Create product",
+    defaultValues: { name: "", price: 0 },
+    mutationFn: (dto) => api.products.insert(dto),
+    mapOut: (form) => ({ name: form.name, price: form.price }),
     queryKey: ["products"],
+  });
+
+  // Edit dialog (PUT)
+  const editDialog = usePutDialog<
+    ProductDto,
+    UpsertProductDto,
+    ProductDto,
+    ProductForm
+  >({
+    title: "Edit product",
     defaultValues: { name: "", price: 0 },
     getFunction: (id) => api.products.getById(id),
     dtoToForm: (dto) => ({ name: dto.name, price: dto.price }),
-    formToDto: (form) => ({ id: selectedProductId, ...form }),
     mutationFn: (dto) => api.products.update(dto),
-    onSuccessMessage: "Product saved",
+    mapOut: (form, dto) => ({ id: dto?.id ?? 0, ...form }),
+    queryKey: ["products"],
   });
 
   return (
-    <FormDialog<ProductForm> {...formDialog}>
-      <Controller
-        name="name"
-        control={formDialog.control}
-        rules={{ required: true }}
-        render={({ field }) => <input {...field} className="text-input" placeholder="Name" />}
-      />
-      <Controller
-        name="price"
-        control={formDialog.control}
-        rules={{ required: true, min: 0 }}
-        render={({ field }) => (
-          <input {...field} type="number" className="text-input" placeholder="Price" />
-        )
-      />
-    </FormDialog>
+    <>
+      <FormDialog<ProductFilters> {...filtersDialog}>
+        <Controller
+          name="search"
+          control={filtersDialog.control}
+          render={({ field }) => (
+            <input {...field} className="text-input" placeholder="Search" />
+          )}
+        />
+      </FormDialog>
+
+      <FormDialog<ProductForm> {...createDialog}>
+        <Controller
+          name="name"
+          control={createDialog.control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <input {...field} className="text-input" placeholder="Name" />
+          )}
+        />
+      </FormDialog>
+
+      <FormDialog<ProductForm> {...editDialog}>
+        <Controller
+          name="name"
+          control={editDialog.control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <input {...field} className="text-input" placeholder="Name" />
+          )}
+        />
+      </FormDialog>
+    </>
   );
 }
 ```

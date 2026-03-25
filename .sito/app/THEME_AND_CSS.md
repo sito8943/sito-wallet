@@ -85,7 +85,7 @@ Create a theme CSS file and load it after the library styles.
 ### 4.1 Buttons and helpers
 
 - `.to-top`, `.to-top.show`, `.to-top.hide`
-- `.fab`
+- `.page-fab`
 - `.password-icon`
 
 ### 4.2 Drawer
