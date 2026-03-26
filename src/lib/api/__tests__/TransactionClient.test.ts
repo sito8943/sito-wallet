@@ -136,4 +136,35 @@ describe("TransactionClient", () => {
       "filters=date%3E%3D2026-03-01T00%3A00%3A00%2Cdate%3C%3D2026-03-31T23%3A59%3A59",
     );
   });
+
+  it("sanitizes grouped filters and only keeps deletedAt as range", async () => {
+    mockDoQuery.mockResolvedValue({
+      incomeTotal: 10,
+      expenseTotal: 2,
+    });
+
+    const client = new TransactionClient();
+    await client.getGroupedByType({
+      accountId: 15,
+      filters:
+        "softDeleteScope==DELETED,status==ACTIVE,deletedAt==true,category==1,amount>=100",
+      date: {
+        start: "2026-03-01",
+        end: "2026-03-31",
+      },
+      deletedAt: {
+        start: "2026-02-01",
+        end: "2026-02-28",
+      } as never,
+    });
+
+    const builtUrl = decodeURIComponent(mockDoQuery.mock.calls[0][0] as string);
+    expect(builtUrl).toContain("accountId=15");
+    expect(builtUrl).toContain(
+      "filters=category==1,amount>=100,date>=2026-03-01,date<=2026-03-31,deletedAt>=2026-02-01,deletedAt<=2026-02-28",
+    );
+    expect(builtUrl).not.toContain("softDeleteScope");
+    expect(builtUrl).not.toContain("status==");
+    expect(builtUrl).not.toContain("deletedAt==true");
+  });
 });

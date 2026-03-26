@@ -65,7 +65,25 @@ vi.mock("lib", () => ({
   defaultTransactionsListFilters: { softDeleteScope: "ACTIVE" },
   normalizeListFilters: (filters: Record<string, unknown> | undefined) =>
     filters ?? { softDeleteScope: "ACTIVE" },
-  normalizeCommonFilters: (filters?: Record<string, unknown>) => filters ?? {},
+  normalizeCommonFilters: (filters?: Record<string, unknown>) => {
+    const normalized = { ...(filters ?? {}) } as Record<string, unknown>;
+
+    delete normalized.softDeleteScope;
+    delete normalized.status;
+
+    const deletedAt = normalized.deletedAt;
+    const isDeletedAtRange =
+      typeof deletedAt === "object" &&
+      deletedAt !== null &&
+      !Array.isArray(deletedAt) &&
+      ("start" in deletedAt || "end" in deletedAt);
+
+    if (!isDeletedAtRange) {
+      delete normalized.deletedAt;
+    }
+
+    return normalized;
+  },
   TransactionTypeResumeDto: class {},
   FilterTransactionTypeResumeDto: class {},
   TransactionTypeGroupedDto: class {},
@@ -258,6 +276,38 @@ describe("useTransactionTypeResume", () => {
     expect(result.current.data).toEqual(data);
   });
 
+  it("sanitizes trash filters and keeps deletedAt range", async () => {
+    const data = { total: 200, type: "in" };
+    mockTransactionsGetTypeResume.mockResolvedValue(data);
+
+    const { result } = renderHook(
+      () =>
+        useTransactionTypeResume({
+          type: "in",
+          account: [1],
+          softDeleteScope: "DELETED",
+          deletedAt: {
+            start: "2026-03-01",
+            end: "2026-03-31",
+          },
+        } as Record<string, unknown>),
+      { wrapper: makeWrapper() },
+    );
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+    const calledWith = mockTransactionsGetTypeResume.mock.calls[0][0];
+    expect(calledWith).toMatchObject({
+      type: "in",
+      account: [1],
+      deletedAt: {
+        start: "2026-03-01",
+        end: "2026-03-31",
+      },
+    });
+    expect(calledWith).not.toHaveProperty("softDeleteScope");
+  });
+
   it("falls back to IndexedDB when the API fails", async () => {
     const fallback = { total: 0, type: "in" };
     mockTransactionsGetTypeResume.mockRejectedValue(new Error("fail"));
@@ -309,6 +359,34 @@ describe("useWeekly", () => {
     });
   });
 
+  it("removes softDeleteScope and deletedAt boolean", async () => {
+    const data = { days: [] };
+    mockTransactionsWeekly.mockResolvedValue(data);
+
+    const { result } = renderHook(
+      () =>
+        useWeekly({
+          type: "in",
+          account: [1],
+          softDeleteScope: "DELETED",
+          deletedAt: true,
+        } as Record<string, unknown>),
+      {
+        wrapper: makeWrapper(),
+      },
+    );
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+    const calledWith = mockTransactionsWeekly.mock.calls[0][0];
+    expect(calledWith).toMatchObject({
+      type: "in",
+      account: [1],
+    });
+    expect(calledWith).not.toHaveProperty("softDeleteScope");
+    expect(calledWith).not.toHaveProperty("deletedAt");
+  });
+
   it("falls back to IndexedDB when the API fails", async () => {
     const fallback = { days: [] };
     mockTransactionsWeekly.mockRejectedValue(new Error("fail"));
@@ -354,6 +432,28 @@ describe("useTransactionsGroupedByType", () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data).toEqual(data);
+  });
+
+  it("removes softDeleteScope and deletedAt boolean before grouped request", async () => {
+    const data = { incomeTotal: 120.5, expenseTotal: 35.25 };
+    mockTransactionsGetGroupedByType.mockResolvedValue(data);
+
+    const { result } = renderHook(
+      () =>
+        useTransactionsGroupedByType({
+          accountId: 15,
+          softDeleteScope: "DELETED",
+          deletedAt: true,
+        } as Record<string, unknown>),
+      { wrapper: makeWrapper() },
+    );
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+    const calledWith = mockTransactionsGetGroupedByType.mock.calls[0][0];
+    expect(calledWith).toMatchObject({ accountId: 15 });
+    expect(calledWith).not.toHaveProperty("softDeleteScope");
+    expect(calledWith).not.toHaveProperty("deletedAt");
   });
 
   it("falls back to IndexedDB when the API fails", async () => {

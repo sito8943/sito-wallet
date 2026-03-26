@@ -220,7 +220,10 @@ export function useInfiniteTransactionsList(props: {
 export function useTransactionTypeResume(
   props: UseTransactionTypeResumePropsType,
 ): UseQueryResult<TransactionTypeResumeDto> {
-  const filters = props;
+  const filters = useMemo(
+    () => normalizeCommonFilters(props) as FilterTransactionTypeResumeDto,
+    [props],
+  );
   const { t } = useTranslation();
 
   const manager = useManager();
@@ -234,11 +237,9 @@ export function useTransactionTypeResume(
     enabled: !!account?.id,
     queryFn: async () => {
       const query = {
+        ...filters,
         type: filters?.type ?? TransactionType.In,
-        account: filters?.account,
-        category: filters?.category,
-        date: filters?.date,
-      };
+      } as FilterTransactionTypeResumeDto;
 
       try {
         return await manager.Transactions.getTypeResume(query);
@@ -263,9 +264,12 @@ export function useTransactionTypeResume(
 }
 
 export function useWeekly(
-  props: FilterTransactionTypeResumeDto,
+  props: FilterWeeklyTransactionDto,
 ): UseQueryResult<TransactionWeeklySpentDto> {
-  const filters = props;
+  const filters = useMemo(
+    () => normalizeCommonFilters(props) as FilterWeeklyTransactionDto,
+    [props],
+  );
   const { t } = useTranslation();
 
   const manager = useManager();
@@ -280,7 +284,10 @@ export function useWeekly(
       const query = {
         type: filters?.type ?? TransactionType.In,
         account: filters?.account,
-      };
+        ...(filters?.deletedAt !== undefined
+          ? { deletedAt: filters.deletedAt }
+          : {}),
+      } as FilterWeeklyTransactionDto;
 
       try {
         return await manager.Transactions.weekly(query);
@@ -307,7 +314,15 @@ export function useWeekly(
 export function useTransactionsGroupedByType(
   props: UseTransactionsGroupedByTypePropsType,
 ): UseQueryResult<TransactionTypeGroupedDto> {
-  const filters = props;
+  const filters = useMemo<FilterTransactionGroupedByTypeDto>(() => {
+    const normalized =
+      normalizeCommonFilters(props) as Partial<FilterTransactionGroupedByTypeDto>;
+
+    return {
+      ...normalized,
+      accountId: props.accountId,
+    };
+  }, [props]);
   const { t } = useTranslation();
 
   const manager = useManager();

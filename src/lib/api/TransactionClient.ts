@@ -26,6 +26,13 @@ import {
 // utils
 import { config } from "../../config";
 
+type UnknownRangeValue = {
+  start?: unknown;
+  end?: unknown;
+};
+
+const TRASH_FILTER_KEYS = new Set(["softdeletescope", "status", "deletedat"]);
+
 export default class TransactionClient extends BaseClient<
   Tables,
   TransactionDto,
@@ -35,14 +42,69 @@ export default class TransactionClient extends BaseClient<
   FilterTransactionDto,
   ImportPreviewTransactionDto
 > {
+  private sanitizeFiltersExpression(filters?: string): string | undefined {
+    if (typeof filters !== "string") return undefined;
+
+    const sanitized = filters
+      .split(",")
+      .map((segment) => segment.trim())
+      .filter(Boolean)
+      .filter((segment) => {
+        const parsed = segment.match(
+          /^([A-Za-z0-9_.-]+)\s*(==|=|!=|>=|<=|>|<)/,
+        );
+        if (!parsed) return true;
+
+        return !TRASH_FILTER_KEYS.has(parsed[1].toLowerCase());
+      });
+
+    return sanitized.length ? sanitized.join(",") : undefined;
+  }
+
+  private parseRangeBoundary(value: unknown): string | undefined {
+    if (value instanceof Date) {
+      return Number.isNaN(value.getTime()) ? undefined : value.toISOString();
+    }
+
+    if (typeof value === "number") {
+      return Number.isFinite(value) ? String(value) : undefined;
+    }
+
+    if (typeof value !== "string") return undefined;
+
+    const normalized = value.trim();
+    return normalized.length ? normalized : undefined;
+  }
+
+  private parseDeletedAtRange(
+    value: FilterTransactionGroupedByTypeDto["deletedAt"],
+  ): { start?: string; end?: string } | undefined {
+    if (!value || typeof value !== "object" || Array.isArray(value)) {
+      return undefined;
+    }
+
+    const parsedValue = value as UnknownRangeValue;
+    const start = this.parseRangeBoundary(parsedValue.start);
+    const end = this.parseRangeBoundary(parsedValue.end);
+
+    if (start === undefined && end === undefined) return undefined;
+
+    return {
+      ...(start !== undefined ? { start } : {}),
+      ...(end !== undefined ? { end } : {}),
+    };
+  }
+
   private buildGroupedByTypeFilters(
     filters?: string,
     date?: FilterTransactionGroupedByTypeDto["date"],
+    deletedAt?: FilterTransactionGroupedByTypeDto["deletedAt"],
   ): string | undefined {
     const values: string[] = [];
 
-    if (filters) {
-      values.push(filters);
+    const sanitizedFilters = this.sanitizeFiltersExpression(filters);
+    if (sanitizedFilters) {
+      values.push(sanitizedFilters);
     }
 
     if (date?.start) {
@@ -51,6 +113,15 @@ export default class TransactionClient extends BaseClient<
 
     if (date?.end) {
       values.push(`date<=${date.end}`);
+    }
+
+    const deletedAtRange = this.parseDeletedAtRange(deletedAt);
+    if (deletedAtRange?.start) {
+      values.push(`deletedAt>=${deletedAtRange.start}`);
+    }
+
+    if (deletedAtRange?.end) {
+      values.push(`deletedAt<=${deletedAtRange.end}`);
     }
 
     return values.length ? values.join(",") : undefined;
@@ -93,7 +164,11 @@ export default class TransactionClient extends BaseClient<
     >(`${Tables.Transactions}/grouped-by-type`, undefined, {
       accountId: filters.accountId,
       userId: filters.userId,
-      filters: this.buildGroupedByTypeFilters(filters.filters, filters.date),
+      filters: this.buildGroupedByTypeFilters(
+        filters.filters,
+        filters.date,
+        filters.deletedAt,
+      ),
     });
     return await this.api.doQuery<TransactionTypeGroupedDto>(
       builtUrl,
