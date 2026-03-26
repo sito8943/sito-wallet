@@ -808,18 +808,20 @@ export function SignInForm() {
 }
 ```
 
-## 14. Entity clients (`BaseClient`) and offline fallback (`IndexedDBClient`)
+## 14. Entity clients (`BaseClient`), offline fallback (`IndexedDBClient`), and Supabase (`SupabaseDataClient`)
 
 ```tsx
 import {
   BaseClient,
   IndexedDBClient,
+  SupabaseDataClient,
   type BaseCommonEntityDto,
   type BaseEntityDto,
   type BaseFilterDto,
   type DeleteDto,
   type ImportPreviewDto,
 } from "@sito/dashboard-app";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 interface ProductDto extends BaseEntityDto {
   name: string;
@@ -871,6 +873,20 @@ class ProductsIndexedDBClient extends IndexedDBClient<
 > {
   constructor() {
     super("products", "my-app-db");
+  }
+}
+
+class ProductsSupabaseClient extends SupabaseDataClient<
+  "products",
+  ProductDto,
+  ProductCommonDto,
+  ProductCreateDto,
+  ProductUpdateDto,
+  ProductFilterDto,
+  ProductImportPreviewDto
+> {
+  constructor(supabase: SupabaseClient) {
+    super("products", supabase);
   }
 }
 

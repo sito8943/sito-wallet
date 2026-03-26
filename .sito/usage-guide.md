@@ -183,12 +183,31 @@ export function UsersTable() {
 - `total`: `0`
 - `hiddenColumns`: `[]` (or `defaultHiddenColumns` if provided)
 
+You can override the initial table state through `initialState`:
+
+```tsx
+<TableOptionsProvider
+  defaultHiddenColumns={["email"]}
+  initialState={{
+    currentPage: 0,
+    pageSize: 50,
+    pageSizes: [25, 50, 100],
+    sortingBy: "createdAt",
+    sortingOrder: SortOrder.ASC,
+    filters: { status: "active" },
+  }}
+>
+  <UsersTable />
+</TableOptionsProvider>
+```
+
 ### Provider Props
 
-| Prop                   | Type        | Description                                  |
-| ---------------------- | ----------- | -------------------------------------------- |
-| `children`             | `ReactNode` | Required.                                    |
-| `defaultHiddenColumns` | `string[]`  | Column keys hidden on mount and after reset. |
+| Prop                   | Type                                   | Description                                                                                                     |
+| ---------------------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `children`             | `ReactNode`                            | Required.                                                                                                       |
+| `defaultHiddenColumns` | `string[]`                             | Column keys hidden on mount and after reset.                                                                    |
+| `initialState`         | `TableOptionsProviderInitialStateType` | Optional initial values for `currentPage`, `pageSize`, `pageSizes`, `sortingBy`, `sortingOrder`, and `filters`. |
 
 ## 6. Key `Table` Props
 
@@ -290,10 +309,10 @@ Columns can be hidden/shown at runtime via a dropdown menu, and table state can 
 When the reset button is clicked (`canReset`), the following state is restored:
 
 - `hiddenColumns` → `defaultHiddenColumns` (or `[]`)
-- `sortingBy` → `"id"`
-- `sortingOrder` → `SortOrder.DESC`
-- `filters` → `{}`
-- `currentPage` → `0`
+- `sortingBy` → `initialState.sortingBy` (or `"id"` if omitted)
+- `sortingOrder` → `initialState.sortingOrder` (or `SortOrder.DESC` if omitted)
+- `filters` → `initialState.filters` (or `{}` if omitted)
+- `currentPage` → `initialState.currentPage` (or `0` if omitted)
 
 ### Programmatic access
 

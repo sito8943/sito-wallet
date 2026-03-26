@@ -13,7 +13,7 @@ Install peer dependencies in the consumer project as well:
 ```bash
 npm install \
   react@18.3.1 react-dom@18.3.1 \
-  @sito/dashboard@^0.0.72 \
+  @sito/dashboard@^0.0.73 \
   @tanstack/react-query@5.83.0 \
   react-hook-form@7.61.1 \
   @fortawesome/fontawesome-svg-core@7.0.0 \
@@ -21,6 +21,12 @@ npm install \
   @fortawesome/free-regular-svg-icons@7.0.0 \
   @fortawesome/free-brands-svg-icons@7.0.0 \
   @fortawesome/react-fontawesome@0.2.3
+```
+
+If you use Supabase backend, also install:
+
+```bash
+npm install @supabase/supabase-js@2.100.0
 ```
 
 ## 2. Required Providers
@@ -99,6 +105,33 @@ export function AppProviders({ children }: { children: ReactNode }) {
   );
 }
 ```
+
+### 2.1 Supabase providers (optional backend)
+
+For Supabase, keep the same outer providers and replace manager/auth pair:
+
+`ConfigProvider` -> `SupabaseManagerProvider` -> `SupabaseAuthProvider` -> `NotificationProvider` -> `DrawerMenuProvider` -> `NavbarProvider`
+
+The consumer app must provide `.env` values and instantiate client itself:
+
+```tsx
+import { createClient } from "@supabase/supabase-js";
+import {
+  SupabaseAuthProvider,
+  SupabaseManagerProvider,
+} from "@sito/dashboard-app";
+
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY,
+);
+
+<SupabaseManagerProvider supabase={supabase}>
+  <SupabaseAuthProvider>{children}</SupabaseAuthProvider>
+</SupabaseManagerProvider>;
+```
+
+`useAuth` keeps the same API with `SupabaseAuthProvider`.
 
 ## 3. Core Integration Rules
 
@@ -424,6 +457,33 @@ class ProductsIndexedDBClient extends IndexedDBClient<
   }
 }
 ```
+
+### 7.3 Supabase client with `SupabaseDataClient`
+
+```ts
+import { SupabaseDataClient } from "@sito/dashboard-app";
+import type { SupabaseClient } from "@supabase/supabase-js";
+
+class ProductsSupabaseClient extends SupabaseDataClient<
+  "products",
+  ProductDto,
+  ProductCommonDto,
+  Omit<ProductDto, "id" | "createdAt" | "updatedAt" | "deletedAt">,
+  ProductUpdateDto,
+  ProductFilterDto,
+  ImportPreviewDto
+> {
+  constructor(supabase: SupabaseClient) {
+    super("products", supabase);
+  }
+}
+```
+
+Optional `SupabaseDataClient` options:
+
+- `idColumn` (default `"id"`)
+- `deletedAtColumn` (default `"deletedAt"`)
+- `defaultSortColumn` (default `idColumn`)
 
 ## 8. Auth and notifications
 
