@@ -1,4 +1,5 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { useMemo } from "react";
 
 // providers
 import { useManager, useOfflineManager } from "providers";
@@ -8,7 +9,11 @@ import { QueryResult, useAuth } from "@sito/dashboard-app";
 import { UseFetchPropsType } from "./types.ts";
 
 // lib
-import { DashboardDto, FilterDashboardDto } from "lib";
+import {
+  DashboardDto,
+  FilterDashboardDto,
+  normalizeHardDeleteFilters,
+} from "lib";
 
 export const DashboardsQueryKeys = {
   all: () => ({
@@ -22,7 +27,11 @@ export const DashboardsQueryKeys = {
 export function useDashboardsList(
   props: UseFetchPropsType<DashboardDto, FilterDashboardDto>
 ): UseQueryResult<QueryResult<DashboardDto>> {
-  const { filters = { deletedAt: false as unknown as FilterDashboardDto["deletedAt"] } } = props;
+  const { filters = {} } = props;
+  const normalizedFilters = useMemo(
+    () => normalizeHardDeleteFilters(filters) as FilterDashboardDto,
+    [filters],
+  );
 
   const manager = useManager();
   const offlineManager = useOfflineManager();
@@ -34,7 +43,7 @@ export function useDashboardsList(
     queryFn: async () => {
       try {
         const result = await manager.Dashboard.get(undefined, {
-          ...filters,
+          ...normalizedFilters,
         });
 
         offlineManager.Dashboard.seed(result.items).catch(() => {});
@@ -42,7 +51,7 @@ export function useDashboardsList(
       } catch (error) {
         console.warn("API failed, loading dashboards from IndexedDB", error);
         return await offlineManager.Dashboard.get(undefined, {
-          ...filters,
+          ...normalizedFilters,
         });
       }
     },

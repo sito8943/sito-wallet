@@ -27,6 +27,7 @@ import {
   TransactionDto,
   CommonTransactionDto,
   FilterTransactionDto,
+  defaultTransactionsListFilters,
   TransactionTypeResumeDto,
   TransactionType,
   FilterTransactionTypeResumeDto,
@@ -34,6 +35,8 @@ import {
   FilterWeeklyTransactionDto,
   TransactionWeeklySpentDto,
   TransactionTypeGroupedDto,
+  normalizeCommonFilters,
+  normalizeListFilters,
 } from "lib";
 import { useTranslation } from "react-i18next";
 
@@ -89,7 +92,7 @@ export function useTransactionsList(props: {
   } = useTableOptions();
 
   const {
-    filters = { deletedAt: false as unknown as Date },
+    filters = defaultTransactionsListFilters,
     query = {} as QueryParam<TransactionDto>,
   } = props;
 
@@ -98,10 +101,11 @@ export function useTransactionsList(props: {
   const { account } = useAuth();
 
   const parsedFilters = useMemo(
-    () => ({
-      ...tableFilters,
-      ...filters,
-    }),
+    () =>
+      normalizeListFilters({
+        ...tableFilters,
+        ...filters,
+      }) as FilterTransactionDto,
     [filters, tableFilters],
   );
 
@@ -152,7 +156,7 @@ export function useInfiniteTransactionsList(props: {
   } = useTableOptions();
 
   const {
-    filters = { deletedAt: false as unknown as Date },
+    filters = defaultTransactionsListFilters,
     query = {} as Omit<QueryParam<TransactionDto>, "currentPage">,
   } = props;
 
@@ -161,10 +165,11 @@ export function useInfiniteTransactionsList(props: {
   const { account } = useAuth();
 
   const parsedFilters = useMemo(
-    () => ({
-      ...tableFilters,
-      ...filters,
-    }),
+    () =>
+      normalizeListFilters({
+        ...tableFilters,
+        ...filters,
+      }) as FilterTransactionDto,
     [filters, tableFilters],
   );
 
@@ -342,25 +347,22 @@ export function useTransactionsCommon(
   const manager = useManager();
   const offlineManager = useOfflineManager();
 
-  const filters = props;
+  const filters = useMemo(
+    () => normalizeCommonFilters(props) as FilterTransactionDto,
+    [props],
+  );
 
   return useQuery({
     ...TransactionsQueryKeys.common(filters),
     queryFn: async () => {
       try {
-        return await manager.Transactions.commonGet({
-          deletedAt: false as unknown as Date,
-          ...filters,
-        });
+        return await manager.Transactions.commonGet(filters);
       } catch (error) {
         console.warn(
           "API failed, loading common transactions from IndexedDB",
           error,
         );
-        return await offlineManager.Transactions.commonGet({
-          deletedAt: false as unknown as Date,
-          ...filters,
-        });
+        return await offlineManager.Transactions.commonGet(filters);
       }
     },
   });

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -217,6 +217,77 @@ vi.mock("../components/WeeklyCard", () => ({
   ),
 }));
 
+vi.mock("../sections/TransactionsDesktopSection", () => ({
+  default: ({
+    tabs,
+    tabValue,
+  }: {
+    tabs: Array<{ id: number; label: string; content: React.ReactNode }>;
+    tabValue?: number;
+  }) => (
+    <div data-testid="tabs-desktop">
+      {tabs.map((tab) => {
+        const isActive = tab.id === (tabValue ?? tabs[0]?.id);
+        return (
+          <div key={tab.id} data-testid={`tab-${tab.id}`} data-active={isActive}>
+            <span data-testid={`tab-label-${tab.id}`}>{tab.label}</span>
+            {isActive ? tab.content : null}
+          </div>
+        );
+      })}
+    </div>
+  ),
+}));
+
+vi.mock("../sections/TransactionsMobileSection", () => ({
+  default: ({
+    tabs,
+    tabValue,
+  }: {
+    tabs: Array<{ id: number; label: string; content: React.ReactNode }>;
+    tabValue?: number;
+  }) => (
+    <div data-testid="tabs-mobile">
+      {tabs.map((tab) => {
+        const isActive = tab.id === (tabValue ?? tabs[0]?.id);
+        return (
+          <div key={tab.id} data-testid={`tab-${tab.id}`} data-active={isActive}>
+            <span data-testid={`tab-label-${tab.id}`}>{tab.label}</span>
+            {isActive ? tab.content : null}
+          </div>
+        );
+      })}
+    </div>
+  ),
+}));
+
+vi.mock("../sections/WeeklySummarySection", () => ({
+  default: ({
+    selectedAccount,
+  }: {
+    selectedAccount?: {
+      id: number;
+      currency?: { name?: string; symbol?: string };
+    } | null;
+  }) =>
+    selectedAccount ? (
+      <>
+        <div
+          data-testid="weekly-card-out"
+          data-account-id={selectedAccount.id}
+          data-currency-name={selectedAccount.currency?.name}
+          data-currency-symbol={selectedAccount.currency?.symbol}
+        />
+        <div
+          data-testid="weekly-card-in"
+          data-account-id={selectedAccount.id}
+          data-currency-name={selectedAccount.currency?.name}
+          data-currency-symbol={selectedAccount.currency?.symbol}
+        />
+      </>
+    ) : null,
+}));
+
 vi.mock("../../Accounts", () => ({
   AddAccountDialog: () => null,
 }));
@@ -233,9 +304,9 @@ vi.mock("lib", () => ({
 import { Transactions } from "../Transactions";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
-function renderTransactions(initialSearch = "") {
+async function renderTransactions(initialSearch = "") {
   const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-  return render(
+  render(
     <QueryClientProvider client={qc}>
       <MemoryRouter
         initialEntries={[`/transactions${initialSearch}`]}
@@ -244,6 +315,14 @@ function renderTransactions(initialSearch = "") {
       </MemoryRouter>
     </QueryClientProvider>
   );
+
+  await waitFor(() => {
+    const content =
+      screen.queryByTestId("tabs-desktop") ??
+      screen.queryByTestId("tabs-mobile") ??
+      screen.queryByTestId("empty-state");
+    expect(content).toBeTruthy();
+  });
 }
 
 // ─── Tests ────────────────────────────────────────────────────────────────────
@@ -262,37 +341,35 @@ describe("Transactions", () => {
   });
 
   describe("tab rendering by account", () => {
-    it("renders one tab per account (desktop + mobile = 2 each)", () => {
-      renderTransactions();
-      // Both desktop and mobile layouts render the same tabs → 2 per account
-      expect(screen.getAllByTestId("tab-1")).toHaveLength(2);
-      expect(screen.getAllByTestId("tab-2")).toHaveLength(2);
+    it("renders one tab per account in desktop layout", async () => {
+      await renderTransactions();
+      expect(screen.getAllByTestId("tab-1")).toHaveLength(1);
+      expect(screen.getAllByTestId("tab-2")).toHaveLength(1);
     });
 
-    it("renders account names as tab labels", () => {
-      renderTransactions();
+    it("renders account names as tab labels", async () => {
+      await renderTransactions();
 
-      // Two instances (desktop + mobile) of each label
       const walletLabels = screen.getAllByTestId("tab-label-1");
       const savingsLabels = screen.getAllByTestId("tab-label-2");
       expect(walletLabels[0]).toHaveTextContent("Wallet");
       expect(savingsLabels[0]).toHaveTextContent("Savings");
     });
 
-    it("renders both desktop and mobile tab layouts", () => {
-      renderTransactions();
-      expect(screen.getAllByTestId(/^tabs-/)).toHaveLength(2);
+    it("renders desktop tabs and does not render mobile tabs in jsdom width", async () => {
+      await renderTransactions();
+      expect(screen.getByTestId("tabs-desktop")).toBeInTheDocument();
+      expect(screen.queryByTestId("tabs-mobile")).toBeNull();
     });
   });
 
   describe("initial tab selection via ?accountId=", () => {
-    it("selects the first account when no accountId query param", () => {
-      renderTransactions();
-      // Without a query param, both mobile + desktop tabs for account 1 render
-      expect(screen.getAllByTestId("tab-1")).toHaveLength(2);
+    it("selects the first account when no accountId query param", async () => {
+      await renderTransactions();
+      expect(screen.getAllByTestId("tab-1")).toHaveLength(1);
     });
 
-    it("renders tab for accountId=2 when passed in URL", () => {
+    it("renders tab for accountId=2 when passed in URL", async () => {
       const qc = new QueryClient({
         defaultOptions: { queries: { retry: false } },
       });
@@ -304,66 +381,68 @@ describe("Transactions", () => {
         </QueryClientProvider>
       );
 
-      expect(screen.getAllByTestId("tab-2")).toHaveLength(2);
+      await screen.findByTestId("tabs-desktop");
+      expect(screen.getAllByTestId("tab-2")).toHaveLength(1);
     });
   });
 
   describe("empty state", () => {
-    it("shows empty state when there are no accounts", () => {
+    it("shows empty state when there are no accounts", async () => {
       mockAccountsList.mockReturnValue({
         data: { items: [] },
         isLoading: false,
         error: null,
       });
-      renderTransactions();
+      await renderTransactions();
 
       expect(screen.getByTestId("empty-state")).toBeInTheDocument();
     });
 
-    it("does not show tabs when accounts list is empty", () => {
+    it("does not show tabs when accounts list is empty", async () => {
       mockAccountsList.mockReturnValue({
         data: { items: [] },
         isLoading: false,
         error: null,
       });
-      renderTransactions();
+      await renderTransactions();
 
       expect(screen.queryByTestId("tab-1")).toBeNull();
     });
   });
 
   describe("weekly cards", () => {
-    it("renders weekly-out and weekly-in cards", () => {
-      renderTransactions();
+    it("renders weekly-out and weekly-in cards", async () => {
+      await renderTransactions();
 
-      expect(screen.getByTestId("weekly-card-out")).toBeInTheDocument();
-      expect(screen.getByTestId("weekly-card-in")).toBeInTheDocument();
+      expect(await screen.findByTestId("weekly-card-out")).toBeInTheDocument();
+      expect(await screen.findByTestId("weekly-card-in")).toBeInTheDocument();
     });
 
-    it("passes selected account data to weekly cards", () => {
-      renderTransactions();
+    it("passes selected account data to weekly cards", async () => {
+      await renderTransactions();
+      const weeklyCardOut = await screen.findByTestId("weekly-card-out");
 
-      expect(screen.getByTestId("weekly-card-out")).toHaveAttribute(
+      expect(weeklyCardOut).toHaveAttribute(
         "data-account-id",
         "1"
       );
-      expect(screen.getByTestId("weekly-card-out")).toHaveAttribute(
+      expect(weeklyCardOut).toHaveAttribute(
         "data-currency-name",
         "EUR"
       );
-      expect(screen.getByTestId("weekly-card-out")).toHaveAttribute(
+      expect(weeklyCardOut).toHaveAttribute(
         "data-currency-symbol",
         "€"
       );
     });
 
-    it("does not render weekly cards when there are no accounts", () => {
+    it("does not render weekly cards when there are no accounts", async () => {
       mockAccountsList.mockReturnValue({
         data: { items: [] },
         isLoading: false,
         error: null,
       });
-      renderTransactions();
+      await renderTransactions();
 
       expect(screen.queryByTestId("weekly-card-out")).toBeNull();
       expect(screen.queryByTestId("weekly-card-in")).toBeNull();
@@ -371,8 +450,8 @@ describe("Transactions", () => {
   });
 
   describe("filter toggle", () => {
-    it("transaction tables receive showFilters=false by default", () => {
-      renderTransactions();
+    it("transaction tables receive showFilters=false by default", async () => {
+      await renderTransactions();
 
       // TransactionTable instances in desktop layout
       const tables = screen.getAllByTestId(/^transaction-table-/);

@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
-import { Error } from "@sito/dashboard-app";
+import { Error, useTableOptions } from "@sito/dashboard-app";
 
 // components
 import { WalletTable } from "components";
@@ -11,7 +11,12 @@ import { WalletTable } from "components";
 import { useTransactionsList } from "hooks";
 
 // lib
-import { EntityName, TransactionDto, useParseColumns } from "lib";
+import {
+  EntityName,
+  TransactionDto,
+  normalizeListFilters,
+  useParseColumns,
+} from "lib";
 
 // types
 import { TransactionContainerPropsType } from "./types";
@@ -22,6 +27,7 @@ import { getTransactionColumns } from "./transactionColumns";
 export const TransactionTable = (props: TransactionContainerPropsType) => {
   const { accountId, categories, getActions, showFilters, setShowFilters } =
     props;
+  const { filters: tableFilters } = useTableOptions();
 
   const { t } = useTranslation();
 
@@ -38,7 +44,18 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
     [categories, t],
   );
 
-  const toIgnore = useMemo(() => ["id", "createdAt", "updatedAt"], []);
+  const softDeleteScope = useMemo(
+    () => String(normalizeListFilters(tableFilters).softDeleteScope ?? "ACTIVE"),
+    [tableFilters],
+  );
+
+  const toIgnore = useMemo(() => {
+    const ignoredColumns = ["id", "createdAt", "updatedAt"];
+    if (softDeleteScope !== "DELETED") {
+      ignoredColumns.push("deletedAt");
+    }
+    return ignoredColumns;
+  }, [softDeleteScope]);
 
   const { columns } = useParseColumns<TransactionDto>(
     columnDefs,

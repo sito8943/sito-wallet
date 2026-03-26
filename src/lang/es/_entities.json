@@ -33,10 +33,19 @@
     "lockedBy": {
       "label": ""
     },
-    "deleted": {
-      "label": "Eliminado",
-      "filter": "Mostrar borrados"
+  "deleted": {
+    "label": "Eliminado",
+    "filter": "Mostrar borrados",
+    "scope": {
+      "label": "Papelera",
+      "values": {
+        "active": "Activos",
+        "deleted": "Eliminados",
+        "all": "Todos"
+      }
     },
+    "range": "Fecha de eliminación"
+  },
     "updatedAt": {
       "label": "Última actualización"
     },

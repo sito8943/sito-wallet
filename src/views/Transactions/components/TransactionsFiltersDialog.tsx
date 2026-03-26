@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Controller } from "react-hook-form";
+import { Controller, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
@@ -72,6 +72,30 @@ export const TransactionsMobileFilters = (
       ] as Option[],
     [t],
   );
+
+  const softDeleteScopeOptions = useMemo(
+    () =>
+      [
+        {
+          id: "ACTIVE",
+          name: t("_entities:base.deleted.scope.values.active"),
+        },
+        {
+          id: "DELETED",
+          name: t("_entities:base.deleted.scope.values.deleted"),
+        },
+        {
+          id: "ALL",
+          name: t("_entities:base.deleted.scope.values.all"),
+        },
+      ] as Option[],
+    [t],
+  );
+
+  const softDeleteScopeValue = useWatch({
+    control,
+    name: "softDeleteScope",
+  }) as string | undefined;
 
   return (
     <FormDialog {...props}>
@@ -183,6 +207,58 @@ export const TransactionsMobileFilters = (
           )}
         />
       </div>
+      <Controller
+        control={control}
+        name="softDeleteScope"
+        render={({ field: { value, onChange, ...rest } }) => (
+          <SelectInput
+            id="mobile-transaction-soft-delete-scope-filter"
+            label={t("_entities:base.deleted.scope.label")}
+            value={value ?? "ACTIVE"}
+            onChange={(event) =>
+              onChange((event.target as HTMLSelectElement).value)
+            }
+            options={softDeleteScopeOptions}
+            {...rest}
+          />
+        )}
+      />
+      {softDeleteScopeValue === "DELETED" ? (
+        <div className="grid grid-cols-2 gap-2">
+          <Controller
+            control={control}
+            name="deletedAtStart"
+            render={({ field: { value, onChange, ...rest } }) => (
+              <TextInput
+                id="mobile-transaction-deleted-at-start-filter"
+                type="date"
+                label={t("_accessibility:components.table.filters.range.start")}
+                value={value ?? ""}
+                onChange={(event) =>
+                  onChange((event.target as HTMLInputElement).value)
+                }
+                {...rest}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name="deletedAtEnd"
+            render={({ field: { value, onChange, ...rest } }) => (
+              <TextInput
+                id="mobile-transaction-deleted-at-end-filter"
+                type="date"
+                label={t("_accessibility:components.table.filters.range.end")}
+                value={value ?? ""}
+                onChange={(event) =>
+                  onChange((event.target as HTMLInputElement).value)
+                }
+                {...rest}
+              />
+            )}
+          />
+        </div>
+      ) : null}
       <div className="grid grid-cols-2 gap-2">
         <Controller
           control={control}

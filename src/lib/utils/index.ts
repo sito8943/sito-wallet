@@ -2,6 +2,7 @@ export * from "./parseBaseColumns";
 export * from "./file";
 export * from "./authAccountSnapshot";
 export * from "./featureFlags";
+export * from "./filterNormalization";
 export * from "./persistedTableOptions";
 
 export const randomBetween = (min: number, max: number) => {

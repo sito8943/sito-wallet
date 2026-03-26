@@ -19,6 +19,8 @@ import {
   FilterAccountDto,
   defaultAccountsListFilters,
   fetchAccountsList,
+  normalizeCommonFilters,
+  normalizeListFilters,
 } from "lib";
 
 export const AccountsQueryKeys = {
@@ -48,15 +50,19 @@ export function useAccountsList(
   props: UseFetchPropsType<AccountDto, FilterAccountDto>,
 ): UseQueryResult<QueryResult<AccountDto>> {
   const { filters = defaultAccountsListFilters } = props;
+  const normalizedFilters = useMemo(
+    () => normalizeListFilters(filters) as FilterAccountDto,
+    [filters],
+  );
 
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
 
   return useQuery({
-    ...AccountsQueryKeys.list(filters),
+    ...AccountsQueryKeys.list(normalizedFilters),
     enabled: !!account?.id,
-    queryFn: () => fetchAccountsList(manager, offlineManager, filters),
+    queryFn: () => fetchAccountsList(manager, offlineManager, normalizedFilters),
   });
 }
 
@@ -73,9 +79,7 @@ export function useInfiniteAccountsList(
   const { account } = useAuth();
 
   const parsedFilters = useMemo(
-    () => ({
-      ...filters,
-    }),
+    () => normalizeListFilters(filters) as FilterAccountDto,
     [filters],
   );
 
@@ -125,18 +129,16 @@ export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
     ...AccountsQueryKeys.common(),
     enabled: !!account?.id,
     queryFn: async () => {
+      const commonFilters = normalizeCommonFilters() as FilterAccountDto;
+
       try {
-        return await manager.Accounts.commonGet({
-          deletedAt: false as unknown as FilterAccountDto["deletedAt"],
-        });
+        return await manager.Accounts.commonGet(commonFilters);
       } catch (error) {
         console.warn(
           "API failed, loading common accounts from IndexedDB",
           error,
         );
-        return await offlineManager.Accounts.commonGet({
-          deletedAt: false as unknown as FilterAccountDto["deletedAt"],
-        });
+        return await offlineManager.Accounts.commonGet(commonFilters);
       }
     },
   });

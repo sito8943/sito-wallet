@@ -62,6 +62,10 @@ vi.mock("lib", () => ({
   TransactionDto: class {},
   CommonTransactionDto: class {},
   FilterTransactionDto: class {},
+  defaultTransactionsListFilters: { softDeleteScope: "ACTIVE" },
+  normalizeListFilters: (filters: Record<string, unknown> | undefined) =>
+    filters ?? { softDeleteScope: "ACTIVE" },
+  normalizeCommonFilters: (filters?: Record<string, unknown>) => filters ?? {},
   TransactionTypeResumeDto: class {},
   FilterTransactionTypeResumeDto: class {},
   TransactionTypeGroupedDto: class {},

@@ -36,8 +36,11 @@ vi.mock("lib", () => ({
   CommonAccountDto: class {},
   FilterAccountDto: class {},
   defaultAccountsListFilters: {
-    deletedAt: false as unknown as Date,
+    softDeleteScope: "ACTIVE",
   },
+  normalizeListFilters: (filters: Record<string, unknown> | undefined) =>
+    filters ?? { softDeleteScope: "ACTIVE" },
+  normalizeCommonFilters: (filters?: Record<string, unknown>) => filters ?? {},
   fetchAccountsList: async (
     _manager: unknown,
     _offlineManager: unknown,
@@ -75,7 +78,7 @@ describe("AccountsQueryKeys", () => {
   });
 
   it("list() nests filters under all()", () => {
-    const key = AccountsQueryKeys.list({ deletedAt: false as unknown as Date });
+    const key = AccountsQueryKeys.list({ softDeleteScope: "ACTIVE" });
     expect(key.queryKey[0]).toBe("accounts");
     expect(key.queryKey[1]).toBe("list");
   });
@@ -101,7 +104,7 @@ describe("useAccountsList", () => {
     mockUseAuth.mockReturnValueOnce({ account: null });
 
     const { result } = renderHook(
-      () => useAccountsList({ filters: { deletedAt: false as unknown as Date } }),
+      () => useAccountsList({ filters: { softDeleteScope: "ACTIVE" } }),
       { wrapper: makeWrapper() }
     );
 
@@ -116,7 +119,7 @@ describe("useAccountsList", () => {
     mockAccountsGet.mockResolvedValue(data);
 
     const { result } = renderHook(
-      () => useAccountsList({ filters: { deletedAt: false as unknown as Date } }),
+      () => useAccountsList({ filters: { softDeleteScope: "ACTIVE" } }),
       { wrapper: makeWrapper() }
     );
 

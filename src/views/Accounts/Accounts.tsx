@@ -49,9 +49,12 @@ import {
 // types
 import {
   AccountDto,
+  FilterAccountDto,
   Tables,
   ImportPreviewAccountDto,
   isFeatureDisabledBusinessError,
+  defaultAccountsListFilters,
+  normalizeListFilters,
 } from "lib";
 
 export function Accounts() {
@@ -102,7 +105,10 @@ export function Accounts() {
 
   const exportAccounts = useExportActionMutate({
     entity: Tables.Accounts,
-    mutationFn: () => manager.Accounts.export(),
+    mutationFn: () =>
+      manager.Accounts.export(
+        normalizeListFilters(defaultAccountsListFilters) as FilterAccountDto,
+      ),
   });
 
   const importAccounts = useImportDialog<AccountDto, ImportPreviewAccountDto>({

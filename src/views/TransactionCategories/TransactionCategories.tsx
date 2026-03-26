@@ -46,9 +46,12 @@ import {
 import {
   Tables,
   TransactionCategoryDto,
+  FilterTransactionCategoryDto,
   ImportPreviewTransactionCategoryDto,
   TablesCamelCase,
   isFeatureDisabledBusinessError,
+  defaultTransactionCategoriesListFilters,
+  normalizeListFilters,
 } from "lib";
 
 export function TransactionCategories() {
@@ -97,7 +100,12 @@ export function TransactionCategories() {
 
   const exportTransactionCategory = useExportActionMutate({
     entity: Tables.TransactionCategories,
-    mutationFn: () => manager.TransactionCategories.export(),
+    mutationFn: () =>
+      manager.TransactionCategories.export(
+        normalizeListFilters(
+          defaultTransactionCategoriesListFilters,
+        ) as FilterTransactionCategoryDto,
+      ),
   });
 
   const importTransactionCategories = useImportDialog<

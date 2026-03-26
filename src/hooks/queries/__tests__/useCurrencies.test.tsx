@@ -36,8 +36,11 @@ vi.mock("lib", () => ({
   CommonCurrencyDto: class {},
   FilterCurrencyDto: class {},
   defaultCurrenciesListFilters: {
-    deletedAt: false as unknown as Date,
+    softDeleteScope: "ACTIVE",
   },
+  normalizeListFilters: (filters: Record<string, unknown> | undefined) =>
+    filters ?? { softDeleteScope: "ACTIVE" },
+  normalizeCommonFilters: (filters?: Record<string, unknown>) => filters ?? {},
   fetchCurrenciesList: async (
     _manager: unknown,
     _offlineManager: unknown,
@@ -75,7 +78,7 @@ describe("CurrenciesQueryKeys", () => {
   });
 
   it("list() nests under all()", () => {
-    const key = CurrenciesQueryKeys.list({ deletedAt: false as unknown as Date });
+    const key = CurrenciesQueryKeys.list({ softDeleteScope: "ACTIVE" });
     expect(key.queryKey[0]).toBe("currencies");
     expect(key.queryKey[1]).toBe("list");
   });
@@ -101,7 +104,7 @@ describe("useCurrenciesList", () => {
     mockUseAuth.mockReturnValueOnce({ account: { id: 0, email: "" } });
 
     const { result } = renderHook(
-      () => useCurrenciesList({ filters: { deletedAt: false as unknown as Date } }),
+      () => useCurrenciesList({ filters: { softDeleteScope: "ACTIVE" } }),
       { wrapper: makeWrapper() }
     );
 
@@ -116,7 +119,7 @@ describe("useCurrenciesList", () => {
     mockCurrenciesGet.mockResolvedValue(data);
 
     const { result } = renderHook(
-      () => useCurrenciesList({ filters: { deletedAt: false as unknown as Date } }),
+      () => useCurrenciesList({ filters: { softDeleteScope: "ACTIVE" } }),
       { wrapper: makeWrapper() }
     );
 

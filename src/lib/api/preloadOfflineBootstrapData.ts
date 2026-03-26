@@ -10,24 +10,25 @@ import {
   TransactionCategoryDto,
   TransactionDto,
 } from "../entities";
+import { normalizeListFilters } from "../utils";
 
 import { Manager } from "./Manager";
 import { OfflineManager } from "./OfflineManager";
 
-export const defaultAccountsListFilters = {
-  deletedAt: false as unknown as FilterAccountDto["deletedAt"],
+export const defaultAccountsListFilters: FilterAccountDto = {
+  softDeleteScope: "ACTIVE",
 };
 
-export const defaultCurrenciesListFilters = {
-  deletedAt: false as unknown as FilterCurrencyDto["deletedAt"],
+export const defaultCurrenciesListFilters: FilterCurrencyDto = {
+  softDeleteScope: "ACTIVE",
 };
 
-export const defaultTransactionCategoriesListFilters = {
-  deletedAt: false as unknown as FilterTransactionCategoryDto["deletedAt"],
+export const defaultTransactionCategoriesListFilters: FilterTransactionCategoryDto = {
+  softDeleteScope: "ACTIVE",
 };
 
-export const defaultTransactionsListFilters = {
-  deletedAt: false as unknown as FilterTransactionDto["deletedAt"],
+export const defaultTransactionsListFilters: FilterTransactionDto = {
+  softDeleteScope: "ACTIVE",
 };
 
 export async function fetchAccountsList(
@@ -35,9 +36,11 @@ export async function fetchAccountsList(
   offlineManager: OfflineManager,
   filters: FilterAccountDto,
 ): Promise<QueryResult<AccountDto>> {
+  const normalizedFilters = normalizeListFilters(filters) as FilterAccountDto;
+
   try {
     const result = await manager.Accounts.get(undefined, {
-      ...filters,
+      ...normalizedFilters,
     });
 
     offlineManager.Accounts.seed(result.items).catch(() => {});
@@ -45,7 +48,7 @@ export async function fetchAccountsList(
   } catch (error) {
     console.warn("API failed, loading accounts from IndexedDB", error);
     return await offlineManager.Accounts.get(undefined, {
-      ...filters,
+      ...normalizedFilters,
     });
   }
 }
@@ -55,16 +58,18 @@ export async function fetchCurrenciesList(
   offlineManager: OfflineManager,
   filters: FilterCurrencyDto,
 ): Promise<QueryResult<CurrencyDto>> {
+  const normalizedFilters = normalizeListFilters(filters) as FilterCurrencyDto;
+
   try {
     const result = await manager.Currencies.get(undefined, {
-      ...filters,
+      ...normalizedFilters,
     });
     offlineManager.Currencies.seed(result.items).catch(() => {});
     return result;
   } catch (error) {
     console.warn("API failed, loading currencies from IndexedDB", error);
     return await offlineManager.Currencies.get(undefined, {
-      ...filters,
+      ...normalizedFilters,
     });
   }
 }
@@ -74,9 +79,13 @@ export async function fetchTransactionCategoriesList(
   offlineManager: OfflineManager,
   filters: FilterTransactionCategoryDto,
 ): Promise<QueryResult<TransactionCategoryDto>> {
+  const normalizedFilters = normalizeListFilters(
+    filters,
+  ) as FilterTransactionCategoryDto;
+
   try {
     const result = await manager.TransactionCategories.get(undefined, {
-      ...filters,
+      ...normalizedFilters,
     });
 
     offlineManager.TransactionCategories.seed(result.items).catch(() => {});
@@ -84,7 +93,7 @@ export async function fetchTransactionCategoriesList(
   } catch (error) {
     console.warn("API failed, loading categories from IndexedDB", error);
     return await offlineManager.TransactionCategories.get(undefined, {
-      ...filters,
+      ...normalizedFilters,
     });
   }
 }
@@ -94,9 +103,11 @@ export async function fetchTransactionsList(
   offlineManager: OfflineManager,
   filters: FilterTransactionDto,
 ): Promise<QueryResult<TransactionDto>> {
+  const normalizedFilters = normalizeListFilters(filters) as FilterTransactionDto;
+
   try {
     const result = await manager.Transactions.get(undefined, {
-      ...filters,
+      ...normalizedFilters,
     });
 
     offlineManager.Transactions.seed(result.items).catch(() => {});
@@ -104,7 +115,7 @@ export async function fetchTransactionsList(
   } catch (error) {
     console.warn("API failed, loading transactions from IndexedDB", error);
     return await offlineManager.Transactions.get(undefined, {
-      ...filters,
+      ...normalizedFilters,
     });
   }
 }

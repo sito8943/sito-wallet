@@ -59,6 +59,7 @@ import {
   ImportPreviewTransactionDto,
   isFeatureDisabledBusinessError,
   CommonAccountDto,
+  normalizeListFilters,
 } from "lib";
 
 // providers
@@ -173,10 +174,12 @@ export function Transactions() {
   const exportTransactions = useExportActionMutate({
     entity: Tables.Transactions,
     mutationFn: () =>
-      manager.Transactions.export({
-        ...filters,
-        accountId: selectedAccount?.id,
-      }),
+      manager.Transactions.export(
+        normalizeListFilters({
+          ...filters,
+          accountId: selectedAccount?.id,
+        }) as FilterTransactionDto,
+      ),
   });
 
   const handleTransactionProcess = useCallback(

@@ -1,6 +1,7 @@
 import { fromLocal, removeFromLocal, toLocal } from "@sito/dashboard-app";
 
 import { config } from "../../config";
+import { normalizeListFilters } from "./filterNormalization";
 
 export type PersistedTableState = {
   sortingBy: string;
@@ -16,7 +17,10 @@ export const saveTableOptions = (
   tabId: string | number,
   state: PersistedTableState,
 ): void => {
-  toLocal(buildKey(view, tabId), state);
+  toLocal(buildKey(view, tabId), {
+    ...state,
+    filters: normalizeListFilters(state.filters),
+  });
 };
 
 export const loadTableOptions = (
@@ -25,7 +29,13 @@ export const loadTableOptions = (
 ): PersistedTableState | null => {
   const raw = fromLocal(buildKey(view, tabId), "object");
   if (!raw || typeof raw !== "object") return null;
-  return raw as PersistedTableState;
+
+  const parsed = raw as PersistedTableState;
+
+  return {
+    ...parsed,
+    filters: normalizeListFilters(parsed.filters),
+  };
 };
 
 export const clearAllTableOptions = (): void => {

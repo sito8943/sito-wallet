@@ -2,13 +2,23 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
-import { Option, SortOrder, useFormDialog, useTableOptions } from "@sito/dashboard-app";
+import {
+  Option,
+  SoftDeleteScope,
+  SortOrder,
+  useFormDialog,
+  useTableOptions,
+} from "@sito/dashboard-app";
 
 // hooks
 import { TransactionsQueryKeys } from "hooks";
 
 // lib
-import { CommonTransactionCategoryDto, TransactionType } from "lib";
+import {
+  CommonTransactionCategoryDto,
+  TransactionType,
+  normalizeListFilters,
+} from "lib";
 
 // types
 import {
@@ -65,6 +75,17 @@ export function useTransactionsMobileFiltersDialog(
     end?: string;
   };
 
+  const normalizedFilters = useMemo(() => normalizeListFilters(filters), [filters]);
+
+  const parsedDeletedAt = (normalizedFilters.deletedAt ?? {}) as {
+    start?: string;
+    end?: string;
+  };
+
+  const parsedSoftDeleteScope =
+    (normalizedFilters.softDeleteScope as SoftDeleteScope | undefined) ??
+    "ACTIVE";
+
   const defaultValues = useMemo<TransactionsMobileFiltersFormType>(
     () => ({
       category: selectedCategories,
@@ -73,6 +94,9 @@ export function useTransactionsMobileFiltersDialog(
       amount: filters?.amount != null ? String(filters.amount) : "",
       dateStart: parsedDate.start ?? "",
       dateEnd: parsedDate.end ?? "",
+      softDeleteScope: parsedSoftDeleteScope,
+      deletedAtStart: parsedDeletedAt.start ?? "",
+      deletedAtEnd: parsedDeletedAt.end ?? "",
       sortingBy: sortingBy || DEFAULT_SORTING_BY,
       sortingOrder: parseSortOrder(sortingOrder),
     }),
@@ -82,6 +106,9 @@ export function useTransactionsMobileFiltersDialog(
       filters?.type,
       parsedDate.end,
       parsedDate.start,
+      parsedDeletedAt.end,
+      parsedDeletedAt.start,
+      parsedSoftDeleteScope,
       selectedCategories,
       sortingBy,
       sortingOrder,
@@ -126,6 +153,20 @@ export function useTransactionsMobileFiltersDialog(
           value: {
             start: values.dateStart || undefined,
             end: values.dateEnd || undefined,
+          },
+        };
+      }
+
+      nextFilters.softDeleteScope = { value: values.softDeleteScope };
+
+      if (
+        values.softDeleteScope === "DELETED" &&
+        (values.deletedAtStart || values.deletedAtEnd)
+      ) {
+        nextFilters.deletedAt = {
+          value: {
+            start: values.deletedAtStart || undefined,
+            end: values.deletedAtEnd || undefined,
           },
         };
       }

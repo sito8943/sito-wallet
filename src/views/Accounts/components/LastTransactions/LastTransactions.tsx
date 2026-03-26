@@ -16,7 +16,7 @@ export const LastTransactions = (props: LastTransactionsPropsType) => {
   const { isLoading, data } = useTransactionsList({
     filters: {
       accountId,
-      deletedAt: false as unknown as Date,
+      softDeleteScope: "ACTIVE",
     },
     query: {
       pageSize: 2,

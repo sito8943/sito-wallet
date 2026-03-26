@@ -19,6 +19,8 @@ import {
   FilterTransactionCategoryDto,
   defaultTransactionCategoriesListFilters,
   fetchTransactionCategoriesList,
+  normalizeCommonFilters,
+  normalizeListFilters,
 } from "lib";
 
 export const TransactionCategoriesQueryKeys = {
@@ -52,16 +54,24 @@ export function useTransactionCategoriesList(
   props: UseFetchPropsType<TransactionCategoryDto, FilterTransactionCategoryDto>
 ): UseQueryResult<QueryResult<TransactionCategoryDto>> {
   const { filters = defaultTransactionCategoriesListFilters } = props;
+  const normalizedFilters = useMemo(
+    () => normalizeListFilters(filters) as FilterTransactionCategoryDto,
+    [filters],
+  );
 
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
 
   return useQuery({
-    ...TransactionCategoriesQueryKeys.list(filters),
+    ...TransactionCategoriesQueryKeys.list(normalizedFilters),
     enabled: !!account?.id,
     queryFn: () =>
-      fetchTransactionCategoriesList(manager, offlineManager, filters),
+      fetchTransactionCategoriesList(
+        manager,
+        offlineManager,
+        normalizedFilters,
+      ),
   });
 }
 
@@ -78,9 +88,7 @@ export function useInfiniteTransactionCategoriesList(
   const { account } = useAuth();
 
   const parsedFilters = useMemo(
-    () => ({
-      ...filters,
-    }),
+    () => normalizeListFilters(filters) as FilterTransactionCategoryDto,
     [filters]
   );
 
@@ -138,18 +146,18 @@ export function useTransactionCategoriesCommon(): UseQueryResult<
     ...TransactionCategoriesQueryKeys.common(),
     enabled: !!account?.id,
     queryFn: async () => {
+      const commonFilters = normalizeCommonFilters() as FilterTransactionCategoryDto;
+
       try {
-        return await manager.TransactionCategories.commonGet({
-          deletedAt: false as unknown as FilterTransactionCategoryDto["deletedAt"],
-        });
+        return await manager.TransactionCategories.commonGet(commonFilters);
       } catch (error) {
         console.warn(
           "API failed, loading common categories from IndexedDB",
           error
         );
-        return await offlineManager.TransactionCategories.commonGet({
-          deletedAt: false as unknown as FilterTransactionCategoryDto["deletedAt"],
-        });
+        return await offlineManager.TransactionCategories.commonGet(
+          commonFilters,
+        );
       }
     },
   });

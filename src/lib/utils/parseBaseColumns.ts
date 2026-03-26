@@ -2,12 +2,22 @@ import { useMemo } from "react";
 import { t } from "i18next";
 
 // @sito/dashboard-app
-import { BaseEntityDto, ColumnType, FilterTypes } from "@sito/dashboard-app";
+import {
+  BaseEntityDto,
+  ColumnType,
+  FilterTypes,
+} from "@sito/dashboard-app";
 
 // lib
 import { EntityName } from "lib";
 
-export const baseColumns = ["id", "createdAt", "updatedAt", "deletedAt"];
+export const baseColumns = [
+  "id",
+  "createdAt",
+  "updatedAt",
+  "deletedAt",
+  "softDeleteScope",
+];
 
 /**
  *
@@ -15,6 +25,21 @@ export const baseColumns = ["id", "createdAt", "updatedAt", "deletedAt"];
  * @returns true is the column is a base column
  */
 export const isBaseColumn = (column: string) => baseColumns.includes(column);
+
+const softDeleteScopeFilterOptions = () => [
+  {
+    id: "ACTIVE",
+    name: t("_entities:base.deleted.scope.values.active"),
+  },
+  {
+    id: "DELETED",
+    name: t("_entities:base.deleted.scope.values.deleted"),
+  },
+  {
+    id: "ALL",
+    name: t("_entities:base.deleted.scope.values.all"),
+  },
+];
 
 /**
  *
@@ -52,18 +77,33 @@ export const prefabBaseColumns = <
     pos: -2,
   },
   {
-    key: "deletedAt",
+    key: "softDeleteScope",
+    label: t("_entities:base.deleted.scope.label"),
     filterOptions: {
-      defaultValue: false,
-      type: FilterTypes.check,
-      label: t("_entities:base.deleted.filter"),
+      defaultValue: "ACTIVE",
+      type: FilterTypes.select,
+      options: softDeleteScopeFilterOptions(),
+      label: t("_entities:base.deleted.scope.label"),
     },
     display: "none",
-    renderBody: (value: unknown) =>
-      value
-        ? t("_accessibility:buttons.yes")
-        : t("_accessibility:buttons.no"),
+    renderBody: () => "",
     pos: -3,
+  },
+  {
+    key: "deletedAt",
+    filterOptions: {
+      defaultValue: { start: "", end: "" },
+      type: FilterTypes.date,
+      label: t("_entities:base.deleted.range"),
+    },
+    display: "none",
+    renderBody: (value: unknown) => {
+      const dateValue = value instanceof Date ? value : new Date(String(value));
+      return Number.isNaN(dateValue.getTime())
+        ? ""
+        : dateValue.toLocaleDateString(navigator.language || "es-ES");
+    },
+    pos: -4,
   },
 ];
 

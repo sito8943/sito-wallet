@@ -109,7 +109,7 @@ export class ProfileIndexedDBClient extends IndexedDBClient<
 
   async me(): Promise<ProfileDto> {
     const result = await this.get(undefined, {
-      deletedAt: false as unknown as BaseFilterDto["deletedAt"],
+      softDeleteScope: "ACTIVE" as BaseFilterDto["softDeleteScope"],
     });
     const firstItem = result.items[0];
 

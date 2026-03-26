@@ -53,6 +53,17 @@ vi.mock("react-router-dom", async () => {
 });
 
 vi.mock("@sito/dashboard-app", () => ({
+  BaseClient: class {},
+  APIClient: class {},
+  IndexedDBClient: class {},
+  IManager: class {},
+  Methods: {
+    GET: "GET",
+    POST: "POST",
+    PUT: "PUT",
+    PATCH: "PATCH",
+    DELETE: "DELETE",
+  },
   useAuth: () => mockUseAuth(),
   fromLocal: mockFromLocal,
   toLocal: mockToLocal,
@@ -92,6 +103,13 @@ vi.mock("hooks", () => ({
 
 vi.mock("components", () => ({
   SearchModal: () => <div data-testid="search-modal" />,
+  BottomNavigation: () => <div data-testid="bottom-navigation" />,
+}));
+
+vi.mock("providers", () => ({
+  BottomNavActionProvider: ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  ),
 }));
 
 vi.mock("../../config", () => ({

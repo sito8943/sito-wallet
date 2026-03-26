@@ -43,9 +43,12 @@ import { useAddCurrency, useEditCurrency } from "./hooks";
 // types
 import {
   CurrencyDto,
+  FilterCurrencyDto,
   ImportPreviewCurrencyDto,
   Tables,
   isFeatureDisabledBusinessError,
+  defaultCurrenciesListFilters,
+  normalizeListFilters,
 } from "lib";
 
 export function Currencies() {
@@ -94,7 +97,10 @@ export function Currencies() {
 
   const exportCurrency = useExportActionMutate({
     entity: Tables.Currencies,
-    mutationFn: () => manager.Currencies.export(),
+    mutationFn: () =>
+      manager.Currencies.export(
+        normalizeListFilters(defaultCurrenciesListFilters) as FilterCurrencyDto,
+      ),
   });
 
   const importCurrencies = useImportDialog<

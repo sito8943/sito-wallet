@@ -19,6 +19,8 @@ import {
   FilterCurrencyDto,
   defaultCurrenciesListFilters,
   fetchCurrenciesList,
+  normalizeCommonFilters,
+  normalizeListFilters,
 } from "lib";
 
 export const CurrenciesQueryKeys = {
@@ -48,15 +50,20 @@ export function useCurrenciesList(
   props: UseFetchPropsType<CurrencyDto, FilterCurrencyDto>,
 ): UseQueryResult<QueryResult<CurrencyDto>> {
   const { filters = defaultCurrenciesListFilters } = props;
+  const normalizedFilters = useMemo(
+    () => normalizeListFilters(filters) as FilterCurrencyDto,
+    [filters],
+  );
 
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
 
   return useQuery({
-    ...CurrenciesQueryKeys.list(filters),
+    ...CurrenciesQueryKeys.list(normalizedFilters),
     enabled: !!account?.id,
-    queryFn: () => fetchCurrenciesList(manager, offlineManager, filters),
+    queryFn: () =>
+      fetchCurrenciesList(manager, offlineManager, normalizedFilters),
   });
 }
 
@@ -73,9 +80,7 @@ export function useInfiniteCurrenciesList(
   const { account } = useAuth();
 
   const parsedFilters = useMemo(
-    () => ({
-      ...filters,
-    }),
+    () => normalizeListFilters(filters) as FilterCurrencyDto,
     [filters]
   );
 
@@ -125,18 +130,16 @@ export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
     ...CurrenciesQueryKeys.common(),
     enabled: !!account?.id,
     queryFn: async () => {
+      const commonFilters = normalizeCommonFilters() as FilterCurrencyDto;
+
       try {
-        return await manager.Currencies.commonGet({
-          deletedAt: false as unknown as FilterCurrencyDto["deletedAt"],
-        });
+        return await manager.Currencies.commonGet(commonFilters);
       } catch (error) {
         console.warn(
           "API failed, loading common currencies from IndexedDB",
           error,
         );
-        return await offlineManager.Currencies.commonGet({
-          deletedAt: false as unknown as FilterCurrencyDto["deletedAt"],
-        });
+        return await offlineManager.Currencies.commonGet(commonFilters);
       }
     },
   });

@@ -9,6 +9,7 @@ import {
   TriggerFormDialogPropsType,
   SortOrder,
   Option,
+  SoftDeleteScope,
 } from "@sito/dashboard-app";
 
 // types
@@ -79,6 +80,9 @@ export interface TransactionsMobileFiltersFormType extends FieldValues {
   amount: string;
   dateStart: string;
   dateEnd: string;
+  softDeleteScope: SoftDeleteScope;
+  deletedAtStart: string;
+  deletedAtEnd: string;
   sortingBy: string;
   sortingOrder: SortOrder;
 }
