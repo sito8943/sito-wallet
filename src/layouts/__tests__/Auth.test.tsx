@@ -8,7 +8,7 @@ const mockNavigate = vi.fn();
 vi.mock("react-router-dom", async () => {
   const actual =
     await vi.importActual<typeof import("react-router-dom")>(
-      "react-router-dom"
+      "react-router-dom",
     );
   return {
     ...actual,
@@ -36,9 +36,7 @@ import { Auth } from "../../layouts/Auth/Auth";
 const SignInPage = () => <div data-testid="sign-in-page">Sign In</div>;
 const DashboardPage = () => <div data-testid="dashboard">Dashboard</div>;
 
-function renderAuth(
-  account: { email?: string } = {}
-) {
+function renderAuth(account: { email?: string } = {}) {
   mockUseAuth.mockReturnValue({
     account: { email: account.email ?? "" },
     isInGuestMode: vi.fn(() => false),
@@ -52,7 +50,7 @@ function renderAuth(
         </Route>
         <Route path="/" element={<DashboardPage />} />
       </Routes>
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 }
 
@@ -89,7 +87,7 @@ describe("Auth layout", () => {
               <Route path="/auth/sign-in" element={<SignInPage />} />
             </Route>
           </Routes>
-        </MemoryRouter>
+        </MemoryRouter>,
       );
 
       expect(mockNavigate).not.toHaveBeenCalled();

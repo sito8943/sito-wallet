@@ -30,7 +30,10 @@ const {
   VITE_FEATURE_TRANSACTIONS_ENABLED_DEFAULT,
 } = import.meta.env;
 
-const parseStrictBoolean = (value: string | undefined, key: string): boolean => {
+const parseStrictBoolean = (
+  value: string | undefined,
+  key: string,
+): boolean => {
   if (value === "true") return true;
   if (value === "false") return false;
 

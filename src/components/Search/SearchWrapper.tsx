@@ -46,7 +46,7 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
   const searchableSitemap = useMemo(() => {
     const routes = flattenSitemap(
       getFeatureFilteredSitemap(isFeatureEnabled),
-      ""
+      "",
     );
     return routes ?? [];
   }, [isFeatureEnabled]);
@@ -59,7 +59,7 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
       });
       return routes;
     },
-    [searchableSitemap]
+    [searchableSitemap],
   );
 
   const debounced = useDebouncedCallback(
@@ -90,13 +90,13 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
 
             setSearching("");
           },
-        }))
+        })),
       );
       setShowResults(!!value);
       setLoading(false);
     },
     // delay in ms
-    300
+    300,
   );
 
   useEffect(() => {
@@ -112,7 +112,7 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
         e.preventDefault();
       }
     },
-    [isModal, showResults]
+    [isModal, showResults],
   );
 
   useEffect(() => {

@@ -1,4 +1,3 @@
-
 // enum
 import { Tables } from "../types";
 
@@ -34,7 +33,11 @@ export class AccountIndexedDBClient extends IndexedDBClient<
   }
 
   async seed(items: AccountDto[]): Promise<void> {
-    await seedStore(getOfflineStoreDbName(Tables.Accounts), Tables.Accounts, items);
+    await seedStore(
+      getOfflineStoreDbName(Tables.Accounts),
+      Tables.Accounts,
+      items,
+    );
   }
 
   async insert(value: AddAccountDto): Promise<AccountDto> {
@@ -50,7 +53,7 @@ export class AccountIndexedDBClient extends IndexedDBClient<
         currencyId: value.currencyId,
         balance: value.balance,
       },
-      created.id
+      created.id,
     );
 
     return created;
@@ -60,7 +63,7 @@ export class AccountIndexedDBClient extends IndexedDBClient<
   async update(id: number, value: UpdateAccountDto): Promise<AccountDto>;
   async update(
     idOrValue: number | UpdateAccountDto,
-    value?: UpdateAccountDto
+    value?: UpdateAccountDto,
   ): Promise<AccountDto> {
     let updateValue: UpdateAccountDto;
 
@@ -86,7 +89,7 @@ export class AccountIndexedDBClient extends IndexedDBClient<
         type: updateValue.type,
         currencyId: updateValue.currencyId,
       },
-      updateValue.id
+      updateValue.id,
     );
 
     return updated;
@@ -96,7 +99,7 @@ export class AccountIndexedDBClient extends IndexedDBClient<
     const deleted = await super.softDelete(ids);
 
     await Promise.all(
-      ids.map((id) => queueSyncOperation("accounts", "DELETE", { id }, id))
+      ids.map((id) => queueSyncOperation("accounts", "DELETE", { id }, id)),
     );
 
     return deleted;
@@ -106,7 +109,7 @@ export class AccountIndexedDBClient extends IndexedDBClient<
     const restored = await super.restore(ids);
 
     await Promise.all(
-      ids.map((id) => queueSyncOperation("accounts", "RESTORE", { id }, id))
+      ids.map((id) => queueSyncOperation("accounts", "RESTORE", { id }, id)),
     );
 
     return restored;
@@ -114,13 +117,13 @@ export class AccountIndexedDBClient extends IndexedDBClient<
 
   async adjustBalance(
     accountId: number,
-    data: AdjustBalanceDto
+    data: AdjustBalanceDto,
   ): Promise<TransactionDto> {
     await queueSyncOperation(
       "accounts",
       "ADJUST_BALANCE",
       { newBalance: data.newBalance, description: data.description },
-      accountId
+      accountId,
     );
 
     return { id: accountId } as TransactionDto;

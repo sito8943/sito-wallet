@@ -94,50 +94,50 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
 
   return (
     <>
-    <DashboardCard
-      id={id}
-      userId={user?.id ?? 0}
-      title={title}
-      config={config}
-      onDelete={onDelete}
-      isBusy={isLoading}
-      loadingOverlay={isLoading}
-      parseFormConfig={parseFormConfig}
-      formToDto={(data) => formToDto(data)}
-      onConfigSaved={() => {
-        void queryClient.invalidateQueries({ ...DashboardsQueryKeys.all() });
-      }}
-      ConfigFormDialog={ConfigFormDialog}
-      renderActiveFilters={({ formConfig }) => (
-        <ActiveFilters account={formConfig.account} />
-      )}
-    >
-      {() => (
-        <div className="flex items-center justify-between w-full mt-auto">
-          <p className="!text-4xl font-bold poppins">
-            {isLoading ? "…" : balance}{" "}
-            <Currency name={currencyName} symbol={symbol} />
-          </p>
-          {account && (
-            <div className="flex items-center gap-1">
-              <IconButton
-                disabled={adjustBalance.isLoading}
-                onClick={() => adjustBalance.action(account).onClick?.()}
-                icon={faScaleBalanced}
-                aria-label={t("_pages:accounts.actions.adjustBalance.text")}
-              />
-              <IconButton
-                disabled={isSyncing}
-                onClick={handleRefresh}
-                icon={isSyncing ? faCircleNotch : faArrowsRotate}
-                className={isSyncing ? "rotate" : ""}
-              />
-            </div>
-          )}
-        </div>
-      )}
-    </DashboardCard>
-    <AdjustBalanceDialog {...adjustBalance} />
+      <DashboardCard
+        id={id}
+        userId={user?.id ?? 0}
+        title={title}
+        config={config}
+        onDelete={onDelete}
+        isBusy={isLoading}
+        loadingOverlay={isLoading}
+        parseFormConfig={parseFormConfig}
+        formToDto={(data) => formToDto(data)}
+        onConfigSaved={() => {
+          void queryClient.invalidateQueries({ ...DashboardsQueryKeys.all() });
+        }}
+        ConfigFormDialog={ConfigFormDialog}
+        renderActiveFilters={({ formConfig }) => (
+          <ActiveFilters account={formConfig.account} />
+        )}
+      >
+        {() => (
+          <div className="flex items-center justify-between w-full mt-auto">
+            <p className="!text-4xl font-bold poppins">
+              {isLoading ? "…" : balance}{" "}
+              <Currency name={currencyName} symbol={symbol} />
+            </p>
+            {account && (
+              <div className="flex items-center gap-1">
+                <IconButton
+                  disabled={adjustBalance.isLoading}
+                  onClick={() => adjustBalance.action(account).onClick?.()}
+                  icon={faScaleBalanced}
+                  aria-label={t("_pages:accounts.actions.adjustBalance.text")}
+                />
+                <IconButton
+                  disabled={isSyncing}
+                  onClick={handleRefresh}
+                  icon={isSyncing ? faCircleNotch : faArrowsRotate}
+                  className={isSyncing ? "rotate" : ""}
+                />
+              </div>
+            )}
+          </div>
+        )}
+      </DashboardCard>
+      <AdjustBalanceDialog {...adjustBalance} />
     </>
   );
 };

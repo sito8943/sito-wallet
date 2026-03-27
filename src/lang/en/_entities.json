@@ -33,19 +33,19 @@
     "lockedBy": {
       "label": "Locked By"
     },
-  "deleted": {
-    "label": "Deleted",
-    "filter": "Show deleted",
-    "scope": {
-      "label": "Trash",
-      "values": {
-        "active": "Active",
-        "deleted": "Deleted",
-        "all": "All"
-      }
+    "deleted": {
+      "label": "Deleted",
+      "filter": "Show deleted",
+      "scope": {
+        "label": "Trash",
+        "values": {
+          "active": "Active",
+          "deleted": "Deleted",
+          "all": "All"
+        }
+      },
+      "range": "Deletion date"
     },
-    "range": "Deletion date"
-  },
     "updatedAt": {
       "label": "Updated At"
     },

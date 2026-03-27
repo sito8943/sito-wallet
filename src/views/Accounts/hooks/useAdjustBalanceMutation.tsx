@@ -35,7 +35,7 @@ export const useAdjustBalanceMutation = () => {
   const queryClient = useQueryClient();
 
   const [selectedAccount, setSelectedAccount] = useState<AccountDto | null>(
-    null
+    null,
   );
 
   const formDialog = useFormDialog<
@@ -62,7 +62,7 @@ export const useAdjustBalanceMutation = () => {
       setSelectedAccount(record);
       formDialog.openDialog();
     },
-    [formDialog]
+    [formDialog],
   );
 
   const { action } = useAdjustBalanceAction({

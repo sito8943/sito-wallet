@@ -39,7 +39,7 @@ export default class TransactionCategoryClient extends BaseClient<
 
   async processImport(
     file: File,
-    override?: boolean
+    override?: boolean,
   ): Promise<ImportPreviewTransactionCategoryDto[]> {
     const items = await parseJSONFile<TransactionCategoryDto>(file);
     return await this.api.doQuery<ImportPreviewTransactionCategoryDto[]>(
@@ -48,12 +48,12 @@ export default class TransactionCategoryClient extends BaseClient<
       items,
       {
         ...this.api.defaultTokenAcquirer(),
-      }
+      },
     );
   }
 
   async import(
-    data: ImportDto<ImportPreviewTransactionCategoryDto>
+    data: ImportDto<ImportPreviewTransactionCategoryDto>,
   ): Promise<number> {
     return await this.api.post(`${this.table}/import`, data);
   }

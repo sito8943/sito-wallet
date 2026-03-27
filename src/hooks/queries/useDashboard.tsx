@@ -25,7 +25,7 @@ export const DashboardsQueryKeys = {
 };
 
 export function useDashboardsList(
-  props: UseFetchPropsType<DashboardDto, FilterDashboardDto>
+  props: UseFetchPropsType<DashboardDto, FilterDashboardDto>,
 ): UseQueryResult<QueryResult<DashboardDto>> {
   const { filters = {} } = props;
   const normalizedFilters = useMemo(

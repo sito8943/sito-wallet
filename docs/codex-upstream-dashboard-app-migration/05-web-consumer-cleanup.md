@@ -1,9 +1,11 @@
 # 05. Limpieza en `sito-wallet/web` tras publicar `dashboard-app`
 
 ## Objetivo
+
 Eliminar forks locales una vez que la versión nueva de `@sito/dashboard-app` ya tenga los 4 casos absorbidos.
 
 ## Pasos literales
+
 1. Subir versión en `package.json` de `@sito/dashboard-app`.
 2. Cambiar imports para usar solo `@sito/dashboard-app`:
 3. `ImportDialog` y `useImportDialog` en `Currencies` deben venir del paquete, no de `src/components` ni de `src/hooks`.
@@ -25,11 +27,13 @@ Eliminar forks locales una vez que la versión nueva de `@sito/dashboard-app` ya
 19. Ajustar tests que apunten a forks borrados.
 
 ## Validación obligatoria
+
 1. `npm run lint`
 2. `npm run build`
 3. `npm run test`
 4. Verificación manual en `Transactions`, `Accounts`, `Currencies`, `TransactionCategories`.
 
 ## Resultado esperado
+
 1. El repo consumidor deja de mantener duplicados de `dashboard-app`.
 2. El mantenimiento de esos componentes queda centralizado en upstream.

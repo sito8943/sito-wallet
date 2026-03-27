@@ -34,7 +34,7 @@ export const CurrenciesQueryKeys = {
   }),
   infiniteList: (
     query: Omit<QueryParam<CurrencyDto>, "currentPage">,
-    filters: FilterCurrencyDto
+    filters: FilterCurrencyDto,
   ) => ({
     queryKey: [
       ...CurrenciesQueryKeys.all().queryKey,
@@ -76,7 +76,7 @@ export function useCurrenciesList(
 }
 
 export function useInfiniteCurrenciesList(
-  props: UseFetchPropsType<CurrencyDto, FilterCurrencyDto>
+  props: UseFetchPropsType<CurrencyDto, FilterCurrencyDto>,
 ) {
   const {
     filters = defaultCurrenciesListFilters,
@@ -94,7 +94,7 @@ export function useInfiniteCurrenciesList(
         normalizeListFilters(filters) as Record<string, unknown>,
         hideDeletedEntities,
       ) as FilterCurrencyDto,
-    [filters, hideDeletedEntities]
+    [filters, hideDeletedEntities],
   );
 
   const parsedQueries = useMemo(
@@ -103,7 +103,7 @@ export function useInfiniteCurrenciesList(
       sortingOrder: query.sortingOrder,
       pageSize: query.pageSize ?? 20,
     }),
-    [query.pageSize, query.sortingBy, query.sortingOrder]
+    [query.pageSize, query.sortingBy, query.sortingOrder],
   );
 
   return useInfiniteQuery({
@@ -118,7 +118,10 @@ export function useInfiniteCurrenciesList(
       };
 
       try {
-        const result = await manager.Currencies.get(requestQuery, parsedFilters);
+        const result = await manager.Currencies.get(
+          requestQuery,
+          parsedFilters,
+        );
         offlineManager.Currencies.seed(result.items).catch(() => {});
         return result;
       } catch (error) {

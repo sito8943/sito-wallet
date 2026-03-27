@@ -2,7 +2,7 @@ import { UpdateDashboardCardConfigDto } from "lib";
 import { TypeResumeTypeFormType } from "./types";
 
 export const formToDto = (
-  data: TypeResumeTypeFormType
+  data: TypeResumeTypeFormType,
 ): UpdateDashboardCardConfigDto => {
   const stringified = JSON.stringify({
     ...data,

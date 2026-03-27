@@ -15,7 +15,7 @@ import { Tables } from "lib";
 import { AssignTransactionAccountDialogPropsType } from "../types";
 
 export function AssignAccountDialog(
-  props: AssignTransactionAccountDialogPropsType
+  props: AssignTransactionAccountDialogPropsType,
 ) {
   const { control, isLoading } = props;
 
@@ -25,7 +25,7 @@ export function AssignAccountDialog(
 
   const accountOptions = useMemo(
     () => [...(accounts?.data ?? [])] as Option[],
-    [accounts?.data]
+    [accounts?.data],
   );
 
   return (
@@ -60,7 +60,7 @@ export function AssignAccountDialog(
             label={t("_entities:transaction.account.label")}
             placeholder={t("_entities:transaction.account.placeholder")}
             autoComplete={`${Tables.Transactions}-${t(
-              "_entities:transaction.account.label"
+              "_entities:transaction.account.label",
             )}`}
             multiple={false}
             disabled={isLoading}

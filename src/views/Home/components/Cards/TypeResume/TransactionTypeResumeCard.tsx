@@ -22,7 +22,11 @@ import { DashboardCard } from "../DashboardCard";
 import "./styles.css";
 
 // types
-import { TransactionTypePropsType, FilterTypeResumeConfigType, TypeResumeTypeFormType } from "./types";
+import {
+  TransactionTypePropsType,
+  FilterTypeResumeConfigType,
+  TypeResumeTypeFormType,
+} from "./types";
 
 // providers
 // providers
@@ -107,7 +111,11 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
                 : "!text-bg-error"
             }`}
           >
-            {data?.total} <Currency name={data?.account?.currency?.name} symbol={data?.account?.currency?.symbol} />
+            {data?.total}{" "}
+            <Currency
+              name={data?.account?.currency?.name}
+              symbol={data?.account?.currency?.symbol}
+            />
           </p>
         </>
       )}

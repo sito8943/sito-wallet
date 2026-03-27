@@ -27,7 +27,7 @@ import { ConfigFormDialogPropsType, WeeklySpentFormType } from "./types";
 import { icons } from "../../../../Transactions/components/utils";
 
 export const ConfigFormDialog = (
-  props: ConfigFormDialogPropsType<WeeklySpentFormType>
+  props: ConfigFormDialogPropsType<WeeklySpentFormType>,
 ) => {
   const { control, isLoading, setValue } = props;
   const { t } = useTranslation();
@@ -40,7 +40,7 @@ export const ConfigFormDialog = (
         id: item.value,
         value: t(`_entities:transactionCategory:type.values.${item.key}`),
       })) as Option[],
-    [t]
+    [t],
   );
 
   const type = useWatch({ control, name: "type" });
@@ -62,7 +62,7 @@ export const ConfigFormDialog = (
             multiple
             label={t("_entities:transaction.account.label")}
             autoComplete={`${Tables.Transactions}-${t(
-              "_entities:transaction.account.label"
+              "_entities:transaction.account.label",
             )}`}
             onChange={(v) => onChange(v)}
             options={accounts ?? []}

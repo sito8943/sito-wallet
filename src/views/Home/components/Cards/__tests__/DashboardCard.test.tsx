@@ -1,5 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  act,
+} from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // ─── Module mocks ──────────────────────────────────────────────────────────────
@@ -76,7 +82,13 @@ vi.mock("lib", () => ({
 }));
 
 vi.mock("./BaseCard", () => ({
-  BaseCard: ({ children, className }: { children: React.ReactNode; className?: string }) => (
+  BaseCard: ({
+    children,
+    className,
+  }: {
+    children: React.ReactNode;
+    className?: string;
+  }) => (
     <div data-testid="base-card" className={className}>
       {children}
     </div>
@@ -129,7 +141,7 @@ function renderCard(overrides = {}) {
     ...render(
       <QueryClientProvider client={qc}>
         <DashboardCard {...buildProps(overrides)} />
-      </QueryClientProvider>
+      </QueryClientProvider>,
     ),
     qc,
   };
@@ -176,10 +188,11 @@ describe("DashboardCard", () => {
       });
 
       await waitFor(
-        () => expect(mockUpdateCardTitle).toHaveBeenCalledWith(
-          expect.objectContaining({ title: "Updated Title" })
-        ),
-        { timeout: 3000 }
+        () =>
+          expect(mockUpdateCardTitle).toHaveBeenCalledWith(
+            expect.objectContaining({ title: "Updated Title" }),
+          ),
+        { timeout: 3000 },
       );
 
       vi.useRealTimers();
@@ -191,7 +204,7 @@ describe("DashboardCard", () => {
       const input = screen.getByRole("textbox");
 
       ["T", "Ti", "Titl", "Title!"].forEach((v) =>
-        fireEvent.change(input, { target: { value: v } })
+        fireEvent.change(input, { target: { value: v } }),
       );
 
       await act(async () => {
@@ -201,10 +214,10 @@ describe("DashboardCard", () => {
 
       await waitFor(
         () => expect(mockUpdateCardTitle).toHaveBeenCalledTimes(1),
-        { timeout: 3000 }
+        { timeout: 3000 },
       );
       expect(mockUpdateCardTitle).toHaveBeenCalledWith(
-        expect.objectContaining({ title: "Title!" })
+        expect.objectContaining({ title: "Title!" }),
       );
 
       vi.useRealTimers();
@@ -230,7 +243,7 @@ describe("DashboardCard", () => {
           const successIcon = document.querySelector(".text-bg-success");
           expect(successIcon).toBeInTheDocument();
         },
-        { timeout: 3000 }
+        { timeout: 3000 },
       );
 
       vi.useRealTimers();
@@ -251,9 +264,11 @@ describe("DashboardCard", () => {
 
       await waitFor(
         () => {
-          expect(document.querySelector(".text-bg-success")).toBeInTheDocument();
+          expect(
+            document.querySelector(".text-bg-success"),
+          ).toBeInTheDocument();
         },
-        { timeout: 3000 }
+        { timeout: 3000 },
       );
 
       await act(async () => {
@@ -265,7 +280,7 @@ describe("DashboardCard", () => {
         () => {
           expect(document.querySelector(".text-bg-success")).toBeNull();
         },
-        { timeout: 3000 }
+        { timeout: 3000 },
       );
 
       vi.useRealTimers();
@@ -324,7 +339,7 @@ describe("DashboardCard", () => {
 
       await waitFor(
         () => expect(screen.queryByTestId("config-dialog")).toBeNull(),
-        { timeout: 3000 }
+        { timeout: 3000 },
       );
     });
 
@@ -365,7 +380,7 @@ describe("DashboardCard", () => {
         expect.objectContaining({
           formConfig: { period: "month" },
           onSubmit: expect.any(Function),
-        })
+        }),
       );
       expect(screen.getByTestId("active-filters")).toBeInTheDocument();
     });

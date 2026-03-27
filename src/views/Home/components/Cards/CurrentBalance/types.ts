@@ -15,11 +15,11 @@ export interface CurrentBalancePropsType extends DashboardDto {
 }
 
 export interface ConfigFormDialogPropsType<TFormType extends FieldValues>
-  extends FormPropsType<TFormType>,
-    Omit<DialogPropsType, "title"> {}
+  extends FormPropsType<TFormType>, Omit<DialogPropsType, "title"> {}
 
 export interface CurrentBalanceFormType
-  extends Omit<UpdateDashboardCardConfigDto, "config" | "userId" | "id">,
+  extends
+    Omit<UpdateDashboardCardConfigDto, "config" | "userId" | "id">,
     FieldValues {
   account: CommonAccountDto | null;
 }

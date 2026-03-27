@@ -33,5 +33,5 @@ export type SearchResultPropsType = {
 
 export type SearchModalPropsType = {
   open: boolean;
-  onClose: () => void
+  onClose: () => void;
 };

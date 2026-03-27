@@ -32,7 +32,10 @@ export function useMobileNavbar<TRow extends BaseDto>(
   const actionsSignatureRef = useRef("");
 
   useEffect(() => {
-    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+    if (
+      typeof window === "undefined" ||
+      typeof window.matchMedia !== "function"
+    ) {
       return;
     }
 

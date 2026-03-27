@@ -204,9 +204,9 @@ select > option {
 }
 
 .page-fab {
-  @apply !hidden
+  @apply !hidden;
 }
 
 .to-top {
-  @apply bottom-20
+  @apply bottom-20;
 }

@@ -29,8 +29,8 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
           <p>
             {t(
               `_entities:transactionCategory.type.values.${String(
-                TransactionType[type]
-              )}`
+                TransactionType[type],
+              )}`,
             )}
           </p>
         }

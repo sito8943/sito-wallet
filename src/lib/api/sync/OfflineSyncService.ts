@@ -13,7 +13,7 @@ import {
 } from "./types";
 
 const isObjectPayload = (
-  value: SyncPayload
+  value: SyncPayload,
 ): value is Record<string, unknown> =>
   typeof value === "object" && value !== null && !Array.isArray(value);
 
@@ -43,7 +43,7 @@ const toSyncHttpError = (error: unknown): SyncHttpError => {
 
 const mergePayload = (
   base: SyncPayload,
-  patch: SyncPayload
+  patch: SyncPayload,
 ): Record<string, unknown> | SyncPayload => {
   if (isObjectPayload(base) && isObjectPayload(patch)) {
     return {
@@ -61,7 +61,7 @@ type PreparedOperationsResult = {
 };
 
 const prepareOperations = (
-  operations: SyncQueueOperation[]
+  operations: SyncQueueOperation[],
 ): PreparedOperationsResult => {
   const sorted = [...operations].sort((left, right) => {
     if (left.createdAt < right.createdAt) return -1;
@@ -97,7 +97,10 @@ const prepareOperations = (
     const existingCreate = createByLocalKey.get(localKey);
 
     if (!existingCreate) {
-      if (canceledCreateKeys.has(localKey) && operation.operation !== "CREATE") {
+      if (
+        canceledCreateKeys.has(localKey) &&
+        operation.operation !== "CREATE"
+      ) {
         discardedOperationIds.push(operation.clientOperationId);
         continue;
       }
@@ -117,7 +120,7 @@ const prepareOperations = (
     if (operation.operation === "UPDATE") {
       existingCreate.payload = mergePayload(
         existingCreate.payload,
-        operation.payload
+        operation.payload,
       );
       continue;
     }
@@ -146,7 +149,7 @@ const buildResult = (
   totalOperations: number,
   syncedOperations: number,
   failedOperations: number,
-  errors: SyncBulkErrorItem[]
+  errors: SyncBulkErrorItem[],
 ): OfflineSyncRunResult => ({
   state,
   totalOperations,
@@ -159,7 +162,7 @@ export class OfflineSyncService {
   constructor(
     private readonly queueStore: SyncQueueStore = syncQueueStore,
     private readonly metadataStore: SyncMetadataStore = syncMetadataStore,
-    private readonly apiClient: SyncClient = syncClient
+    private readonly apiClient: SyncClient = syncClient,
   ) {}
 
   async hasPendingOperations(): Promise<boolean> {
@@ -211,7 +214,7 @@ export class OfflineSyncService {
     try {
       for (const entity of SYNC_ENTITY_ORDER) {
         const entityOperations = preparedOperations.filter(
-          (item) => item.entity === entity
+          (item) => item.entity === entity,
         );
         if (!entityOperations.length) continue;
 
@@ -227,18 +230,20 @@ export class OfflineSyncService {
         });
 
         const failedByClientOperationId = new Set(
-          response.errors.map((item) => item.clientOperationId)
+          response.errors.map((item) => item.clientOperationId),
         );
 
         const successfulSourceIds = entityOperations
           .filter(
             (operation) =>
-              !failedByClientOperationId.has(operation.clientOperationId)
+              !failedByClientOperationId.has(operation.clientOperationId),
           )
           .flatMap((operation) => operation.sourceOperationIds);
 
         if (successfulSourceIds.length) {
-          await this.queueStore.removeOperationsByClientIds(successfulSourceIds);
+          await this.queueStore.removeOperationsByClientIds(
+            successfulSourceIds,
+          );
         }
 
         syncedOperations += response.applied + response.skipped;
@@ -270,7 +275,7 @@ export class OfflineSyncService {
             preparedOperations.length,
             syncedOperations,
             failedOperations,
-            errors
+            errors,
           );
         }
 
@@ -293,7 +298,7 @@ export class OfflineSyncService {
         preparedOperations.length,
         syncedOperations,
         failedOperations,
-        errors
+        errors,
       );
     }
 
@@ -302,11 +307,10 @@ export class OfflineSyncService {
       preparedOperations.length,
       syncedOperations,
       failedOperations,
-      errors
+      errors,
     );
   }
 }
 
 export const offlineSyncService = new OfflineSyncService();
 export { toSyncHttpError };
-

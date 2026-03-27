@@ -2,11 +2,7 @@ import { useMemo } from "react";
 import { t } from "i18next";
 
 // @sito/dashboard-app
-import {
-  BaseEntityDto,
-  ColumnType,
-  FilterTypes,
-} from "@sito/dashboard-app";
+import { BaseEntityDto, ColumnType, FilterTypes } from "@sito/dashboard-app";
 
 // lib
 import { EntityName } from "lib";
@@ -46,7 +42,7 @@ const softDeleteScopeFilterOptions = () => [
  * @returns array of prefab
  */
 export const prefabBaseColumns = <
-  TDto extends BaseEntityDto
+  TDto extends BaseEntityDto,
 >(): ColumnType<TDto>[] => [
   {
     key: "id",
@@ -117,13 +113,13 @@ export const prefabBaseColumns = <
 export const useParseColumns = <TDto extends BaseEntityDto>(
   columns: ColumnType<TDto>[],
   entity: EntityName,
-  toIgnore: string[] = []
+  toIgnore: string[] = [],
 ) => {
   const parsedColumns = useMemo(
     () =>
       [
         ...prefabBaseColumns().filter(
-          (base) => toIgnore.indexOf(base.key) === -1
+          (base) => toIgnore.indexOf(base.key) === -1,
         ),
         ...columns,
       ].map(({ key, renderBody, label, pos, ...rest }) => {
@@ -134,14 +130,14 @@ export const useParseColumns = <TDto extends BaseEntityDto>(
             t(
               `_entities:${isBaseColumn(key as string) ? "base" : entity}.${
                 key as string
-              }.label`
+              }.label`,
             ),
           renderBody,
           pos: pos ?? 0,
           ...rest,
         };
       }),
-    [columns, entity, toIgnore]
+    [columns, entity, toIgnore],
   );
 
   return { columns: parsedColumns };

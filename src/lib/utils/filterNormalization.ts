@@ -25,7 +25,9 @@ const parseSoftDeleteScope = (value: unknown): SoftDeleteScope | undefined => {
   return normalized as SoftDeleteScope;
 };
 
-const parseLegacyStatusScope = (value: unknown): SoftDeleteScope | undefined => {
+const parseLegacyStatusScope = (
+  value: unknown,
+): SoftDeleteScope | undefined => {
   if (typeof value === "boolean") {
     return value ? "DELETED" : "ACTIVE";
   }
@@ -132,8 +134,9 @@ const normalizeFiltersByMode = (
   return normalized;
 };
 
-export const normalizeListFilters = (filters?: unknown): Record<string, unknown> =>
-  normalizeFiltersByMode(filters, "list");
+export const normalizeListFilters = (
+  filters?: unknown,
+): Record<string, unknown> => normalizeFiltersByMode(filters, "list");
 
 export const normalizeCommonFilters = (
   filters?: unknown,

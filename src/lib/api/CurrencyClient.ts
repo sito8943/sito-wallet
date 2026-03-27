@@ -39,7 +39,7 @@ export default class CurrencyClient extends BaseClient<
 
   async processImport(
     file: File,
-    override?: boolean
+    override?: boolean,
   ): Promise<ImportPreviewCurrencyDto[]> {
     const items = await parseJSONFile<CurrencyDto>(file);
     return await this.api.doQuery<ImportPreviewCurrencyDto[]>(
@@ -48,7 +48,7 @@ export default class CurrencyClient extends BaseClient<
       items,
       {
         ...this.api.defaultTokenAcquirer(),
-      }
+      },
     );
   }
 

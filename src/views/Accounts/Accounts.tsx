@@ -152,7 +152,9 @@ export function Accounts() {
   useEffect(() => {
     openAddAccountRef.current = addAccount.openDialog;
   }, [addAccount.openDialog]);
-  useRegisterBottomNavAction(useCallback(() => openAddAccountRef.current(), []));
+  useRegisterBottomNavAction(
+    useCallback(() => openAddAccountRef.current(), []),
+  );
 
   return (
     <Page

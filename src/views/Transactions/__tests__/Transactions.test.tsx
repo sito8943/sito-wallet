@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 vi.mock("react-router-dom", async () => {
   const actual =
     await vi.importActual<typeof import("react-router-dom")>(
-      "react-router-dom"
+      "react-router-dom",
     );
   return {
     ...actual,
@@ -99,7 +99,13 @@ vi.mock("../../Accounts/hooks", () => ({
 
 // @sito/dashboard-app
 vi.mock("@sito/dashboard-app", () => ({
-  Page: ({ children, title }: { children: React.ReactNode; title?: string }) => (
+  Page: ({
+    children,
+    title,
+  }: {
+    children: React.ReactNode;
+    title?: string;
+  }) => (
     <div data-testid="page" data-title={title}>
       {children}
     </div>
@@ -114,7 +120,9 @@ vi.mock("@sito/dashboard-app", () => ({
     className?: string;
     tabsContainerClassName?: string;
   }) => (
-    <div data-testid={`tabs-${className?.includes("hidden") ? "mobile" : "desktop"}`}>
+    <div
+      data-testid={`tabs-${className?.includes("hidden") ? "mobile" : "desktop"}`}
+    >
       {tabs.map((tab) => {
         const isActive = tab.id === (defaultTab ?? tabs[0]?.id);
         return (
@@ -134,9 +142,15 @@ vi.mock("@sito/dashboard-app", () => ({
     <div data-testid="empty-state">{message}</div>
   ),
   GlobalActions: { Add: "add" },
-  useDeleteDialog: () => ({ action: () => ({ id: "delete", onClick: vi.fn() }) }),
-  useRestoreDialog: () => ({ action: () => ({ id: "restore", onClick: vi.fn() }) }),
-  useExportActionMutate: () => ({ action: () => ({ id: "export", onClick: vi.fn() }) }),
+  useDeleteDialog: () => ({
+    action: () => ({ id: "delete", onClick: vi.fn() }),
+  }),
+  useRestoreDialog: () => ({
+    action: () => ({ id: "restore", onClick: vi.fn() }),
+  }),
+  useExportActionMutate: () => ({
+    action: () => ({ id: "export", onClick: vi.fn() }),
+  }),
   useImportDialog: () => ({
     open: false,
     handleClose: vi.fn(),
@@ -230,7 +244,11 @@ vi.mock("../sections/TransactionsDesktopSection", () => ({
       {tabs.map((tab) => {
         const isActive = tab.id === (tabValue ?? tabs[0]?.id);
         return (
-          <div key={tab.id} data-testid={`tab-${tab.id}`} data-active={isActive}>
+          <div
+            key={tab.id}
+            data-testid={`tab-${tab.id}`}
+            data-active={isActive}
+          >
             <span data-testid={`tab-label-${tab.id}`}>{tab.label}</span>
             {isActive ? tab.content : null}
           </div>
@@ -252,7 +270,11 @@ vi.mock("../sections/TransactionsMobileSection", () => ({
       {tabs.map((tab) => {
         const isActive = tab.id === (tabValue ?? tabs[0]?.id);
         return (
-          <div key={tab.id} data-testid={`tab-${tab.id}`} data-active={isActive}>
+          <div
+            key={tab.id}
+            data-testid={`tab-${tab.id}`}
+            data-active={isActive}
+          >
             <span data-testid={`tab-label-${tab.id}`}>{tab.label}</span>
             {isActive ? tab.content : null}
           </div>
@@ -309,12 +331,10 @@ async function renderTransactions(initialSearch = "") {
   const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   render(
     <QueryClientProvider client={qc}>
-      <MemoryRouter
-        initialEntries={[`/transactions${initialSearch}`]}
-      >
+      <MemoryRouter initialEntries={[`/transactions${initialSearch}`]}>
         <Transactions />
       </MemoryRouter>
-    </QueryClientProvider>
+    </QueryClientProvider>,
   );
 
   await waitFor(() => {
@@ -379,7 +399,7 @@ describe("Transactions", () => {
           <MemoryRouter initialEntries={["/transactions?accountId=2"]}>
             <Transactions />
           </MemoryRouter>
-        </QueryClientProvider>
+        </QueryClientProvider>,
       );
 
       await screen.findByTestId("tabs-desktop");
@@ -423,18 +443,9 @@ describe("Transactions", () => {
       await renderTransactions();
       const weeklyCardOut = await screen.findByTestId("weekly-card-out");
 
-      expect(weeklyCardOut).toHaveAttribute(
-        "data-account-id",
-        "1"
-      );
-      expect(weeklyCardOut).toHaveAttribute(
-        "data-currency-name",
-        "EUR"
-      );
-      expect(weeklyCardOut).toHaveAttribute(
-        "data-currency-symbol",
-        "€"
-      );
+      expect(weeklyCardOut).toHaveAttribute("data-account-id", "1");
+      expect(weeklyCardOut).toHaveAttribute("data-currency-name", "EUR");
+      expect(weeklyCardOut).toHaveAttribute("data-currency-symbol", "€");
     });
 
     it("does not render weekly cards when there are no accounts", async () => {
@@ -458,7 +469,7 @@ describe("Transactions", () => {
       const tables = screen.getAllByTestId(/^transaction-table-/);
       expect(tables.length).toBeGreaterThan(0);
       tables.forEach((t) =>
-        expect(t).toHaveAttribute("data-show-filters", "false")
+        expect(t).toHaveAttribute("data-show-filters", "false"),
       );
     });
   });

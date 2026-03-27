@@ -44,7 +44,7 @@ const {
 vi.mock("react-router-dom", async () => {
   const actual =
     await vi.importActual<typeof import("react-router-dom")>(
-      "react-router-dom"
+      "react-router-dom",
     );
   return {
     ...actual,
@@ -164,7 +164,7 @@ function renderView({
         </Route>
         <Route path="/auth/sign-in" element={<SignInPage />} />
       </Routes>
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 }
 

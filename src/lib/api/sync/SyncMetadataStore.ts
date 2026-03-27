@@ -29,13 +29,16 @@ const parseMetadata = (value: string | null): SyncMetadata => {
     const parsed = JSON.parse(value) as Partial<SyncMetadata>;
     return {
       deviceId:
-        typeof parsed.deviceId === "string" ? parsed.deviceId : defaultMetadata.deviceId,
+        typeof parsed.deviceId === "string"
+          ? parsed.deviceId
+          : defaultMetadata.deviceId,
       lastSyncAt:
         typeof parsed.lastSyncAt === "string" || parsed.lastSyncAt === null
           ? parsed.lastSyncAt
           : defaultMetadata.lastSyncAt,
       activeSessionId:
-        typeof parsed.activeSessionId === "string" || parsed.activeSessionId === null
+        typeof parsed.activeSessionId === "string" ||
+        parsed.activeSessionId === null
           ? parsed.activeSessionId
           : defaultMetadata.activeSessionId,
     };
@@ -92,4 +95,3 @@ export class SyncMetadataStore {
 }
 
 export const syncMetadataStore = new SyncMetadataStore();
-

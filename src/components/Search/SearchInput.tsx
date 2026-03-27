@@ -36,7 +36,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputPropsType>(
         </TextInput>
       </div>
     );
-  }
+  },
 );
 
 SearchInput.displayName = "SearchInput";

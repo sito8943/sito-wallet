@@ -13,7 +13,9 @@ export function FeatureUnavailable(props: FeatureUnavailableProps) {
   return (
     <main className="w-full h-full flex flex-col items-center justify-center gap-6 px-4 text-center">
       <FontAwesomeIcon icon={faWarning} className="text-5xl text-warning" />
-      <h2 className="text-3xl max-xs:text-2xl">{t("_pages:featureFlags.route.title")}</h2>
+      <h2 className="text-3xl max-xs:text-2xl">
+        {t("_pages:featureFlags.route.title")}
+      </h2>
       <p className="text-text-muted max-w-xl">
         {t("_pages:featureFlags.route.body", {
           module: t(`_pages:featureFlags.modules.${module}`),

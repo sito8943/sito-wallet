@@ -24,7 +24,7 @@ const bootstrap = async () => {
   ReactDOM.createRoot(document.getElementById("root")!).render(
     <SitoWalletProvider>
       <App />
-    </SitoWalletProvider>
+    </SitoWalletProvider>,
   );
 };
 

@@ -155,11 +155,7 @@ export function useInfiniteTransactionsList(props: {
   filters: FilterTransactionDto;
   query?: Omit<QueryParam<TransactionDto>, "currentPage">;
 }) {
-  const {
-    sortingBy,
-    sortingOrder,
-    filters: tableFilters,
-  } = useTableOptions();
+  const { sortingBy, sortingOrder, filters: tableFilters } = useTableOptions();
 
   const {
     filters = defaultTransactionsListFilters,
@@ -189,7 +185,13 @@ export function useInfiniteTransactionsList(props: {
       sortingOrder: sortingOrder || query.sortingOrder,
       pageSize: query.pageSize ?? 20,
     }),
-    [query.pageSize, query.sortingBy, query.sortingOrder, sortingBy, sortingOrder],
+    [
+      query.pageSize,
+      query.sortingBy,
+      query.sortingOrder,
+      sortingBy,
+      sortingOrder,
+    ],
   );
 
   return useInfiniteQuery({

@@ -4,7 +4,11 @@ import { useTranslation } from "react-i18next";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faFilter, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheckCircle,
+  faFilter,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 
 // react-query
 import { useMutation } from "@tanstack/react-query";
@@ -32,8 +36,8 @@ import { BaseCard } from "./BaseCard";
 import { useManager } from "providers";
 
 // local types
-type GenericConfigDialogProps<TForm extends FieldValues> = FormPropsType<TForm> &
-  Omit<DialogPropsType, "title">;
+type GenericConfigDialogProps<TForm extends FieldValues> =
+  FormPropsType<TForm> & Omit<DialogPropsType, "title">;
 
 type Common = {
   id: number;
@@ -57,7 +61,9 @@ type ChildrenArgs<TForm> = {
 
 export type DashboardCardProps<TForm extends FieldValues> = Common & {
   parseFormConfig: (config?: string | null) => TForm;
-  formToDto: (data: TForm & { userId: number; id: number }) => UpdateDashboardCardConfigDto;
+  formToDto: (
+    data: TForm & { userId: number; id: number },
+  ) => UpdateDashboardCardConfigDto;
   onConfigSaved?: () => void;
   ConfigFormDialog: (props: GenericConfigDialogProps<TForm>) => JSX.Element;
   renderActiveFilters?: (args: RenderFiltersArgs<TForm>) => JSX.Element | null;
@@ -65,7 +71,7 @@ export type DashboardCardProps<TForm extends FieldValues> = Common & {
 };
 
 export const DashboardCard = <TForm extends FieldValues>(
-  props: DashboardCardProps<TForm>
+  props: DashboardCardProps<TForm>,
 ) => {
   const {
     id,
@@ -104,13 +110,11 @@ export const DashboardCard = <TForm extends FieldValues>(
     return () => clearTimeout(timer);
   }, [titleSuccess]);
 
-  const updateTitle = useMutation<number, Error, UpdateDashboardCardTitleDto>(
-    {
-      mutationFn: (data) => manager.Dashboard.updateCardTitle(data),
-      onError: (error) => showErrorNotification({ message: error.message }),
-      onSuccess: () => setTitleSuccess(true),
-    }
-  );
+  const updateTitle = useMutation<number, Error, UpdateDashboardCardTitleDto>({
+    mutationFn: (data) => manager.Dashboard.updateCardTitle(data),
+    onError: (error) => showErrorNotification({ message: error.message }),
+    onSuccess: () => setTitleSuccess(true),
+  });
 
   const debounced = useDebouncedCallback((value: string) => {
     updateTitle.mutate({ id, title: value, userId: userId ?? 0 });
@@ -121,19 +125,30 @@ export const DashboardCard = <TForm extends FieldValues>(
   }, [debounced]);
 
   // Config form state
-  const formConfig = useMemo(() => parseFormConfig(config), [config, parseFormConfig]);
+  const formConfig = useMemo(
+    () => parseFormConfig(config),
+    [config, parseFormConfig],
+  );
 
-  const formProps = usePostForm<UpdateDashboardCardConfigDto, UpdateDashboardCardConfigDto, number, TForm>({
+  const formProps = usePostForm<
+    UpdateDashboardCardConfigDto,
+    UpdateDashboardCardConfigDto,
+    number,
+    TForm
+  >({
     defaultValues: formConfig as DefaultValues<TForm>,
     queryKey: ["dashboards", "card-config", id],
-    formToDto: (data: TForm) => formToDto({ ...(data as TForm), userId: userId ?? 0, id }),
-    mutationFn: async (data: UpdateDashboardCardConfigDto) => await manager.Dashboard.updateCardConfig(data),
+    formToDto: (data: TForm) =>
+      formToDto({ ...(data as TForm), userId: userId ?? 0, id }),
+    mutationFn: async (data: UpdateDashboardCardConfigDto) =>
+      await manager.Dashboard.updateCardConfig(data),
     onSuccess: () => {
       if (onConfigSaved) onConfigSaved();
       setShowFilters(false);
     },
     onSuccessMessage: t("_accessibility:messages.saved"),
-    onError: () => showErrorNotification({ message: t("_accessibility:errors.500") }),
+    onError: () =>
+      showErrorNotification({ message: t("_accessibility:errors.500") }),
   });
 
   const [showFilters, setShowFilters] = useState(false);
@@ -147,7 +162,9 @@ export const DashboardCard = <TForm extends FieldValues>(
         <input
           className="type-resume-title poppins"
           value={cardTitle}
-          placeholder={t("_pages:home.dashboard.transactionTypeResume.placeholder")}
+          placeholder={t(
+            "_pages:home.dashboard.transactionTypeResume.placeholder",
+          )}
           onChange={(e) => {
             setCardTitle(e.target.value);
             debounced(e.target.value);
@@ -155,26 +172,38 @@ export const DashboardCard = <TForm extends FieldValues>(
         />
         {updateTitle.isPending ? <Loading className="mt-1" /> : null}
         {titleSuccess ? (
-          <FontAwesomeIcon icon={faCheckCircle} className="mt-1 text-bg-success" />
+          <FontAwesomeIcon
+            icon={faCheckCircle}
+            className="mt-1 text-bg-success"
+          />
         ) : null}
         <IconButton
           disabled={headerDisabled}
           onClick={() => setShowFilters((v) => !v)}
           icon={faFilter}
         />
-        <IconButton disabled={headerDisabled} onClick={onDelete} className={`error`} icon={faTrash} />
+        <IconButton
+          disabled={headerDisabled}
+          onClick={onDelete}
+          className={`error`}
+          icon={faTrash}
+        />
       </div>
 
-      {renderActiveFilters ? (
-        renderActiveFilters({
-          formConfig,
-          onSubmit: (updated: TForm) => formProps.onSubmit(updated),
-        })
-      ) : null}
+      {renderActiveFilters
+        ? renderActiveFilters({
+            formConfig,
+            onSubmit: (updated: TForm) => formProps.onSubmit(updated),
+          })
+        : null}
 
       {children ? children({ formConfig }) : null}
 
-      <ConfigFormDialog open={showFilters} handleClose={() => setShowFilters(false)} {...formProps} />
+      <ConfigFormDialog
+        open={showFilters}
+        handleClose={() => setShowFilters(false)}
+        {...formProps}
+      />
     </BaseCard>
   );
 };

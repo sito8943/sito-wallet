@@ -1,7 +1,11 @@
 import { t } from "i18next";
 
 // types
-import type { NamedViewPageType, ViewPageType, IsFeatureEnabled } from "./types";
+import type {
+  NamedViewPageType,
+  ViewPageType,
+  IsFeatureEnabled,
+} from "./types";
 import type { FeatureFlagKey } from "lib";
 
 export enum PageId {
@@ -65,7 +69,7 @@ const pageFeatureDependencies: Partial<Record<PageId, FeatureFlagKey>> = {
 
 const isPageFeatureEnabled = (
   page: ViewPageType,
-  isFeatureEnabled: IsFeatureEnabled
+  isFeatureEnabled: IsFeatureEnabled,
 ): boolean => {
   const dependency = pageFeatureDependencies[page.key];
   if (!dependency) return true;
@@ -75,7 +79,7 @@ const isPageFeatureEnabled = (
 
 const filterSitemapByFeatures = (
   routes: ViewPageType[],
-  isFeatureEnabled: IsFeatureEnabled
+  isFeatureEnabled: IsFeatureEnabled,
 ): ViewPageType[] => {
   return routes
     .filter((route) => isPageFeatureEnabled(route, isFeatureEnabled))
@@ -88,7 +92,7 @@ const filterSitemapByFeatures = (
 };
 
 export const getFeatureFilteredSitemap = (
-  isFeatureEnabled: IsFeatureEnabled
+  isFeatureEnabled: IsFeatureEnabled,
 ): ViewPageType[] => {
   return filterSitemapByFeatures(sitemap, isFeatureEnabled);
 };
@@ -103,7 +107,7 @@ export const getFeatureFilteredSitemap = (
 export const findPathInChildren = (
   targetPageId: PageId,
   basePage: ViewPageType,
-  currentPath = ""
+  currentPath = "",
 ) => {
   let path = "";
   const baseChildren = basePage.children ?? [];
@@ -133,7 +137,7 @@ export const findPath = (targetPageId: PageId) => {
       path = findPathInChildren(
         targetPageId,
         page,
-        page.path === "/" ? "" : page.path
+        page.path === "/" ? "" : page.path,
       );
       if (path) {
         break;
@@ -143,10 +147,13 @@ export const findPath = (targetPageId: PageId) => {
   return path;
 };
 
-const pathMap: Record<PageId, string> = sitemap.reduce((acc, { key, path }) => {
-  acc[key] = path;
-  return acc;
-}, {} as Record<PageId, string>);
+const pathMap: Record<PageId, string> = sitemap.reduce(
+  (acc, { key, path }) => {
+    acc[key] = path;
+    return acc;
+  },
+  {} as Record<PageId, string>,
+);
 
 export const getPathByKey = (key: PageId): string | undefined => pathMap[key];
 
@@ -158,7 +165,7 @@ export const getPathByKey = (key: PageId): string | undefined => pathMap[key];
  */
 export const flattenSitemap = (
   routes: ViewPageType[],
-  basePath = ""
+  basePath = "",
 ): NamedViewPageType[] => {
   const result = [];
 

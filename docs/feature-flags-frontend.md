@@ -1,6 +1,7 @@
 # Frontend Docs: Feature Flags
 
 ## Objetivo
+
 Consumir feature flags desde backend para habilitar/deshabilitar modulos de UI sin hardcodear reglas en vistas.
 
 ## Contrato Backend
@@ -63,6 +64,7 @@ VITE_FEATURE_TRANSACTIONS_ENABLED_DEFAULT=true
 ```
 
 Notas:
+
 - Parsear booleans de forma estricta (`"true"` / `"false"`).
 - Centralizar parsing en `config.ts` para evitar duplicacion.
 - Estructura requerida en config: usar `config.featureFlags` como contenedor unico de esta configuracion.
@@ -93,6 +95,7 @@ Notas:
 - Exponer `config.featureFlags.defaults` + `config.featureFlags.storageKey`.
 
 Entregable:
+
 - No existe `DEFAULT_FEATURES` hardcodeado en codigo de negocio.
 
 ### Fase 2 - `FeatureFlagClient`
@@ -103,6 +106,7 @@ Entregable:
 - Mantener claro en comentarios/nombre que no es entidad CRUD de BD.
 
 Entregable:
+
 - Cliente reutilizable y alineado al patron actual de `lib/api`.
 
 ### Fase 3 - Persistencia local de flags
@@ -114,6 +118,7 @@ Entregable:
 - Normalizar merge: `defaults (.env) + payload backend + persisted (cuando aplique)`.
 
 Entregable:
+
 - Acceso a `localStorage` encapsulado y tipado.
 
 ### Fase 4 - `FeatureFlagsProvider`
@@ -127,6 +132,7 @@ Entregable:
   - `clearFeatures()` (logout)
 
 Entregable:
+
 - Estado global de flags disponible en toda la app.
 
 ### Fase 5 - Integracion del provider
@@ -135,6 +141,7 @@ Entregable:
 - Verificar orden para que tenga acceso a auth/manager segun necesidad.
 
 Entregable:
+
 - Provider activo en arbol principal.
 
 ### Fase 6 - Disparo de refresco solo en login
@@ -144,6 +151,7 @@ Entregable:
 - No llamar refresh en bootstrap de sesion (`useAppSession`) ni en otras vistas.
 
 Entregable:
+
 - Refresco ocurre exclusivamente al loggear usuario.
 
 ### Fase 7 - Limpieza en logout
@@ -153,6 +161,7 @@ Entregable:
   - borrar storage de flags.
 
 Entregable:
+
 - Sin residuos de flags entre sesiones.
 
 ### Fase 8 - Guardas de UI
@@ -166,6 +175,7 @@ Entregable:
   - si `transactionsEnabled=false`, bloquear `/transactions` y `/transaction-categories`.
 
 Entregable:
+
 - Usuario no ve ni navega a modulos deshabilitados.
 
 ### Fase 9 - `Modulo No Disponible` (si aplica)
@@ -176,6 +186,7 @@ Entregable:
 - Agregar traducciones (`en` y `es`).
 
 Entregable:
+
 - UX consistente para feature off.
 
 ### Fase 10 - Manejo de errores de negocio
@@ -185,6 +196,7 @@ Entregable:
   - no refrescar flags automaticamente (regla: refresh solo login).
 
 Entregable:
+
 - Comportamiento alineado con politica de refresco definida.
 
 ### Fase 11 - Pruebas
@@ -199,6 +211,7 @@ Entregable:
   - guardas en rutas/menu
 
 Entregable:
+
 - Cobertura de flujo principal y regresiones.
 
 ## Criterios de Aceptacion Globales

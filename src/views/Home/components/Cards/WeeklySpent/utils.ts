@@ -2,7 +2,7 @@ import { UpdateDashboardCardConfigDto } from "lib";
 import { WeeklySpentFormType } from "./types";
 
 export const formToDto = (
-  data: WeeklySpentFormType
+  data: WeeklySpentFormType,
 ): UpdateDashboardCardConfigDto => {
   const parsedAccount = data.accounts?.map((account) => account.id) ?? [];
   const stringified = JSON.stringify({

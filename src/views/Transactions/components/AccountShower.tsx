@@ -3,7 +3,12 @@ import { css } from "@emotion/css";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
-import { IconButton, Loading, SelectInput, useEditAction } from "@sito/dashboard-app";
+import {
+  IconButton,
+  Loading,
+  SelectInput,
+  useEditAction,
+} from "@sito/dashboard-app";
 
 // icons
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
@@ -77,7 +82,8 @@ const AccountShower = (props: AccountCarouselPropsType) => {
     width: `${window.innerWidth - 24}px`,
   });
   const accountNameRef = useRef<HTMLDivElement>(null);
-  const [showFixedAccountSelector, setShowFixedAccountSelector] = useState(false);
+  const [showFixedAccountSelector, setShowFixedAccountSelector] =
+    useState(false);
   const stickyTopPx = 56;
 
   useEffect(() => {

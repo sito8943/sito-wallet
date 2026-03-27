@@ -32,13 +32,19 @@ const resourceLoaders: Record<
 };
 
 const toResourceBundle = (resource: unknown): ResourceBundle => {
-  if (typeof resource === "object" && resource !== null && "default" in resource) {
+  if (
+    typeof resource === "object" &&
+    resource !== null &&
+    "default" in resource
+  ) {
     return (resource as { default: ResourceBundle }).default;
   }
   return resource as ResourceBundle;
 };
 
-const normalizeLanguage = (input?: string | readonly string[]): SupportedLng => {
+const normalizeLanguage = (
+  input?: string | readonly string[],
+): SupportedLng => {
   const value = Array.isArray(input) ? input[0] : input;
   if (!value) return fallbackLng;
   const language = value.split("-")[0].toLowerCase() as SupportedLng;
@@ -48,7 +54,9 @@ const normalizeLanguage = (input?: string | readonly string[]): SupportedLng => 
 const loadedLanguageResources = new Map<SupportedLng, LanguageResources>();
 const appliedLanguages = new Set<SupportedLng>();
 
-const loadLanguageResources = async (lng: SupportedLng): Promise<LanguageResources> => {
+const loadLanguageResources = async (
+  lng: SupportedLng,
+): Promise<LanguageResources> => {
   const cached = loadedLanguageResources.get(lng);
   if (cached) return cached;
 
@@ -62,9 +70,18 @@ const loadLanguageResources = async (lng: SupportedLng): Promise<LanguageResourc
   return parsed;
 };
 
-const applyLanguageResources = (lng: SupportedLng, resources: LanguageResources) => {
+const applyLanguageResources = (
+  lng: SupportedLng,
+  resources: LanguageResources,
+) => {
   if (appliedLanguages.has(lng)) return;
-  i18n.addResourceBundle(lng, "_accessibility", resources._accessibility, true, true);
+  i18n.addResourceBundle(
+    lng,
+    "_accessibility",
+    resources._accessibility,
+    true,
+    true,
+  );
   i18n.addResourceBundle(lng, "_pages", resources._pages, true, true);
   i18n.addResourceBundle(lng, "_entities", resources._entities, true, true);
   appliedLanguages.add(lng);

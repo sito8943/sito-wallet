@@ -19,21 +19,22 @@ Project-specific rules for AI agents. These override or extend the guidelines in
 The project defines all status/brand colors in `src/styles/variables.css` under `@theme`.
 Always use the semantic token classes, **not** raw Tailwind palette utilities.
 
-| Situation | ✅ Correct | ❌ Wrong |
-|-----------|-----------|---------|
+| Situation                 | ✅ Correct                   | ❌ Wrong                        |
+| ------------------------- | ---------------------------- | ------------------------------- |
 | Warning background + text | `bg-bg-warning text-warning` | `bg-yellow-400 text-yellow-900` |
-| Error background + text | `bg-bg-error text-error` | `bg-red-500 text-white` |
-| Success background + text | `bg-bg-success text-success` | `bg-green-500 text-white` |
-| Info background + text | `bg-bg-info text-info` | `bg-blue-500 text-white` |
-| Brand primary bg | `bg-bg-primary` | `bg-blue-900` |
-| Hover state | `hover:bg-hover-primary` | `hover:bg-blue-700` |
-| Muted text | `text-text-muted` | `text-gray-500` |
-| Base background | `bg-base` | `bg-gray-100` |
-| Border | `border-border` | `border-gray-300` |
+| Error background + text   | `bg-bg-error text-error`     | `bg-red-500 text-white`         |
+| Success background + text | `bg-bg-success text-success` | `bg-green-500 text-white`       |
+| Info background + text    | `bg-bg-info text-info`       | `bg-blue-500 text-white`        |
+| Brand primary bg          | `bg-bg-primary`              | `bg-blue-900`                   |
+| Hover state               | `hover:bg-hover-primary`     | `hover:bg-blue-700`             |
+| Muted text                | `text-text-muted`            | `text-gray-500`                 |
+| Base background           | `bg-base`                    | `bg-gray-100`                   |
+| Border                    | `border-border`              | `border-gray-300`               |
 
 **Full token reference:** `src/styles/variables.css`
 
 Available status classes (from `src/index.css`):
+
 - `.success` → `bg-bg-success text-success`
 - `.error` → `bg-bg-error text-error`
 - `.inverted-success` → `text-bg-success`
@@ -54,7 +55,7 @@ src/components/MyComponent/
 
 ```css
 /* styles.css */
-@import "../../styles/variables.css";   /* adjust depth */
+@import "../../styles/variables.css"; /* adjust depth */
 
 .my-component {
   @apply flex items-center gap-2 bg-base p-3 rounded-2xl;
@@ -198,8 +199,7 @@ const myDialog = useMyDialog();
 Define the dialog's props type in `types.ts`. If it needs extra props beyond the form dialog, extend the base type:
 
 ```tsx
-export interface MyDialogPropsType
-  extends TriggerFormDialogPropsType<MyFormType> {
+export interface MyDialogPropsType extends TriggerFormDialogPropsType<MyFormType> {
   extraProp: SomeType;
 }
 ```

@@ -22,7 +22,7 @@ export const formToDto = ({
 };
 
 export const dtoToForm = (
-  dto: TransactionCategoryDto
+  dto: TransactionCategoryDto,
 ): TransactionCategoryFormType => ({
   ...dto,
   userId: dto.user?.id ?? 0,

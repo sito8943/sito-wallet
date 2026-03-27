@@ -45,7 +45,9 @@ export function usePersistedTableOptions(
 
       if (saved) {
         setSortingBy(saved.sortingBy);
-        setSortingOrder(saved.sortingOrder as Parameters<typeof setSortingOrder>[0]);
+        setSortingOrder(
+          saved.sortingOrder as Parameters<typeof setSortingOrder>[0],
+        );
 
         // Rebuild filters in the format onFilterApply expects
         const filtersForApply = Object.entries(saved.filters).reduce(
@@ -66,7 +68,14 @@ export function usePersistedTableOptions(
       setCurrentPage(0);
       isRestoring.current = false;
     },
-    [view, setSortingBy, setSortingOrder, onFilterApply, clearFilters, setCurrentPage],
+    [
+      view,
+      setSortingBy,
+      setSortingOrder,
+      onFilterApply,
+      clearFilters,
+      setCurrentPage,
+    ],
   );
 
   // Handle tab change: save old tab state, restore new tab state

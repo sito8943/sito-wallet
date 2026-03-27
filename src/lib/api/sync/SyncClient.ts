@@ -31,7 +31,7 @@ export class SyncClient {
       rememberKey: config.auth.remember,
       refreshTokenKey: config.auth.refreshTokenKey,
       accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-    }
+    },
   );
 
   private get requestConfig(): RequestOptions | HeadersInit {
@@ -43,52 +43,52 @@ export class SyncClient {
       `${SYNC_BASE_PATH}/status`,
       Methods.GET,
       undefined,
-      this.requestConfig
+      this.requestConfig,
     );
   }
 
   async startSession(
-    data: SyncStartSessionRequest
+    data: SyncStartSessionRequest,
   ): Promise<SyncStartSessionResponse> {
     return await this.api.doQuery<SyncStartSessionResponse>(
       `${SYNC_BASE_PATH}/session/start`,
       Methods.POST,
       data,
-      this.requestConfig
+      this.requestConfig,
     );
   }
 
   async sendBulk(
     entity: SyncEntity,
-    data: SyncBulkRequest
+    data: SyncBulkRequest,
   ): Promise<SyncBulkResponse> {
     return await this.api.doQuery<SyncBulkResponse>(
       `${SYNC_BASE_PATH}/bulk/${entity}`,
       Methods.POST,
       data,
-      this.requestConfig
+      this.requestConfig,
     );
   }
 
   async finishSession(
-    data: SyncFinishSessionRequest
+    data: SyncFinishSessionRequest,
   ): Promise<SyncFinishSessionResponse> {
     return await this.api.doQuery<SyncFinishSessionResponse>(
       `${SYNC_BASE_PATH}/session/finish`,
       Methods.POST,
       data,
-      this.requestConfig
+      this.requestConfig,
     );
   }
 
   async cancelSession(
-    data: SyncCancelSessionRequest
+    data: SyncCancelSessionRequest,
   ): Promise<SyncCancelSessionResponse> {
     return await this.api.doQuery<SyncCancelSessionResponse>(
       `${SYNC_BASE_PATH}/session/cancel`,
       Methods.POST,
       data,
-      this.requestConfig
+      this.requestConfig,
     );
   }
 }

@@ -157,7 +157,7 @@ test.describe("E2E Smoke – core flows", () => {
     await filterBtn.click();
     // Filter panel should appear
     const filterPanel = page.locator(
-      '[data-testid="filter-panel"], [role="dialog"], [class*="filter"]'
+      '[data-testid="filter-panel"], [role="dialog"], [class*="filter"]',
     );
     await expect(filterPanel.first()).toBeVisible({ timeout: 5_000 });
   });
@@ -171,9 +171,7 @@ test.describe("E2E Smoke – core flows", () => {
     await page.goto("/transactions");
 
     // Export button should be visible in the toolbar
-    const exportBtn = page
-      .getByRole("button", { name: /export/i })
-      .first();
+    const exportBtn = page.getByRole("button", { name: /export/i }).first();
     // If no accounts exist this might not render; make it a soft check
     const isVisible = await exportBtn
       .isVisible({ timeout: 5_000 })
@@ -186,9 +184,7 @@ test.describe("E2E Smoke – core flows", () => {
     await signIn(page);
     await page.goto("/transactions");
 
-    const importBtn = page
-      .getByRole("button", { name: /import/i })
-      .first();
+    const importBtn = page.getByRole("button", { name: /import/i }).first();
     const isVisible = await importBtn
       .isVisible({ timeout: 5_000 })
       .catch(() => false);

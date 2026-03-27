@@ -10,7 +10,7 @@ export type ViewPageType = {
   key: PageId;
   path: string;
   children?: ViewPageType[];
-  role? : string[];
+  role?: string[];
 };
 
 export interface NamedViewPageType extends ViewPageType {

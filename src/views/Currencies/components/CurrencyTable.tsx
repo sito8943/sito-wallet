@@ -5,11 +5,7 @@ import { useTranslation } from "react-i18next";
 import { WalletTable } from "components";
 
 // lib
-import {
-  EntityName,
-  ImportPreviewCurrencyDto,
-  useParseColumns,
-} from "lib";
+import { EntityName, ImportPreviewCurrencyDto, useParseColumns } from "lib";
 
 type CurrencyTableProps = {
   items?: ImportPreviewCurrencyDto[] | null;
@@ -60,7 +56,7 @@ export const CurrencyTable = (props: CurrencyTableProps) => {
       },
     ],
     EntityName.Currency,
-    ["id", "createdAt", "updatedAt", "deletedAt"]
+    ["id", "createdAt", "updatedAt", "deletedAt"],
   );
 
   if (!data.length) return null;

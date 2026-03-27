@@ -14,7 +14,9 @@ export const toRenderableError = (error: unknown, fallback: string): Error => {
   return new Error(getErrorMessage(error, fallback));
 };
 
-export const toDateLabel = (value: Date | string | null | undefined): string => {
+export const toDateLabel = (
+  value: Date | string | null | undefined,
+): string => {
   if (!value) return "-";
   const date = value instanceof Date ? value : new Date(value);
   if (Number.isNaN(date.getTime())) return "-";

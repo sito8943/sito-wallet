@@ -28,7 +28,7 @@ import { ConfigFormDialogPropsType, TypeResumeTypeFormType } from "./types";
 import { icons } from "../../../../Transactions/components/utils";
 
 export const ConfigFormDialog = (
-  props: ConfigFormDialogPropsType<TypeResumeTypeFormType>
+  props: ConfigFormDialogPropsType<TypeResumeTypeFormType>,
 ) => {
   const { control, isLoading, setValue } = props;
 
@@ -40,7 +40,7 @@ export const ConfigFormDialog = (
         id: item.value,
         value: t(`_entities:transactionCategory:type.values.${item.key}`),
       })) as Option[],
-    [t]
+    [t],
   );
 
   const type = useWatch({ control, name: "type" });
@@ -74,7 +74,7 @@ export const ConfigFormDialog = (
             multiple
             label={t("_entities:entities.account.plural")}
             autoComplete={`${Tables.Transactions}-${t(
-              "_entities:entities.account.plural"
+              "_entities:entities.account.plural",
             )}`}
             onChange={(v) => onChange(v)}
             options={accounts ?? []}
@@ -96,7 +96,7 @@ export const ConfigFormDialog = (
               <TextInput
                 value={value}
                 placeholder={t(
-                  "_accessibility:components.table.filters.range.start"
+                  "_accessibility:components.table.filters.range.start",
                 )}
                 type="date"
                 {...rest}
@@ -110,7 +110,7 @@ export const ConfigFormDialog = (
               <TextInput
                 value={value}
                 placeholder={t(
-                  "_accessibility:components.table.filters.range.end"
+                  "_accessibility:components.table.filters.range.end",
                 )}
                 type="date"
                 {...rest}
@@ -129,7 +129,7 @@ export const ConfigFormDialog = (
             options={categoriesByType ?? []}
             label={t("_entities:entities.transactionCategory.plural")}
             autoComplete={`${Tables.Transactions}-${t(
-              "_entities:entities.transactionCategory.plural"
+              "_entities:entities.transactionCategory.plural",
             )}`}
             containerClassName="!w-[unset] flex-1"
             onChange={(value) => onChange(value)}

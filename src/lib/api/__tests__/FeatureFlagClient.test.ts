@@ -40,12 +40,9 @@ describe("FeatureFlagClient", () => {
     const client = new FeatureFlagClient();
     const result = await client.getFeatures();
 
-    expect(mockDoQuery).toHaveBeenCalledWith(
-      "app/features",
-      "GET",
-      undefined,
-      { Authorization: "Bearer token" },
-    );
+    expect(mockDoQuery).toHaveBeenCalledWith("app/features", "GET", undefined, {
+      Authorization: "Bearer token",
+    });
 
     expect(result).toEqual({
       transactionsEnabled: false,

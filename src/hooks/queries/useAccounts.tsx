@@ -70,7 +70,8 @@ export function useAccountsList(
   return useQuery({
     ...AccountsQueryKeys.list(normalizedFilters),
     enabled: !!account?.id,
-    queryFn: () => fetchAccountsList(manager, offlineManager, normalizedFilters),
+    queryFn: () =>
+      fetchAccountsList(manager, offlineManager, normalizedFilters),
   });
 }
 

@@ -137,7 +137,9 @@ export function Currencies() {
   useEffect(() => {
     openAddCurrencyRef.current = addCurrency.openDialog;
   }, [addCurrency.openDialog]);
-  useRegisterBottomNavAction(useCallback(() => openAddCurrencyRef.current(), []));
+  useRegisterBottomNavAction(
+    useCallback(() => openAddCurrencyRef.current(), []),
+  );
 
   return (
     <Page

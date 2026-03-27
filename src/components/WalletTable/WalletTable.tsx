@@ -8,7 +8,7 @@ import { WalletTablePropsType } from "./types";
 import { useEffect } from "react";
 
 export const WalletTable = <TRow extends BaseEntityDto>(
-  props: WalletTablePropsType<TRow>
+  props: WalletTablePropsType<TRow>,
 ) => {
   const { setTotal } = useTableOptions();
 

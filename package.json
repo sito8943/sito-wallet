@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "format": "prettier --write .",
     "lint": "eslint .",
     "preview": "vite preview",
     "prepare": "husky",
@@ -63,6 +64,7 @@
     "globals": "15.14.0",
     "husky": "^9.1.7",
     "jsdom": "^28.1.0",
+    "prettier": "^3.8.1",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.56.0",
     "vite": "6.4.1",

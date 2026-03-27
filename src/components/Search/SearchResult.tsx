@@ -38,7 +38,7 @@ export const SearchResult = (props: SearchResultPropsType) => {
         e.preventDefault();
       }
     },
-    [show, onClose]
+    [show, onClose],
   );
   const onClickToHide = useCallback(
     (e: MouseEvent) => {
@@ -50,7 +50,7 @@ export const SearchResult = (props: SearchResultPropsType) => {
         onClose();
       }
     },
-    [show, onClose]
+    [show, onClose],
   );
 
   useEffect(() => {

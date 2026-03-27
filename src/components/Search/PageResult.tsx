@@ -13,7 +13,7 @@ import { PageResultPropsType } from "./types";
  * @param {object} props component props
  * @returns PageResult
  */
-const PageResult = (props:PageResultPropsType) => {
+const PageResult = (props: PageResultPropsType) => {
   const { onClick, path, name, time } = props;
   const { t } = useTranslation();
 
@@ -28,7 +28,8 @@ const PageResult = (props:PageResultPropsType) => {
         icon={faLink}
       />
       <p>
-        {name} <span className="text-xs">({t("_pages:search.types.page")})</span>
+        {name}{" "}
+        <span className="text-xs">({t("_pages:search.types.page")})</span>
       </p>
       <span className="text-xs flex-1 text-end text-slate-400 dark:text-slate-500 group-hover:text-white group-hover:text-opacity-50">
         {time}

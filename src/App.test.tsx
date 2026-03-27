@@ -123,9 +123,11 @@ describe("App auth bootstrap", () => {
     mockReadStoredSessionFromSnapshot.mockReturnValue(null);
     mockReadStoredRememberMe.mockReturnValue(false);
     mockGetSession.mockReturnValue(
-      new Promise((_, reject: (error: { status: number; message: string }) => void) => {
-        rejectSessionRestore = reject;
-      }),
+      new Promise(
+        (_, reject: (error: { status: number; message: string }) => void) => {
+          rejectSessionRestore = reject;
+        },
+      ),
     );
 
     const { rerender } = render(<App />);

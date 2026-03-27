@@ -21,7 +21,7 @@ import { AccountDto } from "lib";
 import { getPathByKey, PageId } from "../../sitemap";
 
 export const useViewTransactionsAction = (
-  props: Omit<UseSingleActionPropTypes<number>, "onClick">
+  props: Omit<UseSingleActionPropTypes<number>, "onClick">,
 ) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ export const useViewTransactionsAction = (
         navigate(`${url}?accountId=${record.id}`);
       },
     }),
-    [hidden, navigate, t, transactionsEnabled]
+    [hidden, navigate, t, transactionsEnabled],
   );
 
   return {

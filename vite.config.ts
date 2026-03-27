@@ -7,7 +7,10 @@ import mkcert from "vite-plugin-mkcert";
 const projectRoot = path.resolve(__dirname);
 
 function shouldBlockFsRequest(requestPath: string): boolean {
-  const normalizedRequestPath = requestPath.split(path.sep).join("/").toLowerCase();
+  const normalizedRequestPath = requestPath
+    .split(path.sep)
+    .join("/")
+    .toLowerCase();
 
   const isSensitiveFile =
     /(^|\/)\.env($|[./])/.test(normalizedRequestPath) ||
@@ -67,7 +70,8 @@ function rawFsDenyGuard() {
           pathnameSegments.includes(".") || normalizedPathname.includes("/./");
         const isSvgRequest = normalizedPathname.toLowerCase().endsWith(".svg");
         const touchesFs = normalizedPathname.startsWith("/@fs/");
-        const isPotentialBypassQuery = hasRaw || hasInline || hasImport || hasUrl;
+        const isPotentialBypassQuery =
+          hasRaw || hasInline || hasImport || hasUrl;
         const shouldInspectRequest =
           isPotentialBypassQuery ||
           hasPathTraversal ||

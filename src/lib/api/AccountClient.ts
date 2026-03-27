@@ -45,7 +45,7 @@ export default class AccountClient extends BaseClient<
 
   async processImport(
     file: File,
-    override?: boolean
+    override?: boolean,
   ): Promise<ImportPreviewAccountDto[]> {
     const items = await parseJSONFile<AccountDto>(file);
     return await this.api.doQuery<ImportPreviewAccountDto[]>(
@@ -54,17 +54,17 @@ export default class AccountClient extends BaseClient<
       items,
       {
         ...this.api.defaultTokenAcquirer(),
-      }
+      },
     );
   }
 
   async adjustBalance(
     accountId: number,
-    data: AdjustBalanceDto
+    data: AdjustBalanceDto,
   ): Promise<TransactionDto> {
     return await this.api.patch(
       `${this.table}/${accountId}/adjust-balance`,
-      data
+      data,
     );
   }
 

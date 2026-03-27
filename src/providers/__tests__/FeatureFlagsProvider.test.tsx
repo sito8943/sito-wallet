@@ -159,7 +159,8 @@ describe("FeatureFlagsProvider", () => {
   });
 
   it("hydrates features from localStorage merged over env defaults", async () => {
-    const { FeatureFlagsProvider, useFeatureFlags } = await loadFeatureFlagsModule();
+    const { FeatureFlagsProvider, useFeatureFlags } =
+      await loadFeatureFlagsModule();
     const wrapper = ({ children }: { children: ReactNode }) => (
       <FeatureFlagsProvider>{children}</FeatureFlagsProvider>
     );
@@ -180,7 +181,8 @@ describe("FeatureFlagsProvider", () => {
   });
 
   it("refreshes features from backend and persists them", async () => {
-    const { FeatureFlagsProvider, useFeatureFlags } = await loadFeatureFlagsModule();
+    const { FeatureFlagsProvider, useFeatureFlags } =
+      await loadFeatureFlagsModule();
     const wrapper = ({ children }: { children: ReactNode }) => (
       <FeatureFlagsProvider>{children}</FeatureFlagsProvider>
     );
@@ -211,7 +213,8 @@ describe("FeatureFlagsProvider", () => {
   });
 
   it("clears persisted flags and restores env defaults", async () => {
-    const { FeatureFlagsProvider, useFeatureFlags } = await loadFeatureFlagsModule();
+    const { FeatureFlagsProvider, useFeatureFlags } =
+      await loadFeatureFlagsModule();
     const wrapper = ({ children }: { children: ReactNode }) => (
       <FeatureFlagsProvider>{children}</FeatureFlagsProvider>
     );
@@ -237,7 +240,8 @@ describe("FeatureFlagsProvider", () => {
   });
 
   it("auto-clears feature flags when user logs out", async () => {
-    const { FeatureFlagsProvider, useFeatureFlags } = await loadFeatureFlagsModule();
+    const { FeatureFlagsProvider, useFeatureFlags } =
+      await loadFeatureFlagsModule();
     const wrapper = ({ children }: { children: ReactNode }) => (
       <FeatureFlagsProvider>{children}</FeatureFlagsProvider>
     );

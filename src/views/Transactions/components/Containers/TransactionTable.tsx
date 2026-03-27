@@ -54,7 +54,9 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
     () =>
       hideDeletedEntities
         ? "ACTIVE"
-        : String(normalizeListFilters(tableFilters).softDeleteScope ?? "ACTIVE"),
+        : String(
+            normalizeListFilters(tableFilters).softDeleteScope ?? "ACTIVE",
+          ),
     [tableFilters, hideDeletedEntities],
   );
 

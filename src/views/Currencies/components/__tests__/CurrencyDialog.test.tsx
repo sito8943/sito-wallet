@@ -111,7 +111,13 @@ function CurrencyFormWrapper({
   isLoading?: boolean;
 }) {
   const form = useForm({
-    defaultValues: { id: undefined, userId: 0, name: "", symbol: "", description: "" },
+    defaultValues: {
+      id: undefined,
+      userId: 0,
+      name: "",
+      symbol: "",
+      description: "",
+    },
   });
   return (
     <CurrencyForm
@@ -126,7 +132,13 @@ function CurrencyFormWrapper({
 /** Wrapper that provides a real useForm() control to AddCurrencyDialog */
 function AddCurrencyWrapper({ open }: { open: boolean }) {
   const form = useForm({
-    defaultValues: { id: undefined, userId: 0, name: "", symbol: "", description: "" },
+    defaultValues: {
+      id: undefined,
+      userId: 0,
+      name: "",
+      symbol: "",
+      description: "",
+    },
   });
   return (
     <AddCurrencyDialog
@@ -143,7 +155,13 @@ function AddCurrencyWrapper({ open }: { open: boolean }) {
 
 function EditCurrencyWrapper({ open }: { open: boolean }) {
   const form = useForm({
-    defaultValues: { id: 1, userId: 99, name: "Euro", symbol: "€", description: "" },
+    defaultValues: {
+      id: 1,
+      userId: 99,
+      name: "Euro",
+      symbol: "€",
+      description: "",
+    },
   });
   return (
     <EditCurrencyDialog
@@ -171,7 +189,7 @@ describe("CurrencyForm", () => {
     const setValue = vi.fn();
     const { rerender } = render(
       <CurrencyFormWrapper open={false} setValue={setValue} />,
-      { wrapper: makeWrapper() }
+      { wrapper: makeWrapper() },
     );
 
     rerender(<CurrencyFormWrapper open={true} setValue={setValue} />);

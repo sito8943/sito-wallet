@@ -29,7 +29,7 @@ import { Tables, TransactionType } from "lib";
 import { icons } from "../../Transactions/components/utils";
 
 export function TransactionCategoryForm(
-  props: TransactionCategoryFormPropsType
+  props: TransactionCategoryFormPropsType,
 ) {
   const { control, isLoading, setValue, open } = props;
   const { t } = useTranslation();
@@ -46,7 +46,7 @@ export function TransactionCategoryForm(
         name: t(`_entities:transactionCategory.type.values.${key}`),
       })) ?? []),
     ],
-    [t]
+    [t],
   );
 
   const { type } = useWatch({ control });
@@ -58,7 +58,7 @@ export function TransactionCategoryForm(
       setValue("name", t("_entities:transactionCategory.name.init"));
       setValue(
         "description",
-        t("_entities:transactionCategory.description.init")
+        t("_entities:transactionCategory.description.init"),
       );
     }
   }, [open, auto, setValue, t]);
@@ -88,7 +88,7 @@ export function TransactionCategoryForm(
             maxLength={25}
             value={value ?? ""}
             autoComplete={`${Tables.TransactionCategories}-${t(
-              "_entities:base.name.label"
+              "_entities:base.name.label",
             )}`}
             label={t("_entities:base.name.label")}
             placeholder={t("_entities:transactionCategory.name.placeholder")}
@@ -132,7 +132,7 @@ export function TransactionCategoryForm(
             maxLength={60}
             value={value ?? ""}
             autoComplete={`${Tables.TransactionCategories}-${t(
-              "_entities:base.description.label"
+              "_entities:base.description.label",
             )}`}
             label={t("_entities:base.description.label")}
             placeholder={t("_entities:base.description.placeholder")}
@@ -145,7 +145,7 @@ export function TransactionCategoryForm(
 }
 
 export function AddTransactionCategoryDialog(
-  props: AddTransactionCategoryDialogPropsType
+  props: AddTransactionCategoryDialogPropsType,
 ) {
   return (
     <FormDialog {...props}>
@@ -155,7 +155,7 @@ export function AddTransactionCategoryDialog(
 }
 
 export function EditTransactionCategoryDialog(
-  props: EditTransactionCategoryDialogPropsType
+  props: EditTransactionCategoryDialogPropsType,
 ) {
   return (
     <FormDialog {...props}>

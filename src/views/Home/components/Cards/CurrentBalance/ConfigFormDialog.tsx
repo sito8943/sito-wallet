@@ -14,7 +14,7 @@ import { Tables } from "lib";
 import { ConfigFormDialogPropsType, CurrentBalanceFormType } from "./types";
 
 export const ConfigFormDialog = (
-  props: ConfigFormDialogPropsType<CurrentBalanceFormType>
+  props: ConfigFormDialogPropsType<CurrentBalanceFormType>,
 ) => {
   const { control } = props;
   const { t } = useTranslation();
@@ -31,7 +31,7 @@ export const ConfigFormDialog = (
             value={value}
             label={t("_entities:transaction.account.label")}
             autoComplete={`${Tables.Accounts}-${t(
-              "_entities:transaction.account.label"
+              "_entities:transaction.account.label",
             )}`}
             onChange={(v) => onChange(v)}
             options={accounts ?? []}

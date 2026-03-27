@@ -103,7 +103,8 @@ vi.mock("lib", () => ({
 }));
 
 vi.mock("../useProfile", () => ({
-  useHideDeletedEntitiesPreference: () => mockUseHideDeletedEntitiesPreference(),
+  useHideDeletedEntitiesPreference: () =>
+    mockUseHideDeletedEntitiesPreference(),
 }));
 
 import {
@@ -216,7 +217,7 @@ describe("useTransactionsList", () => {
         currentPage: 1,
         pageSize: 10,
       }),
-      {}
+      {},
     );
   });
 
@@ -313,7 +314,7 @@ describe("useTransactionTypeResume", () => {
 
     const { result } = renderHook(
       () => useTransactionTypeResume({ type: "in" }),
-      { wrapper: makeWrapper() }
+      { wrapper: makeWrapper() },
     );
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
@@ -359,7 +360,7 @@ describe("useTransactionTypeResume", () => {
 
     const { result } = renderHook(
       () => useTransactionTypeResume({ type: "in" }),
-      { wrapper: makeWrapper() }
+      { wrapper: makeWrapper() },
     );
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
@@ -392,9 +393,12 @@ describe("useWeekly", () => {
     const data = { days: [] };
     mockTransactionsWeekly.mockResolvedValue(data);
 
-    const { result } = renderHook(() => useWeekly({ type: "in", account: [1] }), {
-      wrapper: makeWrapper(),
-    });
+    const { result } = renderHook(
+      () => useWeekly({ type: "in", account: [1] }),
+      {
+        wrapper: makeWrapper(),
+      },
+    );
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data).toEqual(data);
@@ -437,9 +441,12 @@ describe("useWeekly", () => {
     mockTransactionsWeekly.mockRejectedValue(new Error("fail"));
     mockOfflineTransactionsWeekly.mockResolvedValue(fallback);
 
-    const { result } = renderHook(() => useWeekly({ type: "in", account: [1] }), {
-      wrapper: makeWrapper(),
-    });
+    const { result } = renderHook(
+      () => useWeekly({ type: "in", account: [1] }),
+      {
+        wrapper: makeWrapper(),
+      },
+    );
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data).toEqual(fallback);
@@ -473,7 +480,7 @@ describe("useTransactionsGroupedByType", () => {
 
     const { result } = renderHook(
       () => useTransactionsGroupedByType({ accountId: 15 }),
-      { wrapper: makeWrapper() }
+      { wrapper: makeWrapper() },
     );
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
@@ -509,7 +516,7 @@ describe("useTransactionsGroupedByType", () => {
 
     const { result } = renderHook(
       () => useTransactionsGroupedByType({ accountId: 15 }),
-      { wrapper: makeWrapper() }
+      { wrapper: makeWrapper() },
     );
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
@@ -519,7 +526,7 @@ describe("useTransactionsGroupedByType", () => {
   it("is disabled when accountId is missing", () => {
     const { result } = renderHook(
       () => useTransactionsGroupedByType({ accountId: 0 }),
-      { wrapper: makeWrapper() }
+      { wrapper: makeWrapper() },
     );
 
     expect(result.current.fetchStatus).toBe("idle");

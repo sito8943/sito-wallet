@@ -24,10 +24,7 @@ vi.mock("@sito/dashboard-app", () => ({
   }: {
     children: React.ReactNode;
     open: boolean;
-  }) =>
-    open ? (
-      <div data-testid="form-dialog">{children}</div>
-    ) : null,
+  }) => (open ? <div data-testid="form-dialog">{children}</div> : null),
   TextInput: ({
     value,
     onChange,
@@ -60,7 +57,9 @@ vi.mock("@sito/dashboard-app", () => ({
     onChange,
     label,
     disabled,
-  }: React.TextareaHTMLAttributes<HTMLTextAreaElement> & { label?: string }) => (
+  }: React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+    label?: string;
+  }) => (
     <textarea
       data-testid={`paragraph-input-${label}`}
       value={value ?? ""}
@@ -93,7 +92,9 @@ vi.mock("@sito/dashboard-app", () => ({
         disabled={disabled}
       >
         {options?.map((o) => (
-          <option key={o.id} value={o.id}>{o.name}</option>
+          <option key={o.id} value={o.id}>
+            {o.name}
+          </option>
         ))}
       </select>
       {children}
@@ -124,7 +125,9 @@ vi.mock("@sito/dashboard-app", () => ({
     >
       <option value="">-- select --</option>
       {options?.map((o) => (
-        <option key={o.id} value={String(o.id)}>{o.name}</option>
+        <option key={o.id} value={String(o.id)}>
+          {o.name}
+        </option>
       ))}
     </select>
   ),
@@ -162,7 +165,11 @@ vi.mock("../utils", () => ({
   icons: { 0: "wallet", 1: "credit-card", 2: "piggy-bank" },
 }));
 
-import { AccountForm, AddAccountDialog, EditAccountDialog } from "../AccountDialog";
+import {
+  AccountForm,
+  AddAccountDialog,
+  EditAccountDialog,
+} from "../AccountDialog";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -185,7 +192,15 @@ function AccountFormWrapper({
   isLoading?: boolean;
 }) {
   const form = useForm({
-    defaultValues: { id: undefined, userId: 0, name: "", balance: "", type: 0, currency: null, description: "" },
+    defaultValues: {
+      id: undefined,
+      userId: 0,
+      name: "",
+      balance: "",
+      type: 0,
+      currency: null,
+      description: "",
+    },
   });
   return (
     <AccountForm
@@ -199,7 +214,15 @@ function AccountFormWrapper({
 
 function AddAccountWrapper({ open }: { open: boolean }) {
   const form = useForm({
-    defaultValues: { id: undefined, userId: 0, name: "", balance: "", type: 0, currency: null, description: "" },
+    defaultValues: {
+      id: undefined,
+      userId: 0,
+      name: "",
+      balance: "",
+      type: 0,
+      currency: null,
+      description: "",
+    },
   });
   return (
     <AddAccountDialog
@@ -216,7 +239,15 @@ function AddAccountWrapper({ open }: { open: boolean }) {
 
 function EditAccountWrapper({ open }: { open: boolean }) {
   const form = useForm({
-    defaultValues: { id: 1, userId: 99, name: "My Wallet", balance: undefined, type: 0, currency: { id: 1, name: "Euro" }, description: "" },
+    defaultValues: {
+      id: 1,
+      userId: 99,
+      name: "My Wallet",
+      balance: undefined,
+      type: 0,
+      currency: { id: 1, name: "Euro" },
+      description: "",
+    },
   });
   return (
     <EditAccountDialog
@@ -249,7 +280,7 @@ describe("AccountForm", () => {
 
     const { rerender } = render(
       <AccountFormWrapper open={false} setValue={setValue} />,
-      { wrapper: makeWrapper() }
+      { wrapper: makeWrapper() },
     );
 
     rerender(<AccountFormWrapper open={true} setValue={setValue} />);

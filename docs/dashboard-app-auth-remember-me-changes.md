@@ -1,10 +1,12 @@
 # Dashboard-App Auth Remember Me
 
 ## Status
+
 Implemented in `@sito/dashboard-app` (current integration target in this repo).
 This file is kept as a historical record and operational checklist.
 
 ## What is already implemented upstream
+
 - `AuthDto` accepts `rememberMe`.
 - `SessionDto` includes `refreshToken` and `accessTokenExpiresAt`.
 - `AuthClient` supports `refresh()` and `logout()` with optional token revocation payload.
@@ -16,13 +18,16 @@ This file is kept as a historical record and operational checklist.
   - `accessTokenExpiresAtKey`
 
 ## Integration rule (consumer apps)
+
 Use a single shared auth key source and pass the same keys to both:
+
 1. `IManager` / API clients
 2. `AuthProvider`
 
 Do not implement ad-hoc refresh logic in app code.
 
 ## Validation checklist
+
 - [ ] Login without remember: no refresh token persisted.
 - [ ] Login with remember: refresh token + expiration persisted.
 - [ ] Expired access token: protected request refreshes and retries once.

@@ -76,18 +76,20 @@ export function useTransactionsMobileFiltersDialog(
     end?: string;
   };
 
-  const normalizedFilters = useMemo(() => normalizeListFilters(filters), [filters]);
+  const normalizedFilters = useMemo(
+    () => normalizeListFilters(filters),
+    [filters],
+  );
 
   const parsedDeletedAt = (normalizedFilters.deletedAt ?? {}) as {
     start?: string;
     end?: string;
   };
 
-  const parsedSoftDeleteScope =
-    hideDeletedEntities
-      ? "ACTIVE"
-      : ((normalizedFilters.softDeleteScope as SoftDeleteScope | undefined) ??
-        "ACTIVE");
+  const parsedSoftDeleteScope = hideDeletedEntities
+    ? "ACTIVE"
+    : ((normalizedFilters.softDeleteScope as SoftDeleteScope | undefined) ??
+      "ACTIVE");
 
   const defaultValues = useMemo<TransactionsMobileFiltersFormType>(
     () => ({

@@ -142,7 +142,9 @@ export function TransactionCategories() {
   useEffect(() => {
     openAddCategoryRef.current = addTransactionCategory.openDialog;
   }, [addTransactionCategory.openDialog]);
-  useRegisterBottomNavAction(useCallback(() => openAddCategoryRef.current(), []));
+  useRegisterBottomNavAction(
+    useCallback(() => openAddCategoryRef.current(), []),
+  );
 
   return (
     <Page

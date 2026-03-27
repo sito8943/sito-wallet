@@ -30,7 +30,9 @@ describe("OfflineBanner", () => {
     render(<OfflineBanner />);
 
     expect(screen.getByRole("status")).toBeInTheDocument();
-    expect(screen.getByText("_accessibility:offline.banner")).toBeInTheDocument();
+    expect(
+      screen.getByText("_accessibility:offline.banner"),
+    ).toBeInTheDocument();
   });
 
   it("renders when offline mode is forced", () => {

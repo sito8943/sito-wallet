@@ -23,9 +23,10 @@ export const defaultCurrenciesListFilters: FilterCurrencyDto = {
   softDeleteScope: "ACTIVE",
 };
 
-export const defaultTransactionCategoriesListFilters: FilterTransactionCategoryDto = {
-  softDeleteScope: "ACTIVE",
-};
+export const defaultTransactionCategoriesListFilters: FilterTransactionCategoryDto =
+  {
+    softDeleteScope: "ACTIVE",
+  };
 
 export const defaultTransactionsListFilters: FilterTransactionDto = {
   softDeleteScope: "ACTIVE",
@@ -103,7 +104,9 @@ export async function fetchTransactionsList(
   offlineManager: OfflineManager,
   filters: FilterTransactionDto,
 ): Promise<QueryResult<TransactionDto>> {
-  const normalizedFilters = normalizeListFilters(filters) as FilterTransactionDto;
+  const normalizedFilters = normalizeListFilters(
+    filters,
+  ) as FilterTransactionDto;
 
   try {
     const result = await manager.Transactions.get(undefined, {

@@ -11,7 +11,7 @@ import { ItemCardPropsType } from "./types.ts";
 import "./styles.css";
 
 export function ItemCard<TRow extends BaseEntityDto>(
-  props: ItemCardPropsType<TRow>
+  props: ItemCardPropsType<TRow>,
 ) {
   const {
     children,

@@ -52,7 +52,7 @@ export function CurrencyForm(props: CurrencyFormPropsType) {
             maxLength={20}
             value={value ?? ""}
             autoComplete={`${Tables.Currencies}-${t(
-              "_entities:base.name.label"
+              "_entities:base.name.label",
             )}`}
             label={t("_entities:base.name.label")}
             placeholder={t("_entities:currency.name.placeholder")}
@@ -73,7 +73,7 @@ export function CurrencyForm(props: CurrencyFormPropsType) {
             maxLength={20}
             value={value ?? ""}
             autoComplete={`${Tables.Currencies}-${t(
-              "_entities:currency.symbol.label"
+              "_entities:currency.symbol.label",
             )}`}
             label={t("_entities:currency.symbol.label")}
             placeholder={t("_entities:currency.symbol.placeholder")}
@@ -90,7 +90,7 @@ export function CurrencyForm(props: CurrencyFormPropsType) {
             maxLength={60}
             value={value ?? ""}
             autoComplete={`${Tables.Currencies}-${t(
-              "_entities:base.description.label"
+              "_entities:base.description.label",
             )}`}
             label={t("_entities:base.description.label")}
             placeholder={t("_entities:base.description.placeholder")}

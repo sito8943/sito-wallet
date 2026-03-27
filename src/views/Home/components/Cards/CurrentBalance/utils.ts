@@ -2,7 +2,7 @@ import { UpdateDashboardCardConfigDto } from "lib";
 import { CurrentBalanceFormType } from "./types";
 
 export const formToDto = (
-  data: CurrentBalanceFormType
+  data: CurrentBalanceFormType,
 ): UpdateDashboardCardConfigDto => {
   const stringified = JSON.stringify({
     account: data.account,

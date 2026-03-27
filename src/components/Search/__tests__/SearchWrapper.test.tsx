@@ -15,9 +15,10 @@ const { mockNavigate, mockTimeAge, mockFromLocal, mockToLocal, mockIsMac } =
 // ─── Module mocks ──────────────────────────────────────────────────────────────
 
 vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual<typeof import("react-router-dom")>(
-    "react-router-dom"
-  );
+  const actual =
+    await vi.importActual<typeof import("react-router-dom")>(
+      "react-router-dom",
+    );
   return { ...actual, useNavigate: () => mockNavigate };
 });
 
@@ -96,7 +97,12 @@ vi.mock("../../../views/sitemap", () => ({
   getFeatureFilteredSitemap: () => [],
   flattenSitemap: () => [
     { key: "home", path: "/", name: "Home", role: undefined },
-    { key: "transactions", path: "/transactions", name: "Transactions", role: undefined },
+    {
+      key: "transactions",
+      path: "/transactions",
+      name: "Transactions",
+      role: undefined,
+    },
     { key: "accounts", path: "/accounts", name: "Accounts", role: undefined },
   ],
 }));
@@ -129,7 +135,7 @@ function renderSearchWrapper(props = {}) {
   return render(
     <MemoryRouter>
       <SearchWrapper {...props} />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 }
 
@@ -216,9 +222,7 @@ describe("SearchWrapper", () => {
       renderSearchWrapper();
       fireEvent.click(screen.getByTestId("search-input"));
 
-      expect(
-        screen.getByTestId("recent-item-/accounts")
-      ).toBeInTheDocument();
+      expect(screen.getByTestId("recent-item-/accounts")).toBeInTheDocument();
     });
 
     it("saves route to recent when a result is clicked", async () => {
@@ -238,9 +242,7 @@ describe("SearchWrapper", () => {
 
       expect(mockToLocal).toHaveBeenCalledWith(
         "test-recent-searches",
-        expect.arrayContaining([
-          expect.objectContaining({ path: "/" }),
-        ])
+        expect.arrayContaining([expect.objectContaining({ path: "/" })]),
       );
     });
 
@@ -306,7 +308,9 @@ describe("SearchWrapper", () => {
       expect(screen.getByTestId("result-item-/")).toBeInTheDocument();
       fireEvent.click(screen.getByTestId("result-item-/"));
 
-      const saved = mockToLocal.mock.calls.at(-1)?.[1] as Array<{ path: string }>;
+      const saved = mockToLocal.mock.calls.at(-1)?.[1] as Array<{
+        path: string;
+      }>;
       expect(saved.filter((r) => r.path === "/")).toHaveLength(1);
     });
 

@@ -23,7 +23,7 @@ import {
 import { AddTransactionDto, TransactionDto } from "lib";
 
 export function useAddTransaction(
-  props: UseAddTransactionDialogActionPropsType
+  props: UseAddTransactionDialogActionPropsType,
 ): AddTransactionDialogPropsType {
   const { account } = props;
 
@@ -52,7 +52,7 @@ export function useAddTransaction(
           { message: t("_entities:account.balance.greaterThan0") },
           {
             shouldFocus: true,
-          }
+          },
         );
         showErrorNotification({
           message: t("_entities:account.balance.greaterThan0"),

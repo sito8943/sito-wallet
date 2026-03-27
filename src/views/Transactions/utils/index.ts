@@ -36,7 +36,7 @@ export const dtoToForm = (dto: TransactionDto): TransactionFormType => ({
 });
 
 export const addEmptyTransaction = (
-  account: CommonAccountDto | null = null
+  account: CommonAccountDto | null = null,
 ): Omit<TransactionFormType, "id"> => ({
   auto: false,
   description: "",
@@ -47,7 +47,7 @@ export const addEmptyTransaction = (
 });
 
 export const emptyTransaction = (
-  account: CommonAccountDto | null = null
+  account: CommonAccountDto | null = null,
 ): TransactionFormType => ({
   id: 0,
   auto: false,
@@ -64,19 +64,20 @@ export const emptyAssignAccountForm = (): AssignTransactionAccountFormType => ({
 });
 
 export const assignAccountFormToDto = (
-  form: AssignTransactionAccountFormType
+  form: AssignTransactionAccountFormType,
 ): AssignTransactionAccountDto => ({
   accountId: form.account?.id ?? 0,
   transactionIds: form.transactionIds ?? [],
 });
 
-export const emptyAssignCategoryForm = (): AssignTransactionCategoryFormType => ({
-  category: null,
-  transactionIds: [],
-});
+export const emptyAssignCategoryForm =
+  (): AssignTransactionCategoryFormType => ({
+    category: null,
+    transactionIds: [],
+  });
 
 export const assignCategoryFormToDto = (
-  form: AssignTransactionCategoryFormType
+  form: AssignTransactionCategoryFormType,
 ): AssignTransactionCategoryDto => ({
   categoryId: form.category?.id ?? 0,
   transactionIds: form.transactionIds ?? [],

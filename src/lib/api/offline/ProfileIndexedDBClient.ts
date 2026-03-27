@@ -51,12 +51,7 @@ export class ProfileIndexedDBClient extends IndexedDBClient<
       payload.hideDeletedEntities = value.hideDeletedEntities;
     }
 
-    await queueSyncOperation(
-      "profile",
-      "CREATE",
-      payload,
-      created.id,
-    );
+    await queueSyncOperation("profile", "CREATE", payload, created.id);
 
     return created;
   }
@@ -97,12 +92,7 @@ export class ProfileIndexedDBClient extends IndexedDBClient<
       payload.hideDeletedEntities = updateValue.hideDeletedEntities;
     }
 
-    await queueSyncOperation(
-      "profile",
-      "UPDATE",
-      payload,
-      updateValue.id,
-    );
+    await queueSyncOperation("profile", "UPDATE", payload, updateValue.id);
 
     return updated;
   }

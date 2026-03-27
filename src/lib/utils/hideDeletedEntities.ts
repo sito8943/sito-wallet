@@ -4,7 +4,9 @@ type FiltersRecord = Record<string, unknown>;
 
 const ACTIVE_SOFT_DELETE_SCOPE: SoftDeleteScope = "ACTIVE";
 
-export const applyHideDeletedEntitiesPreference = <TFilters extends FiltersRecord>(
+export const applyHideDeletedEntitiesPreference = <
+  TFilters extends FiltersRecord,
+>(
   filters: TFilters,
   hideDeletedEntities?: boolean,
 ): TFilters => {

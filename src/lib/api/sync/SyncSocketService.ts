@@ -47,7 +47,7 @@ const buildSocketUrl = (apiBaseUrl: string): string | null => {
 const syncEntities = new Set<string>(SYNC_ENTITY_ORDER);
 
 const isSyncEntity = (
-  value: unknown
+  value: unknown,
 ): value is SyncSocketBulkProgressEvent["entity"] =>
   isString(value) && syncEntities.has(value);
 
@@ -168,7 +168,7 @@ export class SyncSocketService {
         const event = this.parseMessage(message);
         if (!event) return;
         this.handlers.onEvent?.(event);
-      }
+      },
     );
   }
 

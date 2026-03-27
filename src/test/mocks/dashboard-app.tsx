@@ -54,9 +54,11 @@ export const mockQueryClient = {
   invalidateQueries: vi.fn(),
   refetchQueries: vi.fn(),
 };
-export const mockUseImportAction = vi.fn(({ onClick }: { onClick: () => void }) => ({
-  action: () => ({ id: "import", onClick }),
-}));
+export const mockUseImportAction = vi.fn(
+  ({ onClick }: { onClick: () => void }) => ({
+    action: () => ({ id: "import", onClick }),
+  }),
+);
 
 // Simple stub components
 export const Dialog = ({
@@ -232,11 +234,9 @@ export const AutocompleteInput = ({
 export const ConfigProvider = ({ children }: { children: ReactNode }) => (
   <>{children}</>
 );
-export const TableOptionsProvider = ({
-  children,
-}: {
-  children: ReactNode;
-}) => <>{children}</>;
+export const TableOptionsProvider = ({ children }: { children: ReactNode }) => (
+  <>{children}</>
+);
 export const Page = ({
   children,
   title,
@@ -278,18 +278,10 @@ export const useImportDialog = vi.fn(() => ({
   action: () => ({ id: "import", onClick: vi.fn() }),
 }));
 
-export const ImportDialog = ({
-  open,
-}: {
-  open?: boolean;
-}) =>
+export const ImportDialog = ({ open }: { open?: boolean }) =>
   open ? <div data-testid="import-dialog" /> : null;
 
-export const ConfirmationDialog = ({
-  open,
-}: {
-  open?: boolean;
-}) =>
+export const ConfirmationDialog = ({ open }: { open?: boolean }) =>
   open ? <div data-testid="confirmation-dialog" /> : null;
 
 export const TabsLayout = ({

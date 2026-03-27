@@ -18,16 +18,10 @@ import { TransactionsQueryKeys } from "hooks";
 import { AssignTransactionAccountDto, TransactionDto } from "lib";
 
 // types
-import {
-  AssignTransactionAccountFormType,
-  TransactionActions,
-} from "../types";
+import { AssignTransactionAccountFormType, TransactionActions } from "../types";
 
 // utils
-import {
-  assignAccountFormToDto,
-  emptyAssignAccountForm,
-} from "../utils";
+import { assignAccountFormToDto, emptyAssignAccountForm } from "../utils";
 
 export function useAssignTransactionAccountAction(): UseActionDialog<
   TransactionDto,
@@ -47,7 +41,7 @@ export function useAssignTransactionAccountAction(): UseActionDialog<
     defaultValues: emptyAssignAccountForm(),
     mutationFn: (data) => manager.Transactions.assignAccount(data),
     onSuccessMessage: t(
-      "_pages:transactions.actions.assignAccount.successMessage"
+      "_pages:transactions.actions.assignAccount.successMessage",
     ),
     title: t("_pages:transactions.actions.assignAccount.title"),
     ...TransactionsQueryKeys.all(),
@@ -63,7 +57,7 @@ export function useAssignTransactionAccountAction(): UseActionDialog<
       });
       openDialog();
     },
-    [openDialog, reset]
+    [openDialog, reset],
   );
 
   const action = useCallback(
@@ -71,7 +65,10 @@ export function useAssignTransactionAccountAction(): UseActionDialog<
       id: TransactionActions.AssignAccount,
       tooltip: t("_pages:transactions.actions.assignAccount.text"),
       icon: (
-        <FontAwesomeIcon className="text-bg-primary" icon={faArrowRightArrowLeft} />
+        <FontAwesomeIcon
+          className="text-bg-primary"
+          icon={faArrowRightArrowLeft}
+        />
       ),
       onClick: () => handleOpenDialog([record]),
       multiple: true,
@@ -79,7 +76,7 @@ export function useAssignTransactionAccountAction(): UseActionDialog<
       disabled: isLoading || !!record.deletedAt,
       hidden: !!record.deletedAt,
     }),
-    [handleOpenDialog, isLoading, t]
+    [handleOpenDialog, isLoading, t],
   );
 
   return {

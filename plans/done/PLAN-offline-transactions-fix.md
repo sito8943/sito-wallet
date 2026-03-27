@@ -24,13 +24,13 @@ Cuando `isOnline` cambia, `useAppPreload` entra en estado `loading` transitorio 
 
 ### Archivos involucrados
 
-| Archivo | Rol |
-|---------|-----|
-| `src/layouts/View/View.tsx` | Renderiza `SplashScreen` cuando `preloadLoading` es true |
-| `src/hooks/useAppPreload/useAppPreload.ts` | Calcula `loading` basado en `requiredTasksSignature` vs `lastSettledSignature` |
-| `src/hooks/queries/useTransactions.tsx` | Hooks de query que seedean IndexedDB (fire-and-forget) |
-| `src/lib/api/preloadOfflineBootstrapData.ts` | Bootstrap de datos offline (NO incluye transactions) |
-| `src/providers/SWManagerProvider.tsx` | Cambia el manager activo segun `isOnline` |
+| Archivo                                      | Rol                                                                            |
+| -------------------------------------------- | ------------------------------------------------------------------------------ |
+| `src/layouts/View/View.tsx`                  | Renderiza `SplashScreen` cuando `preloadLoading` es true                       |
+| `src/hooks/useAppPreload/useAppPreload.ts`   | Calcula `loading` basado en `requiredTasksSignature` vs `lastSettledSignature` |
+| `src/hooks/queries/useTransactions.tsx`      | Hooks de query que seedean IndexedDB (fire-and-forget)                         |
+| `src/lib/api/preloadOfflineBootstrapData.ts` | Bootstrap de datos offline (NO incluye transactions)                           |
+| `src/providers/SWManagerProvider.tsx`        | Cambia el manager activo segun `isOnline`                                      |
 
 ---
 
@@ -105,10 +105,14 @@ export async function preloadOfflineBootstrapData(
     fetchAccountsList(manager, offlineManager, defaultAccountsListFilters),
     fetchCurrenciesList(manager, offlineManager, defaultCurrenciesListFilters),
     fetchTransactionCategoriesList(
-      manager, offlineManager, defaultTransactionCategoriesListFilters,
+      manager,
+      offlineManager,
+      defaultTransactionCategoriesListFilters,
     ),
     fetchTransactionsList(
-      manager, offlineManager, defaultTransactionsListFilters,
+      manager,
+      offlineManager,
+      defaultTransactionsListFilters,
     ),
   ]);
 }

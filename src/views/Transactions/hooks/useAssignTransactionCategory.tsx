@@ -24,10 +24,7 @@ import {
 } from "../types";
 
 // utils
-import {
-  assignCategoryFormToDto,
-  emptyAssignCategoryForm,
-} from "../utils";
+import { assignCategoryFormToDto, emptyAssignCategoryForm } from "../utils";
 
 export function useAssignTransactionCategoryAction(): UseActionDialog<
   TransactionDto,
@@ -47,7 +44,7 @@ export function useAssignTransactionCategoryAction(): UseActionDialog<
     defaultValues: emptyAssignCategoryForm(),
     mutationFn: (data) => manager.Transactions.assignCategory(data),
     onSuccessMessage: t(
-      "_pages:transactions.actions.assignCategory.successMessage"
+      "_pages:transactions.actions.assignCategory.successMessage",
     ),
     title: t("_pages:transactions.actions.assignCategory.title"),
     ...TransactionsQueryKeys.all(),
@@ -63,7 +60,7 @@ export function useAssignTransactionCategoryAction(): UseActionDialog<
       });
       openDialog();
     },
-    [openDialog, reset]
+    [openDialog, reset],
   );
 
   const action = useCallback(
@@ -77,7 +74,7 @@ export function useAssignTransactionCategoryAction(): UseActionDialog<
       disabled: isLoading || !!record.deletedAt,
       hidden: !!record.deletedAt,
     }),
-    [handleOpenDialog, isLoading, t]
+    [handleOpenDialog, isLoading, t],
   );
 
   return {

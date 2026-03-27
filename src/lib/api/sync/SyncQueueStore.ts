@@ -21,7 +21,7 @@ const nowIsoString = (): string => new Date().toISOString();
 
 const sortOperations = (
   left: SyncQueueOperation,
-  right: SyncQueueOperation
+  right: SyncQueueOperation,
 ): number => {
   if (left.createdAt < right.createdAt) return -1;
   if (left.createdAt > right.createdAt) return 1;
@@ -31,9 +31,8 @@ const sortOperations = (
 const hasIndexedDb = (): boolean =>
   typeof indexedDB !== "undefined" && indexedDB !== null;
 
-const isObjectStorePayload = (
-  value: unknown
-): value is SyncQueueOperation[] => Array.isArray(value);
+const isObjectStorePayload = (value: unknown): value is SyncQueueOperation[] =>
+  Array.isArray(value);
 
 export class SyncQueueStore {
   private memoryOperations: SyncQueueOperation[] = [];
@@ -58,7 +57,9 @@ export class SyncQueueStore {
       };
 
       request.onerror = () => {
-        reject(request.error ?? new Error("Could not open sync queue database"));
+        reject(
+          request.error ?? new Error("Could not open sync queue database"),
+        );
       };
     });
   }
@@ -134,7 +135,7 @@ export class SyncQueueStore {
     if (!hasIndexedDb()) {
       const toRemove = new Set(ids);
       this.memoryOperations = this.memoryOperations.filter(
-        (item) => !toRemove.has(item.clientOperationId)
+        (item) => !toRemove.has(item.clientOperationId),
       );
       return;
     }
@@ -215,7 +216,7 @@ export const queueSyncOperation = async (
   entity: EnqueueSyncOperationInput["entity"],
   operation: SyncOperationType,
   payload: SyncPayload,
-  localEntityId?: number
+  localEntityId?: number,
 ): Promise<void> => {
   try {
     await syncQueueStore.enqueue({
@@ -228,4 +229,3 @@ export const queueSyncOperation = async (
     console.error("Failed to queue sync operation", error);
   }
 };
-

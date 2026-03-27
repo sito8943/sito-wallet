@@ -1,4 +1,4 @@
-import "./styles.css"
+import "./styles.css";
 export * from "./Recovery";
 export * from "./SignIn";
 export * from "./SignOut";

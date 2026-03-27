@@ -15,7 +15,7 @@ import { Tables } from "lib";
 import { AssignTransactionCategoryDialogPropsType } from "../types";
 
 export function AssignCategoryDialog(
-  props: AssignTransactionCategoryDialogPropsType
+  props: AssignTransactionCategoryDialogPropsType,
 ) {
   const { control, isLoading } = props;
 
@@ -33,7 +33,7 @@ export function AssignCategoryDialog(
             : category.name,
         })) ?? []),
       ] as Option[],
-    [categories?.data, t]
+    [categories?.data, t],
   );
 
   return (
@@ -68,7 +68,7 @@ export function AssignCategoryDialog(
             label={t("_entities:transaction.category.label")}
             placeholder={t("_entities:transaction.category.placeholder")}
             autoComplete={`${Tables.Transactions}-${t(
-              "_entities:transaction.category.label"
+              "_entities:transaction.category.label",
             )}`}
             multiple={false}
             disabled={isLoading}

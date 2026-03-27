@@ -40,7 +40,7 @@ export function TestProviders({
 
 export function renderWithProviders(
   ui: ReactElement,
-  options?: WrapperOptions & Omit<RenderOptions, "wrapper">
+  options?: WrapperOptions & Omit<RenderOptions, "wrapper">,
 ) {
   const queryClient = createTestQueryClient();
   const { routerProps, ...renderOptions } = options ?? {};

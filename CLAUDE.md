@@ -5,5 +5,5 @@ Agents must review and account for all documentation in `.sito/*` before writing
 The files below are mandatory references.
 
 @AGENTS.md
-@.sito/*
+@.sito/\*
 @STYLE_GUIDE.md

@@ -64,11 +64,7 @@ export const BottomNavigation = () => {
     <nav className="fixed -bottom-1 left-0 right-0 z-20 bg-base border-t border-border sm:hidden">
       <div className="flex items-center justify-around h-16">
         {leftItems.map((item) => (
-          <NavLink
-            key={item.path}
-            item={item}
-            isActive={isActive(item.path)}
-          />
+          <NavLink key={item.path} item={item} isActive={isActive(item.path)} />
         ))}
 
         {onAction ? (
@@ -88,11 +84,7 @@ export const BottomNavigation = () => {
         )}
 
         {rightItems.map((item) => (
-          <NavLink
-            key={item.path}
-            item={item}
-            isActive={isActive(item.path)}
-          />
+          <NavLink key={item.path} item={item} isActive={isActive(item.path)} />
         ))}
       </div>
     </nav>

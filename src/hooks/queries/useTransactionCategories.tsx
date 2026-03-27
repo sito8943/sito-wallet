@@ -38,7 +38,7 @@ export const TransactionCategoriesQueryKeys = {
   }),
   infiniteList: (
     query: Omit<QueryParam<TransactionCategoryDto>, "currentPage">,
-    filters: FilterTransactionCategoryDto
+    filters: FilterTransactionCategoryDto,
   ) => ({
     queryKey: [
       ...TransactionCategoriesQueryKeys.all().queryKey,
@@ -53,7 +53,10 @@ export const TransactionCategoriesQueryKeys = {
 };
 
 export function useTransactionCategoriesList(
-  props: UseFetchPropsType<TransactionCategoryDto, FilterTransactionCategoryDto>
+  props: UseFetchPropsType<
+    TransactionCategoryDto,
+    FilterTransactionCategoryDto
+  >,
 ): UseQueryResult<QueryResult<TransactionCategoryDto>> {
   const { filters = defaultTransactionCategoriesListFilters } = props;
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
@@ -84,7 +87,10 @@ export function useTransactionCategoriesList(
 }
 
 export function useInfiniteTransactionCategoriesList(
-  props: UseFetchPropsType<TransactionCategoryDto, FilterTransactionCategoryDto>
+  props: UseFetchPropsType<
+    TransactionCategoryDto,
+    FilterTransactionCategoryDto
+  >,
 ) {
   const {
     filters = defaultTransactionCategoriesListFilters,
@@ -102,7 +108,7 @@ export function useInfiniteTransactionCategoriesList(
         normalizeListFilters(filters) as Record<string, unknown>,
         hideDeletedEntities,
       ) as FilterTransactionCategoryDto,
-    [filters, hideDeletedEntities]
+    [filters, hideDeletedEntities],
   );
 
   const parsedQueries = useMemo(
@@ -111,11 +117,14 @@ export function useInfiniteTransactionCategoriesList(
       sortingOrder: query.sortingOrder,
       pageSize: query.pageSize ?? 20,
     }),
-    [query.pageSize, query.sortingBy, query.sortingOrder]
+    [query.pageSize, query.sortingBy, query.sortingOrder],
   );
 
   return useInfiniteQuery({
-    ...TransactionCategoriesQueryKeys.infiniteList(parsedQueries, parsedFilters),
+    ...TransactionCategoriesQueryKeys.infiniteList(
+      parsedQueries,
+      parsedFilters,
+    ),
     enabled: !!account?.id,
     initialPageParam: 0,
     queryFn: async ({ pageParam }) => {
@@ -128,7 +137,7 @@ export function useInfiniteTransactionCategoriesList(
       try {
         const result = await manager.TransactionCategories.get(
           requestQuery,
-          parsedFilters
+          parsedFilters,
         );
         offlineManager.TransactionCategories.seed(result.items).catch(() => {});
         return result;
@@ -136,7 +145,7 @@ export function useInfiniteTransactionCategoriesList(
         console.warn("API failed, loading categories from IndexedDB", error);
         return await offlineManager.TransactionCategories.get(
           requestQuery,
-          parsedFilters
+          parsedFilters,
         );
       }
     },
@@ -170,7 +179,7 @@ export function useTransactionCategoriesCommon(): UseQueryResult<
       } catch (error) {
         console.warn(
           "API failed, loading common categories from IndexedDB",
-          error
+          error,
         );
         return await offlineManager.TransactionCategories.commonGet(
           commonFilters,

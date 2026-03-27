@@ -1,10 +1,7 @@
 import { FieldValues } from "react-hook-form";
 
 // @sito/dashboard-app
-import {
-  ActionType,
-  FormDialogPropsType,
-} from "@sito/dashboard-app";
+import { ActionType, FormDialogPropsType } from "@sito/dashboard-app";
 
 // lib
 import { CurrencyDto } from "lib";
@@ -15,7 +12,8 @@ export interface CurrencyCardPropsType extends CurrencyDto {
 }
 
 export interface CurrencyFormType
-  extends Omit<CurrencyDto, "deletedAt" | "createdAt" | "updatedAt" | "user">,
+  extends
+    Omit<CurrencyDto, "deletedAt" | "createdAt" | "updatedAt" | "user">,
     FieldValues {
   userId: number;
 }

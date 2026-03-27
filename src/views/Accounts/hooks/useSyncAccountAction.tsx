@@ -6,7 +6,10 @@ import { ActionType } from "@sito/dashboard-app";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleNotch, faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleNotch,
+  faArrowsRotate,
+} from "@fortawesome/free-solid-svg-icons";
 
 // types
 import { UseSingleActionPropTypes } from "@sito/dashboard-app";
@@ -16,7 +19,7 @@ import { AccountActions } from "../types";
 import { AccountDto } from "lib";
 
 export const useSyncAccountAction = (
-  props: UseSingleActionPropTypes<number>
+  props: UseSingleActionPropTypes<number>,
 ) => {
   const { t } = useTranslation();
 
@@ -36,7 +39,7 @@ export const useSyncAccountAction = (
       tooltip: t("_pages:accounts.actions.sync.text"),
       onClick: () => onClick(record.id),
     }),
-    [hidden, isLoading, onClick, t]
+    [hidden, isLoading, onClick, t],
   );
 
   return {

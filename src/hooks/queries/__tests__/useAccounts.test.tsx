@@ -49,7 +49,7 @@ vi.mock("lib", () => ({
   fetchAccountsList: async (
     _manager: unknown,
     _offlineManager: unknown,
-    filters: Record<string, unknown>
+    filters: Record<string, unknown>,
   ) => {
     try {
       const result = await mockAccountsGet(undefined, { ...filters });
@@ -114,7 +114,7 @@ describe("useAccountsList", () => {
 
     const { result } = renderHook(
       () => useAccountsList({ filters: { softDeleteScope: "ACTIVE" } }),
-      { wrapper: makeWrapper() }
+      { wrapper: makeWrapper() },
     );
 
     expect(result.current.fetchStatus).toBe("idle");
@@ -129,7 +129,7 @@ describe("useAccountsList", () => {
 
     const { result } = renderHook(
       () => useAccountsList({ filters: { softDeleteScope: "ACTIVE" } }),
-      { wrapper: makeWrapper() }
+      { wrapper: makeWrapper() },
     );
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));

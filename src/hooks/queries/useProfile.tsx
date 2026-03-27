@@ -27,7 +27,7 @@ export const ProfileQueryKeys = {
 };
 
 export function useMyProfile(
-  props: UseMyProfileProps = {}
+  props: UseMyProfileProps = {},
 ): UseQueryResult<ProfileDto> {
   const { ensure = false, defaultName = "" } = props;
 

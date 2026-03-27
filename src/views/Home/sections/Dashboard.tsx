@@ -94,7 +94,9 @@ export const Dashboard = () => {
   useEffect(() => {
     openAddDashboardRef.current = addDashboardCard.openDialog;
   }, [addDashboardCard.openDialog]);
-  useRegisterBottomNavAction(useCallback(() => openAddDashboardRef.current(), []));
+  useRegisterBottomNavAction(
+    useCallback(() => openAddDashboardRef.current(), []),
+  );
 
   return !error ? (
     <section id="dashboard">

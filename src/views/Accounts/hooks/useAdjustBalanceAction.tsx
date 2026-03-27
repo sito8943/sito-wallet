@@ -19,9 +19,7 @@ interface UseAdjustBalanceActionProps {
   hidden?: boolean;
 }
 
-export const useAdjustBalanceAction = (
-  props: UseAdjustBalanceActionProps
-) => {
+export const useAdjustBalanceAction = (props: UseAdjustBalanceActionProps) => {
   const { t } = useTranslation();
 
   const { hidden = false, onClick } = props;
@@ -32,15 +30,12 @@ export const useAdjustBalanceAction = (
       hidden: !!record.deletedAt || hidden,
       disabled: !!record.deletedAt,
       icon: (
-        <FontAwesomeIcon
-          className="text-bg-primary"
-          icon={faScaleBalanced}
-        />
+        <FontAwesomeIcon className="text-bg-primary" icon={faScaleBalanced} />
       ),
       tooltip: t("_pages:accounts.actions.adjustBalance.text"),
       onClick: () => onClick(record),
     }),
-    [hidden, onClick, t]
+    [hidden, onClick, t],
   );
 
   return {

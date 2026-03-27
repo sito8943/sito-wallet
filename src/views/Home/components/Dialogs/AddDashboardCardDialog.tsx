@@ -35,7 +35,7 @@ export function AddDashboardCardForm(props: DashboardFormPropsType) {
         name: t(`_entities:userDashboardCard.type.values.${key}`),
       })) ?? []),
     ],
-    [t]
+    [t],
   );
 
   return (

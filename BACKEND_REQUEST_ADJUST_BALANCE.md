@@ -3,6 +3,7 @@
 ## Feature
 
 Allow users to manually adjust the current balance of an account. This covers cases like:
+
 - Correcting discrepancies between real and tracked balance
 - Initial migration adjustments
 - Cash accounts where not every transaction is tracked
@@ -31,15 +32,15 @@ PATCH /accounts/{accountId}/adjust-balance
 
 ```json
 {
-  "newBalance": 1500.00,
+  "newBalance": 1500.0,
   "description": "Optional text for the auto-generated transaction"
 }
 ```
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `newBalance` | `number` | Yes | The absolute final balance the account should have |
-| `description` | `string` | No | Description for the adjustment transaction. Defaults to `"Ajuste manual"` if not provided |
+| Field         | Type     | Required | Description                                                                               |
+| ------------- | -------- | -------- | ----------------------------------------------------------------------------------------- |
+| `newBalance`  | `number` | Yes      | The absolute final balance the account should have                                        |
+| `description` | `string` | No       | Description for the adjustment transaction. Defaults to `"Ajuste manual"` if not provided |
 
 ### Response
 
@@ -110,17 +111,17 @@ Once the endpoint is ready:
 
 ## Decisions (confirmed)
 
-| # | Decision |
-|---|----------|
-| 1 | **Absolute** — user enters final `newBalance`, not a delta |
-| 2 | **Yes** — auto-create adjustment transaction with `auto: true` |
-| 3 | Category with `auto: true`, transaction visible in list |
-| 4 | **`description`** field (optional) — defaults to `"Ajuste manual"` if not provided |
-| 5 | Return **full TransactionDTO** of the created transaction |
-| 6 | Respect existing `balanceGreaterThanZero` feature flag |
-| 7 | **Yes** — update IndexedDB locally + queue for sync |
-| 8 | **Rename `initial` → `auto`** across entities, DB columns, DTOs, and frontend (with migration to preserve data) |
-| 9 | **Currency** — use the account's currency |
-| 10 | **Date** — `LocalDateTime.now()` |
-| 11 | **Ownership** — already covered by existing `CurrentUserProvider` + specifications pattern |
-| 12 | **Edge case** — frontend validates `newBalance != currentBalance`, no special backend handling |
+| #   | Decision                                                                                                        |
+| --- | --------------------------------------------------------------------------------------------------------------- |
+| 1   | **Absolute** — user enters final `newBalance`, not a delta                                                      |
+| 2   | **Yes** — auto-create adjustment transaction with `auto: true`                                                  |
+| 3   | Category with `auto: true`, transaction visible in list                                                         |
+| 4   | **`description`** field (optional) — defaults to `"Ajuste manual"` if not provided                              |
+| 5   | Return **full TransactionDTO** of the created transaction                                                       |
+| 6   | Respect existing `balanceGreaterThanZero` feature flag                                                          |
+| 7   | **Yes** — update IndexedDB locally + queue for sync                                                             |
+| 8   | **Rename `initial` → `auto`** across entities, DB columns, DTOs, and frontend (with migration to preserve data) |
+| 9   | **Currency** — use the account's currency                                                                       |
+| 10  | **Date** — `LocalDateTime.now()`                                                                                |
+| 11  | **Ownership** — already covered by existing `CurrentUserProvider` + specifications pattern                      |
+| 12  | **Edge case** — frontend validates `newBalance != currentBalance`, no special backend handling                  |

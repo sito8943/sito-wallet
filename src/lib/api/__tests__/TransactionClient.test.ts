@@ -10,11 +10,7 @@ vi.mock("@sito/dashboard-app", () => ({
     GET: "GET",
   },
   parseQueries: vi.fn(
-    (
-      path: string,
-      _query: unknown,
-      filters?: Record<string, unknown>,
-    ) => {
+    (path: string, _query: unknown, filters?: Record<string, unknown>) => {
       if (!filters) return path;
 
       const search = new URLSearchParams();
