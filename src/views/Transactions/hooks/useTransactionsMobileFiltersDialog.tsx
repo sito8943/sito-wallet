@@ -187,7 +187,6 @@ export function useTransactionsMobileFiltersDialog(
 
       return values;
     },
-    onSuccess: () => onClose(),
     title: t("_accessibility:buttons.filters"),
     ...TransactionsQueryKeys.all(),
   });

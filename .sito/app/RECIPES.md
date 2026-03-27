@@ -429,7 +429,7 @@ export function ProductDialogs() {
     minPrice: 0,
   });
 
-  const filtersDialog = useFormDialog<never, never, never, ProductFilters>({
+  const filtersDialog = useFormDialog<ProductFilters>({
     mode: "state",
     title: "Filters",
     defaultValues: { search: "", minPrice: 0 },

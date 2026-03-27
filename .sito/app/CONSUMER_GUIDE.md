@@ -13,7 +13,7 @@ Install peer dependencies in the consumer project as well:
 ```bash
 npm install \
   react@18.3.1 react-dom@18.3.1 \
-  @sito/dashboard@^0.0.73 \
+  @sito/dashboard@^0.0.74 \
   @tanstack/react-query@5.83.0 \
   react-hook-form@7.61.1 \
   @fortawesome/fontawesome-svg-core@7.0.0 \
@@ -330,7 +330,7 @@ import {
 } from "@sito/dashboard-app";
 
 // 1) Local/state-only dialog (filters)
-const filtersDialog = useFormDialog<never, never, never, ProductFilters>({
+const filtersDialog = useFormDialog<ProductFilters>({
   mode: "state",
   title: "Filters",
   defaultValues: { search: "", minPrice: 0 },
@@ -367,10 +367,104 @@ const editDialog = usePutDialog<
 <FormDialog<ProductForm> {...createDialog}>{/* fields */}</FormDialog>;
 ```
 
-Compatibility note:
+Note:
 
-- The previous entity-coupled `useFormDialog` signature still works for transition.
-- New code should use `usePostDialog` and `usePutDialog` for remote CRUD.
+- `useFormDialog` is state/core lifecycle only.
+- Use `usePostDialog` and `usePutDialog` for remote CRUD flows.
+
+#### Migration from legacy `useFormDialog` (`v0.0.54+`)
+
+Breaking changes:
+
+- `useFormDialog` no longer accepts `mutationFn`, `queryKey`, `getFunction`, `dtoToForm`, or `formToDto`.
+- `useFormDialogLegacy` and `useEntityFormDialog` are no longer exported.
+
+Migration map:
+
+- Legacy create (mutation-only) -> `usePostDialog`
+- Legacy edit (`getFunction` + mutation) -> `usePutDialog`
+- Local/state-only dialog -> `useFormDialog`
+
+Before:
+
+```tsx
+const createDialog = useFormDialog<
+  ProductDto,
+  CreateProductDto,
+  ProductDto,
+  ProductForm
+>({
+  title: "Create product",
+  defaultValues: { name: "", price: 0 },
+  mutationFn: (dto) => api.products.insert(dto),
+  formToDto: (form) => ({ name: form.name, price: form.price }),
+  queryKey: ["products"],
+});
+```
+
+After:
+
+```tsx
+const createDialog = usePostDialog<CreateProductDto, ProductDto, ProductForm>({
+  title: "Create product",
+  defaultValues: { name: "", price: 0 },
+  mutationFn: (dto) => api.products.insert(dto),
+  mapOut: (form) => ({ name: form.name, price: form.price }),
+  queryKey: ["products"],
+});
+```
+
+Before:
+
+```tsx
+const editDialog = useFormDialog<
+  ProductDto,
+  UpdateProductDto,
+  ProductDto,
+  ProductForm
+>({
+  title: "Edit product",
+  defaultValues: { name: "", price: 0 },
+  getFunction: (id) => api.products.getById(id),
+  dtoToForm: (dto) => ({ name: dto.name, price: dto.price }),
+  mutationFn: (dto) => api.products.update(dto),
+  formToDto: (form) => ({ id: 0, ...form }),
+  queryKey: ["products"],
+});
+```
+
+After:
+
+```tsx
+const editDialog = usePutDialog<
+  ProductDto,
+  UpdateProductDto,
+  ProductDto,
+  ProductForm
+>({
+  title: "Edit product",
+  defaultValues: { name: "", price: 0 },
+  getFunction: (id) => api.products.getById(id),
+  dtoToForm: (dto) => ({ name: dto.name, price: dto.price }),
+  mutationFn: (dto) => api.products.update(dto),
+  mapOut: (form, dto) => ({ id: dto?.id ?? 0, ...form }),
+  queryKey: ["products"],
+});
+```
+
+`useFormDialog` now supports `onError(error, context)` for core lifecycle failures (`submit`, `apply`, `clear`):
+
+```tsx
+const filtersDialog = useFormDialog<ProductFilters>({
+  mode: "state",
+  title: "Filters",
+  defaultValues: { search: "", minPrice: 0 },
+  onSubmit: async (values) => setTableFilters(values),
+  onError: (error, { phase, values }) => {
+    reportError(error, { phase, values });
+  },
+});
+```
 
 ### 6.3 Form hooks
 
