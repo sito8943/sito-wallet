@@ -35,6 +35,7 @@ import { useAddAccountDialog } from "../Accounts/hooks";
 import {
   TransactionsQueryKeys,
   useTransactionCategoriesCommon,
+  useHideDeletedEntitiesPreference,
   useMobileNavbar,
   usePersistedTableOptions,
   useAccountsList,
@@ -59,6 +60,7 @@ import {
   ImportPreviewTransactionDto,
   isFeatureDisabledBusinessError,
   CommonAccountDto,
+  applyHideDeletedEntitiesPreference,
   normalizeListFilters,
 } from "lib";
 
@@ -96,6 +98,7 @@ export function Transactions() {
   }, [location.search]);
 
   const manager = useManager();
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   const [showFilters, setShowFilters] = useState(false);
 
@@ -175,10 +178,13 @@ export function Transactions() {
     entity: Tables.Transactions,
     mutationFn: () =>
       manager.Transactions.export(
-        normalizeListFilters({
-          ...filters,
-          accountId: selectedAccount?.id,
-        }) as FilterTransactionDto,
+        applyHideDeletedEntitiesPreference(
+          normalizeListFilters({
+            ...filters,
+            accountId: selectedAccount?.id,
+          }) as Record<string, unknown>,
+          hideDeletedEntities,
+        ) as FilterTransactionDto,
       ),
   });
 
@@ -243,6 +249,7 @@ export function Transactions() {
           categories={parsedCategories ?? []}
           getActions={getTableActions}
           editAction={editTransaction}
+          hideDeletedEntities={hideDeletedEntities}
           showFilters={showFilters}
           setShowFilters={setShowFilters}
         />
@@ -252,6 +259,7 @@ export function Transactions() {
     accounts?.items,
     editTransaction,
     getTableActions,
+    hideDeletedEntities,
     parsedCategories,
     showFilters,
   ]);
@@ -266,6 +274,7 @@ export function Transactions() {
           categories={parsedCategories ?? []}
           getActions={getGridActions}
           editAction={editTransaction}
+          hideDeletedEntities={hideDeletedEntities}
           showFilters={showFilters}
           setShowFilters={setShowFilters}
         />
@@ -275,6 +284,7 @@ export function Transactions() {
     accounts?.items,
     editTransaction,
     getGridActions,
+    hideDeletedEntities,
     parsedCategories,
     showFilters,
     setShowFilters,

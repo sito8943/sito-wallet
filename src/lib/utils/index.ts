@@ -3,6 +3,7 @@ export * from "./file";
 export * from "./authAccountSnapshot";
 export * from "./featureFlags";
 export * from "./filterNormalization";
+export * from "./hideDeletedEntities";
 export * from "./persistedTableOptions";
 
 export const randomBetween = (min: number, max: number) => {

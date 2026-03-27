@@ -90,6 +90,7 @@ export interface TransactionsMobileFiltersFormType extends FieldValues {
 export interface TransactionsMobileFiltersDialogPropsType
   extends TriggerFormDialogPropsType<TransactionsMobileFiltersFormType> {
   categories: CommonTransactionCategoryDto[];
+  hideDeletedEntities?: boolean;
   handleClear: () => void;
 }
 

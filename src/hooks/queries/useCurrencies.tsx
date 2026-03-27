@@ -17,11 +17,13 @@ import {
   CurrencyDto,
   CommonCurrencyDto,
   FilterCurrencyDto,
+  applyHideDeletedEntitiesPreference,
   defaultCurrenciesListFilters,
   fetchCurrenciesList,
   normalizeCommonFilters,
   normalizeListFilters,
 } from "lib";
+import { useHideDeletedEntitiesPreference } from "./useProfile";
 
 export const CurrenciesQueryKeys = {
   all: () => ({
@@ -50,9 +52,15 @@ export function useCurrenciesList(
   props: UseFetchPropsType<CurrencyDto, FilterCurrencyDto>,
 ): UseQueryResult<QueryResult<CurrencyDto>> {
   const { filters = defaultCurrenciesListFilters } = props;
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
+
   const normalizedFilters = useMemo(
-    () => normalizeListFilters(filters) as FilterCurrencyDto,
-    [filters],
+    () =>
+      applyHideDeletedEntitiesPreference(
+        normalizeListFilters(filters) as Record<string, unknown>,
+        hideDeletedEntities,
+      ) as FilterCurrencyDto,
+    [filters, hideDeletedEntities],
   );
 
   const manager = useManager();
@@ -78,10 +86,15 @@ export function useInfiniteCurrenciesList(
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   const parsedFilters = useMemo(
-    () => normalizeListFilters(filters) as FilterCurrencyDto,
-    [filters]
+    () =>
+      applyHideDeletedEntitiesPreference(
+        normalizeListFilters(filters) as Record<string, unknown>,
+        hideDeletedEntities,
+      ) as FilterCurrencyDto,
+    [filters, hideDeletedEntities]
   );
 
   const parsedQueries = useMemo(
@@ -125,12 +138,16 @@ export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   return useQuery({
     ...CurrenciesQueryKeys.common(),
     enabled: !!account?.id,
     queryFn: async () => {
-      const commonFilters = normalizeCommonFilters() as FilterCurrencyDto;
+      const commonFilters = applyHideDeletedEntitiesPreference(
+        normalizeCommonFilters() as Record<string, unknown>,
+        hideDeletedEntities,
+      ) as FilterCurrencyDto;
 
       try {
         return await manager.Currencies.commonGet(commonFilters);

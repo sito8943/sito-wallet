@@ -35,6 +35,11 @@ vi.mock("lib", () => ({
   AccountDto: class {},
   CommonAccountDto: class {},
   FilterAccountDto: class {},
+  applyHideDeletedEntitiesPreference: (
+    filters: Record<string, unknown>,
+    hideDeletedEntities?: boolean,
+  ) =>
+    hideDeletedEntities ? { ...filters, softDeleteScope: "ACTIVE" } : filters,
   defaultAccountsListFilters: {
     softDeleteScope: "ACTIVE",
   },
@@ -54,6 +59,10 @@ vi.mock("lib", () => ({
       return await mockOfflineAccountsGet(undefined, { ...filters });
     }
   },
+}));
+
+vi.mock("../useProfile", () => ({
+  useHideDeletedEntitiesPreference: () => false,
 }));
 
 import {

@@ -46,6 +46,7 @@ vi.mock("hooks", () => ({
     isLoading: false,
     error: null,
   }),
+  useHideDeletedEntitiesPreference: () => false,
   useMobileNavbar: (...args: unknown[]) => mockUseMobileNavbar(...args),
   usePersistedTableOptions: vi.fn(),
   TransactionsQueryKeys: {

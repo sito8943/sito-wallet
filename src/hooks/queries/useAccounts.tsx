@@ -17,11 +17,13 @@ import {
   AccountDto,
   CommonAccountDto,
   FilterAccountDto,
+  applyHideDeletedEntitiesPreference,
   defaultAccountsListFilters,
   fetchAccountsList,
   normalizeCommonFilters,
   normalizeListFilters,
 } from "lib";
+import { useHideDeletedEntitiesPreference } from "./useProfile";
 
 export const AccountsQueryKeys = {
   all: () => ({
@@ -50,9 +52,15 @@ export function useAccountsList(
   props: UseFetchPropsType<AccountDto, FilterAccountDto>,
 ): UseQueryResult<QueryResult<AccountDto>> {
   const { filters = defaultAccountsListFilters } = props;
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
+
   const normalizedFilters = useMemo(
-    () => normalizeListFilters(filters) as FilterAccountDto,
-    [filters],
+    () =>
+      applyHideDeletedEntitiesPreference(
+        normalizeListFilters(filters) as Record<string, unknown>,
+        hideDeletedEntities,
+      ) as FilterAccountDto,
+    [filters, hideDeletedEntities],
   );
 
   const manager = useManager();
@@ -77,10 +85,15 @@ export function useInfiniteAccountsList(
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   const parsedFilters = useMemo(
-    () => normalizeListFilters(filters) as FilterAccountDto,
-    [filters],
+    () =>
+      applyHideDeletedEntitiesPreference(
+        normalizeListFilters(filters) as Record<string, unknown>,
+        hideDeletedEntities,
+      ) as FilterAccountDto,
+    [filters, hideDeletedEntities],
   );
 
   const parsedQueries = useMemo(
@@ -124,12 +137,16 @@ export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   return useQuery({
     ...AccountsQueryKeys.common(),
     enabled: !!account?.id,
     queryFn: async () => {
-      const commonFilters = normalizeCommonFilters() as FilterAccountDto;
+      const commonFilters = applyHideDeletedEntitiesPreference(
+        normalizeCommonFilters() as Record<string, unknown>,
+        hideDeletedEntities,
+      ) as FilterAccountDto;
 
       try {
         return await manager.Accounts.commonGet(commonFilters);

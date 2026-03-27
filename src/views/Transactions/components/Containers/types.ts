@@ -14,6 +14,7 @@ export type TransactionContainerPropsType = {
   categories: CommonTransactionCategoryDto[];
   getActions: (record: TransactionDto) => ActionType<TransactionDto>[];
   editAction: UseActionDialog<TransactionDto, TransactionFormType>;
+  hideDeletedEntities?: boolean;
   showFilters?: boolean;
   setShowFilters?: Dispatch<SetStateAction<boolean>>;
 };

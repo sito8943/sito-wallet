@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 // @sito/dashboard
 import {
   AutocompleteInput,
-  Button,
   FormDialog,
   Option,
   SelectInput,
@@ -28,7 +27,12 @@ const parseSortOrder = (value: unknown): SortOrder => {
 export const TransactionsMobileFilters = (
   props: TransactionsMobileFiltersDialogPropsType,
 ) => {
-  const { categories, control, handleClear } = props;
+  const {
+    categories,
+    control,
+    handleClear,
+    hideDeletedEntities = false,
+  } = props;
 
   const { t } = useTranslation();
 
@@ -73,32 +77,48 @@ export const TransactionsMobileFilters = (
     [t],
   );
 
-  const softDeleteScopeOptions = useMemo(
-    () =>
-      [
-        {
-          id: "ACTIVE",
-          name: t("_entities:base.deleted.scope.values.active"),
-        },
-        {
-          id: "DELETED",
-          name: t("_entities:base.deleted.scope.values.deleted"),
-        },
-        {
-          id: "ALL",
-          name: t("_entities:base.deleted.scope.values.all"),
-        },
-      ] as Option[],
-    [t],
-  );
+  const softDeleteScopeOptions = useMemo(() => {
+    const activeOption = {
+      id: "ACTIVE",
+      name: t("_entities:base.deleted.scope.values.active"),
+    };
+
+    if (hideDeletedEntities) return [activeOption] as Option[];
+
+    return [
+      activeOption,
+      {
+        id: "DELETED",
+        name: t("_entities:base.deleted.scope.values.deleted"),
+      },
+      {
+        id: "ALL",
+        name: t("_entities:base.deleted.scope.values.all"),
+      },
+    ] as Option[];
+  }, [t, hideDeletedEntities]);
 
   const softDeleteScopeValue = useWatch({
     control,
     name: "softDeleteScope",
   }) as string | undefined;
 
+  const effectiveSoftDeleteScopeValue = hideDeletedEntities
+    ? "ACTIVE"
+    : softDeleteScopeValue;
+
   return (
-    <FormDialog {...props}>
+    <FormDialog
+      {...props}
+      extraActions={[
+        {
+          type: "button",
+          variant: "outlined",
+          onClick: handleClear,
+          children: "Clear",
+        },
+      ]}
+    >
       <Controller
         control={control}
         name="category"
@@ -207,23 +227,25 @@ export const TransactionsMobileFilters = (
           )}
         />
       </div>
-      <Controller
-        control={control}
-        name="softDeleteScope"
-        render={({ field: { value, onChange, ...rest } }) => (
-          <SelectInput
-            id="mobile-transaction-soft-delete-scope-filter"
-            label={t("_entities:base.deleted.scope.label")}
-            value={value ?? "ACTIVE"}
-            onChange={(event) =>
-              onChange((event.target as HTMLSelectElement).value)
-            }
-            options={softDeleteScopeOptions}
-            {...rest}
-          />
-        )}
-      />
-      {softDeleteScopeValue === "DELETED" ? (
+      {!hideDeletedEntities ? (
+        <Controller
+          control={control}
+          name="softDeleteScope"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <SelectInput
+              id="mobile-transaction-soft-delete-scope-filter"
+              label={t("_entities:base.deleted.scope.label")}
+              value={value ?? "ACTIVE"}
+              onChange={(event) =>
+                onChange((event.target as HTMLSelectElement).value)
+              }
+              options={softDeleteScopeOptions}
+              {...rest}
+            />
+          )}
+        />
+      ) : null}
+      {effectiveSoftDeleteScopeValue === "DELETED" ? (
         <div className="grid grid-cols-2 gap-2">
           <Controller
             control={control}
@@ -295,9 +317,6 @@ export const TransactionsMobileFilters = (
           )}
         />
       </div>
-      <Button type="button" variant="outlined" onClick={handleClear}>
-        {t("_accessibility:buttons.clear")}
-      </Button>
     </FormDialog>
   );
 };

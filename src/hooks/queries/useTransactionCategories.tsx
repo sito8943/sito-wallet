@@ -17,11 +17,13 @@ import {
   TransactionCategoryDto,
   CommonTransactionCategoryDto,
   FilterTransactionCategoryDto,
+  applyHideDeletedEntitiesPreference,
   defaultTransactionCategoriesListFilters,
   fetchTransactionCategoriesList,
   normalizeCommonFilters,
   normalizeListFilters,
 } from "lib";
+import { useHideDeletedEntitiesPreference } from "./useProfile";
 
 export const TransactionCategoriesQueryKeys = {
   all: () => ({
@@ -54,9 +56,15 @@ export function useTransactionCategoriesList(
   props: UseFetchPropsType<TransactionCategoryDto, FilterTransactionCategoryDto>
 ): UseQueryResult<QueryResult<TransactionCategoryDto>> {
   const { filters = defaultTransactionCategoriesListFilters } = props;
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
+
   const normalizedFilters = useMemo(
-    () => normalizeListFilters(filters) as FilterTransactionCategoryDto,
-    [filters],
+    () =>
+      applyHideDeletedEntitiesPreference(
+        normalizeListFilters(filters) as Record<string, unknown>,
+        hideDeletedEntities,
+      ) as FilterTransactionCategoryDto,
+    [filters, hideDeletedEntities],
   );
 
   const manager = useManager();
@@ -86,10 +94,15 @@ export function useInfiniteTransactionCategoriesList(
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   const parsedFilters = useMemo(
-    () => normalizeListFilters(filters) as FilterTransactionCategoryDto,
-    [filters]
+    () =>
+      applyHideDeletedEntitiesPreference(
+        normalizeListFilters(filters) as Record<string, unknown>,
+        hideDeletedEntities,
+      ) as FilterTransactionCategoryDto,
+    [filters, hideDeletedEntities]
   );
 
   const parsedQueries = useMemo(
@@ -141,12 +154,16 @@ export function useTransactionCategoriesCommon(): UseQueryResult<
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   return useQuery({
     ...TransactionCategoriesQueryKeys.common(),
     enabled: !!account?.id,
     queryFn: async () => {
-      const commonFilters = normalizeCommonFilters() as FilterTransactionCategoryDto;
+      const commonFilters = applyHideDeletedEntitiesPreference(
+        normalizeCommonFilters() as Record<string, unknown>,
+        hideDeletedEntities,
+      ) as FilterTransactionCategoryDto;
 
       try {
         return await manager.TransactionCategories.commonGet(commonFilters);

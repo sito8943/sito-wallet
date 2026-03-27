@@ -25,8 +25,14 @@ import { TransactionContainerPropsType } from "./types";
 import { getTransactionColumns } from "./transactionColumns";
 
 export const TransactionTable = (props: TransactionContainerPropsType) => {
-  const { accountId, categories, getActions, showFilters, setShowFilters } =
-    props;
+  const {
+    accountId,
+    categories,
+    getActions,
+    showFilters,
+    setShowFilters,
+    hideDeletedEntities = false,
+  } = props;
   const { filters: tableFilters } = useTableOptions();
 
   const { t } = useTranslation();
@@ -45,17 +51,27 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
   );
 
   const softDeleteScope = useMemo(
-    () => String(normalizeListFilters(tableFilters).softDeleteScope ?? "ACTIVE"),
-    [tableFilters],
+    () =>
+      hideDeletedEntities
+        ? "ACTIVE"
+        : String(normalizeListFilters(tableFilters).softDeleteScope ?? "ACTIVE"),
+    [tableFilters, hideDeletedEntities],
   );
 
   const toIgnore = useMemo(() => {
     const ignoredColumns = ["id", "createdAt", "updatedAt"];
+
+    if (hideDeletedEntities) {
+      ignoredColumns.push("softDeleteScope", "deletedAt");
+      return ignoredColumns;
+    }
+
     if (softDeleteScope !== "DELETED") {
       ignoredColumns.push("deletedAt");
     }
+
     return ignoredColumns;
-  }, [softDeleteScope]);
+  }, [softDeleteScope, hideDeletedEntities]);
 
   const { columns } = useParseColumns<TransactionDto>(
     columnDefs,

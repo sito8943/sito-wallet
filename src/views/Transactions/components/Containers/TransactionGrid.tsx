@@ -23,6 +23,7 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
     categories,
     getActions,
     editAction,
+    hideDeletedEntities = false,
     showFilters = false,
     setShowFilters,
   } = props;
@@ -50,6 +51,7 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
 
   const transactionMobileFilters = useTransactionsMobileFiltersDialog(
     categories,
+    hideDeletedEntities,
     showFilters,
     () => setShowFilters?.(false),
   );
@@ -58,7 +60,10 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
     <Error error={error} />
   ) : (
     <>
-      <TransactionsMobileFilters {...transactionMobileFilters} />
+      <TransactionsMobileFilters
+        {...transactionMobileFilters}
+        hideDeletedEntities={hideDeletedEntities}
+      />
       <PrettyGrid
         data={items}
         itemClassName="w-full min-w-0"

@@ -35,6 +35,11 @@ vi.mock("lib", () => ({
   CurrencyDto: class {},
   CommonCurrencyDto: class {},
   FilterCurrencyDto: class {},
+  applyHideDeletedEntitiesPreference: (
+    filters: Record<string, unknown>,
+    hideDeletedEntities?: boolean,
+  ) =>
+    hideDeletedEntities ? { ...filters, softDeleteScope: "ACTIVE" } : filters,
   defaultCurrenciesListFilters: {
     softDeleteScope: "ACTIVE",
   },
@@ -54,6 +59,10 @@ vi.mock("lib", () => ({
       return await mockOfflineCurrenciesGet(undefined, { ...filters });
     }
   },
+}));
+
+vi.mock("../useProfile", () => ({
+  useHideDeletedEntitiesPreference: () => false,
 }));
 
 import {

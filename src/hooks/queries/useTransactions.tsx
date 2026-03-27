@@ -27,6 +27,7 @@ import {
   TransactionDto,
   CommonTransactionDto,
   FilterTransactionDto,
+  applyHideDeletedEntitiesPreference,
   defaultTransactionsListFilters,
   TransactionTypeResumeDto,
   TransactionType,
@@ -39,6 +40,7 @@ import {
   normalizeListFilters,
 } from "lib";
 import { useTranslation } from "react-i18next";
+import { useHideDeletedEntitiesPreference } from "./useProfile";
 
 export const TransactionsQueryKeys = {
   all: () => ({
@@ -99,14 +101,18 @@ export function useTransactionsList(props: {
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   const parsedFilters = useMemo(
     () =>
-      normalizeListFilters({
-        ...tableFilters,
-        ...filters,
-      }) as FilterTransactionDto,
-    [filters, tableFilters],
+      applyHideDeletedEntitiesPreference(
+        normalizeListFilters({
+          ...tableFilters,
+          ...filters,
+        }) as Record<string, unknown>,
+        hideDeletedEntities,
+      ) as FilterTransactionDto,
+    [filters, tableFilters, hideDeletedEntities],
   );
 
   const parsedQueries = useMemo(
@@ -163,14 +169,18 @@ export function useInfiniteTransactionsList(props: {
   const manager = useManager();
   const offlineManager = useOfflineManager();
   const { account } = useAuth();
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   const parsedFilters = useMemo(
     () =>
-      normalizeListFilters({
-        ...tableFilters,
-        ...filters,
-      }) as FilterTransactionDto,
-    [filters, tableFilters],
+      applyHideDeletedEntitiesPreference(
+        normalizeListFilters({
+          ...tableFilters,
+          ...filters,
+        }) as Record<string, unknown>,
+        hideDeletedEntities,
+      ) as FilterTransactionDto,
+    [filters, tableFilters, hideDeletedEntities],
   );
 
   const parsedQueries = useMemo(
@@ -220,9 +230,15 @@ export function useInfiniteTransactionsList(props: {
 export function useTransactionTypeResume(
   props: UseTransactionTypeResumePropsType,
 ): UseQueryResult<TransactionTypeResumeDto> {
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
+
   const filters = useMemo(
-    () => normalizeCommonFilters(props) as FilterTransactionTypeResumeDto,
-    [props],
+    () =>
+      applyHideDeletedEntitiesPreference(
+        normalizeCommonFilters(props) as Record<string, unknown>,
+        hideDeletedEntities,
+      ) as FilterTransactionTypeResumeDto,
+    [props, hideDeletedEntities],
   );
   const { t } = useTranslation();
 
@@ -266,9 +282,15 @@ export function useTransactionTypeResume(
 export function useWeekly(
   props: FilterWeeklyTransactionDto,
 ): UseQueryResult<TransactionWeeklySpentDto> {
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
+
   const filters = useMemo(
-    () => normalizeCommonFilters(props) as FilterWeeklyTransactionDto,
-    [props],
+    () =>
+      applyHideDeletedEntitiesPreference(
+        normalizeCommonFilters(props) as Record<string, unknown>,
+        hideDeletedEntities,
+      ) as FilterWeeklyTransactionDto,
+    [props, hideDeletedEntities],
   );
   const { t } = useTranslation();
 
@@ -314,15 +336,19 @@ export function useWeekly(
 export function useTransactionsGroupedByType(
   props: UseTransactionsGroupedByTypePropsType,
 ): UseQueryResult<TransactionTypeGroupedDto> {
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
+
   const filters = useMemo<FilterTransactionGroupedByTypeDto>(() => {
-    const normalized =
-      normalizeCommonFilters(props) as Partial<FilterTransactionGroupedByTypeDto>;
+    const normalized = applyHideDeletedEntitiesPreference(
+      normalizeCommonFilters(props) as Record<string, unknown>,
+      hideDeletedEntities,
+    ) as Partial<FilterTransactionGroupedByTypeDto>;
 
     return {
       ...normalized,
       accountId: props.accountId,
     };
-  }, [props]);
+  }, [props, hideDeletedEntities]);
   const { t } = useTranslation();
 
   const manager = useManager();
@@ -362,9 +388,15 @@ export function useTransactionsCommon(
   const manager = useManager();
   const offlineManager = useOfflineManager();
 
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
+
   const filters = useMemo(
-    () => normalizeCommonFilters(props) as FilterTransactionDto,
-    [props],
+    () =>
+      applyHideDeletedEntitiesPreference(
+        normalizeCommonFilters(props) as Record<string, unknown>,
+        hideDeletedEntities,
+      ) as FilterTransactionDto,
+    [props, hideDeletedEntities],
   );
 
   return useQuery({

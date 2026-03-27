@@ -15,6 +15,7 @@ const mockOfflineTransactionsGetGroupedByType = vi.fn();
 const mockOfflineTransactionsWeekly = vi.fn();
 const mockTransactionsSeed = vi.fn(() => Promise.resolve());
 const mockUseAuth = vi.fn();
+const mockUseHideDeletedEntitiesPreference = vi.fn(() => false);
 
 vi.mock("providers", () => ({
   useManager: () => ({
@@ -62,6 +63,16 @@ vi.mock("lib", () => ({
   TransactionDto: class {},
   CommonTransactionDto: class {},
   FilterTransactionDto: class {},
+  applyHideDeletedEntitiesPreference: (
+    filters: Record<string, unknown>,
+    hideDeletedEntities?: boolean,
+  ) => {
+    if (!hideDeletedEntities) return filters;
+
+    const nextFilters = { ...filters, softDeleteScope: "ACTIVE" };
+    delete (nextFilters as Record<string, unknown>).deletedAt;
+    return nextFilters;
+  },
   defaultTransactionsListFilters: { softDeleteScope: "ACTIVE" },
   normalizeListFilters: (filters: Record<string, unknown> | undefined) =>
     filters ?? { softDeleteScope: "ACTIVE" },
@@ -89,6 +100,10 @@ vi.mock("lib", () => ({
   TransactionTypeGroupedDto: class {},
   FilterTransactionGroupedByTypeDto: class {},
   TransactionWeeklySpentDto: class {},
+}));
+
+vi.mock("../useProfile", () => ({
+  useHideDeletedEntitiesPreference: () => mockUseHideDeletedEntitiesPreference(),
 }));
 
 import {
@@ -153,6 +168,7 @@ describe("useTransactionsList", () => {
     mockUseAuth.mockReturnValue({
       account: { id: 1, email: "test@example.com" },
     });
+    mockUseHideDeletedEntitiesPreference.mockReturnValue(false);
     mockTransactionsGet.mockReset();
     mockOfflineTransactionsGet.mockReset();
     mockTransactionsSeed.mockClear();
@@ -215,6 +231,32 @@ describe("useTransactionsList", () => {
     await waitFor(() => expect(result.current.isError).toBe(true));
     expect(result.current.error?.message).toMatch(/IndexedDB error/);
   });
+
+  it("forces ACTIVE scope when hideDeletedEntities is enabled", async () => {
+    mockUseHideDeletedEntitiesPreference.mockReturnValue(true);
+    const data = { items: [{ id: 1, amount: 100 }], total: 1 };
+    mockTransactionsGet.mockResolvedValue(data);
+
+    const { result } = renderHook(
+      () =>
+        useTransactionsList({
+          filters: {
+            softDeleteScope: "DELETED",
+            deletedAt: {
+              start: "2026-03-01",
+              end: "2026-03-31",
+            },
+          } as Record<string, unknown>,
+        }),
+      { wrapper: makeWrapper() },
+    );
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+    const calledFilters = mockTransactionsGet.mock.calls[0][1];
+    expect(calledFilters).toMatchObject({ softDeleteScope: "ACTIVE" });
+    expect(calledFilters).not.toHaveProperty("deletedAt");
+  });
 });
 
 describe("useTransactionsCommon", () => {
@@ -222,6 +264,7 @@ describe("useTransactionsCommon", () => {
     mockUseAuth.mockReturnValue({
       account: { id: 1, email: "test@example.com" },
     });
+    mockUseHideDeletedEntitiesPreference.mockReturnValue(false);
     mockTransactionsCommonGet.mockReset();
     mockOfflineTransactionsCommonGet.mockReset();
     mockTransactionsSeed.mockClear();
@@ -259,6 +302,7 @@ describe("useTransactionTypeResume", () => {
     mockUseAuth.mockReturnValue({
       account: { id: 1, email: "test@example.com" },
     });
+    mockUseHideDeletedEntitiesPreference.mockReturnValue(false);
     mockTransactionsGetTypeResume.mockReset();
     mockOfflineTransactionsGetTypeResume.mockReset();
   });
@@ -339,6 +383,7 @@ describe("useWeekly", () => {
     mockUseAuth.mockReturnValue({
       account: { id: 1, email: "test@example.com" },
     });
+    mockUseHideDeletedEntitiesPreference.mockReturnValue(false);
     mockTransactionsWeekly.mockReset();
     mockOfflineTransactionsWeekly.mockReset();
   });
@@ -417,6 +462,7 @@ describe("useTransactionsGroupedByType", () => {
     mockUseAuth.mockReturnValue({
       account: { id: 1, email: "test@example.com" },
     });
+    mockUseHideDeletedEntitiesPreference.mockReturnValue(false);
     mockTransactionsGetGroupedByType.mockReset();
     mockOfflineTransactionsGetGroupedByType.mockReset();
   });

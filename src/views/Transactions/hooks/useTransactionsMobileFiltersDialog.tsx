@@ -36,6 +36,7 @@ const parseSortOrder = (value: unknown): SortOrder => {
 
 export function useTransactionsMobileFiltersDialog(
   categories: CommonTransactionCategoryDto[],
+  hideDeletedEntities: boolean,
   open: boolean,
   onClose: () => void,
 ): TransactionsMobileFiltersDialogPropsType {
@@ -83,8 +84,10 @@ export function useTransactionsMobileFiltersDialog(
   };
 
   const parsedSoftDeleteScope =
-    (normalizedFilters.softDeleteScope as SoftDeleteScope | undefined) ??
-    "ACTIVE";
+    hideDeletedEntities
+      ? "ACTIVE"
+      : ((normalizedFilters.softDeleteScope as SoftDeleteScope | undefined) ??
+        "ACTIVE");
 
   const defaultValues = useMemo<TransactionsMobileFiltersFormType>(
     () => ({
@@ -95,8 +98,8 @@ export function useTransactionsMobileFiltersDialog(
       dateStart: parsedDate.start ?? "",
       dateEnd: parsedDate.end ?? "",
       softDeleteScope: parsedSoftDeleteScope,
-      deletedAtStart: parsedDeletedAt.start ?? "",
-      deletedAtEnd: parsedDeletedAt.end ?? "",
+      deletedAtStart: hideDeletedEntities ? "" : (parsedDeletedAt.start ?? ""),
+      deletedAtEnd: hideDeletedEntities ? "" : (parsedDeletedAt.end ?? ""),
       sortingBy: sortingBy || DEFAULT_SORTING_BY,
       sortingOrder: parseSortOrder(sortingOrder),
     }),
@@ -112,6 +115,7 @@ export function useTransactionsMobileFiltersDialog(
       selectedCategories,
       sortingBy,
       sortingOrder,
+      hideDeletedEntities,
     ],
   );
 
@@ -157,9 +161,12 @@ export function useTransactionsMobileFiltersDialog(
         };
       }
 
-      nextFilters.softDeleteScope = { value: values.softDeleteScope };
+      nextFilters.softDeleteScope = {
+        value: hideDeletedEntities ? "ACTIVE" : values.softDeleteScope,
+      };
 
       if (
+        !hideDeletedEntities &&
         values.softDeleteScope === "DELETED" &&
         (values.deletedAtStart || values.deletedAtEnd)
       ) {
@@ -194,6 +201,7 @@ export function useTransactionsMobileFiltersDialog(
   return {
     ...formDialog,
     categories,
+    hideDeletedEntities,
     open,
     handleClose: onClose,
     handleClear,
