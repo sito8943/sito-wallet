@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import {  useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
@@ -25,6 +25,7 @@ import {
   TransactionsMobileFiltersDialogPropsType,
   TransactionsMobileFiltersFormType,
 } from "../types";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const DEFAULT_SORTING_BY = "date";
 export const DEFAULT_SORTING_ORDER = SortOrder.DESC;
@@ -52,6 +53,8 @@ export function useTransactionsMobileFiltersDialog(
     setSortingOrder,
     setCurrentPage,
   } = useTableOptions();
+
+  const queryClient = useQueryClient();
 
   const categoryOptions = useMemo(
     () =>
@@ -123,12 +126,11 @@ export function useTransactionsMobileFiltersDialog(
 
   const formDialog = useFormDialog<
     TransactionsMobileFiltersFormType,
-    TransactionsMobileFiltersFormType,
-    TransactionsMobileFiltersFormType,
     TransactionsMobileFiltersFormType
   >({
+    mode: "state",
     defaultValues,
-    mutationFn: async (values) => {
+    onSubmit: (values) => {
       clearFilters();
 
       const nextFilters: Record<string, { value: unknown }> = {};
@@ -184,11 +186,10 @@ export function useTransactionsMobileFiltersDialog(
       setSortingBy(values.sortingBy || DEFAULT_SORTING_BY);
       setSortingOrder(parseSortOrder(values.sortingOrder));
       setCurrentPage(0);
-
-      return values;
+      queryClient.invalidateQueries({ ...TransactionsQueryKeys.all() });
+      onClose();
     },
     title: t("_accessibility:buttons.filters"),
-    ...TransactionsQueryKeys.all(),
   });
 
   const handleClear = () => {

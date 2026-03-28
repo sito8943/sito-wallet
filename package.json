@@ -27,7 +27,7 @@
     "@fortawesome/react-fontawesome": "0.2.3",
     "@loadable/component": "5.16.7",
     "@sito/dashboard": "^0.0.74",
-    "@sito/dashboard-app": "^0.0.54",
+    "@sito/dashboard-app": "^0.0.55",
     "@stomp/stompjs": "^7.3.0",
     "@supabase/supabase-js": "^2.100.0",
     "@tailwindcss/vite": "4.1.11",

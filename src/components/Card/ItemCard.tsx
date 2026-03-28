@@ -31,7 +31,7 @@ export function ItemCard<TRow extends BaseEntityDto>(
           : "base-border hover:!border-hover-primary"
       } animated`}
     >
-      <button
+      <div
         className={`${
           deleted ? "" : "cursor-pointer"
         } h-full w-full flex flex-col justify-start items-start ${className}`}
@@ -43,7 +43,7 @@ export function ItemCard<TRow extends BaseEntityDto>(
           title
         )}
         {children}
-      </button>
+      </div>
       <Actions actions={actions} />
     </div>
   );

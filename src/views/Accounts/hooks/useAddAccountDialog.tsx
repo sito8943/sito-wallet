@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { useFormDialog } from "@sito/dashboard-app";
+import { usePostDialog } from "@sito/dashboard-app";
 
 // providers
 import { useManager } from "providers";
@@ -23,10 +23,9 @@ export function useAddAccountDialog() {
 
   const manager = useManager();
 
-  const { handleSubmit, ...rest } = useFormDialog<
+  const { handleSubmit, ...rest } = usePostDialog<
     AccountDto,
     AddAccountDto,
-    AccountDto,
     AccountFormType
   >({
     formToDto: formToAddDto,
