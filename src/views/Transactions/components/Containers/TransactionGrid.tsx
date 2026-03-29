@@ -66,6 +66,7 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
       />
       <PrettyGrid
         data={items}
+        className="max-sm:pb-6"
         itemClassName="w-full min-w-0"
         emptyMessage={t("_pages:transactions.empty")}
         loading={isLoading}

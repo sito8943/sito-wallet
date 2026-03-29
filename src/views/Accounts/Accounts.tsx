@@ -172,6 +172,7 @@ export function Accounts() {
         <>
           <PrettyGrid
             data={items}
+            className="max-sm:pb-6"
             itemClassName="max-md:w-full w-auto"
             hasMore={!!hasNextPage}
             loadingMore={isFetchingNextPage}
