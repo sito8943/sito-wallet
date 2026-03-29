@@ -60,11 +60,13 @@
       "username": "Usuario",
       "updatedAt": "Actualizado en",
       "photo": "Foto",
+      "language": "Idioma",
       "hideDeletedEntities": "Ocultar elementos eliminados"
     },
     "helper": {
       "photo": "Tipos permitidos: JPG, PNG, WEBP. Tamaño maximo: 5 MB.",
       "photoAdvice": "Por favor, evita subir fotos personales. Te recomendamos usar avatares o imagenes abstractas.",
+      "language": "Elige el idioma de la aplicacion para tu perfil.",
       "hideDeletedEntities": "Si esta activado, los elementos eliminados no se mostraran en las listas."
     },
     "messages": {
@@ -75,7 +77,9 @@
     },
     "values": {
       "enabled": "Activo",
-      "disabled": "Inactivo"
+      "disabled": "Inactivo",
+      "languageSpanish": "Español",
+      "languageEnglish": "Ingles"
     },
     "errors": {
       "nameRequired": "El nombre es requerido",

@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -8,7 +8,9 @@ import {
   Button,
   Error as ErrorView,
   Loading,
+  Option,
   Page,
+  SelectInput,
   State,
   TextInput,
   useAuth,
@@ -26,7 +28,7 @@ import { useProfilePhoto } from "./hooks";
 import { ProfilePhoto } from "./components";
 
 // lib
-import { UpdateProfileDto } from "lib";
+import { ProfileLanguage, UpdateProfileDto } from "lib";
 
 // types
 import { ProfileFormType } from "./types";
@@ -48,8 +50,11 @@ const toRenderableError = (error: unknown, fallback: string): Error => {
   return new Error(getErrorMessage(error, fallback));
 };
 
+const normalizeProfileLanguage = (value?: string | null): ProfileLanguage =>
+  value === "en" ? "en" : "es";
+
 export function Profile() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const manager = useManager();
   const { showErrorNotification, showSuccessNotification } = useNotification();
 
@@ -77,6 +82,7 @@ export function Profile() {
   const { control, formState, handleSubmit, reset } = useForm<ProfileFormType>({
     defaultValues: {
       name: "",
+      language: "es",
       hideDeletedEntities: false,
     },
   });
@@ -91,9 +97,27 @@ export function Profile() {
     if (!profile) return;
     reset({
       name: profile.name ?? "",
+      language: normalizeProfileLanguage(
+        profile.language ?? i18n.resolvedLanguage ?? i18n.language,
+      ),
       hideDeletedEntities: !!profile.hideDeletedEntities,
     });
-  }, [profile, reset]);
+  }, [i18n.language, i18n.resolvedLanguage, profile, reset]);
+
+  const languageOptions = useMemo(
+    () =>
+      [
+        {
+          id: "en",
+          name: t("_pages:profile.values.languageEnglish"),
+        },
+        {
+          id: "es",
+          name: t("_pages:profile.values.languageSpanish"),
+        },
+      ] as Option[],
+    [t],
+  );
 
   const currentName = useWatch({ control, name: "name" }) ?? "";
   const currentHideDeletedEntities = !!useWatch({
@@ -114,14 +138,22 @@ export function Profile() {
     const payload: UpdateProfileDto = {
       id: profile.id,
       name: values.name.trim(),
+      language: normalizeProfileLanguage(values.language),
       hideDeletedEntities: values.hideDeletedEntities,
     };
 
     try {
       await updateProfile.mutateAsync(payload);
       await queryClient.invalidateQueries({ ...ProfileQueryKeys.all() });
+      const currentLanguage = normalizeProfileLanguage(
+        i18n.resolvedLanguage ?? i18n.language,
+      );
+      if (payload.language && currentLanguage !== payload.language) {
+        await i18n.changeLanguage(payload.language);
+      }
       reset({
         name: payload.name ?? "",
+        language: payload.language ?? "es",
         hideDeletedEntities: !!payload.hideDeletedEntities,
       });
       showSuccessNotification({
@@ -224,6 +256,33 @@ export function Profile() {
                   />
                 )}
               />
+
+              <Controller
+                control={control}
+                name="language"
+                disabled={formDisabled}
+                render={({ field }) => (
+                  <SelectInput
+                    id="profile-language"
+                    required
+                    label={t("_pages:profile.labels.language")}
+                    options={languageOptions}
+                    value={normalizeProfileLanguage(field.value)}
+                    disabled={formDisabled}
+                    onBlur={field.onBlur}
+                    onChange={(event) =>
+                      field.onChange(
+                        normalizeProfileLanguage(
+                          (event.target as HTMLSelectElement).value,
+                        ),
+                      )
+                    }
+                  />
+                )}
+              />
+              <p className="text-sm text-text-muted">
+                {t("_pages:profile.helper.language")}
+              </p>
             </section>
 
             <SectionDivider />

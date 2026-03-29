@@ -60,11 +60,13 @@
       "username": "Username",
       "updatedAt": "Updated at",
       "photo": "Photo",
+      "language": "Language",
       "hideDeletedEntities": "Hide deleted items"
     },
     "helper": {
       "photo": "Allowed types: JPG, PNG, WEBP. Max size: 5 MB.",
       "photoAdvice": "Please avoid uploading personal photos. We recommend using avatars or abstract images instead.",
+      "language": "Choose the app language for your profile.",
       "hideDeletedEntities": "When enabled, deleted items will not be shown in list views."
     },
     "messages": {
@@ -75,7 +77,9 @@
     },
     "values": {
       "enabled": "Enabled",
-      "disabled": "Disabled"
+      "disabled": "Disabled",
+      "languageSpanish": "Spanish",
+      "languageEnglish": "English"
     },
     "errors": {
       "nameRequired": "Name is required",

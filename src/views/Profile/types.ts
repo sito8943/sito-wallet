@@ -1,7 +1,8 @@
-import { ProfileDto } from "lib";
+import { ProfileDto, ProfileLanguage } from "lib";
 
 export type ProfileFormType = {
   name: string;
+  language: ProfileLanguage;
   hideDeletedEntities: boolean;
 };
 

@@ -9,12 +9,20 @@ import { IndexedDBClient } from "@sito/dashboard-app";
 import { Tables } from "../types";
 
 // types
-import { ProfileDto, AddProfileDto, UpdateProfileDto } from "lib";
+import {
+  ProfileDto,
+  AddProfileDto,
+  UpdateProfileDto,
+  ProfileLanguage,
+} from "lib";
 
 // config
 import { queueSyncOperation } from "../sync";
 import { getOfflineStoreDbName } from "./getOfflineStoreDbName";
 import { seedStore } from "./seedStore";
+
+const isProfileLanguage = (value: unknown): value is ProfileLanguage =>
+  value === "es" || value === "en";
 
 export class ProfileIndexedDBClient extends IndexedDBClient<
   Tables,
@@ -42,10 +50,15 @@ export class ProfileIndexedDBClient extends IndexedDBClient<
 
     const payload: {
       name: string;
+      language?: ProfileLanguage;
       hideDeletedEntities?: boolean;
     } = {
       name: value.name,
     };
+
+    if (isProfileLanguage(value.language)) {
+      payload.language = value.language;
+    }
 
     if (typeof value.hideDeletedEntities === "boolean") {
       payload.hideDeletedEntities = value.hideDeletedEntities;
@@ -79,6 +92,7 @@ export class ProfileIndexedDBClient extends IndexedDBClient<
     const payload: {
       id: number;
       name?: string;
+      language?: ProfileLanguage;
       hideDeletedEntities?: boolean;
     } = {
       id: updateValue.id,
@@ -86,6 +100,10 @@ export class ProfileIndexedDBClient extends IndexedDBClient<
 
     if (typeof updateValue.name === "string") {
       payload.name = updateValue.name;
+    }
+
+    if (isProfileLanguage(updateValue.language)) {
+      payload.language = updateValue.language;
     }
 
     if (typeof updateValue.hideDeletedEntities === "boolean") {
