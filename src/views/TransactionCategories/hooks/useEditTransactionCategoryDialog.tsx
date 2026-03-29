@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { useFormDialog } from "@sito/dashboard-app";
+import { usePutDialog } from "@sito/dashboard-app";
 
 // providers
 import { useManager } from "providers";
@@ -23,7 +23,7 @@ export function useEditTransactionCategoryDialog() {
 
   const manager = useManager();
 
-  return useFormDialog<
+  return usePutDialog<
     TransactionCategoryDto,
     UpdateTransactionCategoryDto,
     TransactionCategoryDto,
@@ -32,9 +32,9 @@ export function useEditTransactionCategoryDialog() {
     formToDto,
     dtoToForm,
     defaultValues: emptyTransactionCategory,
-    getFunction: (id) => manager.TransactionCategories.getById(id),
+    getFunction: (id: number) => manager.TransactionCategories.getById(id),
     mutationFn: (data) => manager.TransactionCategories.update(data),
-    onSuccessMessage: t("_pages:common.actions.add.successMessage"),
+    onSuccessMessage: t("_pages:common.actions.edit.successMessage"),
     title: t("_pages:transactionCategories.forms.edit"),
     ...TransactionCategoriesQueryKeys.all(),
   });

@@ -10,7 +10,7 @@ import { useManager } from "providers";
 import { AccountsQueryKeys } from "hooks";
 
 // utils
-import { formToAddDto, dtoToForm, addEmptyAccount } from "../utils";
+import { formToAddDto, addEmptyAccount } from "../utils";
 
 // types
 import { AccountFormType } from "../types";
@@ -24,12 +24,11 @@ export function useAddAccountDialog() {
   const manager = useManager();
 
   const { handleSubmit, ...rest } = usePostDialog<
-    AccountDto,
     AddAccountDto,
+    AccountDto,
     AccountFormType
   >({
     formToDto: formToAddDto,
-    dtoToForm,
     defaultValues: addEmptyAccount,
     mutationFn: (data) => manager.Accounts.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
