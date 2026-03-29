@@ -12,6 +12,20 @@ export type PersistedTableState = {
 const buildKey = (view: string, tabId: string | number): string =>
   `${config.tableOptions}:${view}:${tabId}`;
 
+const normalizePersistedFilters = (
+  filters: unknown,
+): Record<string, unknown> => {
+  const normalized = normalizeListFilters(filters);
+
+  // ACTIVE is the implicit default for list queries. Persisting it creates
+  // noisy/restored UI chips even when users did not set the trash filter.
+  if (normalized.softDeleteScope === "ACTIVE") {
+    delete normalized.softDeleteScope;
+  }
+
+  return normalized;
+};
+
 export const saveTableOptions = (
   view: string,
   tabId: string | number,
@@ -19,7 +33,7 @@ export const saveTableOptions = (
 ): void => {
   toLocal(buildKey(view, tabId), {
     ...state,
-    filters: normalizeListFilters(state.filters),
+    filters: normalizePersistedFilters(state.filters),
   });
 };
 
@@ -34,7 +48,7 @@ export const loadTableOptions = (
 
   return {
     ...parsed,
-    filters: normalizeListFilters(parsed.filters),
+    filters: normalizePersistedFilters(parsed.filters),
   };
 };
 
