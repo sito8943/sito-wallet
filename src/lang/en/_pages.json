@@ -222,7 +222,9 @@
     "empty": "You don’t have any bank accounts. Add one to get started.",
     "add": "Add an account",
     "actions": {
-      "viewTransactions": { "text": "View transactions" },
+      "viewTransactions": {
+        "text": "View transactions"
+      },
       "sync": {
         "text": "Sync balance",
         "successMessage": "Synced successful"
@@ -314,7 +316,7 @@
   },
   "about": {
     "title": "About Sito Wallet",
-    "body": "<p>At <strong>Sito Wallet</strong>, we believe managing your money should be easy and stress-free. That's why we offer an app where you can manage all your accounts, both digital and physical, in one place.</p><p>Created with care by <2>sito8943</2>, our mission is to help you understand and organize your finances clearly, safely, and without complications.</p><p>And the best part: <strong>it's completely free</strong>. Because we believe having control over your money shouldn't cost you anything.</p>",
+    "body": "<p>At <strong>Sito Wallet</strong>, we believe managing your money should be easy and stress-free. That's why we offer an app where you can manage all your accounts, both digital and physical, in one place.</p><p>Created with care by <2>sito8943</2>, our mission is to help you understand and organize your finances clearly, safely, and without complications.</p><p>And the best part: <strong>it's completely free</strong>. It is also an <strong>open-source project</strong> and <strong>does not operate with real money</strong>: it only records and organizes the information you enter.</p>",
     "howTo": {
       "title": "What you can do",
       "body": "With Sito Wallet, you have everything you need to fully control your finances, both digital and physical, thanks to its simple and powerful tools.",
@@ -356,99 +358,157 @@
           ]
         }
       ]
+    },
+    "legal": {
+      "title": "Legal and Transparency Information",
+      "body": "Before using the app, review these pages to understand the terms, privacy details, and storage technology usage. Sito Wallet is free, open source, and does not handle real money.",
+      "links": {
+        "terms": "Terms and Conditions",
+        "privacy": "Privacy Policy",
+        "cookies": "Cookies Policy"
+      },
+      "updated": "Legal content review: March 29, 2026."
     }
   },
   "termsAndConditions": {
     "title": "Terms and Conditions",
-    "body": "<p>Welcome to <strong>Sito Wallet</strong>. By downloading, accessing, or using our app, you agree to comply with these Terms and Conditions. Please read them carefully.</p>",
+    "body": "<p>By accessing or using <strong>Sito Wallet</strong>, you agree to these Terms and Conditions. If you do not agree, you must stop using the app.</p><p><strong>Sito Wallet is completely free, open source, and does not operate with real money.</strong></p><p><strong>Last updated:</strong> March 29, 2026.</p>",
     "sections": [
       {
-        "title": "1. About Sito Wallet",
-        "body": "<p><strong>Sito Wallet</strong> is a free application with the goal of helping you manage and organize your finances (digital and physical) in one place. The app provides tools to manage currencies, accounts, transaction categories, and transactions. <strong>Sito Wallet</strong> is offered <strong>completely free of charge</strong>.</p>"
+        "title": "1. Service identification",
+        "body": "<ul><li><strong>Service:</strong> Sito Wallet.</li><li><strong>Project owner/controller:</strong> sito8943.</li><li><strong>General contact:</strong> <a href=\"https://sito8943.com\">https://sito8943.com</a>.</li><li><strong>Tax or corporate details:</strong> these will be published when legally required for the applicable operating model.</li></ul>"
       },
       {
-        "title": "2. Use of the Application",
-        "body": "<ul><li>You agree to use <strong>Sito Wallet</strong> only for lawful purposes and in accordance with these Terms.</li><li>You are responsible for the accuracy of the information you add (accounts, transactions, balances, etc.).</li><li>The app is intended for <strong>personal finance management</strong> only and must not be used for illegal or fraudulent activities.</li></ul>"
+        "title": "2. Service purpose",
+        "body": "<p>Sito Wallet provides features to record and organize personal finances, including accounts, currencies, categories, and transactions, with offline support and synchronization. <strong>The app does not hold funds, does not execute payments, and does not connect to bank accounts to move real money.</strong></p>"
       },
       {
-        "title": "3. Data and Privacy",
-        "body": "<ul><li><strong>Sito Wallet does not sell or share your personal financial data</strong> with third parties.</li><li>The information you enter remains under your control.</li><li>We may collect non-identifiable usage data to improve the app (such as errors or performance metrics).</li></ul>"
+        "title": "3. Registration, account, and access",
+        "body": "<ul><li>You are responsible for safeguarding your credentials and all activity performed through your account.</li><li>You must provide accurate data and keep it updated.</li><li>Guest mode may have limitations compared to authenticated access.</li></ul>"
       },
       {
-        "title": "4. No Financial Advice",
-        "body": "<p><strong>Sito Wallet</strong> provides tools to record and organize your money, but we do not provide financial, tax, or investment advice. Any decisions you make based on the information in the app are your sole responsibility.</p>"
+        "title": "4. Allowed and prohibited use",
+        "body": "<ul><li>You may only use the app for lawful purposes and in compliance with these terms.</li><li>You must not use the app for fraud, unlawful activity, impersonation, or third-party rights violations.</li><li>You must not attempt to alter, degrade, or compromise service security or availability.</li></ul>"
       },
       {
-        "title": "5. Changes and Updates",
-        "body": "<ul><li>We may update or improve the app from time to time.</li><li>We may also update these Terms. If we do, we will notify users with the new version.</li><li>By continuing to use the app after updates, you agree to the new Terms.</li></ul>"
+        "title": "5. Intellectual property",
+        "body": "<p>The code, design, brand, texts, and other Sito Wallet assets are protected by applicable intellectual and industrial property laws. Unless expressly authorized, reproduction, distribution, transformation, or exploitation is not permitted.</p>"
       },
       {
-        "title": "6. Limitation of Liability",
-        "body": "<p>The app is provided <strong>“as is”</strong> and <strong>“as available”</strong>. We do not guarantee that the app will always work without interruptions, errors, or bugs. We are not responsible for any financial loss or damage resulting from the use of the app.</p>"
+        "title": "6. Privacy and cookies",
+        "body": "<p>Personal data processing is governed by the <a href=\"/privacy-policy\">Privacy Policy</a>. The use of cookies and similar technologies is described in the <a href=\"/cookies-policy\">Cookies Policy</a>.</p>"
       },
       {
-        "title": "7. Termination of Use",
-        "body": "<p>We reserve the right to suspend or terminate your access to the app if you misuse it, violate the Terms, or use it for unlawful activities.</p>"
+        "title": "7. Availability, maintenance, and changes",
+        "body": "<ul><li>We aim to keep the service continuously available, but interruptions may occur due to maintenance, technical incidents, or external causes.</li><li>We may modify features, structure, or content to improve the service or comply with technical, legal, or security requirements.</li><li>Updated versions of these terms become effective once published in the app.</li></ul>"
       },
       {
-        "title": "8. Governing Law",
-        "body": "<p>These Terms shall be governed by and interpreted according to the laws of Spain.</p>"
+        "title": "8. Warranty disclaimer and limitation of liability",
+        "body": "<p>The app is provided <strong>as is</strong> and <strong>as available</strong>. We do not guarantee full absence of bugs or downtime. To the extent permitted by law, we are not liable for indirect damages, lost profits, or financial decisions made by users based on app records.</p>"
+      },
+      {
+        "title": "9. Suspension or termination",
+        "body": "<p>We may suspend or limit access in case of misuse, breach of these terms, or risk to service security or third parties.</p>"
+      },
+      {
+        "title": "10. Governing law and jurisdiction",
+        "body": "<p>These terms are governed by Spanish law. Where legally allowed, disputes will be submitted to the courts of the service owner's domicile, without prejudice to consumer rights under applicable law.</p>"
+      },
+      {
+        "title": "11. Contact",
+        "body": "<p>For questions about these terms, use the contact channel published at <a href=\"https://sito8943.com\">https://sito8943.com</a>.</p>"
       }
     ]
   },
   "cookiesPolicy": {
-    "title": "Cookies Policy",
-    "body": "<p>This policy explains how <strong>Sito Wallet</strong> uses <strong>cookies and similar technologies</strong> when you use the app.</p><p>At this stage, we prioritize technical storage required for sign-in, preferences, and offline functionality. A complete legal version will be published with additional details and controls.</p>",
+    "title": "Cookies and Similar Technologies Policy",
+    "body": "<p>This policy explains how Sito Wallet uses cookies and local storage/access technologies on user devices, in line with Article 22.2 LSSI and applicable privacy regulations.</p><p><strong>Sito Wallet is completely free, open source, and does not operate with real money.</strong></p><p><strong>Last updated:</strong> March 29, 2026.</p>",
     "sections": [
       {
-        "title": "1. What we store in your browser",
-        "body": "<ul><li><strong>Local Storage</strong> for session and app preferences.</li><li><strong>IndexedDB</strong> for offline data and sync queues.</li><li>Technical identifiers and metadata required to keep synchronization working correctly.</li></ul>"
+        "title": "1. What cookies and similar technologies are",
+        "body": "<p>Beyond HTTP cookies, the app may use mechanisms such as <code>localStorage</code> and <code>IndexedDB</code> to store technical and operational information required for sessions, preferences, and offline functionality.</p>"
       },
       {
-        "title": "2. Purpose of this storage",
-        "body": "<ul><li>Keep you signed in and restore your session.</li><li>Allow the app to work in offline mode and synchronize changes later.</li><li>Remember some interface preferences to improve your experience.</li></ul>"
+        "title": "2. Technologies used in this app",
+        "body": "<ul><li><strong>Technical cookies</strong> related to client session/base libraries.</li><li><strong>Local Storage</strong> for session data, preferences, recent searches, feature flags, and sync metadata.</li><li><strong>IndexedDB</strong> for local financial data persistence and offline synchronization queues.</li></ul>"
       },
       {
-        "title": "3. Third-party cookies",
-        "body": "<p>We do not enable advertising cookies in this frontend by default. If non-essential third-party cookies are introduced in the future, this policy and the consent flow will be updated before activation.</p>"
+        "title": "3. Purposes",
+        "body": "<ul><li>Authentication and session continuity.</li><li>Remember essential user preferences.</li><li>Enable offline mode and deferred synchronization.</li><li>Improve technical stability and disconnection recovery.</li></ul>"
       },
       {
-        "title": "4. How to manage and revoke consent",
-        "body": "<p>You can clear or block cookies and local data using your browser settings. We will also provide an in-app cookie preferences entry point in upcoming updates so revocation is as easy as acceptance.</p>"
+        "title": "4. Legal basis",
+        "body": "<p>Technologies strictly necessary to provide the service explicitly requested by the user rely on the Article 22.2 LSSI exemption. If non-essential technologies are introduced in the future (for example, non-exempt analytics or advertising), prior consent will be requested before activation.</p>"
       },
       {
-        "title": "5. Last update",
-        "body": "<p>Last updated on <strong>March 29, 2026</strong>.</p>"
+        "title": "5. First-party and third-party cookies",
+        "body": "<p>At this time, behavioral advertising cookies are not enabled by default in this frontend. If third parties are integrated for non-exempt purposes, they will be explicitly listed in this policy (owner, purpose, duration, and related transfers).</p>"
+      },
+      {
+        "title": "6. Retention",
+        "body": "<p>Retention depends on purpose: some data lasts until sign-out, some until manual deletion by the user or browser/app cleanup, and some while needed for synchronization and technical security.</p>"
+      },
+      {
+        "title": "7. Management and withdrawal",
+        "body": "<ul><li>You can clear or block cookies and local storage through your browser settings.</li><li>When non-essential categories exist, the app will provide a preferences panel with equivalent accept/reject and revocation options at any time.</li><li>Withdrawing consent will be as easy as granting it.</li></ul>"
+      },
+      {
+        "title": "8. More information",
+        "body": "<p>For further details on personal data processing, see the <a href=\"/privacy-policy\">Privacy Policy</a>.</p>"
       }
     ]
   },
   "privacyPolicy": {
     "title": "Privacy Policy",
-    "body": "<p>This policy summarizes how <strong>Sito Wallet</strong> processes personal data when you use the app.</p><p>This is an initial operational version and will be expanded in the next legal review phase with full legal details.</p>",
+    "body": "<p>This policy describes how we process personal data in Sito Wallet and the rights available to users.</p><p><strong>Sito Wallet is completely free, open source, and does not operate with real money.</strong></p><p><strong>Last updated:</strong> March 29, 2026.</p>",
     "sections": [
       {
-        "title": "1. Data we process",
-        "body": "<ul><li>Account data such as username and email.</li><li>Profile data, including optional profile photo if you upload one.</li><li>Financial data you create in the app (accounts, categories, transactions, balances).</li><li>Technical sync data such as device identifiers and synchronization metadata.</li></ul>"
+        "title": "1. Data controller",
+        "body": "<ul><li><strong>Controller:</strong> sito8943 (Sito Wallet).</li><li><strong>General contact:</strong> <a href=\"https://sito8943.com\">https://sito8943.com</a>.</li><li><strong>Privacy contact:</strong> contact channel published on the official website.</li></ul>"
       },
       {
-        "title": "2. Why we process your data",
-        "body": "<ul><li>Provide core app features and maintain your account session.</li><li>Enable offline mode and synchronize your pending changes.</li><li>Improve reliability and diagnose technical issues.</li></ul>"
+        "title": "2. Categories of data processed",
+        "body": "<ul><li>Account and identification data (username, email, internal identifiers).</li><li>Profile data (display name, description, optional photo).</li><li>Financial data entered by users (accounts, balances, categories, transactions).</li><li>Session and synchronization technical data (tokens, device/sync metadata, connectivity status).</li><li>Locally stored usage preferences (language, onboarding, filters, recent searches, interface settings).</li></ul>"
       },
       {
-        "title": "3. Where data is stored",
-        "body": "<p>Data can be stored on our backend and also locally in your browser through <code>localStorage</code> and <code>IndexedDB</code> to support persistence and offline functionality.</p>"
+        "title": "3. Purposes and legal bases",
+        "body": "<ul><li><strong>Provide core service:</strong> performance of the user relationship/terms.</li><li><strong>Authentication and security:</strong> legitimate interest in protecting accounts and preventing unauthorized access.</li><li><strong>Persistence and offline functionality:</strong> performance of the service requested by the user.</li><li><strong>Technical support and stability improvements:</strong> legitimate interest in service continuity and quality.</li><li><strong>Regulatory compliance:</strong> when required by applicable law.</li><li><strong>Important:</strong> the app is only for record-keeping and organization; it does not execute real financial operations or hold money.</li></ul>"
       },
       {
-        "title": "4. Sharing and transfers",
-        "body": "<p>We do not sell your personal financial data. Data may be processed by technical providers needed to operate the service infrastructure.</p>"
+        "title": "4. Data sources",
+        "body": "<ul><li>Data provided directly by users during registration or feature usage.</li><li>Data generated through technical app usage (for example, synchronization status and local storage behavior).</li></ul>"
       },
       {
-        "title": "5. Your rights",
-        "body": "<p>You can request access, rectification, or deletion of your personal data and object to certain processing operations. For privacy requests, use the contact channel available at <a href=\"https://sito8943.com\" target=\"_blank\" rel=\"noopener noreferrer\">sito8943.com</a>.</p>"
+        "title": "5. Recipients and processors",
+        "body": "<p>We do not sell personal financial data. Data may be processed by technology providers acting as processors for hosting, API communications, storage, or infrastructure support, under contracts and appropriate safeguards.</p>"
       },
       {
-        "title": "6. Last update",
-        "body": "<p>Last updated on <strong>March 29, 2026</strong>.</p>"
+        "title": "6. International transfers",
+        "body": "<p>If any provider processes data outside the European Economic Area, appropriate safeguards will be applied in accordance with applicable law (for example, Standard Contractual Clauses or other valid mechanisms).</p>"
+      },
+      {
+        "title": "7. Retention periods",
+        "body": "<ul><li>Account and profile data: while the account remains active or until a valid erasure request, unless legal retention is required.</li><li>User-created financial data: until user deletion or account closure, with possible temporary backup retention.</li><li>Technical/sync metadata: for the period required for operational integrity, incident resolution, and service continuity.</li><li>Browser-local data: until sign-out, browser cleanup, or manual user deletion, depending on data type.</li></ul>"
+      },
+      {
+        "title": "8. User rights",
+        "body": "<p>You may exercise rights of access, rectification, erasure, objection, restriction, and portability where applicable. Use the service contact channel and clearly specify your request. Additional information may be required to verify identity when necessary.</p>"
+      },
+      {
+        "title": "9. Supervisory authority complaint",
+        "body": "<p>If you believe processing does not comply with applicable law, you may file a complaint with the competent supervisory authority. In Spain, the reference authority is the Spanish Data Protection Agency (AEPD): <a href=\"https://www.aepd.es\">https://www.aepd.es</a>.</p>"
+      },
+      {
+        "title": "10. Security",
+        "body": "<p>We apply reasonable technical and organizational measures to protect personal data against unauthorized access, alteration, loss, or destruction. No system is fully infallible, but we continuously review and improve safeguards.</p>"
+      },
+      {
+        "title": "11. Minors",
+        "body": "<p>The app is not intentionally designed for unsupervised use by minors. If you detect inappropriate processing of minors' data, contact us for review and, where appropriate, deletion.</p>"
+      },
+      {
+        "title": "12. Changes to this policy",
+        "body": "<p>We may update this policy to reflect legal, technical, or functional changes. The current version will remain published on this page with its update date.</p>"
       }
     ]
   },

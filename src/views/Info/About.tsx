@@ -1,4 +1,5 @@
 import { useTranslation, Trans } from "react-i18next";
+import { Link } from "react-router-dom";
 
 // types
 import { HowToStep } from "./types";
@@ -9,6 +10,21 @@ export const About = () => {
   const steps = t("_pages:about.howTo.steps", {
     returnObjects: true,
   }) as HowToStep[];
+
+  const legalLinks = [
+    {
+      to: "/terms-and-conditions",
+      label: t("_pages:about.legal.links.terms"),
+    },
+    {
+      to: "/privacy-policy",
+      label: t("_pages:about.legal.links.privacy"),
+    },
+    {
+      to: "/cookies-policy",
+      label: t("_pages:about.legal.links.cookies"),
+    },
+  ];
 
   return (
     <main className="py-10 px-5 gap-5">
@@ -42,6 +58,23 @@ export const About = () => {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="mt-8 bg-base p-5 rounded-2xl">
+        <h3 className="text-2xl font-bold">{t("_pages:about.legal.title")}</h3>
+        <p className="mt-2">{t("_pages:about.legal.body")}</p>
+        <ul className="mt-4 list-disc list-inside space-y-1">
+          {legalLinks.map((link) => (
+            <li key={link.to}>
+              <Link to={link.to} className="primary underline !font-bold">
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-4 text-sm text-text-muted">
+          {t("_pages:about.legal.updated")}
+        </p>
       </section>
     </main>
   );

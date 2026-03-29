@@ -17,7 +17,12 @@ export const TermsAndConditions = () => {
       </h2>
       <Trans
         i18nKey="_pages:termsAndConditions.body"
-        components={[<p />, <strong />]}
+        components={{
+          p: <p />,
+          strong: <strong />,
+          a: <a className="primary underline !font-bold" />,
+          code: <code className="bg-default px-1 rounded" />,
+        }}
       />
 
       <section className="mt-6 space-y-6">
@@ -30,8 +35,10 @@ export const TermsAndConditions = () => {
                 components={{
                   p: <p />,
                   strong: <strong />,
-                  ul: <ul className="list-disc ml-4" />,
+                  ul: <ul className="list-disc ml-4 space-y-1" />,
                   li: <li />,
+                  a: <a className="primary underline !font-bold" />,
+                  code: <code className="bg-default px-1 rounded" />,
                 }}
               />
             </div>

@@ -37,13 +37,7 @@ export const PrivacyPolicy = () => {
                   ul: <ul className="list-disc ml-4 space-y-1" />,
                   li: <li />,
                   code: <code className="bg-default px-1 rounded" />,
-                  a: (
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="primary underline !font-bold"
-                    />
-                  ),
+                  a: <a className="primary underline !font-bold" />,
                 }}
               />
             </div>

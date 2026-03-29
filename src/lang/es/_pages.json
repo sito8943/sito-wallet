@@ -317,7 +317,7 @@
   },
   "about": {
     "title": "Acerca de Sito Wallet",
-    "body": "<p>En <strong>Sito Wallet</strong> creemos que llevar el control de tu dinero debe ser fácil y sin estrés. Por eso te ofrecemos una app donde puedes gestionar todas tus cuentas, tanto digitales como físicas, desde un solo lugar.</p><p>Creada con cariño por <2>sito8943</2>, nuestra misión es ayudarte a entender y organizar tus finanzas de forma clara, segura y sin complicaciones.</p><p>Y lo mejor: <strong>es totalmente gratis</strong>. Porque creemos que tener control de tu dinero no debería costarte nada.</p>",
+    "body": "<p>En <strong>Sito Wallet</strong> creemos que llevar el control de tu dinero debe ser fácil y sin estrés. Por eso te ofrecemos una app donde puedes gestionar todas tus cuentas, tanto digitales como físicas, desde un solo lugar.</p><p>Creada con cariño por <2>sito8943</2>, nuestra misión es ayudarte a entender y organizar tus finanzas de forma clara, segura y sin complicaciones.</p><p>Y lo mejor: <strong>es totalmente gratis</strong>. Además, es un proyecto de <strong>código abierto (open source)</strong> y <strong>no opera con dinero real</strong>: solo registra y organiza la información que introduces.</p>",
     "howTo": {
       "title": "Lo que puedes hacer",
       "body": "En Sito Wallet tienes todo lo necesario para llevar un control total de tus finanzas, tanto digitales como físicas, gracias a sus herramientas simples y potentes.",
@@ -359,99 +359,157 @@
           ]
         }
       ]
+    },
+    "legal": {
+      "title": "Información legal y transparencia",
+      "body": "Antes de usar la app, revisa estas páginas para conocer condiciones, privacidad y uso de tecnologías de almacenamiento. Sito Wallet es gratuito, de código abierto y no gestiona dinero real.",
+      "links": {
+        "terms": "Términos y Condiciones",
+        "privacy": "Política de Privacidad",
+        "cookies": "Política de Cookies"
+      },
+      "updated": "Revisión legal de contenido: 29 de marzo de 2026."
     }
   },
   "termsAndConditions": {
-    "title": "Condiciones de uso",
-    "body": "<p>Bienvenido a <strong>Sito Wallet</strong>. Al descargar, acceder o usar nuestra aplicación, aceptas cumplir con estos Términos y Condiciones. Por favor, léelos con atención.</p>",
+    "title": "Términos y Condiciones",
+    "body": "<p>Al acceder o utilizar <strong>Sito Wallet</strong>, aceptas estos Términos y Condiciones. Si no estás de acuerdo, debes dejar de usar la aplicación.</p><p><strong>Sito Wallet es totalmente gratuita, de código abierto y no opera con dinero real.</strong></p><p><strong>Última actualización:</strong> 29 de marzo de 2026.</p>",
     "sections": [
       {
-        "title": "1. Sobre Sito Wallet",
-        "body": "<p><strong>Sito Wallet</strong> es una aplicación gratuita creada por <2>sito8943</2> con el objetivo de ayudarte a gestionar y organizar tus finanzas (digitales y físicas) en un solo lugar. La app ofrece herramientas para administrar monedas, cuentas, categorías de transacciones y movimientos. <strong>Sito Wallet</strong> se ofrece de manera <strong>totalmente gratuita</strong>.</p>"
+        "title": "1. Identificación del servicio",
+        "body": "<ul><li><strong>Servicio:</strong> Sito Wallet.</li><li><strong>Titular/Responsable del proyecto:</strong> sito8943.</li><li><strong>Contacto general:</strong> <a href=\"https://sito8943.com\">https://sito8943.com</a>.</li><li><strong>Datos fiscales o societarios:</strong> se publicarán cuando sean legalmente exigibles para la modalidad de explotación aplicable.</li></ul>"
       },
       {
-        "title": "2. Uso de la Aplicación",
-        "body": "<ul><li>Aceptas usar <strong>Sito Wallet</strong> únicamente para fines legales y de acuerdo con estos Términos.</li><li>Eres responsable de la exactitud de la información que ingreses (cuentas, transacciones, saldos, etc.).</li><li>La aplicación está pensada solo para la <strong>gestión personal de finanzas</strong> y no debe usarse para actividades ilegales o fraudulentas.</li></ul>"
+        "title": "2. Objeto del servicio",
+        "body": "<p>Sito Wallet ofrece funcionalidades para registrar y organizar finanzas personales, incluyendo cuentas, monedas, categorías y transacciones, con soporte de funcionamiento offline y sincronización. <strong>La app no custodia fondos, no ejecuta pagos ni conecta con cuentas bancarias para mover dinero real.</strong></p>"
       },
       {
-        "title": "3. Datos y Privacidad",
-        "body": "<ul><li><strong>Sito Wallet no vende ni comparte tus datos financieros personales</strong> con terceros.</li><li>La información que ingreses permanece bajo tu control.</li><li>Podemos recopilar datos de uso no identificables para mejorar la app (como errores o métricas de rendimiento).</li></ul>"
+        "title": "3. Registro, cuenta y acceso",
+        "body": "<ul><li>Eres responsable de custodiar tus credenciales y de la actividad realizada desde tu cuenta.</li><li>Debes proporcionar datos veraces y mantenerlos actualizados.</li><li>El acceso en modo invitado puede tener limitaciones frente al acceso autenticado.</li></ul>"
       },
       {
-        "title": "4. No Asesoría Financiera",
-        "body": "<p><strong>Sito Wallet</strong> proporciona herramientas para registrar y organizar tu dinero, pero no ofrecemos asesoría financiera, fiscal ni de inversión. Cualquier decisión que tomes basada en la información de la app es tu única responsabilidad.</p>"
+        "title": "4. Uso permitido y uso prohibido",
+        "body": "<ul><li>Solo puedes usar la app con fines lícitos y conforme a estos términos.</li><li>Queda prohibido utilizar la app para fraude, actividades ilícitas, suplantación o vulneración de derechos de terceros.</li><li>También queda prohibido intentar alterar, degradar o comprometer la seguridad o disponibilidad del servicio.</li></ul>"
       },
       {
-        "title": "5. Cambios y Actualizaciones",
-        "body": "<ul><li>Podemos actualizar o mejorar la aplicación periódicamente.</li><li>También podemos modificar estos Términos. Si lo hacemos, notificaremos a los usuarios con la nueva versión.</li><li>Al seguir usando la aplicación después de una actualización, aceptas los nuevos Términos.</li></ul>"
+        "title": "5. Propiedad intelectual",
+        "body": "<p>El código, diseño, marca, textos y demás elementos de Sito Wallet están protegidos por la normativa aplicable de propiedad intelectual e industrial. Salvo autorización expresa, no se permite su reproducción, distribución, transformación o explotación.</p>"
       },
       {
-        "title": "6. Limitación de Responsabilidad",
-        "body": "<p>La aplicación se ofrece <strong>“tal cual”</strong> y <strong>“según disponibilidad”</strong>. No garantizamos que siempre funcione sin interrupciones, errores o fallos. No somos responsables de pérdidas o daños financieros derivados del uso de la app.</p>"
+        "title": "6. Privacidad y cookies",
+        "body": "<p>El tratamiento de datos personales se regula en la <a href=\"/privacy-policy\">Política de Privacidad</a>. El uso de cookies y tecnologías similares se detalla en la <a href=\"/cookies-policy\">Política de Cookies</a>.</p>"
       },
       {
-        "title": "7. Terminación del Uso",
-        "body": "<p>Nos reservamos el derecho de suspender o terminar tu acceso a la aplicación si haces un uso indebido, violas los Términos o la usas para actividades ilegales.</p>"
+        "title": "7. Disponibilidad, mantenimiento y cambios",
+        "body": "<ul><li>Intentamos mantener el servicio disponible de forma continuada, pero puede haber interrupciones por mantenimiento, incidencias técnicas o causas externas.</li><li>Podemos modificar funcionalidades, estructura o contenidos para mejorar el servicio o adaptarlo a requisitos técnicos, legales o de seguridad.</li><li>Las versiones actualizadas de estos términos entrarán en vigor desde su publicación en la app.</li></ul>"
       },
       {
-        "title": "8. Legislación Aplicable",
-        "body": "<p>Estos Términos se regirán e interpretarán de acuerdo con las leyes de España.</p>"
+        "title": "8. Exclusión de garantías y limitación de responsabilidad",
+        "body": "<p>La app se proporciona <strong>tal cual</strong> y <strong>según disponibilidad</strong>. No garantizamos ausencia total de errores o indisponibilidades. En la medida permitida por la ley, no asumimos responsabilidad por daños indirectos, lucro cesante o decisiones financieras tomadas por el usuario basadas en los datos registrados en la app.</p>"
+      },
+      {
+        "title": "9. Suspensión o terminación",
+        "body": "<p>Podemos suspender o limitar el acceso cuando exista uso indebido, incumplimiento de estos términos o riesgo para la seguridad del servicio o de terceros.</p>"
+      },
+      {
+        "title": "10. Legislación aplicable y jurisdicción",
+        "body": "<p>Estos términos se rigen por la legislación española. Cuando la normativa lo permita, cualquier controversia se someterá a los juzgados y tribunales del domicilio del titular del servicio, sin perjuicio de los derechos que asistan a consumidores según la normativa aplicable.</p>"
+      },
+      {
+        "title": "11. Contacto",
+        "body": "<p>Para consultas sobre estos términos, puedes usar el canal publicado en <a href=\"https://sito8943.com\">https://sito8943.com</a>.</p>"
       }
     ]
   },
   "cookiesPolicy": {
-    "title": "Política de cookies",
-    "body": "<p>Esta política explica cómo <strong>Sito Wallet</strong> utiliza <strong>cookies y tecnologías similares</strong> cuando usas la app.</p><p>En esta fase priorizamos el almacenamiento técnico necesario para sesión, preferencias y funcionamiento offline. La versión legal completa se publicará con más detalle y controles adicionales.</p>",
+    "title": "Política de Cookies y Tecnologías Similares",
+    "body": "<p>Esta política explica cómo Sito Wallet utiliza cookies y tecnologías de almacenamiento/acceso local en el dispositivo del usuario, conforme al artículo 22.2 de la LSSI y normativa de privacidad aplicable.</p><p><strong>Sito Wallet es totalmente gratuita, de código abierto y no opera con dinero real.</strong></p><p><strong>Última actualización:</strong> 29 de marzo de 2026.</p>",
     "sections": [
       {
-        "title": "1. Qué almacenamos en tu navegador",
-        "body": "<ul><li><strong>Local Storage</strong> para sesión y preferencias de la app.</li><li><strong>IndexedDB</strong> para datos offline y colas de sincronización.</li><li>Identificadores técnicos y metadatos necesarios para mantener la sincronización.</li></ul>"
+        "title": "1. Qué son las cookies y tecnologías similares",
+        "body": "<p>Además de cookies HTTP, la app puede usar mecanismos como <code>localStorage</code> e <code>IndexedDB</code> para guardar información técnica y operativa necesaria para sesión, preferencias y funcionamiento offline.</p>"
       },
       {
-        "title": "2. Finalidad de este almacenamiento",
-        "body": "<ul><li>Mantener tu sesión iniciada y restaurarla cuando vuelvas.</li><li>Permitir funcionamiento en modo offline y sincronizar cambios después.</li><li>Recordar preferencias de interfaz para mejorar la experiencia.</li></ul>"
+        "title": "2. Tecnologías usadas en esta app",
+        "body": "<ul><li><strong>Cookies técnicas</strong> vinculadas a librerías/base de sesión del cliente.</li><li><strong>Local Storage</strong> para sesión, preferencias, búsquedas recientes, banderas de funcionalidades y metadatos de sincronización.</li><li><strong>IndexedDB</strong> para persistencia local de datos financieros y cola de sincronización offline.</li></ul>"
       },
       {
-        "title": "3. Cookies de terceros",
-        "body": "<p>En este frontend no activamos por defecto cookies publicitarias. Si en el futuro se incorporan cookies no necesarias de terceros, esta política y el flujo de consentimiento se actualizarán antes de activarlas.</p>"
+        "title": "3. Finalidades",
+        "body": "<ul><li>Autenticación y mantenimiento de sesión.</li><li>Recordar preferencias esenciales de uso.</li><li>Habilitar modo offline y sincronización diferida.</li><li>Mejorar estabilidad técnica y recuperación ante desconexiones.</li></ul>"
       },
       {
-        "title": "4. Cómo gestionar y revocar el consentimiento",
-        "body": "<p>Puedes borrar o bloquear cookies y datos locales desde la configuración de tu navegador. También incorporaremos un acceso permanente dentro de la app para gestionar cookies y revocar consentimiento de forma tan sencilla como aceptarlo.</p>"
+        "title": "4. Base de legitimación",
+        "body": "<p>Las tecnologías estrictamente necesarias para prestar el servicio solicitado por el usuario se apoyan en la excepción del artículo 22.2 LSSI. Si en el futuro se incorporan tecnologías no necesarias (por ejemplo, analítica no exenta o publicidad), se solicitará consentimiento previo antes de activarlas.</p>"
       },
       {
-        "title": "5. Última actualización",
-        "body": "<p>Última actualización: <strong>29 de marzo de 2026</strong>.</p>"
+        "title": "5. Cookies propias y de terceros",
+        "body": "<p>Actualmente, en este frontend no se activan cookies publicitarias comportamentales por defecto. Si se integran terceros con finalidades no exentas, se identificarán expresamente en esta política (titular, finalidad, duración y transferencias asociadas).</p>"
+      },
+      {
+        "title": "6. Conservación",
+        "body": "<p>La duración depende de la finalidad: algunos datos persisten hasta cierre de sesión, otros hasta borrado manual por el usuario o limpieza automática de la app/navegador, y otros mientras sean necesarios para sincronización y seguridad técnica.</p>"
+      },
+      {
+        "title": "7. Gestión y revocación",
+        "body": "<ul><li>Puedes borrar o bloquear cookies y almacenamiento local desde tu navegador.</li><li>Cuando existan categorías no necesarias, la app mostrará panel de preferencias con opciones equivalentes para aceptar/rechazar y revocar en cualquier momento.</li><li>La retirada del consentimiento será tan sencilla como su otorgamiento.</li></ul>"
+      },
+      {
+        "title": "8. Más información",
+        "body": "<p>Para más detalle sobre tratamiento de datos personales, consulta la <a href=\"/privacy-policy\">Política de Privacidad</a>.</p>"
       }
     ]
   },
   "privacyPolicy": {
-    "title": "Política de privacidad",
-    "body": "<p>Esta política resume cómo <strong>Sito Wallet</strong> trata datos personales cuando utilizas la aplicación.</p><p>Esta es una versión operativa inicial y se ampliará en la siguiente fase de revisión legal con el detalle jurídico completo.</p>",
+    "title": "Política de Privacidad",
+    "body": "<p>Esta política describe cómo tratamos datos personales en Sito Wallet y qué derechos te asisten como usuario.</p><p><strong>Sito Wallet es totalmente gratuita, de código abierto y no opera con dinero real.</strong></p><p><strong>Última actualización:</strong> 29 de marzo de 2026.</p>",
     "sections": [
       {
-        "title": "1. Datos que tratamos",
-        "body": "<ul><li>Datos de cuenta como usuario y correo electrónico.</li><li>Datos de perfil, incluida foto de perfil opcional si la subes.</li><li>Datos financieros que creas en la app (cuentas, categorías, transacciones, saldos).</li><li>Datos técnicos de sincronización como identificadores de dispositivo y metadatos de sync.</li></ul>"
+        "title": "1. Responsable del tratamiento",
+        "body": "<ul><li><strong>Responsable:</strong> sito8943 (Sito Wallet).</li><li><strong>Contacto general:</strong> <a href=\"https://sito8943.com\">https://sito8943.com</a>.</li><li><strong>Contacto para privacidad:</strong> canal de contacto publicado en el sitio oficial.</li></ul>"
       },
       {
-        "title": "2. Para qué tratamos los datos",
-        "body": "<ul><li>Prestar las funcionalidades principales de la app y mantener tu sesión.</li><li>Permitir modo offline y sincronizar cambios pendientes.</li><li>Mejorar estabilidad técnica y diagnosticar errores.</li></ul>"
+        "title": "2. Categorías de datos tratados",
+        "body": "<ul><li>Datos de identificación y cuenta (usuario, email, identificadores internos).</li><li>Datos de perfil (nombre visible, descripción y foto opcional).</li><li>Datos financieros introducidos por el usuario (cuentas, saldos, categorías y transacciones).</li><li>Datos técnicos de sesión y sincronización (tokens, metadatos de dispositivo/sync, estado de conectividad).</li><li>Preferencias de uso almacenadas localmente (idioma, onboarding, filtros, búsquedas recientes y ajustes de interfaz).</li></ul>"
       },
       {
-        "title": "3. Dónde se almacenan los datos",
-        "body": "<p>Los datos pueden almacenarse en backend y también localmente en tu navegador mediante <code>localStorage</code> e <code>IndexedDB</code> para soportar persistencia y funcionamiento offline.</p>"
+        "title": "3. Finalidades y bases jurídicas",
+        "body": "<ul><li><strong>Prestar el servicio principal:</strong> ejecución de la relación contractual/condiciones de uso.</li><li><strong>Autenticación y seguridad:</strong> interés legítimo en proteger cuentas y prevenir accesos indebidos.</li><li><strong>Persistencia y funcionamiento offline:</strong> ejecución del servicio solicitado por el usuario.</li><li><strong>Soporte técnico y mejora de estabilidad:</strong> interés legítimo en mantener continuidad y calidad del servicio.</li><li><strong>Cumplimiento normativo:</strong> cuando exista obligación legal aplicable.</li><li><strong>Importante:</strong> la app solo sirve para registro y organización; no realiza operaciones financieras reales ni custodia dinero.</li></ul>"
       },
       {
-        "title": "4. Cesiones y transferencias",
-        "body": "<p>No vendemos tus datos financieros personales. Los datos pueden ser tratados por proveedores técnicos necesarios para operar la infraestructura del servicio.</p>"
+        "title": "4. Origen de los datos",
+        "body": "<ul><li>Datos proporcionados directamente por el usuario al registrarse o usar funcionalidades.</li><li>Datos generados por el uso técnico de la app (por ejemplo, estado de sincronización y almacenamiento local).</li></ul>"
       },
       {
-        "title": "5. Tus derechos",
-        "body": "<p>Puedes solicitar acceso, rectificación o eliminación de tus datos personales y oponerte a determinados tratamientos. Para solicitudes de privacidad, usa el canal de contacto disponible en <a href=\"https://sito8943.com\" target=\"_blank\" rel=\"noopener noreferrer\">sito8943.com</a>.</p>"
+        "title": "5. Destinatarios y encargados",
+        "body": "<p>No vendemos datos personales financieros. Los datos pueden ser tratados por proveedores tecnológicos que actúan como encargados del tratamiento para hosting, comunicaciones API, almacenamiento o soporte de infraestructura, bajo contratos y medidas de protección apropiadas.</p>"
       },
       {
-        "title": "6. Última actualización",
-        "body": "<p>Última actualización: <strong>29 de marzo de 2026</strong>.</p>"
+        "title": "6. Transferencias internacionales",
+        "body": "<p>Si algún proveedor trata datos fuera del Espacio Económico Europeo, se aplicarán garantías adecuadas conforme a la normativa aplicable (por ejemplo, cláusulas contractuales tipo u otros mecanismos válidos).</p>"
+      },
+      {
+        "title": "7. Plazos de conservación",
+        "body": "<ul><li>Datos de cuenta y perfil: mientras la cuenta esté activa o hasta solicitud válida de supresión, salvo obligación legal de conservación.</li><li>Datos financieros creados por el usuario: hasta su eliminación por el usuario o por cierre de cuenta, con posibles copias de seguridad temporales.</li><li>Metadatos técnicos/sync: durante el tiempo necesario para integridad operativa, resolución de incidencias y continuidad del servicio.</li><li>Datos locales en navegador: hasta cierre de sesión, limpieza del navegador o eliminación manual por el usuario, según cada tipo de dato.</li></ul>"
+      },
+      {
+        "title": "8. Derechos de las personas usuarias",
+        "body": "<p>Puedes ejercer los derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad cuando sean aplicables. Para ello, utiliza el canal de contacto del servicio e indica claramente tu solicitud. Podremos requerir información adicional para verificar identidad cuando sea necesario.</p>"
+      },
+      {
+        "title": "9. Reclamación ante autoridad de control",
+        "body": "<p>Si consideras que el tratamiento no se ajusta a la normativa, puedes presentar reclamación ante la autoridad competente. En España, la autoridad de referencia es la Agencia Española de Protección de Datos (AEPD): <a href=\"https://www.aepd.es\">https://www.aepd.es</a>.</p>"
+      },
+      {
+        "title": "10. Seguridad",
+        "body": "<p>Aplicamos medidas técnicas y organizativas razonables para proteger los datos personales frente a acceso no autorizado, alteración, pérdida o destrucción. Ningún sistema es totalmente infalible, pero revisamos y mejoramos controles de forma continua.</p>"
+      },
+      {
+        "title": "11. Menores de edad",
+        "body": "<p>La app no está diseñada para el uso intencional por menores sin supervisión legal adecuada. Si detectas un tratamiento inadecuado de datos de menores, contáctanos para su revisión y, en su caso, eliminación.</p>"
+      },
+      {
+        "title": "12. Cambios en esta política",
+        "body": "<p>Podemos actualizar esta política para adaptarla a cambios legales, técnicos o funcionales. Publicaremos la versión vigente en esta página con su fecha de actualización.</p>"
       }
     ]
   },

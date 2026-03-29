@@ -36,30 +36,30 @@ Cerrar los huecos detectados en `about`, `terms and conditions`, `cookies policy
 
 ## Fase 1 - Redaccion legal completa (ES/EN)
 
-- [ ] `Terms and Conditions`:
-  - [ ] Incluir identificacion del prestador (titular, domicilio, email legal, NIF si aplica).
-  - [ ] Definir alcance del servicio, licencia de uso, limitaciones y responsabilidad.
-  - [ ] Definir modificaciones de terminos (fecha y entrada en vigor).
-  - [ ] Incluir jurisdiccion/ley aplicable y via de contacto.
-- [ ] `Privacy Policy`:
-  - [ ] Responsable del tratamiento y contacto.
-  - [ ] Finalidades concretas por tratamiento.
-  - [ ] Base juridica por finalidad.
-  - [ ] Categorias de datos tratadas.
-  - [ ] Destinatarios/encargados y transferencias internacionales.
-  - [ ] Plazos de conservacion o criterios.
-  - [ ] Derechos RGPD y como ejercerlos.
-  - [ ] Derecho a reclamar ante AEPD.
-  - [ ] Medidas de seguridad (alto nivel, sin revelar detalles sensibles).
-- [ ] `Cookies Policy`:
-  - [ ] Inventario real de cookies y tecnologias similares.
-  - [ ] Finalidad, titular, duracion y tipo por cada una.
-  - [ ] Distinguir tecnicas (exentas) vs no exentas.
-  - [ ] Explicar como retirar/reconfigurar consentimiento.
-  - [ ] Añadir fecha de ultima actualizacion.
-- [ ] `About`:
-  - [ ] Mantener contenido de producto, pero enlazar claramente a terminos/privacidad/cookies.
-  - [ ] Añadir fecha de revision legal.
+- [x] `Terms and Conditions`:
+  - [x] Incluir identificacion del prestador (titular, domicilio, email legal, NIF si aplica).
+  - [x] Definir alcance del servicio, licencia de uso, limitaciones y responsabilidad.
+  - [x] Definir modificaciones de terminos (fecha y entrada en vigor).
+  - [x] Incluir jurisdiccion/ley aplicable y via de contacto.
+- [x] `Privacy Policy`:
+  - [x] Responsable del tratamiento y contacto.
+  - [x] Finalidades concretas por tratamiento.
+  - [x] Base juridica por finalidad.
+  - [x] Categorias de datos tratadas.
+  - [x] Destinatarios/encargados y transferencias internacionales.
+  - [x] Plazos de conservacion o criterios.
+  - [x] Derechos RGPD y como ejercerlos.
+  - [x] Derecho a reclamar ante AEPD.
+  - [x] Medidas de seguridad (alto nivel, sin revelar detalles sensibles).
+- [x] `Cookies Policy`:
+  - [x] Inventario real de cookies y tecnologias similares.
+  - [x] Finalidad, titular, duracion y tipo por cada una.
+  - [x] Distinguir tecnicas (exentas) vs no exentas.
+  - [x] Explicar como retirar/reconfigurar consentimiento.
+  - [x] Añadir fecha de ultima actualizacion.
+- [x] `About`:
+  - [x] Mantener contenido de producto, pero enlazar claramente a terminos/privacidad/cookies.
+  - [x] Añadir fecha de revision legal.
 
 ## Fase 2 - Implementacion tecnica de consentimiento
 
