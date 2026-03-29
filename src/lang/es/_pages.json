@@ -400,10 +400,60 @@
     ]
   },
   "cookiesPolicy": {
-    "title": "Política de cookies"
+    "title": "Política de cookies",
+    "body": "<p>Esta política explica cómo <strong>Sito Wallet</strong> utiliza <strong>cookies y tecnologías similares</strong> cuando usas la app.</p><p>En esta fase priorizamos el almacenamiento técnico necesario para sesión, preferencias y funcionamiento offline. La versión legal completa se publicará con más detalle y controles adicionales.</p>",
+    "sections": [
+      {
+        "title": "1. Qué almacenamos en tu navegador",
+        "body": "<ul><li><strong>Local Storage</strong> para sesión y preferencias de la app.</li><li><strong>IndexedDB</strong> para datos offline y colas de sincronización.</li><li>Identificadores técnicos y metadatos necesarios para mantener la sincronización.</li></ul>"
+      },
+      {
+        "title": "2. Finalidad de este almacenamiento",
+        "body": "<ul><li>Mantener tu sesión iniciada y restaurarla cuando vuelvas.</li><li>Permitir funcionamiento en modo offline y sincronizar cambios después.</li><li>Recordar preferencias de interfaz para mejorar la experiencia.</li></ul>"
+      },
+      {
+        "title": "3. Cookies de terceros",
+        "body": "<p>En este frontend no activamos por defecto cookies publicitarias. Si en el futuro se incorporan cookies no necesarias de terceros, esta política y el flujo de consentimiento se actualizarán antes de activarlas.</p>"
+      },
+      {
+        "title": "4. Cómo gestionar y revocar el consentimiento",
+        "body": "<p>Puedes borrar o bloquear cookies y datos locales desde la configuración de tu navegador. También incorporaremos un acceso permanente dentro de la app para gestionar cookies y revocar consentimiento de forma tan sencilla como aceptarlo.</p>"
+      },
+      {
+        "title": "5. Última actualización",
+        "body": "<p>Última actualización: <strong>29 de marzo de 2026</strong>.</p>"
+      }
+    ]
   },
   "privacyPolicy": {
-    "title": "Política de privacidad"
+    "title": "Política de privacidad",
+    "body": "<p>Esta política resume cómo <strong>Sito Wallet</strong> trata datos personales cuando utilizas la aplicación.</p><p>Esta es una versión operativa inicial y se ampliará en la siguiente fase de revisión legal con el detalle jurídico completo.</p>",
+    "sections": [
+      {
+        "title": "1. Datos que tratamos",
+        "body": "<ul><li>Datos de cuenta como usuario y correo electrónico.</li><li>Datos de perfil, incluida foto de perfil opcional si la subes.</li><li>Datos financieros que creas en la app (cuentas, categorías, transacciones, saldos).</li><li>Datos técnicos de sincronización como identificadores de dispositivo y metadatos de sync.</li></ul>"
+      },
+      {
+        "title": "2. Para qué tratamos los datos",
+        "body": "<ul><li>Prestar las funcionalidades principales de la app y mantener tu sesión.</li><li>Permitir modo offline y sincronizar cambios pendientes.</li><li>Mejorar estabilidad técnica y diagnosticar errores.</li></ul>"
+      },
+      {
+        "title": "3. Dónde se almacenan los datos",
+        "body": "<p>Los datos pueden almacenarse en backend y también localmente en tu navegador mediante <code>localStorage</code> e <code>IndexedDB</code> para soportar persistencia y funcionamiento offline.</p>"
+      },
+      {
+        "title": "4. Cesiones y transferencias",
+        "body": "<p>No vendemos tus datos financieros personales. Los datos pueden ser tratados por proveedores técnicos necesarios para operar la infraestructura del servicio.</p>"
+      },
+      {
+        "title": "5. Tus derechos",
+        "body": "<p>Puedes solicitar acceso, rectificación o eliminación de tus datos personales y oponerte a determinados tratamientos. Para solicitudes de privacidad, usa el canal de contacto disponible en <a href=\"https://sito8943.com\" target=\"_blank\" rel=\"noopener noreferrer\">sito8943.com</a>.</p>"
+      },
+      {
+        "title": "6. Última actualización",
+        "body": "<p>Última actualización: <strong>29 de marzo de 2026</strong>.</p>"
+      }
+    ]
   },
   "notFound": {
     "title": "No encontrado",

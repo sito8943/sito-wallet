@@ -7,9 +7,9 @@
     "transactionCategories": "Categories",
     "currencies": "Currencies",
     "about": "About Sito Wallet",
-    "termsAndConditions": "Terms and Conditions",
-    "cookiesPolicy": "Cookies Policy",
-    "privacyPolicy": "Privacy Policy"
+    "terms-and-conditions": "Terms and Conditions",
+    "cookies-policy": "Cookies Policy",
+    "privacy-policy": "Privacy Policy"
   },
   "search": {
     "label": "Search",
@@ -397,10 +397,60 @@
     ]
   },
   "cookiesPolicy": {
-    "title": "Cookies Policy"
+    "title": "Cookies Policy",
+    "body": "<p>This policy explains how <strong>Sito Wallet</strong> uses <strong>cookies and similar technologies</strong> when you use the app.</p><p>At this stage, we prioritize technical storage required for sign-in, preferences, and offline functionality. A complete legal version will be published with additional details and controls.</p>",
+    "sections": [
+      {
+        "title": "1. What we store in your browser",
+        "body": "<ul><li><strong>Local Storage</strong> for session and app preferences.</li><li><strong>IndexedDB</strong> for offline data and sync queues.</li><li>Technical identifiers and metadata required to keep synchronization working correctly.</li></ul>"
+      },
+      {
+        "title": "2. Purpose of this storage",
+        "body": "<ul><li>Keep you signed in and restore your session.</li><li>Allow the app to work in offline mode and synchronize changes later.</li><li>Remember some interface preferences to improve your experience.</li></ul>"
+      },
+      {
+        "title": "3. Third-party cookies",
+        "body": "<p>We do not enable advertising cookies in this frontend by default. If non-essential third-party cookies are introduced in the future, this policy and the consent flow will be updated before activation.</p>"
+      },
+      {
+        "title": "4. How to manage and revoke consent",
+        "body": "<p>You can clear or block cookies and local data using your browser settings. We will also provide an in-app cookie preferences entry point in upcoming updates so revocation is as easy as acceptance.</p>"
+      },
+      {
+        "title": "5. Last update",
+        "body": "<p>Last updated on <strong>March 29, 2026</strong>.</p>"
+      }
+    ]
   },
   "privacyPolicy": {
-    "title": "Privacy Policy"
+    "title": "Privacy Policy",
+    "body": "<p>This policy summarizes how <strong>Sito Wallet</strong> processes personal data when you use the app.</p><p>This is an initial operational version and will be expanded in the next legal review phase with full legal details.</p>",
+    "sections": [
+      {
+        "title": "1. Data we process",
+        "body": "<ul><li>Account data such as username and email.</li><li>Profile data, including optional profile photo if you upload one.</li><li>Financial data you create in the app (accounts, categories, transactions, balances).</li><li>Technical sync data such as device identifiers and synchronization metadata.</li></ul>"
+      },
+      {
+        "title": "2. Why we process your data",
+        "body": "<ul><li>Provide core app features and maintain your account session.</li><li>Enable offline mode and synchronize your pending changes.</li><li>Improve reliability and diagnose technical issues.</li></ul>"
+      },
+      {
+        "title": "3. Where data is stored",
+        "body": "<p>Data can be stored on our backend and also locally in your browser through <code>localStorage</code> and <code>IndexedDB</code> to support persistence and offline functionality.</p>"
+      },
+      {
+        "title": "4. Sharing and transfers",
+        "body": "<p>We do not sell your personal financial data. Data may be processed by technical providers needed to operate the service infrastructure.</p>"
+      },
+      {
+        "title": "5. Your rights",
+        "body": "<p>You can request access, rectification, or deletion of your personal data and object to certain processing operations. For privacy requests, use the contact channel available at <a href=\"https://sito8943.com\" target=\"_blank\" rel=\"noopener noreferrer\">sito8943.com</a>.</p>"
+      },
+      {
+        "title": "6. Last update",
+        "body": "<p>Last updated on <strong>March 29, 2026</strong>.</p>"
+      }
+    ]
   },
   "notFound": {
     "title": "Not Found",
