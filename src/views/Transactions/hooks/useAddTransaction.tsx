@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { useNotification, useFormDialog } from "@sito/dashboard-app";
+import { useNotification, usePostDialog } from "@sito/dashboard-app";
 
 // providers
 import { useManager } from "providers";
@@ -10,7 +10,7 @@ import { useManager } from "providers";
 import { TransactionsQueryKeys } from "hooks";
 
 // utils
-import { addEmptyTransaction, dtoToForm, formToDto } from "../utils";
+import { addEmptyTransaction, formToDto } from "../utils";
 
 // types
 import {
@@ -33,14 +33,12 @@ export function useAddTransaction(
 
   const { showErrorNotification } = useNotification();
 
-  const { handleSubmit, setError, ...rest } = useFormDialog<
-    TransactionDto,
+  const { handleSubmit, setError, ...rest } = usePostDialog<
     AddTransactionDto,
     TransactionDto,
     TransactionFormType
   >({
     formToDto,
-    dtoToForm,
     defaultValues: addEmptyTransaction(account),
     mutationFn: (data) => manager.Transactions.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),

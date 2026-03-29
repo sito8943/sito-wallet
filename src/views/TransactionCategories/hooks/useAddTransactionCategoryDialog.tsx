@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { useFormDialog } from "@sito/dashboard-app";
+import { usePostDialog } from "@sito/dashboard-app";
 
 // providers
 import { useManager } from "providers";
@@ -10,7 +10,7 @@ import { useManager } from "providers";
 import { TransactionCategoriesQueryKeys } from "hooks";
 
 // utils
-import { addEmptyTransactionCategory, dtoToForm, formToDto } from "../utils";
+import { addEmptyTransactionCategory, formToDto } from "../utils";
 
 // types
 import { TransactionCategoryFormType } from "../types";
@@ -23,14 +23,12 @@ export function useAddTransactionCategoryDialog() {
 
   const manager = useManager();
 
-  const { handleSubmit, ...rest } = useFormDialog<
-    TransactionCategoryDto,
+  const { handleSubmit, ...rest } = usePostDialog<
     AddTransactionCategoryDto,
     TransactionCategoryDto,
     TransactionCategoryFormType
   >({
     formToDto,
-    dtoToForm,
     defaultValues: addEmptyTransactionCategory,
     mutationFn: (data) => manager.TransactionCategories.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),

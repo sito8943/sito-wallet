@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { useFormDialog } from "@sito/dashboard-app";
+import { usePutDialog } from "@sito/dashboard-app";
 
 // providers
 import { useManager } from "providers";
@@ -23,7 +23,7 @@ export function useEditAccountDialog() {
 
   const manager = useManager();
 
-  return useFormDialog<
+  return usePutDialog<
     AccountDto,
     UpdateAccountDto,
     AccountDto,

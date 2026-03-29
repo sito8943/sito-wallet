@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 // @sito/dashboard-app
 import {
   isHttpError,
-  useFormDialog,
+  usePostDialog,
   useNotification,
 } from "@sito/dashboard-app";
 
@@ -15,7 +15,7 @@ import { useManager } from "providers";
 import { CurrenciesQueryKeys } from "hooks";
 
 // utils
-import { addEmptyCurrency, dtoToForm, formToDto } from "../utils";
+import { addEmptyCurrency, formToDto } from "../utils";
 
 // lib
 import { AddCurrencyDto, CurrencyDto } from "lib";
@@ -30,14 +30,12 @@ export function useAddCurrency() {
 
   const queryKey = useMemo(() => CurrenciesQueryKeys.all().queryKey, []);
 
-  const { handleSubmit, ...rest } = useFormDialog<
-    CurrencyDto,
+  const { handleSubmit, ...rest } = usePostDialog<
     AddCurrencyDto,
     CurrencyDto,
     CurrencyFormType
   >({
     formToDto,
-    dtoToForm,
     defaultValues: addEmptyCurrency,
     mutationFn: (data) => manager.Currencies.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),

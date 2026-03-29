@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 // @sito/dashboard-app
 import {
   isHttpError,
-  useFormDialog,
+  usePutDialog,
   useNotification,
 } from "@sito/dashboard-app";
 
@@ -28,7 +28,7 @@ export function useEditCurrency() {
   const manager = useManager();
   const { showErrorNotification } = useNotification();
 
-  return useFormDialog<
+  return usePutDialog<
     CurrencyDto,
     UpdateCurrencyDto,
     CurrencyDto,

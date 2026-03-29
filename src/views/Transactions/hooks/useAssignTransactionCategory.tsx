@@ -6,7 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTags } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
-import { useFormDialog, UseActionDialog } from "@sito/dashboard-app";
+import {
+  usePutDialog,
+  UseActionDialog,
+  usePostDialog,
+} from "@sito/dashboard-app";
 
 // providers
 import { useManager } from "providers";
@@ -34,8 +38,7 @@ export function useAssignTransactionCategoryAction(): UseActionDialog<
 
   const manager = useManager();
 
-  const dialog = useFormDialog<
-    AssignTransactionCategoryDto,
+  const dialog = usePostDialog<
     AssignTransactionCategoryDto,
     number,
     AssignTransactionCategoryFormType

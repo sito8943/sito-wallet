@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useQueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
-import { useFormDialog } from "@sito/dashboard-app";
+import { usePostDialog } from "@sito/dashboard-app";
 
 // hooks
 import { useAdjustBalanceAction } from "./useAdjustBalanceAction";
@@ -38,8 +38,7 @@ export const useAdjustBalanceMutation = () => {
     null,
   );
 
-  const formDialog = useFormDialog<
-    TransactionDto,
+  const formDialog = usePostDialog<
     AdjustBalanceDto,
     TransactionDto,
     AdjustBalanceFormType

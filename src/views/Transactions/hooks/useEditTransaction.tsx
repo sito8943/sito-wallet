@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 // @sito/dashboard-app
 import {
   useEditAction,
-  useFormDialog,
+  usePutDialog,
   UseActionDialog,
 } from "@sito/dashboard-app";
 
@@ -30,7 +30,7 @@ export function useEditTransaction(): UseActionDialog<
 
   const manager = useManager();
 
-  const { openDialog: onClick, ...rest } = useFormDialog<
+  const { openDialog: onClick, ...rest } = usePutDialog<
     TransactionDto,
     UpdateTransactionDto,
     TransactionDto,

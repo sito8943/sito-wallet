@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { useFormDialog } from "@sito/dashboard-app";
+import { usePostDialog } from "@sito/dashboard-app";
 
 // providers
 import { useManager } from "providers";
@@ -10,7 +10,7 @@ import { useManager } from "providers";
 import { DashboardsQueryKeys } from "hooks";
 
 // utils
-import { addEmptyDashboard, dtoToAddForm, formToAddDto } from "../utils";
+import { addEmptyDashboard, formToAddDto } from "../utils";
 
 // lib
 import { AddDashboardDto, DashboardDto } from "lib";
@@ -23,14 +23,12 @@ export function useAddDashboardCard() {
 
   const manager = useManager();
 
-  const { handleSubmit, ...rest } = useFormDialog<
-    DashboardDto,
+  const { handleSubmit, ...rest } = usePostDialog<
     AddDashboardDto,
     DashboardDto,
     DashboardFormType
   >({
     formToDto: formToAddDto,
-    dtoToForm: dtoToAddForm,
     defaultValues: addEmptyDashboard,
     mutationFn: (data) => manager.Dashboard.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
