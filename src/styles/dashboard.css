@@ -208,5 +208,5 @@ select > option {
 }
 
 .to-top {
-  @apply bottom-20;
+  @apply bottom-20 z-10;
 }
