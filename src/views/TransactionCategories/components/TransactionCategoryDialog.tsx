@@ -27,6 +27,7 @@ import { Tables, TransactionType } from "lib";
 
 // utils
 import { icons } from "../../Transactions/components/utils";
+import { normalizeTransactionCategoryColor } from "../utils";
 
 export function TransactionCategoryForm(
   props: TransactionCategoryFormPropsType,
@@ -92,6 +93,25 @@ export function TransactionCategoryForm(
             )}`}
             label={t("_entities:base.name.label")}
             placeholder={t("_entities:transactionCategory.name.placeholder")}
+            {...rest}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="color"
+        disabled={isLoading}
+        render={({ field: { value, ...rest } }) => (
+          <TextInput
+            required
+            type="color"
+            value={normalizeTransactionCategoryColor(value)}
+            autoComplete={`${Tables.TransactionCategories}-${t(
+              "_entities:base.color.label",
+            )}`}
+            label={t("_entities:base.color.label")}
+            aria-label={t("_accessibility:labels.colorPicker")}
+            inputClassName="!h-12 !cursor-pointer !p-1"
             {...rest}
           />
         )}

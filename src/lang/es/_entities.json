@@ -27,6 +27,9 @@
       "empty": "Sin descripción",
       "placeholder": "Alguna descripción"
     },
+    "color": {
+      "label": "Color"
+    },
     "id": {
       "label": "Id"
     },

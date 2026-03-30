@@ -54,6 +54,7 @@ export class TransactionCategoryIndexedDBClient extends IndexedDBClient<
       {
         name: value.name,
         description: value.description,
+        color: value.color,
         type: value.type,
       },
       created.id,
@@ -94,6 +95,7 @@ export class TransactionCategoryIndexedDBClient extends IndexedDBClient<
         id: updateValue.id,
         name: updateValue.name,
         description: updateValue.description,
+        color: updateValue.color,
         type: updateValue.type,
       },
       updateValue.id,
