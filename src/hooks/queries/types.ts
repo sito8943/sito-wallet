@@ -23,6 +23,11 @@ export type UseFetchByIdPropsType = {
   id: number;
 };
 
+export type UseMyProfileProps = {
+  ensure?: boolean;
+  defaultName?: string;
+};
+
 export interface ApiQueryResult<
   TResponseDto extends BaseEntityDto,
 > extends Omit<UseQueryResult<QueryResult<TResponseDto>>, "setTotal"> {

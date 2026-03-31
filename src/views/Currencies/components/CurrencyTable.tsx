@@ -6,10 +6,7 @@ import { WalletTable } from "components";
 
 // lib
 import { EntityName, ImportPreviewCurrencyDto, useParseColumns } from "lib";
-
-type CurrencyTableProps = {
-  items?: ImportPreviewCurrencyDto[] | null;
-};
+import type { CurrencyTableProps } from "./types";
 
 export const CurrencyTable = (props: CurrencyTableProps) => {
   const { items } = props;

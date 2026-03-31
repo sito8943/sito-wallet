@@ -7,12 +7,8 @@ import { useManager, useOfflineManager } from "providers";
 import { useAuth } from "@sito/dashboard-app";
 
 // types
-import { ProfileDto } from "lib";
-
-type UseMyProfileProps = {
-  ensure?: boolean;
-  defaultName?: string;
-};
+import type { ProfileDto } from "lib";
+import type { UseMyProfileProps } from "./types";
 
 export const ProfileQueryKeys = {
   all: () => ({

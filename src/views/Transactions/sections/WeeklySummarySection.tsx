@@ -1,12 +1,9 @@
 import { useTranslation } from "react-i18next";
 
-import { TransactionType, AccountDto } from "lib";
+import { TransactionType } from "lib";
 
 import { WeeklyCard } from "../components/WeeklyCard";
-
-type WeeklySummarySectionProps = {
-  selectedAccount?: AccountDto | null;
-};
+import type { WeeklySummarySectionProps } from "./types";
 
 export const WeeklySummarySection = (props: WeeklySummarySectionProps) => {
   const { selectedAccount } = props;

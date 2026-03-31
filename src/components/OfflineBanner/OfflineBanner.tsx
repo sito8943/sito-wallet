@@ -2,10 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useOnlineStatus } from "hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWarning } from "@fortawesome/free-solid-svg-icons";
-
-type OfflineBannerProps = {
-  forceVisible?: boolean;
-};
+import type { OfflineBannerProps } from "./types";
 
 export function OfflineBanner({ forceVisible = false }: OfflineBannerProps) {
   const isOnline = useOnlineStatus();

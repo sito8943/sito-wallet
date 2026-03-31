@@ -1,23 +1,11 @@
-import {
-  ImgHTMLAttributes,
-  ReactNode,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useEffect, useMemo, useState } from "react";
 
 // @sito/dashboard-app
 import { useAuth } from "@sito/dashboard-app";
 
 // config
 import { config } from "../../config";
-
-type ImagePropsType = Omit<ImgHTMLAttributes<HTMLImageElement>, "src"> & {
-  endpoint: string;
-  fallback?: ReactNode;
-  token?: string;
-  baseUrl?: string;
-};
+import type { ImagePropsType } from "./types";
 
 const resolveUrl = (endpoint: string, baseUrl: string) => {
   if (/^https?:\/\//i.test(endpoint)) return endpoint;

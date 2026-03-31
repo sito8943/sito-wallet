@@ -1,10 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useNavbar, ActionsDropdown, Actions } from "@sito/dashboard-app";
-import type { ActionPropsType, BaseDto } from "@sito/dashboard";
-
-type ActionsDropdownActions<TRow extends BaseDto> = ActionPropsType<TRow>[];
-type ActionsDropdownAction<TRow extends BaseDto> =
-  ActionsDropdownActions<TRow>[number];
+import type { BaseDto } from "@sito/dashboard";
+import type { ActionsDropdownAction, ActionsDropdownActions } from "./types";
 
 const MOBILE_NAVBAR_MEDIA_QUERY = "(max-width: 639px)";
 

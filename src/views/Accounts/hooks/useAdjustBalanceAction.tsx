@@ -10,14 +10,10 @@ import { faScaleBalanced } from "@fortawesome/free-solid-svg-icons";
 
 // types
 import { AccountActions } from "../types";
+import type { UseAdjustBalanceActionProps } from "./types";
 
 // lib
 import { AccountDto } from "lib";
-
-interface UseAdjustBalanceActionProps {
-  onClick: (record: AccountDto) => void;
-  hidden?: boolean;
-}
 
 export const useAdjustBalanceAction = (props: UseAdjustBalanceActionProps) => {
   const { t } = useTranslation();

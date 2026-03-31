@@ -1,9 +1,5 @@
-import { TabsLayout, TabsType } from "@sito/dashboard-app";
-
-type TransactionsDesktopSectionProps = {
-  tabValue?: number;
-  tabs: TabsType[];
-};
+import { TabsLayout } from "@sito/dashboard-app";
+import type { TransactionsDesktopSectionProps } from "./types";
 
 export const TransactionsDesktopSection = (
   props: TransactionsDesktopSectionProps,

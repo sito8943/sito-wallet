@@ -11,7 +11,6 @@ import {
   useNotification,
   useAuth,
   usePostForm,
-  AuthDto,
   SessionDto,
   PasswordInput,
   Loading,
@@ -29,6 +28,7 @@ import { randomBackgroundColor } from "lib";
 
 // components
 import { TextLogo } from "components";
+import type { SignInFormType } from "./types";
 
 const color: "primary" | "secondary" | "tertiary" | "quaternary" =
   randomBackgroundColor();
@@ -51,9 +51,6 @@ export function SignIn() {
   const manager = useManager();
   const navigate = useNavigate();
 
-  type SignInFormType = AuthDto<{
-    rememberMe: boolean;
-  }>;
   const rememberMeRef = useRef(false);
 
   const { handleSubmit, control, onSubmit, isLoading } = usePostForm<

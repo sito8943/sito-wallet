@@ -25,6 +25,7 @@ import { useManager } from "providers";
 
 // lib
 import { randomBackgroundColor } from "lib";
+import type { RegisterWithName } from "./types";
 
 const color: "primary" | "secondary" | "tertiary" | "quaternary" =
   randomBackgroundColor();
@@ -45,13 +46,6 @@ export function SignUp() {
   const manager = useManager();
 
   const navigate = useNavigate();
-
-  type RegisterWithName = {
-    name: string;
-    email: string;
-    password: string;
-    rPassword: string;
-  };
 
   const { handleSubmit, control, onSubmit, isLoading } = usePostForm<
     RegisterWithName,

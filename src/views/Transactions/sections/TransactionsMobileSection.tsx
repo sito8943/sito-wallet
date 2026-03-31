@@ -1,19 +1,7 @@
-import { TabsLayout, TabsType } from "@sito/dashboard-app";
-
-import { AccountDto } from "lib";
+import { TabsLayout } from "@sito/dashboard-app";
 
 import AccountShower from "../components/AccountShower";
-
-type TransactionsMobileSectionProps = {
-  accounts: AccountDto[];
-  selectedAccount?: AccountDto | null;
-  isAccountLoading?: boolean;
-  accountError: Error | null;
-  onAccountChange: (accountId: number) => void;
-  onOpenFilters: () => void;
-  tabValue?: number;
-  tabs: TabsType[];
-};
+import type { TransactionsMobileSectionProps } from "./types";
 
 export const TransactionsMobileSection = (
   props: TransactionsMobileSectionProps,
