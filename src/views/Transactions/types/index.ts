@@ -22,6 +22,10 @@ import {
 export interface TransactionCardPropsType extends TransactionDto {
   actions: ActionType<TransactionDto>[];
   onClick: (id: number) => void;
+  selectionMode?: boolean;
+  selected?: boolean;
+  onSelect?: (id: number) => void;
+  onLongPress?: (id: number) => void;
 }
 
 export interface TransactionFormType

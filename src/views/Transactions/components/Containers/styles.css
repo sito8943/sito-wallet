@@ -1,0 +1,9 @@
+@reference "../../../../styles/variables.css";
+
+.transaction-grid-selection-bar {
+  @apply top-27 bg-white pb-2 sticky z-10;
+}
+
+.transaction-grid-selection-bar .table-selection-bar {
+  margin-bottom: 0;
+}

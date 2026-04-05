@@ -1,8 +1,15 @@
-import { useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
 import { useTimeAge } from "@sito/dashboard-app";
+
+// icons
+import {
+  faCircle,
+  faCircleCheck,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // types
 import { TransactionCardPropsType } from "../types";
@@ -21,6 +28,10 @@ export function TransactionCard(props: TransactionCardPropsType) {
   const {
     id,
     onClick,
+    onSelect,
+    onLongPress,
+    selectionMode,
+    selected,
     description,
     auto,
     date,
@@ -30,6 +41,8 @@ export function TransactionCard(props: TransactionCardPropsType) {
     deletedAt,
   } = props;
   const deleted = !!deletedAt;
+  const touchTimeoutRef = useRef<number | null>(null);
+  const longPressTriggeredRef = useRef(false);
 
   const { timeAge } = useTimeAge();
 
@@ -40,16 +53,71 @@ export function TransactionCard(props: TransactionCardPropsType) {
     return description;
   }, [description, auto, t]);
 
+  const clearTouchTimeout = useCallback(() => {
+    if (touchTimeoutRef.current === null) return;
+    window.clearTimeout(touchTimeoutRef.current);
+    touchTimeoutRef.current = null;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      clearTouchTimeout();
+    };
+  }, [clearTouchTimeout]);
+
+  const handleTouchStart = useCallback(() => {
+    if (deleted || selectionMode || !onLongPress) return;
+
+    clearTouchTimeout();
+    touchTimeoutRef.current = window.setTimeout(() => {
+      longPressTriggeredRef.current = true;
+      onLongPress(id);
+    }, 450);
+  }, [clearTouchTimeout, deleted, id, onLongPress, selectionMode]);
+
+  const handleClick = useCallback(() => {
+    if (deleted) return;
+
+    if (longPressTriggeredRef.current) {
+      longPressTriggeredRef.current = false;
+      return;
+    }
+
+    if (selectionMode) {
+      onSelect?.(id);
+      return;
+    }
+
+    onClick(id);
+  }, [deleted, id, onClick, onSelect, selectionMode]);
+
   return (
     <button
-      name={t("_pages:transactions.forms.edit")}
-      aria-label={t("_pages:transactions.forms.editAria")}
-      onClick={() => (!deleted ? onClick(id) : {})}
-      className={`transition flex justify-between items-center gap-2 w-full min-w-0 overflow-hidden ${
+      name={
+        selectionMode
+          ? t("_accessibility:components.table.selectRow")
+          : t("_pages:transactions.forms.edit")
+      }
+      aria-label={
+        selectionMode
+          ? t("_accessibility:components.table.selectRow")
+          : t("_pages:transactions.forms.editAria")
+      }
+      onClick={handleClick}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={clearTouchTimeout}
+      onTouchCancel={clearTouchTimeout}
+      onTouchMove={clearTouchTimeout}
+      className={`transition relative flex justify-between items-center gap-2 w-full min-w-0 overflow-hidden ${
         deleted
           ? "!border-bg-error border-2 opacity-60"
+          : selectionMode
+            ? selected
+              ? "!border-bg-primary border-2 bg-base"
+              : "border-border border-1 bg-base"
           : "bg-base hover:!bg-hover-primary hover:!text-white"
       } p-2 pr-3 rounded-lg`}
+      aria-pressed={selectionMode ? !!selected : undefined}
     >
       <Type
         className="bg-base-dark px-3 py-3.5 rounded-full"
@@ -77,6 +145,11 @@ export function TransactionCard(props: TransactionCardPropsType) {
           symbol={account?.currency?.symbol}
         />
       </p>
+      {selectionMode && !deleted && (
+        <span className={`${selected ? "text-primary" : "text-text-muted"}`}>
+          <FontAwesomeIcon icon={selected ? faCircleCheck : faCircle} />
+        </span>
+      )}
     </button>
   );
 }

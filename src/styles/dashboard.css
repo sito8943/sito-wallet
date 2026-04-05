@@ -195,6 +195,10 @@ select > option {
   height: auto;
 }
 
+.table-selection-bar {
+  @apply top-28 sticky z-10;
+}
+
 .page-header {
   @apply max-sm:hidden;
 }

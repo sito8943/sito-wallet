@@ -4,6 +4,12 @@ Project-specific rules for AI agents. These override or extend the guidelines in
 
 ---
 
+## Workspace Architecture Rule
+
+- Also follow `../ARCHITECTURE_RULES.md`.
+
+---
+
 ## Documentation First
 
 - Before writing code or proposing an implementation plan, read and account for all documentation under `.sito/*`.
