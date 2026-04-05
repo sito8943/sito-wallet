@@ -31,12 +31,14 @@ import {
   EditAccountDialog,
   AdjustBalanceDialog,
 } from "./components";
+import { MobileSelectionBar } from "components";
 
 // hooks
 import {
   useInfiniteAccountsList,
   AccountsQueryKeys,
   useMobileNavbar,
+  useMobileMultiSelection,
 } from "hooks";
 import {
   useAddAccountDialog,
@@ -56,6 +58,9 @@ import {
   defaultAccountsListFilters,
   normalizeListFilters,
 } from "lib";
+
+// styles
+import "./styles.css";
 
 export function Accounts() {
   const { t } = useTranslation();
@@ -142,6 +147,11 @@ export function Accounts() {
     ],
   );
 
+  const mobileSelection = useMobileMultiSelection<AccountDto>({
+    items,
+    getActions,
+  });
+
   const pageToolbar = useMemo(() => {
     return [exportAccounts.action(), importAccounts.action()];
   }, [exportAccounts, importAccounts]);
@@ -170,6 +180,13 @@ export function Accounts() {
     >
       {!error ? (
         <>
+          <MobileSelectionBar
+            className="account-selection-bar"
+            count={mobileSelection.selectedCount}
+            multiActions={mobileSelection.multiActions}
+            onActionClick={mobileSelection.onMultiActionClick}
+            onCancel={mobileSelection.clearSelection}
+          />
           <PrettyGrid
             data={items}
             className="max-sm:pb-6"
@@ -200,6 +217,10 @@ export function Accounts() {
               <AccountCard
                 actions={getActions(account)}
                 onClick={(id: number) => editAccount.openDialog(id)}
+                selectionMode={mobileSelection.selectionMode}
+                selected={mobileSelection.isSelected(account.id)}
+                onSelect={mobileSelection.onToggleRowSelection}
+                onLongPress={mobileSelection.onLongPressRow}
                 {...account}
               />
             )}

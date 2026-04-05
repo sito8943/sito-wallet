@@ -10,8 +10,13 @@ export type ItemCardPropsType<TEntity extends BaseEntityDto> = {
   title: string | ReactNode;
   className?: string;
   name: string;
+  "aria-label"?: string;
   onClick?: () => void;
   deleted: boolean;
+  selectionMode?: boolean;
+  selected?: boolean;
+  onToggleSelection?: () => void;
+  onLongPressSelection?: () => void;
 };
 
 export type ItemCardTitlePropsType = {

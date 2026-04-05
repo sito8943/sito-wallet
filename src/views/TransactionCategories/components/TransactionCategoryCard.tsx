@@ -25,8 +25,20 @@ export function TransactionCategoryCard(
 ) {
   const { t } = useTranslation();
 
-  const { id, onClick, actions, name, description, type, deletedAt, auto } =
-    props;
+  const {
+    id,
+    onClick,
+    onSelect,
+    onLongPress,
+    selectionMode,
+    selected,
+    actions,
+    name,
+    description,
+    type,
+    deletedAt,
+    auto,
+  } = props;
   const deleted = !!deletedAt;
   const typeValue = type ?? TransactionType.Out;
 
@@ -72,7 +84,11 @@ export function TransactionCategoryCard(
       deleted={deleted}
       name={t("_pages:transactionCategory.forms.edit")}
       aria-label={t("_pages:transactionCategory.forms.editAria")}
-      onClick={() => (!deleted ? onClick(id) : {})}
+      onClick={() => onClick(id)}
+      selectionMode={selectionMode}
+      selected={selected}
+      onToggleSelection={() => onSelect?.(id)}
+      onLongPressSelection={() => onLongPress?.(id)}
       actions={actions}
       className="gap-2 max-sm:gap-1"
       containerClassName="max-sm:min-h-0 max-sm:rounded-xl max-sm:p-2.5"

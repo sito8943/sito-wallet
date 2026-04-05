@@ -27,6 +27,10 @@ export function AccountCard(props: AccountCardPropsType) {
   const {
     id,
     onClick,
+    onSelect,
+    onLongPress,
+    selectionMode,
+    selected,
     actions,
     name,
     description,
@@ -48,7 +52,26 @@ export function AccountCard(props: AccountCardPropsType) {
       deleted={deleted}
       name={t("_pages:accounts.forms.edit")}
       aria-label={t("_pages:accounts.forms.editAria")}
-      onClick={() => (!deleted && id ? onClick?.(id) : {})}
+      onClick={() => {
+        if (!id) return;
+        onClick?.(id);
+      }}
+      selectionMode={selectionMode}
+      selected={selected}
+      onToggleSelection={
+        id
+          ? () => {
+              onSelect?.(id);
+            }
+          : undefined
+      }
+      onLongPressSelection={
+        id
+          ? () => {
+              onLongPress?.(id);
+            }
+          : undefined
+      }
       actions={actions}
       containerClassName={containerClassName ?? "md:w-100 max-md:w-full"}
     >

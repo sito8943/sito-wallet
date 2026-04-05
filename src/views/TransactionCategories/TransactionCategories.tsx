@@ -30,12 +30,14 @@ import {
   TransactionCategoryCard,
   EditTransactionCategoryDialog,
 } from "./components";
+import { MobileSelectionBar } from "components";
 
 // hooks
 import {
   useInfiniteTransactionCategoriesList,
   TransactionCategoriesQueryKeys,
   useMobileNavbar,
+  useMobileMultiSelection,
 } from "hooks";
 import {
   useAddTransactionCategoryDialog,
@@ -53,6 +55,9 @@ import {
   defaultTransactionCategoriesListFilters,
   normalizeListFilters,
 } from "lib";
+
+// styles
+import "./styles.css";
 
 export function TransactionCategories() {
   const { t } = useTranslation();
@@ -129,6 +134,11 @@ export function TransactionCategories() {
     [deleteTransactionCategory, restoreTransactionCategory],
   );
 
+  const mobileSelection = useMobileMultiSelection<TransactionCategoryDto>({
+    items,
+    getActions,
+  });
+
   const pageToolbar = useMemo(() => {
     return [
       exportTransactionCategory.action(),
@@ -160,6 +170,13 @@ export function TransactionCategories() {
     >
       {!error ? (
         <>
+          <MobileSelectionBar
+            className="transaction-category-selection-bar"
+            count={mobileSelection.selectedCount}
+            multiActions={mobileSelection.multiActions}
+            onActionClick={mobileSelection.onMultiActionClick}
+            onCancel={mobileSelection.clearSelection}
+          />
           <PrettyGrid
             data={items}
             className="full-grid max-sm:pb-6"
@@ -189,6 +206,10 @@ export function TransactionCategories() {
               <TransactionCategoryCard
                 actions={getActions(transactionCategory)}
                 onClick={(id: number) => editTransactionCategory.openDialog(id)}
+                selectionMode={mobileSelection.selectionMode}
+                selected={mobileSelection.isSelected(transactionCategory.id)}
+                onSelect={mobileSelection.onToggleRowSelection}
+                onLongPress={mobileSelection.onLongPressRow}
                 {...transactionCategory}
               />
             )}

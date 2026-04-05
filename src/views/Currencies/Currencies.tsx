@@ -31,12 +31,14 @@ import {
   EditCurrencyDialog,
   CurrencyTable,
 } from "./components";
+import { MobileSelectionBar } from "components";
 
 // hooks
 import {
   useInfiniteCurrenciesList,
   CurrenciesQueryKeys,
   useMobileNavbar,
+  useMobileMultiSelection,
 } from "hooks";
 import { useAddCurrency, useEditCurrency } from "./hooks";
 
@@ -50,6 +52,9 @@ import {
   defaultCurrenciesListFilters,
   normalizeListFilters,
 } from "lib";
+
+// styles
+import "./styles.css"
 
 export function Currencies() {
   const { t } = useTranslation();
@@ -127,6 +132,11 @@ export function Currencies() {
     [deleteCurrency, restoreCurrency],
   );
 
+  const mobileSelection = useMobileMultiSelection<CurrencyDto>({
+    items,
+    getActions,
+  });
+
   const pageToolbar = useMemo(() => {
     return [exportCurrency.action(), importCurrencies.action()];
   }, [exportCurrency, importCurrencies]);
@@ -155,6 +165,13 @@ export function Currencies() {
     >
       {!error ? (
         <>
+          <MobileSelectionBar
+            className="currency-selection-bar"
+            count={mobileSelection.selectedCount}
+            multiActions={mobileSelection.multiActions}
+            onActionClick={mobileSelection.onMultiActionClick}
+            onCancel={mobileSelection.clearSelection}
+          />
           <PrettyGrid
             data={items}
             className="full-grid max-sm:pb-6"
@@ -184,6 +201,10 @@ export function Currencies() {
               <CurrencyCard
                 actions={getActions(account)}
                 onClick={(id: number) => editCurrency.openDialog(id)}
+                selectionMode={mobileSelection.selectionMode}
+                selected={mobileSelection.isSelected(account.id)}
+                onSelect={mobileSelection.onToggleRowSelection}
+                onLongPress={mobileSelection.onLongPressRow}
                 {...account}
               />
             )}

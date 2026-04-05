@@ -17,6 +17,10 @@ export interface AccountCardPropsType extends Omit<
 > {
   actions: ActionType<AccountDto>[];
   onClick?: (id: number) => void;
+  selectionMode?: boolean;
+  selected?: boolean;
+  onSelect?: (id: number) => void;
+  onLongPress?: (id: number) => void;
   containerClassName?: string;
   showLastTransactions?: boolean;
   showTypeResume?: boolean;

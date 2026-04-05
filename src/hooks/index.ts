@@ -4,3 +4,4 @@ export * from "./useOnlineStatus";
 export * from "./useAppSession";
 export * from "./useAppPreload";
 export * from "./usePersistedTableOptions";
+export * from "./useMobileMultiSelection";

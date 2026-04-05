@@ -11,6 +11,10 @@ export * from "./actions";
 export interface TransactionCategoryCardPropsType extends TransactionCategoryDto {
   actions: ActionType<TransactionCategoryDto>[];
   onClick: (id: number) => void;
+  selectionMode?: boolean;
+  selected?: boolean;
+  onSelect?: (id: number) => void;
+  onLongPress?: (id: number) => void;
 }
 
 export interface TransactionCategoryFormType

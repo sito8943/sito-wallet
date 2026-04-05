@@ -9,6 +9,10 @@ import { CurrencyDto } from "lib";
 export interface CurrencyCardPropsType extends CurrencyDto {
   actions: ActionType<CurrencyDto>[];
   onClick: (id: number) => void;
+  selectionMode?: boolean;
+  selected?: boolean;
+  onSelect?: (id: number) => void;
+  onLongPress?: (id: number) => void;
 }
 
 export interface CurrencyFormType

@@ -9,7 +9,19 @@ import { CurrencyCardPropsType } from "../types";
 export function CurrencyCard(props: CurrencyCardPropsType) {
   const { t } = useTranslation();
 
-  const { id, onClick, actions, name, description, symbol, deletedAt } = props;
+  const {
+    id,
+    onClick,
+    onSelect,
+    onLongPress,
+    selectionMode,
+    selected,
+    actions,
+    name,
+    description,
+    symbol,
+    deletedAt,
+  } = props;
   const deleted = !!deletedAt;
   const parsedDescription =
     description || t("_entities:base.description.empty");
@@ -37,7 +49,11 @@ export function CurrencyCard(props: CurrencyCardPropsType) {
       deleted={deleted}
       name={t("_pages:currencies.forms.edit")}
       aria-label={t("_pages:currencies.forms.editAria")}
-      onClick={() => (!deleted ? onClick(id) : {})}
+      onClick={() => onClick(id)}
+      selectionMode={selectionMode}
+      selected={selected}
+      onToggleSelection={() => onSelect?.(id)}
+      onLongPressSelection={() => onLongPress?.(id)}
       actions={actions}
       className="gap-2 max-xs:gap-1"
       containerClassName="max-xs:min-h-0 max-xs:rounded-xl max-xs:p-2.5"
