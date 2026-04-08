@@ -7,6 +7,8 @@ import { useTranslation } from "react-i18next";
 // @sito/dashboard-app
 import {
   BaseLinkPropsType,
+  BottomNavActionProvider,
+  BottomNavigation,
   ConfigProvider,
   Error,
   Onboarding,
@@ -16,21 +18,20 @@ import {
   Notification,
   SplashScreen,
 } from "@sito/dashboard-app";
+import type { BottomNavigationItemType } from "@sito/dashboard-app";
 
 // providers
 import { useAuth, fromLocal, toLocal } from "@sito/dashboard-app";
 import { useAppPreload } from "hooks";
 
 // components
-import { SearchModal, BottomNavigation } from "components";
+import { SearchModal } from "components";
 import Header from "./Header";
 import Footer from "./Footer";
 
-// providers
-import { BottomNavActionProvider } from "providers";
-
 // config
 import { config } from "../../config";
+import { bottomMap } from "../../views/bottomMap";
 
 const onboardingStepKeys = [
   "welcome",
@@ -57,6 +58,28 @@ export function View() {
     [t],
   );
 
+  const bottomNavigationItems = useMemo<BottomNavigationItemType[]>(
+    () =>
+      bottomMap.map((item) => {
+        const label = t(`_pages:${item.page}.title`);
+
+        return {
+          id: item.id,
+          to: item.to,
+          icon: item.icon,
+          position: item.position,
+          label,
+          ariaLabel: label,
+        };
+      }),
+    [t],
+  );
+
+  const isBottomNavItemActive = (
+    pathname: string,
+    item: BottomNavigationItemType,
+  ) => (item.to === "/" ? pathname === "/" : pathname.startsWith(item.to));
+
   useEffect(() => {
     if (showOnboarding) {
       toLocal(config.onboarding, true);
@@ -82,7 +105,10 @@ export function View() {
             </TableOptionsProvider>
           </ErrorBoundary>
           <Footer />
-          <BottomNavigation />
+          <BottomNavigation
+            items={bottomNavigationItems}
+            isItemActive={isBottomNavItemActive}
+          />
           <Tooltip id="tooltip" />
           <Notification />
         </BottomNavActionProvider>

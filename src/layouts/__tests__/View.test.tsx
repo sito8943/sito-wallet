@@ -76,11 +76,15 @@ vi.mock("@sito/dashboard-app", () => ({
   NavbarProvider: ({ children }: { children: React.ReactNode }) => (
     <>{children}</>
   ),
+  BottomNavActionProvider: ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  ),
   Error: ({ error }: { error: Error }) => (
     <div data-testid="error-ui">{error?.message}</div>
   ),
   ToTop: () => <div data-testid="to-top" />,
   Notification: () => <div data-testid="notification" />,
+  BottomNavigation: () => <div data-testid="bottom-navigation" />,
   Onboarding: ({ steps }: { steps: MockOnboardingStep[] }) => (
     <div
       data-testid="onboarding"
@@ -103,13 +107,6 @@ vi.mock("hooks", () => ({
 
 vi.mock("components", () => ({
   SearchModal: () => <div data-testid="search-modal" />,
-  BottomNavigation: () => <div data-testid="bottom-navigation" />,
-}));
-
-vi.mock("providers", () => ({
-  BottomNavActionProvider: ({ children }: { children: React.ReactNode }) => (
-    <>{children}</>
-  ),
 }));
 
 vi.mock("../../config", () => ({

@@ -3,7 +3,7 @@ import { useDebouncedCallback } from "use-debounce";
 import { useNavigate } from "react-router-dom";
 import { stringSimilarity } from "string-similarity-js";
 
-// "@sito/dashboard
+// "@sito/dashboard-app
 import { useTimeAge, isMac, toLocal, fromLocal } from "@sito/dashboard-app";
 import { useFeatureFlags } from "providers";
 

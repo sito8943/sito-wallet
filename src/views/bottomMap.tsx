@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
   faFileInvoice,
@@ -8,30 +7,35 @@ import {
 
 // types
 import type { BottomNavItemType } from "./types";
+import { PageId } from "./sitemap";
 
 export const bottomMap: BottomNavItemType[] = [
   {
-    page: "home",
-    path: "/",
-    icon: <FontAwesomeIcon icon={faHome} />,
+    id: "home",
+    page: PageId.Home,
+    to: "/",
+    icon: faHome,
     position: "left",
   },
   {
-    page: "transactions",
-    path: "/transactions",
-    icon: <FontAwesomeIcon icon={faFileInvoice} />,
+    id: "transactions",
+    page: PageId.Transactions,
+    to: "/transactions",
+    icon: faFileInvoice,
     position: "left",
   },
   {
-    page: "accounts",
-    path: "/accounts",
-    icon: <FontAwesomeIcon icon={faCreditCard} />,
+    id: "accounts",
+    page: PageId.Accounts,
+    to: "/accounts",
+    icon: faCreditCard,
     position: "right",
   },
   {
-    page: "profile",
-    path: "/profile",
-    icon: <FontAwesomeIcon icon={faUser} />,
+    id: "profile",
+    page: PageId.Profile,
+    to: "/profile",
+    icon: faUser,
     position: "right",
   },
 ];

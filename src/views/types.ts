@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import type { FeatureFlagKey } from "lib";
 
 // lib
@@ -34,8 +35,9 @@ export type MenuItemType = {
 export type IsFeatureEnabled = (key: FeatureFlagKey) => boolean;
 
 export type BottomNavItemType = {
-  page: string;
-  path: string;
-  icon: ReactNode;
+  id: string;
+  page: PageId;
+  to: string;
+  icon: IconDefinition;
   position: "left" | "right";
 };
