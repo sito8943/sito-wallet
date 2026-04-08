@@ -24,7 +24,7 @@ import {
 import { useManager } from "providers";
 
 // lib
-import { randomBackgroundColor } from "lib";
+import { AppRoutes, randomBackgroundColor } from "lib";
 
 // components
 import { TextLogo } from "components";
@@ -73,7 +73,7 @@ export function SignIn() {
     onSuccess: (data) => {
       logUser(data, rememberMeRef.current);
       setGuestMode(false);
-      navigate("/");
+      navigate(AppRoutes.home);
     },
     onError: (error) => {
       if (isHttpError(error))
@@ -194,7 +194,7 @@ export function SignIn() {
           <p className="ml-1">
             {t("_pages:auth.signIn.toRegister.question")}
             <Link
-              to="/auth/sign-up"
+              to={AppRoutes.signUp}
               className={`ml-1 primary text-sm underline text-left`}
             >
               {t("_pages:auth.signIn.toRegister.link")}
@@ -209,7 +209,7 @@ export function SignIn() {
           <p className="ml-1">
             {t("_pages:auth.signIn.accountRecovery.question")}
             <Link
-              to="/auth/sign-up"
+              to={AppRoutes.recovery}
               className={`ml-1 primary text-sm underline text-left`}
             >
               {t("_pages:auth.signIn.accountRecovery.link")}
@@ -245,7 +245,7 @@ export function SignIn() {
             variant="outlined"
             onClick={() => {
               setGuestMode(true);
-              navigate("/");
+              navigate(AppRoutes.home);
             }}
             aria-label={t("_pages:auth.signIn.guest")}
           >

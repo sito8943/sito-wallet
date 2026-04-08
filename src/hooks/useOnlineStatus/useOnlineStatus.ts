@@ -1,13 +1,7 @@
-import { useSyncExternalStore } from "react";
-
 import { probeServerReachability } from "./probe";
-import { getServerSnapshot, getSnapshot, setServerReachable } from "./store";
-import { subscribe } from "./subscribe";
+import { setServerReachable } from "./store";
 import type { OnlineStatusSnapshot } from "./types";
-
-export function useOnlineStatusSnapshot(): OnlineStatusSnapshot {
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-}
+import { useOnlineStatusSnapshot } from "./useOnlineStatusSnapshot";
 
 /**
  * Returns true when the browser has network connectivity.
@@ -17,5 +11,6 @@ export function useOnlineStatus(): boolean {
   return useOnlineStatusSnapshot().isOnline;
 }
 
+export { useOnlineStatusSnapshot };
 export { probeServerReachability, setServerReachable };
 export type { OnlineStatusSnapshot };

@@ -6,7 +6,7 @@ import type {
   ViewPageType,
   IsFeatureEnabled,
 } from "./types";
-import type { FeatureFlagKey } from "lib";
+import { AppRoutes, type FeatureFlagKey } from "lib";
 
 export enum PageId {
   Home = "home",
@@ -25,39 +25,39 @@ export enum PageId {
 export const sitemap: ViewPageType[] = [
   {
     key: PageId.Home,
-    path: "/",
+    path: AppRoutes.home,
   },
   {
     key: PageId.Profile,
-    path: "/profile",
+    path: AppRoutes.profile,
   },
   {
     key: PageId.Transactions,
-    path: "/transactions",
+    path: AppRoutes.transactions,
   },
   {
     key: PageId.TransactionCategories,
-    path: "/transaction-categories",
+    path: AppRoutes.transactionCategories,
   },
   {
     key: PageId.Accounts,
-    path: "/accounts",
+    path: AppRoutes.accounts,
   },
   {
     key: PageId.Currencies,
-    path: "/currencies",
+    path: AppRoutes.currencies,
   },
   {
     key: PageId.NotFound,
-    path: "/*",
+    path: AppRoutes.notFound,
   },
   {
     key: PageId.About,
-    path: "/about-us",
+    path: AppRoutes.about,
   },
-  { key: PageId.CookiesPolicy, path: "/cookies-policy" },
-  { key: PageId.TermsAndConditions, path: "/terms-and-conditions" },
-  { key: PageId.PrivacyPolicy, path: "/privacy-policy" },
+  { key: PageId.CookiesPolicy, path: AppRoutes.cookiesPolicy },
+  { key: PageId.TermsAndConditions, path: AppRoutes.termsAndConditions },
+  { key: PageId.PrivacyPolicy, path: AppRoutes.privacyPolicy },
 ];
 
 const pageFeatureDependencies: Partial<Record<PageId, FeatureFlagKey>> = {

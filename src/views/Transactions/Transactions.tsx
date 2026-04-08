@@ -2,7 +2,6 @@ import loadable from "@loadable/component";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { parseQueries } from "some-javascript-utils/browser";
 
 // @sito-dashboard-app
 import {
@@ -62,6 +61,7 @@ import {
   CommonAccountDto,
   applyHideDeletedEntitiesPreference,
   normalizeListFilters,
+  RouteQueryParam,
 } from "lib";
 
 // providers
@@ -91,10 +91,12 @@ export function Transactions() {
   const navigate = useNavigate();
 
   const tabValue = useMemo(() => {
-    const queries = parseQueries(location.search) as FilterTransactionDto;
-    return queries.accountId && !isNaN(queries.accountId)
-      ? Number(queries.accountId)
-      : undefined;
+    const search = new URLSearchParams(location.search);
+    const value = search.get(RouteQueryParam.accountId);
+    if (!value) return undefined;
+
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : undefined;
   }, [location.search]);
 
   const manager = useManager();
@@ -313,7 +315,7 @@ export function Transactions() {
       if (!accountId) return;
 
       const nextSearch = new URLSearchParams(location.search);
-      nextSearch.set("accountId", String(accountId));
+      nextSearch.set(RouteQueryParam.accountId, String(accountId));
 
       navigate(
         {

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
+import { AppRoutes } from "lib";
 
 export function NotFound() {
   const { t } = useTranslation();
@@ -11,7 +12,7 @@ export function NotFound() {
         {t("_pages:notFound.title")}
       </h2>
       <p className="appear !text-lg text-center">{t("_pages:notFound.body")}</p>
-      <Link to="/" className="appear button primary submit !px-10">
+      <Link to={AppRoutes.home} className="appear button primary submit !px-10">
         {t("_pages:home.title")}
       </Link>
     </main>

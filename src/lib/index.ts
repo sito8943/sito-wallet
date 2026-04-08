@@ -6,3 +6,6 @@ export * from "./api";
 
 // utils
 export * from "./utils";
+
+// routes
+export * from "./routes";

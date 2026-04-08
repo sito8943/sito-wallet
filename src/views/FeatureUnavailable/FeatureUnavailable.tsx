@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWarning } from "@fortawesome/free-solid-svg-icons";
 
+import { AppRoutes } from "lib";
 import type { FeatureUnavailableProps } from "./types";
 
 export function FeatureUnavailable(props: FeatureUnavailableProps) {
@@ -21,7 +22,7 @@ export function FeatureUnavailable(props: FeatureUnavailableProps) {
           module: t(`_pages:featureFlags.modules.${module}`),
         })}
       </p>
-      <Link to="/" className="button primary submit !px-10">
+      <Link to={AppRoutes.home} className="button primary submit !px-10">
         {t("_pages:featureFlags.route.cta")}
       </Link>
     </main>

@@ -15,10 +15,7 @@ import { UseSingleActionPropTypes } from "@sito/dashboard-app";
 import { AccountActions } from "../types";
 
 // lib
-import { AccountDto } from "lib";
-
-// sitemap
-import { getPathByKey, PageId } from "../../sitemap";
+import { AccountDto, getTransactionsRouteWithAccountId } from "lib";
 
 export const useViewTransactionsAction = (
   props: Omit<UseSingleActionPropTypes<number>, "onClick">,
@@ -38,8 +35,7 @@ export const useViewTransactionsAction = (
       icon: <FontAwesomeIcon className="text-bg-primary" icon={faClock} />,
       tooltip: t("_pages:accounts.actions.viewTransactions.text"),
       onClick: () => {
-        const url = getPathByKey(PageId.Transactions) ?? "";
-        navigate(`${url}?accountId=${record.id}`);
+        navigate(getTransactionsRouteWithAccountId(record.id));
       },
     }),
     [hidden, navigate, t, transactionsEnabled],

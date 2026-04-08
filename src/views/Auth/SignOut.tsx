@@ -8,7 +8,11 @@ import { useAuth, SplashScreen } from "@sito/dashboard-app";
 import { useFeatureFlags, useOfflineManager } from "providers";
 
 // lib
-import { clearPersistedPublicSessionAccount, clearAllTableOptions } from "lib";
+import {
+  AppRoutes,
+  clearPersistedPublicSessionAccount,
+  clearAllTableOptions,
+} from "lib";
 
 /**
  * SignOut page
@@ -34,7 +38,7 @@ export function SignOut() {
     }
 
     setTimeout(() => {
-      navigate("/auth/sign-in");
+      navigate(AppRoutes.signIn);
     }, 1000);
   }, [clearFeatures, logoutUser, navigate, offlineManager]);
 

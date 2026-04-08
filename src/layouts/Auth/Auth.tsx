@@ -7,13 +7,14 @@ import { Error, Notification } from "@sito/dashboard-app";
 
 // providers
 import { useAuth } from "@sito/dashboard-app";
+import { AppRoutes } from "lib";
 
 export const Auth = () => {
   const { account } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (account.email) navigate("/");
+    if (account.email) navigate(AppRoutes.home);
   }, [account, navigate]);
 
   return (

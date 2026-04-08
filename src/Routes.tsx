@@ -4,6 +4,7 @@ import loadable from "@loadable/component";
 import { View, Auth } from "./layouts";
 import { BrowserRouter, Routes as ReactRoutes, Route } from "react-router-dom";
 import { useFeatureFlags } from "providers";
+import { AppRoutes } from "lib";
 
 // auth
 const SignUp = loadable(() =>
@@ -102,18 +103,18 @@ export const Routes = () => {
   return (
     <BrowserRouter>
       <ReactRoutes>
-        <Route path="/auth/" element={<Auth />}>
-          <Route path="/auth/sign-in" element={<SignIn />} />
-          <Route path="/auth/sign-up" element={<SignUp />} />
-          <Route path="/auth/update-password" element={<UpdatePassword />} />
-          <Route path="/auth/recovery" element={<Recovery />} />
-          <Route path="/auth/*" element={<NotFound />} />
+        <Route path={AppRoutes.authRoot} element={<Auth />}>
+          <Route path={AppRoutes.signIn} element={<SignIn />} />
+          <Route path={AppRoutes.signUp} element={<SignUp />} />
+          <Route path={AppRoutes.updatePassword} element={<UpdatePassword />} />
+          <Route path={AppRoutes.recovery} element={<Recovery />} />
+          <Route path={AppRoutes.authNotFound} element={<NotFound />} />
         </Route>
-        <Route path="/sign-out" element={<SignOut />} />
-        <Route path="/" element={<View />}>
+        <Route path={AppRoutes.signOut} element={<SignOut />} />
+        <Route path={AppRoutes.home} element={<View />}>
           <Route index element={<Home />} />
           <Route
-            path="/transactions"
+            path={AppRoutes.transactions}
             element={
               isFeatureEnabled("transactionsEnabled") ? (
                 <Transactions />
@@ -123,7 +124,7 @@ export const Routes = () => {
             }
           />
           <Route
-            path="/transaction-categories"
+            path={AppRoutes.transactionCategories}
             element={
               isFeatureEnabled("transactionCategoriesEnabled") ? (
                 <TransactionCategories />
@@ -133,7 +134,7 @@ export const Routes = () => {
             }
           />
           <Route
-            path="/accounts"
+            path={AppRoutes.accounts}
             element={
               isFeatureEnabled("accountsEnabled") ? (
                 <Accounts />
@@ -143,7 +144,7 @@ export const Routes = () => {
             }
           />
           <Route
-            path="/currencies"
+            path={AppRoutes.currencies}
             element={
               isFeatureEnabled("currenciesEnabled") ? (
                 <Currencies />
@@ -152,15 +153,15 @@ export const Routes = () => {
               )
             }
           />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/about-us" element={<About />} />
-          <Route path="/cookies-policy" element={<CookiesPolicy />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path={AppRoutes.profile} element={<Profile />} />
+          <Route path={AppRoutes.about} element={<About />} />
+          <Route path={AppRoutes.cookiesPolicy} element={<CookiesPolicy />} />
+          <Route path={AppRoutes.privacyPolicy} element={<PrivacyPolicy />} />
           <Route
-            path="/terms-and-conditions"
+            path={AppRoutes.termsAndConditions}
             element={<TermsAndConditions />}
           />
-          <Route path="*" element={<NotFound />} />
+          <Route path={AppRoutes.notFound} element={<NotFound />} />
         </Route>
       </ReactRoutes>
     </BrowserRouter>

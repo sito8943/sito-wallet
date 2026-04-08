@@ -24,7 +24,7 @@ import {
 import { useManager } from "providers";
 
 // lib
-import { randomBackgroundColor } from "lib";
+import { AppRoutes, randomBackgroundColor } from "lib";
 import type { RegisterWithName } from "./types";
 
 const color: "primary" | "secondary" | "tertiary" | "quaternary" =
@@ -67,7 +67,7 @@ export function SignUp() {
       await manager.Auth.register(data as unknown as RegisterDto),
     onSuccess: (data) => {
       logUser(data);
-      navigate("/");
+      navigate(AppRoutes.home);
     },
     onError: (error) => {
       showErrorNotification({
@@ -206,7 +206,7 @@ export function SignUp() {
           <p className="ml-1">
             {t("_pages:auth.signUp.toLogin.question")}
             <Link
-              to="/auth/sign-in"
+              to={AppRoutes.signIn}
               className={`ml-1 primary text-sm underline text-left`}
             >
               {t("_pages:auth.signUp.toLogin.link")}
@@ -242,7 +242,7 @@ export function SignUp() {
             variant="outlined"
             onClick={() => {
               setGuestMode(true);
-              navigate("/");
+              navigate(AppRoutes.home);
             }}
             aria-label={t("_pages:auth.signUp.guest")}
           >
