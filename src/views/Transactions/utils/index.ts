@@ -97,3 +97,5 @@ export const assignCategoryFormToDto = (
   ),
   transactionIds: form.transactionIds ?? [],
 });
+
+export * from "./weeklyTransactions";

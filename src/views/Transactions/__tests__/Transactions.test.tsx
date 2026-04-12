@@ -209,6 +209,8 @@ vi.mock("../components", () => ({
       data-show-filters={showFilters}
     />
   ),
+  WeeklyTransactionsDialog: ({ open }: { open: boolean }) =>
+    open ? <div data-testid="weekly-transactions-dialog" /> : null,
 }));
 
 vi.mock("../components/WeeklyCard", () => ({
@@ -318,6 +320,7 @@ vi.mock("../../Accounts", () => ({
 vi.mock("lib", () => ({
   Tables: { Transactions: "transactions", Accounts: "accounts" },
   TransactionType: { In: "in", Out: "out" },
+  RouteQueryParam: { accountId: "accountId" },
   FilterTransactionDto: class {},
   TransactionDto: class {},
   ImportPreviewTransactionDto: class {},

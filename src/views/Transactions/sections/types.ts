@@ -1,5 +1,5 @@
 import type { TabsType } from "@sito/dashboard-app";
-import type { AccountDto } from "lib";
+import type { AccountDto, TransactionType } from "lib";
 
 export type TransactionsDesktopSectionProps = {
   tabValue?: number;
@@ -19,4 +19,5 @@ export type TransactionsMobileSectionProps = {
 
 export type WeeklySummarySectionProps = {
   selectedAccount?: AccountDto | null;
+  onOpenWeeklyTransactions?: (type: TransactionType) => void;
 };

@@ -6,6 +6,7 @@ export type WeeklyCardProps = {
   currencySymbol?: string;
   title: string;
   type: TransactionType;
+  onOpenTransactions?: (type: TransactionType) => void;
 };
 
 export type AccountCarouselPropsType = {

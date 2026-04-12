@@ -6,7 +6,7 @@ import { WeeklyCard } from "../components/WeeklyCard";
 import type { WeeklySummarySectionProps } from "./types";
 
 export const WeeklySummarySection = (props: WeeklySummarySectionProps) => {
-  const { selectedAccount } = props;
+  const { selectedAccount, onOpenWeeklyTransactions } = props;
   const { t } = useTranslation();
 
   if (!selectedAccount) return null;
@@ -19,6 +19,7 @@ export const WeeklySummarySection = (props: WeeklySummarySectionProps) => {
         accountId={selectedAccount.id}
         currencyName={selectedAccount.currency?.name}
         currencySymbol={selectedAccount.currency?.symbol}
+        onOpenTransactions={onOpenWeeklyTransactions}
       />
       <WeeklyCard
         type={TransactionType.In}
@@ -26,6 +27,7 @@ export const WeeklySummarySection = (props: WeeklySummarySectionProps) => {
         accountId={selectedAccount.id}
         currencyName={selectedAccount.currency?.name}
         currencySymbol={selectedAccount.currency?.symbol}
+        onOpenTransactions={onOpenWeeklyTransactions}
       />
     </div>
   );

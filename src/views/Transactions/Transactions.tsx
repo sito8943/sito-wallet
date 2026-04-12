@@ -48,6 +48,7 @@ import {
   EditTransactionDialog,
   TransactionGrid,
   TransactionTable,
+  WeeklyTransactionsDialog,
 } from "./components";
 import { AddAccountDialog } from "../Accounts";
 
@@ -56,6 +57,7 @@ import {
   FilterTransactionDto,
   Tables,
   TransactionDto,
+  TransactionType,
   ImportPreviewTransactionDto,
   isFeatureDisabledBusinessError,
   CommonAccountDto,
@@ -103,6 +105,17 @@ export function Transactions() {
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   const [showFilters, setShowFilters] = useState(false);
+  const [weeklyTransactionsDialog, setWeeklyTransactionsDialog] = useState<{
+    open: boolean;
+    type: TransactionType;
+    accountId?: number;
+    title: string;
+  }>({
+    open: false,
+    type: TransactionType.Out,
+    accountId: undefined,
+    title: "",
+  });
 
   // #region categories
 
@@ -328,6 +341,30 @@ export function Transactions() {
     [location.pathname, location.search, navigate],
   );
 
+  const handleOpenWeeklyTransactions = useCallback(
+    (type: TransactionType) => {
+      if (!selectedAccount?.id) return;
+
+      setWeeklyTransactionsDialog({
+        open: true,
+        type,
+        accountId: selectedAccount.id,
+        title:
+          type === TransactionType.Out
+            ? t("_pages:transactions.cards.weeklySpent.title")
+            : t("_pages:transactions.cards.weeklyIncoming.title"),
+      });
+    },
+    [selectedAccount, t],
+  );
+
+  const handleCloseWeeklyTransactions = useCallback(() => {
+    setWeeklyTransactionsDialog((previous) => ({
+      ...previous,
+      open: false,
+    }));
+  }, []);
+
   return (
     <Page
       title={t("_pages:transactions.title")}
@@ -348,7 +385,10 @@ export function Transactions() {
       }}
       queryKey={TransactionsQueryKeys.all().queryKey}
     >
-      <WeeklySummarySection selectedAccount={selectedAccount} />
+      <WeeklySummarySection
+        selectedAccount={selectedAccount}
+        onOpenWeeklyTransactions={handleOpenWeeklyTransactions}
+      />
 
       {noAccounts ? (
         <Empty
@@ -396,6 +436,15 @@ export function Transactions() {
       <ImportDialog {...importTransactions} />
       <AssignAccountDialog {...assignTransactionAccount} />
       <AssignCategoryDialog {...assignTransactionCategory} />
+      <WeeklyTransactionsDialog
+        open={weeklyTransactionsDialog.open}
+        onClose={handleCloseWeeklyTransactions}
+        accountId={weeklyTransactionsDialog.accountId}
+        type={weeklyTransactionsDialog.type}
+        title={weeklyTransactionsDialog.title}
+        getActions={getGridActions}
+        onTransactionClick={editTransaction.openDialog}
+      />
     </Page>
   );
 }
