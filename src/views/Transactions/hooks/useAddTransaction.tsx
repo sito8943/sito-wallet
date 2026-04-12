@@ -55,7 +55,12 @@ export function useAddTransaction(
         showErrorNotification({
           message: t("_entities:account.balance.greaterThan0"),
         });
+        return;
       }
+
+      showErrorNotification({
+        message: error.message || t("_accessibility:errors.500"),
+      });
     },
     ...TransactionsQueryKeys.all(),
   });

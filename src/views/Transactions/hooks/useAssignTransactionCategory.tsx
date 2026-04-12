@@ -6,7 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTags } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
-import { UseActionDialog, usePostDialog } from "@sito/dashboard-app";
+import {
+  UseActionDialog,
+  useNotification,
+  usePostDialog,
+} from "@sito/dashboard-app";
 
 // providers
 import { useManager } from "providers";
@@ -33,6 +37,7 @@ export function useAssignTransactionCategoryAction(): UseActionDialog<
   const { t } = useTranslation();
 
   const manager = useManager();
+  const { showErrorNotification } = useNotification();
 
   const dialog = usePostDialog<
     AssignTransactionCategoryDto,
@@ -46,6 +51,11 @@ export function useAssignTransactionCategoryAction(): UseActionDialog<
       "_pages:transactions.actions.assignCategory.successMessage",
     ),
     title: t("_pages:transactions.actions.assignCategory.title"),
+    onError: (error) => {
+      showErrorNotification({
+        message: error.message || t("_accessibility:errors.500"),
+      });
+    },
     ...TransactionsQueryKeys.all(),
   });
 
@@ -54,7 +64,7 @@ export function useAssignTransactionCategoryAction(): UseActionDialog<
   const handleOpenDialog = useCallback(
     (transactions: TransactionDto[]) => {
       reset?.({
-        category: null,
+        categories: [],
         transactionIds: transactions.map((item) => item.id),
       });
       openDialog();

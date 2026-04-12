@@ -5,6 +5,7 @@ import {
   useEditAction,
   usePutDialog,
   UseActionDialog,
+  useNotification,
 } from "@sito/dashboard-app";
 
 // providers
@@ -29,6 +30,7 @@ export function useEditTransaction(): UseActionDialog<
   const { t } = useTranslation();
 
   const manager = useManager();
+  const { showErrorNotification } = useNotification();
 
   const { openDialog: onClick, ...rest } = usePutDialog<
     TransactionDto,
@@ -43,6 +45,11 @@ export function useEditTransaction(): UseActionDialog<
     mutationFn: (data) => manager.Transactions.update(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:transactions.forms.edit"),
+    onError: (error) => {
+      showErrorNotification({
+        message: error.message || t("_accessibility:errors.500"),
+      });
+    },
     ...TransactionsQueryKeys.all(),
   });
 

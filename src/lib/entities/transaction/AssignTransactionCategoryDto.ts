@@ -1,4 +1,5 @@
 export interface AssignTransactionCategoryDto {
-  categoryId: number;
+  categoryIds?: number[];
+  categoryId?: number;
   transactionIds: number[];
 }

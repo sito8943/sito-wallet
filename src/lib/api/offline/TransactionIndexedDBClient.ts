@@ -28,7 +28,30 @@ import { getOfflineStoreDbName } from "./getOfflineStoreDbName";
 import { seedStore } from "./seedStore";
 
 type TransactionCreateInput = AddTransactionDto &
-  Partial<Pick<UpdateTransactionDto, "categoryId">>;
+  Partial<Pick<UpdateTransactionDto, "categoryId" | "categoryIds">>;
+
+const parseCategoryIds = (value: {
+  categoryIds?: number[];
+  categoryId?: number;
+}): number[] => {
+  if (Array.isArray(value.categoryIds) && value.categoryIds.length > 0) {
+    const seen = new Set<number>();
+
+    return value.categoryIds.filter((categoryId) => {
+      if (!Number.isFinite(categoryId) || categoryId <= 0) return false;
+      if (seen.has(categoryId)) return false;
+
+      seen.add(categoryId);
+      return true;
+    });
+  }
+
+  if (typeof value.categoryId === "number" && value.categoryId > 0) {
+    return [value.categoryId];
+  }
+
+  return [];
+};
 
 export class TransactionIndexedDBClient extends IndexedDBClient<
   Tables,
@@ -60,7 +83,7 @@ export class TransactionIndexedDBClient extends IndexedDBClient<
       "CREATE",
       {
         accountId: parsed.accountId,
-        categoryId: parsed.categoryId ?? 0,
+        categoryIds: parseCategoryIds(parsed),
         amount: parsed.amount,
         date: parsed.date,
         description: parsed.description,
@@ -100,7 +123,7 @@ export class TransactionIndexedDBClient extends IndexedDBClient<
       {
         id: updateValue.id,
         accountId: updateValue.accountId,
-        categoryId: updateValue.categoryId,
+        categoryIds: parseCategoryIds(updateValue),
         amount: updateValue.amount,
         date: updateValue.date,
         description: updateValue.description,

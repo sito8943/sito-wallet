@@ -2,10 +2,11 @@ import { DeleteDto } from "@sito/dashboard-app";
 import { TransactionType } from "./TransactionType";
 
 export interface UpdateTransactionDto extends DeleteDto {
-  description: string;
+  description?: string | null;
   accountId: number;
-  categoryId: number;
-  type: TransactionType;
+  categoryIds?: number[];
+  categoryId?: number;
+  type?: TransactionType;
   amount: number;
-  date: string;
+  date?: string | null;
 }

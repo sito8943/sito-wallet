@@ -19,7 +19,12 @@ import {
 } from "../types";
 
 // lib
-import { Tables } from "lib";
+import {
+  CommonTransactionCategoryDto,
+  Tables,
+  hasMixedTransactionCategoryTypes,
+  normalizeSelectedTransactionCategories,
+} from "lib";
 
 // hooks
 import { useAccountsCommon, useTransactionCategoriesCommon } from "hooks";
@@ -57,9 +62,24 @@ export function TransactionForm(props: TransactionFormPropsType) {
             ? t("_entities:transactionCategory.name.init")
             : category.name,
         })) ?? []),
-      ] as Option[],
+      ] as CommonTransactionCategoryDto[],
     [categories?.data, t],
   );
+
+  const selectedCategories = useWatch({
+    control,
+    name: "categories",
+  }) as CommonTransactionCategoryDto[] | undefined;
+
+  const selectedCategoryType = selectedCategories?.[0]?.type;
+
+  const categoryOptionsByType = useMemo(() => {
+    if (selectedCategoryType === undefined) return categoryOptions;
+
+    return categoryOptions.filter(
+      (category) => category.type === selectedCategoryType,
+    );
+  }, [categoryOptions, selectedCategoryType]);
 
   // #endregion
 
@@ -78,19 +98,45 @@ export function TransactionForm(props: TransactionFormPropsType) {
       />
       <Controller
         control={control}
-        name="category"
+        name="categories"
+        rules={{
+          validate: (value) => {
+            const parsedCategories = Array.isArray(value)
+              ? (value as CommonTransactionCategoryDto[])
+              : [];
+
+            if (!parsedCategories.length) {
+              return t("_entities:transaction.category.required");
+            }
+
+            if (hasMixedTransactionCategoryTypes(parsedCategories)) {
+              return t("_entities:transaction.category.required");
+            }
+
+            return true;
+          },
+        }}
         disabled={isLoading || lockCategory}
         render={({ field: { value, onChange, ...rest } }) => (
           <AutocompleteInput
             required
-            options={categoryOptions}
-            value={value}
-            onChange={(v) => onChange(v)}
+            options={categoryOptionsByType as Option[]}
+            value={Array.isArray(value) ? value : []}
+            onChange={(nextValue) =>
+              onChange(
+                normalizeSelectedTransactionCategories(
+                  Array.isArray(nextValue)
+                    ? (nextValue as CommonTransactionCategoryDto[])
+                    : [],
+                ),
+              )
+            }
             label={t("_entities:transaction.category.label")}
+            placeholder={t("_entities:transaction.category.placeholder")}
             autoComplete={`${Tables.Transactions}-${t(
               "_entities:transaction.category.label",
             )}`}
-            multiple={false}
+            multiple
             {...rest}
           />
         )}

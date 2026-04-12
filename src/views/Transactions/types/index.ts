@@ -32,9 +32,17 @@ export interface TransactionFormType
   extends
     Omit<
       TransactionDto,
-      "currency" | "deletedAt" | "createdAt" | "updatedAt" | "user"
+      | "currency"
+      | "deletedAt"
+      | "createdAt"
+      | "updatedAt"
+      | "user"
+      | "category"
+      | "categories"
     >,
-    FieldValues {}
+    FieldValues {
+  categories: CommonTransactionCategoryDto[];
+}
 
 export type TransactionFormPropsType =
   FormDialogPropsType<TransactionFormType> & {
@@ -70,7 +78,7 @@ export type AssignTransactionAccountDialogPropsType =
   TriggerFormDialogPropsType<AssignTransactionAccountFormType>;
 
 export interface AssignTransactionCategoryFormType extends FieldValues {
-  category: CommonTransactionCategoryDto | null;
+  categories: CommonTransactionCategoryDto[];
   transactionIds: number[];
 }
 
@@ -91,7 +99,8 @@ export interface TransactionsMobileFiltersFormType extends FieldValues {
   sortingOrder: SortOrder;
 }
 
-export interface TransactionsMobileFiltersDialogPropsType extends TriggerFormDialogPropsType<TransactionsMobileFiltersFormType> {
+export interface TransactionsMobileFiltersDialogPropsType
+  extends TriggerFormDialogPropsType<TransactionsMobileFiltersFormType> {
   categories: CommonTransactionCategoryDto[];
   hideDeletedEntities?: boolean;
   handleClear: () => void;

@@ -4,10 +4,12 @@ import { formatForDatetimeLocal } from "@sito/dashboard-app";
 import {
   CommonAccountDto,
   TransactionDto,
-  TransactionType,
   UpdateTransactionDto,
   AssignTransactionAccountDto,
   AssignTransactionCategoryDto,
+  getPrimaryTransactionCategory,
+  getTransactionCategories,
+  normalizeSelectedTransactionCategories,
 } from "lib";
 import {
   AssignTransactionAccountFormType,
@@ -17,23 +19,34 @@ import {
 
 export const formToDto = ({
   account,
-  category,
+  categories,
   ...data
 }: TransactionFormType): UpdateTransactionDto => {
+  const normalizedCategories =
+    normalizeSelectedTransactionCategories(categories);
+  const primaryCategory = getPrimaryTransactionCategory({
+    categories: normalizedCategories,
+  });
+
   return {
     ...data,
     accountId: account?.id ?? 0,
-    categoryId: category?.id ?? 0,
-    type: data.type as TransactionType,
+    categoryIds: normalizedCategories.map((category) => category.id),
+    ...(primaryCategory ? { type: primaryCategory.type } : {}),
   };
 };
 
-export const dtoToForm = (dto: TransactionDto): TransactionFormType => ({
-  ...dto,
-  accountId: dto.account?.id ?? 0,
-  categoryId: dto.category?.id ?? 0,
-  date: formatForDatetimeLocal(dto.date),
-});
+export const dtoToForm = (dto: TransactionDto): TransactionFormType => {
+  const categories = getTransactionCategories(dto);
+
+  return {
+    ...dto,
+    categories,
+    accountId: dto.account?.id ?? 0,
+    categoryIds: categories.map((category) => category.id),
+    date: dto.date ? formatForDatetimeLocal(dto.date) : formatForDatetimeLocal(),
+  };
+};
 
 export const addEmptyTransaction = (
   account: CommonAccountDto | null = null,
@@ -41,7 +54,7 @@ export const addEmptyTransaction = (
   auto: false,
   description: "",
   account,
-  category: null,
+  categories: [],
   amount: 0,
   date: formatForDatetimeLocal(),
 });
@@ -53,7 +66,7 @@ export const emptyTransaction = (
   auto: false,
   description: "",
   account,
-  category: null,
+  categories: [],
   amount: 0,
   date: formatForDatetimeLocal(),
 });
@@ -72,13 +85,15 @@ export const assignAccountFormToDto = (
 
 export const emptyAssignCategoryForm =
   (): AssignTransactionCategoryFormType => ({
-    category: null,
+    categories: [],
     transactionIds: [],
   });
 
 export const assignCategoryFormToDto = (
   form: AssignTransactionCategoryFormType,
 ): AssignTransactionCategoryDto => ({
-  categoryId: form.category?.id ?? 0,
+  categoryIds: normalizeSelectedTransactionCategories(form.categories).map(
+    (category) => category.id,
+  ),
   transactionIds: form.transactionIds ?? [],
 });

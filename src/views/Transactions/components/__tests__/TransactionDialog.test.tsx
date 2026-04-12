@@ -68,19 +68,38 @@ vi.mock("@sito/dashboard-app", () => ({
     label,
     options,
     disabled,
+    multiple,
   }: {
     value?: unknown;
     onChange?: (v: unknown) => void;
     label?: string;
     options?: Array<{ id: number; name: string }>;
     disabled?: boolean;
+    multiple?: boolean;
   }) => (
     <select
       data-testid={`autocomplete-${label}`}
-      value={(value as { id: number } | undefined)?.id ?? ""}
+      multiple={multiple}
+      value={
+        multiple
+          ? Array.isArray(value)
+            ? value.map((item) => String((item as { id: number }).id))
+            : []
+          : ((value as { id: number } | undefined)?.id ?? "")
+      }
       onChange={(e) => {
-        const opt = options?.find((o) => String(o.id) === e.target.value);
-        onChange?.(opt ?? null);
+        if (multiple) {
+          const selectedIds = Array.from(e.currentTarget.selectedOptions).map(
+            (option) => Number(option.value),
+          );
+          const selectedOptions =
+            options?.filter((option) => selectedIds.includes(option.id)) ?? [];
+          onChange?.(selectedOptions);
+          return;
+        }
+
+        const option = options?.find((item) => String(item.id) === e.target.value);
+        onChange?.(option ?? null);
       }}
       aria-label={label}
       disabled={disabled}
@@ -159,7 +178,7 @@ function TransactionFormWrapper({
   const form = useForm({
     defaultValues: {
       id: undefined,
-      category: null,
+      categories: [],
       account: null,
       amount: "",
       date: "",
@@ -184,7 +203,7 @@ function AddTransactionWrapper({ open }: { open: boolean }) {
   const form = useForm({
     defaultValues: {
       id: undefined,
-      category: null,
+      categories: [],
       account: null,
       amount: "",
       date: "",
@@ -209,7 +228,7 @@ function EditTransactionWrapper({ open }: { open: boolean }) {
   const form = useForm({
     defaultValues: {
       id: 1,
-      category: { id: 1 },
+      categories: [{ id: 1, name: "Food", auto: false, type: 0 }],
       account: defaultAccount,
       amount: "50",
       date: "2024-01-01T12:00",

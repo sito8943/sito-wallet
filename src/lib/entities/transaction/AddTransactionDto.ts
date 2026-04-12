@@ -1,9 +1,11 @@
 import { TransactionType } from "./TransactionType";
 
 export interface AddTransactionDto {
-  description: string;
+  description?: string | null;
   accountId: number;
-  type: TransactionType;
   amount: number;
-  date: string;
+  date?: string | null;
+  categoryIds?: number[];
+  categoryId?: number;
+  type?: TransactionType;
 }

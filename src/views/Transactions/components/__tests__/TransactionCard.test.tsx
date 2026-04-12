@@ -30,6 +30,30 @@ vi.mock("lib", () => ({
     Out: 0,
     In: 1,
   },
+  getTransactionCategories: (
+    transaction: {
+      categories?: Array<{ id: number }>;
+      category?: { id: number } | null;
+    },
+  ) => {
+    if (Array.isArray(transaction.categories) && transaction.categories.length) {
+      return transaction.categories;
+    }
+
+    return transaction.category ? [transaction.category] : [];
+  },
+  getPrimaryTransactionCategory: (
+    transaction: {
+      categories?: Array<{ id: number }>;
+      category?: { id: number } | null;
+    },
+  ) => {
+    if (Array.isArray(transaction.categories) && transaction.categories.length) {
+      return transaction.categories[0];
+    }
+
+    return transaction.category ?? null;
+  },
 }));
 
 import { TransactionCard } from "../TransactionCard";
