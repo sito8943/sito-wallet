@@ -1,27 +1,30 @@
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Dialog, Empty, Error, Loading } from "@sito/dashboard-app";
+import {
+  Dialog,
+  Empty,
+  Error,
+  Loading,
+  SortOrder,
+  TableOptionsProvider,
+} from "@sito/dashboard-app";
 
-import { Currency } from "views/Currencies/components/Currency";
-import { Type } from "views/TransactionCategories/components/Type";
+import { WalletTable } from "components";
 
 import { useWeeklyTransactionsList } from "../../hooks";
 import { TransactionCard } from "../TransactionCard";
 
 import {
   WEEKLY_TRANSACTIONS_DIALOG_CLASS_NAME,
-  WEEKLY_TRANSACTIONS_TABLE_HEADERS,
+  WEEKLY_TRANSACTIONS_TABLE_INITIAL_STATE,
 } from "./constants";
 import type { WeeklyTransactionsDialogPropsType } from "./types";
-import {
-  getWeeklyTransactionAmountClassName,
-  getWeeklyTransactionAmountPrefix,
-  getWeeklyTransactionCategoryLabel,
-  getWeeklyTransactionDateLabel,
-  getWeeklyTransactionDescriptionLabel,
-  getWeeklyTransactionType,
-  getWeeklyTransactionsRangeLabel,
-} from "./utils";
+import { EntityName, useParseColumns } from "lib";
+import type { TransactionDto } from "lib";
+import { getWeeklyTransactionsTableColumns } from "./tableColumns";
+import { sortWeeklyTransactions } from "./sort";
+import { getWeeklyTransactionsRangeLabel } from "./utils";
 
 import "./styles.css";
 
@@ -48,7 +51,29 @@ export const WeeklyTransactionsDialog = (
     weekScope,
   });
 
-  const items = data?.items ?? [];
+  const items = useMemo(() => data?.items ?? [], [data?.items]);
+  const [sortProperty, setSortProperty] = useState<string>(
+    WEEKLY_TRANSACTIONS_TABLE_INITIAL_STATE.sortingBy,
+  );
+  const [sortOrder, setSortOrder] = useState<SortOrder>(
+    WEEKLY_TRANSACTIONS_TABLE_INITIAL_STATE.sortingOrder,
+  );
+
+  const weeklyColumns = useMemo(
+    () => getWeeklyTransactionsTableColumns(t),
+    [t],
+  );
+
+  const { columns } = useParseColumns<TransactionDto>(
+    weeklyColumns,
+    EntityName.Transaction,
+    ["id", "createdAt", "updatedAt", "deletedAt", "softDeleteScope"],
+  );
+
+  const sortedItems = useMemo(
+    () => sortWeeklyTransactions(items, sortProperty, sortOrder, t),
+    [items, sortOrder, sortProperty, t],
+  );
 
   const dateRangeLabel = getWeeklyTransactionsRangeLabel(dateRange);
 
@@ -70,41 +95,29 @@ export const WeeklyTransactionsDialog = (
           <Empty message={t("_pages:transactions.empty")} />
         ) : (
           <>
-            <div className="weekly-transactions-table-wrapper max-sm:hidden">
-              <table className="weekly-transactions-table">
-                <thead>
-                  <tr>
-                    {WEEKLY_TRANSACTIONS_TABLE_HEADERS.map((headerKey) => (
-                      <th key={headerKey}>{t(headerKey)}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {items.map((transaction) => (
-                    <tr key={transaction.id}>
-                      <td>{getWeeklyTransactionDateLabel(transaction.date)}</td>
-                      <td>
-                        <div className="w-fit">
-                          <Type type={getWeeklyTransactionType(transaction)} />
-                        </div>
-                      </td>
-                      <td>{getWeeklyTransactionDescriptionLabel(transaction, t)}</td>
-                      <td>{getWeeklyTransactionCategoryLabel(transaction, t)}</td>
-                      <td>
-                        <p className={getWeeklyTransactionAmountClassName(transaction)}>
-                          {getWeeklyTransactionAmountPrefix(transaction)}
-                          {transaction.amount}{" "}
-                          <Currency
-                            name={transaction.account?.currency?.name}
-                            symbol={transaction.account?.currency?.symbol}
-                          />
-                        </p>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <TableOptionsProvider
+              initialState={WEEKLY_TRANSACTIONS_TABLE_INITIAL_STATE}
+            >
+              <div className="weekly-transactions-table-wrapper max-sm:hidden">
+                <WalletTable
+                  total={sortedItems.length}
+                  data={sortedItems}
+                  entity={EntityName.Transaction}
+                  columns={columns}
+                  isLoading={false}
+                  contentClassName="weekly-transactions-table-content"
+                  filterOptions={{
+                    button: {
+                      hide: true,
+                    },
+                  }}
+                  onSort={(property, order) => {
+                    setSortProperty(property);
+                    setSortOrder(order);
+                  }}
+                />
+              </div>
+            </TableOptionsProvider>
 
             <div className="weekly-transactions-dialog-mobile-list sm:hidden!">
               {items.map((transaction) => (

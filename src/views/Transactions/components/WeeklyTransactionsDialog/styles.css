@@ -13,23 +13,11 @@
 }
 
 .weekly-transactions-table-wrapper {
-  @apply max-h-[60vh] overflow-auto border border-border rounded-xl bg-base-light;
+  @apply border border-border rounded-xl bg-base-light;
 }
 
-.weekly-transactions-table {
-  @apply w-full border-collapse;
-}
-
-.weekly-transactions-table thead th {
-  @apply sticky top-0 z-10 bg-base-light text-text text-xs font-semibold uppercase tracking-wide px-3 py-2 border-b border-border text-left;
-}
-
-.weekly-transactions-table tbody td {
-  @apply px-3 py-2 border-b border-border align-top;
-}
-
-.weekly-transactions-table tbody tr:last-child td {
-  @apply border-b-0;
+.weekly-transactions-table-content {
+  @apply max-h-[60vh] overflow-auto;
 }
 
 .weekly-transactions-dialog-mobile-list {
