@@ -5,7 +5,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const mockLogUser = vi.fn();
 const mockLogoutUser = vi.fn(() => Promise.resolve());
 const mockGetSession = vi.fn();
-const mockClearIndexedDatabases = vi.fn(() => Promise.resolve());
 const mockClearFeatures = vi.fn();
 const mockUseOnlineStatus = vi.fn();
 const mockReadStoredSessionFromSnapshot = vi.fn();
@@ -35,9 +34,6 @@ vi.mock("providers", () => ({
       getSession: mockGetSession,
     },
   }),
-  useOfflineManager: () => ({
-    clearIndexedDatabases: mockClearIndexedDatabases,
-  }),
   useFeatureFlags: () => ({
     clearFeatures: mockClearFeatures,
   }),
@@ -62,7 +58,6 @@ describe("App auth bootstrap", () => {
     mockLogUser.mockReset();
     mockLogoutUser.mockReset();
     mockGetSession.mockReset();
-    mockClearIndexedDatabases.mockReset();
     mockClearFeatures.mockReset();
     mockUseOnlineStatus.mockReset();
     mockReadStoredSessionFromSnapshot.mockReset();
@@ -106,7 +101,6 @@ describe("App auth bootstrap", () => {
     await waitFor(() => expect(mockLogoutUser).toHaveBeenCalled());
     expect(mockClearPersistedPublicSessionAccount).toHaveBeenCalled();
     expect(mockClearFeatures).toHaveBeenCalled();
-    expect(mockClearIndexedDatabases).toHaveBeenCalled();
 
     expect(await screen.findByTestId("routes")).toBeInTheDocument();
   });
@@ -143,7 +137,6 @@ describe("App auth bootstrap", () => {
 
     expect(mockLogoutUser).toHaveBeenCalled();
     expect(mockClearFeatures).toHaveBeenCalled();
-    expect(mockClearIndexedDatabases).toHaveBeenCalled();
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(300);

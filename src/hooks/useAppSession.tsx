@@ -1,7 +1,7 @@
 import { isHttpError, useAuth } from "@sito/dashboard-app";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { useFeatureFlags, useManager, useOfflineManager } from "providers";
+import { useFeatureFlags, useManager } from "providers";
 import {
   clearPersistedPublicSessionAccount,
   readStoredRememberMe,
@@ -14,19 +14,13 @@ export const useAppSession = (): boolean => {
   const { logUser, logoutUser } = useAuth();
   const { clearFeatures } = useFeatureFlags();
   const manager = useManager();
-  const offlineManager = useOfflineManager();
   const isOnline = useOnlineStatus();
   const [loading, setLoading] = useState(true);
-
-  const clearIndexedDatabases = useCallback(async () => {
-    await offlineManager.clearIndexedDatabases();
-  }, [offlineManager]);
 
   const bootstrapContextRef = useRef({
     logUser,
     logoutUser,
     manager,
-    clearIndexedDatabases,
     clearFeatures,
   });
   const initialIsOnlineRef = useRef(isOnline);
@@ -35,7 +29,6 @@ export const useAppSession = (): boolean => {
     logUser,
     logoutUser,
     manager,
-    clearIndexedDatabases,
     clearFeatures,
   };
 
@@ -79,7 +72,6 @@ export const useAppSession = (): boolean => {
           } else {
             clearPersistedPublicSessionAccount();
             bootstrapContextRef.current.clearFeatures();
-            bootstrapContextRef.current.clearIndexedDatabases();
             bootstrapContextRef.current.logoutUser();
           }
         } catch (err) {

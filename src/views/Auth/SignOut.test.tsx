@@ -27,6 +27,9 @@ vi.mock("providers", () => ({
 const mockClearAllTableOptions = vi.fn();
 
 vi.mock("lib", () => ({
+  AppRoutes: {
+    signIn: "/auth/sign-in",
+  },
   clearPersistedPublicSessionAccount: () =>
     mockClearPersistedPublicSessionAccount(),
   clearAllTableOptions: () => mockClearAllTableOptions(),
