@@ -50,6 +50,11 @@ const TransactionCategories = loadable(() =>
     }),
   ),
 );
+const Subscriptions = loadable(() =>
+  import("views/Subscriptions/Subscriptions").then((module) => ({
+    default: module.Subscriptions,
+  })),
+);
 const Transactions = loadable(() =>
   import("views/Transactions/Transactions").then((module) => ({
     default: module.Transactions,
@@ -130,6 +135,16 @@ export const Routes = () => {
                 <TransactionCategories />
               ) : (
                 <FeatureUnavailable module="transactionCategories" />
+              )
+            }
+          />
+          <Route
+            path={AppRoutes.subscriptions}
+            element={
+              isFeatureEnabled("subscriptionsEnabled") ? (
+                <Subscriptions />
+              ) : (
+                <FeatureUnavailable module="subscriptions" />
               )
             }
           />

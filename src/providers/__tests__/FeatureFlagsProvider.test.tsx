@@ -49,6 +49,7 @@ vi.mock("lib", () => {
       "currenciesEnabled",
       "accountsEnabled",
       "transactionsEnabled",
+      "subscriptionsEnabled",
     ] as const) {
       if (typeof value[key] === "boolean") {
         next[key] = value[key];

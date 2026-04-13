@@ -1,4 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
+
 export { ProfileQueryKeys } from "./queryKeys/profileQueryKeys";
-export * from "./useMyProfile";
-export * from "./useProfileById";
-export * from "./useHideDeletedEntitiesPreference";
+export { useMyProfile } from "./useMyProfile";
+export { useProfileById } from "./useProfileById";
+export { useHideDeletedEntitiesPreference } from "./useHideDeletedEntitiesPreference";

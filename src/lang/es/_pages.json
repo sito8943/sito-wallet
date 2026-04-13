@@ -5,6 +5,7 @@
     "accounts": "Cuentas",
     "transactions": "Transacciones",
     "transactionCategories": "Categorías",
+    "subscriptions": "Suscripciones",
     "currencies": "Monedas",
     "about": "Acerca de Sito Wallet",
     "terms-and-conditions": "Términos y Condiciones",
@@ -206,7 +207,8 @@
       "accounts": "cuentas",
       "currencies": "monedas",
       "transactions": "transacciones",
-      "transactionCategories": "categorías de transacciones"
+      "transactionCategories": "categorías de transacciones",
+      "subscriptions": "suscripciones"
     }
   },
   "sync": {
@@ -314,6 +316,29 @@
       "add": "Nueva moneda",
       "edit": "Editar moneda",
       "editAria": "Click para editar moneda"
+    }
+  },
+  "subscriptions": {
+    "title": "Suscripciones",
+    "empty": "No tienes suscripciones. Crea una para empezar.",
+    "add": "Agregar una suscripción",
+    "labels": {
+      "nextRenewal": "Próxima renovación",
+      "noRenewal": "Sin renovación"
+    },
+    "forms": {
+      "add": "Nueva suscripción",
+      "edit": "Editar suscripción",
+      "editAria": "Haz clic para editar la suscripción"
+    },
+    "actions": {
+      "billingLog": {
+        "text": "Registrar pago",
+        "disabled": "No puedes registrar pagos en suscripciones canceladas",
+        "title": "Registrar pago",
+        "for": "Suscripción",
+        "successMessage": "Pago registrado correctamente"
+      }
     }
   },
   "footer": {

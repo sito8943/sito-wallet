@@ -1,0 +1,10 @@
+@reference "../../../styles/variables.css";
+
+.weekly-transactions-dialog-mobile-list .transaction-card {
+  min-height: 58px;
+  @apply bg-base-light;
+}
+
+.transaction-card {
+  @apply relative flex justify-between items-center gap-2 w-full min-w-0 overflow-hidden p-2 pr-3 rounded-lg;
+}

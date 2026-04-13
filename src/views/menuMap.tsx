@@ -13,16 +13,19 @@ import {
   faTags,
   faFileInvoice,
   faUser,
+  faRepeat,
 } from "@fortawesome/free-solid-svg-icons";
 
 // types
 import type { MenuItemType, IsFeatureEnabled } from "./types";
-import type { FeatureFlagKey } from "lib";
+import { AppRoutes } from "../lib/routes";
+import type { FeatureFlagKey } from "../lib/api/featureFlags/types";
 
 export enum MenuKeys {
   Home = "home",
   Transactions = "transactions",
   TransactionCategories = "transactionCategories",
+  Subscriptions = "subscriptions",
   Accounts = "accounts",
   Currencies = "currencies",
   Products = "products",
@@ -39,66 +42,71 @@ export enum MenuKeys {
 export const menuMap: MenuItemType[] = [
   {
     page: MenuKeys.Home,
-    path: "/",
+    path: AppRoutes.home,
     icon: <FontAwesomeIcon icon={faHome} />,
   },
   {
     page: MenuKeys.Transactions,
-    path: "/transactions",
+    path: AppRoutes.transactions,
     icon: <FontAwesomeIcon icon={faFileInvoice} />,
   },
   {
     page: MenuKeys.TransactionCategories,
-    path: "/transaction-categories",
+    path: AppRoutes.transactionCategories,
     icon: <FontAwesomeIcon icon={faTags} />,
   },
   {
+    page: MenuKeys.Subscriptions,
+    path: AppRoutes.subscriptions,
+    icon: <FontAwesomeIcon icon={faRepeat} />,
+  },
+  {
     page: MenuKeys.Accounts,
-    path: "/accounts",
+    path: AppRoutes.accounts,
     icon: <FontAwesomeIcon icon={faCreditCard} />,
   },
   {
     page: MenuKeys.Currencies,
-    path: "/currencies",
+    path: AppRoutes.currencies,
     icon: <FontAwesomeIcon icon={faCoins} />,
   },
   { type: "divider" },
   {
     page: MenuKeys.About,
-    path: "/about-us",
+    path: AppRoutes.about,
     icon: <FontAwesomeIcon icon={faCircleInfo} />,
   },
   {
     page: MenuKeys.TermsAndConditions,
-    path: "/terms-and-conditions",
+    path: AppRoutes.termsAndConditions,
     icon: <FontAwesomeIcon icon={faScroll} />,
   },
   {
     page: MenuKeys.CookiesPolicy,
-    path: "/cookies-policy",
+    path: AppRoutes.cookiesPolicy,
     icon: <FontAwesomeIcon icon={faCookieBite} />,
   },
   {
     page: MenuKeys.PrivacyPolicy,
-    path: "/privacy-policy",
+    path: AppRoutes.privacyPolicy,
     icon: <FontAwesomeIcon icon={faShieldHalved} />,
   },
   { type: "divider" },
   {
     page: MenuKeys.Profile,
-    path: "/profile",
+    path: AppRoutes.profile,
     auth: true,
     icon: <FontAwesomeIcon icon={faUser} />,
   },
   {
     page: MenuKeys.SignOut,
-    path: "/sign-out",
+    path: AppRoutes.signOut,
     auth: true,
     icon: <FontAwesomeIcon icon={faRightFromBracket} />,
   },
   {
     page: MenuKeys.SignIn,
-    path: "/auth/sign-in",
+    path: AppRoutes.signIn,
     auth: false,
     icon: <FontAwesomeIcon icon={faRightToBracket} />,
   },
@@ -107,6 +115,7 @@ export const menuMap: MenuItemType[] = [
 const menuFeatureDependencies: Partial<Record<MenuKeys, FeatureFlagKey>> = {
   [MenuKeys.Transactions]: "transactionsEnabled",
   [MenuKeys.TransactionCategories]: "transactionCategoriesEnabled",
+  [MenuKeys.Subscriptions]: "subscriptionsEnabled",
   [MenuKeys.Accounts]: "accountsEnabled",
   [MenuKeys.Currencies]: "currenciesEnabled",
 };

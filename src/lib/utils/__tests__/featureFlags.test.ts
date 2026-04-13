@@ -27,6 +27,7 @@ const defaults: AppFeatures = {
   currenciesEnabled: true,
   accountsEnabled: true,
   transactionsEnabled: true,
+  subscriptionsEnabled: true,
 };
 
 describe("featureFlags utils", () => {
@@ -41,12 +42,14 @@ describe("featureFlags utils", () => {
       currenciesEnabled: "yes",
       accountsEnabled: false,
       transactionsEnabled: null,
+      subscriptionsEnabled: true,
       extra: true,
     });
 
     expect(payload).toEqual({
       balanceGreaterThanZero: true,
       accountsEnabled: false,
+      subscriptionsEnabled: true,
     });
   });
 
@@ -59,6 +62,7 @@ describe("featureFlags utils", () => {
       },
       payload: {
         transactionsEnabled: false,
+        subscriptionsEnabled: false,
       },
     });
 
@@ -67,6 +71,7 @@ describe("featureFlags utils", () => {
       currenciesEnabled: false,
       accountsEnabled: true,
       transactionsEnabled: false,
+      subscriptionsEnabled: false,
     });
   });
 

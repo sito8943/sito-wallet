@@ -15,6 +15,14 @@
     "transactionCategory": {
       "singular": "Categoria",
       "plural": "Categorias"
+    },
+    "subscription": {
+      "singular": "Suscripción",
+      "plural": "Suscripciones"
+    },
+    "subscriptionProvider": {
+      "singular": "Proveedor de suscripción",
+      "plural": "Proveedores de suscripción"
     }
   },
   "base": {
@@ -160,6 +168,87 @@
       "required": "El símbolo es requerido",
       "label": "Símbolo",
       "placeholder": "Ej: $"
+    }
+  },
+  "subscription": {
+    "name": {
+      "placeholder": "Ej: Netflix Premium"
+    },
+    "provider": {
+      "label": "Proveedor",
+      "placeholder": "Selecciona un proveedor",
+      "required": "El proveedor es requerido"
+    },
+    "currency": {
+      "label": "Moneda",
+      "placeholder": "Selecciona una moneda",
+      "required": "La moneda es requerida"
+    },
+    "amount": {
+      "label": "Importe",
+      "placeholder": "Ej: 19.99",
+      "required": "El importe es requerido",
+      "greaterThanZero": "El importe debe ser mayor que cero"
+    },
+    "billingFrequency": {
+      "label": "Frecuencia",
+      "placeholder": "Ej: 1",
+      "required": "La frecuencia es requerida",
+      "greaterThanZero": "La frecuencia debe ser mayor o igual a 1"
+    },
+    "billingUnit": {
+      "label": "Unidad de facturación",
+      "required": "La unidad de facturación es requerida",
+      "values": {
+        "DAY": "Día",
+        "MONTH": "Mes",
+        "YEAR": "Año"
+      }
+    },
+    "startsAt": {
+      "label": "Inicio",
+      "required": "La fecha de inicio es requerida"
+    },
+    "lastPaidAt": {
+      "label": "Último pago"
+    },
+    "status": {
+      "label": "Estado",
+      "required": "El estado es requerido",
+      "values": {
+        "ACTIVE": "Activa",
+        "PAUSED": "Pausada",
+        "CANCELED": "Cancelada"
+      }
+    },
+    "notificationEnabled": {
+      "label": "Notificar antes de renovar"
+    },
+    "notificationDaysBefore": {
+      "label": "Días antes de renovar",
+      "placeholder": "Ej: 3",
+      "required": "Los días de notificación son requeridos",
+      "range": "Los días deben estar entre 0 y 30"
+    }
+  },
+  "subscriptionBillingLog": {
+    "amount": {
+      "label": "Importe pagado",
+      "placeholder": "Ej: 19.99",
+      "required": "El importe pagado es requerido",
+      "greaterThanZero": "El importe pagado debe ser mayor que cero"
+    },
+    "paidAt": {
+      "label": "Fecha de pago",
+      "required": "La fecha de pago es requerida"
+    },
+    "currency": {
+      "label": "Moneda",
+      "placeholder": "Selecciona una moneda"
+    },
+    "note": {
+      "label": "Nota",
+      "placeholder": "Ej: Pago con tarjeta"
     }
   },
   "userDashboardCard": {

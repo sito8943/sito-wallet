@@ -15,6 +15,14 @@
     "transactionCategory": {
       "singular": "Category",
       "plural": "Categories"
+    },
+    "subscription": {
+      "singular": "Subscription",
+      "plural": "Subscriptions"
+    },
+    "subscriptionProvider": {
+      "singular": "Subscription Provider",
+      "plural": "Subscription Providers"
     }
   },
   "base": {
@@ -159,6 +167,87 @@
       "required": "Symbol is required",
       "label": "Symbol",
       "placeholder": "Ex: $"
+    }
+  },
+  "subscription": {
+    "name": {
+      "placeholder": "Ex: Netflix Premium"
+    },
+    "provider": {
+      "label": "Provider",
+      "placeholder": "Select a provider",
+      "required": "Provider is required"
+    },
+    "currency": {
+      "label": "Currency",
+      "placeholder": "Select a currency",
+      "required": "Currency is required"
+    },
+    "amount": {
+      "label": "Amount",
+      "placeholder": "Ex: 19.99",
+      "required": "Amount is required",
+      "greaterThanZero": "Amount must be greater than zero"
+    },
+    "billingFrequency": {
+      "label": "Frequency",
+      "placeholder": "Ex: 1",
+      "required": "Frequency is required",
+      "greaterThanZero": "Frequency must be greater than or equal to 1"
+    },
+    "billingUnit": {
+      "label": "Billing unit",
+      "required": "Billing unit is required",
+      "values": {
+        "DAY": "Day",
+        "MONTH": "Month",
+        "YEAR": "Year"
+      }
+    },
+    "startsAt": {
+      "label": "Starts at",
+      "required": "Start date is required"
+    },
+    "lastPaidAt": {
+      "label": "Last paid at"
+    },
+    "status": {
+      "label": "Status",
+      "required": "Status is required",
+      "values": {
+        "ACTIVE": "Active",
+        "PAUSED": "Paused",
+        "CANCELED": "Canceled"
+      }
+    },
+    "notificationEnabled": {
+      "label": "Notify before renewal"
+    },
+    "notificationDaysBefore": {
+      "label": "Days before renewal",
+      "placeholder": "Ex: 3",
+      "required": "Notification days are required",
+      "range": "Days must be between 0 and 30"
+    }
+  },
+  "subscriptionBillingLog": {
+    "amount": {
+      "label": "Paid amount",
+      "placeholder": "Ex: 19.99",
+      "required": "Paid amount is required",
+      "greaterThanZero": "Paid amount must be greater than zero"
+    },
+    "paidAt": {
+      "label": "Paid at",
+      "required": "Paid date is required"
+    },
+    "currency": {
+      "label": "Currency",
+      "placeholder": "Select a currency"
+    },
+    "note": {
+      "label": "Note",
+      "placeholder": "Ex: Paid with card"
     }
   },
   "userDashboardCard": {

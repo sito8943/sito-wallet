@@ -2,6 +2,7 @@ export * from "./Accounts";
 export * from "./Currencies";
 export * from "./Transactions";
 export * from "./TransactionCategories";
+export * from "./Subscriptions";
 export * from "./Auth";
 export * from "./Home";
 export * from "./Profile";

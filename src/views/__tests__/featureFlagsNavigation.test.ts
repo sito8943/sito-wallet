@@ -15,6 +15,7 @@ describe("feature flags navigation guards", () => {
     const menu = getFeatureFilteredMenuMap(
       checker({
         transactionsEnabled: false,
+        subscriptionsEnabled: false,
         accountsEnabled: true,
         currenciesEnabled: true,
         transactionCategoriesEnabled: false,
@@ -25,6 +26,7 @@ describe("feature flags navigation guards", () => {
 
     expect(menuPages).not.toContain(MenuKeys.Transactions);
     expect(menuPages).not.toContain(MenuKeys.TransactionCategories);
+    expect(menuPages).not.toContain(MenuKeys.Subscriptions);
     expect(menuPages).toContain(MenuKeys.Accounts);
   });
 
@@ -32,6 +34,7 @@ describe("feature flags navigation guards", () => {
     const routes = getFeatureFilteredSitemap(
       checker({
         transactionsEnabled: false,
+        subscriptionsEnabled: false,
         accountsEnabled: false,
         currenciesEnabled: true,
         transactionCategoriesEnabled: false,
@@ -42,6 +45,7 @@ describe("feature flags navigation guards", () => {
 
     expect(pageKeys).not.toContain(PageId.Transactions);
     expect(pageKeys).not.toContain(PageId.TransactionCategories);
+    expect(pageKeys).not.toContain(PageId.Subscriptions);
     expect(pageKeys).not.toContain(PageId.Accounts);
     expect(pageKeys).toContain(PageId.Currencies);
   });

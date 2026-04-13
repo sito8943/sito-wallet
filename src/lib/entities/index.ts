@@ -4,5 +4,7 @@ export * from "./transaction";
 export * from "./transactionCategory";
 export * from "./dashboard";
 export * from "./profile";
+export * from "./subscription";
+export * from "./subscriptionProvider";
 export * from "./ImportDto";
 export * from "./ImportPreviewDto";

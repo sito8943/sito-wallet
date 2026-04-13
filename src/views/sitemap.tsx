@@ -6,13 +6,15 @@ import type {
   ViewPageType,
   IsFeatureEnabled,
 } from "./types";
-import { AppRoutes, type FeatureFlagKey } from "lib";
+import { AppRoutes } from "../lib/routes";
+import type { FeatureFlagKey } from "../lib/api/featureFlags/types";
 
 export enum PageId {
   Home = "home",
   Profile = "profile",
   Transactions = "transactions",
   TransactionCategories = "transactionCategories",
+  Subscriptions = "subscriptions",
   Accounts = "accounts",
   Currencies = "currencies",
   NotFound = "not-found",
@@ -40,6 +42,10 @@ export const sitemap: ViewPageType[] = [
     path: AppRoutes.transactionCategories,
   },
   {
+    key: PageId.Subscriptions,
+    path: AppRoutes.subscriptions,
+  },
+  {
     key: PageId.Accounts,
     path: AppRoutes.accounts,
   },
@@ -63,6 +69,7 @@ export const sitemap: ViewPageType[] = [
 const pageFeatureDependencies: Partial<Record<PageId, FeatureFlagKey>> = {
   [PageId.Transactions]: "transactionsEnabled",
   [PageId.TransactionCategories]: "transactionCategoriesEnabled",
+  [PageId.Subscriptions]: "subscriptionsEnabled",
   [PageId.Accounts]: "accountsEnabled",
   [PageId.Currencies]: "currenciesEnabled",
 };

@@ -11,6 +11,7 @@ const APP_FEATURE_KEYS: Array<keyof AppFeatures> = [
   "currenciesEnabled",
   "accountsEnabled",
   "transactionsEnabled",
+  "subscriptionsEnabled",
 ];
 
 const isObject = (value: unknown): value is Record<string, unknown> => {

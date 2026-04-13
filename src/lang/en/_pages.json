@@ -5,6 +5,7 @@
     "accounts": "Accounts",
     "transactions": "Transactions",
     "transactionCategories": "Categories",
+    "subscriptions": "Subscriptions",
     "currencies": "Currencies",
     "about": "About Sito Wallet",
     "terms-and-conditions": "Terms and Conditions",
@@ -206,7 +207,8 @@
       "accounts": "accounts",
       "currencies": "currencies",
       "transactions": "transactions",
-      "transactionCategories": "transaction categories"
+      "transactionCategories": "transaction categories",
+      "subscriptions": "subscriptions"
     }
   },
   "sync": {
@@ -313,6 +315,29 @@
       "add": "New currency",
       "edit": "Edit currency",
       "editAria": "Click to edit currency"
+    }
+  },
+  "subscriptions": {
+    "title": "Subscriptions",
+    "empty": "You don't have subscriptions yet. Create one to get started.",
+    "add": "Add a subscription",
+    "labels": {
+      "nextRenewal": "Next renewal",
+      "noRenewal": "No renewal"
+    },
+    "forms": {
+      "add": "New subscription",
+      "edit": "Edit subscription",
+      "editAria": "Click to edit subscription"
+    },
+    "actions": {
+      "billingLog": {
+        "text": "Register payment",
+        "disabled": "You cannot register payments for canceled subscriptions",
+        "title": "Register payment",
+        "for": "Subscription",
+        "successMessage": "Payment registered successfully"
+      }
     }
   },
   "footer": {

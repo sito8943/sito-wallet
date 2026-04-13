@@ -1,0 +1,9 @@
+@reference "../../styles/variables.css";
+
+.subscription-selection-bar {
+  @apply sm:hidden top-12 bg-white py-2 sticky z-10;
+}
+
+.subscription-selection-bar .table-selection-bar {
+  margin-bottom: 0;
+}

@@ -3,6 +3,7 @@ export type AppFeatures = {
   currenciesEnabled: boolean;
   accountsEnabled: boolean;
   transactionsEnabled: boolean;
+  subscriptionsEnabled: boolean;
 };
 
 export type AppFeaturesPayload = Partial<AppFeatures>;

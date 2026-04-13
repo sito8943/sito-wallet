@@ -43,7 +43,7 @@ const getSortableValue = (
     case "date":
       return getSortableDate(transaction);
     case "type":
-      return getSortableText(getWeeklyTransactionType(transaction));
+      return getSortableText(String(getWeeklyTransactionType(transaction)));
     case "category":
       return getSortableText(getWeeklyTransactionCategoryLabel(transaction, t));
     case "description":
