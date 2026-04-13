@@ -1,18 +1,23 @@
 import { useEffect, useMemo } from "react";
 import { Controller, useWatch } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 
+// @sito/dashboard-app
 import {
   AutocompleteInput,
   Option,
   ParagraphInput,
   SelectInput,
   TextInput,
+  useTranslation,
 } from "@sito/dashboard-app";
 
+// hooks
 import { useCurrenciesCommon, useSubscriptionProvidersCommon } from "hooks";
+
+// lib
 import { SUBSCRIPTION_BILLING_UNITS, SUBSCRIPTION_STATUSES, Tables } from "lib";
 
+// types
 import { SubscriptionFormPropsType } from "../types";
 
 export function SubscriptionForm(props: SubscriptionFormPropsType) {
