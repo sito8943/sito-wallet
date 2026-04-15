@@ -1,0 +1,182 @@
+import { useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { Controller, useWatch } from "react-hook-form";
+
+// @sito/dashboard-app
+import {
+  enumToKeyValueArray,
+  useAuth,
+  ParagraphInput,
+  SelectInput,
+  TextInput,
+  Option,
+  AutocompleteInput,
+} from "@sito/dashboard-app";
+
+// icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+// types
+import { AccountFormPropsType } from "../types";
+
+// lib
+import { Tables, AccountType } from "lib";
+
+// utils
+import { icons } from "./utils";
+
+// hooks
+import { useCurrenciesCommon } from "hooks";
+
+export function AccountForm(props: AccountFormPropsType) {
+  const { control, isLoading, setValue, open } = props;
+  const { t } = useTranslation();
+  const { account } = useAuth();
+
+  useEffect(() => {
+    if (account && setValue) setValue("userId", account?.id ?? 0);
+  }, [account, setValue, open]);
+
+  const currencies = useCurrenciesCommon();
+
+  const currencyOptions = useMemo(
+    () => [...(currencies?.data ?? [])] as Option[],
+    [currencies.data],
+  );
+
+  const typeOptions = useMemo(
+    () => [
+      ...(enumToKeyValueArray(AccountType)?.map(({ key, value }) => ({
+        id: value as number,
+        name: t(`_entities:account.type.values.${key}`),
+      })) ?? []),
+    ],
+    [t],
+  );
+
+  const { type, id } = useWatch({ control });
+
+  return (
+    <>
+      <Controller
+        control={control}
+        render={({ field }) => <input {...field} type="hidden" />}
+        name="id"
+      />
+      <Controller
+        control={control}
+        render={({ field }) => <input {...field} type="hidden" />}
+        name="userId"
+      />
+      <Controller
+        control={control}
+        rules={{
+          required: `${t("_entities:base.name.required")}`,
+        }}
+        name="name"
+        disabled={isLoading}
+        render={({ field: { value, ...rest } }) => (
+          <TextInput
+            id="name"
+            required
+            maxLength={20}
+            value={value ?? ""}
+            autoComplete={`${Tables.Accounts}-${t(
+              "_entities:base.name.label",
+            )}`}
+            label={t("_entities:base.name.label")}
+            placeholder={t("_entities:account.name.placeholder")}
+            {...rest}
+          />
+        )}
+      />
+      {!id && (
+        <Controller
+          control={control}
+          rules={{
+            required: `${t("_entities:account.balance.required")}`,
+          }}
+          name="balance"
+          disabled={isLoading}
+          render={({ field: { value, ...rest } }) => (
+            <TextInput
+              id="balance"
+              required
+              maxLength={20}
+              value={value ?? ""}
+              type="number"
+              autoComplete={`${Tables.Accounts}-${t(
+                "_entities:account.balance.initial",
+              )}`}
+              label={t("_entities:account.balance.initial")}
+              placeholder={t("_entities:account.balance.placeholder")}
+              {...rest}
+            />
+          )}
+        />
+      )}
+      <div className="flex gap-5">
+        <Controller
+          control={control}
+          name="type"
+          disabled={isLoading}
+          render={({ field: { value, onChange, ...rest } }) => (
+            <SelectInput
+              id="type"
+              required
+              options={typeOptions}
+              value={value}
+              onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
+              label={t("_entities:account.type.label")}
+              inputClassName="!pl-7"
+              {...rest}
+            >
+              <FontAwesomeIcon
+                icon={icons[(type ?? 0) as keyof typeof icons]}
+                className="absolute left-2 vertical-center text-text text-sm"
+              />
+            </SelectInput>
+          )}
+        />
+        <Controller
+          control={control}
+          name="currency"
+          disabled={isLoading}
+          render={({ field: { value, onChange, ...rest } }) => (
+            <AutocompleteInput
+              id="currency"
+              required
+              options={currencyOptions}
+              value={value}
+              autoComplete={`${Tables.Accounts}-${t(
+                "_entities:account.currency.label",
+              )}`}
+              onChange={(v) => onChange(v)}
+              label={t("_entities:account.currency.label")}
+              multiple={false}
+              {...rest}
+            />
+          )}
+        />
+      </div>
+      <Controller
+        control={control}
+        name="description"
+        disabled={isLoading}
+        render={({ field: { value, ...rest } }) => (
+          <ParagraphInput
+            id="description"
+            maxLength={60}
+            value={value ?? ""}
+            autoComplete={`${Tables.Accounts}-${t(
+              "_entities:base.description.label",
+            )}`}
+            label={t("_entities:base.description.label")}
+            placeholder={t("_entities:base.description.placeholder")}
+            {...rest}
+          />
+        )}
+      />
+    </>
+  );
+}

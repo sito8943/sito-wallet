@@ -8,33 +8,34 @@ import {
 // types
 import type { BottomNavItemType } from "./types";
 import { PageId } from "./sitemap";
+import { AppRoutes } from "lib";
 
 export const bottomMap: BottomNavItemType[] = [
   {
     id: "home",
     page: PageId.Home,
-    to: "/",
+    to: AppRoutes.home,
     icon: faHome,
     position: "left",
   },
   {
     id: "transactions",
     page: PageId.Transactions,
-    to: "/transactions",
+    to: AppRoutes.transactions,
     icon: faFileInvoice,
     position: "left",
   },
   {
     id: "accounts",
     page: PageId.Accounts,
-    to: "/accounts",
+    to: AppRoutes.accounts,
     icon: faCreditCard,
     position: "right",
   },
   {
     id: "profile",
     page: PageId.Profile,
-    to: "/profile",
+    to: AppRoutes.profile,
     icon: faUser,
     position: "right",
   },

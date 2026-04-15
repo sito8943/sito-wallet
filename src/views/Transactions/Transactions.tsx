@@ -64,6 +64,7 @@ import {
   applyHideDeletedEntitiesPreference,
   normalizeListFilters,
   RouteQueryParam,
+  getTransactionsRouteWithAccountId,
 } from "lib";
 
 // providers
@@ -257,7 +258,7 @@ export function Transactions() {
     return (accounts?.items?.map((item) => ({
       id: item.id,
       label: item.name,
-      to: `?accountId=${item.id}`,
+      to: getTransactionsRouteWithAccountId(item.id),
       content: (
         <TransactionTable
           accountId={item.id}

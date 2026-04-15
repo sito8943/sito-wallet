@@ -13,10 +13,7 @@ import {
 } from "lib";
 
 import { SubscriptionProvidersQueryKeys } from "./queryKeys/subscriptionProvidersQueryKeys";
-
-export type UseSubscriptionProvidersCommonProps = {
-  onlyEnabled?: boolean;
-};
+import { UseSubscriptionProvidersCommonProps } from "./types";
 
 export function useSubscriptionProvidersCommon(
   props: UseSubscriptionProvidersCommonProps = {},

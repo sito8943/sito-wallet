@@ -19,7 +19,7 @@ import { ProfilePhotoPropsType } from "../types";
 // components
 import { Image } from "components";
 
-const PhotoFallback = () => (
+const profilePhotoFallback = (
   <FontAwesomeIcon icon={faUser} className="text-4xl text-text-muted" />
 );
 
@@ -60,12 +60,12 @@ export function ProfilePhoto({
           {hasPhoto ? (
             <Image
               endpoint={profile.photo!}
-              fallback={<PhotoFallback />}
+              fallback={profilePhotoFallback}
               className="w-full h-full object-cover"
               alt={profile.name}
             />
           ) : (
-            <PhotoFallback />
+            profilePhotoFallback
           )}
           {isUploading && (
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center">

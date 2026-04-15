@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 // types
 import { HowToStep } from "./types";
 
+// lib
+import { AppRoutes } from "lib";
+
 export const About = () => {
   const { t } = useTranslation();
 
@@ -13,15 +16,15 @@ export const About = () => {
 
   const legalLinks = [
     {
-      to: "/terms-and-conditions",
+      to: AppRoutes.termsAndConditions,
       label: t("_pages:about.legal.links.terms"),
     },
     {
-      to: "/privacy-policy",
+      to: AppRoutes.privacyPolicy,
       label: t("_pages:about.legal.links.privacy"),
     },
     {
-      to: "/cookies-policy",
+      to: AppRoutes.cookiesPolicy,
       label: t("_pages:about.legal.links.cookies"),
     },
   ];

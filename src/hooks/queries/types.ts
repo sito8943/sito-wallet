@@ -37,3 +37,12 @@ export interface ApiQueryResult<
 export type UseTransactionTypeResumePropsType = FilterTransactionTypeResumeDto;
 export type UseTransactionsGroupedByTypePropsType =
   FilterTransactionGroupedByTypeDto;
+
+export type UseSubscriptionsRenewalsProps = {
+  from?: string;
+  to?: string;
+};
+
+export type UseSubscriptionProvidersCommonProps = {
+  onlyEnabled?: boolean;
+};

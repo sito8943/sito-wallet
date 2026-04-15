@@ -7,11 +7,7 @@ import { useManager } from "providers";
 import { SubscriptionRenewalDto } from "lib";
 
 import { SubscriptionsQueryKeys } from "./queryKeys/subscriptionsQueryKeys";
-
-export type UseSubscriptionsRenewalsProps = {
-  from?: string;
-  to?: string;
-};
+import { UseSubscriptionsRenewalsProps } from "./types";
 
 export function useSubscriptionsRenewals(
   props: UseSubscriptionsRenewalsProps = {},
