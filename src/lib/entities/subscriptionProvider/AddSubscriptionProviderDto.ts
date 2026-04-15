@@ -3,5 +3,4 @@ export interface AddSubscriptionProviderDto {
   description?: string | null;
   website?: string | null;
   photo?: string | null;
-  enabled?: boolean;
 }

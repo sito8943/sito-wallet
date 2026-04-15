@@ -5,5 +5,4 @@ export interface SubscriptionProviderDto extends BaseEntityDto {
   description?: string | null;
   website?: string | null;
   photo?: string | null;
-  enabled: boolean;
 }

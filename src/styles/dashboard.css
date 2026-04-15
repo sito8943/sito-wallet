@@ -40,7 +40,7 @@ select > option {
 }
 
 .select-input-label {
-  @apply left-0 peer-focus:!left-0;
+  @apply left-0 peer-focus:!left-0 top-2;
 }
 
 .autocomplete-input-container,
