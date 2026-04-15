@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import {
   faCircleCheck,
   faCircleXmark,
-  faGlobe,
+  faExternalLink,
   faImage,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,7 +17,9 @@ const ensureAbsoluteUrl = (value: string): string => {
   return `https://${value}`;
 };
 
-export function SubscriptionProviderCard(props: SubscriptionProviderCardPropsType) {
+export function SubscriptionProviderCard(
+  props: SubscriptionProviderCardPropsType,
+) {
   const { t } = useTranslation();
 
   const {
@@ -37,7 +39,8 @@ export function SubscriptionProviderCard(props: SubscriptionProviderCardPropsTyp
   } = props;
 
   const deleted = !!deletedAt;
-  const parsedDescription = description || t("_entities:base.description.empty");
+  const parsedDescription =
+    description || t("_entities:base.description.empty");
   const parsedWebsite = website?.trim() ?? "";
   const hasPhoto = !!photo?.trim();
 
@@ -45,7 +48,20 @@ export function SubscriptionProviderCard(props: SubscriptionProviderCardPropsTyp
     <ItemCard
       title={
         <div className="flex w-full items-start justify-between gap-2">
-          <ItemCardTitle>{name}</ItemCardTitle>
+          <ItemCardTitle>
+            {name}{" "}
+            {parsedWebsite ? (
+              <a
+                href={ensureAbsoluteUrl(parsedWebsite)}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(event) => event.stopPropagation()}
+                className="inline-flex items-center gap-1 text-xs text-bg-primary underline"
+              >
+                <FontAwesomeIcon icon={faExternalLink} />
+              </a>
+            ) : null}
+          </ItemCardTitle>
           <span
             className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-xs ${
               enabled
@@ -79,19 +95,6 @@ export function SubscriptionProviderCard(props: SubscriptionProviderCardPropsTyp
       >
         {parsedDescription}
       </p>
-
-      {parsedWebsite ? (
-        <a
-          href={ensureAbsoluteUrl(parsedWebsite)}
-          target="_blank"
-          rel="noreferrer"
-          onClick={(event) => event.stopPropagation()}
-          className="inline-flex items-center gap-1 text-xs text-bg-primary underline"
-        >
-          <FontAwesomeIcon icon={faGlobe} />
-          <span className="max-w-full truncate">{parsedWebsite}</span>
-        </a>
-      ) : null}
 
       {hasPhoto ? (
         <p className="inline-flex items-center gap-1 text-xs text-text-muted">

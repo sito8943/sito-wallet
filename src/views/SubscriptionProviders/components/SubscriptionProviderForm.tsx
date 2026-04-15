@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Controller, useWatch } from "react-hook-form";
 
 // @sito/dashboard-app
@@ -10,11 +10,11 @@ import {
 } from "@sito/dashboard-app";
 
 // icons
-import { faImage } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faImage } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
-import { Image } from "components";
+// import { Image } from "components";
 
 // lib
 import { Tables } from "lib";
@@ -35,7 +35,7 @@ export function SubscriptionProviderForm(
     control,
     name: "file",
   }) as File | null;
-  const currentPhoto =
+ /*  const currentPhoto =
     (useWatch({
       control,
       name: "photo",
@@ -43,7 +43,7 @@ export function SubscriptionProviderForm(
   const removePhoto = !!useWatch({
     control,
     name: "removePhoto",
-  });
+  }); */
 
   const previewUrl = useMemo(() => {
     if (!selectedFile) return "";
@@ -56,18 +56,18 @@ export function SubscriptionProviderForm(
     };
   }, [previewUrl]);
 
-  const hasStoredPhoto = !!currentPhoto.trim();
+  /* const hasStoredPhoto = !!currentPhoto.trim();
   const showStoredPhoto = hasStoredPhoto && !selectedFile && !removePhoto;
-  const hasAnyPhoto = !!previewUrl || showStoredPhoto;
+  const hasAnyPhoto = !!previewUrl || showStoredPhoto; */
 
-  const openFileSelector = useCallback(() => {
+  /* const openFileSelector = useCallback(() => {
     const fileInput = document.getElementById(
       SUBSCRIPTION_PROVIDER_FILE_INPUT_ID,
     );
     if (fileInput instanceof HTMLInputElement) fileInput.click();
-  }, []);
+  }, []); */
 
-  const handleDeletePhoto = useCallback(() => {
+  /* const handleDeletePhoto = useCallback(() => {
     if (!setValue) return;
 
     if (removePhoto) {
@@ -83,7 +83,7 @@ export function SubscriptionProviderForm(
     if (hasStoredPhoto) {
       setValue("removePhoto", true, { shouldDirty: true });
     }
-  }, [hasStoredPhoto, removePhoto, selectedFile, setValue]);
+  }, [hasStoredPhoto, removePhoto, selectedFile, setValue]); */
 
   return (
     <>
@@ -153,7 +153,7 @@ export function SubscriptionProviderForm(
         )}
       />
 
-      <div className="flex flex-col gap-2 rounded-xl border border-border p-3">
+      {/* <div className="flex flex-col gap-2 rounded-xl border border-border p-3">
         <p className="text-sm">
           {t("_entities:subscriptionProvider.photo.label")}
         </p>
@@ -218,7 +218,7 @@ export function SubscriptionProviderForm(
             ) : null}
           </div>
         </div>
-      </div>
+      </div> */}
 
       <Controller
         control={control}
