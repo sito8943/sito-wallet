@@ -130,7 +130,9 @@ const menuFeatureDependencies: Partial<Record<MenuKeys, FeatureFlagKey>> = {
 
 export const getFeatureFilteredMenuMap = (
   isFeatureEnabled: IsFeatureEnabled,
+  language?: string,
 ): MenuItemType[] => {
+  void language;
   const menuMap = getMenuMap();
   const filtered = menuMap.filter((item) => {
     if (!item.page) return true;

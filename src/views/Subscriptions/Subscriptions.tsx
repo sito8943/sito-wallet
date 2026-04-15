@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
-import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
+// @sito/dashboard-app
 import {
   ConfirmationDialog,
   Empty,
@@ -12,45 +13,50 @@ import {
   useExportActionMutate,
   useNotification,
   useRestoreDialog,
+  useTranslation,
 } from "@sito/dashboard-app";
 
+// icons
 import { faAdd, faRepeat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+// hooks
 import {
   SubscriptionsQueryKeys,
   useInfiniteSubscriptionsList,
   useMobileMultiSelection,
   useMobileNavbar,
 } from "hooks";
+import { useAddSubscriptionBillingLogDialog } from "./hooks"
+
+// components
 import { MobileSelectionBar } from "components";
+import {
+  AddSubscriptionBillingLogDialog,
+  SubscriptionCard,
+} from "./components";
+
+// providers
 import { useManager, useRegisterBottomNavAction } from "providers";
 
+// lib
 import {
+  AppRoutes,
   FilterSubscriptionDto,
   SubscriptionDto,
   Tables,
   defaultSubscriptionsListFilters,
+  getSubscriptionEditRoute,
   isFeatureDisabledBusinessError,
   normalizeListFilters,
 } from "lib";
 
-import {
-  AddSubscriptionBillingLogDialog,
-  AddSubscriptionDialog,
-  EditSubscriptionDialog,
-  SubscriptionCard,
-} from "./components";
-import {
-  useAddSubscriptionBillingLogDialog,
-  useAddSubscriptionDialog,
-  useEditSubscriptionDialog,
-} from "./hooks";
-
+// styles
 import "./styles.css";
 
 export function Subscriptions() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { showErrorNotification } = useNotification();
 
   const manager = useManager();
@@ -81,7 +87,8 @@ export function Subscriptions() {
 
   const deleteSubscription = useDeleteDialog({
     mutationFn: async (ids) => {
-      if (!subscriptionsClient) throw new Error("subscriptions.featureDisabled");
+      if (!subscriptionsClient)
+        throw new Error("subscriptions.featureDisabled");
       return await subscriptionsClient.softDelete(ids);
     },
     ...SubscriptionsQueryKeys.all(),
@@ -89,23 +96,25 @@ export function Subscriptions() {
 
   const restoreSubscription = useRestoreDialog({
     mutationFn: async (ids) => {
-      if (!subscriptionsClient) throw new Error("subscriptions.featureDisabled");
+      if (!subscriptionsClient)
+        throw new Error("subscriptions.featureDisabled");
       return await subscriptionsClient.restore(ids);
     },
     ...SubscriptionsQueryKeys.all(),
   });
 
-  const addSubscription = useAddSubscriptionDialog();
-  const editSubscription = useEditSubscriptionDialog();
   const addBillingLog = useAddSubscriptionBillingLogDialog();
 
   const exportSubscriptions = useExportActionMutate({
     entity: Tables.Subscriptions,
     mutationFn: async () => {
-      if (!subscriptionsClient) throw new Error("subscriptions.featureDisabled");
+      if (!subscriptionsClient)
+        throw new Error("subscriptions.featureDisabled");
 
       return await subscriptionsClient.export(
-        normalizeListFilters(defaultSubscriptionsListFilters) as FilterSubscriptionDto,
+        normalizeListFilters(
+          defaultSubscriptionsListFilters,
+        ) as FilterSubscriptionDto,
       );
     },
   });
@@ -131,10 +140,12 @@ export function Subscriptions() {
 
   useMobileNavbar(t("_pages:subscriptions.title"), pageToolbar);
 
-  const openAddSubscriptionRef = useRef(addSubscription.openDialog);
+  const openAddSubscriptionRef = useRef(() =>
+    navigate(AppRoutes.subscriptionNew),
+  );
   useEffect(() => {
-    openAddSubscriptionRef.current = addSubscription.openDialog;
-  }, [addSubscription.openDialog]);
+    openAddSubscriptionRef.current = () => navigate(AppRoutes.subscriptionNew);
+  }, [navigate]);
 
   useRegisterBottomNavAction(
     useCallback(() => {
@@ -149,7 +160,7 @@ export function Subscriptions() {
       isLoading={isLoading}
       actions={pageToolbar}
       addOptions={{
-        onClick: () => addSubscription.openDialog(),
+        onClick: () => navigate(AppRoutes.subscriptionNew),
         disabled: isLoading || !subscriptionsClient,
         tooltip: t("_pages:subscriptions.add"),
       }}
@@ -184,7 +195,7 @@ export function Subscriptions() {
                   icon: <FontAwesomeIcon icon={faAdd} />,
                   id: GlobalActions.Add,
                   disabled: isLoading || !subscriptionsClient,
-                  onClick: () => addSubscription.openDialog(),
+                  onClick: () => navigate(AppRoutes.subscriptionNew),
                   tooltip: t("_pages:subscriptions.add"),
                 }}
               />
@@ -192,7 +203,7 @@ export function Subscriptions() {
             renderComponent={(subscription) => (
               <SubscriptionCard
                 actions={getActions(subscription)}
-                onClick={(id: number) => editSubscription.openDialog(id)}
+                onClick={(id: number) => navigate(getSubscriptionEditRoute(id))}
                 selectionMode={mobileSelection.selectionMode}
                 selected={mobileSelection.isSelected(subscription.id)}
                 onSelect={mobileSelection.onToggleRowSelection}
@@ -202,8 +213,6 @@ export function Subscriptions() {
             )}
           />
 
-          <AddSubscriptionDialog {...addSubscription} />
-          <EditSubscriptionDialog {...editSubscription} />
           <AddSubscriptionBillingLogDialog {...addBillingLog} />
           <ConfirmationDialog {...deleteSubscription} />
           <ConfirmationDialog {...restoreSubscription} />

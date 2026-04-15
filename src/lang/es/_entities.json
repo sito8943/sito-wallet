@@ -179,6 +179,11 @@
       "placeholder": "Selecciona un proveedor",
       "required": "El proveedor es requerido"
     },
+    "account": {
+      "label": "Cuenta",
+      "placeholder": "Selecciona una cuenta",
+      "requiredWhenAuto": "La cuenta es requerida cuando se crean transacciones automáticas"
+    },
     "currency": {
       "label": "Moneda",
       "placeholder": "Selecciona una moneda",
@@ -209,6 +214,10 @@
       "label": "Inicio",
       "required": "La fecha de inicio es requerida"
     },
+    "endsAt": {
+      "label": "Fin",
+      "afterStart": "La fecha de fin debe ser mayor o igual que la fecha de inicio"
+    },
     "lastPaidAt": {
       "label": "Último pago"
     },
@@ -221,6 +230,9 @@
         "CANCELED": "Cancelada"
       }
     },
+    "autoCreateTransaction": {
+      "label": "Crear transacción automática"
+    },
     "notificationEnabled": {
       "label": "Notificar antes de renovar"
     },
@@ -229,6 +241,31 @@
       "placeholder": "Ej: 3",
       "required": "Los días de notificación son requeridos",
       "range": "Los días deben estar entre 0 y 30"
+    }
+  },
+  "subscriptionProvider": {
+    "name": {
+      "placeholder": "Ej: Netflix",
+      "unique": "Ya existe un proveedor con ese nombre"
+    },
+    "website": {
+      "label": "Sitio web",
+      "placeholder": "Ej: https://www.netflix.com"
+    },
+    "photo": {
+      "label": "Foto",
+      "upload": "Subir foto",
+      "replace": "Cambiar foto",
+      "delete": "Quitar foto",
+      "selectedFile": "Archivo seleccionado",
+      "deleteOnSave": "La foto se eliminará al guardar"
+    },
+    "enabled": {
+      "label": "Habilitado",
+      "values": {
+        "true": "Habilitado",
+        "false": "Deshabilitado"
+      }
     }
   },
   "subscriptionBillingLog": {

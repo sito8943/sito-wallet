@@ -46,6 +46,7 @@ describe("feature flags navigation guards", () => {
     expect(pageKeys).not.toContain(PageId.Transactions);
     expect(pageKeys).not.toContain(PageId.TransactionCategories);
     expect(pageKeys).not.toContain(PageId.Subscriptions);
+    expect(pageKeys).not.toContain(PageId.SubscriptionProviders);
     expect(pageKeys).not.toContain(PageId.Accounts);
     expect(pageKeys).toContain(PageId.Currencies);
   });

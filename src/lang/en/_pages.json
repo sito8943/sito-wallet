@@ -6,6 +6,7 @@
     "transactions": "Transactions",
     "transactionCategories": "Categories",
     "subscriptions": "Subscriptions",
+    "subscriptionProviders": "Subscription providers",
     "currencies": "Currencies",
     "about": "About Sito Wallet",
     "terms-and-conditions": "Terms and Conditions",
@@ -334,6 +335,7 @@
       "editAria": "Click to edit subscription"
     },
     "actions": {
+      "cancel": "Cancel",
       "billingLog": {
         "text": "Register payment",
         "disabled": "You cannot register payments for canceled subscriptions",
@@ -341,6 +343,16 @@
         "for": "Subscription",
         "successMessage": "Payment registered successfully"
       }
+    }
+  },
+  "subscriptionProviders": {
+    "title": "Subscription providers",
+    "empty": "You don't have subscription providers yet. Add one to get started.",
+    "add": "Add a provider",
+    "forms": {
+      "add": "New provider",
+      "edit": "Edit provider",
+      "editAria": "Click to edit provider"
     }
   },
   "footer": {

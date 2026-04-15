@@ -10,6 +10,8 @@ export const AppRoutes = {
   transactions: "/transactions",
   transactionCategories: "/transaction-categories",
   subscriptions: "/subscriptions",
+  subscriptionNew: "/subscriptions/new",
+  subscriptionEdit: "/subscriptions/:subscriptionId/edit",
   subscriptionProviders: "/subscription-providers",
   accounts: "/accounts",
   currencies: "/currencies",
@@ -31,4 +33,13 @@ export const getTransactionsRouteWithAccountId = (
   const search = new URLSearchParams();
   search.set(RouteQueryParam.accountId, String(accountId));
   return `${AppRoutes.transactions}?${search.toString()}`;
+};
+
+export const getSubscriptionEditRoute = (
+  subscriptionId: number | string,
+): string => {
+  return AppRoutes.subscriptionEdit.replace(
+    ":subscriptionId",
+    String(subscriptionId),
+  );
 };

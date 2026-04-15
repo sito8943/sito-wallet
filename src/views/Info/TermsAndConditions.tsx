@@ -20,7 +20,7 @@ export const TermsAndConditions = () => {
         components={{
           p: <p />,
           strong: <strong />,
-          a: <a className="primary underline !font-bold" />,
+          a: <a className="primary underline font-bold!" />,
           code: <code className="bg-default px-1 rounded" />,
         }}
       />
@@ -28,7 +28,7 @@ export const TermsAndConditions = () => {
       <section className="mt-6 space-y-6">
         {sections.map((section, idx) => (
           <div key={idx} className="bg-base p-5 rounded-2xl">
-            <h3 className="text-2xl font-bold">{section.title}</h3>
+            <h3 className="text-2xl max-sm:text-xl font-bold">{section.title}</h3>
             <div className="mt-2 text-text">
               <Trans
                 i18nKey={`_pages:termsAndConditions.sections.${idx}.body`}
@@ -37,7 +37,7 @@ export const TermsAndConditions = () => {
                   strong: <strong />,
                   ul: <ul className="list-disc ml-4 space-y-1" />,
                   li: <li />,
-                  a: <a className="primary underline !font-bold" />,
+                  a: <a className="primary underline font-bold!" />,
                   code: <code className="bg-default px-1 rounded" />,
                 }}
               />

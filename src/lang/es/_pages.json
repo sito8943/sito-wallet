@@ -6,6 +6,7 @@
     "transactions": "Transacciones",
     "transactionCategories": "Categorías",
     "subscriptions": "Suscripciones",
+    "subscriptionProviders": "Proveedores de suscripción",
     "currencies": "Monedas",
     "about": "Acerca de Sito Wallet",
     "terms-and-conditions": "Términos y Condiciones",
@@ -335,6 +336,7 @@
       "editAria": "Haz clic para editar la suscripción"
     },
     "actions": {
+      "cancel": "Cancelar",
       "billingLog": {
         "text": "Registrar pago",
         "disabled": "No puedes registrar pagos en suscripciones canceladas",
@@ -342,6 +344,16 @@
         "for": "Suscripción",
         "successMessage": "Pago registrado correctamente"
       }
+    }
+  },
+  "subscriptionProviders": {
+    "title": "Proveedores de suscripción",
+    "empty": "No tienes proveedores de suscripción. Agrega uno para empezar.",
+    "add": "Agregar un proveedor",
+    "forms": {
+      "add": "Nuevo proveedor",
+      "edit": "Editar proveedor",
+      "editAria": "Haz clic para editar el proveedor"
     }
   },
   "footer": {

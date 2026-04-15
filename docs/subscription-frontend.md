@@ -107,13 +107,16 @@ Nota:
   "name": "Netflix Premium",
   "description": "4K plan",
   "providerId": 7,
+  "accountId": 12,
   "currencyId": 1,
   "amount": 19.99,
   "billingFrequency": 1,
   "billingUnit": "MONTH",
   "startsAt": "2026-01-15T10:00:00",
+  "endsAt": "2026-12-31T23:59:59",
   "lastPaidAt": "2026-04-15T10:00:00",
   "status": "ACTIVE",
+  "autoCreateTransaction": true,
   "notificationEnabled": true,
   "notificationDaysBefore": 3
 }
@@ -126,9 +129,14 @@ Reglas clave:
 - `billingFrequency >= 1`.
 - `billingUnit` requerido.
 - `startsAt` requerido.
+- `endsAt` es opcional. Si se envia, debe ser `>= startsAt`.
+- `autoCreateTransaction` es opcional (default `false`).
+- Si `autoCreateTransaction=true`, `accountId` es obligatorio (`> 0`).
+- Si se envia `accountId`, la cuenta debe existir, no estar borrada y pertenecer al usuario.
 - Si `notificationEnabled=true`, `notificationDaysBefore` es requerido en rango `0..30`.
 - Si `notificationEnabled` no se envia, backend lo interpreta como `false`.
 - Si `status=CANCELED`, backend deja `nextRenewalAt = null`.
+- Si el siguiente ciclo cae despues de `endsAt`, backend deja `nextRenewalAt = null`.
 - `userId` no hace falta enviarlo desde UI (backend lo resuelve por token).
 
 ### 2) Crear en lote
@@ -146,7 +154,10 @@ Reglas clave:
   "amount": 21.99,
   "billingFrequency": 1,
   "billingUnit": "MONTH",
+  "accountId": 12,
+  "endsAt": "2026-12-31T23:59:59",
   "status": "PAUSED",
+  "autoCreateTransaction": true,
   "notificationEnabled": false
 }
 ```
@@ -154,6 +165,8 @@ Reglas clave:
 
 Notas:
 - En update se aplican solo campos enviados (no null).
+- Para desasociar cuenta, enviar `accountId: 0` (o negativo).
+- `endsAt` solo se actualiza cuando llega valor no null (no se limpia con `null` en el contrato actual).
 - Si `notificationEnabled=false`, backend fuerza `notificationDaysBefore=null`.
 - En el contrato actual `PATCH /subscriptions/{id}` exige `id` en body (`id is required`).
 
@@ -201,6 +214,14 @@ Reglas:
 - No permite logs para subscriptions `CANCELED`.
 - Recalcula `lastPaidAt` y `nextRenewalAt` en la subscription.
 - Si no envias `currencyId`, el log hereda la moneda de la suscripcion.
+- Si `autoCreateTransaction=true` en la subscription, backend crea una transaccion automatica por cada renewal:
+  - `auto=true`
+  - `account = subscription.account`
+  - `amount/date` desde el billing log
+  - `description = note` o fallback `Renewal: {subscriptionName}`
+  - categoria auto OUT: `subscription-auto-renewal` (la crea si no existe)
+- Si `autoCreateTransaction=true` y no hay cuenta asociada, falla con `accountId is required when autoCreateTransaction=true`.
+- Si `transactionsEnabled=false` y hay auto-transaccion, falla con `transactions.featureDisabled`.
 
 ### 2) Listar billing logs
 - `GET /subscriptions/{id}/billing-logs`
@@ -250,6 +271,14 @@ Reglas:
     "name": "Netflix",
     "image": "https://cdn.example.com/providers/netflix.png"
   },
+  "account": {
+    "id": 12,
+    "name": "BBVA Debit",
+    "currency": {
+      "id": 1,
+      "name": "USD"
+    }
+  },
   "currency": {
     "id": 1,
     "name": "USD"
@@ -258,9 +287,11 @@ Reglas:
   "billingFrequency": 1,
   "billingUnit": 1,
   "startsAt": "2026-01-15T10:00:00",
+  "endsAt": "2026-12-31T23:59:59",
   "lastPaidAt": "2026-04-15T10:00:00",
   "nextRenewalAt": "2026-05-15T10:00:00",
   "status": 0,
+  "autoCreateTransaction": true,
   "notificationEnabled": true,
   "notificationDaysBefore": 3,
   "updatedAt": "2026-04-12T18:20:10",
@@ -286,14 +317,18 @@ Reglas:
 - `provider not found`
 - `provider is disabled`
 - `currency not found`
+- `account not found`
 - `amount must be greater than zero`
 - `billingFrequency must be greater than zero`
 - `billingUnit is required`
 - `startsAt is required`
+- `endsAt must be greater than or equal to startsAt`
+- `accountId is required when autoCreateTransaction=true`
 - `notificationDaysBefore is required when notificationEnabled=true`
 - `notificationDaysBefore must be between 0 and 30`
 - `id is required`
 - `Cannot create billing log for canceled subscription`
+- `transactions.featureDisabled`
 - `to must be greater than or equal to from`
 - `Subscription not found with id: {id}`
 
@@ -324,6 +359,10 @@ export interface CommonSubscriptionProviderDTO extends CommonRef {
   image?: string | null;
 }
 
+export interface CommonAccountDTO extends CommonRef {
+  currency?: CommonCurrencyDTO | null;
+}
+
 export interface SubscriptionProviderDTO extends CommonRef {
   description?: string | null;
   website?: string | null;
@@ -338,14 +377,17 @@ export interface SubscriptionDTO {
   name: string;
   description?: string | null;
   provider: CommonSubscriptionProviderDTO | null;
+  account: CommonAccountDTO | null;
   currency: CommonCurrencyDTO | null;
   amount: number;
   billingFrequency: number;
   billingUnit: number; // 0 DAY, 1 MONTH, 2 YEAR
   startsAt: string;
+  endsAt?: string | null;
   lastPaidAt?: string | null;
   nextRenewalAt?: string | null;
   status: number; // 0 ACTIVE, 1 PAUSED, 2 CANCELED
+  autoCreateTransaction: boolean;
   notificationEnabled: boolean;
   notificationDaysBefore?: number | null;
   updatedAt?: string | null;
@@ -356,13 +398,16 @@ export interface CreateSubscriptionCommand {
   name: string;
   description?: string | null;
   providerId: number;
+  accountId?: number | null;
   currencyId?: number | null;
   amount: number;
   billingFrequency: number;
   billingUnit: SubscriptionBillingUnit;
   startsAt: string;
+  endsAt?: string | null;
   lastPaidAt?: string | null;
   status?: SubscriptionStatus;
+  autoCreateTransaction?: boolean;
   notificationEnabled?: boolean;
   notificationDaysBefore?: number | null;
 }
@@ -398,8 +443,9 @@ export interface PageResponse<T> {
 
 ## Checklist de integracion frontend
 1. Cargar y validar `subscriptionsEnabled` antes de mostrar el modulo.
-2. Para formularios create/update, validar reglas locales (`amount`, `billingFrequency`, `notificationDaysBefore`).
+2. Para formularios create/update, validar reglas locales (`amount`, `billingFrequency`, `notificationDaysBefore`, `endsAt >= startsAt`).
 3. En `PATCH /{id}`, enviar tambien `id` en body para alinear contrato actual.
 4. Usar providers de `GET /subscription-providers/common` para selects.
-5. Usar `GET /subscriptions/renewals` para agenda/lista de proximas renovaciones.
-6. Deshabilitar UI de crear billing log cuando status sea `CANCELED`.
+5. Si `autoCreateTransaction=true`, obligar seleccion de `accountId`.
+6. Usar `GET /subscriptions/renewals` para agenda/lista de proximas renovaciones.
+7. Deshabilitar UI de crear billing log cuando status sea `CANCELED`.

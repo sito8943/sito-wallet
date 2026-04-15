@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 // @sito/dashboard-app
 import {
   Button,
+  CheckInput,
   Error as ErrorView,
   Loading,
   Option,
@@ -192,97 +193,96 @@ export function Profile() {
               void onSubmit(event);
             }}
           >
-            <section id="personal" className="flex flex-col gap-4">
+            <section id="personal" className="flex flex-col gap-1">
               <div className="flex flex-col gap-1">
                 <h3 className="text-xs uppercase tracking-wide text-text-muted">
                   {t("_pages:profile.sections.personal")}
                 </h3>
               </div>
-
-              <div className="flex max-sm:flex-col max-sm:items-start items-center gap-4">
-                <div className="flex items-center justify-start gap-4">
-                  <ProfilePhoto
-                    profile={profile}
-                    isUploading={isUploading}
-                    onUpload={uploadPhoto}
-                    onDelete={deletePhoto}
-                  />
-                  <div className="flex flex-col">
-                    <h3 className="text-xl">
-                      {currentName || profile.name || ""}
-                    </h3>
-                    <p className="text-sm text-text-muted">
-                      {t("_pages:profile.labels.username")}:{" "}
-                      {profile.user?.username ?? "-"}
-                    </p>
+              <div className="flex flex-col gap-6">
+                <div className="flex max-sm:flex-col max-sm:items-start items-center gap-4">
+                  <div className="flex items-center justify-start gap-4">
+                    <ProfilePhoto
+                      profile={profile}
+                      isUploading={isUploading}
+                      onUpload={uploadPhoto}
+                      onDelete={deletePhoto}
+                    />
+                    <div className="flex flex-col">
+                      <h3 className="text-xl">
+                        {currentName || profile.name || ""}
+                      </h3>
+                      <p className="text-sm text-text-muted">
+                        {t("_pages:profile.labels.username")}:{" "}
+                        {profile.user?.username ?? "-"}
+                      </p>
+                    </div>
                   </div>
                 </div>
+
+                <Controller
+                  control={control}
+                  name="name"
+                  disabled={formDisabled}
+                  rules={{
+                    validate: (value: string) => {
+                      const parsedValue = value.trim();
+                      if (!parsedValue.length) {
+                        return t("_pages:profile.errors.nameRequired");
+                      }
+                      if (parsedValue.length > 120) {
+                        return t("_pages:profile.errors.nameMax");
+                      }
+                      return true;
+                    },
+                  }}
+                  render={({ field, fieldState }) => (
+                    <TextInput
+                      id="profile-name"
+                      required
+                      maxLength={120}
+                      label={t("_entities:base.name.label")}
+                      value={field.value ?? ""}
+                      helperText={
+                        typeof fieldState.error?.message === "string"
+                          ? fieldState.error.message
+                          : ""
+                      }
+                      state={fieldState.error ? State.error : State.default}
+                      disabled={formDisabled}
+                      onBlur={field.onBlur}
+                      onChange={(event) =>
+                        field.onChange((event.target as HTMLInputElement).value)
+                      }
+                    />
+                  )}
+                />
+
+                <Controller
+                  control={control}
+                  name="language"
+                  disabled={formDisabled}
+                  render={({ field }) => (
+                    <SelectInput
+                      id="profile-language"
+                      required
+                      label={t("_pages:profile.labels.language")}
+                      options={languageOptions}
+                      value={normalizeProfileLanguage(field.value)}
+                      disabled={formDisabled}
+                      helperText={t("_pages:profile.helper.language")}
+                      onBlur={field.onBlur}
+                      onChange={(event) =>
+                        field.onChange(
+                          normalizeProfileLanguage(
+                            (event.target as HTMLSelectElement).value,
+                          ),
+                        )
+                      }
+                    />
+                  )}
+                />
               </div>
-
-              <Controller
-                control={control}
-                name="name"
-                disabled={formDisabled}
-                rules={{
-                  validate: (value: string) => {
-                    const parsedValue = value.trim();
-                    if (!parsedValue.length) {
-                      return t("_pages:profile.errors.nameRequired");
-                    }
-                    if (parsedValue.length > 120) {
-                      return t("_pages:profile.errors.nameMax");
-                    }
-                    return true;
-                  },
-                }}
-                render={({ field, fieldState }) => (
-                  <TextInput
-                    id="profile-name"
-                    required
-                    maxLength={120}
-                    label={t("_entities:base.name.label")}
-                    value={field.value ?? ""}
-                    helperText={
-                      typeof fieldState.error?.message === "string"
-                        ? fieldState.error.message
-                        : ""
-                    }
-                    state={fieldState.error ? State.error : State.default}
-                    disabled={formDisabled}
-                    onBlur={field.onBlur}
-                    onChange={(event) =>
-                      field.onChange((event.target as HTMLInputElement).value)
-                    }
-                  />
-                )}
-              />
-
-              <Controller
-                control={control}
-                name="language"
-                disabled={formDisabled}
-                render={({ field }) => (
-                  <SelectInput
-                    id="profile-language"
-                    required
-                    label={t("_pages:profile.labels.language")}
-                    options={languageOptions}
-                    value={normalizeProfileLanguage(field.value)}
-                    disabled={formDisabled}
-                    onBlur={field.onBlur}
-                    onChange={(event) =>
-                      field.onChange(
-                        normalizeProfileLanguage(
-                          (event.target as HTMLSelectElement).value,
-                        ),
-                      )
-                    }
-                  />
-                )}
-              />
-              <p className="text-sm text-text-muted">
-                {t("_pages:profile.helper.language")}
-              </p>
             </section>
 
             <SectionDivider />
@@ -297,12 +297,11 @@ export function Profile() {
                 </p>
               </div>
 
-              <label
-                htmlFor="hide-deleted-entities"
-                className="flex items-center justify-between gap-3 rounded-xl border border-border bg-base-light p-3"
-              >
+              <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-base-light p-3">
                 <div className="flex flex-col gap-1">
-                  <span>{t("_pages:profile.labels.hideDeletedEntities")}</span>
+                  <span id="hide-deleted-entities-label">
+                    {t("_pages:profile.labels.hideDeletedEntities")}
+                  </span>
                   <span className="text-sm text-text-muted">
                     {currentHideDeletedEntities
                       ? t("_pages:profile.values.enabled")
@@ -315,18 +314,24 @@ export function Profile() {
                   name="hideDeletedEntities"
                   disabled={formDisabled}
                   render={({ field }) => (
-                    <input
+                    <CheckInput
                       id="hide-deleted-entities"
-                      type="checkbox"
+                      name={field.name}
+                      label=""
+                      labelClassName="hidden"
+                      containerClassName="shrink-0"
+                      inputClassName="h-4 w-4 accent-bg-primary"
+                      aria-labelledby="hide-deleted-entities-label"
                       checked={!!field.value}
                       disabled={formDisabled}
                       onBlur={field.onBlur}
-                      onChange={(event) => field.onChange(event.target.checked)}
-                      className="h-4 w-4 accent-bg-primary"
+                      onChange={(event) =>
+                        field.onChange(event.currentTarget.checked)
+                      }
                     />
                   )}
                 />
-              </label>
+              </div>
             </section>
 
             <SectionDivider />

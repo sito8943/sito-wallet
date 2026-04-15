@@ -35,9 +35,12 @@ select > option {
   @apply border-2 border-border/40 !pl-2 rounded-lg;
 }
 
-.text-input-label,
-.select-input-label {
+.text-input-label {
   @apply left-2 peer-focus:!left-2;
+}
+
+.select-input-label {
+  @apply left-0 peer-focus:!left-0;
 }
 
 .autocomplete-input-container,
@@ -297,4 +300,8 @@ select > option {
   .step-container {
     gap: 1.5rem;
   }
+}
+
+.empty-container {
+  @apply px-1 py-6;
 }

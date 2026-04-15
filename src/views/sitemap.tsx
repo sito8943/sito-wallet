@@ -15,6 +15,7 @@ export enum PageId {
   Transactions = "transactions",
   TransactionCategories = "transactionCategories",
   Subscriptions = "subscriptions",
+  SubscriptionProviders = "subscriptionProviders",
   Accounts = "accounts",
   Currencies = "currencies",
   NotFound = "not-found",
@@ -46,6 +47,10 @@ export const sitemap: ViewPageType[] = [
     path: AppRoutes.subscriptions,
   },
   {
+    key: PageId.SubscriptionProviders,
+    path: AppRoutes.subscriptionProviders,
+  },
+  {
     key: PageId.Accounts,
     path: AppRoutes.accounts,
   },
@@ -70,6 +75,7 @@ const pageFeatureDependencies: Partial<Record<PageId, FeatureFlagKey>> = {
   [PageId.Transactions]: "transactionsEnabled",
   [PageId.TransactionCategories]: "transactionCategoriesEnabled",
   [PageId.Subscriptions]: "subscriptionsEnabled",
+  [PageId.SubscriptionProviders]: "subscriptionsEnabled",
   [PageId.Accounts]: "accountsEnabled",
   [PageId.Currencies]: "currenciesEnabled",
 };

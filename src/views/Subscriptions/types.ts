@@ -1,12 +1,12 @@
-import { FieldValues } from "react-hook-form";
+import { Control, FieldValues, UseFormSetValue } from "react-hook-form";
 
 import {
   ActionType,
-  FormDialogPropsType,
   TriggerFormDialogPropsType,
 } from "@sito/dashboard-app";
 
 import {
+  CommonAccountDto,
   CommonCurrencyDto,
   CommonSubscriptionProviderDto,
   SubscriptionBillingUnit,
@@ -28,22 +28,25 @@ export interface SubscriptionFormType extends FieldValues {
   name: string;
   description: string;
   provider: CommonSubscriptionProviderDto | null;
+  account: CommonAccountDto | null;
   currency: CommonCurrencyDto | null;
   amount: string;
   billingFrequency: string;
   billingUnit: SubscriptionBillingUnit;
   startsAt: string;
+  endsAt: string;
   lastPaidAt: string;
   status: SubscriptionStatus;
+  autoCreateTransaction: boolean;
   notificationEnabled: boolean;
   notificationDaysBefore: string;
 }
 
-export type SubscriptionFormPropsType = FormDialogPropsType<SubscriptionFormType>;
-
-export type AddSubscriptionDialogPropsType = FormDialogPropsType<SubscriptionFormType>;
-
-export type EditSubscriptionDialogPropsType = FormDialogPropsType<SubscriptionFormType>;
+export interface SubscriptionFormPropsType {
+  control: Control<SubscriptionFormType>;
+  isLoading?: boolean;
+  setValue: UseFormSetValue<SubscriptionFormType>;
+}
 
 export interface SubscriptionBillingLogFormType extends FieldValues {
   subscriptionId: number;

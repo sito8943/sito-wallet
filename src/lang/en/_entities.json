@@ -178,6 +178,11 @@
       "placeholder": "Select a provider",
       "required": "Provider is required"
     },
+    "account": {
+      "label": "Account",
+      "placeholder": "Select an account",
+      "requiredWhenAuto": "Account is required when auto-create transaction is enabled"
+    },
     "currency": {
       "label": "Currency",
       "placeholder": "Select a currency",
@@ -208,6 +213,10 @@
       "label": "Starts at",
       "required": "Start date is required"
     },
+    "endsAt": {
+      "label": "Ends at",
+      "afterStart": "End date must be greater than or equal to start date"
+    },
     "lastPaidAt": {
       "label": "Last paid at"
     },
@@ -220,6 +229,9 @@
         "CANCELED": "Canceled"
       }
     },
+    "autoCreateTransaction": {
+      "label": "Auto-create transaction"
+    },
     "notificationEnabled": {
       "label": "Notify before renewal"
     },
@@ -228,6 +240,31 @@
       "placeholder": "Ex: 3",
       "required": "Notification days are required",
       "range": "Days must be between 0 and 30"
+    }
+  },
+  "subscriptionProvider": {
+    "name": {
+      "placeholder": "Ex: Netflix",
+      "unique": "There is a provider with that name already"
+    },
+    "website": {
+      "label": "Website",
+      "placeholder": "Ex: https://www.netflix.com"
+    },
+    "photo": {
+      "label": "Photo",
+      "upload": "Upload photo",
+      "replace": "Replace photo",
+      "delete": "Remove photo",
+      "selectedFile": "Selected file",
+      "deleteOnSave": "Photo will be removed on save"
+    },
+    "enabled": {
+      "label": "Enabled",
+      "values": {
+        "true": "Enabled",
+        "false": "Disabled"
+      }
     }
   },
   "subscriptionBillingLog": {

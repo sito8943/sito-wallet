@@ -12,6 +12,7 @@ import {
   useAuth,
   usePostForm,
   SessionDto,
+  CheckInput,
   PasswordInput,
   Loading,
   Button,
@@ -167,22 +168,18 @@ export function SignIn() {
             disabled={isLoading}
             name="rememberMe"
             render={({ field }) => (
-              <label
-                htmlFor="rememberMe"
-                className="ml-1 flex items-center gap-2"
-              >
-                <input
-                  id="rememberMe"
-                  type="checkbox"
-                  name={field.name}
-                  checked={!!field.value}
-                  onBlur={field.onBlur}
-                  onChange={(event) => field.onChange(event.target.checked)}
-                />
-                <span className="text-sm">
-                  {t("_pages:auth.signIn.remember")}
-                </span>
-              </label>
+              <CheckInput
+                id="rememberMe"
+                name={field.name}
+                label={t("_pages:auth.signIn.remember")}
+                checked={!!field.value}
+                disabled={isLoading}
+                containerClassName="ml-1"
+                onBlur={field.onBlur}
+                onChange={(event) =>
+                  field.onChange(event.currentTarget.checked)
+                }
+              />
             )}
           />
         </div>

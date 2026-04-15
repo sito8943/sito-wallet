@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 // icons
@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
-import { IconButton } from "@sito/dashboard-app";
+import { FileInput, IconButton } from "@sito/dashboard-app";
 
 // types
 import { ProfilePhotoPropsType } from "../types";
@@ -30,10 +30,10 @@ export function ProfilePhoto({
   onDelete,
 }: ProfilePhotoPropsType) {
   const { t } = useTranslation();
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = useCallback(() => {
-    fileInputRef.current?.click();
+    const fileInput = document.getElementById("profile-photo-file-input");
+    if (fileInput instanceof HTMLInputElement) fileInput.click();
   }, []);
 
   const handleFileChange = useCallback(
@@ -99,11 +99,12 @@ export function ProfilePhoto({
           />
         )}
       </div>
-      <input
-        ref={fileInputRef}
-        type="file"
+      <FileInput
+        id="profile-photo-file-input"
+        unstyled
         accept="image/jpeg,image/png,image/webp"
-        className="hidden"
+        inputClassName="hidden"
+        disabled={isUploading}
         onChange={handleFileChange}
       />
     </div>

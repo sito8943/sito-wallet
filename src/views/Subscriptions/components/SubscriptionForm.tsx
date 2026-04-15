@@ -4,6 +4,7 @@ import { Controller, useWatch } from "react-hook-form";
 // @sito/dashboard-app
 import {
   AutocompleteInput,
+  CheckInput,
   Option,
   ParagraphInput,
   SelectInput,
@@ -12,7 +13,11 @@ import {
 } from "@sito/dashboard-app";
 
 // hooks
-import { useCurrenciesCommon, useSubscriptionProvidersCommon } from "hooks";
+import {
+  useAccountsCommon,
+  useCurrenciesCommon,
+  useSubscriptionProvidersCommon,
+} from "hooks";
 
 // lib
 import { SUBSCRIPTION_BILLING_UNITS, SUBSCRIPTION_STATUSES, Tables } from "lib";
@@ -26,6 +31,7 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
 
   const providersQuery = useSubscriptionProvidersCommon({ onlyEnabled: true });
   const currenciesQuery = useCurrenciesCommon();
+  const accountsQuery = useAccountsCommon();
 
   const providerOptions = useMemo(
     () => [...(providersQuery.data ?? [])] as Option[],
@@ -35,6 +41,11 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
   const currencyOptions = useMemo(
     () => [...(currenciesQuery.data ?? [])] as Option[],
     [currenciesQuery.data],
+  );
+
+  const accountOptions = useMemo(
+    () => [...(accountsQuery.data ?? [])] as Option[],
+    [accountsQuery.data],
   );
 
   const billingUnitOptions = useMemo(
@@ -59,15 +70,26 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
     control,
     name: "notificationEnabled",
   });
+  const autoCreateTransaction = useWatch({
+    control,
+    name: "autoCreateTransaction",
+  });
+  const startsAt = useWatch({
+    control,
+    name: "startsAt",
+  });
 
   useEffect(() => {
-    if (!notificationEnabled && setValue) {
-      setValue("notificationDaysBefore", "");
+    if (!notificationEnabled) {
+      setValue("notificationDaysBefore", "", { shouldDirty: false });
     }
   }, [notificationEnabled, setValue]);
 
   const formDisabled =
-    isLoading || providersQuery.isLoading || currenciesQuery.isLoading;
+    isLoading ||
+    providersQuery.isLoading ||
+    currenciesQuery.isLoading ||
+    accountsQuery.isLoading;
 
   return (
     <>
@@ -77,48 +99,49 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
         name="id"
       />
 
-      <Controller
-        control={control}
-        rules={{
-          required: t("_entities:base.name.required"),
-        }}
-        name="name"
-        disabled={formDisabled}
-        render={({ field: { value, ...rest } }) => (
-          <TextInput
-            required
-            maxLength={120}
-            value={value ?? ""}
-            label={t("_entities:base.name.label")}
-            placeholder={t("_entities:subscription.name.placeholder")}
-            autoComplete={`${Tables.Subscriptions}-${t("_entities:base.name.label")}`}
-            {...rest}
-          />
-        )}
-      />
+      <div className="grid gap-5 md:grid-cols-2">
+        <Controller
+          control={control}
+          rules={{
+            required: t("_entities:base.name.required"),
+          }}
+          name="name"
+          disabled={formDisabled}
+          render={({ field: { value, ...rest } }) => (
+            <TextInput
+              required
+              maxLength={120}
+              value={value ?? ""}
+              label={t("_entities:base.name.label")}
+              placeholder={t("_entities:subscription.name.placeholder")}
+              autoComplete={`${Tables.Subscriptions}-${t("_entities:base.name.label")}`}
+              {...rest}
+            />
+          )}
+        />
 
-      <Controller
-        control={control}
-        rules={{
-          required: t("_entities:subscription.provider.required"),
-        }}
-        name="provider"
-        disabled={formDisabled}
-        render={({ field: { value, onChange, ...rest } }) => (
-          <AutocompleteInput
-            required
-            options={providerOptions}
-            value={value}
-            onChange={(nextValue) => onChange(nextValue)}
-            label={t("_entities:subscription.provider.label")}
-            placeholder={t("_entities:subscription.provider.placeholder")}
-            autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.provider.label")}`}
-            multiple={false}
-            {...rest}
-          />
-        )}
-      />
-      <div className="flex gap-2">
+        <Controller
+          control={control}
+          rules={{
+            required: t("_entities:subscription.provider.required"),
+          }}
+          name="provider"
+          disabled={formDisabled}
+          render={({ field: { value, onChange, ...rest } }) => (
+            <AutocompleteInput
+              required
+              options={providerOptions}
+              value={value}
+              onChange={(nextValue) => onChange(nextValue)}
+              label={t("_entities:subscription.provider.label")}
+              placeholder={t("_entities:subscription.provider.placeholder")}
+              autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.provider.label")}`}
+              multiple={false}
+              {...rest}
+            />
+          )}
+        />
+
         <Controller
           control={control}
           rules={{
@@ -165,8 +188,7 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
             />
           )}
         />
-      </div>
-      <div className="flex gap-2">
+
         <Controller
           control={control}
           rules={{
@@ -214,8 +236,7 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
             />
           )}
         />
-      </div>
-      <div className="flex gap-2">
+
         <Controller
           control={control}
           rules={{
@@ -237,6 +258,45 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
 
         <Controller
           control={control}
+          name="endsAt"
+          disabled={formDisabled}
+          rules={{
+            validate: (value) => {
+              const parsedEndsAt = value?.trim();
+              if (!parsedEndsAt?.length) return true;
+
+              const parsedStartsAt = startsAt?.trim();
+              if (!parsedStartsAt?.length) return true;
+
+              const startDate = new Date(parsedStartsAt);
+              const endDate = new Date(parsedEndsAt);
+
+              if (
+                Number.isNaN(startDate.getTime()) ||
+                Number.isNaN(endDate.getTime())
+              ) {
+                return true;
+              }
+
+              return (
+                endDate.getTime() >= startDate.getTime() ||
+                t("_entities:subscription.endsAt.afterStart")
+              );
+            },
+          }}
+          render={({ field: { value, ...rest } }) => (
+            <TextInput
+              type="datetime-local"
+              value={value ?? ""}
+              label={t("_entities:subscription.endsAt.label")}
+              autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.endsAt.label")}`}
+              {...rest}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
           name="lastPaidAt"
           disabled={formDisabled}
           render={({ field: { value, ...rest } }) => (
@@ -249,82 +309,123 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
             />
           )}
         />
-      </div>
 
-      <Controller
-        control={control}
-        rules={{
-          required: t("_entities:subscription.status.required"),
-        }}
-        name="status"
-        disabled={formDisabled}
-        render={({ field: { value, onChange, ...rest } }) => (
-          <SelectInput
-            required
-            options={statusOptions}
-            value={value}
-            onChange={(event) =>
-              onChange((event.target as HTMLSelectElement).value)
-            }
-            label={t("_entities:subscription.status.label")}
-            {...rest}
-          />
-        )}
-      />
-
-      <Controller
-        control={control}
-        name="notificationEnabled"
-        disabled={formDisabled}
-        render={({ field: { value, onChange, ...rest } }) => (
-          <label className="flex items-center gap-2 text-sm text-text">
-            <input
-              {...rest}
-              type="checkbox"
-              checked={!!value}
-              onChange={(event) => onChange(event.target.checked)}
-              className="h-4 w-4"
-            />
-            {t("_entities:subscription.notificationEnabled.label")}
-          </label>
-        )}
-      />
-
-      {notificationEnabled ? (
         <Controller
           control={control}
           rules={{
-            required: t(
-              "_entities:subscription.notificationDaysBefore.required",
-            ),
-            validate: (value) => {
-              const parsed = Number(value);
-              return (
-                (Number.isFinite(parsed) && parsed >= 0 && parsed <= 30) ||
-                t("_entities:subscription.notificationDaysBefore.range")
-              );
-            },
+            required: t("_entities:subscription.status.required"),
           }}
-          name="notificationDaysBefore"
+          name="status"
           disabled={formDisabled}
-          render={({ field: { value, ...rest } }) => (
-            <TextInput
+          render={({ field: { value, onChange, ...rest } }) => (
+            <SelectInput
               required
-              type="number"
-              min={0}
-              max={30}
-              step={1}
-              value={value ?? ""}
-              label={t("_entities:subscription.notificationDaysBefore.label")}
-              placeholder={t(
-                "_entities:subscription.notificationDaysBefore.placeholder",
-              )}
-              autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.notificationDaysBefore.label")}`}
+              options={statusOptions}
+              value={value}
+              onChange={(event) =>
+                onChange((event.target as HTMLSelectElement).value)
+              }
+              label={t("_entities:subscription.status.label")}
               {...rest}
             />
           )}
         />
-      ) : null}
+      </div>
+
+      <div className="grid gap-3 md:grid-cols-2">
+        <Controller
+          control={control}
+          name="autoCreateTransaction"
+          disabled={formDisabled}
+          render={({ field: { value, onChange, ...rest } }) => (
+            <CheckInput
+              {...rest}
+              id="subscription-auto-create-transaction"
+              checked={!!value}
+              label={t("_entities:subscription.autoCreateTransaction.label")}
+              inputClassName="h-4 w-4"
+              onChange={(event) => onChange(event.currentTarget.checked)}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="account"
+          disabled={formDisabled}
+          rules={{
+            validate: (value) => {
+              if (!autoCreateTransaction) return true;
+              return !!value?.id || t("_entities:subscription.account.requiredWhenAuto");
+            },
+          }}
+          render={({ field: { value, onChange, ...rest } }) => (
+            <AutocompleteInput
+              required={!!autoCreateTransaction}
+              options={accountOptions}
+              value={value}
+              onChange={(nextValue) => onChange(nextValue)}
+              label={t("_entities:subscription.account.label")}
+              placeholder={t("_entities:subscription.account.placeholder")}
+              autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.account.label")}`}
+              multiple={false}
+              {...rest}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="notificationEnabled"
+          disabled={formDisabled}
+          render={({ field: { value, onChange, ...rest } }) => (
+            <CheckInput
+              {...rest}
+              id="subscription-notification-enabled"
+              checked={!!value}
+              label={t("_entities:subscription.notificationEnabled.label")}
+              inputClassName="h-4 w-4"
+              onChange={(event) => onChange(event.currentTarget.checked)}
+            />
+          )}
+        />
+
+        {notificationEnabled ? (
+          <Controller
+            control={control}
+            rules={{
+              required: t(
+                "_entities:subscription.notificationDaysBefore.required",
+              ),
+              validate: (value) => {
+                const parsed = Number(value);
+                return (
+                  (Number.isFinite(parsed) && parsed >= 0 && parsed <= 30) ||
+                  t("_entities:subscription.notificationDaysBefore.range")
+                );
+              },
+            }}
+            name="notificationDaysBefore"
+            disabled={formDisabled}
+            render={({ field: { value, ...rest } }) => (
+              <TextInput
+                required
+                type="number"
+                min={0}
+                max={30}
+                step={1}
+                value={value ?? ""}
+                label={t("_entities:subscription.notificationDaysBefore.label")}
+                placeholder={t(
+                  "_entities:subscription.notificationDaysBefore.placeholder",
+                )}
+                autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.notificationDaysBefore.label")}`}
+                {...rest}
+              />
+            )}
+          />
+        ) : null}
+      </div>
 
       <Controller
         control={control}

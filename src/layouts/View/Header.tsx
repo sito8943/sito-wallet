@@ -17,7 +17,7 @@ function Header() {
   const { i18n } = useTranslation();
 
   const featureFilteredMenuMap = useMemo(
-    () => getFeatureFilteredMenuMap(isFeatureEnabled),
+    () => getFeatureFilteredMenuMap(isFeatureEnabled, i18n.resolvedLanguage),
     [isFeatureEnabled, i18n.resolvedLanguage],
   );
 

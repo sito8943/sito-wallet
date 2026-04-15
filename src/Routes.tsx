@@ -55,6 +55,18 @@ const Subscriptions = loadable(() =>
     default: module.Subscriptions,
   })),
 );
+const SubscriptionEditor = loadable(() =>
+  import("views/Subscriptions/SubscriptionEditor").then((module) => ({
+    default: module.SubscriptionEditor,
+  })),
+);
+const SubscriptionProviders = loadable(() =>
+  import("views/SubscriptionProviders/SubscriptionProviders").then(
+    (module) => ({
+      default: module.SubscriptionProviders,
+    }),
+  ),
+);
 const Transactions = loadable(() =>
   import("views/Transactions/Transactions").then((module) => ({
     default: module.Transactions,
@@ -149,10 +161,30 @@ export const Routes = () => {
             }
           />
           <Route
+            path={AppRoutes.subscriptionNew}
+            element={
+              isFeatureEnabled("subscriptionsEnabled") ? (
+                <SubscriptionEditor />
+              ) : (
+                <FeatureUnavailable module="subscriptions" />
+              )
+            }
+          />
+          <Route
+            path={AppRoutes.subscriptionEdit}
+            element={
+              isFeatureEnabled("subscriptionsEnabled") ? (
+                <SubscriptionEditor />
+              ) : (
+                <FeatureUnavailable module="subscriptions" />
+              )
+            }
+          />
+          <Route
             path={AppRoutes.subscriptionProviders}
             element={
               isFeatureEnabled("subscriptionsEnabled") ? (
-                <Subscriptions />
+                <SubscriptionProviders />
               ) : (
                 <FeatureUnavailable module="subscriptions" />
               )

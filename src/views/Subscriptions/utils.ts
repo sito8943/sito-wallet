@@ -77,13 +77,16 @@ export const subscriptionDtoToForm = (
   name: dto.name,
   description: dto.description ?? "",
   provider: dto.provider,
+  account: dto.account ?? null,
   currency: dto.currency,
   amount: String(dto.amount ?? ""),
   billingFrequency: String(dto.billingFrequency ?? ""),
   billingUnit: toSubscriptionBillingUnit(dto.billingUnit),
   startsAt: toDateTimeLocal(dto.startsAt),
+  endsAt: toDateTimeLocal(dto.endsAt),
   lastPaidAt: toDateTimeLocal(dto.lastPaidAt),
   status: toSubscriptionStatus(dto.status),
+  autoCreateTransaction: !!dto.autoCreateTransaction,
   notificationEnabled: !!dto.notificationEnabled,
   notificationDaysBefore:
     dto.notificationDaysBefore === null || dto.notificationDaysBefore === undefined
@@ -103,13 +106,16 @@ export const subscriptionFormToCreateDto = (
     name: form.name.trim(),
     description: form.description?.trim() || null,
     providerId: form.provider?.id ?? 0,
+    accountId: form.account?.id ?? null,
     currencyId: form.currency?.id ?? null,
     amount: parseFiniteNumber(form.amount),
     billingFrequency: parseFiniteNumber(form.billingFrequency, 1),
     billingUnit: toSubscriptionBillingUnit(form.billingUnit),
     startsAt: form.startsAt,
+    endsAt: toOptionalDateTime(form.endsAt),
     lastPaidAt: toOptionalDateTime(form.lastPaidAt) ?? null,
     status: toSubscriptionStatus(form.status),
+    autoCreateTransaction: !!form.autoCreateTransaction,
     notificationEnabled,
     notificationDaysBefore,
   };
@@ -117,22 +123,29 @@ export const subscriptionFormToCreateDto = (
 
 export const subscriptionFormToUpdateDto = (
   form: SubscriptionFormType,
-): UpdateSubscriptionDto => ({
-  id: form.id,
-  ...subscriptionFormToCreateDto(form),
-});
+): UpdateSubscriptionDto => {
+  const payload = subscriptionFormToCreateDto(form);
+  return {
+    id: form.id,
+    ...payload,
+    accountId: form.account?.id ?? 0,
+  };
+};
 
 export const emptyAddSubscriptionForm: Omit<SubscriptionFormType, "id"> = {
   name: "",
   description: "",
   provider: null,
+  account: null,
   currency: null,
   amount: "",
   billingFrequency: "1",
   billingUnit: "MONTH",
   startsAt: nowDateTimeLocal(),
+  endsAt: "",
   lastPaidAt: "",
   status: "ACTIVE",
+  autoCreateTransaction: false,
   notificationEnabled: false,
   notificationDaysBefore: "",
 };
@@ -142,13 +155,16 @@ export const emptySubscriptionForm: SubscriptionFormType = {
   name: "",
   description: "",
   provider: null,
+  account: null,
   currency: null,
   amount: "",
   billingFrequency: "1",
   billingUnit: "MONTH",
   startsAt: nowDateTimeLocal(),
+  endsAt: "",
   lastPaidAt: "",
   status: "ACTIVE",
+  autoCreateTransaction: false,
   notificationEnabled: false,
   notificationDaysBefore: "",
 };
