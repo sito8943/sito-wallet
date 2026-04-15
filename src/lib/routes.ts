@@ -10,6 +10,7 @@ export const AppRoutes = {
   transactions: "/transactions",
   transactionCategories: "/transaction-categories",
   subscriptions: "/subscriptions",
+  subscriptionProviders: "/subscription-providers",
   accounts: "/accounts",
   currencies: "/currencies",
   profile: "/profile",

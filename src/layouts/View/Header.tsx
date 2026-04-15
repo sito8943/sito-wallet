@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 // @sito-dashboard
 import { Navbar, Drawer } from "@sito/dashboard-app";
@@ -13,10 +14,11 @@ import { useFeatureFlags } from "providers";
 function Header() {
   const [showDrawer, setShowDrawer] = useState(false);
   const { isFeatureEnabled } = useFeatureFlags();
+  const { i18n } = useTranslation();
 
   const featureFilteredMenuMap = useMemo(
     () => getFeatureFilteredMenuMap(isFeatureEnabled),
-    [isFeatureEnabled],
+    [isFeatureEnabled, i18n.resolvedLanguage],
   );
 
   return (

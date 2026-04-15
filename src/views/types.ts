@@ -19,8 +19,9 @@ export interface NamedViewPageType extends ViewPageType {
 }
 
 export type SubMenuItemType = {
+  id: string;
   label: string;
-  path: string;
+  path?: string;
 };
 
 export type MenuItemType = {
@@ -29,7 +30,7 @@ export type MenuItemType = {
   icon?: ReactNode;
   type?: "menu" | "divider";
   auth?: boolean;
-  child?: SubMenuItemType[];
+  children?: SubMenuItemType[];
 };
 
 export type IsFeatureEnabled = (key: FeatureFlagKey) => boolean;

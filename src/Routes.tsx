@@ -149,6 +149,16 @@ export const Routes = () => {
             }
           />
           <Route
+            path={AppRoutes.subscriptionProviders}
+            element={
+              isFeatureEnabled("subscriptionsEnabled") ? (
+                <Subscriptions />
+              ) : (
+                <FeatureUnavailable module="subscriptions" />
+              )
+            }
+          />
+          <Route
             path={AppRoutes.accounts}
             element={
               isFeatureEnabled("accountsEnabled") ? (

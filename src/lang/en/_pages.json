@@ -321,6 +321,9 @@
     "title": "Subscriptions",
     "empty": "You don't have subscriptions yet. Create one to get started.",
     "add": "Add a subscription",
+    "providers": {
+      "title": "Subscription providers"
+    },
     "labels": {
       "nextRenewal": "Next renewal",
       "noRenewal": "No renewal"

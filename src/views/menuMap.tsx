@@ -1,5 +1,6 @@
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { t } from "i18next";
 import {
   faCoins,
   faCreditCard,
@@ -39,7 +40,7 @@ export enum MenuKeys {
   PrivacyPolicy = "privacyPolicy",
 }
 
-export const menuMap: MenuItemType[] = [
+const getMenuMap = (): MenuItemType[] => [
   {
     page: MenuKeys.Home,
     path: AppRoutes.home,
@@ -59,6 +60,13 @@ export const menuMap: MenuItemType[] = [
     page: MenuKeys.Subscriptions,
     path: AppRoutes.subscriptions,
     icon: <FontAwesomeIcon icon={faRepeat} />,
+    children: [
+      {
+        id: "subscriptionProviders",
+        label: t("_pages:subscriptions.providers.title"),
+        path: AppRoutes.subscriptionProviders,
+      },
+    ],
   },
   {
     page: MenuKeys.Accounts,
@@ -123,6 +131,7 @@ const menuFeatureDependencies: Partial<Record<MenuKeys, FeatureFlagKey>> = {
 export const getFeatureFilteredMenuMap = (
   isFeatureEnabled: IsFeatureEnabled,
 ): MenuItemType[] => {
+  const menuMap = getMenuMap();
   const filtered = menuMap.filter((item) => {
     if (!item.page) return true;
 

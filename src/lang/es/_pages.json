@@ -322,6 +322,9 @@
     "title": "Suscripciones",
     "empty": "No tienes suscripciones. Crea una para empezar.",
     "add": "Agregar una suscripción",
+    "providers": {
+      "title": "Proveedores de suscripción"
+    },
     "labels": {
       "nextRenewal": "Próxima renovación",
       "noRenewal": "Sin renovación"

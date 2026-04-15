@@ -55,6 +55,7 @@
     "clear": "Clear filters",
     "next": "Go to next step",
     "skip": "Skip step",
+    "subscriptionProviders": "Go to subscription providers",
     "startAsGuest": "Start as guest",
     "signIn": "Sign in"
   },
