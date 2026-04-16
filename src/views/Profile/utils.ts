@@ -1,3 +1,5 @@
+import { ProfileLanguage } from "lib";
+
 export const getErrorMessage = (error: unknown, fallback: string): string => {
   if (error instanceof Error) return error.message;
 
@@ -13,6 +15,10 @@ export const toRenderableError = (error: unknown, fallback: string): Error => {
   if (error instanceof Error) return error;
   return new Error(getErrorMessage(error, fallback));
 };
+
+export const normalizeProfileLanguage = (
+  value?: string | null,
+): ProfileLanguage => (value === "en" ? "en" : "es");
 
 export const toDateLabel = (
   value: Date | string | null | undefined,

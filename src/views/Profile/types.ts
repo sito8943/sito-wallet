@@ -6,6 +6,10 @@ export type ProfileFormType = {
   hideDeletedEntities: boolean;
 };
 
+export interface ProfileFormPropsType {
+  profile: ProfileDto;
+}
+
 export interface ProfilePhotoPropsType {
   profile: ProfileDto;
   isUploading: boolean;

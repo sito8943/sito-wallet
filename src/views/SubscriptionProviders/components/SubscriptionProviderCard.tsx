@@ -1,15 +1,13 @@
 import { useTranslation } from "react-i18next";
 
-import {
-  faCircleCheck,
-  faCircleXmark,
-  faExternalLink,
-  faImage,
-} from "@fortawesome/free-solid-svg-icons";
+// icons
+import { faExternalLink, faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+// components
 import { ItemCard, ItemCardTitle } from "components";
 
+// types
 import { SubscriptionProviderCardPropsType } from "../types";
 
 const ensureAbsoluteUrl = (value: string): string => {
@@ -28,7 +26,6 @@ export function SubscriptionProviderCard(
     description,
     website,
     photo,
-    enabled,
     deletedAt,
     actions,
     onClick,
@@ -62,18 +59,6 @@ export function SubscriptionProviderCard(
               </a>
             ) : null}
           </ItemCardTitle>
-          <span
-            className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-xs ${
-              enabled
-                ? "bg-bg-success text-success"
-                : "bg-bg-warning text-warning"
-            }`}
-          >
-            <FontAwesomeIcon icon={enabled ? faCircleCheck : faCircleXmark} />
-            {enabled
-              ? t("_entities:subscriptionProvider.enabled.values.true")
-              : t("_entities:subscriptionProvider.enabled.values.false")}
-          </span>
         </div>
       }
       deleted={deleted}
