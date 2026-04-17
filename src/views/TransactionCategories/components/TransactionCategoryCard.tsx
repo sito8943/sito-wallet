@@ -91,7 +91,7 @@ export function TransactionCategoryCard(
       onLongPressSelection={() => onLongPress?.(id)}
       actions={actions}
       className="gap-2 max-sm:gap-1"
-      containerClassName="max-sm:min-h-0 max-sm:rounded-xl max-sm:p-2.5 !w-full"
+      containerClassName="max-sm:min-h-0 max-sm:rounded-xl max-sm:p-2.5"
     >
       <p
         className={`${description ? "" : "!text-xs italic"} text-start mb-2 max-xs:mb-0 max-xs:w-full max-xs:overflow-hidden max-xs:text-ellipsis max-xs:whitespace-nowrap max-sm:!text-xs max-xs:text-text-muted ${
