@@ -1,16 +1,21 @@
 import { useCallback } from "react";
-import { useTranslation } from "react-i18next";
 
-import { ActionType } from "@sito/dashboard-app";
+// @sito/dashboard-app
+import { ActionType, useTranslation } from "@sito/dashboard-app";
 
+// icons
 import { faFileInvoice } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+// lib
 import { SubscriptionDto } from "lib";
 
+// types
 import { SubscriptionAction } from "../types";
-import { toSubscriptionStatus } from "../utils";
 import { UseAddSubscriptionBillingLogActionProps } from "./types";
+
+// utils
+import { toSubscriptionStatus } from "../utils";
 
 export function useAddSubscriptionBillingLogAction(
   props: UseAddSubscriptionBillingLogActionProps,
@@ -27,7 +32,9 @@ export function useAddSubscriptionBillingLogAction(
         id: SubscriptionAction.AddBillingLog,
         hidden: hidden || !!record.deletedAt,
         disabled: !!record.deletedAt || isCanceled,
-        icon: <FontAwesomeIcon icon={faFileInvoice} className="text-bg-primary" />,
+        icon: (
+          <FontAwesomeIcon icon={faFileInvoice} className="text-bg-primary" />
+        ),
         tooltip: isCanceled
           ? t("_pages:subscriptions.actions.billingLog.disabled")
           : t("_pages:subscriptions.actions.billingLog.text"),

@@ -9,3 +9,6 @@ export * from "./utils";
 
 // routes
 export * from "./routes";
+
+// types
+export * from "./types";

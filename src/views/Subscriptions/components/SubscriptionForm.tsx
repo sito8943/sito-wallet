@@ -20,13 +20,18 @@ import {
 } from "hooks";
 
 // lib
-import { SUBSCRIPTION_BILLING_UNITS, SUBSCRIPTION_STATUSES, Tables } from "lib";
+import {
+  FormMode,
+  SUBSCRIPTION_BILLING_UNITS,
+  SUBSCRIPTION_STATUSES,
+  Tables,
+} from "lib";
 
 // types
 import { SubscriptionFormPropsType } from "../types";
 
 export function SubscriptionForm(props: SubscriptionFormPropsType) {
-  const { control, isLoading, setValue } = props;
+  const { control, isLoading, setValue, mode = FormMode.Add } = props;
   const { t } = useTranslation();
 
   const providersQuery = useSubscriptionProvidersCommon({ onlyEnabled: true });
@@ -356,7 +361,10 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
           rules={{
             validate: (value) => {
               if (!autoCreateTransaction) return true;
-              return !!value?.id || t("_entities:subscription.account.requiredWhenAuto");
+              return (
+                !!value?.id ||
+                t("_entities:subscription.account.requiredWhenAuto")
+              );
             },
           }}
           render={({ field: { value, onChange, ...rest } }) => (
@@ -374,21 +382,23 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
           )}
         />
 
-        <Controller
-          control={control}
-          name="notificationEnabled"
-          disabled={formDisabled}
-          render={({ field: { value, onChange, ...rest } }) => (
-            <CheckInput
-              {...rest}
-              id="subscription-notification-enabled"
-              checked={!!value}
-              label={t("_entities:subscription.notificationEnabled.label")}
-              inputClassName="h-4 w-4"
-              onChange={(event) => onChange(event.currentTarget.checked)}
-            />
-          )}
-        />
+        {mode === FormMode.Edit && (
+          <Controller
+            control={control}
+            name="notificationEnabled"
+            disabled={formDisabled}
+            render={({ field: { value, onChange, ...rest } }) => (
+              <CheckInput
+                {...rest}
+                id="subscription-notification-enabled"
+                checked={!!value}
+                label={t("_entities:subscription.notificationEnabled.label")}
+                inputClassName="h-4 w-4"
+                onChange={(event) => onChange(event.currentTarget.checked)}
+              />
+            )}
+          />
+        )}
 
         {notificationEnabled ? (
           <Controller
