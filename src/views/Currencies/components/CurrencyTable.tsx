@@ -21,6 +21,7 @@ export const CurrencyTable = (props: CurrencyTableProps) => {
     [
       {
         key: "name",
+        label: t("_entities:base.name.label"),
         renderBody: (value: unknown, entity: ImportPreviewCurrencyDto) => {
           const parsedValue = typeof value === "string" ? value : "";
           return (

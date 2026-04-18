@@ -29,7 +29,9 @@
     "skip": "Skip",
     "startAsGuest": "Start as guest",
     "signIn": "Sign in",
-    "toTop": "Go to top"
+    "toTop": "Go to top",
+    "no": "no",
+    "yes": "yes"
   },
   "ariaLabels": {
     "ok": "Confirm action",

@@ -29,7 +29,6 @@ import {
   AddCurrencyDialog,
   CurrencyCard,
   EditCurrencyDialog,
-  CurrencyTable,
 } from "./components";
 import { MobileSelectionBar } from "components";
 
@@ -116,9 +115,9 @@ export function Currencies() {
     fileProcessor: (file, options) =>
       manager.Currencies.processImport(file, options?.override),
     mutationFn: (data) => manager.Currencies.import(data),
-    renderCustomPreview: (
+   /*  renderCustomPreview: (
       items: ImportPreviewCurrencyDto[] | null | undefined,
-    ) => <CurrencyTable items={items} />,
+    ) => <CurrencyTable items={items} />, */
     ...CurrenciesQueryKeys.all(),
   });
 
