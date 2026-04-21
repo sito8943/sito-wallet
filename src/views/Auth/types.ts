@@ -4,9 +4,17 @@ export type SignInFormType = AuthDto<{
   rememberMe: boolean;
 }>;
 
-export type RegisterWithName = {
-  name: string;
+export type SignUpFormType = {
   email: string;
+  password: string;
+  rPassword: string;
+};
+
+export type RecoveryFormType = {
+  email: string;
+};
+
+export type UpdatePasswordFormType = {
   password: string;
   rPassword: string;
 };

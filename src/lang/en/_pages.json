@@ -192,6 +192,27 @@
         "question": "Already registered?",
         "link": "Sign In"
       }
+    },
+    "recovery": {
+      "title": "Recover account",
+      "submit": "Send recovery email",
+      "resendConfirm": "Resend confirmation email",
+      "sent": "If the account exists, we sent a password reset link.",
+      "confirmationSent": "If the account exists, we sent a confirmation email.",
+      "toLogin": {
+        "question": "Remembered your password?",
+        "link": "Sign In"
+      }
+    },
+    "updatePassword": {
+      "title": "Update password",
+      "submit": "Save new password",
+      "sent": "Password updated. You can sign in now.",
+      "invalidToken": "Recovery link is invalid or expired.",
+      "toLogin": {
+        "question": "Already have access?",
+        "link": "Sign In"
+      }
     }
   },
   "signOut": {

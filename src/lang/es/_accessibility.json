@@ -106,6 +106,7 @@
     "409": "No se pudo completar la operación porque entra en conflicto con el estado actual. Actualiza e inténtalo de nuevo.",
     "500": "Ha ocurrido un error en el servidor",
     "signIn": {
+      "400": "Solicitud inválida",
       "500": "Ha ocurrido un error de autenticación",
       "404": "Usuario no encontrado",
       "403": "Acceso denegado",
@@ -113,8 +114,11 @@
       "503": "Sin conexión. Revisa tu red e inténtalo de nuevo."
     },
     "signUp": {
+      "400": "Solicitud inválida",
+      "409": "Ya existe una cuenta con este correo electrónico",
       "422": "El correo electrónico ya está en uso",
       "404": "Error inesperado. Recurso no encontrado",
+      "503": "Sin conexión. Revisa tu red e inténtalo de nuevo.",
       "500": "Ha ocurrido un error de autenticación"
     }
   },

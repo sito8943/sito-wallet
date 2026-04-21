@@ -7,6 +7,7 @@ import ProfileClient from "./ProfileClient";
 import FeatureFlagClient from "./FeatureFlagClient";
 import SubscriptionProviderClient from "./SubscriptionProviderClient";
 import SubscriptionClient from "./SubscriptionClient";
+import AuthApiClient from "./AuthApiClient";
 
 // @sito/dashboard-app
 import { IManager } from "@sito/dashboard-app";
@@ -26,6 +27,7 @@ export class Manager extends IManager {
   subscriptionProviders: SubscriptionProviderClient =
     new SubscriptionProviderClient();
   subscriptions: SubscriptionClient = new SubscriptionClient();
+  authApi: AuthApiClient = new AuthApiClient();
 
   constructor() {
     super(config.apiUrl, config.auth.user, {
@@ -87,5 +89,9 @@ export class Manager extends IManager {
 
   get Subscriptions(): SubscriptionClient {
     return this.subscriptions;
+  }
+
+  get AuthApi(): AuthApiClient {
+    return this.authApi;
   }
 }

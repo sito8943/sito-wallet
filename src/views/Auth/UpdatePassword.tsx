@@ -1,26 +1,30 @@
-import { useEffect, useState } from "react";
-/* import { Controller,  useForm } from "react-hook-form"; */
+import { useEffect, useMemo, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { Link, useNavigate } from "react-router-dom";
 import "./styles.css";
-/* import { Link, useNavigate } from "react-router-dom";
-import { deleteCookie } from "some-javascript-utils/browser"; */
 
-// @sito/dashboard
-/* import { State, Loading } from "@sito/dashboard"; */
-
-// components
-import { Button } from "@sito/dashboard-app";
+// @sito/dashboard-app
+import {
+  Button,
+  Loading,
+  PasswordInput,
+  State,
+  isHttpError,
+  useNotification,
+} from "@sito/dashboard-app";
 
 // providers
-/* import { uesAuth } from "providers"; */
-/* import { useNotification } from "@sito/dashboard-app";
-import { useManager } from "providers"; */
+import { useManager } from "providers";
 
-// hooks
-/* import { usePostForm } from "hooks"; */
+// lib
+import { AppRoutes } from "lib";
 
-// config
-/* import { config } from "../../config"; */
+import type { UpdatePasswordFormType } from "./types";
+import {
+  extractRecoveryAccessTokenFromLocation,
+  getTranslatedStatusMessage,
+} from "./utils";
 
 /**
  * UpdatePassword page
@@ -28,125 +32,191 @@ import { useManager } from "providers"; */
  */
 export function UpdatePassword() {
   const { t } = useTranslation();
-
-  /* const navigate = useNavigate();
-  const manager = useManager(); */
+  const navigate = useNavigate();
+  const manager = useManager();
+  const { showErrorNotification, showSuccessNotification } = useNotification();
 
   const [appear, setAppear] = useState(false);
-  /* const [passwordError, setPasswordError] = useState("");
-  const [saving, setSaving] = useState(false); */
+  const [saving, setSaving] = useState(false);
 
-  /* const { handleSubmit, control } = useForm(); */
+  const { handleSubmit, control, setError } = useForm<UpdatePasswordFormType>({
+    defaultValues: {
+      password: "",
+      rPassword: "",
+    },
+  });
 
-  /* const { setNotification } = useNotification(); */
+  const accessToken = useMemo(
+    () =>
+      extractRecoveryAccessTokenFromLocation(
+        window.location.hash,
+        window.location.search,
+      ),
+    [],
+  );
 
-  /*const onSubmit = async (d) => {
+  const onSubmit = async (data: UpdatePasswordFormType) => {
+    if (data.password !== data.rPassword) {
+      setError("rPassword", {
+        type: "validate",
+        message: t("_accessibility:errors.differentPasswords"),
+      });
+      return;
+    }
+
+    if (!accessToken) {
+      showErrorNotification({
+        message: t("_pages:auth.updatePassword.invalidToken"),
+      });
+      return;
+    }
+
     setSaving(true);
-    setPasswordError("");
-    if (d.password !== d.rPassword) {
-      setSaving(false);
-      // eslint-disable-next-line no-console
-      console.error(t("_accessibility:errors.passwordDoNotMatch"));
-      return setNotification(t("_accessibility:errors.passwordDoNotMatch"));
-    }
     try {
-      await manager.User.updatePassword(d.password);
-      setNotification(t("_pages:auth.updatePassword.sent"), {}, "good");
+      await manager.AuthApi.resetPassword({
+        accessToken,
+        newPassword: data.password,
+      });
+      showSuccessNotification({
+        message: t("_pages:auth.updatePassword.sent"),
+      });
 
-      deleteCookie(config.recovering);
-      setTimeout(() => navigate(AppRoutes.signOut), 2000);
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-      // set server status to notification
-      setNotification(String(e.status));
+      setTimeout(() => {
+        navigate(AppRoutes.signIn);
+      }, 1200);
+    } catch (error) {
+      if (isHttpError(error)) {
+        const translatedStatusMessage = getTranslatedStatusMessage(
+          t,
+          "_accessibility:errors",
+          error.status,
+        );
+
+        showErrorNotification({
+          message:
+            translatedStatusMessage ??
+            error.message ??
+            t("_accessibility:errors.500"),
+        });
+      } else {
+        showErrorNotification({ message: t("_accessibility:errors.500") });
+      }
+    } finally {
+      setSaving(false);
     }
-    setSaving(false);
-  }; */
+  };
 
   useEffect(() => {
     setTimeout(() => {
       setAppear(true);
-    }, 1100);
+    }, 500);
   }, []);
 
   return (
-    <div className="w-full h-screen flex items-start justify-center">
+    <div className="w-full h-screen flex items-center justify-center">
       <form
-        /* onSubmit={handleSubmit(onSubmit)} */
-        className="w-96 max-sm:w-10/12 px-5 pt-10 flex flex-col items-center justify-start"
+        onSubmit={handleSubmit(onSubmit)}
+        className={`${appear ? "blur-appear" : ""} auth-form`}
       >
-        {/* <Link to={AppRoutes.signIn}>LOGO</Link> */}
         <h1
-          className={`w-full text-2xl md:text-3xl font-bold mb-5 transition-all duration-500 ease-in-out delay-200 ${
+          className={`w-full text-2xl md:text-3xl mb-1 transition-all duration-500 ease-in-out delay-200 ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
           {t("_pages:auth.updatePassword.title")}
         </h1>
-        <div
-          className={`w-full transition-all duration-500 ease-in-out delay-300 ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          {/*  <Controller
-            control={control}
-            disabled={saving}
-            name="password"
-            render={({ field }) => (
-              <PasswordInput
-                {...field}
-                name="password"
-                id="password"
-                className={`text-input peer`}
-                label={t("_entities:user.password.label")}
-                required
-              />
-            )}
-          /> */}
-        </div>
-        <div
-          className={`w-full transition-all duration-500 ease-in-out delay-[400ms] ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          {/* <Controller
-            control={control}
-            disabled={saving}
-            name="rPassword"
-            render={({ field }) => (
-              <PasswordInput
-                {...field}
-                name="rPassword"
-                id="rPassword"
-                className={`text-input peer`}
-                label={t("_entities:user.rPassword.label")}
-                required
-                helperText={passwordError}
-                state={passwordError.length ? State.error : State.default}
-              />
-            )}
-          /> */}
-        </div>
-        <Button
-          type="submit"
-          variant="submit"
-          color="primary"
-          /* disabled={saving} */
-          className={`mb-5 self-start duration-500 ease-in-out delay-[500ms] ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          } submit`}
-        >
-          {/* {saving && (
-            <Loading
-              className="button-loading"
-              strokeWidth="4"
-              loaderClass="!w-6"
-              color="stroke-white"
+
+        <div className="form-container w-full">
+          <div
+            className={`w-full transition-all duration-500 ease-in-out delay-300 ${
+              appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+            }`}
+          >
+            <Controller
+              control={control}
+              disabled={saving}
+              name="password"
+              render={({ field, fieldState }) => (
+                <PasswordInput
+                  {...field}
+                  id="password"
+                  value={field.value ?? ""}
+                  inputClassName="peer"
+                  label={t("_entities:user.password.label")}
+                  required
+                  helperText={fieldState.error?.message}
+                  state={fieldState.error ? State.error : State.default}
+                />
+              )}
+              rules={{ required: `${t("_entities:user.password.required")}` }}
             />
-          )} */}
-          {t("_accessibility:buttons.submit")}
-        </Button>
+          </div>
+          <div
+            className={`w-full transition-all duration-500 ease-in-out delay-[400ms] ${
+              appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+            }`}
+          >
+            <Controller
+              control={control}
+              disabled={saving}
+              name="rPassword"
+              render={({ field, fieldState }) => (
+                <PasswordInput
+                  {...field}
+                  id="rPassword"
+                  value={field.value ?? ""}
+                  inputClassName="peer"
+                  label={t("_entities:user.rPassword.label")}
+                  required
+                  helperText={fieldState.error?.message}
+                  state={fieldState.error ? State.error : State.default}
+                />
+              )}
+              rules={{ required: `${t("_entities:user.password.required")}` }}
+            />
+          </div>
+        </div>
+
+        <div
+          className={`self-start transition-all duration-500 ease-in-out delay-[500ms] ${
+            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+          }`}
+        >
+          <p className="ml-1">
+            {t("_pages:auth.updatePassword.toLogin.question")}
+            <Link
+              to={AppRoutes.signIn}
+              className={`ml-1 primary text-sm underline text-left`}
+            >
+              {t("_pages:auth.updatePassword.toLogin.link")}
+            </Link>
+          </p>
+        </div>
+
+        <div
+          className={`flex max-xs:flex-col gap-3 mt-6 w-full duration-500 ease-in-out delay-[600ms] ${
+            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+          }`}
+        >
+          <Button
+            type="submit"
+            variant="submit"
+            color="primary"
+            disabled={saving}
+            className="!px-8"
+            aria-label={t("_pages:auth.updatePassword.submit")}
+          >
+            {saving && (
+              <Loading
+                className="!w-auto"
+                color="stroke-base"
+                loaderClass="!w-6"
+                strokeWidth="6"
+              />
+            )}
+            {t("_pages:auth.updatePassword.submit")}
+          </Button>
+        </div>
       </form>
     </div>
   );

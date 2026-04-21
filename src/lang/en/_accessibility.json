@@ -86,6 +86,7 @@
     "409": "The operation could not be completed because it conflicts with the current state. Please refresh and try again.",
     "500": "An error has occurred in the server",
     "signIn": {
+      "400": "Invalid request payload",
       "401": "Invalid credentials",
       "403": "Access denied",
       "404": "User not found",
@@ -93,8 +94,11 @@
       "500": "An authentication error has occurred"
     },
     "signUp": {
+      "400": "Invalid request payload",
+      "409": "An account with this email already exists",
       "422": "Email is already in use",
       "404": "Unexpected Error. Resource not found",
+      "503": "No connection. Please check your network and try again.",
       "500": "An authentication error has occurred"
     }
   },

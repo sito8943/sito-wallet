@@ -192,6 +192,27 @@
         "question": "¿Ya tienes cuenta?",
         "link": "Inicia sesión"
       }
+    },
+    "recovery": {
+      "title": "Recuperar cuenta",
+      "submit": "Enviar email de recuperación",
+      "resendConfirm": "Reenviar confirmación",
+      "sent": "Si la cuenta existe, enviamos un enlace para restablecer la contraseña.",
+      "confirmationSent": "Si la cuenta existe, enviamos un correo de confirmación.",
+      "toLogin": {
+        "question": "¿Recordaste tu contraseña?",
+        "link": "Inicia sesión"
+      }
+    },
+    "updatePassword": {
+      "title": "Actualizar contraseña",
+      "submit": "Guardar nueva contraseña",
+      "sent": "Contraseña actualizada. Ya puedes iniciar sesión.",
+      "invalidToken": "El enlace de recuperación es inválido o expiró.",
+      "toLogin": {
+        "question": "¿Ya tienes acceso?",
+        "link": "Inicia sesión"
+      }
     }
   },
   "signOut": {

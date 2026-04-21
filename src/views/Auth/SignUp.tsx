@@ -18,6 +18,7 @@ import {
   Button,
   Loading,
   PasswordInput,
+  isHttpError,
 } from "@sito/dashboard-app";
 
 // providers
@@ -25,7 +26,8 @@ import { useManager } from "providers";
 
 // lib
 import { AppRoutes, randomBackgroundColor } from "lib";
-import type { RegisterWithName } from "./types";
+import type { SignUpFormType } from "./types";
+import { getTranslatedStatusMessage } from "./utils";
 
 const color: "primary" | "secondary" | "tertiary" | "quaternary" =
   randomBackgroundColor();
@@ -48,13 +50,18 @@ export function SignUp() {
   const navigate = useNavigate();
 
   const { handleSubmit, control, onSubmit, isLoading } = usePostForm<
-    RegisterWithName,
-    RegisterWithName,
+    SignUpFormType,
+    SignUpFormType,
     SessionDto,
-    RegisterWithName
+    SignUpFormType
   >({
     queryKey: ["auth", "sign-up"],
-    formToDto: (data: RegisterWithName) => {
+    defaultValues: {
+      email: "",
+      password: "",
+      rPassword: "",
+    },
+    formToDto: (data: SignUpFormType) => {
       if (data.password !== data.rPassword) {
         showErrorNotification({
           message: t("_accessibility:errors.differentPasswords"),
@@ -63,15 +70,36 @@ export function SignUp() {
       }
       return data;
     },
-    mutationFn: async (data: RegisterWithName) =>
-      await manager.Auth.register(data as unknown as RegisterDto),
+    mutationFn: async (data: SignUpFormType) =>
+      await manager.Auth.register(
+        {
+          email: data.email,
+          password: data.password,
+        } as RegisterDto,
+      ),
     onSuccess: (data) => {
       logUser(data);
       navigate(AppRoutes.home);
     },
     onError: (error) => {
+      if (isHttpError(error)) {
+        const translatedStatusMessage = getTranslatedStatusMessage(
+          t,
+          "_accessibility:errors.signUp",
+          error.status,
+        );
+
+        showErrorNotification({
+          message:
+            translatedStatusMessage ??
+            error.message ??
+            t("_accessibility:errors.500"),
+        });
+        return;
+      }
+
       showErrorNotification({
-        message: t(`_accessibility:errors.signUp.${error.message}`),
+        message: t("_accessibility:errors.500"),
       });
     },
   });
@@ -101,31 +129,6 @@ export function SignUp() {
           }`}
         ></div>
         <div className="form-container w-full">
-          <div
-            className={`w-full transition-all duration-500 ease-in-out delay-250 ${
-              appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-            }`}
-          >
-            <Controller
-              control={control}
-              disabled={isLoading}
-              name="name"
-              render={({ field, fieldState }) => (
-                <TextInput
-                  {...field}
-                  type="text"
-                  value={field.value ?? ""}
-                  id="name"
-                  inputClassName="peer"
-                  label={t("_entities:user.name.label")}
-                  required
-                  helperText={fieldState.error?.message}
-                  state={fieldState.error ? State.error : State.default}
-                />
-              )}
-              rules={{ required: `${t("_entities:user.name.required")}` }}
-            />
-          </div>
           <div
             className={`w-full transition-all duration-500 ease-in-out delay-300 ${
               appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
