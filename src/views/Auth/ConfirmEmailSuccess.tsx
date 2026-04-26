@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@sito/dashboard-app";
 
 import { TextLogo } from "components";
-import { AppRoutes, randomBackgroundColor } from "lib";
+import { AppRoutes, AuthRouteQueryParam, randomBackgroundColor } from "lib";
 
 import "./styles.css";
 
@@ -26,10 +26,10 @@ export function ConfirmEmailSuccess() {
     const hashParams = new URLSearchParams(rawHash);
 
     const hasError =
-      searchParams.has("error") ||
-      searchParams.has("error_description") ||
-      hashParams.has("error") ||
-      hashParams.has("error_description");
+      searchParams.has(AuthRouteQueryParam.error) ||
+      searchParams.has(AuthRouteQueryParam.errorDescription) ||
+      hashParams.has(AuthRouteQueryParam.error) ||
+      hashParams.has(AuthRouteQueryParam.errorDescription);
 
     if (hasError) {
       navigate(AppRoutes.confirmEmailError, { replace: true });

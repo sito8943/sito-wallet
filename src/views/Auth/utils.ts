@@ -1,5 +1,12 @@
 // config
 import { config } from "../../config";
+import { AuthRouteQueryParam } from "lib";
+
+const recoveryAccessTokenParams = [
+  AuthRouteQueryParam.accessToken,
+  AuthRouteQueryParam.accessTokenLegacy,
+  AuthRouteQueryParam.token,
+] as const;
 
 export const buildAuthRedirectUrl = (path: string): string => {
   const base = config.thisUrl || window.location.origin;
@@ -18,8 +25,7 @@ export const extractRecoveryAccessTokenFromLocation = (
     : rawHash;
   const hashParams = new URLSearchParams(hashQuery);
 
-  const keys = ["access_token", "accessToken", "token"];
-  for (const key of keys) {
+  for (const key of recoveryAccessTokenParams) {
     const fromSearch = searchParams.get(key);
     if (fromSearch && fromSearch.length > 0) return fromSearch;
 

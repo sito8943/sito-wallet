@@ -18,7 +18,7 @@ import { BasicProviderPropTypes } from "../types";
 
 // hooks
 import { useManager } from "../useSWManager";
-import { FeatureFlagsContext } from "./useFeatureFlags";
+import { FeatureFlagsContext } from "./FeatureFlagsContext";
 
 // config
 import { config } from "../../config";

@@ -17,12 +17,11 @@ import { TransactionsMobileFiltersDialogPropsType } from "../types";
 
 // utils
 import { getTransactionTypeOptions } from "./Containers/transactionColumns";
-import { DEFAULT_SORTING_BY, DEFAULT_SORTING_ORDER } from "../hooks";
-
-const parseSortOrder = (value: unknown): SortOrder => {
-  const parsed = String(value ?? "").toUpperCase();
-  return parsed === SortOrder.ASC ? SortOrder.ASC : SortOrder.DESC;
-};
+import {
+  DEFAULT_SORTING_BY,
+  DEFAULT_SORTING_ORDER,
+  parseSortOrder,
+} from "../hooks";
 
 export const TransactionsMobileFilters = (
   props: TransactionsMobileFiltersDialogPropsType,

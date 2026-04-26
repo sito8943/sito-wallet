@@ -14,15 +14,9 @@ import {
   FilterDashboardDto,
   normalizeHardDeleteFilters,
 } from "lib";
+import { DashboardsQueryKeys } from "./queryKeys/dashboardsQueryKeys";
 
-export const DashboardsQueryKeys = {
-  all: () => ({
-    queryKey: ["dashboards"],
-  }),
-  list: () => ({
-    queryKey: [...DashboardsQueryKeys.all().queryKey, "list"],
-  }),
-};
+export { DashboardsQueryKeys };
 
 export function useDashboardsList(
   props: UseFetchPropsType<DashboardDto, FilterDashboardDto>,

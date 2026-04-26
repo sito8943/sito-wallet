@@ -1,11 +1,11 @@
-import {  useMemo } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
 import {
   Option,
   SoftDeleteScope,
-  SortOrder,
   useFormDialog,
   useTableOptions,
 } from "@sito/dashboard-app";
@@ -16,24 +16,20 @@ import { TransactionsQueryKeys } from "hooks";
 // lib
 import {
   CommonTransactionCategoryDto,
-  TransactionType,
   normalizeListFilters,
+  TransactionType,
 } from "lib";
 
 // types
-import {
+import type {
   TransactionsMobileFiltersDialogPropsType,
   TransactionsMobileFiltersFormType,
 } from "../types";
-import { useQueryClient } from "@tanstack/react-query";
-
-export const DEFAULT_SORTING_BY = "date";
-export const DEFAULT_SORTING_ORDER = SortOrder.DESC;
-
-const parseSortOrder = (value: unknown): SortOrder => {
-  const parsed = String(value ?? "").toUpperCase();
-  return parsed === SortOrder.ASC ? SortOrder.ASC : SortOrder.DESC;
-};
+import {
+  DEFAULT_SORTING_BY,
+  DEFAULT_SORTING_ORDER,
+} from "./constants";
+import { parseSortOrder } from "./utils";
 
 export function useTransactionsMobileFiltersDialog(
   categories: CommonTransactionCategoryDto[],

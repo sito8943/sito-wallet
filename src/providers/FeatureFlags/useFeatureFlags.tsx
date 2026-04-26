@@ -1,11 +1,8 @@
-import { createContext, useContext } from "react";
+import { useContext } from "react";
 
 // types
-import { FeatureFlagsContextType } from "./types";
-
-export const FeatureFlagsContext = createContext<
-  FeatureFlagsContextType | undefined
->(undefined);
+import type { FeatureFlagsContextType } from "./types";
+import { FeatureFlagsContext } from "./FeatureFlagsContext";
 
 export const useFeatureFlags = (): FeatureFlagsContextType => {
   const context = useContext(FeatureFlagsContext);

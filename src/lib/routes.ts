@@ -30,6 +30,14 @@ export const RouteQueryParam = {
   accountId: "accountId",
 } as const;
 
+export const AuthRouteQueryParam = {
+  error: "error",
+  errorDescription: "error_description",
+  accessToken: "access_token",
+  accessTokenLegacy: "accessToken",
+  token: "token",
+} as const;
+
 export const getTransactionsRouteWithAccountId = (
   accountId: number | string,
 ): string => {
