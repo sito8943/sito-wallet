@@ -32,6 +32,21 @@ const Recovery = loadable(() =>
     default: module.Recovery,
   })),
 );
+const SignUpSuccess = loadable(() =>
+  import("views/Auth/SignUpSuccess").then((module) => ({
+    default: module.SignUpSuccess,
+  })),
+);
+const ConfirmEmailSuccess = loadable(() =>
+  import("views/Auth/ConfirmEmailSuccess").then((module) => ({
+    default: module.ConfirmEmailSuccess,
+  })),
+);
+const ConfirmEmailError = loadable(() =>
+  import("views/Auth/ConfirmEmailError").then((module) => ({
+    default: module.ConfirmEmailError,
+  })),
+);
 // view
 const Home = loadable(() =>
   import("views/Home/Home").then((module) => ({
@@ -123,8 +138,17 @@ export const Routes = () => {
         <Route path={AppRoutes.authRoot} element={<Auth />}>
           <Route path={AppRoutes.signIn} element={<SignIn />} />
           <Route path={AppRoutes.signUp} element={<SignUp />} />
+          <Route path={AppRoutes.signUpSuccess} element={<SignUpSuccess />} />
           <Route path={AppRoutes.updatePassword} element={<UpdatePassword />} />
           <Route path={AppRoutes.recovery} element={<Recovery />} />
+          <Route
+            path={AppRoutes.confirmEmailSuccess}
+            element={<ConfirmEmailSuccess />}
+          />
+          <Route
+            path={AppRoutes.confirmEmailError}
+            element={<ConfirmEmailError />}
+          />
           <Route path={AppRoutes.authNotFound} element={<NotFound />} />
         </Route>
         <Route path={AppRoutes.signOut} element={<SignOut />} />

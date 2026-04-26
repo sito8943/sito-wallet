@@ -195,7 +195,7 @@
     },
     "recovery": {
       "title": "Recuperar cuenta",
-      "submit": "Enviar email de recuperación",
+      "submit": "Enviar email",
       "resendConfirm": "Reenviar confirmación",
       "sent": "Si la cuenta existe, enviamos un enlace para restablecer la contraseña.",
       "confirmationSent": "Si la cuenta existe, enviamos un correo de confirmación.",
@@ -213,6 +213,23 @@
         "question": "¿Ya tienes acceso?",
         "link": "Inicia sesión"
       }
+    },
+    "signUpSuccess": {
+      "title": "Cuenta creada correctamente",
+      "description": "Revisa tu bandeja de entrada para confirmar tu correo y activar la cuenta.",
+      "toSignIn": "Ir a iniciar sesión",
+      "resend": "Reenviar confirmación"
+    },
+    "confirmEmailSuccess": {
+      "title": "Correo confirmado",
+      "description": "Tu correo se confirmó correctamente. Ya puedes iniciar sesión.",
+      "toSignIn": "Iniciar sesión"
+    },
+    "confirmEmailError": {
+      "title": "No se pudo confirmar el correo",
+      "description": "El enlace es inválido o expiró. Solicita un nuevo correo de confirmación.",
+      "resend": "Solicitar nuevo correo",
+      "toSignIn": "Ir a iniciar sesión"
     }
   },
   "signOut": {

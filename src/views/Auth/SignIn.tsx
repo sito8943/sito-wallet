@@ -113,7 +113,7 @@ export function SignIn() {
           }`}
         >
           <TextLogo variant={color} />
-          <h1 className={`w-full text-2xl mb-1`}>
+          <h1 className={`auth-title`}>
             {t("_pages:auth.signIn.title")}
           </h1>
         </div>

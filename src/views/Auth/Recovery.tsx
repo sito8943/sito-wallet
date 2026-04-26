@@ -48,7 +48,7 @@ export function Recovery() {
   const isLoading = loadingAction !== null;
 
   const forgotRedirectTo = buildAuthRedirectUrl(AppRoutes.updatePassword);
-  const confirmRedirectTo = buildAuthRedirectUrl(AppRoutes.signIn);
+  const confirmRedirectTo = buildAuthRedirectUrl(AppRoutes.confirmEmailSuccess);
 
   const onForgotPassword = async ({ email }: RecoveryFormType) => {
     setLoadingAction("forgot");
@@ -216,7 +216,7 @@ export function Recovery() {
             {loadingAction === "resend-confirm" && (
               <Loading
                 className="!w-auto"
-                color="stroke-base"
+                color="stroke-primary"
                 loaderClass="!w-6"
                 strokeWidth="6"
               />

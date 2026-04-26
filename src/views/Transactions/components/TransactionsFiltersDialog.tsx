@@ -112,6 +112,7 @@ export const TransactionsMobileFilters = (
       {...props}
       extraActions={[
         {
+          id: "clear",
           type: "button",
           variant: "outlined",
           onClick: handleClear,

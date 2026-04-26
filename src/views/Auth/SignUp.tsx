@@ -26,7 +26,11 @@ import { useManager } from "providers";
 
 // lib
 import { AppRoutes, randomBackgroundColor } from "lib";
+
+// types
 import type { SignUpFormType } from "./types";
+
+// utils
 import { getTranslatedStatusMessage } from "./utils";
 
 const color: "primary" | "secondary" | "tertiary" | "quaternary" =
@@ -39,7 +43,7 @@ const color: "primary" | "secondary" | "tertiary" | "quaternary" =
 export function SignUp() {
   const { t } = useTranslation();
 
-  const { logUser, setGuestMode } = useAuth();
+  const { setGuestMode } = useAuth();
 
   const [appear, setAppear] = useState(false);
 
@@ -77,9 +81,8 @@ export function SignUp() {
           password: data.password,
         } as RegisterDto,
       ),
-    onSuccess: (data) => {
-      logUser(data);
-      navigate(AppRoutes.home);
+    onSuccess: () => {
+      navigate(AppRoutes.signUpSuccess);
     },
     onError: (error) => {
       if (isHttpError(error)) {
