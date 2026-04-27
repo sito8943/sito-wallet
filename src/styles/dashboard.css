@@ -305,7 +305,3 @@ select > option {
 .empty-container {
   @apply px-1 py-6;
 }
-
-.import-error-message {
-  @apply text-text;
-}
