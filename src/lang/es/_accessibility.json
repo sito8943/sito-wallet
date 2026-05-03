@@ -104,6 +104,7 @@
     "differentPasswords": "Las contraseñas no coinciden",
     "invalidCredentials": "Usuario o contraseña incorrectos",
     "409": "No se pudo completar la operación porque entra en conflicto con el estado actual. Actualiza e inténtalo de nuevo.",
+    "429": "Demasiados intentos. Espera un momento antes de volver a intentarlo.",
     "503": "Sin conexión. Revisa tu red e inténtalo de nuevo.",
     "500": "Ha ocurrido un error en el servidor",
     "signIn": {
@@ -121,6 +122,9 @@
       "404": "Error inesperado. Recurso no encontrado",
       "503": "Sin conexión. Revisa tu red e inténtalo de nuevo.",
       "500": "Ha ocurrido un error de autenticación"
+    },
+    "updatePassword": {
+      "401": "El enlace del correo ya expiró. Solicita uno nuevo."
     }
   },
   "messages": {

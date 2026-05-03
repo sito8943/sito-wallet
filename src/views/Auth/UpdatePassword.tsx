@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -18,13 +19,18 @@ import {
 import { useManager } from "providers";
 
 // lib
-import { AppRoutes, AuthRouteQueryParam, AuthRouteQueryParamType } from "lib";
+import {
+  AppRoutes,
+  AuthRouteQueryParam,
+  AuthRouteQueryParamType,
+  ResetPasswordDto,
+} from "lib";
 
 import type { UpdatePasswordFormType } from "./types";
 import {
   extractAuthQueryParamFromLocation,
   extractRecoveryAccessTokenFromLocation,
-  getTranslatedStatusMessage,
+  getAuthErrorMessage,
   hasAuthErrorParamsInLocation,
 } from "./utils";
 
@@ -40,7 +46,6 @@ export function UpdatePassword() {
   const { showErrorNotification, showSuccessNotification } = useNotification();
 
   const [appear, setAppear] = useState(false);
-  const [saving, setSaving] = useState(false);
 
   const { handleSubmit, control, setError } = useForm<UpdatePasswordFormType>({
     defaultValues: {
@@ -48,6 +53,14 @@ export function UpdatePassword() {
       rPassword: "",
     },
   });
+
+  const resetPasswordMutation = useMutation<void, unknown, ResetPasswordDto>({
+    mutationFn: async (payload) => {
+      await manager.AuthApi.resetPassword(payload);
+    },
+  });
+
+  const saving = resetPasswordMutation.isPending;
 
   const hasAuthErrorParams = useMemo(
     () => hasAuthErrorParamsInLocation(location.hash, location.search),
@@ -118,9 +131,8 @@ export function UpdatePassword() {
       return;
     }
 
-    setSaving(true);
     try {
-      await manager.AuthApi.resetPassword(resetPayload);
+      await resetPasswordMutation.mutateAsync(resetPayload);
       showSuccessNotification({
         message: t("_pages:auth.updatePassword.sent"),
       });
@@ -129,24 +141,11 @@ export function UpdatePassword() {
         navigate(AppRoutes.signIn);
       }, 1200);
     } catch (error) {
-      if (isHttpError(error)) {
-        const translatedStatusMessage = getTranslatedStatusMessage(
-          t,
-          "_accessibility:errors",
-          error.status,
-        );
+      const message = isHttpError(error)
+        ? getAuthErrorMessage(t, error.status, "updatePassword")
+        : getAuthErrorMessage(t);
 
-        showErrorNotification({
-          message:
-            translatedStatusMessage ??
-            error.message ??
-            t("_accessibility:errors.500"),
-        });
-      } else {
-        showErrorNotification({ message: t("_accessibility:errors.500") });
-      }
-    } finally {
-      setSaving(false);
+      showErrorNotification({ message });
     }
   };
 

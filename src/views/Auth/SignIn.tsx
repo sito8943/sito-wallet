@@ -30,7 +30,7 @@ import { AppRoutes, randomBackgroundColor } from "lib";
 // components
 import { TextLogo } from "components";
 import type { SignInFormType } from "./types";
-import { getTranslatedStatusMessage } from "./utils";
+import { getAuthErrorMessage } from "./utils";
 
 const color: "primary" | "secondary" | "tertiary" | "quaternary" =
   randomBackgroundColor();
@@ -78,20 +78,11 @@ export function SignIn() {
       navigate(AppRoutes.home);
     },
     onError: (error) => {
-      if (isHttpError(error)) {
-        const translatedStatusMessage = getTranslatedStatusMessage(
-          t,
-          "_accessibility:errors.signIn",
-          error.status,
-        );
+      const message = isHttpError(error)
+        ? getAuthErrorMessage(t, error.status, "signIn")
+        : getAuthErrorMessage(t);
 
-        showErrorNotification({
-          message:
-            translatedStatusMessage ??
-            error.message ??
-            t("_accessibility:errors.500"),
-        });
-      }
+      showErrorNotification({ message });
     },
   });
 

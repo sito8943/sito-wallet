@@ -15,7 +15,7 @@ import { useManager } from "providers";
 
 import "./styles.css";
 import type { SignUpSuccessLocationState } from "./types";
-import { buildAuthRedirectUrl, getTranslatedStatusMessage } from "./utils";
+import { buildAuthRedirectUrl, getAuthErrorMessage } from "./utils";
 
 const color: "primary" | "secondary" | "tertiary" | "quaternary" =
   randomBackgroundColor();
@@ -49,22 +49,11 @@ export function SignUpSuccess() {
           response.message || t("_pages:auth.recovery.confirmationSent"),
       });
     } catch (error) {
-      if (isHttpError(error)) {
-        const translatedStatusMessage = getTranslatedStatusMessage(
-          t,
-          "_accessibility:errors",
-          error.status,
-        );
+      const message = isHttpError(error)
+        ? getAuthErrorMessage(t, error.status, "signUpSuccess")
+        : getAuthErrorMessage(t);
 
-        showErrorNotification({
-          message:
-            translatedStatusMessage ??
-            error.message ??
-            t("_accessibility:errors.500"),
-        });
-      } else {
-        showErrorNotification({ message: t("_accessibility:errors.500") });
-      }
+      showErrorNotification({ message });
     } finally {
       setIsResending(false);
     }

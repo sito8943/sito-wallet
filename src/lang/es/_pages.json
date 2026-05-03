@@ -197,7 +197,7 @@
       "title": "Recuperar cuenta",
       "submit": "Enviar email",
       "resendConfirm": "Reenviar confirmación",
-      "sent": "Si la cuenta existe, enviamos un enlace para restablecer la contraseña.",
+      "sent": "Si la cuenta existe, enviamos un correo para restablecer.",
       "confirmationSent": "Si la cuenta existe, enviamos un correo de confirmación.",
       "toLogin": {
         "question": "¿Recordaste tu contraseña?",

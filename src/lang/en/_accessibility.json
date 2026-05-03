@@ -84,6 +84,7 @@
     "differentPasswords": "Passwords do not match",
     "invalidCredentials": "Wrong user or password",
     "409": "The operation could not be completed because it conflicts with the current state. Please refresh and try again.",
+    "429": "Too many attempts. Please wait a moment before trying again.",
     "503": "No connection. Please check your network and try again.",
     "500": "An error has occurred in the server",
     "signIn": {
@@ -101,6 +102,9 @@
       "404": "Unexpected Error. Resource not found",
       "503": "No connection. Please check your network and try again.",
       "500": "An authentication error has occurred"
+    },
+    "updatePassword": {
+      "401": "The email link has expired. Please request a new one."
     }
   },
   "offline": {

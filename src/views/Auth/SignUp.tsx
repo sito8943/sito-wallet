@@ -31,7 +31,7 @@ import { AppRoutes, randomBackgroundColor } from "lib";
 import type { SignUpFormType, SignUpSuccessLocationState } from "./types";
 
 // utils
-import { getTranslatedStatusMessage } from "./utils";
+import { getAuthErrorMessage } from "./utils";
 
 const color: "primary" | "secondary" | "tertiary" | "quaternary" =
   randomBackgroundColor();
@@ -98,25 +98,11 @@ export function SignUp() {
       navigate(AppRoutes.signUpSuccess);
     },
     onError: (error) => {
-      if (isHttpError(error)) {
-        const translatedStatusMessage = getTranslatedStatusMessage(
-          t,
-          "_accessibility:errors.signUp",
-          error.status,
-        );
+      const message = isHttpError(error)
+        ? getAuthErrorMessage(t, error.status, "signUp")
+        : getAuthErrorMessage(t);
 
-        showErrorNotification({
-          message:
-            translatedStatusMessage ??
-            error.message ??
-            t("_accessibility:errors.500"),
-        });
-        return;
-      }
-
-      showErrorNotification({
-        message: t("_accessibility:errors.500"),
-      });
+      showErrorNotification({ message });
     },
   });
 

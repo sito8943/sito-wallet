@@ -21,7 +21,7 @@ import { AppRoutes } from "lib";
 import { useManager } from "providers";
 
 import type { RecoveryFormType } from "./types";
-import { buildAuthRedirectUrl, getTranslatedStatusMessage } from "./utils";
+import { buildAuthRedirectUrl, getAuthErrorMessage } from "./utils";
 
 /**
  * Recovery page
@@ -61,22 +61,11 @@ export function Recovery() {
         message: response.message || t("_pages:auth.recovery.sent"),
       });
     } catch (error) {
-      if (isHttpError(error)) {
-        const translatedStatusMessage = getTranslatedStatusMessage(
-          t,
-          "_accessibility:errors",
-          error.status,
-        );
+      const message = isHttpError(error)
+        ? getAuthErrorMessage(t, error.status, "recovery")
+        : getAuthErrorMessage(t);
 
-        showErrorNotification({
-          message:
-            translatedStatusMessage ??
-            error.message ??
-            t("_accessibility:errors.500"),
-        });
-      } else {
-        showErrorNotification({ message: t("_accessibility:errors.500") });
-      }
+      showErrorNotification({ message });
     } finally {
       setLoadingAction(null);
     }
@@ -97,22 +86,11 @@ export function Recovery() {
           response.message || t("_pages:auth.recovery.confirmationSent"),
       });
     } catch (error) {
-      if (isHttpError(error)) {
-        const translatedStatusMessage = getTranslatedStatusMessage(
-          t,
-          "_accessibility:errors",
-          error.status,
-        );
+      const message = isHttpError(error)
+        ? getAuthErrorMessage(t, error.status, "recovery")
+        : getAuthErrorMessage(t);
 
-        showErrorNotification({
-          message:
-            translatedStatusMessage ??
-            error.message ??
-            t("_accessibility:errors.500"),
-        });
-      } else {
-        showErrorNotification({ message: t("_accessibility:errors.500") });
-      }
+      showErrorNotification({ message });
     } finally {
       setLoadingAction(null);
     }
