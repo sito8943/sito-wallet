@@ -6,7 +6,10 @@ import {
   AddSubscriptionProviderDto,
   CommonSubscriptionProviderDto,
   FilterSubscriptionProviderDto,
-  ImportPreviewDto,
+  ImportDto,
+  ImportPreviewSubscriptionProviderDto,
+  parseJSONFile,
+  SubscriptionProviderImportItemDto,
   SubscriptionProviderDto,
   UpdateSubscriptionProviderDto,
 } from "lib";
@@ -54,7 +57,7 @@ export default class SubscriptionProviderClient extends BaseClient<
   AddSubscriptionProviderDto,
   UpdateSubscriptionProviderDto,
   FilterSubscriptionProviderDto,
-  ImportPreviewDto
+  ImportPreviewSubscriptionProviderDto
 > {
   constructor() {
     super(
@@ -129,5 +132,40 @@ export default class SubscriptionProviderClient extends BaseClient<
         ...this.api.defaultTokenAcquirer(),
       },
     );
+  }
+
+  async processImport(
+    file: File,
+    override?: boolean,
+  ): Promise<ImportPreviewSubscriptionProviderDto[]> {
+    const parsedOverride = override ? "true" : "false";
+    const items = await parseJSONFile<SubscriptionProviderImportItemDto>(file);
+    return await this.api.doQuery<ImportPreviewSubscriptionProviderDto[]>(
+      `${this.table}/import/process?override=${parsedOverride}`,
+      Methods.POST,
+      items,
+      {
+        ...this.api.defaultTokenAcquirer(),
+      },
+    );
+  }
+
+  async import(
+    data: ImportDto<ImportPreviewSubscriptionProviderDto>,
+  ): Promise<number> {
+    const parsedData: {
+      override: boolean;
+      items: SubscriptionProviderImportItemDto[];
+    } = {
+      override: data.override,
+      items: data.items.map((item) => ({
+        name: item.name,
+        description: item.description ?? null,
+        website: item.website ?? null,
+        photo: item.photo ?? null,
+      })),
+    };
+
+    return await this.api.post(`${this.table}/import`, parsedData);
   }
 }

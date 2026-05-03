@@ -6,10 +6,12 @@ import {
   Empty,
   Error as ErrorView,
   GlobalActions,
+  ImportDialog,
   Page,
   PrettyGrid,
   useDeleteDialog,
   useExportActionMutate,
+  useImportDialog,
   useNotification,
   useRestoreDialog,
 } from "@sito/dashboard-app";
@@ -28,8 +30,10 @@ import { useManager, useRegisterBottomNavAction } from "providers";
 
 import {
   FilterSubscriptionProviderDto,
+  ImportPreviewSubscriptionProviderDto,
   SubscriptionProviderDto,
   Tables,
+  TablesCamelCase,
   defaultSubscriptionProvidersListFilters,
   isFeatureDisabledBusinessError,
   normalizeListFilters,
@@ -117,6 +121,31 @@ export function SubscriptionProviders() {
     },
   });
 
+  const importSubscriptionProviders = useImportDialog<
+    SubscriptionProviderDto,
+    ImportPreviewSubscriptionProviderDto
+  >({
+    entity: TablesCamelCase.SubscriptionProviders,
+    fileProcessor: async (file, options) => {
+      if (!subscriptionProvidersClient) {
+        throw new Error("subscriptions.featureDisabled");
+      }
+
+      return await subscriptionProvidersClient.processImport(
+        file,
+        options?.override,
+      );
+    },
+    mutationFn: async (data) => {
+      if (!subscriptionProvidersClient) {
+        throw new Error("subscriptions.featureDisabled");
+      }
+
+      return await subscriptionProvidersClient.import(data);
+    },
+    ...SubscriptionProvidersQueryKeys.all(),
+  });
+
   const getActions = useCallback(
     (record: SubscriptionProviderDto) => [
       deleteSubscriptionProvider.action(record),
@@ -133,9 +162,16 @@ export function SubscriptionProviders() {
   const pageToolbar = useMemo(
     () =>
       subscriptionProvidersClient
-        ? [exportSubscriptionProviders.action()]
+        ? [
+            exportSubscriptionProviders.action(),
+            importSubscriptionProviders.action(),
+          ]
         : [],
-    [exportSubscriptionProviders, subscriptionProvidersClient],
+    [
+      exportSubscriptionProviders,
+      importSubscriptionProviders,
+      subscriptionProvidersClient,
+    ],
   );
 
   useMobileNavbar(t("_pages:subscriptionProviders.title"), pageToolbar);
@@ -217,6 +253,7 @@ export function SubscriptionProviders() {
           <EditSubscriptionProviderDialog {...editSubscriptionProvider} />
           <ConfirmationDialog {...deleteSubscriptionProvider} />
           <ConfirmationDialog {...restoreSubscriptionProvider} />
+          <ImportDialog {...importSubscriptionProviders} />
         </>
       ) : (
         <ErrorView error={error} />

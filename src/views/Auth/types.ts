@@ -18,3 +18,7 @@ export type UpdatePasswordFormType = {
   password: string;
   rPassword: string;
 };
+
+export type SignUpSuccessLocationState = {
+  email: string;
+};

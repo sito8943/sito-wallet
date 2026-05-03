@@ -1,21 +1,74 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import { Button } from "@sito/dashboard-app";
+import {
+  Button,
+  Loading,
+  isHttpError,
+  useNotification,
+} from "@sito/dashboard-app";
 
 import { TextLogo } from "components";
 import { AppRoutes, randomBackgroundColor } from "lib";
+import { useManager } from "providers";
 
 import "./styles.css";
+import type { SignUpSuccessLocationState } from "./types";
+import { buildAuthRedirectUrl, getTranslatedStatusMessage } from "./utils";
 
 const color: "primary" | "secondary" | "tertiary" | "quaternary" =
   randomBackgroundColor();
 
 export function SignUpSuccess() {
   const { t } = useTranslation();
+  const manager = useManager();
+  const location = useLocation();
   const navigate = useNavigate();
+  const { showErrorNotification, showSuccessNotification } = useNotification();
   const [appear, setAppear] = useState(false);
+  const [isResending, setIsResending] = useState(false);
+  const locationState = location.state as SignUpSuccessLocationState | null;
+  const email = locationState?.email?.trim() ?? "";
+  const confirmRedirectTo = buildAuthRedirectUrl(AppRoutes.confirmEmailSuccess);
+
+  const onResendConfirmEmail = async () => {
+    if (email.length === 0) {
+      navigate(AppRoutes.recovery);
+      return;
+    }
+
+    setIsResending(true);
+    try {
+      const response = await manager.AuthApi.resendConfirmEmail({
+        email,
+        redirectTo: confirmRedirectTo,
+      });
+      showSuccessNotification({
+        message:
+          response.message || t("_pages:auth.recovery.confirmationSent"),
+      });
+    } catch (error) {
+      if (isHttpError(error)) {
+        const translatedStatusMessage = getTranslatedStatusMessage(
+          t,
+          "_accessibility:errors",
+          error.status,
+        );
+
+        showErrorNotification({
+          message:
+            translatedStatusMessage ??
+            error.message ??
+            t("_accessibility:errors.500"),
+        });
+      } else {
+        showErrorNotification({ message: t("_accessibility:errors.500") });
+      }
+    } finally {
+      setIsResending(false);
+    }
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -53,6 +106,7 @@ export function SignUpSuccess() {
             variant="submit"
             color="primary"
             className="!px-8"
+            disabled={isResending}
             onClick={() => navigate(AppRoutes.signIn)}
             aria-label={t("_pages:auth.signUpSuccess.toSignIn")}
           >
@@ -62,9 +116,18 @@ export function SignUpSuccess() {
             type="button"
             variant="outlined"
             className="!px-8"
-            onClick={() => navigate(AppRoutes.recovery)}
+            disabled={isResending}
+            onClick={onResendConfirmEmail}
             aria-label={t("_pages:auth.signUpSuccess.resend")}
           >
+            {isResending && (
+              <Loading
+                className="!w-auto"
+                color="stroke-primary"
+                loaderClass="!w-6"
+                strokeWidth="6"
+              />
+            )}
             {t("_pages:auth.signUpSuccess.resend")}
           </Button>
         </div>

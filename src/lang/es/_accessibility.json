@@ -104,6 +104,7 @@
     "differentPasswords": "Las contraseñas no coinciden",
     "invalidCredentials": "Usuario o contraseña incorrectos",
     "409": "No se pudo completar la operación porque entra en conflicto con el estado actual. Actualiza e inténtalo de nuevo.",
+    "503": "Sin conexión. Revisa tu red e inténtalo de nuevo.",
     "500": "Ha ocurrido un error en el servidor",
     "signIn": {
       "400": "Solicitud inválida",

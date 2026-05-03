@@ -1,0 +1,8 @@
+export interface SubscriptionProviderImportItemDto {
+  id?: number;
+  name: string;
+  description?: string | null;
+  website?: string | null;
+  photo?: string | null;
+  image?: string | null;
+}

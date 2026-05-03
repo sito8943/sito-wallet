@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
@@ -28,7 +28,7 @@ import { useManager } from "providers";
 import { AppRoutes, randomBackgroundColor } from "lib";
 
 // types
-import type { SignUpFormType } from "./types";
+import type { SignUpFormType, SignUpSuccessLocationState } from "./types";
 
 // utils
 import { getTranslatedStatusMessage } from "./utils";
@@ -52,6 +52,7 @@ export function SignUp() {
   const manager = useManager();
 
   const navigate = useNavigate();
+  const signUpEmailRef = useRef("");
 
   const { handleSubmit, control, onSubmit, isLoading } = usePostForm<
     SignUpFormType,
@@ -74,14 +75,26 @@ export function SignUp() {
       }
       return data;
     },
-    mutationFn: async (data: SignUpFormType) =>
-      await manager.Auth.register(
+    mutationFn: async (data: SignUpFormType) => {
+      signUpEmailRef.current = data.email.trim();
+      return await manager.Auth.register(
         {
           email: data.email,
           password: data.password,
         } as RegisterDto,
-      ),
+      );
+    },
     onSuccess: () => {
+      const locationState: SignUpSuccessLocationState | null =
+        signUpEmailRef.current.length > 0
+          ? { email: signUpEmailRef.current }
+          : null;
+
+      if (locationState) {
+        navigate(AppRoutes.signUpSuccess, { state: locationState });
+        return;
+      }
+
       navigate(AppRoutes.signUpSuccess);
     },
     onError: (error) => {
