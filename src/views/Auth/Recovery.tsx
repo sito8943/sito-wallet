@@ -37,13 +37,12 @@ export function Recovery() {
     "forgot" | "resend-confirm" | null
   >(null);
 
-  const { handleSubmit, control, trigger, getValues } = useForm<RecoveryFormType>(
-    {
+  const { handleSubmit, control, trigger, getValues } =
+    useForm<RecoveryFormType>({
       defaultValues: {
         email: "",
       },
-    },
-  );
+    });
 
   const isLoading = loadingAction !== null;
 
@@ -62,7 +61,7 @@ export function Recovery() {
       });
     } catch (error) {
       const message = isHttpError(error)
-        ? getAuthErrorMessage(t, error.status, "recovery")
+        ? getAuthErrorMessage(t, error.status)
         : getAuthErrorMessage(t);
 
       showErrorNotification({ message });
@@ -82,8 +81,7 @@ export function Recovery() {
         redirectTo: confirmRedirectTo,
       });
       showSuccessNotification({
-        message:
-          response.message || t("_pages:auth.recovery.confirmationSent"),
+        message: response.message || t("_pages:auth.recovery.confirmationSent"),
       });
     } catch (error) {
       const message = isHttpError(error)
