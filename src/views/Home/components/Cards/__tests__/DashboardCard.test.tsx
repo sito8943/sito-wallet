@@ -34,7 +34,7 @@ vi.mock("@sito/dashboard-app", () => ({
   useNotification: () => ({
     showErrorNotification: mockShowErrorNotification,
   }),
-  usePostForm: ({
+  useMutationForm: ({
     defaultValues,
     onSuccess,
     mutationFn,

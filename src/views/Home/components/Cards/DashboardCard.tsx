@@ -21,7 +21,7 @@ import {
   IconButton,
   Loading,
   useNotification,
-  usePostForm,
+  useMutationForm,
 } from "@sito/dashboard-app";
 
 // lib
@@ -96,7 +96,7 @@ export const DashboardCard = <TForm extends FieldValues>(
     [config, parseFormConfig],
   );
 
-  const formProps = usePostForm<
+  const formProps = useMutationForm<
     UpdateDashboardCardConfigDto,
     UpdateDashboardCardConfigDto,
     number,

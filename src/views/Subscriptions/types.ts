@@ -20,9 +20,9 @@ export interface SubscriptionFormType
   extends FieldValues, Omit<SubscriptionDto, "createdAt" | "updatedAt"> {}
 
 export interface SubscriptionFormPropsType {
-  control: Control<SubscriptionFormType>;
+  control?: Control<SubscriptionFormType>;
   isLoading?: boolean;
-  setValue: UseFormSetValue<SubscriptionFormType>;
+  setValue?: UseFormSetValue<SubscriptionFormType>;
   mode?: FormMode;
 }
 

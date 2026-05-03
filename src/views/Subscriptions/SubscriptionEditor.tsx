@@ -1,21 +1,22 @@
 import { useEffect, useMemo } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import {
   Button,
   Error as ErrorView,
+  FormContainer,
   isHttpError,
   Page,
+  useMutationForm,
   useNotification,
 } from "@sito/dashboard-app";
 
 import { SubscriptionsQueryKeys, useMobileNavbar } from "hooks";
 import { useManager } from "providers";
 
-import { AppRoutes } from "lib";
+import { AppRoutes, SubscriptionDto } from "lib";
 
 import { SubscriptionForm } from "./components";
 import { SubscriptionFormType } from "./types";
@@ -51,7 +52,6 @@ const parseErrorMessage = (error: unknown, fallback: string): string => {
 export function SubscriptionEditor() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const { showErrorNotification, showSuccessNotification } = useNotification();
 
   const manager = useManager();
@@ -73,9 +73,57 @@ export function SubscriptionEditor() {
 
   useMobileNavbar(title);
 
-  const { control, formState, handleSubmit, reset, setValue } =
-    useForm<SubscriptionFormType>({
+  const { control, handleSubmit, isLoading: isSubmitting, onSubmit, reset, setValue } =
+    useMutationForm<
+      SubscriptionFormType,
+      SubscriptionFormType,
+      SubscriptionDto,
+      SubscriptionFormType
+    >({
       defaultValues: emptySubscriptionForm,
+      queryKey: SubscriptionsQueryKeys.all().queryKey,
+      mutationFn: async (values: SubscriptionFormType) => {
+        if (!subscriptionsClient) {
+          throw new Error("subscriptions.featureDisabled");
+        }
+
+        if (isEditMode) {
+          if (!subscriptionId) {
+            throw new Error("Invalid subscription id");
+          }
+
+          return await subscriptionsClient.update(
+            subscriptionFormToUpdateDto(values),
+          );
+        }
+
+        return await subscriptionsClient.insert(
+          subscriptionFormToCreateDto(values),
+        );
+      },
+      onSuccess: async () => {
+        showSuccessNotification({
+          message: isEditMode
+            ? t("_pages:common.actions.edit.successMessage")
+            : t("_pages:common.actions.add.successMessage"),
+        });
+
+        navigate(AppRoutes.subscriptions);
+      },
+      onError: (error) => {
+        if (isHttpError(error) && error.status === 400) {
+          showErrorNotification({
+            message: String(
+              error.message ?? t("_pages:featureFlags.moduleUnavailable"),
+            ),
+          });
+          return;
+        }
+
+        showErrorNotification({
+          message: parseErrorMessage(error, t("_accessibility:errors.500")),
+        });
+      },
     });
 
   const subscriptionQuery = useQuery({
@@ -96,65 +144,15 @@ export function SubscriptionEditor() {
 
   useEffect(() => {
     if (!subscriptionQuery.data) return;
-    reset(subscriptionDtoToForm(subscriptionQuery.data));
+    reset?.(subscriptionDtoToForm(subscriptionQuery.data));
   }, [reset, subscriptionQuery.data]);
 
   useEffect(() => {
     if (isEditMode) return;
-    reset(emptySubscriptionForm);
+    reset?.(emptySubscriptionForm);
   }, [isEditMode, reset]);
 
-  const saveMutation = useMutation({
-    mutationFn: async (values: SubscriptionFormType) => {
-      console.log("Saving subscription with values:", values);
-      if (!subscriptionsClient) {
-        throw new Error("subscriptions.featureDisabled");
-      }
-
-      if (isEditMode) {
-        if (!subscriptionId) {
-          throw new Error("Invalid subscription id");
-        }
-
-        return await subscriptionsClient.update(
-          subscriptionFormToUpdateDto(values),
-        );
-      }
-
-      return await subscriptionsClient.insert(subscriptionFormToCreateDto(values));
-    },
-  });
-
-  const isSubmitting = saveMutation.isPending || formState.isSubmitting;
   const isLoading = isSubmitting || (isEditMode && subscriptionQuery.isLoading);
-
-  const onSubmit = handleSubmit(async (values) => {
-    try {
-      await saveMutation.mutateAsync(values);
-      await queryClient.invalidateQueries({ ...SubscriptionsQueryKeys.all() });
-
-      showSuccessNotification({
-        message: isEditMode
-          ? t("_pages:common.actions.edit.successMessage")
-          : t("_pages:common.actions.add.successMessage"),
-      });
-
-      navigate(AppRoutes.subscriptions);
-    } catch (error) {
-      console.error("Error saving subscription", error);
-      if (isHttpError(error) && error.status === 400) {
-        return showErrorNotification({
-          message: String(
-            error.message ?? t("_pages:featureFlags.moduleUnavailable"),
-          ),
-        });
-      }
-
-      return showErrorNotification({
-        message: parseErrorMessage(error, t("_accessibility:errors.500")),
-      });
-    }
-  });
 
   return (
     <Page
@@ -172,42 +170,48 @@ export function SubscriptionEditor() {
         />
       ) : (
         <div className="w-full max-w-5xl self-center rounded-2xl py-3">
-          <form
-            className="flex flex-col gap-4"
-            onSubmit={(event) => {
-              event.preventDefault();
-              void onSubmit(event);
-            }}
+          <FormContainer<SubscriptionFormType>
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
+            isLoading={isLoading}
+            onCancel={() => navigate(AppRoutes.subscriptions)}
+            submitLabel={
+              isEditMode
+                ? t("_pages:common.actions.edit.text")
+                : t("_pages:common.actions.add.text")
+            }
+            cancelLabel={t("_pages:subscriptions.actions.cancel")}
+            submitDisabled={isLoading}
+            cancelDisabled={isLoading}
+            renderActions={({ buttonProps, cancelLabel, onCancel, submitLabel }) => (
+              <div className="flex gap-2 max-sm:flex-col-reverse">
+                <Button
+                  {...buttonProps.cancel}
+                  variant="outlined"
+                  onClick={onCancel}
+                  className="max-sm:w-full"
+                >
+                  {cancelLabel}
+                </Button>
+                <Button
+                  {...buttonProps.submit}
+                  variant="submit"
+                  color="primary"
+                  className="max-sm:w-full"
+                >
+                  {submitLabel}
+                </Button>
+              </div>
+            )}
           >
-            <SubscriptionForm
-              control={control}
-              isLoading={isLoading}
-              setValue={setValue}
-            />
-
-            <div className="flex gap-2 max-sm:flex-col-reverse">
-              <Button
-                type="button"
-                variant="outlined"
-                disabled={isLoading}
-                onClick={() => navigate(AppRoutes.subscriptions)}
-                className="max-sm:w-full"
-              >
-                {t("_pages:subscriptions.actions.cancel")}
-              </Button>
-              <Button
-                type="submit"
-                variant="submit"
-                color="primary"
-                disabled={isLoading}
-                className="max-sm:w-full"
-              >
-                {isEditMode
-                  ? t("_pages:common.actions.edit.text")
-                  : t("_pages:common.actions.add.text")}
-              </Button>
+            <div className="flex flex-col gap-4">
+              <SubscriptionForm
+                control={control}
+                isLoading={isLoading}
+                setValue={setValue}
+              />
             </div>
-          </form>
+          </FormContainer>
         </div>
       )}
     </Page>

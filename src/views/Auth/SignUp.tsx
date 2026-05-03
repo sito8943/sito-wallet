@@ -12,7 +12,7 @@ import {
   TextInput,
   useNotification,
   useAuth,
-  usePostForm,
+  useMutationForm,
   RegisterDto,
   SessionDto,
   Button,
@@ -54,7 +54,7 @@ export function SignUp() {
   const navigate = useNavigate();
   const signUpEmailRef = useRef("");
 
-  const { handleSubmit, control, onSubmit, isLoading } = usePostForm<
+  const { handleSubmit, control, onSubmit, isLoading } = useMutationForm<
     SignUpFormType,
     SignUpFormType,
     SessionDto,

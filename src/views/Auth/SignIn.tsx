@@ -10,7 +10,7 @@ import "./styles.css";
 import {
   useNotification,
   useAuth,
-  usePostForm,
+  useMutationForm,
   SessionDto,
   CheckInput,
   PasswordInput,
@@ -55,7 +55,7 @@ export function SignIn() {
 
   const rememberMeRef = useRef(false);
 
-  const { handleSubmit, control, onSubmit, isLoading } = usePostForm<
+  const { handleSubmit, control, onSubmit, isLoading } = useMutationForm<
     SignInFormType,
     SignInFormType,
     SessionDto,
