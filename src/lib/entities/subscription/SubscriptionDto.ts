@@ -16,9 +16,13 @@ export interface SubscriptionDto extends BaseEntityDto {
   currency: CommonCurrencyDto | null;
   billingFrequency: number;
   billingUnit: SubscriptionBillingUnit;
+  startsAt?: string | null;
+  endsAt?: string | null;
+  lastPaidAt?: string | null;
   nextRenewalAt?: string | null;
   status: SubscriptionStatus;
   autoCreateTransaction: boolean;
+  notificationEnabled?: boolean;
   category?: CommonTransactionCategoryDto | null;
   categories?: CommonTransactionCategoryDto[] | null;
   notificationDaysBefore?: number | null;
