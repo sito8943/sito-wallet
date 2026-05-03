@@ -7,6 +7,6 @@ export interface FilterSubscriptionDto extends BaseFilterDto {
   name?: string;
   providerId?: number;
   currencyId?: number;
-  billingUnit?: SubscriptionBillingUnit | number;
-  status?: SubscriptionStatus | number;
+  billingUnit?: SubscriptionBillingUnit;
+  status?: SubscriptionStatus;
 }

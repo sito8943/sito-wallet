@@ -106,6 +106,7 @@ export function SubscriptionEditor() {
 
   const saveMutation = useMutation({
     mutationFn: async (values: SubscriptionFormType) => {
+      console.log("Saving subscription with values:", values);
       if (!subscriptionsClient) {
         throw new Error("subscriptions.featureDisabled");
       }
@@ -140,6 +141,7 @@ export function SubscriptionEditor() {
 
       navigate(AppRoutes.subscriptions);
     } catch (error) {
+      console.error("Error saving subscription", error);
       if (isHttpError(error) && error.status === 400) {
         return showErrorNotification({
           message: String(

@@ -237,7 +237,7 @@
       "label": "Notificar antes de renovar"
     },
     "notificationDaysBefore": {
-      "label": "Días antes de renovar",
+      "label": "Días a notificar antes de renovar",
       "placeholder": "Ej: 3",
       "required": "Los días de notificación son requeridos",
       "range": "Los días deben estar entre 0 y 30"

@@ -1,6 +1,8 @@
 import {
   AddSubscriptionBillingLogDto,
   AddSubscriptionDto,
+  SUBSCRIPTION_BILLING_UNITS,
+  SUBSCRIPTION_STATUSES,
   SubscriptionBillingUnit,
   SubscriptionDto,
   SubscriptionStatus,
@@ -8,14 +10,50 @@ import {
 } from "lib";
 
 import {
-  SUBSCRIPTION_BILLING_UNIT_BY_CODE,
-  SUBSCRIPTION_STATUS_BY_CODE,
+  DEFAULT_SUBSCRIPTION_BILLING_UNIT,
+  DEFAULT_SUBSCRIPTION_STATUS,
+  LEGACY_SUBSCRIPTION_BILLING_UNIT_BY_CODE,
+  LEGACY_SUBSCRIPTION_STATUS_BY_CODE,
 } from "./constants";
 import { SubscriptionBillingLogFormType, SubscriptionFormType } from "./types";
 
 const parseFiniteNumber = (value: unknown, fallback = 0): number => {
+  if (typeof value === "string" && value.trim().length === 0) return fallback;
+
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : fallback;
+};
+
+const parseOptionalFiniteNumber = (value: unknown): number | null => {
+  if (value === null || value === undefined) return null;
+  if (typeof value === "string" && value.trim().length === 0) return null;
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+};
+
+const isSubscriptionBillingUnit = (
+  value: unknown,
+): value is SubscriptionBillingUnit => {
+  return (
+    typeof value === "string" &&
+    SUBSCRIPTION_BILLING_UNITS.includes(value as SubscriptionBillingUnit)
+  );
+};
+
+const isSubscriptionStatus = (value: unknown): value is SubscriptionStatus => {
+  return (
+    typeof value === "string" &&
+    SUBSCRIPTION_STATUSES.includes(value as SubscriptionStatus)
+  );
+};
+
+const toLegacyCode = (value: unknown): number | null => {
+  if (typeof value !== "number" && typeof value !== "string") return null;
+  if (typeof value === "string" && value.trim().length === 0) return null;
+
+  const parsed = Number(value);
+  return Number.isInteger(parsed) ? parsed : null;
 };
 
 const toDateTimeLocal = (value?: string | null): string => {
@@ -39,68 +77,65 @@ const nowDateTimeLocal = (): string => {
   return toDateTimeLocal(new Date().toISOString());
 };
 
-const toOptionalDateTime = (value?: string | null): string | null | undefined => {
-  if (!value) return undefined;
-
-  const parsed = value.trim();
-  return parsed.length ? parsed : undefined;
-};
-
 export const toSubscriptionBillingUnit = (
-  value: number | string | null | undefined,
+  value: unknown,
 ): SubscriptionBillingUnit => {
-  if (
-    value === "DAY" ||
-    value === "MONTH" ||
-    value === "YEAR"
-  ) {
+  if (isSubscriptionBillingUnit(value)) {
     return value;
   }
 
-  return SUBSCRIPTION_BILLING_UNIT_BY_CODE[Number(value)] ?? "MONTH";
+  const legacyCode = toLegacyCode(value);
+  if (legacyCode === null) return DEFAULT_SUBSCRIPTION_BILLING_UNIT;
+
+  return (
+    LEGACY_SUBSCRIPTION_BILLING_UNIT_BY_CODE[legacyCode] ??
+    DEFAULT_SUBSCRIPTION_BILLING_UNIT
+  );
 };
 
-export const toSubscriptionStatus = (
-  value: number | string | null | undefined,
-): SubscriptionStatus => {
-  if (value === "ACTIVE" || value === "PAUSED" || value === "CANCELED") {
+export const toSubscriptionStatus = (value: unknown): SubscriptionStatus => {
+  if (isSubscriptionStatus(value)) {
     return value;
   }
 
-  return SUBSCRIPTION_STATUS_BY_CODE[Number(value)] ?? "ACTIVE";
+  const legacyCode = toLegacyCode(value);
+  if (legacyCode === null) return DEFAULT_SUBSCRIPTION_STATUS;
+
+  return (
+    LEGACY_SUBSCRIPTION_STATUS_BY_CODE[legacyCode] ??
+    DEFAULT_SUBSCRIPTION_STATUS
+  );
 };
 
 export const subscriptionDtoToForm = (
   dto: SubscriptionDto,
-): SubscriptionFormType => ({
-  id: dto.id,
-  name: dto.name,
-  description: dto.description ?? "",
-  provider: dto.provider,
-  account: dto.account ?? null,
-  currency: dto.currency,
-  amount: String(dto.amount ?? ""),
-  billingFrequency: String(dto.billingFrequency ?? ""),
-  billingUnit: toSubscriptionBillingUnit(dto.billingUnit),
-  startsAt: toDateTimeLocal(dto.startsAt),
-  endsAt: toDateTimeLocal(dto.endsAt),
-  lastPaidAt: toDateTimeLocal(dto.lastPaidAt),
-  status: toSubscriptionStatus(dto.status),
-  autoCreateTransaction: !!dto.autoCreateTransaction,
-  notificationEnabled: !!dto.notificationEnabled,
-  notificationDaysBefore:
-    dto.notificationDaysBefore === null || dto.notificationDaysBefore === undefined
-      ? ""
-      : String(dto.notificationDaysBefore),
-});
+): SubscriptionFormType => {
+  const notificationDaysBefore = parseOptionalFiniteNumber(
+    dto.notificationDaysBefore,
+  );
+
+  return {
+    id: dto.id,
+    name: dto.name,
+    description: dto.description ?? "",
+    provider: dto.provider,
+    account: dto.account ?? null,
+    currency: dto.currency,
+    amount: dto.amount ?? 0,
+    billingFrequency: dto.billingFrequency ?? 1,
+    billingUnit: toSubscriptionBillingUnit(dto.billingUnit),
+    status: toSubscriptionStatus(dto.status),
+    autoCreateTransaction: !!dto.autoCreateTransaction,
+    notificationDaysBefore: notificationDaysBefore,
+  };
+};
 
 export const subscriptionFormToCreateDto = (
   form: SubscriptionFormType,
 ): AddSubscriptionDto => {
-  const notificationEnabled = !!form.notificationEnabled;
-  const notificationDaysBefore = notificationEnabled
-    ? parseFiniteNumber(form.notificationDaysBefore)
-    : null;
+  const notificationDaysBefore = parseOptionalFiniteNumber(
+    form.notificationDaysBefore,
+  );
 
   return {
     name: form.name.trim(),
@@ -111,12 +146,7 @@ export const subscriptionFormToCreateDto = (
     amount: parseFiniteNumber(form.amount),
     billingFrequency: parseFiniteNumber(form.billingFrequency, 1),
     billingUnit: toSubscriptionBillingUnit(form.billingUnit),
-    startsAt: form.startsAt,
-    endsAt: toOptionalDateTime(form.endsAt),
-    lastPaidAt: toOptionalDateTime(form.lastPaidAt) ?? null,
-    status: toSubscriptionStatus(form.status),
     autoCreateTransaction: !!form.autoCreateTransaction,
-    notificationEnabled,
     notificationDaysBefore,
   };
 };
@@ -128,45 +158,36 @@ export const subscriptionFormToUpdateDto = (
   return {
     id: form.id,
     ...payload,
+    status: toSubscriptionStatus(form.status),
     accountId: form.account?.id ?? 0,
   };
 };
 
-export const emptyAddSubscriptionForm: Omit<SubscriptionFormType, "id"> = {
-  name: "",
-  description: "",
-  provider: null,
-  account: null,
-  currency: null,
-  amount: "",
-  billingFrequency: "1",
-  billingUnit: "MONTH",
-  startsAt: nowDateTimeLocal(),
-  endsAt: "",
-  lastPaidAt: "",
-  status: "ACTIVE",
-  autoCreateTransaction: false,
-  notificationEnabled: false,
-  notificationDaysBefore: "",
+const createEmptySubscriptionFormValues = (): Omit<
+  SubscriptionFormType,
+  "id"
+> => {
+  return {
+    name: "",
+    description: "",
+    provider: null,
+    account: null,
+    currency: null,
+    amount: 0,
+    billingFrequency: 1,
+    billingUnit: DEFAULT_SUBSCRIPTION_BILLING_UNIT,
+    status: DEFAULT_SUBSCRIPTION_STATUS,
+    autoCreateTransaction: false,
+    notificationDaysBefore: null,
+  };
 };
 
-export const emptySubscriptionForm: SubscriptionFormType = {
+export const emptyAddSubscriptionForm: Omit<SubscriptionFormType, "id"> =
+  createEmptySubscriptionFormValues();
+
+export const emptySubscriptionForm = {
   id: 0,
-  name: "",
-  description: "",
-  provider: null,
-  account: null,
-  currency: null,
-  amount: "",
-  billingFrequency: "1",
-  billingUnit: "MONTH",
-  startsAt: nowDateTimeLocal(),
-  endsAt: "",
-  lastPaidAt: "",
-  status: "ACTIVE",
-  autoCreateTransaction: false,
-  notificationEnabled: false,
-  notificationDaysBefore: "",
+  ...createEmptySubscriptionFormValues(),
 };
 
 export const emptySubscriptionBillingLogForm: SubscriptionBillingLogFormType = {

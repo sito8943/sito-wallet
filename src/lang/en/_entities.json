@@ -236,7 +236,7 @@
       "label": "Notify before renewal"
     },
     "notificationDaysBefore": {
-      "label": "Days before renewal",
+      "label": "Days to notify before renewal",
       "placeholder": "Ex: 3",
       "required": "Notification days are required",
       "range": "Days must be between 0 and 30"

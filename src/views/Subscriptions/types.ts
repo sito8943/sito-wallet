@@ -1,16 +1,11 @@
-import { Control, FieldValues, UseFormSetValue } from "react-hook-form";
+import type { Control, FieldValues, UseFormSetValue } from "react-hook-form";
 
-import { ActionType, TriggerFormDialogPropsType } from "@sito/dashboard-app";
+import type {
+  ActionType,
+  TriggerFormDialogPropsType,
+} from "@sito/dashboard-app";
 
-import {
-  CommonAccountDto,
-  CommonCurrencyDto,
-  CommonSubscriptionProviderDto,
-  FormMode,
-  SubscriptionBillingUnit,
-  SubscriptionDto,
-  SubscriptionStatus,
-} from "lib";
+import type { CommonCurrencyDto, FormMode, SubscriptionDto } from "lib";
 
 export interface SubscriptionCardPropsType extends SubscriptionDto {
   actions: ActionType<SubscriptionDto>[];
@@ -21,24 +16,8 @@ export interface SubscriptionCardPropsType extends SubscriptionDto {
   onLongPress?: (id: number) => void;
 }
 
-export interface SubscriptionFormType extends FieldValues {
-  id: number;
-  name: string;
-  description: string;
-  provider: CommonSubscriptionProviderDto | null;
-  account: CommonAccountDto | null;
-  currency: CommonCurrencyDto | null;
-  amount: string;
-  billingFrequency: string;
-  billingUnit: SubscriptionBillingUnit;
-  startsAt: string;
-  endsAt: string;
-  lastPaidAt: string;
-  status: SubscriptionStatus;
-  autoCreateTransaction: boolean;
-  notificationEnabled: boolean;
-  notificationDaysBefore: string;
-}
+export interface SubscriptionFormType
+  extends FieldValues, Omit<SubscriptionDto, "createdAt" | "updatedAt"> {}
 
 export interface SubscriptionFormPropsType {
   control: Control<SubscriptionFormType>;

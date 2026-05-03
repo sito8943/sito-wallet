@@ -182,7 +182,25 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
             )}
           />
         </div>
-
+        <Controller
+          control={control}
+          name="notificationDaysBefore"
+          disabled={formDisabled}
+          render={({ field: { value, ...rest } }) => (
+            <TextInput
+              type="number"
+              min={0}
+              step={1}
+              value={value ?? ""}
+              label={t("_entities:subscription.notificationDaysBefore.label")}
+              placeholder={t(
+                "_entities:subscription.notificationDaysBefore.placeholder",
+              )}
+              autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.notificationDaysBefore.label")}`}
+              {...rest}
+            />
+          )}
+        />
         {mode !== FormMode.Add && (
           <Controller
             control={control}
@@ -209,6 +227,22 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
 
       <Controller
         control={control}
+        name="description"
+        disabled={formDisabled}
+        render={({ field: { value, ...rest } }) => (
+          <ParagraphInput
+            maxLength={500}
+            value={value ?? ""}
+            label={t("_entities:base.description.label")}
+            placeholder={t("_entities:base.description.placeholder")}
+            autoComplete={`${Tables.Subscriptions}-${t("_entities:base.description.label")}`}
+            {...rest}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
         name="autoCreateTransaction"
         disabled={formDisabled}
         render={({ field: { value, onChange, ...rest } }) => (
@@ -226,6 +260,27 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
 
       {autoCreateTransaction && (
         <div className="grid gap-5 md:grid-cols-2">
+          <Controller
+            control={control}
+            rules={{
+              required: t("_entities:subscription.amount.required"),
+            }}
+            name="amount"
+            disabled={formDisabled}
+            render={({ field: { value, ...rest } }) => (
+              <TextInput
+                required
+                type="number"
+                min={1}
+                step={1}
+                value={value ?? ""}
+                label={t("_entities:subscription.amount.label")}
+                placeholder={t("_entities:subscription.amount.placeholder")}
+                autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.amount.label")}`}
+                {...rest}
+              />
+            )}
+          />
           <Controller
             control={control}
             rules={{
@@ -264,21 +319,6 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
                 placeholder={t("_entities:subscription.account.placeholder")}
                 autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.account.label")}`}
                 multiple={false}
-                {...rest}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name="description"
-            disabled={formDisabled}
-            render={({ field: { value, ...rest } }) => (
-              <ParagraphInput
-                maxLength={500}
-                value={value ?? ""}
-                label={t("_entities:base.description.label")}
-                placeholder={t("_entities:base.description.placeholder")}
-                autoComplete={`${Tables.Subscriptions}-${t("_entities:base.description.label")}`}
                 {...rest}
               />
             )}
