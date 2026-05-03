@@ -9,3 +9,4 @@ export * from "./AddSubscriptionBillingLogDto";
 export * from "./SubscriptionBillingLogDto";
 export * from "./FilterSubscriptionBillingLogDto";
 export * from "./SubscriptionRenewalDto";
+export * from "./AddSubscriptionRenewalDto";

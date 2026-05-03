@@ -1,7 +1,7 @@
 import {
-  BaseFilterDto,
   BaseClient,
   Methods,
+  QueryParam,
   QueryResult,
   parseQueries,
 } from "@sito/dashboard-app";
@@ -10,6 +10,7 @@ import { Tables } from "./types";
 
 import {
   AddSubscriptionBillingLogDto,
+  AddSubscriptionRenewalDto,
   AddSubscriptionDto,
   CommonSubscriptionDto,
   FilterSubscriptionBillingLogDto,
@@ -24,9 +25,10 @@ import {
 import { config } from "../../config";
 
 export type GetSubscriptionRenewalsFilters = {
+  subscriptionId?: number;
   from?: string;
   to?: string;
-} & BaseFilterDto;
+};
 
 export default class SubscriptionClient extends BaseClient<
   Tables,
@@ -48,10 +50,22 @@ export default class SubscriptionClient extends BaseClient<
   async renewals(
     filters?: GetSubscriptionRenewalsFilters,
   ): Promise<SubscriptionRenewalDto[]> {
-    const builtUrl = parseQueries<
-      SubscriptionRenewalDto[],
-      GetSubscriptionRenewalsFilters
-    >(`${this.table}/renewals`, undefined, filters);
+    const searchParams = new URLSearchParams();
+
+    if (filters?.subscriptionId) {
+      searchParams.set("subscriptionId", String(filters.subscriptionId));
+    }
+    if (filters?.from) {
+      searchParams.set("from", filters.from);
+    }
+    if (filters?.to) {
+      searchParams.set("to", filters.to);
+    }
+
+    const queryString = searchParams.toString();
+    const builtUrl = queryString
+      ? `${this.table}/renewals?${queryString}`
+      : `${this.table}/renewals`;
 
     return await this.api.doQuery<SubscriptionRenewalDto[]>(
       builtUrl,
@@ -70,14 +84,22 @@ export default class SubscriptionClient extends BaseClient<
     return await this.api.post(`${this.table}/${subscriptionId}/billing-logs`, data);
   }
 
+  async createRenewal(
+    subscriptionId: number,
+    data: AddSubscriptionRenewalDto = {},
+  ): Promise<number> {
+    return await this.api.post(`${this.table}/${subscriptionId}/renewals`, data);
+  }
+
   async getBillingLogs(
     subscriptionId: number,
+    query?: QueryParam<SubscriptionBillingLogDto>,
     filters?: FilterSubscriptionBillingLogDto,
   ): Promise<QueryResult<SubscriptionBillingLogDto>> {
     const builtUrl = parseQueries<
-      QueryResult<SubscriptionBillingLogDto>,
+      SubscriptionBillingLogDto,
       FilterSubscriptionBillingLogDto
-    >(`${this.table}/${subscriptionId}/billing-logs`, undefined, filters);
+    >(`${this.table}/${subscriptionId}/billing-logs`, query, filters);
 
     return await this.api.doQuery<QueryResult<SubscriptionBillingLogDto>>(
       builtUrl,

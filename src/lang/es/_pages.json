@@ -381,6 +381,11 @@
         "title": "Registrar pago",
         "for": "Suscripción",
         "successMessage": "Pago registrado correctamente"
+      },
+      "renewal": {
+        "text": "Registrar renovación",
+        "disabled": "No puedes registrar renovaciones en suscripciones canceladas",
+        "successMessage": "Renovación registrada correctamente"
       }
     }
   },

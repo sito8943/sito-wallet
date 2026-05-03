@@ -380,6 +380,11 @@
         "title": "Register payment",
         "for": "Subscription",
         "successMessage": "Payment registered successfully"
+      },
+      "renewal": {
+        "text": "Register renewal",
+        "disabled": "You cannot register renewals for canceled subscriptions",
+        "successMessage": "Renewal registered successfully"
       }
     }
   },

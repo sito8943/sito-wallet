@@ -27,7 +27,10 @@ import {
   useMobileMultiSelection,
   useMobileNavbar,
 } from "hooks";
-import { useAddSubscriptionBillingLogDialog } from "./hooks";
+import {
+  useAddSubscriptionBillingLogDialog,
+  useAddSubscriptionRenewalMutation,
+} from "./hooks";
 
 // components
 import { MobileSelectionBar } from "components";
@@ -104,6 +107,7 @@ export function Subscriptions() {
   });
 
   const addBillingLog = useAddSubscriptionBillingLogDialog();
+  const addRenewal = useAddSubscriptionRenewalMutation();
 
   const exportSubscriptions = useExportActionMutate({
     entity: Tables.Subscriptions,
@@ -121,11 +125,12 @@ export function Subscriptions() {
 
   const getActions = useCallback(
     (record: SubscriptionDto) => [
+      addRenewal.action(record),
       addBillingLog.action(record),
       deleteSubscription.action(record),
       restoreSubscription.action(record),
     ],
-    [addBillingLog, deleteSubscription, restoreSubscription],
+    [addBillingLog, addRenewal, deleteSubscription, restoreSubscription],
   );
 
   const mobileSelection = useMobileMultiSelection<SubscriptionDto>({

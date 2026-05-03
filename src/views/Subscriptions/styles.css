@@ -1,9 +1,61 @@
 @reference "../../styles/variables.css";
 
 .subscription-selection-bar {
-  @apply sm:hidden top-12 bg-white py-2 sticky z-10;
+  @apply bg-base-light sm:hidden top-12 sticky z-10 py-2;
 }
 
 .subscription-selection-bar .table-selection-bar {
   margin-bottom: 0;
+}
+
+.subscription-editor-layout {
+  @apply grid w-full max-w-7xl self-center gap-4 py-3 lg:grid-cols-[minmax(0,1fr)_22rem];
+}
+
+.subscription-editor-form {
+  @apply rounded-2xl;
+}
+
+.subscription-editor-sidebar {
+  @apply bg-base-light border-border sticky top-14 flex h-fit flex-col gap-4 rounded-2xl border p-4;
+}
+
+.subscription-activity-section {
+  @apply flex flex-col gap-2;
+}
+
+.subscription-activity-section-title {
+  @apply text-text text-base font-semibold;
+}
+
+.subscription-activity-loading {
+  @apply mx-auto my-2;
+}
+
+.subscription-activity-list {
+  @apply flex flex-col gap-2;
+}
+
+.subscription-activity-item {
+  @apply bg-base border-border rounded-xl border p-3;
+}
+
+.subscription-activity-amount {
+  @apply text-text text-sm font-semibold;
+}
+
+.subscription-activity-meta {
+  @apply text-text-muted text-xs;
+}
+
+.subscription-activity-note {
+  @apply text-text mt-1 text-sm;
+}
+
+.subscription-activity-empty {
+  @apply text-text-muted text-sm;
+}
+
+.subscription-activity-error {
+  @apply text-error bg-bg-error rounded-md px-2 py-1 text-sm;
 }

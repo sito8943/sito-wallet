@@ -16,9 +16,17 @@ import {
 import { SubscriptionsQueryKeys, useMobileNavbar } from "hooks";
 import { useManager } from "providers";
 
-import { AppRoutes, SubscriptionDto } from "lib";
+import { AppRoutes, FormMode, SubscriptionDto } from "lib";
 
-import { SubscriptionForm } from "./components";
+import {
+  AddSubscriptionBillingLogDialog,
+  SubscriptionActivitySidebar,
+  SubscriptionForm,
+} from "./components";
+import {
+  useAddSubscriptionBillingLogDialog,
+  useAddSubscriptionRenewalMutation,
+} from "./hooks";
 import { SubscriptionFormType } from "./types";
 import {
   emptySubscriptionForm,
@@ -26,6 +34,7 @@ import {
   subscriptionFormToCreateDto,
   subscriptionFormToUpdateDto,
 } from "./utils";
+import "./styles.css";
 
 const parseSubscriptionId = (value?: string): number | null => {
   if (!value) return null;
@@ -70,8 +79,8 @@ export function SubscriptionEditor() {
   const title = isEditMode
     ? t("_pages:subscriptions.forms.edit")
     : t("_pages:subscriptions.forms.add");
-
-  useMobileNavbar(title);
+  const addBillingLog = useAddSubscriptionBillingLogDialog();
+  const addRenewal = useAddSubscriptionRenewalMutation();
 
   const { control, handleSubmit, isLoading: isSubmitting, onSubmit, reset, setValue } =
     useMutationForm<
@@ -142,6 +151,30 @@ export function SubscriptionEditor() {
     },
   });
 
+  const subscriptionBillingLogsQuery = useQuery({
+    queryKey: [
+      ...SubscriptionsQueryKeys.all().queryKey,
+      "billing-logs",
+      subscriptionId,
+    ],
+    enabled:
+      !!subscriptionsClient &&
+      !!subscriptionId &&
+      !invalidEditRoute &&
+      isEditMode &&
+      !!subscriptionQuery.data,
+    queryFn: async () => {
+      if (!subscriptionsClient || !subscriptionId) {
+        throw new Error("subscriptions.featureDisabled");
+      }
+
+      return await subscriptionsClient.getBillingLogs(subscriptionId, {
+        currentPage: 0,
+        pageSize: 10,
+      });
+    },
+  });
+
   useEffect(() => {
     if (!subscriptionQuery.data) return;
     reset?.(subscriptionDtoToForm(subscriptionQuery.data));
@@ -152,12 +185,24 @@ export function SubscriptionEditor() {
     reset?.(emptySubscriptionForm);
   }, [isEditMode, reset]);
 
+  const editorActions = useMemo(() => {
+    if (!isEditMode || !subscriptionQuery.data) return [];
+
+    return [
+      addRenewal.action(subscriptionQuery.data),
+      addBillingLog.action(subscriptionQuery.data),
+    ];
+  }, [addBillingLog, addRenewal, isEditMode, subscriptionQuery.data]);
+
+  useMobileNavbar(title, editorActions);
+
   const isLoading = isSubmitting || (isEditMode && subscriptionQuery.isLoading);
 
   return (
     <Page
       title={title}
       isLoading={isEditMode && subscriptionQuery.isLoading}
+      actions={editorActions}
       queryKey={SubscriptionsQueryKeys.all().queryKey}
     >
       {invalidEditRoute ? (
@@ -169,49 +214,63 @@ export function SubscriptionEditor() {
           )}
         />
       ) : (
-        <div className="w-full max-w-5xl self-center rounded-2xl py-3">
-          <FormContainer<SubscriptionFormType>
-            handleSubmit={handleSubmit}
-            onSubmit={onSubmit}
-            isLoading={isLoading}
-            onCancel={() => navigate(AppRoutes.subscriptions)}
-            submitLabel={
-              isEditMode
-                ? t("_pages:common.actions.edit.text")
-                : t("_pages:common.actions.add.text")
-            }
-            cancelLabel={t("_pages:subscriptions.actions.cancel")}
-            submitDisabled={isLoading}
-            cancelDisabled={isLoading}
-            renderActions={({ buttonProps, cancelLabel, onCancel, submitLabel }) => (
-              <div className="flex gap-2 max-sm:flex-col-reverse">
-                <Button
-                  {...buttonProps.cancel}
-                  variant="outlined"
-                  onClick={onCancel}
-                  className="max-sm:w-full"
-                >
-                  {cancelLabel}
-                </Button>
-                <Button
-                  {...buttonProps.submit}
-                  variant="submit"
-                  color="primary"
-                  className="max-sm:w-full"
-                >
-                  {submitLabel}
-                </Button>
+        <div className="subscription-editor-layout">
+          <div className="subscription-editor-form">
+            <FormContainer<SubscriptionFormType>
+              handleSubmit={handleSubmit}
+              onSubmit={onSubmit}
+              isLoading={isLoading}
+              onCancel={() => navigate(AppRoutes.subscriptions)}
+              submitLabel={
+                isEditMode
+                  ? t("_pages:common.actions.edit.text")
+                  : t("_pages:common.actions.add.text")
+              }
+              cancelLabel={t("_pages:subscriptions.actions.cancel")}
+              submitDisabled={isLoading}
+              cancelDisabled={isLoading}
+              renderActions={({ buttonProps, cancelLabel, onCancel, submitLabel }) => (
+                <div className="flex gap-2 max-sm:flex-col-reverse">
+                  <Button
+                    {...buttonProps.cancel}
+                    variant="outlined"
+                    onClick={onCancel}
+                    className="max-sm:w-full"
+                  >
+                    {cancelLabel}
+                  </Button>
+                  <Button
+                    {...buttonProps.submit}
+                    variant="submit"
+                    color="primary"
+                    className="max-sm:w-full"
+                  >
+                    {submitLabel}
+                  </Button>
+                </div>
+              )}
+            >
+              <div className="flex flex-col gap-4">
+                <SubscriptionForm
+                  control={control}
+                  isLoading={isLoading}
+                  setValue={setValue}
+                  mode={isEditMode ? FormMode.Edit : FormMode.Add}
+                />
               </div>
-            )}
-          >
-            <div className="flex flex-col gap-4">
-              <SubscriptionForm
-                control={control}
-                isLoading={isLoading}
-                setValue={setValue}
-              />
-            </div>
-          </FormContainer>
+            </FormContainer>
+          </div>
+          {isEditMode && subscriptionId ? (
+            <SubscriptionActivitySidebar
+              startsAt={subscriptionQuery.data?.startsAt}
+              lastPaidAt={subscriptionQuery.data?.lastPaidAt}
+              nextRenewalAt={subscriptionQuery.data?.nextRenewalAt}
+              billingLogs={subscriptionBillingLogsQuery.data?.items ?? []}
+              billingLogsLoading={subscriptionBillingLogsQuery.isLoading}
+              billingLogsError={subscriptionBillingLogsQuery.error}
+            />
+          ) : null}
+          <AddSubscriptionBillingLogDialog {...addBillingLog} />
         </div>
       )}
     </Page>

@@ -6,6 +6,7 @@ import type {
 } from "@sito/dashboard-app";
 
 import type {
+  SubscriptionBillingLogDto,
   CommonCurrencyDto,
   CommonTransactionCategoryDto,
   FormMode,
@@ -46,6 +47,16 @@ export interface AddSubscriptionBillingLogDialogPropsType extends TriggerFormDia
   selectedSubscription: SubscriptionDto | null;
 }
 
+export interface SubscriptionActivitySidebarPropsType {
+  startsAt?: string | null;
+  lastPaidAt?: string | null;
+  nextRenewalAt?: string | null;
+  billingLogs: SubscriptionBillingLogDto[];
+  billingLogsLoading?: boolean;
+  billingLogsError?: unknown;
+}
+
 export enum SubscriptionAction {
+  AddRenewal = "addRenewal",
   AddBillingLog = "addBillingLog",
 }
