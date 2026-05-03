@@ -183,6 +183,11 @@
       "placeholder": "Select an account",
       "requiredWhenAuto": "Account is required when auto-create transaction is enabled"
     },
+    "category": {
+      "label": "Categories",
+      "placeholder": "Select categories",
+      "requiredWhenAuto": "At least one category is required when auto-create transaction is enabled"
+    },
     "currency": {
       "label": "Currency",
       "placeholder": "Select a currency",

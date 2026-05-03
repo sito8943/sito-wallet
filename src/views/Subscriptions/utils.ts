@@ -1,6 +1,8 @@
 import {
   AddSubscriptionBillingLogDto,
   AddSubscriptionDto,
+  CommonTransactionCategoryDto,
+  normalizeSelectedTransactionCategories,
   SUBSCRIPTION_BILLING_UNITS,
   SUBSCRIPTION_STATUSES,
   SubscriptionBillingUnit,
@@ -73,6 +75,23 @@ const toDateTimeLocal = (value?: string | null): string => {
   return `${year}-${month}-${day}T${hours}:${minutes}`;
 };
 
+const parseSubscriptionCategories = (
+  dto: SubscriptionDto,
+): CommonTransactionCategoryDto[] => {
+  const source = dto as SubscriptionDto & {
+    category?: CommonTransactionCategoryDto | null;
+    categories?: CommonTransactionCategoryDto[] | null;
+  };
+
+  const categories = Array.isArray(source.categories)
+    ? source.categories
+    : source.category
+      ? [source.category]
+      : [];
+
+  return normalizeSelectedTransactionCategories(categories);
+};
+
 const nowDateTimeLocal = (): string => {
   return toDateTimeLocal(new Date().toISOString());
 };
@@ -126,6 +145,7 @@ export const subscriptionDtoToForm = (
     billingUnit: toSubscriptionBillingUnit(dto.billingUnit),
     status: toSubscriptionStatus(dto.status),
     autoCreateTransaction: !!dto.autoCreateTransaction,
+    categories: parseSubscriptionCategories(dto),
     notificationDaysBefore: notificationDaysBefore,
   };
 };
@@ -136,6 +156,10 @@ export const subscriptionFormToCreateDto = (
   const notificationDaysBefore = parseOptionalFiniteNumber(
     form.notificationDaysBefore,
   );
+  const categories = normalizeSelectedTransactionCategories(form.categories);
+  const categoryIds = form.autoCreateTransaction
+    ? categories.map((category) => category.id)
+    : undefined;
 
   return {
     name: form.name.trim(),
@@ -147,6 +171,7 @@ export const subscriptionFormToCreateDto = (
     billingFrequency: parseFiniteNumber(form.billingFrequency, 1),
     billingUnit: toSubscriptionBillingUnit(form.billingUnit),
     autoCreateTransaction: !!form.autoCreateTransaction,
+    categoryIds,
     notificationDaysBefore,
   };
 };
@@ -178,6 +203,7 @@ const createEmptySubscriptionFormValues = (): Omit<
     billingUnit: DEFAULT_SUBSCRIPTION_BILLING_UNIT,
     status: DEFAULT_SUBSCRIPTION_STATUS,
     autoCreateTransaction: false,
+    categories: [],
     notificationDaysBefore: null,
   };
 };

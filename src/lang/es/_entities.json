@@ -184,6 +184,11 @@
       "placeholder": "Selecciona una cuenta",
       "requiredWhenAuto": "La cuenta es requerida cuando se crean transacciones automáticas"
     },
+    "category": {
+      "label": "Categorías",
+      "placeholder": "Selecciona categorías",
+      "requiredWhenAuto": "Debes seleccionar al menos una categoría cuando se crean transacciones automáticas"
+    },
     "currency": {
       "label": "Moneda",
       "placeholder": "Selecciona una moneda",

@@ -30,7 +30,8 @@ export function SubscriptionCard(props: SubscriptionCardPropsType) {
     onLongPress,
   } = props;
 
-  const parsedDescription = description || t("_entities:base.description.empty");
+  const parsedDescription =
+    description || t("_entities:base.description.empty");
 
   const parsedStatus = toSubscriptionStatus(status);
 
@@ -49,7 +50,8 @@ export function SubscriptionCard(props: SubscriptionCardPropsType) {
         <div className="flex w-full items-start justify-between gap-2">
           <ItemCardTitle>{name}</ItemCardTitle>
           <span className="text-sm font-semibold whitespace-nowrap">
-            {amount} <Currency name={currency?.name} symbol={currency?.symbol} />
+            {amount}{" "}
+            <Currency name={currency?.name} symbol={currency?.symbol} />
           </span>
         </div>
       }

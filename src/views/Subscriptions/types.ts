@@ -5,7 +5,12 @@ import type {
   TriggerFormDialogPropsType,
 } from "@sito/dashboard-app";
 
-import type { CommonCurrencyDto, FormMode, SubscriptionDto } from "lib";
+import type {
+  CommonCurrencyDto,
+  CommonTransactionCategoryDto,
+  FormMode,
+  SubscriptionDto,
+} from "lib";
 
 export interface SubscriptionCardPropsType extends SubscriptionDto {
   actions: ActionType<SubscriptionDto>[];
@@ -17,7 +22,10 @@ export interface SubscriptionCardPropsType extends SubscriptionDto {
 }
 
 export interface SubscriptionFormType
-  extends FieldValues, Omit<SubscriptionDto, "createdAt" | "updatedAt"> {}
+  extends FieldValues,
+    Omit<SubscriptionDto, "createdAt" | "updatedAt" | "category" | "categories"> {
+  categories: CommonTransactionCategoryDto[];
+}
 
 export interface SubscriptionFormPropsType {
   control?: Control<SubscriptionFormType>;

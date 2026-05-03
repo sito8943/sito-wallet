@@ -27,7 +27,7 @@ import {
   useMobileMultiSelection,
   useMobileNavbar,
 } from "hooks";
-import { useAddSubscriptionBillingLogDialog } from "./hooks"
+import { useAddSubscriptionBillingLogDialog } from "./hooks";
 
 // components
 import { MobileSelectionBar } from "components";
@@ -200,17 +200,22 @@ export function Subscriptions() {
                 }}
               />
             }
-            renderComponent={(subscription) => (
-              <SubscriptionCard
-                actions={getActions(subscription)}
-                onClick={(id: number) => navigate(getSubscriptionEditRoute(id))}
-                selectionMode={mobileSelection.selectionMode}
-                selected={mobileSelection.isSelected(subscription.id)}
-                onSelect={mobileSelection.onToggleRowSelection}
-                onLongPress={mobileSelection.onLongPressRow}
-                {...subscription}
-              />
-            )}
+            renderComponent={(subscription) => {
+              console.log("Rendering subscription:", subscription);
+              return (
+                <SubscriptionCard
+                  actions={getActions(subscription)}
+                  onClick={(id: number) =>
+                    navigate(getSubscriptionEditRoute(id))
+                  }
+                  selectionMode={mobileSelection.selectionMode}
+                  selected={mobileSelection.isSelected(subscription.id)}
+                  onSelect={mobileSelection.onToggleRowSelection}
+                  onLongPress={mobileSelection.onLongPressRow}
+                  {...subscription}
+                />
+              );
+            }}
           />
 
           <AddSubscriptionBillingLogDialog {...addBillingLog} />

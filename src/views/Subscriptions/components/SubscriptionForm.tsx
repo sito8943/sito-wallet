@@ -17,11 +17,14 @@ import {
   useAccountsCommon,
   useCurrenciesCommon,
   useSubscriptionProvidersCommon,
+  useTransactionCategoriesCommon,
 } from "hooks";
 
 // lib
 import {
+  CommonTransactionCategoryDto,
   FormMode,
+  normalizeSelectedTransactionCategories,
   SUBSCRIPTION_BILLING_UNITS,
   SUBSCRIPTION_STATUSES,
   Tables,
@@ -37,6 +40,7 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
   const providersQuery = useSubscriptionProvidersCommon({ onlyEnabled: true });
   const currenciesQuery = useCurrenciesCommon();
   const accountsQuery = useAccountsCommon();
+  const categoriesQuery = useTransactionCategoriesCommon();
 
   const providerOptions = useMemo(
     () => [...(providersQuery.data ?? [])] as Option[],
@@ -51,6 +55,17 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
   const accountOptions = useMemo(
     () => [...(accountsQuery.data ?? [])] as Option[],
     [accountsQuery.data],
+  );
+
+  const categoryOptions = useMemo(
+    () =>
+      (categoriesQuery.data ?? []).map((category) => ({
+        ...category,
+        name: category.auto
+          ? t("_entities:transactionCategory.name.init")
+          : category.name,
+      })) as CommonTransactionCategoryDto[],
+    [categoriesQuery.data, t],
   );
 
   const billingUnitOptions = useMemo(
@@ -80,7 +95,8 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
     isLoading ||
     providersQuery.isLoading ||
     currenciesQuery.isLoading ||
-    accountsQuery.isLoading;
+    accountsQuery.isLoading ||
+    categoriesQuery.isLoading;
 
   return (
     <>
@@ -319,6 +335,42 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
                 placeholder={t("_entities:subscription.account.placeholder")}
                 autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.account.label")}`}
                 multiple={false}
+                {...rest}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name="categories"
+            disabled={formDisabled}
+            rules={{
+              validate: (value) => {
+                if (!autoCreateTransaction) return true;
+
+                return (
+                  (Array.isArray(value) && value.length > 0) ||
+                  t("_entities:subscription.category.requiredWhenAuto")
+                );
+              },
+            }}
+            render={({ field: { value, onChange, ...rest } }) => (
+              <AutocompleteInput
+                required={!!autoCreateTransaction}
+                options={categoryOptions as Option[]}
+                value={Array.isArray(value) ? value : []}
+                onChange={(nextValue) =>
+                  onChange(
+                    normalizeSelectedTransactionCategories(
+                      Array.isArray(nextValue)
+                        ? (nextValue as CommonTransactionCategoryDto[])
+                        : [],
+                    ),
+                  )
+                }
+                label={t("_entities:subscription.category.label")}
+                placeholder={t("_entities:subscription.category.placeholder")}
+                autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.category.label")}`}
+                multiple
                 {...rest}
               />
             )}

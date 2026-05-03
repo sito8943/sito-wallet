@@ -12,5 +12,6 @@ export interface AddSubscriptionDto {
   billingUnit: SubscriptionBillingUnit;
   status?: SubscriptionStatus;
   autoCreateTransaction?: boolean;
+  categoryIds?: number[];
   notificationDaysBefore?: number | null;
 }
