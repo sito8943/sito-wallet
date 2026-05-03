@@ -4,6 +4,7 @@ export const AppRoutes = {
   signIn: "/auth/sign-in",
   signUp: "/auth/sign-up",
   signUpSuccess: "/auth/sign-up-success",
+  resetPassword: "/auth/reset-password",
   updatePassword: "/auth/update-password",
   recovery: "/auth/recovery",
   confirmEmailSuccess: "/auth/confirm-email-success",
@@ -36,6 +37,13 @@ export const AuthRouteQueryParam = {
   accessToken: "access_token",
   accessTokenLegacy: "accessToken",
   token: "token",
+  tokenHash: "token_hash",
+  type: "type",
+} as const;
+
+export const AuthRouteQueryParamType = {
+  email: "email",
+  recovery: "recovery",
 } as const;
 
 export const getTransactionsRouteWithAccountId = (

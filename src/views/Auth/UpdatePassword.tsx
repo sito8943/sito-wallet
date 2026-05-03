@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./styles.css";
 
 // @sito/dashboard-app
@@ -18,12 +18,14 @@ import {
 import { useManager } from "providers";
 
 // lib
-import { AppRoutes } from "lib";
+import { AppRoutes, AuthRouteQueryParam, AuthRouteQueryParamType } from "lib";
 
 import type { UpdatePasswordFormType } from "./types";
 import {
+  extractAuthQueryParamFromLocation,
   extractRecoveryAccessTokenFromLocation,
   getTranslatedStatusMessage,
+  hasAuthErrorParamsInLocation,
 } from "./utils";
 
 /**
@@ -32,6 +34,7 @@ import {
  */
 export function UpdatePassword() {
   const { t } = useTranslation();
+  const location = useLocation();
   const navigate = useNavigate();
   const manager = useManager();
   const { showErrorNotification, showSuccessNotification } = useNotification();
@@ -46,14 +49,38 @@ export function UpdatePassword() {
     },
   });
 
-  const accessToken = useMemo(
-    () =>
-      extractRecoveryAccessTokenFromLocation(
-        window.location.hash,
-        window.location.search,
-      ),
-    [],
+  const hasAuthErrorParams = useMemo(
+    () => hasAuthErrorParamsInLocation(location.hash, location.search),
+    [location.hash, location.search],
   );
+
+  const accessToken = useMemo(
+    () => extractRecoveryAccessTokenFromLocation(location.hash, location.search),
+    [location.hash, location.search],
+  );
+
+  const recoveryToken = useMemo(() => {
+    const tokenHash = extractAuthQueryParamFromLocation(
+      location.hash,
+      location.search,
+      AuthRouteQueryParam.tokenHash,
+    );
+    const tokenType = extractAuthQueryParamFromLocation(
+      location.hash,
+      location.search,
+      AuthRouteQueryParam.type,
+    );
+    const normalizedTokenType = tokenType?.toLowerCase() ?? null;
+
+    if (!tokenHash || normalizedTokenType !== AuthRouteQueryParamType.recovery) {
+      return null;
+    }
+
+    return {
+      tokenHash,
+      tokenType: normalizedTokenType,
+    };
+  }, [location.hash, location.search]);
 
   const onSubmit = async (data: UpdatePasswordFormType) => {
     if (data.password !== data.rPassword) {
@@ -64,7 +91,27 @@ export function UpdatePassword() {
       return;
     }
 
-    if (!accessToken) {
+    if (hasAuthErrorParams) {
+      showErrorNotification({
+        message: t("_pages:auth.updatePassword.invalidToken"),
+      });
+      return;
+    }
+
+    const resetPayload = recoveryToken
+      ? {
+          tokenHash: recoveryToken.tokenHash,
+          type: recoveryToken.tokenType,
+          newPassword: data.password,
+        }
+      : accessToken
+        ? {
+            accessToken,
+            newPassword: data.password,
+          }
+        : null;
+
+    if (!resetPayload) {
       showErrorNotification({
         message: t("_pages:auth.updatePassword.invalidToken"),
       });
@@ -73,10 +120,7 @@ export function UpdatePassword() {
 
     setSaving(true);
     try {
-      await manager.AuthApi.resetPassword({
-        accessToken,
-        newPassword: data.password,
-      });
+      await manager.AuthApi.resetPassword(resetPayload);
       showSuccessNotification({
         message: t("_pages:auth.updatePassword.sent"),
       });

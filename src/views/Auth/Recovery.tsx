@@ -47,7 +47,7 @@ export function Recovery() {
 
   const isLoading = loadingAction !== null;
 
-  const forgotRedirectTo = buildAuthRedirectUrl(AppRoutes.updatePassword);
+  const forgotRedirectTo = buildAuthRedirectUrl(AppRoutes.resetPassword);
   const confirmRedirectTo = buildAuthRedirectUrl(AppRoutes.confirmEmailSuccess);
 
   const onForgotPassword = async ({ email }: RecoveryFormType) => {

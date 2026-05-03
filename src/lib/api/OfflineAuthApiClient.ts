@@ -2,6 +2,7 @@ import { type HttpError } from "@sito/dashboard-app";
 
 import type {
   AcceptedResponseDto,
+  ConfirmEmailDto,
   ForgotPasswordDto,
   ResendConfirmEmailDto,
   ResetPasswordDto,
@@ -28,6 +29,10 @@ export class OfflineAuthApiClient {
   async resendConfirmEmail(
     _data: ResendConfirmEmailDto,
   ): Promise<AcceptedResponseDto> {
+    throw createOfflineAuthError();
+  }
+
+  async confirmEmail(_data: ConfirmEmailDto): Promise<void> {
     throw createOfflineAuthError();
   }
 }

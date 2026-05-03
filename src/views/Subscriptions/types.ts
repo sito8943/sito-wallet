@@ -44,7 +44,7 @@ export interface SubscriptionFormPropsType {
   control: Control<SubscriptionFormType>;
   isLoading?: boolean;
   setValue: UseFormSetValue<SubscriptionFormType>;
-  mode: FormMode;
+  mode?: FormMode;
 }
 
 export interface SubscriptionBillingLogFormType extends FieldValues {

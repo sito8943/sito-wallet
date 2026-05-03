@@ -139,6 +139,7 @@ export const Routes = () => {
           <Route path={AppRoutes.signIn} element={<SignIn />} />
           <Route path={AppRoutes.signUp} element={<SignUp />} />
           <Route path={AppRoutes.signUpSuccess} element={<SignUpSuccess />} />
+          <Route path={AppRoutes.resetPassword} element={<UpdatePassword />} />
           <Route path={AppRoutes.updatePassword} element={<UpdatePassword />} />
           <Route path={AppRoutes.recovery} element={<Recovery />} />
           <Route

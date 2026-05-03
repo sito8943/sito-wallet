@@ -169,7 +169,7 @@ export function SubscriptionEditor() {
           )}
         />
       ) : (
-        <div className="w-full max-w-5xl self-center rounded-2xl base-border p-3 sm:p-6">
+        <div className="w-full max-w-5xl self-center rounded-2xl py-3">
           <form
             className="flex flex-col gap-4"
             onSubmit={(event) => {

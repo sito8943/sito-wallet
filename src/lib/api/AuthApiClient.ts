@@ -12,14 +12,35 @@ export type AcceptedResponseDto = {
   message: string;
 };
 
-export type ResetPasswordDto = {
+type ResetPasswordByAccessTokenDto = {
   accessToken: string;
   newPassword: string;
 };
 
+type ResetPasswordByTokenHashDto = {
+  tokenHash: string;
+  type: string;
+  newPassword: string;
+};
+
+export type ResetPasswordDto =
+  | ResetPasswordByAccessTokenDto
+  | ResetPasswordByTokenHashDto;
+
 export type ResendConfirmEmailDto = {
   email: string;
   redirectTo: string;
+};
+
+export type ConfirmEmailDto = {
+  tokenHash: string;
+  type: string;
+};
+
+const hasHttpStatus = (error: unknown, status: number): boolean => {
+  if (typeof error !== "object" || error === null) return false;
+  if (!("status" in error)) return false;
+  return error.status === status;
 };
 
 /**
@@ -58,5 +79,19 @@ export default class AuthApiClient {
       Methods.POST,
       data,
     );
+  }
+
+  async confirmEmail(data: ConfirmEmailDto): Promise<void> {
+    try {
+      await this.api.doQuery<null>("auth/email/confirm", Methods.POST, data);
+    } catch (error) {
+      if (!hasHttpStatus(error, 404)) throw error;
+
+      await this.api.doQuery<null>(
+        "auth/email/confirm/verify",
+        Methods.POST,
+        data,
+      );
+    }
   }
 }

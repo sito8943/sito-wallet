@@ -130,7 +130,7 @@ Request:
 ```json
 {
   "email": "user@mail.com",
-  "redirectTo": "https://tu-frontend.com/reset-password"
+  "redirectTo": "https://tu-frontend.com/auth/reset-password"
 }
 ```
 
@@ -145,7 +145,16 @@ Response `202` (siempre misma forma):
 ### 7) Reset Password
 `POST /auth/password/reset`
 
-Request:
+Request canonico (nuevo flujo):
+```json
+{
+  "tokenHash": "<supabase-token-hash>",
+  "type": "recovery",
+  "newPassword": "newStrongPassword123"
+}
+```
+
+Compatibilidad temporal (flujo legacy, opcional mientras se migra):
 ```json
 {
   "accessToken": "<supabase-recovery-access-token>",
@@ -157,9 +166,20 @@ Response:
 - `204 No Content`
 
 Errores comunes:
-- `400` request invalido / contrasena corta / bridge desactivado
-- `401` token de recovery invalido
+- `400` request invalido / `newPassword` invalido / `tokenHash` vacio / `type` no soportado
+- `401` token de recovery invalido o expirado
 - `404` usuario no existe localmente
+- `503` bridge de Supabase no disponible
+
+Contrato esperado del backend:
+1. Endpoint publico (sin `Authorization`) para consumir callback de recovery.
+2. Validar `newPassword` requerido y politicas de password.
+3. Soportar como payload canonico `tokenHash` + `type`.
+4. Normalizar `type` a lowercase y permitir `recovery`.
+5. Verificar token contra Supabase bridge (equivalente a `verifyOtp` con `token_hash` + `type`).
+6. Compatibilidad temporal: aceptar `accessToken` mientras existan enlaces legacy en circulacion.
+7. Si el token verifica y usuario existe localmente, actualizar password y devolver `204`.
+8. Si la verificacion falla, devolver `401` (no `500`).
 
 ### 8) Resend Confirm Email
 `POST /auth/email/confirm/resend`
@@ -180,12 +200,53 @@ Response `202`:
 }
 ```
 
+### 9) Confirm Email (token_hash callback)
+`POST /auth/email/confirm`
+
+Request:
+```json
+{
+  "tokenHash": "<supabase-token-hash>",
+  "type": "email"
+}
+```
+
+Response:
+- `204 No Content`
+
+Errores comunes:
+- `400` payload invalido (`tokenHash` vacio o `type` no soportado)
+- `401` token invalido/expirado
+- `503` bridge de Supabase no disponible
+
+Contrato esperado del backend:
+1. Endpoint publico (sin `Authorization`) para consumir el callback de email.
+2. Validar `tokenHash` requerido y `type` requerido.
+3. Normalizar `type` a lowercase y permitir `email` (al menos en este flujo).
+4. Verificar el token contra Supabase bridge (equivalente a `verifyOtp` con `token_hash` + `type`).
+5. Si verifica correctamente, devolver `204`.
+6. Si el email ya estaba confirmado, devolver `204` (idempotente) para evitar falsos errores de UX.
+
+Compatibilidad temporal:
+- El frontend de `wallet` intenta `POST /auth/email/confirm`.
+- Si recibe `404`, intenta `POST /auth/email/confirm/verify`.
+- Recomendado: exponer `POST /auth/email/confirm` como endpoint canonico y retirar el fallback cuando backend este desplegado en todos los entornos.
+
 ## Flujo recomendado de reset en frontend
 1. Pantalla "Forgot password" llama `POST /auth/password/forgot`.
 2. Usuario abre link del email.
-3. Frontend obtiene `access_token` del link de recuperacion.
-4. Frontend envia `accessToken` + `newPassword` a `POST /auth/password/reset`.
-5. Si `204`, redirigir a login.
+3. Plantilla de Supabase para recovery debe redirigir a:
+   `/auth/reset-password?token_hash={{ .TokenHash }}&type=recovery`
+4. Frontend lee `token_hash`/`type` y envia `tokenHash` + `type` + `newPassword` a `POST /auth/password/reset`.
+5. Compatibilidad temporal: si llega enlace legacy con `access_token`, frontend puede enviar `accessToken` + `newPassword`.
+6. Si `204`, redirigir a login.
+
+## Flujo recomendado de confirmacion de email (sign-up)
+1. Frontend envia `POST /auth/email/confirm/resend` con `redirectTo` apuntando a `https://<frontend>/auth/confirm-email-success`.
+2. Plantilla de Supabase redirige con query params: `/auth/confirm-email-success?token_hash={{ .TokenHash }}&type=email`.
+3. Frontend lee `token_hash`/`type` y llama `POST /auth/email/confirm`.
+4. Si backend responde `204`, frontend muestra `ConfirmEmailSuccess`.
+5. Si backend responde error, frontend redirige a `ConfirmEmailError`.
 
 ## Notas de integracion
 - El backend puede devolver errores como texto simple (`message`), no siempre JSON estructurado.
