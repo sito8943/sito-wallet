@@ -221,12 +221,8 @@ export function SubscriptionEditor() {
               onSubmit={onSubmit}
               isLoading={isLoading}
               onCancel={() => navigate(AppRoutes.subscriptions)}
-              submitLabel={
-                isEditMode
-                  ? t("_pages:common.actions.edit.text")
-                  : t("_pages:common.actions.add.text")
-              }
-              cancelLabel={t("_pages:subscriptions.actions.cancel")}
+              submitLabel={t("_accessibility:buttons.save")}
+              cancelLabel={t("_accessibility:buttons.cancel")}
               submitDisabled={isLoading}
               cancelDisabled={isLoading}
               renderActions={({ buttonProps, cancelLabel, onCancel, submitLabel }) => (
@@ -264,7 +260,6 @@ export function SubscriptionEditor() {
             <SubscriptionActivitySidebar
               startsAt={subscriptionQuery.data?.startsAt}
               lastPaidAt={subscriptionQuery.data?.lastPaidAt}
-              nextRenewalAt={subscriptionQuery.data?.nextRenewalAt}
               billingLogs={subscriptionBillingLogsQuery.data?.items ?? []}
               billingLogsLoading={subscriptionBillingLogsQuery.isLoading}
               billingLogsError={subscriptionBillingLogsQuery.error}

@@ -225,6 +225,9 @@
     "lastPaidAt": {
       "label": "Last paid at"
     },
+    "nextRenewalAt": {
+      "label": "Next renewal"
+    },
     "status": {
       "label": "Status",
       "required": "Status is required",

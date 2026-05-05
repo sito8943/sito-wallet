@@ -220,6 +220,22 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
         {mode !== FormMode.Add && (
           <Controller
             control={control}
+            name="nextRenewalAt"
+            disabled={formDisabled}
+            render={({ field: { value, ...rest } }) => (
+              <TextInput
+                type="datetime-local"
+                value={value ?? ""}
+                label={t("_entities:subscription.nextRenewalAt.label")}
+                autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.nextRenewalAt.label")}`}
+                {...rest}
+              />
+            )}
+          />
+        )}
+        {mode !== FormMode.Add && (
+          <Controller
+            control={control}
             rules={{
               required: t("_entities:subscription.status.required"),
             }}

@@ -226,6 +226,9 @@
     "lastPaidAt": {
       "label": "Último pago"
     },
+    "nextRenewalAt": {
+      "label": "Próxima renovación"
+    },
     "status": {
       "label": "Estado",
       "required": "El estado es requerido",

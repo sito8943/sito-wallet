@@ -34,6 +34,14 @@ const parseOptionalFiniteNumber = (value: unknown): number | null => {
   return Number.isFinite(parsed) ? parsed : null;
 };
 
+const parseOptionalDateTimeLocal = (value: unknown): string | null => {
+  if (value === null || value === undefined) return null;
+  if (typeof value !== "string") return null;
+
+  const normalized = value.trim();
+  return normalized.length > 0 ? normalized : null;
+};
+
 const isSubscriptionBillingUnit = (
   value: unknown,
 ): value is SubscriptionBillingUnit => {
@@ -147,6 +155,7 @@ export const subscriptionDtoToForm = (
     autoCreateTransaction: !!dto.autoCreateTransaction,
     categories: parseSubscriptionCategories(dto),
     notificationDaysBefore: notificationDaysBefore,
+    nextRenewalAt: toDateTimeLocal(dto.nextRenewalAt),
   };
 };
 
@@ -180,11 +189,14 @@ export const subscriptionFormToUpdateDto = (
   form: SubscriptionFormType,
 ): UpdateSubscriptionDto => {
   const payload = subscriptionFormToCreateDto(form);
+  const nextRenewalAt = parseOptionalDateTimeLocal(form.nextRenewalAt);
+
   return {
     id: form.id,
     ...payload,
     status: toSubscriptionStatus(form.status),
     accountId: form.account?.id ?? 0,
+    nextRenewalAt,
   };
 };
 

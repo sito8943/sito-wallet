@@ -11,7 +11,6 @@ export function SubscriptionActivitySidebar(
   const {
     startsAt,
     lastPaidAt,
-    nextRenewalAt,
     billingLogs,
     billingLogsLoading,
     billingLogsError,
@@ -28,9 +27,6 @@ export function SubscriptionActivitySidebar(
 
   const startsAtLabel = formatDateTime(startsAt);
   const lastPaidAtLabel = formatDateTime(lastPaidAt);
-  const nextRenewalAtLabel = nextRenewalAt
-    ? formatDateTime(nextRenewalAt)
-    : t("_pages:subscriptions.labels.noRenewal");
 
   const billingLogsErrorMessage =
     billingLogsError instanceof Error
@@ -53,17 +49,6 @@ export function SubscriptionActivitySidebar(
             <p className="subscription-activity-meta">
               {t("_entities:subscription.lastPaidAt.label")}: {lastPaidAtLabel}
             </p>
-          </li>
-        </ul>
-      </section>
-
-      <section className="subscription-activity-section">
-        <h3 className="subscription-activity-section-title">
-          {t("_pages:subscriptions.labels.nextRenewal")}
-        </h3>
-        <ul className="subscription-activity-list">
-          <li className="subscription-activity-item">
-            <p className="subscription-activity-meta">{nextRenewalAtLabel}</p>
           </li>
         </ul>
       </section>
