@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useNavbar, ActionsDropdown, Actions } from "@sito/dashboard-app";
-import type { BaseDto } from "@sito/dashboard";
+import type { BaseDto } from "@sito/dashboard-app";
 import type { ActionsDropdownAction, ActionsDropdownActions } from "./types";
 
 const MOBILE_NAVBAR_MEDIA_QUERY = "(max-width: 639px)";
@@ -68,7 +68,7 @@ export function useMobileNavbar<TRow extends BaseDto>(
     const proxiedActions = actionsRef.current.map((action, index) => {
       const proxiedAction: ActionsDropdownAction<TRow> = {
         ...action,
-        onClick: (entity) => {
+        onClick: (entity: TRow) => {
           actionsRef.current[index]?.onClick(entity);
         },
       };

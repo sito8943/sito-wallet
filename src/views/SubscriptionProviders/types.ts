@@ -25,7 +25,6 @@ export interface SubscriptionProviderFormType extends FieldValues {
   photo: string;
   file: File | null;
   removePhoto: boolean;
-  enabled: boolean;
 }
 
 export type SubscriptionProviderFormPropsType =

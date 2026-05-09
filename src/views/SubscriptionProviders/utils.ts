@@ -1,6 +1,4 @@
-import {
-  SubscriptionProviderDto,
-} from "lib";
+import { SubscriptionProviderDto } from "lib";
 
 import {
   CreateSubscriptionProviderMutationDto,
@@ -23,7 +21,6 @@ export const subscriptionProviderDtoToForm = (
   photo: dto.photo ?? "",
   file: null,
   removePhoto: false,
-  enabled: dto.enabled,
 });
 
 export const subscriptionProviderFormToCreateDto = (
@@ -34,7 +31,6 @@ export const subscriptionProviderFormToCreateDto = (
       name: form.name.trim(),
       description: toNullableValue(form.description),
       website: toNullableValue(form.website),
-      enabled: !!form.enabled,
     },
     file: form.file ?? null,
   };

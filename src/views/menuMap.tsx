@@ -1,3 +1,9 @@
+// @sito/dashboard-app
+import {
+  filterMenuByFeatureFlags,
+  normalizeMenuDividers,
+} from "@sito/dashboard-app";
+
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { t } from "i18next";
@@ -133,24 +139,12 @@ export const getFeatureFilteredMenuMap = (
   language?: string,
 ): MenuItemType[] => {
   void language;
-  const menuMap = getMenuMap();
-  const filtered = menuMap.filter((item) => {
-    if (!item.page) return true;
 
-    const dependency = menuFeatureDependencies[item.page];
-    if (!dependency) return true;
+  const filtered = filterMenuByFeatureFlags(
+    getMenuMap(),
+    isFeatureEnabled,
+    menuFeatureDependencies,
+  );
 
-    return isFeatureEnabled(dependency);
-  });
-
-  return filtered.filter((item, index, items) => {
-    if (item.type !== "divider") return true;
-
-    const previous = items[index - 1];
-    const next = items[index + 1];
-
-    if (!previous || !next) return false;
-
-    return previous.type !== "divider" && next.type !== "divider";
-  });
+  return normalizeMenuDividers(filtered);
 };

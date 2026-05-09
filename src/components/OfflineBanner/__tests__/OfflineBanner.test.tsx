@@ -13,6 +13,23 @@ vi.mock("hooks", () => ({
   useOnlineStatus: () => mockUseOnlineStatus(),
 }));
 
+vi.mock("@sito/dashboard-app", () => ({
+  OfflineBanner: ({
+    isOnline,
+    message,
+    className,
+  }: {
+    isOnline?: boolean;
+    message?: string;
+    className?: string;
+  }) =>
+    isOnline ? null : (
+      <div role="status" className={className}>
+        {message}
+      </div>
+    ),
+}));
+
 import { OfflineBanner } from "../OfflineBanner";
 
 describe("OfflineBanner", () => {

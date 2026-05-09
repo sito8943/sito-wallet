@@ -1,4 +1,4 @@
-import type { ActionPropsType, BaseDto } from "@sito/dashboard";
+import type { ActionPropsType, BaseDto } from "@sito/dashboard-app";
 
 export type ActionsDropdownActions<TRow extends BaseDto> =
   ActionPropsType<TRow>[];

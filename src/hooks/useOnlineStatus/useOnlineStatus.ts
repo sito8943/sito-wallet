@@ -1,7 +1,39 @@
-import { probeServerReachability } from "./probe";
-import { setServerReachable } from "./store";
-import type { OnlineStatusSnapshot } from "./types";
-import { useOnlineStatusSnapshot } from "./useOnlineStatusSnapshot";
+import {
+  configureOnlineStatus,
+  probeServerReachability as probeServerReachabilityFromLibrary,
+  setServerReachable,
+  useOnlineStatusSnapshot,
+  type OnlineStatusSnapshot,
+} from "@sito/dashboard-app";
+
+import { config } from "../../config";
+
+const getServerStatusUrl = (): string | null => {
+  if (!config.apiUrl) return null;
+  return `${config.apiUrl.replace(/\/$/, "")}${config.server.statusPath}`;
+};
+
+const getProbeHeaders = (): HeadersInit => {
+  if (typeof window === "undefined") return {};
+
+  const token = window.localStorage.getItem(config.auth.user);
+  if (!token) return {};
+
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+};
+
+configureOnlineStatus({
+  checkIntervalMs: config.server.probeInterval,
+  probeUrl: getServerStatusUrl(),
+  timeoutMs: 5000,
+  probeMethod: "GET",
+  probeRequestInit: () => ({
+    headers: getProbeHeaders(),
+  }),
+  resolveIsServerReachable: (response) => response.status < 500,
+});
 
 /**
  * Returns true when the browser has network connectivity.
@@ -11,6 +43,9 @@ export function useOnlineStatus(): boolean {
   return useOnlineStatusSnapshot().isOnline;
 }
 
-export { useOnlineStatusSnapshot };
-export { probeServerReachability, setServerReachable };
+export const probeServerReachability = () => {
+  return probeServerReachabilityFromLibrary();
+};
+
+export { setServerReachable, useOnlineStatusSnapshot };
 export type { OnlineStatusSnapshot };

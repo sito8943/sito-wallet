@@ -1,5 +1,5 @@
 import { BaseEntityDto } from "@sito/dashboard-app";
-import { Table, useTableOptions } from "@sito/dashboard";
+import { Table, useTableOptions } from "@sito/dashboard-app";
 
 // types
 import { WalletTablePropsType } from "./types";

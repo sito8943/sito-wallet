@@ -25,7 +25,7 @@ const isPublicSessionAccount = (
   );
 };
 
-export const persistPublicSessionAccount = (account: SessionDto): void => {
+export const persistPublicSessionAccount = (account: Partial<SessionDto>): void => {
   if (!account.id || !account.token) return;
   if (!isNonEmptyString(account.username) || !isNonEmptyString(account.email)) {
     return;

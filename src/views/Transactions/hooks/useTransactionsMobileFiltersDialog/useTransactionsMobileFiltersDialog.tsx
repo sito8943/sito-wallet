@@ -21,15 +21,12 @@ import {
 } from "lib";
 
 // types
-import type {
-  TransactionsMobileFiltersDialogPropsType,
-  TransactionsMobileFiltersFormType,
-} from "../types";
 import {
   DEFAULT_SORTING_BY,
   DEFAULT_SORTING_ORDER,
 } from "./constants";
 import { parseSortOrder } from "./utils";
+import { TransactionsMobileFiltersDialogPropsType, TransactionsMobileFiltersFormType } from "views/Transactions/types";
 
 export function useTransactionsMobileFiltersDialog(
   categories: CommonTransactionCategoryDto[],
