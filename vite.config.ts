@@ -5,8 +5,25 @@ import path from "path";
 import mkcert from "vite-plugin-mkcert";
 
 const projectRoot = path.resolve(__dirname);
+const linkedDashboardAppRoot = path.resolve(
+  projectRoot,
+  "../../lib/-sito-dashboard-app",
+);
+const appReactRoot = path.resolve(projectRoot, "node_modules/react");
+const appReactDomRoot = path.resolve(projectRoot, "node_modules/react-dom");
 
-function shouldBlockFsRequest(requestPath: string): boolean {
+function isWithinPath(targetPath: string, parentPath: string): boolean {
+  const relativePath = path.relative(parentPath, targetPath);
+  return (
+    relativePath === "" ||
+    (!relativePath.startsWith("..") && !path.isAbsolute(relativePath))
+  );
+}
+
+function shouldBlockFsRequest(
+  requestPath: string,
+  externalAllowedRoots: string[] = [],
+): boolean {
   const normalizedRequestPath = requestPath
     .split(path.sep)
     .join("/")
@@ -26,10 +43,16 @@ function shouldBlockFsRequest(requestPath: string): boolean {
   const isOutsideProject =
     relativeToRoot.startsWith("..") || path.isAbsolute(relativeToRoot);
 
-  return isOutsideProject;
+  if (!isOutsideProject) return false;
+
+  const isAllowedExternalPath = externalAllowedRoots.some((allowedRoot) =>
+    isWithinPath(requestPath, allowedRoot),
+  );
+
+  return !isAllowedExternalPath;
 }
 
-function rawFsDenyGuard() {
+function rawFsDenyGuard(externalAllowedRoots: string[] = []) {
   return {
     name: "raw-fs-deny-guard",
     configureServer(server: {
@@ -93,7 +116,7 @@ function rawFsDenyGuard() {
         if (
           !hasPathTraversal &&
           !hasBackslashInPath &&
-          !shouldBlockFsRequest(resolvedFsPath)
+          !shouldBlockFsRequest(resolvedFsPath, externalAllowedRoots)
         ) {
           return next();
         }
@@ -107,58 +130,86 @@ function rawFsDenyGuard() {
 }
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(), tailwindcss(), mkcert(), rawFsDenyGuard()],
-  server: {
-    fs: {
-      strict: true,
-      deny: [".env", ".env.*", "*.pem", "*.crt", "*.key", ".git/**"],
+export default defineConfig(({ command, mode }) => {
+  const externalAllowedRoots =
+    command === "serve" && mode === "development"
+      ? [linkedDashboardAppRoot]
+      : [];
+  const fsAllowRoots = [projectRoot, ...externalAllowedRoots];
+
+  return {
+    plugins: [
+      react(),
+      tailwindcss(),
+      mkcert(),
+      rawFsDenyGuard(externalAllowedRoots),
+    ],
+    server: {
+      fs: {
+        strict: true,
+        allow: fsAllowRoots,
+        deny: [".env", ".env.*", "*.pem", "*.crt", "*.key", ".git/**"],
+      },
     },
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: (id) => {
-          if (!id.includes("node_modules")) return;
-          if (
-            id.includes("/react/") ||
-            id.includes("/react-dom/") ||
-            id.includes("/react-router-dom/")
-          ) {
-            return "vendor-react";
-          }
-          if (
-            id.includes("/i18next/") ||
-            id.includes("/react-i18next/") ||
-            id.includes("/i18next-browser-languagedetector/")
-          ) {
-            return "vendor-i18n";
-          }
-          if (id.includes("/@tanstack/react-query/")) return "vendor-query";
-          if (
-            id.includes("/@sito/dashboard-app/") ||
-            id.includes("/@sito/dashboard/")
-          ) {
-            return "vendor-sito";
-          }
-          if (id.includes("/@fortawesome/")) return "vendor-icons";
-          if (id.includes("/react-tooltip/")) return "vendor-tooltip";
-          return;
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: (id) => {
+            if (!id.includes("node_modules")) return;
+            if (
+              id.includes("/react/") ||
+              id.includes("/react-dom/") ||
+              id.includes("/react-router-dom/")
+            ) {
+              return "vendor-react";
+            }
+            if (
+              id.includes("/i18next/") ||
+              id.includes("/react-i18next/") ||
+              id.includes("/i18next-browser-languagedetector/")
+            ) {
+              return "vendor-i18n";
+            }
+            if (id.includes("/@tanstack/react-query/")) return "vendor-query";
+            if (
+              id.includes("/@sito/dashboard-app/") ||
+              id.includes("/@sito/dashboard/")
+            ) {
+              return "vendor-sito";
+            }
+            if (id.includes("/@fortawesome/")) return "vendor-icons";
+            if (id.includes("/react-tooltip/")) return "vendor-tooltip";
+            return;
+          },
         },
       },
     },
-  },
-  resolve: {
-    alias: {
-      assets: path.resolve(__dirname, "./src/assets"),
-      components: path.resolve(__dirname, "./src/components"),
-      lib: path.resolve(__dirname, "./src/lib"),
-      hooks: path.resolve(__dirname, "./src/hooks"),
-      layouts: path.resolve(__dirname, "./src/layouts"),
-      views: path.resolve(__dirname, "./src/views"),
-      providers: path.resolve(__dirname, "./src/providers"),
-      db: path.resolve(__dirname, "./src/db"),
-      lang: path.resolve(__dirname, "./src/lang"),
+    resolve: {
+      dedupe: ["react", "react-dom"],
+      alias: [
+        { find: /^react$/, replacement: appReactRoot },
+        { find: /^react\/(.*)$/, replacement: `${appReactRoot}/$1` },
+        { find: /^react-dom$/, replacement: appReactDomRoot },
+        { find: /^react-dom\/(.*)$/, replacement: `${appReactDomRoot}/$1` },
+        { find: "assets", replacement: path.resolve(__dirname, "./src/assets") },
+        {
+          find: "components",
+          replacement: path.resolve(__dirname, "./src/components"),
+        },
+        { find: "lib", replacement: path.resolve(__dirname, "./src/lib") },
+        { find: "hooks", replacement: path.resolve(__dirname, "./src/hooks") },
+        {
+          find: "layouts",
+          replacement: path.resolve(__dirname, "./src/layouts"),
+        },
+        { find: "views", replacement: path.resolve(__dirname, "./src/views") },
+        {
+          find: "providers",
+          replacement: path.resolve(__dirname, "./src/providers"),
+        },
+        { find: "db", replacement: path.resolve(__dirname, "./src/db") },
+        { find: "lang", replacement: path.resolve(__dirname, "./src/lang") },
+      ],
     },
-  },
+  };
 });
