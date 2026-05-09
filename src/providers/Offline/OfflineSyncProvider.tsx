@@ -52,6 +52,7 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
 
     try {
       const isServerReachable = await probeServerReachability();
+
       if (isServerReachable) {
         setServerReachable(true);
         return;
@@ -84,7 +85,6 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
     if (!isBrowserOnline || !account?.id || isInGuestMode()) {
       shouldNotifySocketDisconnectRef.current = false;
       socketDisconnectedNotifiedRef.current = false;
-      setServerReachable(true);
       syncSocketService.disconnect();
       return;
     }

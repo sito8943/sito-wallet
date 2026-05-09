@@ -1,5 +1,4 @@
 import {
-  configureOnlineStatus,
   probeServerReachability as probeServerReachabilityFromLibrary,
   setServerReachable,
   useOnlineStatusSnapshot,
@@ -24,27 +23,27 @@ const getProbeHeaders = (): HeadersInit => {
   };
 };
 
-configureOnlineStatus({
+const onlineStatusOptions = {
   checkIntervalMs: config.server.probeInterval,
   probeUrl: getServerStatusUrl(),
   timeoutMs: 5000,
-  probeMethod: "GET",
+  probeMethod: "GET" as const,
   probeRequestInit: () => ({
     headers: getProbeHeaders(),
   }),
   resolveIsServerReachable: (response) => response.status < 500,
-});
+};
 
 /**
  * Returns true when the browser has network connectivity.
  * Also reflects when the backend is unavailable, even if the browser is online.
  */
 export function useOnlineStatus(): boolean {
-  return useOnlineStatusSnapshot().isOnline;
+  return useOnlineStatusSnapshot(onlineStatusOptions).isOnline;
 }
 
 export const probeServerReachability = () => {
-  return probeServerReachabilityFromLibrary();
+  return probeServerReachabilityFromLibrary(onlineStatusOptions);
 };
 
 export { setServerReachable, useOnlineStatusSnapshot };
