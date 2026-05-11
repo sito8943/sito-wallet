@@ -17,7 +17,7 @@ import { Manager, OfflineManager } from "lib";
 import { AuthAccountPersistenceProvider } from "./AuthAccountPersistenceProvider";
 import { OfflineSyncProvider } from "./Offline/OfflineSyncProvider";
 import { FeatureFlagsProvider } from "./FeatureFlags/FeatureFlagsProvider";
-import { OfflineManagerProvider } from "./OfflineManagerProvider";
+import { OfflineManagerContext } from "./Offline/OfflineManagerContext";
 import { navigateWithWindow } from "./navigation";
 
 // config
@@ -34,8 +34,11 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
 
   const appWrapperProvider = useMemo(
     () => ({
-      provider: OfflineManagerProvider,
-      props: { offlineManager },
+      provider: ({ children: providerChildren }: BasicProviderPropTypes) => (
+        <OfflineManagerContext.Provider value={offlineManager}>
+          {providerChildren}
+        </OfflineManagerContext.Provider>
+      ),
     }),
     [offlineManager],
   );
