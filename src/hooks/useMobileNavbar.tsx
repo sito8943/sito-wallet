@@ -2,23 +2,8 @@ import { useEffect, useRef } from "react";
 import { useNavbar, ActionsDropdown, Actions } from "@sito/dashboard-app";
 import type { BaseDto } from "@sito/dashboard-app";
 import type { ActionsDropdownAction, ActionsDropdownActions } from "./types";
-
-const MOBILE_NAVBAR_MEDIA_QUERY = "(max-width: 639px)";
-
-const getActionsSignature = <TRow extends BaseDto>(
-  actions: ActionsDropdownActions<TRow> | undefined,
-) => {
-  if (!actions?.length) return "";
-
-  return actions
-    .map(
-      (action) =>
-        `${action.id}|${action.tooltip}|${action.disabled ? "1" : "0"}|${
-          action.hidden ? "1" : "0"
-        }`,
-    )
-    .join(";");
-};
+import { MOBILE_NAVBAR_MEDIA_QUERY } from "./mobileNavbar.constants";
+import { getActionsSignature } from "./mobileNavbar.utils";
 
 export function useMobileNavbar<TRow extends BaseDto>(
   title: string,
@@ -68,7 +53,7 @@ export function useMobileNavbar<TRow extends BaseDto>(
     const proxiedActions = actionsRef.current.map((action, index) => {
       const proxiedAction: ActionsDropdownAction<TRow> = {
         ...action,
-        onClick: (entity: TRow) => {
+        onClick: (entity: TRow | undefined) => {
           actionsRef.current[index]?.onClick(entity);
         },
       };

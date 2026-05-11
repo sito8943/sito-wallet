@@ -12,22 +12,13 @@ import {
 
 import {
   emptyAddSubscriptionProviderForm,
+  getProviderId,
   subscriptionProviderFormToCreateDto,
 } from "../utils";
 import {
   CreateSubscriptionProviderMutationDto,
   SubscriptionProviderFormType,
 } from "../types";
-
-const getProviderId = (value: unknown): number | null => {
-  if (typeof value === "number" && Number.isFinite(value)) return value;
-  if (typeof value === "object" && value !== null) {
-    const maybeValue = value as { id?: unknown };
-    const parsedId = Number(maybeValue.id);
-    if (Number.isFinite(parsedId)) return parsedId;
-  }
-  return null;
-};
 
 export function useAddSubscriptionProviderDialog() {
   const { t } = useTranslation();

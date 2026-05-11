@@ -9,7 +9,9 @@ export const useOfflineManager = (): OfflineManager => {
   const context = useContext(OfflineManagerContext);
 
   if (!context) {
-    throw new Error("useOfflineManager must be used within SWManagerProvider");
+    throw new Error(
+      "useOfflineManager must be used within SitoWalletProvider or SitoWalletProvider",
+    );
   }
 
   return context;

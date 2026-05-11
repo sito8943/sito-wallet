@@ -18,6 +18,7 @@ import { DashboardsQueryKeys } from "./queryKeys/dashboardsQueryKeys";
 
 export { DashboardsQueryKeys };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useDashboardsList(
   props: UseFetchPropsType<DashboardDto, FilterDashboardDto>,
 ): UseQueryResult<QueryResult<DashboardDto>> {

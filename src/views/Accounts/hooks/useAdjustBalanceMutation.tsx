@@ -17,16 +17,10 @@ import { AccountDto, AdjustBalanceDto, TransactionDto } from "lib";
 
 // types
 import { AdjustBalanceFormType } from "../types";
-
-const defaultValues: AdjustBalanceFormType = {
-  newBalance: "",
-  description: "",
-};
-
-const formToDto = (data: AdjustBalanceFormType): AdjustBalanceDto => ({
-  newBalance: Number(data.newBalance),
-  description: data.description || undefined,
-});
+import {
+  adjustBalanceDefaultValues,
+  adjustBalanceFormToDto,
+} from "./adjustBalanceMutation.utils";
 
 export const useAdjustBalanceMutation = () => {
   const { t } = useTranslation();
@@ -43,8 +37,8 @@ export const useAdjustBalanceMutation = () => {
     TransactionDto,
     AdjustBalanceFormType
   >({
-    formToDto,
-    defaultValues,
+    formToDto: adjustBalanceFormToDto,
+    defaultValues: adjustBalanceDefaultValues,
     mutationFn: (data) =>
       manager.Accounts.adjustBalance(selectedAccount?.id ?? 0, data),
     onSuccessMessage: t("_pages:accounts.actions.adjustBalance.successMessage"),

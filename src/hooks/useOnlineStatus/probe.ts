@@ -1,24 +1,7 @@
-import { config } from "../../config";
-
 import { getSnapshot, setServerReachable } from "./store";
+import { getProbeHeaders, getServerStatusUrl } from "./utils";
 
 let probeInFlight: Promise<boolean> | null = null;
-
-const getServerStatusUrl = () => {
-  if (!config.apiUrl) return null;
-  return `${config.apiUrl.replace(/\/$/, "")}${config.server.statusPath}`;
-};
-
-const getProbeHeaders = (): HeadersInit => {
-  if (typeof window === "undefined") return {};
-
-  const token = window.localStorage.getItem(config.auth.user);
-  if (!token) return {};
-
-  return {
-    Authorization: `Bearer ${token}`,
-  };
-};
 
 export const probeServerReachability = async (): Promise<boolean> => {
   if (!getSnapshot().isBrowserOnline) return false;
