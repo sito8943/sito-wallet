@@ -5,12 +5,16 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
-// types
-import type { BottomNavItemType } from "./types";
+// @sito/dashboard-app
+import { BottomNavItemType } from "@sito/dashboard-app";
+
+// sitemap;
 import { PageId } from "./sitemap";
+
+// lib
 import { AppRoutes } from "lib";
 
-export const bottomMap: BottomNavItemType[] = [
+export const bottomMap: BottomNavItemType<PageId>[] = [
   {
     id: "home",
     page: PageId.Home,

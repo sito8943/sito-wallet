@@ -1,13 +1,14 @@
 import { t } from "i18next";
 
-// types
-import type {
+// @sito/dashboard-app
+import {
+  FeatureEnabledFn,
   NamedViewPageType,
   ViewPageType,
-  IsFeatureEnabled,
-} from "./types";
-import { AppRoutes } from "../lib/routes";
-import type { FeatureFlagKey } from "../lib/api/featureFlags/types";
+} from "@sito/dashboard-app";
+
+// lib
+import { AppRoutes, FeatureFlagKey } from "lib";
 
 export enum PageId {
   Home = "home",
@@ -25,7 +26,7 @@ export enum PageId {
   PrivacyPolicy = "privacy-policy",
 }
 
-export const sitemap: ViewPageType[] = [
+export const sitemap: ViewPageType<PageId>[] = [
   {
     key: PageId.Home,
     path: AppRoutes.home,
@@ -81,8 +82,8 @@ const pageFeatureDependencies: Partial<Record<PageId, FeatureFlagKey>> = {
 };
 
 const isPageFeatureEnabled = (
-  page: ViewPageType,
-  isFeatureEnabled: IsFeatureEnabled,
+  page: ViewPageType<PageId>,
+  isFeatureEnabled: FeatureEnabledFn<FeatureFlagKey>,
 ): boolean => {
   const dependency = pageFeatureDependencies[page.key];
   if (!dependency) return true;
@@ -91,9 +92,9 @@ const isPageFeatureEnabled = (
 };
 
 const filterSitemapByFeatures = (
-  routes: ViewPageType[],
-  isFeatureEnabled: IsFeatureEnabled,
-): ViewPageType[] => {
+  routes: ViewPageType<PageId>[],
+  isFeatureEnabled: FeatureEnabledFn<FeatureFlagKey>,
+): ViewPageType<PageId>[] => {
   return routes
     .filter((route) => isPageFeatureEnabled(route, isFeatureEnabled))
     .map((route) => ({
@@ -105,8 +106,8 @@ const filterSitemapByFeatures = (
 };
 
 export const getFeatureFilteredSitemap = (
-  isFeatureEnabled: IsFeatureEnabled,
-): ViewPageType[] => {
+  isFeatureEnabled: FeatureEnabledFn<FeatureFlagKey>,
+): ViewPageType<PageId>[] => {
   return filterSitemapByFeatures(sitemap, isFeatureEnabled);
 };
 
@@ -119,7 +120,7 @@ export const getFeatureFilteredSitemap = (
  */
 export const findPathInChildren = (
   targetPageId: PageId,
-  basePage: ViewPageType,
+  basePage: ViewPageType<PageId>,
   currentPath = "",
 ) => {
   let path = "";
@@ -177,7 +178,7 @@ export const getPathByKey = (key: PageId): string | undefined => pathMap[key];
  * @returns flatten sitemap
  */
 export const flattenSitemap = (
-  routes: ViewPageType[],
+  routes: ViewPageType<PageId>[],
   basePath = "",
 ): NamedViewPageType[] => {
   const result = [];

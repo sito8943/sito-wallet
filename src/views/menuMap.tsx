@@ -1,12 +1,15 @@
+import { t } from "i18next";
+
 // @sito/dashboard-app
 import {
+  FeatureEnabledFn,
   filterMenuByFeatureFlags,
+  MenuItemType,
   normalizeMenuDividers,
 } from "@sito/dashboard-app";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { t } from "i18next";
 import {
   faCoins,
   faCreditCard,
@@ -23,10 +26,9 @@ import {
   faRepeat,
 } from "@fortawesome/free-solid-svg-icons";
 
-// types
-import type { MenuItemType, IsFeatureEnabled } from "./types";
-import { AppRoutes } from "../lib/routes";
-import type { FeatureFlagKey } from "../lib/api/featureFlags/types";
+// lib
+import { AppRoutes } from "lib";
+import type { FeatureFlagKey } from "lib";
 
 export enum MenuKeys {
   Home = "home",
@@ -46,7 +48,7 @@ export enum MenuKeys {
   PrivacyPolicy = "privacyPolicy",
 }
 
-const getMenuMap = (): MenuItemType[] => [
+const getMenuMap = (): MenuItemType<MenuKeys>[] => [
   {
     page: MenuKeys.Home,
     path: AppRoutes.home,
@@ -135,9 +137,9 @@ const menuFeatureDependencies: Partial<Record<MenuKeys, FeatureFlagKey>> = {
 };
 
 export const getFeatureFilteredMenuMap = (
-  isFeatureEnabled: IsFeatureEnabled,
+  isFeatureEnabled: FeatureEnabledFn<FeatureFlagKey>,
   language?: string,
-): MenuItemType[] => {
+): MenuItemType<MenuKeys>[] => {
   void language;
 
   const filtered = filterMenuByFeatureFlags(
