@@ -14,6 +14,7 @@ export const Auth = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(account)
     if (account.email) navigate(AppRoutes.home);
   }, [account, navigate]);
 

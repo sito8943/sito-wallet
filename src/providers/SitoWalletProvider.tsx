@@ -1,4 +1,4 @@
-import { type ComponentType, useState } from "react";
+import { type ComponentType, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -32,6 +32,14 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
   const isOnline = useOnlineStatus();
   const activeManager = isOnline ? onlineManager : offlineManager;
 
+  const appWrapperProvider = useMemo(
+    () => ({
+      provider: OfflineManagerProvider,
+      props: { offlineManager },
+    }),
+    [offlineManager],
+  );
+
   return (
     <AppProviders
       config={{
@@ -41,10 +49,7 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
       }}
       manager={{ manager: activeManager }}
       auth={authConfig}
-      appWrapperProvider={{
-        provider: OfflineManagerProvider,
-        props: { offlineManager },
-      }}
+      appWrapperProvider={appWrapperProvider}
     >
       <TranslationProvider t={t} language={i18n.language}>
         <AuthAccountPersistenceProvider>

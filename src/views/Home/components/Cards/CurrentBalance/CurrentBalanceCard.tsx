@@ -14,7 +14,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import { IconButton } from "@sito/dashboard-app";
 
 // hooks
-import { AccountsQueryKeys, DashboardsQueryKeys, useAccountsList } from "hooks";
+import { AccountsQueryKeys } from "../../../../../hooks/queries/queryKeys/accountsQueryKeys";
+import { DashboardsQueryKeys } from "../../../../../hooks/queries/queryKeys/dashboardsQueryKeys";
+import { useAccountsList } from "../../../../../hooks/queries/useAccountsList";
 import { useAdjustBalanceMutation } from "../../../../Accounts/hooks";
 
 // components

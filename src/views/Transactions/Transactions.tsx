@@ -37,8 +37,8 @@ import {
   useHideDeletedEntitiesPreference,
   useMobileNavbar,
   usePersistedTableOptions,
-  useAccountsList,
 } from "hooks";
+import { useAccountsList } from "../../hooks/queries/useAccountsList";
 
 // components
 import {

@@ -145,7 +145,7 @@ export default defineConfig(({ command, mode }) => {
       rawFsDenyGuard(externalAllowedRoots),
     ],
     server: {
-      https: true,
+      https: {},
       fs: {
         strict: true,
         allow: fsAllowRoots,
