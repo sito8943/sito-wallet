@@ -60,8 +60,6 @@ export function Users() {
     [data?.pages],
   );
 
-  console.log(items);
-
   useEffect(() => {
     if (!isFeatureDisabledBusinessError(error)) return;
 
