@@ -1,12 +1,15 @@
 // layouts
 import { View, Auth } from "./layouts";
 import { BrowserRouter, Routes as ReactRoutes, Route } from "react-router-dom";
+import { useAuth } from "@sito/dashboard-app";
 import { useFeatureFlags } from "providers";
-import { AppRoutes } from "lib";
+import { AppRoutes, isAdminSession } from "lib";
 import { routeComponents } from "./views/routes";
 
 export const Routes = () => {
   const { isFeatureEnabled } = useFeatureFlags();
+  const { account } = useAuth();
+  const canAccessUsers = isAdminSession(account);
   const {
     SignUp,
     SignIn,
@@ -26,6 +29,7 @@ export const Routes = () => {
     Accounts,
     Currencies,
     Profile,
+    Users,
     FeatureUnavailable,
     About,
     CookiesPolicy,
@@ -137,6 +141,10 @@ export const Routes = () => {
             }
           />
           <Route path={AppRoutes.profile} element={<Profile />} />
+          <Route
+            path={AppRoutes.users}
+            element={canAccessUsers ? <Users /> : <NotFound />}
+          />
           <Route path={AppRoutes.about} element={<About />} />
           <Route path={AppRoutes.cookiesPolicy} element={<CookiesPolicy />} />
           <Route path={AppRoutes.privacyPolicy} element={<PrivacyPolicy />} />

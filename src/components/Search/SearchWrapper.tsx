@@ -4,7 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { stringSimilarity } from "string-similarity-js";
 
 // "@sito/dashboard-app
-import { useTimeAge, isMac, toLocal, fromLocal } from "@sito/dashboard-app";
+import {
+  useAuth,
+  useTimeAge,
+  isMac,
+  toLocal,
+  fromLocal,
+} from "@sito/dashboard-app";
 import { useFeatureFlags } from "providers";
 
 // components
@@ -40,16 +46,17 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
 
   const navigate = useNavigate();
   const { isFeatureEnabled } = useFeatureFlags();
+  const { account } = useAuth();
 
   const { timeAge } = useTimeAge();
 
   const searchableSitemap = useMemo(() => {
     const routes = flattenSitemap(
-      getFeatureFilteredSitemap(isFeatureEnabled),
+      getFeatureFilteredSitemap(isFeatureEnabled, account),
       "",
     );
     return routes ?? [];
-  }, [isFeatureEnabled]);
+  }, [account, isFeatureEnabled]);
 
   const searchOnRoutes = useCallback(
     (searchInput: string) => {

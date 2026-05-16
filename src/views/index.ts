@@ -7,6 +7,7 @@ export * from "./SubscriptionProviders";
 export * from "./Auth";
 export * from "./Home";
 export * from "./Profile";
+export * from "./Users";
 export * from "./NotFound";
 export * from "./FeatureUnavailable";
 export * from "./sitemap";

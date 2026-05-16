@@ -95,6 +95,11 @@ export const routeComponents = {
       default: module.Profile,
     })),
   ),
+  Users: loadable(() =>
+    import("views/Users/Users").then((module) => ({
+      default: module.Users,
+    })),
+  ),
   FeatureUnavailable: loadable(() =>
     import("views/FeatureUnavailable").then((module) => ({
       default: module.FeatureUnavailable,

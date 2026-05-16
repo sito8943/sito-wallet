@@ -1,6 +1,7 @@
 export * from "./parseBaseColumns";
 export * from "./file";
 export * from "./authAccountSnapshot";
+export * from "./sessionAccess";
 export * from "./featureFlags";
 export * from "./filterNormalization";
 export * from "./hideDeletedEntities";

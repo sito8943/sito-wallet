@@ -7,6 +7,7 @@ import ProfileClient from "./ProfileClient";
 import FeatureFlagClient from "./FeatureFlagClient";
 import SubscriptionProviderClient from "./SubscriptionProviderClient";
 import SubscriptionClient from "./SubscriptionClient";
+import UserClient from "./UserClient";
 import AuthApiClient from "./AuthApiClient";
 
 // @sito/dashboard-app
@@ -27,6 +28,7 @@ export class Manager extends IManager {
   subscriptionProviders: SubscriptionProviderClient =
     new SubscriptionProviderClient();
   subscriptions: SubscriptionClient = new SubscriptionClient();
+  users: UserClient = new UserClient();
   authApi: AuthApiClient = new AuthApiClient();
 
   constructor() {
@@ -89,6 +91,10 @@ export class Manager extends IManager {
 
   get Subscriptions(): SubscriptionClient {
     return this.subscriptions;
+  }
+
+  get Users(): UserClient {
+    return this.users;
   }
 
   get AuthApi(): AuthApiClient {

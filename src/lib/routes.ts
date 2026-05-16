@@ -20,6 +20,7 @@ export const AppRoutes = {
   accounts: "/accounts",
   currencies: "/currencies",
   profile: "/profile",
+  users: "/users",
   about: "/about-us",
   cookiesPolicy: "/cookies-policy",
   privacyPolicy: "/privacy-policy",

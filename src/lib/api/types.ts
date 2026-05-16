@@ -7,6 +7,7 @@ export enum Tables {
   Subscriptions = "subscriptions",
   UserDashboardConfig = "user-dashboard-config",
   Profiles = "profiles",
+  Users = "users",
 }
 
 export enum TablesCamelCase {
@@ -18,6 +19,7 @@ export enum TablesCamelCase {
   Subscriptions = "subscriptions",
   UserDashboardConfig = "userDashboardConfig",
   Profiles = "profiles",
+  Users = "users",
 }
 
 export enum EntityName {
@@ -29,4 +31,5 @@ export enum EntityName {
   Subscription = "subscription",
   UserDashboardConfig = "userDashboardConfig",
   Profile = "profile",
+  User = "user",
 }

@@ -7,10 +7,15 @@ import {
 
 import { config } from "../../config";
 
-type PublicSessionAccount = Pick<SessionDto, "id" | "username" | "email">;
+type PublicSessionAccount = Pick<SessionDto, "id" | "username" | "email"> & {
+  admin?: boolean;
+};
 
 const isNonEmptyString = (value: unknown): value is string =>
   typeof value === "string" && value.length > 0;
+
+const isBoolean = (value: unknown): value is boolean =>
+  typeof value === "boolean";
 
 const isPublicSessionAccount = (
   value: unknown,
@@ -21,7 +26,8 @@ const isPublicSessionAccount = (
   return (
     typeof candidate.id === "number" &&
     isNonEmptyString(candidate.username) &&
-    isNonEmptyString(candidate.email)
+    isNonEmptyString(candidate.email) &&
+    (candidate.admin === undefined || isBoolean(candidate.admin))
   );
 };
 
@@ -31,11 +37,17 @@ export const persistPublicSessionAccount = (account: Partial<SessionDto>): void 
     return;
   }
 
-  toLocal(config.auth.accountSnapshotKey, {
+  const snapshot: PublicSessionAccount = {
     id: account.id,
     username: account.username,
     email: account.email,
-  } satisfies PublicSessionAccount);
+  };
+
+  if (isBoolean(account.admin)) {
+    snapshot.admin = account.admin;
+  }
+
+  toLocal(config.auth.accountSnapshotKey, snapshot);
 };
 
 export const loadPersistedPublicSessionAccount =

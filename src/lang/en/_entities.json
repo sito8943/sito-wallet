@@ -23,6 +23,10 @@
     "subscriptionProvider": {
       "singular": "Subscription Provider",
       "plural": "Subscription Providers"
+    },
+    "user": {
+      "singular": "User",
+      "plural": "Users"
     }
   },
   "base": {
@@ -86,6 +90,10 @@
     "rPassword": {
       "label": "Confirm password",
       "placeholder": "Ex: ********"
+    },
+    "admin": {
+      "label": "Administrator",
+      "helper": "Grants full administrative access"
     }
   },
   "account": {

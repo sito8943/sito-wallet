@@ -8,6 +8,7 @@
     "subscriptions": "Suscripciones",
     "subscriptionProviders": "Proveedores de suscripción",
     "currencies": "Monedas",
+    "users": "Usuarios",
     "about": "Acerca de Sito Wallet",
     "terms-and-conditions": "Términos y Condiciones",
     "cookies-policy": "Política de Cookies",
@@ -397,6 +398,17 @@
       "add": "Nuevo proveedor",
       "edit": "Editar proveedor",
       "editAria": "Haz clic para editar el proveedor"
+    }
+  },
+  "users": {
+    "title": "Usuarios",
+    "empty": "No hay usuarios. Crea uno para empezar.",
+    "add": "Agregar un usuario",
+    "forms": {
+      "add": "Nuevo usuario",
+      "edit": "Editar usuario",
+      "editAria": "Haz clic para editar el usuario",
+      "passwordEditHint": "Deja vacío para mantener la actual"
     }
   },
   "footer": {

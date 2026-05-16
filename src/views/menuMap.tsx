@@ -23,11 +23,12 @@ import {
   faTags,
   faFileInvoice,
   faUser,
+  faUsers,
   faRepeat,
 } from "@fortawesome/free-solid-svg-icons";
 
 // lib
-import { AppRoutes } from "lib";
+import { AppRoutes, isAdminSession } from "lib";
 import type { FeatureFlagKey } from "lib";
 
 export enum MenuKeys {
@@ -39,6 +40,7 @@ export enum MenuKeys {
   Currencies = "currencies",
   Products = "products",
   Movements = "movements",
+  Users = "users",
   SignOut = "signOut",
   SignIn = "auth.signIn",
   Profile = "profile",
@@ -85,6 +87,14 @@ const getMenuMap = (): MenuItemType<MenuKeys>[] => [
     page: MenuKeys.Currencies,
     path: AppRoutes.currencies,
     icon: <FontAwesomeIcon icon={faCoins} />,
+  },
+  { type: "divider" },
+  {
+    page: MenuKeys.Users,
+    path: AppRoutes.users,
+    auth: true,
+    access: (account) => isAdminSession(account),
+    icon: <FontAwesomeIcon icon={faUsers} />,
   },
   { type: "divider" },
   {

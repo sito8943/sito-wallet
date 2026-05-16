@@ -1,0 +1,9 @@
+@reference "../../styles/variables.css";
+
+.user-selection-bar {
+  @apply sm:hidden top-12 bg-base py-2 sticky z-10;
+}
+
+.user-selection-bar .table-selection-bar {
+  margin-bottom: 0;
+}

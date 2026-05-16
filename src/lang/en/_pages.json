@@ -8,6 +8,7 @@
     "subscriptions": "Subscriptions",
     "subscriptionProviders": "Subscription providers",
     "currencies": "Currencies",
+    "users": "Users",
     "about": "About Sito Wallet",
     "terms-and-conditions": "Terms and Conditions",
     "cookies-policy": "Cookies Policy",
@@ -396,6 +397,17 @@
       "add": "New provider",
       "edit": "Edit provider",
       "editAria": "Click to edit provider"
+    }
+  },
+  "users": {
+    "title": "Users",
+    "empty": "No users yet. Create one to get started.",
+    "add": "Add a user",
+    "forms": {
+      "add": "New user",
+      "edit": "Edit user",
+      "editAria": "Click to edit user",
+      "passwordEditHint": "Leave empty to keep current"
     }
   },
   "footer": {

@@ -4,15 +4,17 @@ import { t } from "i18next";
 import {
   FeatureEnabledFn,
   NamedViewPageType,
+  SessionAccountDto,
   ViewPageType,
 } from "@sito/dashboard-app";
 
 // lib
-import { AppRoutes, FeatureFlagKey } from "lib";
+import { AppRoutes, FeatureFlagKey, isAdminSession } from "lib";
 
 export enum PageId {
   Home = "home",
   Profile = "profile",
+  Users = "users",
   Transactions = "transactions",
   TransactionCategories = "transactionCategories",
   Subscriptions = "subscriptions",
@@ -34,6 +36,11 @@ export const sitemap: ViewPageType<PageId>[] = [
   {
     key: PageId.Profile,
     path: AppRoutes.profile,
+  },
+  {
+    key: PageId.Users,
+    path: AppRoutes.users,
+    access: (account) => isAdminSession(account),
   },
   {
     key: PageId.Transactions,
@@ -91,24 +98,38 @@ const isPageFeatureEnabled = (
   return isFeatureEnabled(dependency);
 };
 
+const isPageAccessible = (
+  page: ViewPageType<PageId>,
+  account?: SessionAccountDto,
+): boolean => {
+  if (!page.access) return true;
+  return page.access(account);
+};
+
 const filterSitemapByFeatures = (
   routes: ViewPageType<PageId>[],
   isFeatureEnabled: FeatureEnabledFn<FeatureFlagKey>,
+  account?: SessionAccountDto,
 ): ViewPageType<PageId>[] => {
   return routes
-    .filter((route) => isPageFeatureEnabled(route, isFeatureEnabled))
+    .filter(
+      (route) =>
+        isPageFeatureEnabled(route, isFeatureEnabled) &&
+        isPageAccessible(route, account),
+    )
     .map((route) => ({
       ...route,
       children: route.children
-        ? filterSitemapByFeatures(route.children, isFeatureEnabled)
+        ? filterSitemapByFeatures(route.children, isFeatureEnabled, account)
         : undefined,
     }));
 };
 
 export const getFeatureFilteredSitemap = (
   isFeatureEnabled: FeatureEnabledFn<FeatureFlagKey>,
+  account?: SessionAccountDto,
 ): ViewPageType<PageId>[] => {
-  return filterSitemapByFeatures(sitemap, isFeatureEnabled);
+  return filterSitemapByFeatures(sitemap, isFeatureEnabled, account);
 };
 
 /**

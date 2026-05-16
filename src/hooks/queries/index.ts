@@ -7,3 +7,4 @@ export * from "./useDashboard";
 export * from "./useProfile";
 export * from "./useSubscriptions";
 export * from "./useSubscriptionProviders";
+export * from "./useUsers";
