@@ -6,3 +6,4 @@ export * from "./Logo";
 export * from "./OfflineBanner";
 export * from "./Image";
 export * from "./MobileSelectionBar";
+export * from "./ColorVignette";

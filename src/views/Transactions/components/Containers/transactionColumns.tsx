@@ -21,6 +21,7 @@ import {
 // views
 import { Currency } from "views/Currencies/components/Currency";
 import { Type } from "views/TransactionCategories/components/Type";
+import { ColorVignette } from "components";
 
 export const getTransactionTypeOptions = (t: TFunction): Option[] =>
   enumToKeyValueArray(TransactionType)?.map((item) => ({
@@ -53,11 +54,17 @@ export const getTransactionColumns = (
         const transactionCategories = getTransactionCategories(entity);
         if (!transactionCategories.length) return undefined;
 
-        return transactionCategories
-          .map((category) =>
-            category.auto ? t("_entities:transactionCategory.name.init") : category.name,
-          )
-          .join(", ");
+        return transactionCategories.map((category) =>
+          category.auto ? (
+            t("_entities:transactionCategory.name.init")
+          ) : (
+            <p className="flex items-center gap-2">
+              {category.color && <ColorVignette color={category.color} />}
+              {category.name}
+            </p>
+          ),
+        );
+        /* .join(", "); */
       },
     },
     {
@@ -91,7 +98,9 @@ export const getTransactionColumns = (
       renderBody: (_: unknown, entity: TransactionDto) => (
         <div className="w-fit">
           <Type
-            type={getPrimaryTransactionCategory(entity)?.type ?? TransactionType.In}
+            type={
+              getPrimaryTransactionCategory(entity)?.type ?? TransactionType.In
+            }
           />
         </div>
       ),

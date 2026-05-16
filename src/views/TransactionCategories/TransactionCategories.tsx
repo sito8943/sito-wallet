@@ -79,6 +79,8 @@ export function TransactionCategories() {
     [data?.pages],
   );
 
+  console.log(items);
+
   useEffect(() => {
     if (!isFeatureDisabledBusinessError(error)) return;
 
