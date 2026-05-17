@@ -103,7 +103,9 @@ export function Recovery() {
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <form
-        onSubmit={handleSubmit(onForgotPassword)}
+        onSubmit={(event) => {
+          void handleSubmit(onForgotPassword)(event);
+        }}
         className={`${appear ? "blur-appear" : ""} auth-form`}
       >
         <h1
@@ -186,7 +188,9 @@ export function Recovery() {
             variant="outlined"
             className="!px-8"
             disabled={isLoading}
-            onClick={onResendConfirmEmail}
+            onClick={() => {
+              void onResendConfirmEmail();
+            }}
             aria-label={t("_pages:auth.recovery.resendConfirm")}
           >
             {loadingAction === "resend-confirm" && (

@@ -55,7 +55,7 @@ export const Dashboard = () => {
             <li key={item.id}>
               <TransactionTypeResume
                 onDelete={() => {
-                  deleteDashboardCard.onClick([item.id]);
+                  void deleteDashboardCard.onClick([item.id]);
                 }}
                 key={item.id}
                 {...item}
@@ -67,7 +67,7 @@ export const Dashboard = () => {
             <li key={item.id}>
               <WeeklySpentCard
                 onDelete={() => {
-                  deleteDashboardCard.onClick([item.id]);
+                  void deleteDashboardCard.onClick([item.id]);
                 }}
                 key={item.id}
                 {...item}
@@ -79,7 +79,7 @@ export const Dashboard = () => {
             <li key={item.id}>
               <CurrentBalanceCard
                 onDelete={() => {
-                  deleteDashboardCard.onClick([item.id]);
+                  void deleteDashboardCard.onClick([item.id]);
                 }}
                 key={item.id}
                 {...item}

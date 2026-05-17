@@ -72,7 +72,7 @@ export const useAppSession = (): boolean => {
           } else {
             clearPersistedPublicSessionAccount();
             bootstrapContextRef.current.clearFeatures();
-            bootstrapContextRef.current.logoutUser();
+            await bootstrapContextRef.current.logoutUser();
           }
         } catch (err) {
           console.error("Error during session bootstrap cleanup:", err);

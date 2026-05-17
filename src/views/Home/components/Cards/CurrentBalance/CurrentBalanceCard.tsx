@@ -124,13 +124,17 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
               <div className="flex items-center gap-1">
                 <IconButton
                   disabled={adjustBalance.isLoading}
-                  onClick={() => adjustBalance.action(account).onClick?.()}
+                  onClick={() => {
+                    void adjustBalance.action(account).onClick?.();
+                  }}
                   icon={faScaleBalanced}
                   aria-label={t("_pages:accounts.actions.adjustBalance.text")}
                 />
                 <IconButton
                   disabled={isSyncing}
-                  onClick={handleRefresh}
+                  onClick={() => {
+                    void handleRefresh();
+                  }}
                   icon={isSyncing ? faCircleNotch : faArrowsRotate}
                   className={isSyncing ? "rotate" : ""}
                 />

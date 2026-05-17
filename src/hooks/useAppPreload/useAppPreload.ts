@@ -85,7 +85,7 @@ export function useAppPreload(
     if (lastSettledSignature === requiredTasksSignature) return;
 
     const runSignature = requiredTasksSignature;
-    Promise.allSettled(requiredTasks.map((task) => task.run())).then(
+    void Promise.allSettled(requiredTasks.map((task) => task.run())).then(
       (results) => {
         if (!isMounted) return;
 

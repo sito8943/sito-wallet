@@ -43,7 +43,7 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
   const queryClient = useQueryClient();
 
   const handlePhotoUpdate = useCallback(() => {
-    queryClient.invalidateQueries({ ...ProfileQueryKeys.all() });
+    void queryClient.invalidateQueries({ ...ProfileQueryKeys.all() });
   }, [queryClient]);
 
   const { isUploading, uploadPhoto, deletePhoto } = useProfilePhoto(
@@ -156,8 +156,12 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
                 <ProfilePhoto
                   profile={profile}
                   isUploading={isUploading}
-                  onUpload={uploadPhoto}
-                  onDelete={deletePhoto}
+                  onUpload={(file) => {
+                    void uploadPhoto(file);
+                  }}
+                  onDelete={() => {
+                    void deletePhoto();
+                  }}
                 />
                 <div className="flex flex-col">
                   <h3 className="text-xl">{currentName || profile.name || ""}</h3>

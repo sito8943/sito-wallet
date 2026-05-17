@@ -181,7 +181,7 @@ export function useTransactionsMobileFiltersDialog(
       setSortingBy(values.sortingBy || DEFAULT_SORTING_BY);
       setSortingOrder(parseSortOrder(values.sortingOrder));
       setCurrentPage(0);
-      queryClient.invalidateQueries({ ...TransactionsQueryKeys.all() });
+      void queryClient.invalidateQueries({ ...TransactionsQueryKeys.all() });
       onClose();
     },
     title: t("_accessibility:buttons.filters"),

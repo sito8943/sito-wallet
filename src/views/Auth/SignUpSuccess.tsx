@@ -106,7 +106,9 @@ export function SignUpSuccess() {
             variant="outlined"
             className="!px-8"
             disabled={isResending}
-            onClick={onResendConfirmEmail}
+            onClick={() => {
+              void onResendConfirmEmail();
+            }}
             aria-label={t("_pages:auth.signUpSuccess.resend")}
           >
             {isResending && (

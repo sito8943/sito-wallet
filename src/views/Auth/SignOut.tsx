@@ -43,7 +43,7 @@ export function SignOut() {
   }, [clearFeatures, logoutUser, navigate, offlineManager]);
 
   useEffect(() => {
-    logic();
+    void logic();
   }, [logic]);
 
   return <SplashScreen />;

@@ -86,7 +86,7 @@ export function ConfirmEmailSuccess() {
       }
     };
 
-    verifyConfirmation();
+    void verifyConfirmation();
 
     return () => {
       cancelled = true;

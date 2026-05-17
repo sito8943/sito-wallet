@@ -82,7 +82,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
       formToDto={(data) => formToDto(data)}
       onConfigSaved={() => {
         // Keep original behavior: refresh related queries on save
-        queryClient.invalidateQueries({ ...TransactionsQueryKeys.all() });
+        void queryClient.invalidateQueries({ ...TransactionsQueryKeys.all() });
       }}
       ConfigFormDialog={ConfigFormDialog}
       renderActiveFilters={({ formConfig, onSubmit }) => (

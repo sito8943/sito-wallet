@@ -45,7 +45,7 @@ export const Image = (props: ImagePropsType) => {
 
     clearSource();
 
-    (async () => {
+    void (async () => {
       try {
         const headers: HeadersInit = {};
         if (parsedToken) headers.Authorization = `Bearer ${parsedToken}`;

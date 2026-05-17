@@ -28,4 +28,4 @@ const bootstrap = async () => {
   );
 };
 
-bootstrap();
+void bootstrap();
