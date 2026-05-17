@@ -336,6 +336,10 @@
       "add": "Nueva transacción",
       "edit": "Editar transacción",
       "editAria": "Haz clic para editar la transacción"
+    },
+    "export": {
+      "title": "Exportar transacciones",
+      "includeCurrentAccount": "Incluir filtro de la cuenta actual"
     }
   },
   "transactionCategories": {

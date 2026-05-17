@@ -148,7 +148,12 @@ vi.mock("@sito/dashboard-app", () => ({
   useRestoreDialog: () => ({
     action: () => ({ id: "restore", onClick: vi.fn() }),
   }),
-  useExportActionMutate: () => ({
+  useExportDialog: () => ({
+    open: false,
+    handleClose: vi.fn(),
+    handleSubmit: vi.fn(),
+    isLoading: false,
+    extraFields: null,
     action: () => ({ id: "export", onClick: vi.fn() }),
   }),
   useImportDialog: () => ({
@@ -185,6 +190,7 @@ vi.mock("@sito/dashboard-app", () => ({
   }),
   ConfirmationDialog: () => null,
   ImportDialog: () => null,
+  ExportDialog: () => null,
   TabsType: {},
 }));
 

@@ -335,6 +335,10 @@
       "add": "New transaction",
       "edit": "Edit transaction",
       "editAria": "Click to edit transaction"
+    },
+    "export": {
+      "title": "Export transactions",
+      "includeCurrentAccount": "Include current account filter"
     }
   },
   "transactionCategories": {

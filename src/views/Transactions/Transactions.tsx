@@ -7,12 +7,13 @@ import { useTranslation } from "react-i18next";
 import {
   Page,
   useDeleteDialog,
-  useExportActionMutate,
+  useExportDialog,
   useRestoreDialog,
   ConfirmationDialog,
   TabsType,
   useTableOptions,
   Empty,
+  ExportDialog,
   GlobalActions,
   ImportDialog,
   useImportDialog,
@@ -88,7 +89,7 @@ const isMobile = window.innerWidth <= 640;
 
 export function Transactions() {
   const { t } = useTranslation();
-  const { showErrorNotification } = useNotification();
+  const { showErrorNotification, showSuccessNotification } = useNotification();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -190,18 +191,54 @@ export function Transactions() {
 
   const { filters } = useTableOptions();
 
-  const exportTransactions = useExportActionMutate({
+  const exportTransactions = useExportDialog<
+    TransactionDto,
+    { includeCurrentAccount: boolean }
+  >({
     entity: Tables.Transactions,
-    mutationFn: () =>
-      manager.Transactions.export(
+    defaultExtra: { includeCurrentAccount: true },
+    mutationFn: ({ includeCurrentAccount }) => {
+      const baseFilters = { ...filters };
+      if (includeCurrentAccount) baseFilters.accountId = selectedAccount?.id;
+      else delete baseFilters.accountId;
+
+      return manager.Transactions.export(
         applyHideDeletedEntitiesPreference(
-          normalizeListFilters({
-            ...filters,
-            accountId: selectedAccount?.id,
-          }) as Record<string, unknown>,
+          normalizeListFilters(
+            baseFilters as Record<string, unknown>,
+          ) as Record<string, unknown>,
           hideDeletedEntities,
         ) as FilterTransactionDto,
-      ),
+      );
+    },
+    onSuccess: (data) => {
+      const json = JSON.stringify(data, null, 2);
+      const blob = new Blob([json], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `${Tables.Transactions}.json`;
+      anchor.click();
+      URL.revokeObjectURL(url);
+      showSuccessNotification({
+        message: t("_pages:common.actions.export.successMessage"),
+      });
+    },
+    renderExtraFields: ({ values, setValue }) => (
+      <label className="flex items-center gap-2 cursor-pointer">
+        <input
+          type="checkbox"
+          checked={values.includeCurrentAccount}
+          onChange={(e) =>
+            setValue("includeCurrentAccount", e.target.checked)
+          }
+          className="accent-bg-primary"
+        />
+        <span className="text-text">
+          {t("_pages:transactions.export.includeCurrentAccount")}
+        </span>
+      </label>
+    ),
   });
 
   const handleTransactionProcess = useCallback(
@@ -435,6 +472,10 @@ export function Transactions() {
       <ConfirmationDialog {...deleteTransaction} />
       <ConfirmationDialog {...restoreTransaction} />
       <ImportDialog {...importTransactions} />
+      <ExportDialog
+        {...exportTransactions}
+        title={t("_pages:transactions.export.title")}
+      />
       <AssignAccountDialog {...assignTransactionAccount} />
       <AssignCategoryDialog {...assignTransactionCategory} />
       <WeeklyTransactionsDialog

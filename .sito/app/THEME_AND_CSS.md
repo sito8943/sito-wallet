@@ -78,7 +78,8 @@ Create a theme CSS file and load it after the library styles.
 | `Page`           | `addOptions.className`                                                          |
 | `ToTop`          | `className`                                                                     |
 | `SplashScreen`   | `className`                                                                     |
-| `ImportDialog`   | `renderCustomPreview` to replace default preview                                |
+| `ImportDialog`   | `renderCustomPreview` to replace default preview, `extraFields` to inject custom inputs |
+| `ExportDialog`   | `extraFields` for custom inputs (date range, format), `extraActions` for footer buttons |
 
 ## 4. Exported CSS class map by component
 
@@ -191,3 +192,5 @@ export default {
 2. Use `className` props for component-level adjustments.
 3. Avoid broad overrides of `.button`, `.action`, `.text-input` without scoping.
 4. For complex import UI, use `renderCustomPreview` instead of forking `ImportDialog`.
+5. For extra inputs in import flows (account pickers, toggles, notes), use the `extraFields` prop on `ImportDialog` or `renderExtraFields` on `useImportDialog` instead of wrapping the dialog.
+6. For export flows that need configuration (date range, format, columns), use `useExportDialog` + `ExportDialog`. For direct exports without configuration, stay on `useExportAction` + `useExportActionMutate` — both produce the same `action()` shape.
