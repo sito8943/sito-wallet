@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { css } from "@emotion/css";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
