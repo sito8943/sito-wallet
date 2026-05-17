@@ -1,10 +1,10 @@
-import type { SessionAccountDto } from "@sito/dashboard-app";
+import type { WalletSessionAccountDto } from "../types";
 
 const isBoolean = (value: unknown): value is boolean =>
   typeof value === "boolean";
 
 export const isAdminSession = (
-  account?: SessionAccountDto | null,
+  account?: WalletSessionAccountDto | null,
 ): boolean => {
   return isBoolean(account?.admin) && account.admin;
 };

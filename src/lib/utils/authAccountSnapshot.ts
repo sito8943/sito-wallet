@@ -1,16 +1,12 @@
-import type {
-  SessionDto} from "@sito/dashboard-app";
-import {
-  fromLocal,
-  removeFromLocal,
-  toLocal,
-} from "@sito/dashboard-app";
+import { fromLocal, removeFromLocal, toLocal } from "@sito/dashboard-app";
 
 import { config } from "../../config";
+import type { WalletSessionDto } from "../types";
 
-type PublicSessionAccount = Pick<SessionDto, "id" | "username" | "email"> & {
-  admin?: boolean;
-};
+type PublicSessionAccount = Pick<
+  WalletSessionDto,
+  "id" | "username" | "email"
+> & { admin?: boolean };
 
 const isNonEmptyString = (value: unknown): value is string =>
   typeof value === "string" && value.length > 0;
@@ -32,7 +28,9 @@ const isPublicSessionAccount = (
   );
 };
 
-export const persistPublicSessionAccount = (account: Partial<SessionDto>): void => {
+export const persistPublicSessionAccount = (
+  account: Partial<WalletSessionDto>,
+): void => {
   if (!account.id || !account.token) return;
   if (!isNonEmptyString(account.username) || !isNonEmptyString(account.email)) {
     return;
@@ -66,7 +64,7 @@ export const readStoredRememberMe = (): boolean | undefined => {
   return typeof rememberMe === "boolean" ? rememberMe : undefined;
 };
 
-export const readStoredSessionFromSnapshot = (): SessionDto | null => {
+export const readStoredSessionFromSnapshot = (): WalletSessionDto | null => {
   const snapshot = loadPersistedPublicSessionAccount();
   const token = fromLocal(config.auth.user);
 
