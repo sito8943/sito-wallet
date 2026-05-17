@@ -55,6 +55,10 @@ vi.mock("hooks", () => ({
   },
 }));
 
+vi.mock("../../../hooks/queries/useAccountsList", () => ({
+  useAccountsList: () => mockAccountsList(),
+}));
+
 // providers
 vi.mock("providers", () => ({
   useManager: () => ({
@@ -94,6 +98,13 @@ vi.mock("../hooks", () => ({
 vi.mock("../../Accounts/hooks", () => ({
   useAddAccountDialog: () => ({
     openDialog: vi.fn(),
+  }),
+}));
+
+vi.mock("../../TransactionCategories/hooks", () => ({
+  useEditTransactionCategoryDialog: () => ({
+    openDialog: vi.fn(),
+    action: vi.fn(() => ({ id: "edit-category", onClick: vi.fn() })),
   }),
 }));
 
@@ -323,13 +334,40 @@ vi.mock("../../Accounts", () => ({
   AddAccountDialog: () => null,
 }));
 
+vi.mock("../../TransactionCategories/components", () => ({
+  EditTransactionCategoryDialog: () => null,
+}));
+
 vi.mock("lib", () => ({
   Tables: { Transactions: "transactions", Accounts: "accounts" },
   TransactionType: { In: "in", Out: "out" },
   RouteQueryParam: { accountId: "accountId" },
+  AppRoutes: {
+    home: "/",
+    profile: "/profile",
+    users: "/users",
+    transactions: "/transactions",
+    transactionCategories: "/transaction-categories",
+    subscriptions: "/subscriptions",
+    subscriptionProviders: "/subscription-providers",
+    accounts: "/accounts",
+    currencies: "/currencies",
+    notFound: "*",
+    about: "/about-us",
+    cookiesPolicy: "/cookies-policy",
+    termsAndConditions: "/terms-and-conditions",
+    privacyPolicy: "/privacy-policy",
+    signOut: "/sign-out",
+    signIn: "/auth/sign-in",
+  },
   FilterTransactionDto: class {},
   TransactionDto: class {},
   ImportPreviewTransactionDto: class {},
+  applyHideDeletedEntitiesPreference: <T,>(value: T) => value,
+  normalizeListFilters: <T,>(value: T) => value,
+  getTransactionsRouteWithAccountId: (accountId: number | string) =>
+    `/transactions?accountId=${String(accountId)}`,
+  isAdminSession: () => false,
   isFeatureDisabledBusinessError: () => false,
 }));
 

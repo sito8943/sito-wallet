@@ -29,6 +29,12 @@ vi.mock("@sito/dashboard-app", () => ({
   Notification: () => <div data-testid="notification" />,
 }));
 
+vi.mock("lib", () => ({
+  AppRoutes: {
+    home: "/",
+  },
+}));
+
 import { Auth } from "../../layouts/Auth/Auth";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────

@@ -113,6 +113,25 @@ vi.mock("../../config", () => ({
   config: { onboarding: "test-onboarding" },
 }));
 
+vi.mock("../../views/bottomMap", () => ({
+  bottomMap: [
+    {
+      id: "home",
+      page: "home",
+      to: "/",
+      icon: null,
+      position: "left",
+    },
+    {
+      id: "profile",
+      page: "profile",
+      to: "/profile",
+      icon: null,
+      position: "right",
+    },
+  ],
+}));
+
 vi.mock("../../layouts/View/Header", () => ({
   default: () => <header data-testid="header" />,
 }));

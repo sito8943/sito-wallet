@@ -1,5 +1,50 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import type { FeatureFlagKey } from "lib";
+
+vi.mock("@sito/dashboard-app", () => ({
+  filterMenuByFeatureFlags: (
+    menu: Array<{ page?: string; type?: string }>,
+    isFeatureEnabled: (key: FeatureFlagKey) => boolean,
+    dependencies: Partial<Record<string, FeatureFlagKey>>,
+  ) =>
+    menu.filter((item) => {
+      if (!item.page) return true;
+      const dependency = dependencies[item.page];
+      return dependency ? isFeatureEnabled(dependency) : true;
+    }),
+  normalizeMenuDividers: (
+    menu: Array<{ type?: string }>,
+  ) =>
+    menu.filter(
+      (item, index, items) =>
+        item.type !== "divider" ||
+        (index > 0 &&
+          index < items.length - 1 &&
+          items[index - 1]?.type !== "divider"),
+    ),
+}));
+
+vi.mock("lib", () => ({
+  AppRoutes: {
+    home: "/",
+    profile: "/profile",
+    users: "/users",
+    transactions: "/transactions",
+    transactionCategories: "/transaction-categories",
+    subscriptions: "/subscriptions",
+    subscriptionProviders: "/subscription-providers",
+    accounts: "/accounts",
+    currencies: "/currencies",
+    notFound: "*",
+    about: "/about-us",
+    cookiesPolicy: "/cookies-policy",
+    termsAndConditions: "/terms-and-conditions",
+    privacyPolicy: "/privacy-policy",
+    signOut: "/sign-out",
+    signIn: "/auth/sign-in",
+  },
+  isAdminSession: () => false,
+}));
 
 import { getFeatureFilteredMenuMap, MenuKeys } from "../menuMap";
 import { getFeatureFilteredSitemap, PageId } from "../sitemap";

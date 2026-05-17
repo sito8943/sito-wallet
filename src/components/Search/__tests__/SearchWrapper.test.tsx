@@ -3,13 +3,21 @@ import { render, screen, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
 // ─── Hoisted mocks (must be declared before vi.mock factories) ─────────────────
-const { mockNavigate, mockTimeAge, mockFromLocal, mockToLocal, mockIsMac } =
+const {
+  mockNavigate,
+  mockTimeAge,
+  mockFromLocal,
+  mockToLocal,
+  mockIsMac,
+  mockUseAuth,
+} =
   vi.hoisted(() => ({
     mockNavigate: vi.fn(),
     mockTimeAge: vi.fn(() => "just now"),
     mockFromLocal: vi.fn(() => null),
     mockToLocal: vi.fn(),
     mockIsMac: vi.fn(() => false),
+    mockUseAuth: vi.fn(() => ({ account: { email: "user@example.com" } })),
   }));
 
 // ─── Module mocks ──────────────────────────────────────────────────────────────
@@ -23,6 +31,7 @@ vi.mock("react-router-dom", async () => {
 });
 
 vi.mock("@sito/dashboard-app", () => ({
+  useAuth: () => mockUseAuth(),
   useTimeAge: () => ({ timeAge: mockTimeAge }),
   fromLocal: mockFromLocal,
   toLocal: mockToLocal,
@@ -147,6 +156,9 @@ describe("SearchWrapper", () => {
     mockFromLocal.mockReturnValue(null);
     mockNavigate.mockReset();
     mockToLocal.mockReset();
+    mockUseAuth.mockReset().mockReturnValue({
+      account: { email: "user@example.com" },
+    });
   });
 
   afterEach(() => {
