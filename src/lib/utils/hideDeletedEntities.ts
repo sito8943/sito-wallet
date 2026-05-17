@@ -1,4 +1,4 @@
-import { SoftDeleteScope } from "@sito/dashboard-app";
+import type { SoftDeleteScope } from "@sito/dashboard-app";
 
 type FiltersRecord = Record<string, unknown>;
 

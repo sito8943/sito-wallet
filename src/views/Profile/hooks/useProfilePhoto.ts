@@ -8,7 +8,7 @@ import { useNotification } from "@sito/dashboard-app";
 import { useManager } from "providers";
 
 // lib
-import { ProfileDto } from "lib";
+import type { ProfileDto } from "lib";
 
 export function useProfilePhoto(
   profileId: number,

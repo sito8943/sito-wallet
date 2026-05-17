@@ -19,11 +19,12 @@ import {
 import { useManager } from "providers";
 
 // lib
+import type {
+  ResetPasswordDto} from "lib";
 import {
   AppRoutes,
   AuthRouteQueryParam,
-  AuthRouteQueryParamType,
-  ResetPasswordDto,
+  AuthRouteQueryParamType
 } from "lib";
 
 import type { UpdatePasswordFormType } from "./types";
@@ -158,7 +159,9 @@ export function UpdatePassword() {
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={(event) => {
+          void handleSubmit(onSubmit)(event);
+        }}
         className={`${appear ? "blur-appear" : ""} auth-form`}
       >
         <h1

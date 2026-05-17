@@ -1,7 +1,7 @@
 import { Loading } from "@sito/dashboard-app";
 import { useTranslation } from "react-i18next";
 
-import { SubscriptionActivitySidebarPropsType } from "../types";
+import type { SubscriptionActivitySidebarPropsType } from "../types";
 
 export function SubscriptionActivitySidebar(
   props: SubscriptionActivitySidebarPropsType,

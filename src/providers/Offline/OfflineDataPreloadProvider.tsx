@@ -7,7 +7,7 @@ import { useAuth } from "@sito/dashboard-app";
 import { preloadOfflineBootstrapData } from "lib";
 
 // types
-import { BasicProviderPropTypes } from "../types";
+import type { BasicProviderPropTypes } from "../types";
 
 // hooks
 import { useOnlineStatus } from "hooks";

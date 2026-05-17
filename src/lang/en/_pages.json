@@ -168,6 +168,26 @@
     "get_started": {
       "title": "You're Ready to Take Control",
       "body": "Add your first account now and start your journey to healthier finances today."
+    },
+    "setup": {
+      "currencies": {
+        "title": "Start with your main currency or load your currencies from a file.",
+        "description": "You can create your first currency right here or reuse a previous export.",
+        "create": "Create currency",
+        "import": "Import currencies"
+      },
+      "accounts": {
+        "title": "Set up your first account without leaving onboarding.",
+        "description": "Create one account manually or import several at once to get started faster.",
+        "create": "Create account",
+        "import": "Import accounts"
+      },
+      "transactions": {
+        "title": "Prepare your base categories or bring in your history directly.",
+        "description": "This leaves your initial setup ready before you start entering transactions by hand.",
+        "createCategory": "Create category",
+        "import": "Import transactions"
+      }
     }
   },
   "auth": {

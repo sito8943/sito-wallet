@@ -22,7 +22,7 @@ import { DashboardCard } from "../DashboardCard";
 import "./styles.css";
 
 // types
-import {
+import type {
   TransactionTypePropsType,
   FilterTypeResumeConfigType,
   TypeResumeTypeFormType,

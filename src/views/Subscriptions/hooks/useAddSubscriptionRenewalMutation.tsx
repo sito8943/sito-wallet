@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useNotification } from "@sito/dashboard-app";
 
 import { SubscriptionsQueryKeys } from "hooks";
-import { SubscriptionDto } from "lib";
+import type { SubscriptionDto } from "lib";
 import { useManager } from "providers";
 
 import { useAddSubscriptionRenewalAction } from "./useAddSubscriptionRenewalAction";

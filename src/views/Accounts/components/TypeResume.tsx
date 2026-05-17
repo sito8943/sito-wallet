@@ -11,7 +11,7 @@ import { Type } from "views/TransactionCategories";
 import { Currency } from "views/Currencies/components/Currency";
 
 // types
-import { TypeResumePropsType } from "./types";
+import type { TypeResumePropsType } from "./types";
 
 // styles
 import "./styles.css";

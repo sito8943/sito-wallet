@@ -42,10 +42,11 @@ import {
 import { useAddCurrency, useEditCurrency } from "./hooks";
 
 // types
-import {
+import type {
   CurrencyDto,
   FilterCurrencyDto,
-  ImportPreviewCurrencyDto,
+  ImportPreviewCurrencyDto} from "lib";
+import {
   Tables,
   isFeatureDisabledBusinessError,
   defaultCurrenciesListFilters,

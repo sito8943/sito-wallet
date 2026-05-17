@@ -1,5 +1,5 @@
-import { CurrencyDto, UpdateCurrencyDto } from "lib";
-import { CurrencyFormType } from "../types";
+import type { CurrencyDto, UpdateCurrencyDto } from "lib";
+import type { CurrencyFormType } from "../types";
 
 export const formToDto = (data: CurrencyFormType): UpdateCurrencyDto => ({
   ...data,

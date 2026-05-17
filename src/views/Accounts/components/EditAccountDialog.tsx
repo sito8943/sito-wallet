@@ -2,7 +2,7 @@
 import { FormDialog } from "@sito/dashboard-app";
 
 // types
-import { EditAccountDialogPropsType } from "../types";
+import type { EditAccountDialogPropsType } from "../types";
 
 // components
 import { AccountForm } from "./AccountForm";

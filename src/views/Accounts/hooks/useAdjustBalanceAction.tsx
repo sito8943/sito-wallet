@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { ActionType } from "@sito/dashboard-app";
+import type { ActionType } from "@sito/dashboard-app";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,7 +13,7 @@ import { AccountActions } from "../types";
 import type { UseAdjustBalanceActionProps } from "./types";
 
 // lib
-import { AccountDto } from "lib";
+import type { AccountDto } from "lib";
 
 export const useAdjustBalanceAction = (props: UseAdjustBalanceActionProps) => {
   const { t } = useTranslation();

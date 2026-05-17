@@ -1,4 +1,4 @@
-import { BaseEntityDto, CommonUserDto } from "@sito/dashboard-app";
+import type { BaseEntityDto, CommonUserDto } from "@sito/dashboard-app";
 
 export interface CurrencyDto extends BaseEntityDto {
   name: string;

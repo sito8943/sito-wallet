@@ -1,8 +1,8 @@
-import { ActionType } from "@sito/dashboard-app";
+import type { ActionType } from "@sito/dashboard-app";
 
-import { TransactionDto, TransactionType } from "lib";
+import type { TransactionDto, TransactionType } from "lib";
 
-import { WeeklyTransactionsScopeType } from "../../utils";
+import type { WeeklyTransactionsScopeType } from "../../utils";
 
 export type WeeklyTransactionsDialogPropsType = {
   open: boolean;

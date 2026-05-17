@@ -4,13 +4,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito-dashboard-app
+import type {
+  TabsType} from "@sito/dashboard-app";
 import {
   Page,
   useDeleteDialog,
   useExportDialog,
   useRestoreDialog,
   ConfirmationDialog,
-  TabsType,
   useTableOptions,
   Empty,
   ExportDialog,
@@ -56,14 +57,15 @@ import { AddAccountDialog } from "../Accounts";
 import { EditTransactionCategoryDialog } from "../TransactionCategories/components";
 
 // lib
-import {
+import type {
   FilterTransactionDto,
-  Tables,
   TransactionDto,
-  TransactionType,
   ImportPreviewTransactionDto,
+  CommonAccountDto} from "lib";
+import {
+  Tables,
+  TransactionType,
   isFeatureDisabledBusinessError,
-  CommonAccountDto,
   applyHideDeletedEntitiesPreference,
   normalizeListFilters,
   RouteQueryParam,
@@ -210,7 +212,7 @@ export function Transactions() {
         applyHideDeletedEntitiesPreference(
           normalizeListFilters(
             baseFilters as Record<string, unknown>,
-          ) as Record<string, unknown>,
+          ),
           hideDeletedEntities,
         ) as FilterTransactionDto,
       );

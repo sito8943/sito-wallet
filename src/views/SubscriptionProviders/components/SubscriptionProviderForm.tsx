@@ -20,7 +20,7 @@ import {
 import { Tables } from "lib";
 
 // types
-import { SubscriptionProviderFormPropsType } from "../types";
+import type { SubscriptionProviderFormPropsType } from "../types";
 
 // constants
 import { PHOTO_ACCEPT, SUBSCRIPTION_PROVIDER_FILE_INPUT_ID } from "./constants";
@@ -34,7 +34,7 @@ export function SubscriptionProviderForm(
   const selectedFile = useWatch({
     control,
     name: "file",
-  }) as File | null;
+  });
  /*  const currentPhoto =
     (useWatch({
       control,

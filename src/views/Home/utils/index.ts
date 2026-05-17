@@ -1,5 +1,6 @@
-import { DashboardDto, AddDashboardDto, DashboardCardType } from "lib";
-import { DashboardFormType } from "../types";
+import type { DashboardDto, AddDashboardDto} from "lib";
+import { DashboardCardType } from "lib";
+import type { DashboardFormType } from "../types";
 
 export const formToAddDto = ({
   config,

@@ -1,4 +1,4 @@
-import { TransactionType } from "lib";
+import type { TransactionType } from "lib";
 
 export type TypePropsType = {
   type: TransactionType;

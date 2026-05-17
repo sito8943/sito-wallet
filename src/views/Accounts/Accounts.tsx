@@ -49,11 +49,12 @@ import {
 } from "./hooks";
 
 // types
-import {
+import type {
   AccountDto,
   FilterAccountDto,
+  ImportPreviewAccountDto} from "lib";
+import {
   Tables,
-  ImportPreviewAccountDto,
   isFeatureDisabledBusinessError,
   defaultAccountsListFilters,
   normalizeListFilters,

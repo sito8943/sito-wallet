@@ -2,7 +2,7 @@ import { useTranslation, Trans } from "react-i18next";
 import { Link } from "react-router-dom";
 
 // types
-import { HowToStep } from "./types";
+import type { HowToStep } from "./types";
 
 // lib
 import { AppRoutes } from "lib";

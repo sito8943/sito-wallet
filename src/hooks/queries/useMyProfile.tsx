@@ -1,4 +1,5 @@
-import { UseQueryResult, useQuery } from "@tanstack/react-query";
+import type { UseQueryResult} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 // providers
 import { useManager, useOfflineManager } from "providers";

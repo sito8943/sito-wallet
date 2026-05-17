@@ -1,13 +1,15 @@
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 // providers
 import { useManager, useOfflineManager } from "providers";
 import { useAuth } from "@sito/dashboard-app";
 
 // lib
-import {
+import type {
   CommonAccountDto,
-  FilterAccountDto,
+  FilterAccountDto} from "lib";
+import {
   applyHideDeletedEntitiesPreference,
   normalizeCommonFilters,
 } from "lib";
@@ -26,7 +28,7 @@ export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
     enabled: !!account?.id,
     queryFn: async () => {
       const commonFilters = applyHideDeletedEntitiesPreference(
-        normalizeCommonFilters() as Record<string, unknown>,
+        normalizeCommonFilters(),
         hideDeletedEntities,
       ) as FilterAccountDto;
 

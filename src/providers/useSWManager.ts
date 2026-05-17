@@ -1,7 +1,7 @@
 import { useManager as useBaseManager } from "@sito/dashboard-app";
 
 // lib
-import { Manager, OfflineManager } from "lib";
+import type { Manager, OfflineManager } from "lib";
 import { useOfflineManager } from "./Offline/OfflineManagerContext";
 
 /**

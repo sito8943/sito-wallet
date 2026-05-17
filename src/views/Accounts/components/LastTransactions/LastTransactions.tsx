@@ -2,7 +2,7 @@
 import { Loading, SortOrder } from "@sito/dashboard-app";
 
 // types
-import { LastTransactionsPropsType } from "./types";
+import type { LastTransactionsPropsType } from "./types";
 
 //hooks
 import { useTransactionsList } from "hooks";

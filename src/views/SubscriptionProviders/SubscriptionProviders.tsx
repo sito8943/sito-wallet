@@ -28,10 +28,11 @@ import {
 import { MobileSelectionBar } from "components";
 import { useManager, useRegisterBottomNavAction } from "providers";
 
-import {
+import type {
   FilterSubscriptionProviderDto,
   ImportPreviewSubscriptionProviderDto,
-  SubscriptionProviderDto,
+  SubscriptionProviderDto} from "lib";
+import {
   Tables,
   TablesCamelCase,
   defaultSubscriptionProvidersListFilters,

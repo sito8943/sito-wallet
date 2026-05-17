@@ -6,10 +6,10 @@ import { isHttpError, useNotification, usePostDialog } from "@sito/dashboard-app
 import { UsersQueryKeys } from "hooks";
 import { useManager } from "providers";
 
-import { AddUserDto } from "lib";
+import type { AddUserDto } from "lib";
 
 import { emptyAddUserForm, userFormToCreateDto } from "../utils";
-import { UserFormType } from "../types";
+import type { UserFormType } from "../types";
 
 export function useAddUser() {
   const { t } = useTranslation();

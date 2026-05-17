@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 
 // lib
-import { OfflineManager } from "lib";
+import type { OfflineManager } from "lib";
 
 export const OfflineManagerContext = createContext<OfflineManager | null>(null);
 

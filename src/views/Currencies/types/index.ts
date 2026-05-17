@@ -1,10 +1,10 @@
-import { FieldValues } from "react-hook-form";
+import type { FieldValues } from "react-hook-form";
 
 // @sito/dashboard-app
-import { ActionType, FormDialogPropsType } from "@sito/dashboard-app";
+import type { ActionType, FormDialogPropsType } from "@sito/dashboard-app";
 
 // lib
-import { CurrencyDto } from "lib";
+import type { CurrencyDto } from "lib";
 
 export interface CurrencyCardPropsType extends CurrencyDto {
   actions: ActionType<CurrencyDto>[];

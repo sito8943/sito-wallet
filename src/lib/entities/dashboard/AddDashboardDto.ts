@@ -1,4 +1,4 @@
-import { DashboardCardType } from "./DashboardCardType";
+import type { DashboardCardType } from "./DashboardCardType";
 
 export interface AddDashboardDto {
   type: DashboardCardType;

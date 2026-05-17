@@ -3,17 +3,18 @@ import { Controller, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
+import type {
+  Option} from "@sito/dashboard-app";
 import {
   AutocompleteInput,
   FormDialog,
-  Option,
   SelectInput,
   SortOrder,
   TextInput,
 } from "@sito/dashboard-app";
 
 // types
-import { TransactionsMobileFiltersDialogPropsType } from "../types";
+import type { TransactionsMobileFiltersDialogPropsType } from "../types";
 
 // utils
 import { getTransactionTypeOptions } from "./Containers/transactionColumns";

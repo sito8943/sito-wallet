@@ -1,14 +1,15 @@
+import type {
+  QueryParam,
+  QueryResult} from "@sito/dashboard-app";
 import {
   BaseClient,
   Methods,
-  QueryParam,
-  QueryResult,
   parseQueries,
 } from "@sito/dashboard-app";
 
 import { Tables } from "./types";
 
-import {
+import type {
   AddSubscriptionBillingLogDto,
   AddSubscriptionRenewalDto,
   AddSubscriptionDto,

@@ -17,10 +17,10 @@ import { CurrenciesQueryKeys } from "hooks";
 import { dtoToForm, emptyCurrency, formToDto } from "../utils";
 
 // lib
-import { UpdateCurrencyDto, CurrencyDto } from "lib";
+import type { UpdateCurrencyDto, CurrencyDto } from "lib";
 
 // types
-import { CurrencyFormType } from "../types";
+import type { CurrencyFormType } from "../types";
 
 export function useEditCurrency() {
   const { t } = useTranslation();

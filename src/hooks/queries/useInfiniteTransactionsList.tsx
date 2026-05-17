@@ -2,15 +2,17 @@ import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 // @sito/dashboard-app
-import { QueryParam, useAuth, useTableOptions } from "@sito/dashboard-app";
+import type { QueryParam} from "@sito/dashboard-app";
+import { useAuth, useTableOptions } from "@sito/dashboard-app";
 
 // providers
 import { useManager, useOfflineManager } from "providers";
 
 // lib
-import {
+import type {
   TransactionDto,
-  FilterTransactionDto,
+  FilterTransactionDto} from "lib";
+import {
   applyHideDeletedEntitiesPreference,
   defaultTransactionsListFilters,
   normalizeListFilters,
@@ -41,7 +43,7 @@ export function useInfiniteTransactionsList(props: {
         normalizeListFilters({
           ...tableFilters,
           ...filters,
-        }) as Record<string, unknown>,
+        }),
         hideDeletedEntities,
       ) as FilterTransactionDto,
     [filters, tableFilters, hideDeletedEntities],

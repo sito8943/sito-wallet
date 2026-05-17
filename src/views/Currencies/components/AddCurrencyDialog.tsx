@@ -2,7 +2,7 @@
 import { FormDialog } from "@sito/dashboard-app";
 
 // types
-import { AddCurrencyDialogPropsType } from "../types";
+import type { AddCurrencyDialogPropsType } from "../types";
 
 // components
 import { CurrencyForm } from "./CurrencyForm";

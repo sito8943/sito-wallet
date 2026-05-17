@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { ActionType } from "@sito/dashboard-app";
+import type { ActionType } from "@sito/dashboard-app";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,11 +12,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // types
-import { UseSingleActionPropTypes } from "@sito/dashboard-app";
+import type { UseSingleActionPropTypes } from "@sito/dashboard-app";
 import { AccountActions } from "../types";
 
 // lib
-import { AccountDto } from "lib";
+import type { AccountDto } from "lib";
 
 export const useSyncAccountAction = (
   props: UseSingleActionPropTypes<number>,

@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
-import { UseActionDialog, usePostDialog } from "@sito/dashboard-app";
+import type { UseActionDialog} from "@sito/dashboard-app";
+import { usePostDialog } from "@sito/dashboard-app";
 
 // providers
 import { useManager } from "providers";
@@ -15,10 +16,11 @@ import { useManager } from "providers";
 import { TransactionsQueryKeys } from "hooks";
 
 // lib
-import { AssignTransactionAccountDto, TransactionDto } from "lib";
+import type { AssignTransactionAccountDto, TransactionDto } from "lib";
 
 // types
-import { AssignTransactionAccountFormType, TransactionActions } from "../types";
+import type { AssignTransactionAccountFormType} from "../types";
+import { TransactionActions } from "../types";
 
 // utils
 import { assignAccountFormToDto, emptyAssignAccountForm } from "../utils";

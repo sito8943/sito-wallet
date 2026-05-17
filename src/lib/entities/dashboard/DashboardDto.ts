@@ -1,5 +1,5 @@
-import { BaseEntityDto, CommonUserDto } from "@sito/dashboard-app";
-import { DashboardCardType } from "./DashboardCardType";
+import type { BaseEntityDto, CommonUserDto } from "@sito/dashboard-app";
+import type { DashboardCardType } from "./DashboardCardType";
 
 export interface DashboardDto extends BaseEntityDto {
   type: DashboardCardType;

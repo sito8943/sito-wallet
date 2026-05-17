@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { ItemCard, ItemCardTitle } from "components";
 
-import { UserCardPropsType } from "../types";
+import type { UserCardPropsType } from "../types";
 
 export function UserCard(props: UserCardPropsType) {
   const { t } = useTranslation();

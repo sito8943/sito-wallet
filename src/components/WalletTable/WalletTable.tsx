@@ -1,8 +1,8 @@
-import { BaseEntityDto } from "@sito/dashboard-app";
+import type { BaseEntityDto } from "@sito/dashboard-app";
 import { Table, useTableOptions } from "@sito/dashboard-app";
 
 // types
-import { WalletTablePropsType } from "./types";
+import type { WalletTablePropsType } from "./types";
 
 // lib
 import { useEffect } from "react";

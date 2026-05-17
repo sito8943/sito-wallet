@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
+import type {
+  UseActionDialog} from "@sito/dashboard-app";
 import {
   useEditAction,
   usePutDialog,
-  UseActionDialog,
   useNotification,
 } from "@sito/dashboard-app";
 
@@ -18,10 +19,10 @@ import { TransactionsQueryKeys } from "hooks";
 import { dtoToForm, emptyTransaction, formToDto } from "../utils";
 
 // lib
-import { UpdateTransactionDto, TransactionDto } from "lib";
+import type { UpdateTransactionDto, TransactionDto } from "lib";
 
 // types
-import { TransactionFormType } from "../types";
+import type { TransactionFormType } from "../types";
 
 export function useEditTransaction(): UseActionDialog<
   TransactionDto,

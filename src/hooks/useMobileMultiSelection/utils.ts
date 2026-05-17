@@ -1,4 +1,4 @@
-import { ActionType, BaseEntityDto } from "@sito/dashboard-app";
+import type { ActionType, BaseEntityDto } from "@sito/dashboard-app";
 
 export function getSharedMultiActions<TRow extends BaseEntityDto>(
   selectedRows: TRow[],

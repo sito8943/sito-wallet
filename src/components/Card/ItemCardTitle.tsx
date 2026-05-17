@@ -1,4 +1,4 @@
-import { ItemCardTitlePropsType } from "./types";
+import type { ItemCardTitlePropsType } from "./types";
 
 export const ItemCardTitle = (props: ItemCardTitlePropsType) => {
   const { children, deleted = false, className = "" } = props;

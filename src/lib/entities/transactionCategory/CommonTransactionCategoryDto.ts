@@ -1,5 +1,5 @@
-import { BaseCommonEntityDto } from "@sito/dashboard-app";
-import { TransactionType } from "lib";
+import type { BaseCommonEntityDto } from "@sito/dashboard-app";
+import type { TransactionType } from "lib";
 
 export interface CommonTransactionCategoryDto extends BaseCommonEntityDto {
   name: string;

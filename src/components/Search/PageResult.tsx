@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
 
 // types
-import { PageResultPropsType } from "./types";
+import type { PageResultPropsType } from "./types";
 
 /**
  *

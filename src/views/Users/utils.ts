@@ -1,6 +1,6 @@
-import { AddUserDto, UpdateUserDto, UserDto } from "lib";
+import type { AddUserDto, UpdateUserDto, UserDto } from "lib";
 
-import { UserFormType } from "./types";
+import type { UserFormType } from "./types";
 
 const toOptionalValue = (value: string): string | undefined => {
   const parsed = value.trim();

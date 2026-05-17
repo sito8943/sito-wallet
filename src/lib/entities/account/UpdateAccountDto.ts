@@ -1,5 +1,5 @@
-import { DeleteDto } from "@sito/dashboard-app";
-import { AccountType } from "./AccountType";
+import type { DeleteDto } from "@sito/dashboard-app";
+import type { AccountType } from "./AccountType";
 
 export interface UpdateAccountDto extends DeleteDto {
   name: string;

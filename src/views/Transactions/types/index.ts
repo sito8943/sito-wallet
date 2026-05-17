@@ -1,7 +1,7 @@
-import { FieldValues } from "react-hook-form";
+import type { FieldValues } from "react-hook-form";
 
 // @sito/dashboard
-import {
+import type {
   ActionType,
   BaseEntityDto,
   UseActionDialog,
@@ -13,7 +13,7 @@ import {
 } from "@sito/dashboard-app";
 
 // types
-import {
+import type {
   CommonAccountDto,
   CommonTransactionCategoryDto,
   TransactionDto,

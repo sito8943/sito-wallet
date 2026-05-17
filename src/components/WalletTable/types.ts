@@ -1,4 +1,4 @@
-import { TablePropsType, BaseEntityDto } from "@sito/dashboard-app";
+import type { TablePropsType, BaseEntityDto } from "@sito/dashboard-app";
 
 export type WalletTablePropsType<TRow extends BaseEntityDto> =
   TablePropsType<TRow> & {

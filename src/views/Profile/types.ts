@@ -1,4 +1,4 @@
-import { ProfileDto, ProfileLanguage } from "lib";
+import type { ProfileDto, ProfileLanguage } from "lib";
 
 export type ProfileFormType = {
   name: string;

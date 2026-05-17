@@ -3,15 +3,17 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 // providers
 import { useManager, useOfflineManager } from "providers";
-import { QueryParam, useAuth } from "@sito/dashboard-app";
+import type { QueryParam} from "@sito/dashboard-app";
+import { useAuth } from "@sito/dashboard-app";
 
 // types
-import { UseFetchPropsType } from "./types.ts";
+import type { UseFetchPropsType } from "./types.ts";
 
 // lib
-import {
+import type {
   AccountDto,
-  FilterAccountDto,
+  FilterAccountDto} from "lib";
+import {
   applyHideDeletedEntitiesPreference,
   defaultAccountsListFilters,
   normalizeListFilters,
@@ -36,7 +38,7 @@ export function useInfiniteAccountsList(
   const parsedFilters = useMemo(
     () =>
       applyHideDeletedEntitiesPreference(
-        normalizeListFilters(filters) as Record<string, unknown>,
+        normalizeListFilters(filters),
         hideDeletedEntities,
       ) as FilterAccountDto,
     [filters, hideDeletedEntities],

@@ -1,4 +1,4 @@
-import { FilterTransactionDto } from "lib";
+import type { FilterTransactionDto } from "lib";
 
 export interface FilterWeeklyTransactionDto extends Omit<
   FilterTransactionDto,

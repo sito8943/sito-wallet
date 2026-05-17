@@ -1,10 +1,12 @@
 import { useMemo } from "react";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 // @sito/dashboard-app
-import {
+import type {
   QueryParam,
-  QueryResult,
+  QueryResult} from "@sito/dashboard-app";
+import {
   useAuth,
   useTableOptions,
 } from "@sito/dashboard-app";
@@ -13,9 +15,10 @@ import {
 import { useManager, useOfflineManager } from "providers";
 
 // lib
-import {
+import type {
   TransactionDto,
-  FilterTransactionDto,
+  FilterTransactionDto} from "lib";
+import {
   applyHideDeletedEntitiesPreference,
   defaultTransactionsListFilters,
   normalizeListFilters,
@@ -52,7 +55,7 @@ export function useTransactionsList(props: {
         normalizeListFilters({
           ...tableFilters,
           ...filters,
-        }) as Record<string, unknown>,
+        }),
         hideDeletedEntities,
       ) as FilterTransactionDto,
     [filters, tableFilters, hideDeletedEntities],

@@ -1,14 +1,14 @@
-import { FieldValues } from "react-hook-form";
+import type { FieldValues } from "react-hook-form";
 
 // @sito/dashboard-app
-import {
+import type {
   DialogPropsType,
   FormPropsType,
   RangeValue,
 } from "@sito/dashboard-app";
 
 // lib
-import {
+import type {
   CommonAccountDto,
   CommonTransactionCategoryDto,
   DashboardDto,

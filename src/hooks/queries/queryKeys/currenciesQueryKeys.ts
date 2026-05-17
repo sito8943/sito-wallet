@@ -1,6 +1,6 @@
-import { QueryParam } from "@sito/dashboard-app";
+import type { QueryParam } from "@sito/dashboard-app";
 
-import { CurrencyDto, FilterCurrencyDto } from "lib";
+import type { CurrencyDto, FilterCurrencyDto } from "lib";
 
 export const CurrenciesQueryKeys = {
   all: () => ({

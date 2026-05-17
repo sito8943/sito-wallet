@@ -1,9 +1,9 @@
-import { QueryResult } from "@sito/dashboard-app";
-import { UseQueryResult } from "@tanstack/react-query";
+import type { QueryResult } from "@sito/dashboard-app";
+import type { UseQueryResult } from "@tanstack/react-query";
 
-import { TransactionDto, TransactionType } from "lib";
+import type { TransactionDto, TransactionType } from "lib";
 
-import {
+import type {
   WeeklyTransactionsDateRangeType,
   WeeklyTransactionsScopeType,
 } from "../../utils";

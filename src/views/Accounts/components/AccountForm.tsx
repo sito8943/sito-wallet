@@ -3,13 +3,14 @@ import { useTranslation } from "react-i18next";
 import { Controller, useWatch } from "react-hook-form";
 
 // @sito/dashboard-app
+import type {
+  Option} from "@sito/dashboard-app";
 import {
   enumToKeyValueArray,
   useAuth,
   ParagraphInput,
   SelectInput,
   TextInput,
-  Option,
   AutocompleteInput,
 } from "@sito/dashboard-app";
 
@@ -17,7 +18,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // types
-import { AccountFormPropsType } from "../types";
+import type { AccountFormPropsType } from "../types";
 
 // lib
 import { Tables, AccountType } from "lib";

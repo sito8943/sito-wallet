@@ -14,7 +14,7 @@ import {
 import { FileInput, IconButton } from "@sito/dashboard-app";
 
 // types
-import { ProfilePhotoPropsType } from "../types";
+import type { ProfilePhotoPropsType } from "../types";
 
 // components
 import { Image } from "components";

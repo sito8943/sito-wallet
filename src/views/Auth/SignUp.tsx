@@ -7,14 +7,15 @@ import { Link, useNavigate } from "react-router-dom";
 import "./styles.css";
 
 // @sito/dashboard-app
+import type {
+  RegisterDto,
+  SessionDto} from "@sito/dashboard-app";
 import {
   State,
   TextInput,
   useNotification,
   useAuth,
   useMutationForm,
-  RegisterDto,
-  SessionDto,
   Button,
   Loading,
   PasswordInput,
@@ -115,7 +116,9 @@ export function SignUp() {
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={(event) => {
+          void handleSubmit(onSubmit)(event);
+        }}
         className={`${appear ? "blur-appear" : ""} auth-form`}
       >
         <h1

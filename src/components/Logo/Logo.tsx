@@ -1,5 +1,5 @@
 // types
-import { LogoProps } from "./types";
+import type { LogoProps } from "./types";
 
 function Logo(props: LogoProps) {
   const { variant = "primary", ...restProps } = props;

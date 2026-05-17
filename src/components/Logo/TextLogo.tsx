@@ -1,5 +1,5 @@
 // types
-import { TextLogoProps } from "./types";
+import type { TextLogoProps } from "./types";
 
 // components
 import Vector from "./Vector";

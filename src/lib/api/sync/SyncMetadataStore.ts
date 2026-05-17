@@ -1,5 +1,5 @@
 import { SYNC_METADATA_STORAGE_KEY } from "./constants";
-import { SyncMetadata } from "./types";
+import type { SyncMetadata } from "./types";
 
 const defaultMetadata: SyncMetadata = {
   deviceId: null,

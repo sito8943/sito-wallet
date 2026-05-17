@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { ItemCard, ItemCardTitle } from "components";
 
 // types
-import { CurrencyCardPropsType } from "../types";
+import type { CurrencyCardPropsType } from "../types";
 
 export function CurrencyCard(props: CurrencyCardPropsType) {
   const { t } = useTranslation();

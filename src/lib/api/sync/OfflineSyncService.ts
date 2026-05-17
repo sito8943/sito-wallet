@@ -1,15 +1,19 @@
 import { SYNC_CLIENT_APP_VERSION } from "./constants";
-import { syncClient, SyncClient } from "./SyncClient";
-import { syncMetadataStore, SyncMetadataStore } from "./SyncMetadataStore";
-import { syncQueueStore, SyncQueueStore } from "./SyncQueueStore";
-import {
+import type { SyncClient } from "./SyncClient";
+import { syncClient } from "./SyncClient";
+import type { SyncMetadataStore } from "./SyncMetadataStore";
+import { syncMetadataStore } from "./SyncMetadataStore";
+import type { SyncQueueStore } from "./SyncQueueStore";
+import { syncQueueStore } from "./SyncQueueStore";
+import type {
   OfflineSyncRunResult,
   PreparedSyncOperation,
-  SYNC_ENTITY_ORDER,
   SyncBulkErrorItem,
   SyncHttpError,
   SyncPayload,
-  SyncQueueOperation,
+  SyncQueueOperation} from "./types";
+import {
+  SYNC_ENTITY_ORDER
 } from "./types";
 
 const isObjectPayload = (

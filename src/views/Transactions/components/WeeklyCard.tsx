@@ -12,7 +12,7 @@ import { Currency } from "../../Currencies";
 import { BaseCard } from "../../Home/components/Cards/BaseCard";
 
 // types
-import { WeeklyCardProps } from "./types";
+import type { WeeklyCardProps } from "./types";
 
 export const WeeklyCard = (props: WeeklyCardProps) => {
   const {

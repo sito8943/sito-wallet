@@ -3,7 +3,8 @@ import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { FormDialog, AutocompleteInput, Option } from "@sito/dashboard-app";
+import type { Option } from "@sito/dashboard-app";
+import { FormDialog, AutocompleteInput } from "@sito/dashboard-app";
 
 // hooks
 import { useAccountsCommon } from "hooks";
@@ -12,7 +13,7 @@ import { useAccountsCommon } from "hooks";
 import { Tables } from "lib";
 
 // types
-import { AssignTransactionAccountDialogPropsType } from "../types";
+import type { AssignTransactionAccountDialogPropsType } from "../types";
 
 export function AssignAccountDialog(
   props: AssignTransactionAccountDialogPropsType,

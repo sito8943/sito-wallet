@@ -2,16 +2,17 @@ import { BaseClient, Methods } from "@sito/dashboard-app";
 
 import { Tables } from "./types";
 
-import {
+import type {
   AddSubscriptionProviderDto,
   CommonSubscriptionProviderDto,
   FilterSubscriptionProviderDto,
   ImportDto,
   ImportPreviewSubscriptionProviderDto,
-  parseJSONFile,
   SubscriptionProviderImportItemDto,
   SubscriptionProviderDto,
-  UpdateSubscriptionProviderDto,
+  UpdateSubscriptionProviderDto} from "lib";
+import {
+  parseJSONFile
 } from "lib";
 
 import { config } from "../../config";

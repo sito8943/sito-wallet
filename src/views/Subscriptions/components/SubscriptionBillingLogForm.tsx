@@ -2,9 +2,10 @@ import { useEffect, useMemo } from "react";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+import type {
+  Option} from "@sito/dashboard-app";
 import {
   AutocompleteInput,
-  Option,
   ParagraphInput,
   TextInput,
 } from "@sito/dashboard-app";
@@ -12,7 +13,7 @@ import {
 import { useCurrenciesCommon } from "hooks";
 import { Tables } from "lib";
 
-import { AddSubscriptionBillingLogDialogPropsType } from "../types";
+import type { AddSubscriptionBillingLogDialogPropsType } from "../types";
 
 export function SubscriptionBillingLogForm(
   props: AddSubscriptionBillingLogDialogPropsType,

@@ -1,0 +1,25 @@
+@import "../../../../styles/variables.css";
+
+.onboarding-setup {
+  @apply w-full rounded-3xl border border-border bg-base-light p-4 text-left;
+}
+
+.onboarding-setup-title {
+  @apply text-base font-semibold text-text;
+}
+
+.onboarding-setup-description {
+  @apply mt-2 text-sm text-text-muted;
+}
+
+.onboarding-setup-actions {
+  @apply mt-4 flex flex-col gap-3 sm:flex-row;
+}
+
+.onboarding-setup-actions .button {
+  @apply w-full justify-center;
+}
+
+.onboarding-setup-button-content {
+  @apply flex items-center justify-center gap-2;
+}

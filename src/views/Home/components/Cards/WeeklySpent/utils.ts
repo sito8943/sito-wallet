@@ -1,5 +1,5 @@
-import { UpdateDashboardCardConfigDto } from "lib";
-import { WeeklySpentFormType } from "./types";
+import type { UpdateDashboardCardConfigDto } from "lib";
+import type { WeeklySpentFormType } from "./types";
 
 export const formToDto = (
   data: WeeklySpentFormType,

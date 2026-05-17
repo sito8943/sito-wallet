@@ -1,10 +1,10 @@
-import { FieldValues } from "react-hook-form";
+import type { FieldValues } from "react-hook-form";
 
 // @sito/dashboard-app
-import { ActionType, FormDialogPropsType } from "@sito/dashboard-app";
+import type { ActionType, FormDialogPropsType } from "@sito/dashboard-app";
 
 // lib
-import { DashboardDto } from "lib";
+import type { DashboardDto } from "lib";
 
 export interface DashboardCardPropsType extends DashboardDto {
   actions: ActionType<DashboardDto>[];

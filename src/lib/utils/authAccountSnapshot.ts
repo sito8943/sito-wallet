@@ -1,7 +1,8 @@
+import type {
+  SessionDto} from "@sito/dashboard-app";
 import {
   fromLocal,
   removeFromLocal,
-  SessionDto,
   toLocal,
 } from "@sito/dashboard-app";
 

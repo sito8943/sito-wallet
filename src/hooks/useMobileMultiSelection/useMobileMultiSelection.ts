@@ -1,10 +1,10 @@
 import { useCallback, useMemo, useState } from "react";
 
 // @sito/dashboard-app
-import { ActionType, BaseEntityDto } from "@sito/dashboard-app";
+import type { ActionType, BaseEntityDto } from "@sito/dashboard-app";
 
 // types
-import {
+import type {
   UseMobileMultiSelectionPropsType,
   UseMobileMultiSelectionReturnType,
 } from "./types";

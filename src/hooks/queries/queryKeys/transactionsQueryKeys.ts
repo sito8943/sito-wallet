@@ -1,6 +1,6 @@
-import { QueryParam } from "@sito/dashboard-app";
+import type { QueryParam } from "@sito/dashboard-app";
 
-import {
+import type {
   FilterTransactionDto,
   FilterTransactionGroupedByTypeDto,
   FilterWeeklyTransactionDto,

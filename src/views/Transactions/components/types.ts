@@ -1,4 +1,4 @@
-import { AccountDto, TransactionType } from "lib";
+import type { AccountDto, TransactionType } from "lib";
 
 export type WeeklyCardProps = {
   accountId?: number | null;

@@ -1,15 +1,15 @@
-import { ReactNode } from "react";
-import { FieldValues } from "react-hook-form";
+import type { ReactNode } from "react";
+import type { FieldValues } from "react-hook-form";
 
 // @sito/dashboard-app
-import {
+import type {
   ActionType,
   FormDialogPropsType,
   TriggerFormDialogPropsType,
 } from "@sito/dashboard-app";
 
 // lib
-import { AccountDto } from "lib";
+import type { AccountDto } from "lib";
 
 export interface AccountCardPropsType extends Omit<
   Partial<AccountDto>,

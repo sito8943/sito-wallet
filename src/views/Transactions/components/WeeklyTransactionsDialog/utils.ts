@@ -1,15 +1,16 @@
-import { TFunction } from "i18next";
+import type { TFunction } from "i18next";
 
 import { getFormattedDateTime } from "@sito/dashboard-app";
 
+import type {
+  TransactionDto} from "lib";
 import {
-  TransactionDto,
   TransactionType,
   getPrimaryTransactionCategory,
   getTransactionCategories,
 } from "lib";
 
-import { WeeklyTransactionsDateRangeType } from "../../utils";
+import type { WeeklyTransactionsDateRangeType } from "../../utils";
 
 export const getWeeklyTransactionsRangeLabel = (
   dateRange: WeeklyTransactionsDateRangeType,

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { ArrayChip, Chip, RangeChip } from "@sito/dashboard-app";
 
 // types
-import { ActiveFiltersPropsType } from "./types";
+import type { ActiveFiltersPropsType } from "./types";
 
 // lib
 import { TransactionType } from "lib";

@@ -3,21 +3,23 @@ import { Controller, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { FormDialog, AutocompleteInput, Option } from "@sito/dashboard-app";
+import type { Option } from "@sito/dashboard-app";
+import { FormDialog, AutocompleteInput } from "@sito/dashboard-app";
 
 // hooks
 import { useTransactionCategoriesCommon } from "hooks";
 
 // lib
+import type {
+  CommonTransactionCategoryDto} from "lib";
 import {
-  CommonTransactionCategoryDto,
   Tables,
   hasMixedTransactionCategoryTypes,
   normalizeSelectedTransactionCategories,
 } from "lib";
 
 // types
-import { AssignTransactionCategoryDialogPropsType } from "../types";
+import type { AssignTransactionCategoryDialogPropsType } from "../types";
 
 export function AssignCategoryDialog(
   props: AssignTransactionCategoryDialogPropsType,
@@ -79,7 +81,7 @@ export function AssignCategoryDialog(
         rules={{
           validate: (value) => {
             const parsedCategories = Array.isArray(value)
-              ? (value as CommonTransactionCategoryDto[])
+              ? (value)
               : [];
 
             if (!parsedCategories.length) {

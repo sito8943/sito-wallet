@@ -1,7 +1,7 @@
 import { APIClient, Methods } from "@sito/dashboard-app";
 
 import { config } from "../../../config";
-import {
+import type {
   SyncBulkRequest,
   SyncBulkResponse,
   SyncCancelSessionRequest,

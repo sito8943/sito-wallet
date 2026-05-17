@@ -1,4 +1,4 @@
-import { VectorProps } from "./types";
+import type { VectorProps } from "./types";
 
 function Vector(props: VectorProps) {
   const { variant = "primary", ...restProps } = props;

@@ -1,13 +1,14 @@
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { useAuth } from "@sito/dashboard-app";
 
 import { useManager } from "providers";
 
-import { SubscriptionRenewalDto } from "lib";
+import type { SubscriptionRenewalDto } from "lib";
 
 import { SubscriptionsQueryKeys } from "./queryKeys/subscriptionsQueryKeys";
-import { UseSubscriptionsRenewalsProps } from "./types";
+import type { UseSubscriptionsRenewalsProps } from "./types";
 
 export function useSubscriptionsRenewals(
   props: UseSubscriptionsRenewalsProps = {},

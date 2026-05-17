@@ -14,7 +14,7 @@ import {
 
 // types
 import type { FeatureFlagsContextType } from "./types";
-import { BasicProviderPropTypes } from "../types";
+import type { BasicProviderPropTypes } from "../types";
 
 // hooks
 import { useManager } from "../useSWManager";

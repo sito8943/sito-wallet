@@ -21,7 +21,7 @@ import { SearchInput } from "./SearchInput";
 import { flattenSitemap, getFeatureFilteredSitemap } from "../../views/sitemap";
 
 // types
-import { SearchResultType, SearchWrapperPropsType } from "./types";
+import type { SearchResultType, SearchWrapperPropsType } from "./types";
 
 // config
 import { config } from "../../config";

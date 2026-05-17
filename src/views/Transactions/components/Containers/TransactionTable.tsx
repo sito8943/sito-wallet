@@ -11,15 +11,16 @@ import { WalletTable } from "components";
 import { useTransactionsList } from "hooks";
 
 // lib
+import type {
+  TransactionDto} from "lib";
 import {
   EntityName,
-  TransactionDto,
   normalizeListFilters,
   useParseColumns,
 } from "lib";
 
 // types
-import { TransactionContainerPropsType } from "./types";
+import type { TransactionContainerPropsType } from "./types";
 
 // utils
 import { getTransactionColumns } from "./transactionColumns";

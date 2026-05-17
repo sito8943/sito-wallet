@@ -43,10 +43,11 @@ import {
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 // lib
+import type {
+  FilterSubscriptionDto,
+  SubscriptionDto} from "lib";
 import {
   AppRoutes,
-  FilterSubscriptionDto,
-  SubscriptionDto,
   Tables,
   defaultSubscriptionsListFilters,
   getSubscriptionEditRoute,

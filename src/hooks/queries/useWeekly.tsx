@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
@@ -9,10 +10,11 @@ import { useAuth } from "@sito/dashboard-app";
 import { useManager, useOfflineManager } from "providers";
 
 // lib
-import {
+import type {
   FilterWeeklyTransactionDto,
+  TransactionWeeklySpentDto} from "lib";
+import {
   TransactionType,
-  TransactionWeeklySpentDto,
   applyHideDeletedEntitiesPreference,
   normalizeCommonFilters,
 } from "lib";
@@ -28,7 +30,7 @@ export function useWeekly(
   const filters = useMemo(
     () =>
       applyHideDeletedEntitiesPreference(
-        normalizeCommonFilters(props) as Record<string, unknown>,
+        normalizeCommonFilters(props),
         hideDeletedEntities,
       ) as FilterWeeklyTransactionDto,
     [props, hideDeletedEntities],

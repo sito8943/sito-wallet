@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { ActionType } from "@sito/dashboard-app";
+import type { ActionType } from "@sito/dashboard-app";
 import { useFeatureFlags } from "providers";
 
 // icons
@@ -11,11 +11,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 // types
-import { UseSingleActionPropTypes } from "@sito/dashboard-app";
+import type { UseSingleActionPropTypes } from "@sito/dashboard-app";
 import { AccountActions } from "../types";
 
 // lib
-import { AccountDto, getTransactionsRouteWithAccountId } from "lib";
+import type { AccountDto} from "lib";
+import { getTransactionsRouteWithAccountId } from "lib";
 
 export const useViewTransactionsAction = (
   props: Omit<UseSingleActionPropTypes<number>, "onClick">,

@@ -1,5 +1,5 @@
-import { CommonTransactionCategoryDto } from "../transactionCategory";
-import { TransactionDto } from "./TransactionDto";
+import type { CommonTransactionCategoryDto } from "../transactionCategory";
+import type { TransactionDto } from "./TransactionDto";
 
 const parseCategoryArray = (
   categories: CommonTransactionCategoryDto[] | null | undefined,

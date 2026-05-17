@@ -25,7 +25,7 @@ import {
 } from "@sito/dashboard-app";
 
 // lib
-import { UpdateDashboardCardConfigDto, UpdateDashboardCardTitleDto } from "lib";
+import type { UpdateDashboardCardConfigDto, UpdateDashboardCardTitleDto } from "lib";
 
 // local
 import { BaseCard } from "./BaseCard";
@@ -105,7 +105,7 @@ export const DashboardCard = <TForm extends FieldValues>(
     defaultValues: formConfig as DefaultValues<TForm>,
     queryKey: ["dashboards", "card-config", id],
     formToDto: (data: TForm) =>
-      formToDto({ ...(data as TForm), userId: userId ?? 0, id }),
+      formToDto({ ...(data), userId: userId ?? 0, id }),
     mutationFn: async (data: UpdateDashboardCardConfigDto) =>
       await manager.Dashboard.updateCardConfig(data),
     onSuccess: () => {

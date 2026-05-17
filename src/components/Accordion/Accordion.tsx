@@ -1,5 +1,5 @@
 // types
-import { AccordionPropsType } from "./types";
+import type { AccordionPropsType } from "./types";
 
 // styles
 import "./styles.css";

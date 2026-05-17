@@ -5,7 +5,7 @@ import { useAuth } from "@sito/dashboard-app";
 import { persistPublicSessionAccount } from "lib";
 
 // types
-import { BasicProviderPropTypes } from "./types";
+import type { BasicProviderPropTypes } from "./types";
 
 export const AuthAccountPersistenceProvider = ({
   children,

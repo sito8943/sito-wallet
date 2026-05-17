@@ -1,20 +1,23 @@
 import { useMemo } from "react";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
-import { QueryResult, useAuth } from "@sito/dashboard-app";
+import type { QueryResult} from "@sito/dashboard-app";
+import { useAuth } from "@sito/dashboard-app";
 
 import { useManager } from "providers";
 
-import {
+import type {
   FilterSubscriptionDto,
-  SubscriptionDto,
+  SubscriptionDto} from "lib";
+import {
   applyHideDeletedEntitiesPreference,
   defaultSubscriptionsListFilters,
   normalizeListFilters,
 } from "lib";
 
 import { useHideDeletedEntitiesPreference } from "./useProfile";
-import { UseFetchPropsType } from "./types";
+import type { UseFetchPropsType } from "./types";
 import { SubscriptionsQueryKeys } from "./queryKeys/subscriptionsQueryKeys";
 
 export function useSubscriptionsList(
@@ -30,7 +33,7 @@ export function useSubscriptionsList(
   const normalizedFilters = useMemo(
     () =>
       applyHideDeletedEntitiesPreference(
-        normalizeListFilters(filters) as Record<string, unknown>,
+        normalizeListFilters(filters),
         hideDeletedEntities,
       ) as FilterSubscriptionDto,
     [filters, hideDeletedEntities],

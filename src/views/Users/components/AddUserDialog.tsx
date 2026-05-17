@@ -1,6 +1,6 @@
 import { FormDialog } from "@sito/dashboard-app";
 
-import { AddUserDialogPropsType } from "../types";
+import type { AddUserDialogPropsType } from "../types";
 
 import { UserForm } from "./UserForm";
 

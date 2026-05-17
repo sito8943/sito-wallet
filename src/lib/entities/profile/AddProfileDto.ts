@@ -1,4 +1,4 @@
-import { ProfileLanguage } from "./ProfileDto";
+import type { ProfileLanguage } from "./ProfileDto";
 
 export interface AddProfileDto {
   name: string;

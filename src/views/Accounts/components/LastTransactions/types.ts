@@ -1,4 +1,4 @@
-import { CommonCurrencyDto, TransactionDto } from "lib";
+import type { CommonCurrencyDto, TransactionDto } from "lib";
 
 export type LastTransactionsPropsType = {
   accountId: number;

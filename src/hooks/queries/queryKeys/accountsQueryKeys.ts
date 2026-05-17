@@ -1,6 +1,6 @@
-import { QueryParam } from "@sito/dashboard-app";
+import type { QueryParam } from "@sito/dashboard-app";
 
-import { AccountDto, FilterAccountDto } from "lib";
+import type { AccountDto, FilterAccountDto } from "lib";
 
 export const AccountsQueryKeys = {
   all: () => ({

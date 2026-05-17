@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
@@ -9,12 +10,13 @@ import { useAuth } from "@sito/dashboard-app";
 import { useManager, useOfflineManager } from "providers";
 
 // types
-import { UseTransactionsGroupedByTypePropsType } from "./types.ts";
+import type { UseTransactionsGroupedByTypePropsType } from "./types.ts";
 
 // lib
-import {
+import type {
   FilterTransactionGroupedByTypeDto,
-  TransactionTypeGroupedDto,
+  TransactionTypeGroupedDto} from "lib";
+import {
   applyHideDeletedEntitiesPreference,
   normalizeCommonFilters,
 } from "lib";
@@ -29,7 +31,7 @@ export function useTransactionsGroupedByType(
 
   const filters = useMemo<FilterTransactionGroupedByTypeDto>(() => {
     const normalized = applyHideDeletedEntitiesPreference(
-      normalizeCommonFilters(props) as Record<string, unknown>,
+      normalizeCommonFilters(props),
       hideDeletedEntities,
     ) as Partial<FilterTransactionGroupedByTypeDto>;
 

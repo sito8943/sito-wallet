@@ -45,11 +45,12 @@ import {
 } from "./hooks";
 
 // types
-import {
-  Tables,
+import type {
   TransactionCategoryDto,
   FilterTransactionCategoryDto,
-  ImportPreviewTransactionCategoryDto,
+  ImportPreviewTransactionCategoryDto} from "lib";
+import {
+  Tables,
   TablesCamelCase,
   isFeatureDisabledBusinessError,
   defaultTransactionCategoriesListFilters,

@@ -1,17 +1,18 @@
 // @sito/dashboard-app
 import { formatForDatetimeLocal } from "@sito/dashboard-app";
 
-import {
+import type {
   CommonAccountDto,
   TransactionDto,
   UpdateTransactionDto,
   AssignTransactionAccountDto,
-  AssignTransactionCategoryDto,
+  AssignTransactionCategoryDto} from "lib";
+import {
   getPrimaryTransactionCategory,
   getTransactionCategories,
   normalizeSelectedTransactionCategories,
 } from "lib";
-import {
+import type {
   AssignTransactionAccountFormType,
   AssignTransactionCategoryFormType,
   TransactionFormType,

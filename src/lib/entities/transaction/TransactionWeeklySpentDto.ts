@@ -1,4 +1,4 @@
-import { CommonAccountDto } from "lib";
+import type { CommonAccountDto } from "lib";
 
 export type TransactionWeeklySpentDto = {
   currentWeek: number;

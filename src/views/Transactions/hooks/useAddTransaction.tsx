@@ -13,14 +13,14 @@ import { TransactionsQueryKeys } from "hooks";
 import { addEmptyTransaction, formToDto } from "../utils";
 
 // types
-import {
+import type {
   AddTransactionDialogPropsType,
   TransactionFormType,
   UseAddTransactionDialogActionPropsType,
 } from "../types";
 
 // lib
-import { AddTransactionDto, TransactionDto } from "lib";
+import type { AddTransactionDto, TransactionDto } from "lib";
 
 export function useAddTransaction(
   props: UseAddTransactionDialogActionPropsType,

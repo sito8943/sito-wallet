@@ -1,5 +1,5 @@
-import { BaseEntityDto } from "@sito/dashboard-app";
-import { CommonUserProfileDto } from "./CommonUserProfileDto";
+import type { BaseEntityDto } from "@sito/dashboard-app";
+import type { CommonUserProfileDto } from "./CommonUserProfileDto";
 
 export type ProfileLanguage = "es" | "en";
 

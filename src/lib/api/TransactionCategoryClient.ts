@@ -4,14 +4,15 @@ import { BaseClient, Methods } from "@sito/dashboard-app";
 import { Tables } from "./types";
 
 // types
-import {
+import type {
   CommonTransactionCategoryDto,
   TransactionCategoryDto,
   UpdateTransactionCategoryDto,
   FilterTransactionCategoryDto,
   AddTransactionCategoryDto,
   ImportPreviewTransactionCategoryDto,
-  ImportDto,
+  ImportDto} from "lib";
+import {
   parseJSONFile,
 } from "lib";
 

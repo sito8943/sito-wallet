@@ -2,7 +2,7 @@ import { BaseClient } from "@sito/dashboard-app";
 
 import { Tables } from "./types";
 
-import {
+import type {
   AddUserDto,
   CommonUserDto,
   FilterUserDto,

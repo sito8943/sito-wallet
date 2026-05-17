@@ -1,5 +1,5 @@
-import { UpdateDashboardCardConfigDto } from "lib";
-import { TypeResumeTypeFormType } from "./types";
+import type { UpdateDashboardCardConfigDto } from "lib";
+import type { TypeResumeTypeFormType } from "./types";
 
 export const formToDto = (
   data: TypeResumeTypeFormType,

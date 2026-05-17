@@ -1,5 +1,6 @@
-import { AccountDto, AccountType, AddAccountDto, UpdateAccountDto } from "lib";
-import { AccountFormType } from "./types";
+import type { AccountDto, AddAccountDto, UpdateAccountDto } from "lib";
+import { AccountType } from "lib";
+import type { AccountFormType } from "./types";
 
 export const formToUpdateDto = ({
   currency,

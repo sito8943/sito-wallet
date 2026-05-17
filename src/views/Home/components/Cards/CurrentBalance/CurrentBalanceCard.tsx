@@ -30,7 +30,7 @@ import { DashboardCard } from "../DashboardCard";
 import "../TypeResume/styles.css";
 
 // types
-import { CurrentBalanceFormType, CurrentBalancePropsType } from "./types";
+import type { CurrentBalanceFormType, CurrentBalancePropsType } from "./types";
 
 // utils
 import { formToDto } from "./utils";

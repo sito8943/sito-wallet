@@ -5,7 +5,7 @@ import { isHttpError, useNotification, usePutDialog } from "@sito/dashboard-app"
 import { SubscriptionProvidersQueryKeys } from "hooks";
 import { useManager } from "providers";
 
-import {
+import type {
   SubscriptionProviderDto,
 } from "lib";
 
@@ -14,7 +14,7 @@ import {
   subscriptionProviderDtoToForm,
   subscriptionProviderFormToUpdateDto,
 } from "../utils";
-import {
+import type {
   SubscriptionProviderFormType,
   UpdateSubscriptionProviderMutationDto,
 } from "../types";

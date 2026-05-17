@@ -8,7 +8,7 @@ import { Loading, IconButton } from "@sito/dashboard-app";
 import { faBroom } from "@fortawesome/free-solid-svg-icons";
 
 // types
-import { SearchResultPropsType } from "./types";
+import type { SearchResultPropsType } from "./types";
 
 // components
 import PageResult from "./PageResult";

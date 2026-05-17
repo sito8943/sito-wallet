@@ -1,10 +1,11 @@
 import { t } from "i18next";
 
 // @sito/dashboard-app
-import {
+import type {
   FeatureEnabledFn,
+  MenuItemType} from "@sito/dashboard-app";
+import {
   filterMenuByFeatureFlags,
-  MenuItemType,
   normalizeMenuDividers,
 } from "@sito/dashboard-app";
 

@@ -2,9 +2,10 @@ import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import {
+import type {
   ActionType,
-  BaseEntityDto,
+  BaseEntityDto} from "@sito/dashboard-app";
+import {
   TableSelectionBar,
 } from "@sito/dashboard-app";
 
@@ -13,7 +14,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // types
-import { MobileSelectionBarPropsType } from "./types";
+import type { MobileSelectionBarPropsType } from "./types";
 
 // constants
 import { MOBILE_SELECTION_CANCEL_ACTION_ID } from "./constants";

@@ -16,7 +16,8 @@ import {
 import { SubscriptionsQueryKeys, useMobileNavbar } from "hooks";
 import { useManager } from "providers";
 
-import { AppRoutes, FormMode, SubscriptionDto } from "lib";
+import type { SubscriptionDto } from "lib";
+import { AppRoutes, FormMode } from "lib";
 
 import {
   AddSubscriptionBillingLogDialog,
@@ -27,7 +28,7 @@ import {
   useAddSubscriptionBillingLogDialog,
   useAddSubscriptionRenewalMutation,
 } from "./hooks";
-import { SubscriptionFormType } from "./types";
+import type { SubscriptionFormType } from "./types";
 import {
   emptySubscriptionForm,
   subscriptionDtoToForm,

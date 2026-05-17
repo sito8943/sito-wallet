@@ -1,20 +1,22 @@
 import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { QueryParam, useAuth } from "@sito/dashboard-app";
+import type { QueryParam} from "@sito/dashboard-app";
+import { useAuth } from "@sito/dashboard-app";
 
 import { useManager } from "providers";
 
-import {
+import type {
   FilterSubscriptionDto,
-  SubscriptionDto,
+  SubscriptionDto} from "lib";
+import {
   applyHideDeletedEntitiesPreference,
   defaultSubscriptionsListFilters,
   normalizeListFilters,
 } from "lib";
 
 import { useHideDeletedEntitiesPreference } from "./useProfile";
-import { UseFetchPropsType } from "./types";
+import type { UseFetchPropsType } from "./types";
 import { SubscriptionsQueryKeys } from "./queryKeys/subscriptionsQueryKeys";
 
 export function useInfiniteSubscriptionsList(
@@ -34,7 +36,7 @@ export function useInfiniteSubscriptionsList(
   const parsedFilters = useMemo(
     () =>
       applyHideDeletedEntitiesPreference(
-        normalizeListFilters(filters) as Record<string, unknown>,
+        normalizeListFilters(filters),
         hideDeletedEntities,
       ) as FilterSubscriptionDto,
     [filters, hideDeletedEntities],

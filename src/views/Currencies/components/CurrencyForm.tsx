@@ -6,7 +6,7 @@ import { Controller } from "react-hook-form";
 import { TextInput, ParagraphInput } from "@sito/dashboard-app";
 
 // types
-import { CurrencyFormPropsType } from "../types";
+import type { CurrencyFormPropsType } from "../types";
 
 // lib
 import { Tables } from "lib";

@@ -2,7 +2,7 @@
 import { Chip } from "@sito/dashboard-app";
 
 // types
-import { ActiveFiltersPropsType } from "./types";
+import type { ActiveFiltersPropsType } from "./types";
 
 export const ActiveFilters = (props: ActiveFiltersPropsType) => {
   const { account } = props;

@@ -1,17 +1,20 @@
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
 // providers
 import { useManager, useOfflineManager } from "providers";
-import { QueryResult, useAuth } from "@sito/dashboard-app";
+import type { QueryResult} from "@sito/dashboard-app";
+import { useAuth } from "@sito/dashboard-app";
 
 // types
-import { UseFetchPropsType } from "./types.ts";
+import type { UseFetchPropsType } from "./types.ts";
 
 // lib
-import {
+import type {
   DashboardDto,
-  FilterDashboardDto,
+  FilterDashboardDto} from "lib";
+import {
   normalizeHardDeleteFilters,
 } from "lib";
 import { DashboardsQueryKeys } from "./queryKeys/dashboardsQueryKeys";

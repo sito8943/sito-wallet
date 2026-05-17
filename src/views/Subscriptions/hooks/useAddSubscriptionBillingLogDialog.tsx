@@ -7,7 +7,7 @@ import { usePostDialog } from "@sito/dashboard-app";
 import { SubscriptionsQueryKeys } from "hooks";
 import { useManager } from "providers";
 
-import {
+import type {
   AddSubscriptionBillingLogDto,
   SubscriptionDto,
 } from "lib";
@@ -16,7 +16,7 @@ import {
   emptySubscriptionBillingLogForm,
   subscriptionBillingLogFormToDto,
 } from "../utils";
-import { SubscriptionBillingLogFormType } from "../types";
+import type { SubscriptionBillingLogFormType } from "../types";
 import { useAddSubscriptionBillingLogAction } from "./useAddSubscriptionBillingLogAction";
 
 export function useAddSubscriptionBillingLogDialog() {

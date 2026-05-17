@@ -7,7 +7,7 @@ import { Tables } from "./types";
 import { config } from "../../config";
 
 // types
-import { AddProfileDto, ProfileDto, UpdateProfileDto } from "lib";
+import type { AddProfileDto, ProfileDto, UpdateProfileDto } from "lib";
 
 type APIErrorShape = {
   status: number;

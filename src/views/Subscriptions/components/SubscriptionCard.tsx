@@ -6,7 +6,7 @@ import { ItemCard, ItemCardTitle } from "components";
 import { Currency } from "views/Currencies/components/Currency";
 
 import { SUBSCRIPTION_STATUS_BADGE_CLASSNAME } from "../constants";
-import { SubscriptionCardPropsType } from "../types";
+import type { SubscriptionCardPropsType } from "../types";
 import { toSubscriptionStatus } from "../utils";
 
 export function SubscriptionCard(props: SubscriptionCardPropsType) {

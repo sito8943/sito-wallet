@@ -6,13 +6,14 @@ import { useEffect, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @sito/dashboard-app
+import type {
+  Option} from "@sito/dashboard-app";
 import {
   enumToKeyValueArray,
   FormDialog,
   AutocompleteInput,
   TextInput,
-  SelectInput,
-  Option,
+  SelectInput
 } from "@sito/dashboard-app";
 
 // hooks
@@ -22,7 +23,7 @@ import { useAccountsCommon, useTransactionCategoriesCommon } from "hooks";
 import { Tables, TransactionType } from "lib";
 
 // types
-import { ConfigFormDialogPropsType, TypeResumeTypeFormType } from "./types";
+import type { ConfigFormDialogPropsType, TypeResumeTypeFormType } from "./types";
 
 // utils
 import { icons } from "../../../../Transactions/components/utils";

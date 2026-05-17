@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
@@ -9,13 +10,14 @@ import { useAuth } from "@sito/dashboard-app";
 import { useManager, useOfflineManager } from "providers";
 
 // types
-import { UseTransactionTypeResumePropsType } from "./types.ts";
+import type { UseTransactionTypeResumePropsType } from "./types.ts";
 
 // lib
-import {
+import type {
   FilterTransactionTypeResumeDto,
+  TransactionTypeResumeDto} from "lib";
+import {
   TransactionType,
-  TransactionTypeResumeDto,
   applyHideDeletedEntitiesPreference,
   normalizeCommonFilters,
 } from "lib";
@@ -31,7 +33,7 @@ export function useTransactionTypeResume(
   const filters = useMemo(
     () =>
       applyHideDeletedEntitiesPreference(
-        normalizeCommonFilters(props) as Record<string, unknown>,
+        normalizeCommonFilters(props),
         hideDeletedEntities,
       ) as FilterTransactionTypeResumeDto,
     [props, hideDeletedEntities],

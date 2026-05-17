@@ -1,6 +1,6 @@
-import { QueryParam } from "@sito/dashboard-app";
+import type { QueryParam } from "@sito/dashboard-app";
 
-import { FilterSubscriptionProviderDto, SubscriptionProviderDto } from "lib";
+import type { FilterSubscriptionProviderDto, SubscriptionProviderDto } from "lib";
 
 export const SubscriptionProvidersQueryKeys = {
   all: () => ({

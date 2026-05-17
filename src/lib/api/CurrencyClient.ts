@@ -4,15 +4,16 @@ import { BaseClient, Methods } from "@sito/dashboard-app";
 import { Tables } from "./types";
 
 // types
-import {
+import type {
   CommonCurrencyDto,
   CurrencyDto,
   UpdateCurrencyDto,
   FilterCurrencyDto,
   AddCurrencyDto,
-  parseJSONFile,
   ImportPreviewCurrencyDto,
-  ImportDto,
+  ImportDto} from "lib";
+import {
+  parseJSONFile
 } from "lib";
 
 // config

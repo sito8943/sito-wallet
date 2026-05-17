@@ -1,7 +1,7 @@
 import { t } from "i18next";
 
 // @sito/dashboard-app
-import {
+import type {
   FeatureEnabledFn,
   NamedViewPageType,
   SessionAccountDto,
@@ -9,7 +9,8 @@ import {
 } from "@sito/dashboard-app";
 
 // lib
-import { AppRoutes, FeatureFlagKey, isAdminSession } from "lib";
+import type { FeatureFlagKey} from "lib";
+import { AppRoutes, isAdminSession } from "lib";
 
 export enum PageId {
   Home = "home",

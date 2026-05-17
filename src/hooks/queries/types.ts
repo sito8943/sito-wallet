@@ -1,7 +1,7 @@
-import { UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
 
 // @sito/dashboard-app
-import {
+import type {
   BaseEntityDto,
   BaseFilterDto,
   QueryParam,
@@ -9,7 +9,7 @@ import {
 } from "@sito/dashboard-app";
 
 // lib
-import {
+import type {
   FilterTransactionGroupedByTypeDto,
   FilterTransactionTypeResumeDto,
 } from "lib";

@@ -6,7 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
-import { BottomNavItemType } from "@sito/dashboard-app";
+import type { BottomNavItemType } from "@sito/dashboard-app";
 
 // sitemap;
 import { PageId } from "./sitemap";

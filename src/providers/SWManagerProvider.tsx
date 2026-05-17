@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ManagerProvider } from "@sito/dashboard-app";
 
 // types
-import { BasicProviderPropTypes } from "./types";
+import type { BasicProviderPropTypes } from "./types";
 
 // hooks
 import { useOnlineStatus } from "hooks";

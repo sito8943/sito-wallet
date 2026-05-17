@@ -2,12 +2,13 @@ import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
+import type {
+  ActionType} from "@sito/dashboard-app";
 import {
   Error,
   SortOrder,
   Loading,
   PrettyGrid,
-  ActionType,
   TableSelectionBar,
 } from "@sito/dashboard-app";
 
@@ -20,14 +21,14 @@ import { TransactionCard } from "../TransactionCard";
 import { TransactionsMobileFilters } from "../TransactionsFiltersDialog";
 
 // types
-import { TransactionContainerPropsType } from "./types";
+import type { TransactionContainerPropsType } from "./types";
 
 // hooks
 import { useInfiniteTransactionsList } from "hooks";
 import { useTransactionsMobileFiltersDialog } from "../../hooks";
 
 // lib
-import { TransactionDto } from "lib";
+import type { TransactionDto } from "lib";
 
 // styles
 import "./styles.css";

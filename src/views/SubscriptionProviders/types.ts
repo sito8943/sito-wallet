@@ -1,8 +1,8 @@
-import { FieldValues } from "react-hook-form";
+import type { FieldValues } from "react-hook-form";
 
-import { ActionType, FormDialogPropsType } from "@sito/dashboard-app";
+import type { ActionType, FormDialogPropsType } from "@sito/dashboard-app";
 
-import {
+import type {
   AddSubscriptionProviderDto,
   SubscriptionProviderDto,
   UpdateSubscriptionProviderDto,

@@ -1,5 +1,5 @@
-import { DeleteDto } from "@sito/dashboard-app";
-import { TransactionType } from "./TransactionType";
+import type { DeleteDto } from "@sito/dashboard-app";
+import type { TransactionType } from "./TransactionType";
 
 export interface UpdateTransactionDto extends DeleteDto {
   description?: string | null;

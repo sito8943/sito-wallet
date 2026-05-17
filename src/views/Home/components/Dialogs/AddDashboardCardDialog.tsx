@@ -2,7 +2,7 @@
 import { FormDialog } from "@sito/dashboard-app";
 
 // types
-import { AddDashboardDialogPropsType } from "../../types";
+import type { AddDashboardDialogPropsType } from "../../types";
 
 import { AddDashboardCardForm } from "./AddDashboardCardForm";
 

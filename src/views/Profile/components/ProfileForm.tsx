@@ -4,10 +4,11 @@ import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
+import type {
+  Option} from "@sito/dashboard-app";
 import {
   Button,
   CheckInput,
-  Option,
   SelectInput,
   State,
   TextInput,
@@ -25,10 +26,10 @@ import { useProfilePhoto } from "../hooks";
 import { ProfilePhoto } from "./ProfilePhoto";
 
 // lib
-import { UpdateProfileDto } from "lib";
+import type { UpdateProfileDto } from "lib";
 
 // types
-import { ProfileFormPropsType, ProfileFormType } from "../types";
+import type { ProfileFormPropsType, ProfileFormType } from "../types";
 
 // utils
 import { getErrorMessage, normalizeProfileLanguage } from "../utils";

@@ -1,18 +1,19 @@
 import { useCallback } from "react";
 
 // @sito/dashboard-app
-import { ActionType, useTranslation } from "@sito/dashboard-app";
+import type { ActionType} from "@sito/dashboard-app";
+import { useTranslation } from "@sito/dashboard-app";
 
 // icons
 import { faFileInvoice } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // lib
-import { SubscriptionDto } from "lib";
+import type { SubscriptionDto } from "lib";
 
 // types
 import { SubscriptionAction } from "../types";
-import { UseAddSubscriptionBillingLogActionProps } from "./types";
+import type { UseAddSubscriptionBillingLogActionProps } from "./types";
 
 // utils
 import { toSubscriptionStatus } from "../utils";

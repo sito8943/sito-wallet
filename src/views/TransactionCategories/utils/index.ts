@@ -1,9 +1,10 @@
-import {
+import type {
   TransactionCategoryDto,
-  TransactionType,
-  UpdateTransactionCategoryDto,
+  UpdateTransactionCategoryDto} from "lib";
+import {
+  TransactionType
 } from "lib";
-import { TransactionCategoryFormType } from "../types";
+import type { TransactionCategoryFormType } from "../types";
 
 export const DEFAULT_TRANSACTION_CATEGORY_COLOR = "#0d0d0d";
 

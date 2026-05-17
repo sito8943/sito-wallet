@@ -3,9 +3,10 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
-import {
+import type {
   Option,
-  SoftDeleteScope,
+  SoftDeleteScope} from "@sito/dashboard-app";
+import {
   useFormDialog,
   useTableOptions,
 } from "@sito/dashboard-app";
@@ -14,10 +15,11 @@ import {
 import { TransactionsQueryKeys } from "hooks";
 
 // lib
-import {
+import type {
   CommonTransactionCategoryDto,
-  normalizeListFilters,
-  TransactionType,
+  TransactionType} from "lib";
+import {
+  normalizeListFilters
 } from "lib";
 
 // types
@@ -26,7 +28,7 @@ import {
   DEFAULT_SORTING_ORDER,
 } from "./constants";
 import { parseSortOrder } from "./utils";
-import { TransactionsMobileFiltersDialogPropsType, TransactionsMobileFiltersFormType } from "views/Transactions/types";
+import type { TransactionsMobileFiltersDialogPropsType, TransactionsMobileFiltersFormType } from "views/Transactions/types";
 
 export function useTransactionsMobileFiltersDialog(
   categories: CommonTransactionCategoryDto[],

@@ -21,10 +21,10 @@ import {
 } from "views/Accounts/hooks";
 
 // lib
-import { AccountDto } from "lib";
+import type { AccountDto } from "lib";
 
 // types
-import { AccountCarouselPropsType } from "./types";
+import type { AccountCarouselPropsType } from "./types";
 
 // components
 import { Error } from "@sito/dashboard-app";

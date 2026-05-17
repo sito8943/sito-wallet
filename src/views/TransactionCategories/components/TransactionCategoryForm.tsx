@@ -15,7 +15,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // types
-import { TransactionCategoryFormPropsType } from "../types";
+import type { TransactionCategoryFormPropsType } from "../types";
 
 // lib
 import { Tables, TransactionType } from "lib";

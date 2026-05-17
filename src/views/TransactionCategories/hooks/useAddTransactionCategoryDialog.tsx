@@ -13,10 +13,10 @@ import { TransactionCategoriesQueryKeys } from "hooks";
 import { addEmptyTransactionCategory, formToDto } from "../utils";
 
 // types
-import { TransactionCategoryFormType } from "../types";
+import type { TransactionCategoryFormType } from "../types";
 
 // lib
-import { AddTransactionCategoryDto, TransactionCategoryDto } from "lib";
+import type { AddTransactionCategoryDto, TransactionCategoryDto } from "lib";
 
 export function useAddTransactionCategoryDialog() {
   const { t } = useTranslation();

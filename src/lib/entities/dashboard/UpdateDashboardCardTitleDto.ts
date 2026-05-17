@@ -1,4 +1,4 @@
-import { DeleteDto } from "@sito/dashboard-app";
+import type { DeleteDto } from "@sito/dashboard-app";
 
 export interface UpdateDashboardCardTitleDto extends DeleteDto {
   title: string;

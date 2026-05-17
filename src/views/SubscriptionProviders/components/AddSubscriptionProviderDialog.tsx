@@ -2,7 +2,7 @@
 import { FormDialog } from "@sito/dashboard-app";
 
 // types
-import { AddSubscriptionProviderDialogPropsType } from "../types";
+import type { AddSubscriptionProviderDialogPropsType } from "../types";
 
 // components
 import { SubscriptionProviderForm } from "./SubscriptionProviderForm";

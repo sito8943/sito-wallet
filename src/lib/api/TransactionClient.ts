@@ -4,7 +4,7 @@ import { BaseClient, Methods, parseQueries } from "@sito/dashboard-app";
 import { Tables } from "./types";
 
 // types
-import {
+import type {
   CommonTransactionDto,
   TransactionDto,
   UpdateTransactionDto,
@@ -18,9 +18,10 @@ import {
   FilterWeeklyTransactionDto,
   ImportPreviewTransactionDto,
   ImportDto,
-  parseJSONFile,
   AssignTransactionAccountDto,
-  AssignTransactionCategoryDto,
+  AssignTransactionCategoryDto} from "lib";
+import {
+  parseJSONFile
 } from "lib";
 
 // utils

@@ -1,5 +1,5 @@
-import { UpdateDashboardCardConfigDto } from "lib";
-import { CurrentBalanceFormType } from "./types";
+import type { UpdateDashboardCardConfigDto } from "lib";
+import type { CurrentBalanceFormType } from "./types";
 
 export const formToDto = (
   data: CurrentBalanceFormType,

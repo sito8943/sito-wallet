@@ -1,12 +1,13 @@
-import { Outlet, useNavigate, useLocation, Link, To } from "react-router-dom";
+import type { To } from "react-router-dom";
+import { Outlet, useNavigate, useLocation, Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
-import { ComponentType, useEffect, useMemo, useState } from "react";
+import type { ComponentType} from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
 import {
-  BaseLinkPropsType,
   BottomNavActionProvider,
   BottomNavigation,
   ConfigProvider,
@@ -14,20 +15,22 @@ import {
   Onboarding,
   TableOptionsProvider,
   NavbarProvider,
-  OnboardingStepType,
   Notification,
   SplashScreen,
 } from "@sito/dashboard-app";
-import type { BottomNavigationItemType } from "@sito/dashboard-app";
+import type { BottomNavigationItemType ,
+  BaseLinkPropsType,
+  OnboardingStepType} from "@sito/dashboard-app";
 
 // providers
-import { useAuth, fromLocal, toLocal } from "@sito/dashboard-app";
+import { fromLocal, toLocal } from "@sito/dashboard-app";
 import { useAppPreload } from "hooks";
 
 // components
 import { SearchModal } from "components";
 import Header from "./Header";
 import Footer from "./Footer";
+import { OnboardingSetup } from "./components/OnboardingSetup";
 
 // config
 import { config } from "../../config";
@@ -42,18 +45,25 @@ const onboardingStepKeys = [
 ];
 
 export function View() {
-  const { account, isInGuestMode } = useAuth();
   const { loading: preloadLoading } = useAppPreload();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+  const onboardingStorageKey =
+    typeof config.onboarding === "string" ? config.onboarding : "onboarding";
 
-  const [showOnboarding] = useState(() => !fromLocal(config.onboarding));
+  const [showOnboarding] = useState(() => !fromLocal(onboardingStorageKey));
   const onboardingSteps = useMemo<OnboardingStepType[]>(
     () =>
       onboardingStepKeys.map((stepKey) => ({
         title: t(`_pages:onboarding.${stepKey}.title`),
         body: t(`_pages:onboarding.${stepKey}.body`),
+        content:
+          stepKey === "currencies" ||
+          stepKey === "accounts" ||
+          stepKey === "transactions" ? (
+            <OnboardingSetup stepKey={stepKey} />
+          ) : undefined,
       })),
     [t],
   );
@@ -82,9 +92,9 @@ export function View() {
 
   useEffect(() => {
     if (showOnboarding) {
-      toLocal(config.onboarding, true);
+      toLocal(onboardingStorageKey, true);
     }
-  }, [account.email, isInGuestMode, navigate, showOnboarding]);
+  }, [onboardingStorageKey, showOnboarding]);
 
   if (preloadLoading) return <SplashScreen />;
 

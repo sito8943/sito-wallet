@@ -1,6 +1,6 @@
-import { SubscriptionProviderDto } from "lib";
+import type { SubscriptionProviderDto } from "lib";
 
-import {
+import type {
   CreateSubscriptionProviderMutationDto,
   SubscriptionProviderFormType,
   UpdateSubscriptionProviderMutationDto,

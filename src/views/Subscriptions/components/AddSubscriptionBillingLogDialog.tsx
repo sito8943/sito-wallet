@@ -1,6 +1,6 @@
 import { FormDialog } from "@sito/dashboard-app";
 
-import { AddSubscriptionBillingLogDialogPropsType } from "../types";
+import type { AddSubscriptionBillingLogDialogPropsType } from "../types";
 
 import { SubscriptionBillingLogForm } from "./SubscriptionBillingLogForm";
 

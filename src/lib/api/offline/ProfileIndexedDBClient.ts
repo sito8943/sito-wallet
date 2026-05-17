@@ -1,4 +1,4 @@
-import {
+import type {
   BaseCommonEntityDto,
   BaseFilterDto,
   ImportPreviewDto,
@@ -9,7 +9,7 @@ import { IndexedDBClient } from "@sito/dashboard-app";
 import { Tables } from "../types";
 
 // types
-import {
+import type {
   ProfileDto,
   AddProfileDto,
   UpdateProfileDto,

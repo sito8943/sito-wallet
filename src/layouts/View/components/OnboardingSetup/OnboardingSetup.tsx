@@ -1,0 +1,185 @@
+import { useTranslation } from "react-i18next";
+import { Button, ImportDialog, useImportDialog } from "@sito/dashboard-app";
+import {
+  faCloudUpload,
+  faCoins,
+  faTags,
+  faWallet,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+// providers
+import { useManager } from "providers";
+
+// hooks
+import {
+  AccountsQueryKeys,
+  CurrenciesQueryKeys,
+  TransactionsQueryKeys,
+} from "hooks";
+import { useAddAccountDialog } from "views/Accounts/hooks";
+import { useAddCurrency } from "views/Currencies/hooks/useAddCurrency";
+import { useAddTransactionCategoryDialog } from "views/TransactionCategories/hooks";
+
+// components
+import { AddAccountDialog } from "views/Accounts/components";
+import { AddCurrencyDialog } from "views/Currencies/components";
+import { AddTransactionCategoryDialog } from "views/TransactionCategories/components";
+
+// lib
+import type {
+  AccountDto,
+  CurrencyDto,
+  ImportPreviewAccountDto,
+  ImportPreviewCurrencyDto,
+  ImportPreviewTransactionDto,
+  TransactionDto} from "lib";
+import {
+  Tables
+} from "lib";
+
+// types
+import type { OnboardingSetupPropsType } from "./types";
+
+// styles
+import "./styles.css";
+
+export function OnboardingSetup(props: OnboardingSetupPropsType) {
+  const { stepKey } = props;
+  const { t } = useTranslation();
+  const manager = useManager();
+
+  const addCurrency = useAddCurrency();
+  const addAccount = useAddAccountDialog();
+  const addTransactionCategory = useAddTransactionCategoryDialog();
+
+  const importCurrencies = useImportDialog<
+    CurrencyDto,
+    ImportPreviewCurrencyDto
+  >({
+    entity: Tables.Currencies,
+    fileProcessor: (file, options) =>
+      manager.Currencies.processImport(file, options?.override),
+    mutationFn: (data) => manager.Currencies.import(data),
+    ...CurrenciesQueryKeys.all(),
+  });
+
+  const importAccounts = useImportDialog<AccountDto, ImportPreviewAccountDto>({
+    entity: Tables.Accounts,
+    fileProcessor: (file, options) =>
+      manager.Accounts.processImport(file, options?.override),
+    mutationFn: (data) => manager.Accounts.import(data),
+    ...AccountsQueryKeys.all(),
+  });
+
+  const importTransactions = useImportDialog<
+    TransactionDto,
+    ImportPreviewTransactionDto
+  >({
+    entity: Tables.Transactions,
+    fileProcessor: (file, options) =>
+      manager.Transactions.processImport(file, options?.override),
+    mutationFn: (data) => manager.Transactions.import(data),
+    ...TransactionsQueryKeys.all(),
+  });
+
+  if (stepKey === "currencies") {
+    return (
+      <>
+        <div className="onboarding-setup">
+          <p className="onboarding-setup-title">
+            {t("_pages:onboarding.setup.currencies.title")}
+          </p>
+          <p className="onboarding-setup-description">
+            {t("_pages:onboarding.setup.currencies.description")}
+          </p>
+          <div className="onboarding-setup-actions">
+            <Button onClick={() => addCurrency.openDialog()}>
+              <span className="onboarding-setup-button-content">
+                <FontAwesomeIcon icon={faCoins} />
+                {t("_pages:onboarding.setup.currencies.create")}
+              </span>
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => importCurrencies.action().onClick()}
+            >
+              <span className="onboarding-setup-button-content">
+                <FontAwesomeIcon icon={faCloudUpload} />
+                {t("_pages:onboarding.setup.currencies.import")}
+              </span>
+            </Button>
+          </div>
+        </div>
+        <AddCurrencyDialog {...addCurrency} />
+        <ImportDialog {...importCurrencies} />
+      </>
+    );
+  }
+
+  if (stepKey === "accounts") {
+    return (
+      <>
+        <div className="onboarding-setup">
+          <p className="onboarding-setup-title">
+            {t("_pages:onboarding.setup.accounts.title")}
+          </p>
+          <p className="onboarding-setup-description">
+            {t("_pages:onboarding.setup.accounts.description")}
+          </p>
+          <div className="onboarding-setup-actions">
+            <Button onClick={() => addAccount.openDialog()}>
+              <span className="onboarding-setup-button-content">
+                <FontAwesomeIcon icon={faWallet} />
+                {t("_pages:onboarding.setup.accounts.create")}
+              </span>
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => importAccounts.action().onClick()}
+            >
+              <span className="onboarding-setup-button-content">
+                <FontAwesomeIcon icon={faCloudUpload} />
+                {t("_pages:onboarding.setup.accounts.import")}
+              </span>
+            </Button>
+          </div>
+        </div>
+        <AddAccountDialog {...addAccount} />
+        <ImportDialog {...importAccounts} />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <div className="onboarding-setup">
+        <p className="onboarding-setup-title">
+          {t("_pages:onboarding.setup.transactions.title")}
+        </p>
+        <p className="onboarding-setup-description">
+          {t("_pages:onboarding.setup.transactions.description")}
+        </p>
+        <div className="onboarding-setup-actions">
+          <Button onClick={() => addTransactionCategory.openDialog()}>
+            <span className="onboarding-setup-button-content">
+              <FontAwesomeIcon icon={faTags} />
+              {t("_pages:onboarding.setup.transactions.createCategory")}
+            </span>
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={() => importTransactions.action().onClick()}
+          >
+            <span className="onboarding-setup-button-content">
+              <FontAwesomeIcon icon={faCloudUpload} />
+              {t("_pages:onboarding.setup.transactions.import")}
+            </span>
+          </Button>
+        </div>
+      </div>
+      <AddTransactionCategoryDialog {...addTransactionCategory} />
+      <ImportDialog {...importTransactions} />
+    </>
+  );
+}

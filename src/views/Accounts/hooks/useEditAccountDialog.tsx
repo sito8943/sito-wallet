@@ -13,10 +13,10 @@ import { AccountsQueryKeys } from "hooks";
 import { dtoToForm, emptyAccount, formToUpdateDto } from "../utils";
 
 // types
-import { AccountFormType } from "../types";
+import type { AccountFormType } from "../types";
 
 // lib
-import { UpdateAccountDto, AccountDto } from "lib";
+import type { UpdateAccountDto, AccountDto } from "lib";
 
 export function useEditAccountDialog() {
   const { t } = useTranslation();

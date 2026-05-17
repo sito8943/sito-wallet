@@ -13,10 +13,10 @@ import { AccountsQueryKeys, TransactionsQueryKeys } from "hooks";
 import { useManager } from "providers";
 
 // lib
-import { AccountDto, AdjustBalanceDto, TransactionDto } from "lib";
+import type { AccountDto, AdjustBalanceDto, TransactionDto } from "lib";
 
 // types
-import { AdjustBalanceFormType } from "../types";
+import type { AdjustBalanceFormType } from "../types";
 import {
   adjustBalanceDefaultValues,
   adjustBalanceFormToDto,

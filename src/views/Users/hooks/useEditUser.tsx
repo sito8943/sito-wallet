@@ -9,10 +9,10 @@ import {
 import { UsersQueryKeys } from "hooks";
 import { useManager } from "providers";
 
-import { UpdateUserDto, UserDto } from "lib";
+import type { UpdateUserDto, UserDto } from "lib";
 
 import { emptyUserForm, userDtoToForm, userFormToUpdateDto } from "../utils";
-import { UserFormType } from "../types";
+import type { UserFormType } from "../types";
 
 export function useEditUser() {
   const { t } = useTranslation();

@@ -10,7 +10,7 @@ import { ItemCard } from "components";
 import { LastTransactions } from "./LastTransactions";
 
 // types
-import { AccountCardPropsType } from "../types";
+import type { AccountCardPropsType } from "../types";
 
 // lib
 import { AccountType } from "lib";

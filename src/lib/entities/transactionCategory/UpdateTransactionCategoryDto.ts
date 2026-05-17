@@ -1,5 +1,5 @@
-import { TransactionType } from "lib";
-import { DeleteDto } from "@sito/dashboard-app";
+import type { TransactionType } from "lib";
+import type { DeleteDto } from "@sito/dashboard-app";
 
 export interface UpdateTransactionCategoryDto extends DeleteDto {
   name: string;

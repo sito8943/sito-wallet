@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ItemCard, ItemCardTitle } from "components";
 
 // types
-import { SubscriptionProviderCardPropsType } from "../types";
+import type { SubscriptionProviderCardPropsType } from "../types";
 
 const ensureAbsoluteUrl = (value: string): string => {
   if (/^https?:\/\//i.test(value)) return value;

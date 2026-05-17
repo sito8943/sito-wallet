@@ -5,7 +5,8 @@ import { useTranslation } from "react-i18next";
 import { WalletTable } from "components";
 
 // lib
-import { EntityName, ImportPreviewCurrencyDto, useParseColumns } from "lib";
+import type { ImportPreviewCurrencyDto} from "lib";
+import { EntityName, useParseColumns } from "lib";
 import type { CurrencyTableProps } from "./types";
 
 export const CurrencyTable = (props: CurrencyTableProps) => {

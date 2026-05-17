@@ -1,4 +1,4 @@
-import { ImportDto } from "../ImportDto";
-import { ImportPreviewTransactionDto } from "./ImportPreviewTransactionDto";
+import type { ImportDto } from "../ImportDto";
+import type { ImportPreviewTransactionDto } from "./ImportPreviewTransactionDto";
 
 export type ImportTransactionDto = ImportDto<ImportPreviewTransactionDto>;

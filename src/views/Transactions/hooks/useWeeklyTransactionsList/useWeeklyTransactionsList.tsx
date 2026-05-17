@@ -5,13 +5,13 @@ import { useAuth } from "@sito/dashboard-app";
 
 import { useManager, useOfflineManager } from "providers";
 
-import { FilterTransactionDto } from "lib";
+import type { FilterTransactionDto } from "lib";
 
 import { TransactionsQueryKeys } from "hooks";
 
 import { getWeeklyTransactionsDateRange } from "../../utils";
 import { WEEKLY_TRANSACTIONS_LIST_QUERY } from "./constants";
-import {
+import type {
   UseWeeklyTransactionsListPropsType,
   UseWeeklyTransactionsListResultType,
 } from "./types";

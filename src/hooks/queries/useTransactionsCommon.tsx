@@ -1,16 +1,18 @@
 import { useMemo } from "react";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 // providers
 import { useManager, useOfflineManager } from "providers";
 
 // types
-import { UseTransactionTypeResumePropsType } from "./types.ts";
+import type { UseTransactionTypeResumePropsType } from "./types.ts";
 
 // lib
-import {
+import type {
   CommonTransactionDto,
-  FilterTransactionDto,
+  FilterTransactionDto} from "lib";
+import {
   applyHideDeletedEntitiesPreference,
   normalizeCommonFilters,
 } from "lib";
@@ -30,7 +32,7 @@ export function useTransactionsCommon(
   const filters = useMemo(
     () =>
       applyHideDeletedEntitiesPreference(
-        normalizeCommonFilters(props) as Record<string, unknown>,
+        normalizeCommonFilters(props),
         hideDeletedEntities,
       ) as FilterTransactionDto,
     [props, hideDeletedEntities],

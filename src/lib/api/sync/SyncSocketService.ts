@@ -1,14 +1,16 @@
-import { Client, IMessage, StompSubscription } from "@stomp/stompjs";
+import type { IMessage, StompSubscription } from "@stomp/stompjs";
+import { Client } from "@stomp/stompjs";
 
 import { config } from "../../../config";
-import {
-  SYNC_ENTITY_ORDER,
+import type {
   SyncSocketBulkProgressEvent,
   SyncSocketConnectionAckEvent,
   SyncSocketEvent,
   SyncSocketSessionErrorEvent,
   SyncSocketSessionFinishedEvent,
-  SyncSocketSessionOpenedEvent,
+  SyncSocketSessionOpenedEvent} from "./types";
+import {
+  SYNC_ENTITY_ORDER
 } from "./types";
 
 const SYNC_SOCKET_DESTINATION = "/user/queue/sync-status";
@@ -216,7 +218,7 @@ export class SyncSocketService {
     this.subscription = null;
 
     if (this.client?.active) {
-      this.client.deactivate();
+      void this.client.deactivate();
     }
     this.client = null;
   }

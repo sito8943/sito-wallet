@@ -1,7 +1,7 @@
 import { css } from "@emotion/css";
 
 // types
-import { ColorVignettePropsType } from "./types";
+import type { ColorVignettePropsType } from "./types";
 
 const ColorVignette = (props: ColorVignettePropsType) => {
   const { color } = props;

@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TextInput } from "@sito/dashboard-app";
 
 // types
-import { SearchInputPropsType } from "./types";
+import type { SearchInputPropsType } from "./types";
 
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputPropsType>(
   (props, ref) => {

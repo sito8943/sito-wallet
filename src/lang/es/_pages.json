@@ -168,6 +168,26 @@
     "get_started": {
       "title": "Listo para tomar el control",
       "body": "Añade tu primera cuenta ahora y comienza tu camino hacia unas finanzas más saludables hoy mismo."
+    },
+    "setup": {
+      "currencies": {
+        "title": "Empieza con tu divisa principal o carga tus monedas desde un archivo.",
+        "description": "Puedes crear tu primera moneda aquí mismo o reutilizar una exportación previa.",
+        "create": "Crear moneda",
+        "import": "Importar monedas"
+      },
+      "accounts": {
+        "title": "Deja preparada tu primera cuenta sin salir del onboarding.",
+        "description": "Crea una cuenta manualmente o importa varias de una vez para arrancar más rápido.",
+        "create": "Crear cuenta",
+        "import": "Importar cuentas"
+      },
+      "transactions": {
+        "title": "Prepara tus categorías base o trae directamente tu histórico.",
+        "description": "Así tendrás el alta inicial lista antes de empezar a registrar movimientos a mano.",
+        "createCategory": "Crear categoría",
+        "import": "Importar movimientos"
+      }
     }
   },
   "auth": {

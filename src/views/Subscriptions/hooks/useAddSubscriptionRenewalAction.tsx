@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 
-import { ActionType, useTranslation } from "@sito/dashboard-app";
+import type { ActionType} from "@sito/dashboard-app";
+import { useTranslation } from "@sito/dashboard-app";
 
 import {
   faAdd,
@@ -8,11 +9,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { SubscriptionDto } from "lib";
+import type { SubscriptionDto } from "lib";
 
 import { SubscriptionAction } from "../types";
 import { toSubscriptionStatus } from "../utils";
-import { UseAddSubscriptionRenewalActionProps } from "./types";
+import type { UseAddSubscriptionRenewalActionProps } from "./types";
 
 export function useAddSubscriptionRenewalAction(
   props: UseAddSubscriptionRenewalActionProps,

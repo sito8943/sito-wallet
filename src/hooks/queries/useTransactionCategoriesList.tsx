@@ -1,17 +1,20 @@
 import { useMemo } from "react";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 // providers
 import { useManager, useOfflineManager } from "providers";
-import { QueryResult, useAuth } from "@sito/dashboard-app";
+import type { QueryResult} from "@sito/dashboard-app";
+import { useAuth } from "@sito/dashboard-app";
 
 // types
-import { UseFetchPropsType } from "./types.ts";
+import type { UseFetchPropsType } from "./types.ts";
 
 // lib
-import {
+import type {
   TransactionCategoryDto,
-  FilterTransactionCategoryDto,
+  FilterTransactionCategoryDto} from "lib";
+import {
   applyHideDeletedEntitiesPreference,
   defaultTransactionCategoriesListFilters,
   fetchTransactionCategoriesList,
@@ -33,7 +36,7 @@ export function useTransactionCategoriesList(
   const normalizedFilters = useMemo(
     () =>
       applyHideDeletedEntitiesPreference(
-        normalizeListFilters(filters) as Record<string, unknown>,
+        normalizeListFilters(filters),
         hideDeletedEntities,
       ) as FilterTransactionCategoryDto,
     [filters, hideDeletedEntities],

@@ -19,7 +19,7 @@ import { DashboardCard } from "../DashboardCard";
 import "../TypeResume/styles.css";
 
 // types
-import {
+import type {
   WeeklySpentFormType,
   WeeklySpentPropsType,
   FilterWeeklyConfigType,

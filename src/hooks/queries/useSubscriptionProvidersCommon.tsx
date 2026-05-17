@@ -1,19 +1,21 @@
 import { useMemo } from "react";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { useAuth } from "@sito/dashboard-app";
 
 import { useManager } from "providers";
 
-import {
+import type {
   CommonSubscriptionProviderDto,
-  FilterSubscriptionProviderDto,
+  FilterSubscriptionProviderDto} from "lib";
+import {
   defaultSubscriptionProvidersListFilters,
   normalizeCommonFilters,
 } from "lib";
 
 import { SubscriptionProvidersQueryKeys } from "./queryKeys/subscriptionProvidersQueryKeys";
-import { UseSubscriptionProvidersCommonProps } from "./types";
+import type { UseSubscriptionProvidersCommonProps } from "./types";
 
 export function useSubscriptionProvidersCommon(
   props: UseSubscriptionProvidersCommonProps = {},

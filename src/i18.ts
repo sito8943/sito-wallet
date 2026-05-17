@@ -122,10 +122,11 @@ export const initI18n = async () => {
   appliedLanguages.add(fallbackLng);
   appliedLanguages.add(preferredLng);
 
-  i18n.on("languageChanged", async (lng) => {
+  i18n.on("languageChanged", (lng) => {
     const normalized = normalizeLanguage(lng);
-    const languageResources = await loadLanguageResources(normalized);
-    applyLanguageResources(normalized, languageResources);
+    void loadLanguageResources(normalized).then((languageResources) => {
+      applyLanguageResources(normalized, languageResources);
+    });
   });
 
   return i18n;

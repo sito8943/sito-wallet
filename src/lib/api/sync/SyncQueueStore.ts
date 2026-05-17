@@ -3,7 +3,7 @@ import {
   SYNC_DB_STORE_OPERATIONS,
   SYNC_DB_VERSION,
 } from "./constants";
-import {
+import type {
   EnqueueSyncOperationInput,
   SyncQueueOperation,
   SyncOperationType,

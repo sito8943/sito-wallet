@@ -9,7 +9,7 @@ import { faCircle, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // types
-import { TransactionCardPropsType } from "../types";
+import type { TransactionCardPropsType } from "../types";
 
 // views
 import { Currency } from "views/Currencies/components/Currency";

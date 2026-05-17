@@ -59,6 +59,42 @@ export default tseslint.config(
     },
   },
   {
+    files: ["src/**/*.{ts,tsx}"],
+    ignores: [
+      "src/**/__tests__/**",
+      "src/test/**",
+      "src/**/*.test.ts",
+      "src/**/*.test.tsx",
+      "src/**/*.spec.ts",
+      "src/**/*.spec.tsx",
+    ],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
+        {
+          prefer: "type-imports",
+          fixStyle: "separate-type-imports",
+        },
+      ],
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          checksVoidReturn: {
+            attributes: true,
+          },
+        },
+      ],
+      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/switch-exhaustiveness-check": "error",
+    },
+  },
+  {
     files: ["src/test/**/*.{ts,tsx}"],
     rules: {
       "react-refresh/only-export-components": "off",

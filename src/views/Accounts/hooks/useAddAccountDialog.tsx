@@ -13,10 +13,10 @@ import { AccountsQueryKeys } from "hooks";
 import { formToAddDto, addEmptyAccount } from "../utils";
 
 // types
-import { AccountFormType } from "../types";
+import type { AccountFormType } from "../types";
 
 // lib
-import { AddAccountDto, AccountDto } from "lib";
+import type { AddAccountDto, AccountDto } from "lib";
 
 export function useAddAccountDialog() {
   const { t } = useTranslation();

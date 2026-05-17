@@ -9,7 +9,7 @@ import {
 
 import { Tables } from "lib";
 
-import { UserFormPropsType } from "../types";
+import type { UserFormPropsType } from "../types";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

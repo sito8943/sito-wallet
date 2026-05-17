@@ -1,4 +1,4 @@
-import { CurrencyPropsType } from "./types";
+import type { CurrencyPropsType } from "./types";
 
 export const Currency = (props: CurrencyPropsType) => {
   const { name = "", symbol = "" } = props;

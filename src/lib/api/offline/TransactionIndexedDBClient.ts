@@ -4,7 +4,7 @@ import { IndexedDBClient } from "@sito/dashboard-app";
 import { Tables } from "../types";
 
 // types
-import {
+import type {
   TransactionDto,
   CommonTransactionDto,
   AddTransactionDto,

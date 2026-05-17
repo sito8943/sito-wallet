@@ -1,10 +1,11 @@
-import { BaseClient, BaseCommonEntityDto } from "@sito/dashboard-app";
+import type { BaseCommonEntityDto } from "@sito/dashboard-app";
+import { BaseClient } from "@sito/dashboard-app";
 
 // enum
 import { Tables } from "./types";
 
 // types
-import {
+import type {
   DashboardDto,
   UpdateDashboardDto,
   AddDashboardDto,

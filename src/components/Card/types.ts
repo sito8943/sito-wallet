@@ -1,7 +1,7 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 // @sito/dashboard-app
-import { BaseEntityDto, ActionType } from "@sito/dashboard-app";
+import type { BaseEntityDto, ActionType } from "@sito/dashboard-app";
 
 export type ItemCardPropsType<TEntity extends BaseEntityDto> = {
   children: ReactNode;

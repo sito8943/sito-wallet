@@ -1,4 +1,4 @@
-import { AppFeatures, FeatureFlagKey } from "lib";
+import type { AppFeatures, FeatureFlagKey } from "lib";
 
 export type FeatureFlagsContextType = {
   features: AppFeatures;

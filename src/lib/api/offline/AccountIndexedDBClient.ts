@@ -2,7 +2,7 @@
 import { Tables } from "../types";
 
 // types
-import {
+import type {
   AccountDto,
   CommonAccountDto,
   AddAccountDto,

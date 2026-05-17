@@ -1,4 +1,4 @@
-import { CommonCurrencyDto } from "lib";
+import type { CommonCurrencyDto } from "lib";
 
 export type TypeResumePropsType = {
   accountId: number;

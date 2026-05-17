@@ -1,4 +1,4 @@
-import { ActionType, BaseEntityDto } from "@sito/dashboard-app";
+import type { ActionType, BaseEntityDto } from "@sito/dashboard-app";
 
 export interface UseMobileMultiSelectionPropsType<
   TRow extends BaseEntityDto,

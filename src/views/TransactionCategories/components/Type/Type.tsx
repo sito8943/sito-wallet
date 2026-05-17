@@ -12,7 +12,7 @@ import { TransactionType } from "lib";
 import { icons } from "../../../Transactions/components/utils";
 
 // types
-import { TypePropsType } from "./types";
+import type { TypePropsType } from "./types";
 
 export const Type = (props: TypePropsType) => {
   const { type, noText = false, filled = true, className = "" } = props;

@@ -1,6 +1,6 @@
-import { QueryResult } from "@sito/dashboard-app";
+import type { QueryResult } from "@sito/dashboard-app";
 
-import {
+import type {
   AccountDto,
   CurrencyDto,
   FilterAccountDto,
@@ -12,8 +12,8 @@ import {
 } from "../entities";
 import { normalizeListFilters } from "../utils";
 
-import { Manager } from "./Manager";
-import { OfflineManager } from "./OfflineManager";
+import type { Manager } from "./Manager";
+import type { OfflineManager } from "./OfflineManager";
 
 export const defaultAccountsListFilters: FilterAccountDto = {
   softDeleteScope: "ACTIVE",

@@ -14,13 +14,14 @@ import {
 } from "hooks";
 
 // types
-import { BasicProviderPropTypes } from "../types";
+import type { BasicProviderPropTypes } from "../types";
 
 // lib
+import type {
+  SyncSocketEvent} from "lib";
 import {
   offlineSyncService,
   syncSocketService,
-  SyncSocketEvent,
   toSyncHttpError,
 } from "lib";
 
@@ -197,7 +198,7 @@ export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
       }
     };
 
-    runSync();
+    void runSync();
 
     return () => {
       isCancelled = true;

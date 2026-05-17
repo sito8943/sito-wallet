@@ -125,6 +125,10 @@ vi.mock("../../layouts/View/Footer", () => ({
   ),
 }));
 
+vi.mock("../../layouts/View/components/OnboardingSetup", () => ({
+  OnboardingSetup: () => <div data-testid="onboarding-setup-content" />,
+}));
+
 import { View } from "../../layouts/View/View";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────

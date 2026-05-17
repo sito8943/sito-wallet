@@ -1,4 +1,4 @@
-import { BaseFilterDto, RangeValue } from "@sito/dashboard-app";
+import type { BaseFilterDto, RangeValue } from "@sito/dashboard-app";
 
 export interface FilterTransactionGroupedByTypeDto extends BaseFilterDto {
   accountId: number;

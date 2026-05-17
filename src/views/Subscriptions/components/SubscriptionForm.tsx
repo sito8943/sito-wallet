@@ -2,10 +2,11 @@ import { useMemo } from "react";
 import { Controller, useWatch } from "react-hook-form";
 
 // @sito/dashboard-app
+import type {
+  Option} from "@sito/dashboard-app";
 import {
   AutocompleteInput,
   CheckInput,
-  Option,
   ParagraphInput,
   SelectInput,
   TextInput,
@@ -21,8 +22,9 @@ import {
 } from "hooks";
 
 // lib
+import type {
+  CommonTransactionCategoryDto} from "lib";
 import {
-  CommonTransactionCategoryDto,
   FormMode,
   normalizeSelectedTransactionCategories,
   SUBSCRIPTION_BILLING_UNITS,
@@ -31,7 +33,7 @@ import {
 } from "lib";
 
 // types
-import { SubscriptionFormPropsType } from "../types";
+import type { SubscriptionFormPropsType } from "../types";
 
 export function SubscriptionForm(props: SubscriptionFormPropsType) {
   const { control, isLoading, mode = FormMode.Add } = props;

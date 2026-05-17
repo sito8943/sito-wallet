@@ -1,7 +1,7 @@
 import { useTranslation, Trans } from "react-i18next";
 
 // types
-import { TermsSection } from "./types";
+import type { TermsSection } from "./types";
 
 export const CookiesPolicy = () => {
   const { t } = useTranslation();

@@ -13,10 +13,10 @@ import { DashboardsQueryKeys } from "hooks";
 import { addEmptyDashboard, formToAddDto } from "../utils";
 
 // lib
-import { AddDashboardDto, DashboardDto } from "lib";
+import type { AddDashboardDto, DashboardDto } from "lib";
 
 // types
-import { DashboardFormType } from "../types";
+import type { DashboardFormType } from "../types";
 
 export function useAddDashboardCard() {
   const { t } = useTranslation();

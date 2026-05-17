@@ -7,7 +7,7 @@ import { Dialog } from "@sito/dashboard-app";
 import { SearchWrapper } from "components";
 
 // types
-import { SearchModalPropsType } from "./types";
+import type { SearchModalPropsType } from "./types";
 
 export const SearchModal = (props: SearchModalPropsType) => {
   const { t } = useTranslation();

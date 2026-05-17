@@ -10,7 +10,7 @@ import {
 } from "@sito/dashboard-app";
 
 // types
-import { DashboardFormPropsType } from "../../types";
+import type { DashboardFormPropsType } from "../../types";
 
 // lib
 import { DashboardCardType } from "lib";

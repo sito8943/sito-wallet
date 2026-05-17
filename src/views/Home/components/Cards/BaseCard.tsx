@@ -1,5 +1,5 @@
 // types
-import { BaseCardPropsType } from "./types";
+import type { BaseCardPropsType } from "./types";
 
 // styles
 import "./styles.css";
