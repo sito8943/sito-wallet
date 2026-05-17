@@ -32,6 +32,7 @@ export const getTransactionTypeOptions = (t: TFunction): Option[] =>
 export const getTransactionColumns = (
   t: TFunction,
   categories: CommonTransactionCategoryDto[],
+  onCategoryClick?: (id: number) => void,
 ): ColumnType<TransactionDto>[] => {
   const renderEmpty = (value: string | undefined | null) => {
     if (value && value.length) {
@@ -57,6 +58,19 @@ export const getTransactionColumns = (
         return transactionCategories.map((category) =>
           category.auto ? (
             t("_entities:transactionCategory.name.init")
+          ) : onCategoryClick ? (
+            <button
+              key={category.id}
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                onCategoryClick(category.id);
+              }}
+              className="flex items-center gap-2 text-primary hover:underline cursor-pointer"
+            >
+              {category.color && <ColorVignette color={category.color} />}
+              {category.name}
+            </button>
           ) : (
             <p key={category.id} className="flex items-center gap-2">
               {category.color && <ColorVignette color={category.color} />}

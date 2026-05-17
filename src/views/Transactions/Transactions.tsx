@@ -32,6 +32,7 @@ import {
   useAssignTransactionCategoryAction,
 } from "./hooks";
 import { useAddAccountDialog } from "../Accounts/hooks";
+import { useEditTransactionCategoryDialog } from "../TransactionCategories/hooks";
 import {
   TransactionsQueryKeys,
   useTransactionCategoriesCommon,
@@ -52,6 +53,7 @@ import {
   WeeklyTransactionsDialog,
 } from "./components";
 import { AddAccountDialog } from "../Accounts";
+import { EditTransactionCategoryDialog } from "../TransactionCategories/components";
 
 // lib
 import {
@@ -120,6 +122,8 @@ export function Transactions() {
   });
 
   // #region categories
+
+  const editTransactionCategory = useEditTransactionCategoryDialog();
 
   const categories = useTransactionCategoriesCommon();
 
@@ -305,12 +309,14 @@ export function Transactions() {
           hideDeletedEntities={hideDeletedEntities}
           showFilters={showFilters}
           setShowFilters={setShowFilters}
+          onCategoryClick={editTransactionCategory.openDialog}
         />
       ),
     })) ?? []) as TabsType[];
   }, [
     accounts?.items,
     editTransaction,
+    editTransactionCategory.openDialog,
     getTableActions,
     hideDeletedEntities,
     parsedCategories,
@@ -478,6 +484,7 @@ export function Transactions() {
       />
       <AssignAccountDialog {...assignTransactionAccount} />
       <AssignCategoryDialog {...assignTransactionCategory} />
+      <EditTransactionCategoryDialog {...editTransactionCategory} />
       <WeeklyTransactionsDialog
         open={weeklyTransactionsDialog.open}
         onClose={handleCloseWeeklyTransactions}

@@ -17,4 +17,5 @@ export type TransactionContainerPropsType = {
   hideDeletedEntities?: boolean;
   showFilters?: boolean;
   setShowFilters?: Dispatch<SetStateAction<boolean>>;
+  onCategoryClick?: (id: number) => void;
 };

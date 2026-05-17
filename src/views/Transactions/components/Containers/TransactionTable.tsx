@@ -32,6 +32,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
     showFilters,
     setShowFilters,
     hideDeletedEntities = false,
+    onCategoryClick,
   } = props;
   const { filters: tableFilters } = useTableOptions();
 
@@ -46,8 +47,8 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
   // #region columns
 
   const columnDefs = useMemo(
-    () => getTransactionColumns(t, categories),
-    [categories, t],
+    () => getTransactionColumns(t, categories, onCategoryClick),
+    [categories, onCategoryClick, t],
   );
 
   const softDeleteScope = useMemo(
