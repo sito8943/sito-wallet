@@ -9,6 +9,16 @@ const linkedDashboardAppRoot = path.resolve(
   projectRoot,
   "../../lib/-sito-dashboard-app",
 );
+const appDashboardRoot = path.resolve(projectRoot, "node_modules/@sito/dashboard");
+const appDashboardAppRoot = path.resolve(
+  projectRoot,
+  "node_modules/@sito/dashboard-app",
+);
+const appDashboardEntry = path.resolve(appDashboardRoot, "dist/index.js");
+const appDashboardAppEntry = path.resolve(
+  appDashboardAppRoot,
+  "dist/dashboard-app.js",
+);
 const appReactRoot = path.resolve(projectRoot, "node_modules/react");
 const appReactDomRoot = path.resolve(projectRoot, "node_modules/react-dom");
 
@@ -188,6 +198,8 @@ export default defineConfig(({ command, mode }) => {
     resolve: {
       dedupe: ["react", "react-dom"],
       alias: [
+        { find: /^@sito\/dashboard-app$/, replacement: appDashboardAppEntry },
+        { find: /^@sito\/dashboard$/, replacement: appDashboardEntry },
         { find: /^react$/, replacement: appReactRoot },
         { find: /^react\/(.*)$/, replacement: `${appReactRoot}/$1` },
         { find: /^react-dom$/, replacement: appReactDomRoot },

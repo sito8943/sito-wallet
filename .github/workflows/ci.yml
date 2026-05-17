@@ -28,6 +28,17 @@ jobs:
 
       - name: Unit & Integration Tests
         run: npm run test
+        env:
+          VITE_APP_VERSION: test
+          VITE_INDEXED_DB_NAME: sito_wallet_indexed_db
+          VITE_SERVER_PROBE_INTERVAL: 15000
+          VITE_SERVER_STATUS_PATH: /sync/status
+          VITE_FEATURE_FLAGS_STORAGE_KEY: featureFlags
+          VITE_FEATURE_BALANCE_GREATER_THAN_ZERO_DEFAULT: "false"
+          VITE_FEATURE_CURRENCIES_ENABLED_DEFAULT: "true"
+          VITE_FEATURE_ACCOUNTS_ENABLED_DEFAULT: "true"
+          VITE_FEATURE_TRANSACTIONS_ENABLED_DEFAULT: "true"
+          VITE_FEATURE_SUBSCRIPTIONS_ENABLED_DEFAULT: "true"
 
   e2e:
     runs-on: ubuntu-latest
@@ -56,6 +67,7 @@ jobs:
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
           VITE_THIS_URL: ${{ secrets.VITE_THIS_URL }}
+          VITE_APP_VERSION: ${{ github.sha }}
           VITE_LANGUAGE: en
           VITE_BASIC_KEY: ${{ secrets.VITE_BASIC_KEY }}
           VITE_ACCEPT_COOKIE: ${{ secrets.VITE_ACCEPT_COOKIE }}
@@ -71,6 +83,15 @@ jobs:
           VITE_ONBOARDING: ${{ secrets.VITE_ONBOARDING }}
           VITE_GUEST_MODE: ${{ secrets.VITE_GUEST_MODE }}
           VITE_RECENT_SEARCHES: ${{ secrets.VITE_RECENT_SEARCHES }}
+          VITE_INDEXED_DB_NAME: sito_wallet_indexed_db
+          VITE_SERVER_PROBE_INTERVAL: 15000
+          VITE_SERVER_STATUS_PATH: /sync/status
+          VITE_FEATURE_FLAGS_STORAGE_KEY: featureFlags
+          VITE_FEATURE_BALANCE_GREATER_THAN_ZERO_DEFAULT: "false"
+          VITE_FEATURE_CURRENCIES_ENABLED_DEFAULT: "true"
+          VITE_FEATURE_ACCOUNTS_ENABLED_DEFAULT: "true"
+          VITE_FEATURE_TRANSACTIONS_ENABLED_DEFAULT: "true"
+          VITE_FEATURE_SUBSCRIPTIONS_ENABLED_DEFAULT: "true"
 
       - name: Serve and run E2E smoke tests
         run: |

@@ -2,6 +2,18 @@ import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
+const projectRoot = path.resolve(__dirname);
+const appDashboardRoot = path.resolve(projectRoot, "node_modules/@sito/dashboard");
+const appDashboardAppRoot = path.resolve(
+  projectRoot,
+  "node_modules/@sito/dashboard-app",
+);
+const appDashboardEntry = path.resolve(appDashboardRoot, "dist/index.js");
+const appDashboardAppEntry = path.resolve(
+  appDashboardAppRoot,
+  "dist/dashboard-app.js",
+);
+
 export default defineConfig({
   plugins: [react() as ReturnType<typeof react>],
   test: {
@@ -32,21 +44,33 @@ export default defineConfig({
       VITE_FEATURE_CURRENCIES_ENABLED_DEFAULT: "true",
       VITE_FEATURE_ACCOUNTS_ENABLED_DEFAULT: "true",
       VITE_FEATURE_TRANSACTIONS_ENABLED_DEFAULT: "true",
+      VITE_FEATURE_SUBSCRIPTIONS_ENABLED_DEFAULT: "true",
     },
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
     exclude: ["e2e/**", "node_modules/**"],
   },
   resolve: {
-    alias: {
-      assets: path.resolve(__dirname, "./src/assets"),
-      components: path.resolve(__dirname, "./src/components"),
-      lib: path.resolve(__dirname, "./src/lib"),
-      hooks: path.resolve(__dirname, "./src/hooks"),
-      layouts: path.resolve(__dirname, "./src/layouts"),
-      views: path.resolve(__dirname, "./src/views"),
-      providers: path.resolve(__dirname, "./src/providers"),
-      db: path.resolve(__dirname, "./src/db"),
-      lang: path.resolve(__dirname, "./src/lang"),
-    },
+    alias: [
+      { find: /^@sito\/dashboard-app$/, replacement: appDashboardAppEntry },
+      { find: /^@sito\/dashboard$/, replacement: appDashboardEntry },
+      { find: "assets", replacement: path.resolve(__dirname, "./src/assets") },
+      {
+        find: "components",
+        replacement: path.resolve(__dirname, "./src/components"),
+      },
+      { find: "lib", replacement: path.resolve(__dirname, "./src/lib") },
+      { find: "hooks", replacement: path.resolve(__dirname, "./src/hooks") },
+      {
+        find: "layouts",
+        replacement: path.resolve(__dirname, "./src/layouts"),
+      },
+      { find: "views", replacement: path.resolve(__dirname, "./src/views") },
+      {
+        find: "providers",
+        replacement: path.resolve(__dirname, "./src/providers"),
+      },
+      { find: "db", replacement: path.resolve(__dirname, "./src/db") },
+      { find: "lang", replacement: path.resolve(__dirname, "./src/lang") },
+    ],
   },
 });
