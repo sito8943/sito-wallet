@@ -78,9 +78,6 @@ const AccountShower = (props: AccountCarouselPropsType) => {
     [adjustBalance, editAccountAction, syncAccount],
   );
 
-  const mobileCardWidthClass = css({
-    width: `${window.innerWidth - 24}px`,
-  });
   const accountNameRef = useRef<HTMLDivElement>(null);
   const [showFixedAccountSelector, setShowFixedAccountSelector] =
     useState(false);
@@ -142,7 +139,7 @@ const AccountShower = (props: AccountCarouselPropsType) => {
         )}
         {error && <Error />}
         <div
-          className={`w-screen bg-base-light fixed left-0 top-12 z-30 px-4 py-2 origin-top transition-all duration-200 ease-out ${
+          className={`bg-base-light fixed left-0 top-12 z-30 px-4 py-2 origin-top transition-all duration-200 ease-out ${
             showFixedAccountSelector
               ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
               : "opacity-0 -translate-y-2 scale-95 pointer-events-none"
@@ -151,13 +148,13 @@ const AccountShower = (props: AccountCarouselPropsType) => {
           {renderAccountSelector("account-id-fixed", "account-id-fixed")}
         </div>
         <AccountCard
-          containerClassName={mobileCardWidthClass}
           showLastTransactions={false}
           showTypeResume
           showCurrency={false}
           actions={selectedAccount ? getActions(selectedAccount) : []}
           {...selectedAccount}
           hideDescription
+          containerClassName="w-full"
           name={
             <div
               ref={accountNameRef}

@@ -58,7 +58,7 @@ export const getTransactionColumns = (
           category.auto ? (
             t("_entities:transactionCategory.name.init")
           ) : (
-            <p className="flex items-center gap-2">
+            <p key={category.id} className="flex items-center gap-2">
               {category.color && <ColorVignette color={category.color} />}
               {category.name}
             </p>
