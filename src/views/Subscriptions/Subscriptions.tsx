@@ -207,7 +207,6 @@ export function Subscriptions() {
               />
             }
             renderComponent={(subscription) => {
-              console.log("Rendering subscription:", subscription);
               return (
                 <SubscriptionCard
                   actions={getActions(subscription)}

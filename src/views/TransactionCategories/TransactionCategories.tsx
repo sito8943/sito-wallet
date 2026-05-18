@@ -48,7 +48,8 @@ import {
 import type {
   TransactionCategoryDto,
   FilterTransactionCategoryDto,
-  ImportPreviewTransactionCategoryDto} from "lib";
+  ImportPreviewTransactionCategoryDto,
+} from "lib";
 import {
   Tables,
   TablesCamelCase,
@@ -79,8 +80,6 @@ export function TransactionCategories() {
     () => data?.pages?.flatMap((page) => page.items) ?? [],
     [data?.pages],
   );
-
-  console.log(items);
 
   useEffect(() => {
     if (!isFeatureDisabledBusinessError(error)) return;
