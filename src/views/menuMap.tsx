@@ -1,9 +1,7 @@
 import { t } from "i18next";
 
 // @sito/dashboard-app
-import type {
-  FeatureEnabledFn,
-  MenuItemType} from "@sito/dashboard-app";
+import type { FeatureEnabledFn, MenuItemType } from "@sito/dashboard-app";
 import {
   filterMenuByFeatureFlags,
   normalizeMenuDividers,
@@ -97,7 +95,7 @@ const getMenuMap = (): MenuItemType<MenuKeys>[] => [
     access: (account) => isAdminSession(account),
     icon: <FontAwesomeIcon icon={faUsers} />,
   },
-  { type: "divider" },
+  { type: "divider", access: (account) => isAdminSession(account) },
   {
     page: MenuKeys.About,
     path: AppRoutes.about,

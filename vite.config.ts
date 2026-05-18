@@ -1,3 +1,4 @@
+import { existsSync, lstatSync } from "node:fs";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import tailwindcss from "@tailwindcss/vite";
@@ -10,18 +11,33 @@ const linkedDashboardAppRoot = path.resolve(
   projectRoot,
   "../../lib/-sito-dashboard-app",
 );
-const appDashboardRoot = path.resolve(projectRoot, "node_modules/@sito/dashboard");
+const linkedDashboardRoot = path.resolve(
+  linkedDashboardAppRoot,
+  "node_modules/@sito/dashboard",
+);
 const appDashboardAppRoot = path.resolve(
   projectRoot,
   "node_modules/@sito/dashboard-app",
 );
-const appDashboardEntry = path.resolve(appDashboardRoot, "dist/index.js");
-const appDashboardAppEntry = path.resolve(
-  appDashboardAppRoot,
+const linkedDashboardEntry = path.resolve(linkedDashboardRoot, "dist/index.js");
+const linkedDashboardAppEntry = path.resolve(
+  linkedDashboardAppRoot,
   "dist/dashboard-app.js",
 );
 const appReactRoot = path.resolve(projectRoot, "node_modules/react");
 const appReactDomRoot = path.resolve(projectRoot, "node_modules/react-dom");
+
+function pathExists(targetPath: string): boolean {
+  return existsSync(targetPath);
+}
+
+function isSymlink(targetPath: string): boolean {
+  try {
+    return lstatSync(targetPath).isSymbolicLink();
+  } catch {
+    return false;
+  }
+}
 
 function isWithinPath(targetPath: string, parentPath: string): boolean {
   const relativePath = path.relative(parentPath, targetPath);
@@ -142,11 +158,28 @@ function rawFsDenyGuard(externalAllowedRoots: string[] = []) {
 
 // https://vite.dev/config/
 export default defineConfig(({ command, mode }) => {
-  const externalAllowedRoots =
-    command === "serve" && mode === "development"
-      ? [linkedDashboardAppRoot]
-      : [];
+  const useLinkedDashboardApp =
+    command === "serve" &&
+    mode === "development" &&
+    isSymlink(appDashboardAppRoot) &&
+    pathExists(linkedDashboardAppEntry) &&
+    pathExists(linkedDashboardEntry);
+  const externalAllowedRoots = useLinkedDashboardApp
+    ? [linkedDashboardAppRoot, linkedDashboardRoot]
+    : [];
   const fsAllowRoots = [projectRoot, ...externalAllowedRoots];
+  const linkedPackageAliases = useLinkedDashboardApp
+    ? [
+        {
+          find: /^@sito\/dashboard-app$/,
+          replacement: linkedDashboardAppEntry,
+        },
+        {
+          find: /^@sito\/dashboard$/,
+          replacement: linkedDashboardEntry,
+        },
+      ]
+    : [];
 
   return {
     plugins: [
@@ -240,8 +273,7 @@ export default defineConfig(({ command, mode }) => {
     resolve: {
       dedupe: ["react", "react-dom"],
       alias: [
-        { find: /^@sito\/dashboard-app$/, replacement: appDashboardAppEntry },
-        { find: /^@sito\/dashboard$/, replacement: appDashboardEntry },
+        ...linkedPackageAliases,
         { find: /^react$/, replacement: appReactRoot },
         { find: /^react\/(.*)$/, replacement: `${appReactRoot}/$1` },
         { find: /^react-dom$/, replacement: appReactDomRoot },

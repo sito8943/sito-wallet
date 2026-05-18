@@ -3,7 +3,7 @@ import { Outlet, useNavigate, useLocation, Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
 import type { ComponentType} from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
@@ -17,6 +17,7 @@ import {
   NavbarProvider,
   Notification,
   SplashScreen,
+  useAuth,
 } from "@sito/dashboard-app";
 import type { BottomNavigationItemType ,
   BaseLinkPropsType,
@@ -35,6 +36,7 @@ import { OnboardingSetup } from "./components/OnboardingSetup";
 // config
 import { config } from "../../config";
 import { bottomMap } from "../../views/bottomMap";
+import { isAnonymousVisitorSession } from "lib";
 
 const onboardingStepKeys = [
   "welcome",
@@ -47,12 +49,18 @@ const onboardingStepKeys = [
 export function View() {
   const { loading: preloadLoading } = useAppPreload();
   const { t } = useTranslation();
+  const { account, isInGuestMode } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const onboardingStorageKey =
     typeof config.onboarding === "string" ? config.onboarding : "onboarding";
+  const isAnonymousVisitor = isAnonymousVisitorSession(
+    account,
+    isInGuestMode(),
+  );
 
-  const [showOnboarding] = useState(() => !fromLocal(onboardingStorageKey));
+  const showOnboarding =
+    isAnonymousVisitor || !fromLocal(onboardingStorageKey);
   const onboardingSteps = useMemo<OnboardingStepType[]>(
     () =>
       onboardingStepKeys.map((stepKey) => ({
@@ -91,10 +99,10 @@ export function View() {
   ) => (item.to === "/" ? pathname === "/" : pathname.startsWith(item.to));
 
   useEffect(() => {
-    if (showOnboarding) {
+    if (showOnboarding && !isAnonymousVisitor) {
       toLocal(onboardingStorageKey, true);
     }
-  }, [onboardingStorageKey, showOnboarding]);
+  }, [isAnonymousVisitor, onboardingStorageKey, showOnboarding]);
 
   if (preloadLoading) return <SplashScreen />;
 

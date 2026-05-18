@@ -156,19 +156,19 @@ const HomePage = () => <div data-testid="home-page">Home</div>;
 const SignInPage = () => <div data-testid="sign-in">Sign In</div>;
 
 function renderView({
-  email = "",
+  email = "user@example.com",
   guestMode = false,
   onboardingDone = false,
   initialPath = "/",
 }: {
-  email?: string;
+  email?: string | null;
   guestMode?: boolean;
   onboardingDone?: boolean;
   initialPath?: string;
 } = {}) {
   mockIsInGuestMode.mockReturnValue(guestMode);
   mockUseAuth.mockReturnValue({
-    account: { email },
+    account: email === null ? null : { email },
     isInGuestMode: mockIsInGuestMode,
   });
   mockFromLocal.mockImplementation((key: string) => {
@@ -206,25 +206,37 @@ describe("View layout", () => {
 
   describe("onboarding", () => {
     it("shows Onboarding when localStorage key is not set (first visit)", () => {
-      mockFromLocal.mockReturnValue(null);
       renderView({ email: "user@example.com" });
       expect(screen.getByTestId("onboarding")).toBeInTheDocument();
     });
 
-    it("does NOT show Onboarding when localStorage key is set", () => {
+    it("does NOT show Onboarding when localStorage key is set for authenticated users", () => {
       mockFromLocal.mockReturnValue(true);
       renderView({ email: "user@example.com", onboardingDone: true });
       expect(screen.queryByTestId("onboarding")).toBeNull();
     });
 
-    it("saves onboarding flag to localStorage on first visit", () => {
-      mockFromLocal.mockReturnValue(null);
+    it("keeps showing Onboarding for anonymous visitors even if the localStorage key is set", () => {
+      renderView({ email: null, onboardingDone: true });
+      expect(screen.getByTestId("onboarding")).toBeInTheDocument();
+    });
+
+    it("does NOT show Onboarding when localStorage key is set for guest mode", () => {
+      renderView({ email: null, guestMode: true, onboardingDone: true });
+      expect(screen.queryByTestId("onboarding")).toBeNull();
+    });
+
+    it("saves onboarding flag to localStorage for authenticated first visits", () => {
       renderView({ email: "user@example.com" });
       expect(mockToLocal).toHaveBeenCalledWith("test-onboarding", true);
     });
 
+    it("does NOT save the onboarding flag for anonymous visitors", () => {
+      renderView({ email: null });
+      expect(mockToLocal).not.toHaveBeenCalled();
+    });
+
     it("renders with all 5 onboarding steps", () => {
-      mockFromLocal.mockReturnValue(null);
       renderView({ email: "user@example.com" });
 
       const steps =

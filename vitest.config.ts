@@ -1,18 +1,55 @@
+import { existsSync, lstatSync } from "node:fs";
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 const projectRoot = path.resolve(__dirname);
-const appDashboardRoot = path.resolve(projectRoot, "node_modules/@sito/dashboard");
+const linkedDashboardAppRoot = path.resolve(
+  projectRoot,
+  "../../lib/-sito-dashboard-app",
+);
+const linkedDashboardRoot = path.resolve(
+  linkedDashboardAppRoot,
+  "node_modules/@sito/dashboard",
+);
 const appDashboardAppRoot = path.resolve(
   projectRoot,
   "node_modules/@sito/dashboard-app",
 );
-const appDashboardEntry = path.resolve(appDashboardRoot, "dist/index.js");
-const appDashboardAppEntry = path.resolve(
-  appDashboardAppRoot,
+const linkedDashboardEntry = path.resolve(linkedDashboardRoot, "dist/index.js");
+const linkedDashboardAppEntry = path.resolve(
+  linkedDashboardAppRoot,
   "dist/dashboard-app.js",
 );
+
+function pathExists(targetPath: string): boolean {
+  return existsSync(targetPath);
+}
+
+function isSymlink(targetPath: string): boolean {
+  try {
+    return lstatSync(targetPath).isSymbolicLink();
+  } catch {
+    return false;
+  }
+}
+
+const useLinkedDashboardApp =
+  isSymlink(appDashboardAppRoot) &&
+  pathExists(linkedDashboardAppEntry) &&
+  pathExists(linkedDashboardEntry);
+const linkedPackageAliases = useLinkedDashboardApp
+  ? [
+      {
+        find: /^@sito\/dashboard-app$/,
+        replacement: linkedDashboardAppEntry,
+      },
+      {
+        find: /^@sito\/dashboard$/,
+        replacement: linkedDashboardEntry,
+      },
+    ]
+  : [];
 
 export default defineConfig({
   plugins: [react() as ReturnType<typeof react>],
@@ -51,8 +88,7 @@ export default defineConfig({
   },
   resolve: {
     alias: [
-      { find: /^@sito\/dashboard-app$/, replacement: appDashboardAppEntry },
-      { find: /^@sito\/dashboard$/, replacement: appDashboardEntry },
+      ...linkedPackageAliases,
       { find: "assets", replacement: path.resolve(__dirname, "./src/assets") },
       {
         find: "components",
