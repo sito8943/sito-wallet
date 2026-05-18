@@ -1,4 +1,4 @@
-export const AppRoutes = {
+export const AppRoutes: { [key: string]: string } = {
   authRoot: "/auth/",
   authNotFound: "/auth/*",
   signIn: "/auth/sign-in",
