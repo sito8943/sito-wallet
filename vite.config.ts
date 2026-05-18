@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import mkcert from "vite-plugin-mkcert";
+import { VitePWA } from "vite-plugin-pwa";
 
 const projectRoot = path.resolve(__dirname);
 const linkedDashboardAppRoot = path.resolve(
@@ -148,14 +149,52 @@ export default defineConfig(({ command, mode }) => {
   const fsAllowRoots = [projectRoot, ...externalAllowedRoots];
 
   return {
-    define: {
-      __APP_BUILD_ID__: JSON.stringify(new Date().toISOString()),
-    },
     plugins: [
       react(),
       tailwindcss(),
       mkcert(),
       rawFsDenyGuard(externalAllowedRoots),
+      VitePWA({
+        registerType: "prompt",
+        injectRegister: "auto",
+        includeAssets: [
+          "favicon.svg",
+          "apple-touch-icon.png",
+          "pwa-192x192.png",
+          "pwa-512x512.png",
+        ],
+        manifest: {
+          name: "Sito Wallet",
+          short_name: "Wallet",
+          description:
+            "Manage accounts, transactions, subscriptions, and balances from a single wallet app.",
+          start_url: "/",
+          scope: "/",
+          display: "standalone",
+          background_color: "#f2f2f2",
+          theme_color: "#041e42",
+          lang: "es",
+          icons: [
+            {
+              src: "pwa-192x192.png",
+              sizes: "192x192",
+              type: "image/png",
+            },
+            {
+              src: "pwa-512x512.png",
+              sizes: "512x512",
+              type: "image/png",
+            },
+          ],
+        },
+        workbox: {
+          navigateFallback: "index.html",
+          cleanupOutdatedCaches: true,
+          clientsClaim: true,
+          skipWaiting: false,
+          globPatterns: ["**/*.{js,css,html,ico,png,svg,webp,woff2}"],
+        },
+      }),
     ],
     server: {
       https: {},
