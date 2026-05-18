@@ -1,8 +1,5 @@
 import type { FieldValues } from "react-hook-form";
 
-// @sito/dashboard-app
-import type { DialogPropsType, FormPropsType } from "@sito/dashboard-app";
-
 // lib
 import type {
   CommonAccountDto,
@@ -11,12 +8,11 @@ import type {
   UpdateDashboardCardConfigDto,
 } from "lib";
 
+export type { ConfigFormDialogPropsType } from "../types";
+
 export interface WeeklySpentPropsType extends DashboardDto {
   onDelete: () => void;
 }
-
-export interface ConfigFormDialogPropsType<TFormType extends FieldValues>
-  extends FormPropsType<TFormType>, Omit<DialogPropsType, "title"> {}
 
 export interface WeeklySpentFormType
   extends

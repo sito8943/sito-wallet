@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { FieldValues } from "react-hook-form";
-import type { DialogPropsType, FormPropsType } from "@sito/dashboard-app";
+import type { FormDialogPropsType } from "@sito/dashboard-app";
 import type { UpdateDashboardCardConfigDto } from "lib";
 
 export type BaseCardPropsType = {
@@ -8,8 +8,8 @@ export type BaseCardPropsType = {
   children: ReactNode;
 };
 
-type GenericConfigDialogProps<TForm extends FieldValues> = FormPropsType<TForm> &
-  Omit<DialogPropsType, "title">;
+export type ConfigFormDialogPropsType<TForm extends FieldValues> =
+  Omit<FormDialogPropsType<TForm>, "title">;
 
 type Common = {
   id: number;
@@ -37,7 +37,7 @@ export type DashboardCardProps<TForm extends FieldValues> = Common & {
     data: TForm & { userId: number; id: number },
   ) => UpdateDashboardCardConfigDto;
   onConfigSaved?: () => void;
-  ConfigFormDialog: (props: GenericConfigDialogProps<TForm>) => JSX.Element;
+  ConfigFormDialog: (props: ConfigFormDialogPropsType<TForm>) => JSX.Element;
   renderActiveFilters?: (args: RenderFiltersArgs<TForm>) => JSX.Element | null;
   children?: (args: ChildrenArgs<TForm>) => JSX.Element | null;
 };
