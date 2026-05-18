@@ -95,6 +95,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
         else navigate(route);
       }}
       linkComponent={Link}
+      motion="auto"
     >
       <ManagerProvider manager={manager}>
         <AuthProvider
@@ -128,6 +129,7 @@ Optional capabilities:
 1. Disable auth: `auth={false}`
 2. Enable optional UI providers: `withNavbarProvider`, `withBottomNavActionProvider`
 3. Inject app-specific wrappers: `featureFlagsProvider`, `offlineSyncProvider`, `appWrapperProvider`
+4. Control library transitions globally with `config.motion`: `"auto"` (default), `"none"`, or `"always"`
 
 ```tsx
 import type { ReactNode } from "react";
@@ -157,6 +159,7 @@ function AppShell({ children }: { children: ReactNode }) {
           else navigate(route);
         },
         linkComponent: Link,
+        motion: "auto",
       }}
       manager={{ manager }}
       withNavbarProvider
@@ -167,6 +170,12 @@ function AppShell({ children }: { children: ReactNode }) {
   );
 }
 ```
+
+`motion` semantics:
+
+- `"auto"` respects `prefers-reduced-motion`.
+- `"none"` disables library transitions and animations.
+- `"always"` keeps library transitions enabled even when the OS/browser requests reduced motion.
 
 ### 2.1 Supabase providers (optional backend)
 

@@ -63,21 +63,32 @@ Create a theme CSS file and load it after the library styles.
 }
 ```
 
+## 2.1 Motion control and shared animation utility
+
+Library transitions use a shared `.animated` utility class.
+`ConfigProvider` controls that behavior globally through `motion?: "auto" | "none" | "always"`.
+
+- `"auto"` respects `prefers-reduced-motion`.
+- `"none"` disables library transitions and animations by applying `data-sito-motion="none"` at the document root.
+- `"always"` keeps library transitions enabled even when the OS/browser requests reduced motion.
+
+Use `motion="auto"` unless you have a clear product reason to force or disable motion.
+
 ## 3. Safe extension points via `className` props
 
-| Area             | Extension point                                                                 |
-| ---------------- | ------------------------------------------------------------------------------- |
-| `TabsLayout`     | `className`, `tabsContainerClassName`, `tabButtonProps.className`               |
-| `PrettyGrid`     | `className`, `itemClassName`, `loadMoreComponent`                               |
-| `Dialog`         | `containerClassName`, `className`, `animationClass`                             |
-| `DialogActions`  | `containerClassName`, `primaryClassName`                                        |
-| `Error`          | `className`, `messageProps.className`, `retryButtonProps.className`             |
-| `Empty`          | `messageProps.className`                                                        |
-| `ParagraphInput` | `containerClassName`, `inputClassName`, `labelClassName`, `helperTextClassName` |
-| `Navbar`         | `menuButtonProps.className`                                                     |
-| `Page`           | `addOptions.className`                                                          |
-| `ToTop`          | `className`                                                                     |
-| `SplashScreen`   | `className`                                                                     |
+| Area             | Extension point                                                                         |
+| ---------------- | --------------------------------------------------------------------------------------- |
+| `TabsLayout`     | `className`, `tabsContainerClassName`, `tabButtonProps.className`                       |
+| `PrettyGrid`     | `className`, `itemClassName`, `loadMoreComponent`                                       |
+| `Dialog`         | `containerClassName`, `className`, `animationClass`                                     |
+| `DialogActions`  | `containerClassName`, `primaryClassName`                                                |
+| `Error`          | `className`, `messageProps.className`, `retryButtonProps.className`                     |
+| `Empty`          | `messageProps.className`                                                                |
+| `ParagraphInput` | `containerClassName`, `inputClassName`, `labelClassName`, `helperTextClassName`         |
+| `Navbar`         | `menuButtonProps.className`                                                             |
+| `Page`           | `addOptions.className`                                                                  |
+| `ToTop`          | `className`                                                                             |
+| `SplashScreen`   | `className`                                                                             |
 | `ImportDialog`   | `renderCustomPreview` to replace default preview, `extraFields` to inject custom inputs |
 | `ExportDialog`   | `extraFields` for custom inputs (date range, format), `extraActions` for footer buttons |
 
@@ -85,6 +96,7 @@ Create a theme CSS file and load it after the library styles.
 
 ### 4.1 Buttons and helpers
 
+- `.animated`
 - `.to-top`, `.to-top.show`, `.to-top.hide`
 - `.page-fab`
 - `.password-icon`
@@ -153,6 +165,12 @@ Create a theme CSS file and load it after the library styles.
 .page-header,
 .header {
   backdrop-filter: saturate(120%) blur(8px);
+}
+
+/* Disable every library animation utility explicitly */
+:root[data-sito-motion="none"] .animated {
+  transition: none !important;
+  animation: none !important;
 }
 
 /* Dialog */

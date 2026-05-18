@@ -49,6 +49,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
         else navigate(route);
       }}
       linkComponent={Link}
+      motion="auto"
     >
       {/* ManagerProvider already mounts QueryClientProvider internally */}
       <ManagerProvider manager={manager}>
@@ -73,6 +74,12 @@ export function AppProviders({ children }: { children: ReactNode }) {
   );
 }
 ```
+
+`ConfigProvider.motion` controls library transitions globally:
+
+- `"auto"` respects `prefers-reduced-motion`.
+- `"none"` disables library transitions and animations.
+- `"always"` keeps library transitions enabled even when the OS/browser requests reduced motion.
 
 ## 2. Base app shell (Navbar + Drawer + Notification + ToTop)
 
