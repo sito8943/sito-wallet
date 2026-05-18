@@ -18,6 +18,7 @@ import { AuthAccountPersistenceProvider } from "./AuthAccountPersistenceProvider
 import { OfflineSyncProvider } from "./Offline/OfflineSyncProvider";
 import { FeatureFlagsProvider } from "./FeatureFlags/FeatureFlagsProvider";
 import { OfflineManagerContext } from "./Offline/OfflineManagerContext";
+import { ProfileLanguageSyncProvider } from "./ProfileLanguageSyncProvider";
 import { navigateWithWindow } from "./navigation";
 
 // config
@@ -56,9 +57,11 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
     >
       <TranslationProvider t={t} language={i18n.language}>
         <AuthAccountPersistenceProvider>
-          <FeatureFlagsProvider>
-            <OfflineSyncProvider>{children}</OfflineSyncProvider>
-          </FeatureFlagsProvider>
+          <ProfileLanguageSyncProvider>
+            <FeatureFlagsProvider>
+              <OfflineSyncProvider>{children}</OfflineSyncProvider>
+            </FeatureFlagsProvider>
+          </ProfileLanguageSyncProvider>
         </AuthAccountPersistenceProvider>
       </TranslationProvider>
     </AppProviders>

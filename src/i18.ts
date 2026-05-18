@@ -42,7 +42,7 @@ const toResourceBundle = (resource: unknown): ResourceBundle => {
   return resource as ResourceBundle;
 };
 
-const normalizeLanguage = (
+export const normalizeSupportedLanguage = (
   input?: string | readonly string[],
 ): SupportedLng => {
   const value = Array.isArray(input) ? input[0] : input;
@@ -91,7 +91,7 @@ export const initI18n = async () => {
   if (i18n.isInitialized) return i18n;
 
   const detector = new LanguageDetector();
-  const preferredLng = normalizeLanguage(detector.detect());
+  const preferredLng = normalizeSupportedLanguage(detector.detect());
 
   const fallbackResources = await loadLanguageResources(fallbackLng);
   const preferredResources =
@@ -123,7 +123,7 @@ export const initI18n = async () => {
   appliedLanguages.add(preferredLng);
 
   i18n.on("languageChanged", (lng) => {
-    const normalized = normalizeLanguage(lng);
+    const normalized = normalizeSupportedLanguage(lng);
     void loadLanguageResources(normalized).then((languageResources) => {
       applyLanguageResources(normalized, languageResources);
     });
