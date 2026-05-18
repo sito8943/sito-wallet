@@ -12,10 +12,6 @@ export const randomBetween = (min: number, max: number) => {
 };
 
 export const randomBackgroundColor = () => {
-  const colors = ["primary", "secondary", "tertiary", "quaternary"];
-  return colors[randomBetween(0, colors.length - 1)] as
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "quaternary";
+  const colors = ["primary"];
+  return colors[randomBetween(0, colors.length - 1)] as "primary";
 };
