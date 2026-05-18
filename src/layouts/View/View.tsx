@@ -12,7 +12,6 @@ import {
   BottomNavigation,
   ConfigProvider,
   Error,
-  Onboarding,
   TableOptionsProvider,
   NavbarProvider,
   Notification,
@@ -20,8 +19,7 @@ import {
   useAuth,
 } from "@sito/dashboard-app";
 import type { BottomNavigationItemType ,
-  BaseLinkPropsType,
-  OnboardingStepType} from "@sito/dashboard-app";
+  BaseLinkPropsType} from "@sito/dashboard-app";
 
 // providers
 import { fromLocal, toLocal } from "@sito/dashboard-app";
@@ -32,11 +30,13 @@ import { SearchModal } from "components";
 import Header from "./Header";
 import Footer from "./Footer";
 import { OnboardingSetup } from "./components/OnboardingSetup";
+import { WalletOnboarding } from "./components/WalletOnboarding";
 
 // config
 import { config } from "../../config";
 import { bottomMap } from "../../views/bottomMap";
 import { isAnonymousVisitorSession } from "lib";
+import type { WalletOnboardingStepType } from "./components/WalletOnboarding";
 
 const onboardingStepKeys = [
   "welcome",
@@ -61,7 +61,7 @@ export function View() {
 
   const showOnboarding =
     isAnonymousVisitor || !fromLocal(onboardingStorageKey);
-  const onboardingSteps = useMemo<OnboardingStepType[]>(
+  const onboardingSteps = useMemo<WalletOnboardingStepType[]>(
     () =>
       onboardingStepKeys.map((stepKey) => ({
         title: t(`_pages:onboarding.${stepKey}.title`),
@@ -115,7 +115,7 @@ export function View() {
     >
       <NavbarProvider>
         <BottomNavActionProvider>
-          {showOnboarding && <Onboarding steps={onboardingSteps} />}
+          {showOnboarding && <WalletOnboarding steps={onboardingSteps} />}
           <Header />
           <ErrorBoundary FallbackComponent={Error}>
             <TableOptionsProvider>
