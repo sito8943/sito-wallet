@@ -7,7 +7,7 @@ import type { Option } from "@sito/dashboard-app";
 import { FormDialog, AutocompleteInput } from "@sito/dashboard-app";
 
 // hooks
-import { useTransactionCategoriesCommon } from "hooks";
+import { useTransactionCategoriesCommon } from "../../../hooks/queries/useTransactionCategoriesCommon";
 
 // lib
 import type {

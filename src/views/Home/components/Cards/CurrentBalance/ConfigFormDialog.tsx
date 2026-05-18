@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { AutocompleteInput, FormDialog } from "@sito/dashboard-app";
 
 // hooks
-import { useAccountsCommon } from "hooks";
+import { useAccountsCommon } from "../../../../../hooks/queries/useAccountsCommon";
 
 // lib
 import { Tables } from "lib";

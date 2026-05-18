@@ -8,7 +8,7 @@ import { Error, useTableOptions } from "@sito/dashboard-app";
 import { WalletTable } from "components";
 
 // hooks
-import { useTransactionsList } from "hooks";
+import { useTransactionsList } from "../../../../hooks/queries/useTransactionsList";
 
 // lib
 import type {

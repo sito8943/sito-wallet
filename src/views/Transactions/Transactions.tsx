@@ -36,12 +36,12 @@ import { useAddAccountDialog } from "../Accounts/hooks";
 import { useEditTransactionCategoryDialog } from "../TransactionCategories/hooks";
 import {
   TransactionsQueryKeys,
-  useTransactionCategoriesCommon,
-  useHideDeletedEntitiesPreference,
   useMobileNavbar,
   usePersistedTableOptions,
 } from "hooks";
 import { useAccountsList } from "../../hooks/queries/useAccountsList";
+import { useHideDeletedEntitiesPreference } from "../../hooks/queries/useHideDeletedEntitiesPreference";
+import { useTransactionCategoriesCommon } from "../../hooks/queries/useTransactionCategoriesCommon";
 
 // components
 import {

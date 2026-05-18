@@ -43,12 +43,49 @@ vi.mock("./Routes", () => ({
   Routes: () => <div data-testid="routes" />,
 }));
 
-vi.mock("lib", () => ({
-  readStoredSessionFromSnapshot: () => mockReadStoredSessionFromSnapshot(),
-  readStoredRememberMe: () => mockReadStoredRememberMe(),
-  clearPersistedPublicSessionAccount: () =>
-    mockClearPersistedPublicSessionAccount(),
+vi.mock("components", () => ({
+  UpdateDialog: () => null,
 }));
+
+vi.mock("lib", () => {
+  return {
+    readStoredSessionFromSnapshot: () => mockReadStoredSessionFromSnapshot(),
+    readStoredRememberMe: () => mockReadStoredRememberMe(),
+    clearPersistedPublicSessionAccount: () =>
+      mockClearPersistedPublicSessionAccount(),
+    AppRoutes: {
+      authRoot: "/auth/",
+      authNotFound: "/auth/*",
+      signIn: "/auth/sign-in",
+      signUp: "/auth/sign-up",
+      signUpSuccess: "/auth/sign-up-success",
+      resetPassword: "/auth/reset-password",
+      updatePassword: "/auth/update-password",
+      recovery: "/auth/recovery",
+      confirmEmailSuccess: "/auth/confirm-email-success",
+      confirmEmailError: "/auth/confirm-email-error",
+      signOut: "/sign-out",
+      home: "/",
+      transactions: "/transactions",
+      transactionCategories: "/transaction-categories",
+      subscriptions: "/subscriptions",
+      subscriptionNew: "/subscriptions/new",
+      subscriptionEdit: "/subscriptions/:subscriptionId/edit",
+      subscriptionProviders: "/subscription-providers",
+      accounts: "/accounts",
+      currencies: "/currencies",
+      profile: "/profile",
+      users: "/users",
+      about: "/about-us",
+      cookiesPolicy: "/cookies-policy",
+      privacyPolicy: "/privacy-policy",
+      termsAndConditions: "/terms-and-conditions",
+      notFound: "*",
+    },
+    isAdminSession: (account?: { admin?: boolean | null }) =>
+      account?.admin === true,
+  };
+});
 
 import App from "./App";
 

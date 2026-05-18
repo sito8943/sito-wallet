@@ -13,7 +13,7 @@ import {
   applyHideDeletedEntitiesPreference,
   normalizeCommonFilters,
 } from "lib";
-import { useHideDeletedEntitiesPreference } from "./useProfile";
+import { useHideDeletedEntitiesPreference } from "./useHideDeletedEntitiesPreference";
 
 import { AccountsQueryKeys } from "./queryKeys/accountsQueryKeys";
 

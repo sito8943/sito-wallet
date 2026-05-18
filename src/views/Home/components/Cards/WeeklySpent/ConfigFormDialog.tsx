@@ -16,7 +16,7 @@ import {
 } from "@sito/dashboard-app";
 
 // hooks
-import { useAccountsCommon } from "hooks";
+import { useAccountsCommon } from "../../../../../hooks/queries/useAccountsCommon";
 
 // lib
 import { Tables, TransactionType } from "lib";

@@ -15,11 +15,11 @@ import {
 
 // hooks
 import {
-  useAccountsCommon,
   useCurrenciesCommon,
   useSubscriptionProvidersCommon,
-  useTransactionCategoriesCommon,
 } from "hooks";
+import { useAccountsCommon } from "../../../hooks/queries/useAccountsCommon";
+import { useTransactionCategoriesCommon } from "../../../hooks/queries/useTransactionCategoriesCommon";
 
 // lib
 import type {

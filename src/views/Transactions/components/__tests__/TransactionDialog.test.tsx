@@ -124,10 +124,15 @@ const mockCategoriesCommon = vi.fn(() => ({
   isLoading: false,
 }));
 
-vi.mock("hooks", () => ({
+vi.mock("../../../../hooks/queries/useAccountsCommon", () => ({
   useAccountsCommon: () => mockAccountsCommon(),
-  useTransactionCategoriesCommon: () => mockCategoriesCommon(),
 }));
+vi.mock(
+  "../../../../hooks/queries/useTransactionCategoriesCommon",
+  () => ({
+    useTransactionCategoriesCommon: () => mockCategoriesCommon(),
+  }),
+);
 
 vi.mock("lib", () => ({
   Tables: { Transactions: "transactions" },

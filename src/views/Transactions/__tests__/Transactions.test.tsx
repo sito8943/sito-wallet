@@ -41,12 +41,6 @@ const mockUseMobileNavbar = vi.fn();
 
 vi.mock("hooks", () => ({
   useAccountsList: () => mockAccountsList(),
-  useTransactionCategoriesCommon: () => ({
-    data: [{ id: 1, name: "Food", auto: false }],
-    isLoading: false,
-    error: null,
-  }),
-  useHideDeletedEntitiesPreference: () => false,
   useMobileNavbar: (...args: unknown[]) => mockUseMobileNavbar(...args),
   usePersistedTableOptions: vi.fn(),
   TransactionsQueryKeys: {
@@ -57,6 +51,16 @@ vi.mock("hooks", () => ({
 
 vi.mock("../../../hooks/queries/useAccountsList", () => ({
   useAccountsList: () => mockAccountsList(),
+}));
+vi.mock("../../../hooks/queries/useTransactionCategoriesCommon", () => ({
+  useTransactionCategoriesCommon: () => ({
+    data: [{ id: 1, name: "Food", auto: false }],
+    isLoading: false,
+    error: null,
+  }),
+}));
+vi.mock("../../../hooks/queries/useHideDeletedEntitiesPreference", () => ({
+  useHideDeletedEntitiesPreference: () => false,
 }));
 
 // providers

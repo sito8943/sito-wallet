@@ -15,7 +15,7 @@ import {
   normalizeListFilters,
 } from "lib";
 
-import { useHideDeletedEntitiesPreference } from "./useProfile";
+import { useHideDeletedEntitiesPreference } from "./useHideDeletedEntitiesPreference";
 import type { UseFetchPropsType } from "./types";
 import { SubscriptionsQueryKeys } from "./queryKeys/subscriptionsQueryKeys";
 

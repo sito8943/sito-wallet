@@ -102,7 +102,7 @@ vi.mock("lib", () => ({
   TransactionWeeklySpentDto: class {},
 }));
 
-vi.mock("../useProfile", () => ({
+vi.mock("../useHideDeletedEntitiesPreference", () => ({
   useHideDeletedEntitiesPreference: () =>
     mockUseHideDeletedEntitiesPreference(),
 }));

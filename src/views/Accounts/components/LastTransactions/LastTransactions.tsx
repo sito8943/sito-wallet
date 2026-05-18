@@ -5,7 +5,7 @@ import { Loading, SortOrder } from "@sito/dashboard-app";
 import type { LastTransactionsPropsType } from "./types";
 
 //hooks
-import { useTransactionsList } from "hooks";
+import { useTransactionsList } from "../../../../hooks/queries/useTransactionsList";
 
 // components
 import { Transaction } from "./Transaction";

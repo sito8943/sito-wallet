@@ -20,7 +20,7 @@ import {
   fetchTransactionCategoriesList,
   normalizeListFilters,
 } from "lib";
-import { useHideDeletedEntitiesPreference } from "./useProfile";
+import { useHideDeletedEntitiesPreference } from "./useHideDeletedEntitiesPreference";
 
 import { TransactionCategoriesQueryKeys } from "./queryKeys/transactionCategoriesQueryKeys";
 

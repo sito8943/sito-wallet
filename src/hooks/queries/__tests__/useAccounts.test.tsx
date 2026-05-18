@@ -61,7 +61,7 @@ vi.mock("lib", () => ({
   },
 }));
 
-vi.mock("../useProfile", () => ({
+vi.mock("../useHideDeletedEntitiesPreference", () => ({
   useHideDeletedEntitiesPreference: () => false,
 }));
 
