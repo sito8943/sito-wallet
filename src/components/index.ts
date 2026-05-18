@@ -7,3 +7,4 @@ export * from "./OfflineBanner";
 export * from "./Image";
 export * from "./MobileSelectionBar";
 export * from "./ColorVignette";
+export * from "./UpdateDialog";

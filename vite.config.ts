@@ -148,6 +148,9 @@ export default defineConfig(({ command, mode }) => {
   const fsAllowRoots = [projectRoot, ...externalAllowedRoots];
 
   return {
+    define: {
+      __APP_BUILD_ID__: JSON.stringify(new Date().toISOString()),
+    },
     plugins: [
       react(),
       tailwindcss(),

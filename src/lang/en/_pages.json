@@ -253,6 +253,14 @@
       "toSignIn": "Go to sign in"
     }
   },
+  "pwaUpdate": {
+    "title": "New version available",
+    "description": "A new app version was deployed. Update now to use the latest changes.",
+    "actions": {
+      "later": "Later",
+      "update": "Update"
+    }
+  },
   "signOut": {
     "title": "Sign out"
   },

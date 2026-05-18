@@ -253,6 +253,14 @@
       "toSignIn": "Ir a iniciar sesión"
     }
   },
+  "pwaUpdate": {
+    "title": "Nueva versión disponible",
+    "description": "Se desplegó una nueva versión de la app. Actualiza para usar los cambios más recientes.",
+    "actions": {
+      "later": "Más tarde",
+      "update": "Actualizar"
+    }
+  },
   "signOut": {
     "title": "Cerrar sesión"
   },

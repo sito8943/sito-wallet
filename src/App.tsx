@@ -2,6 +2,7 @@ import { Suspense } from "react";
 
 // components
 import { SplashScreen } from "@sito/dashboard-app";
+import { UpdateDialog } from "components";
 
 // hooks
 import { useAppSession } from "hooks";
@@ -17,6 +18,7 @@ function App() {
   return (
     <Suspense fallback={<SplashScreen />}>
       <Routes />
+      <UpdateDialog />
     </Suspense>
   );
 }
