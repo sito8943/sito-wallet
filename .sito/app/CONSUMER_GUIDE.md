@@ -297,7 +297,7 @@ import { PrettyGrid, Loading } from "@sito/dashboard-app";
   hasMore={hasMore}
   loadingMore={isFetchingNextPage}
   onLoadMore={fetchNextPage}
-  loadMoreComponent={<Loading className="!w-auto" loaderClass="w-5 h-5" />}
+  loadMoreComponent={<Loading className="w-auto!" loaderClass="w-5 h-5" />}
 />;
 ```
 

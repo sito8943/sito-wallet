@@ -175,7 +175,7 @@ export function Recovery() {
           >
             {loadingAction === "forgot" && (
               <Loading
-                className="!w-auto"
+                className="w-auto!"
                 color="stroke-base"
                 loaderClass="!w-6"
                 strokeWidth="6"
@@ -195,7 +195,7 @@ export function Recovery() {
           >
             {loadingAction === "resend-confirm" && (
               <Loading
-                className="!w-auto"
+                className="w-auto!"
                 color="stroke-primary"
                 loaderClass="!w-6"
                 strokeWidth="6"

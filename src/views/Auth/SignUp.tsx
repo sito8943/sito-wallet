@@ -237,7 +237,7 @@ export function SignUp() {
           >
             {isLoading && (
               <Loading
-                className="!w-auto"
+                className="w-auto!"
                 color="stroke-base"
                 loaderClass="!w-6"
                 strokeWidth="6"

@@ -254,7 +254,7 @@ export function UpdatePassword() {
           >
             {saving && (
               <Loading
-                className="!w-auto"
+                className="w-auto!"
                 color="stroke-base"
                 loaderClass="!w-6"
                 strokeWidth="6"

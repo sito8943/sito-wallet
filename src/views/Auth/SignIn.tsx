@@ -236,7 +236,7 @@ export function SignIn() {
               <Loading
                 color="stroke-base"
                 loaderClass="!w-6"
-                className="!w-auto"
+                className="w-auto!"
                 strokeWidth="6"
               />
             )}

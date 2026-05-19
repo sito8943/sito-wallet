@@ -131,7 +131,7 @@ export function ConfirmEmailSuccess() {
         >
           {isVerifying ? (
             <Loading
-              className="!w-auto"
+              className="w-auto!"
               color="stroke-primary"
               loaderClass="!w-6"
               strokeWidth="6"
