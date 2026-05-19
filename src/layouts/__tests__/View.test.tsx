@@ -55,6 +55,7 @@ vi.mock("react-router-dom", async () => {
 vi.mock("@sito/dashboard-app", () => ({
   BaseClient: class {},
   APIClient: class {},
+  AuthClient: class {},
   IndexedDBClient: class {},
   IManager: class {},
   Methods: {
@@ -79,6 +80,33 @@ vi.mock("@sito/dashboard-app", () => ({
   BottomNavActionProvider: ({ children }: { children: React.ReactNode }) => (
     <>{children}</>
   ),
+  AppShell: ({
+    header,
+    footer,
+    bottomNavigation,
+    extras,
+    children,
+  }: {
+    header?: React.ReactNode;
+    footer?: React.ReactNode;
+    bottomNavigation?: React.ReactNode;
+    extras?: React.ReactNode;
+    children?: React.ReactNode;
+  }) => (
+    <div data-testid="app-shell">
+      {header}
+      {children}
+      {footer}
+      {bottomNavigation}
+      {extras}
+    </div>
+  ),
+  DashboardHeader: () => <header data-testid="header" />,
+  DashboardFooter: () => (
+    <footer data-testid="footer">
+      <div data-testid="to-top" />
+    </footer>
+  ),
   Error: ({ error }: { error: Error }) => (
     <div data-testid="error-ui">{error?.message}</div>
   ),
@@ -98,6 +126,7 @@ vi.mock("@sito/dashboard-app", () => ({
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: mockTranslate,
+    i18n: { resolvedLanguage: "en" },
   }),
 }));
 
@@ -107,10 +136,28 @@ vi.mock("hooks", () => ({
 
 vi.mock("components", () => ({
   SearchModal: () => <div data-testid="search-modal" />,
+  OfflineBanner: () => <div data-testid="offline-banner" />,
+}));
+
+vi.mock("providers", () => ({
+  useFeatureFlags: () => ({ isFeatureEnabled: () => true }),
+}));
+
+vi.mock("views/menuMap", () => ({
+  getFeatureFilteredMenuMap: () => [],
 }));
 
 vi.mock("../../config", () => ({
-  config: { onboarding: "test-onboarding" },
+  config: {
+    onboarding: "test-onboarding",
+    apiUrl: "",
+    auth: {
+      user: "user",
+      remember: "remember",
+      refreshTokenKey: "refreshToken",
+      accessTokenExpiresAtKey: "accessTokenExpiresAt",
+    },
+  },
 }));
 
 vi.mock("../../views/bottomMap", () => ({
@@ -130,18 +177,6 @@ vi.mock("../../views/bottomMap", () => ({
       position: "right",
     },
   ],
-}));
-
-vi.mock("../../layouts/View/Header", () => ({
-  default: () => <header data-testid="header" />,
-}));
-
-vi.mock("../../layouts/View/Footer", () => ({
-  default: () => (
-    <footer data-testid="footer">
-      <div data-testid="to-top" />
-    </footer>
-  ),
 }));
 
 vi.mock("../../layouts/View/components/OnboardingSetup", () => ({

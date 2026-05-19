@@ -2,41 +2,46 @@ import type { To } from "react-router-dom";
 import { Outlet, useNavigate, useLocation, Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
-import type { ComponentType} from "react";
+import type { ComponentType } from "react";
 import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
 import {
+  AppShell,
   BottomNavActionProvider,
   BottomNavigation,
   ConfigProvider,
+  DashboardFooter,
+  DashboardHeader,
   Error,
-  TableOptionsProvider,
+  fromLocal,
   NavbarProvider,
-  Notification,
+  Onboarding,
   SplashScreen,
+  TableOptionsProvider,
+  toLocal,
   useAuth,
 } from "@sito/dashboard-app";
-import type { BottomNavigationItemType ,
-  BaseLinkPropsType} from "@sito/dashboard-app";
+import type {
+  BaseLinkPropsType,
+  BottomNavigationItemType,
+  OnboardingStepType,
+} from "@sito/dashboard-app";
 
 // providers
-import { fromLocal, toLocal } from "@sito/dashboard-app";
+import { useFeatureFlags } from "providers";
 import { useAppPreload } from "hooks";
 
 // components
-import { SearchModal } from "components";
-import Header from "./Header";
-import Footer from "./Footer";
+import { OfflineBanner, SearchModal } from "components";
 import { OnboardingSetup } from "./components/OnboardingSetup";
-import { WalletOnboarding } from "./components/WalletOnboarding";
 
 // config
 import { config } from "../../config";
 import { bottomMap } from "../../views/bottomMap";
 import { isAnonymousVisitorSession } from "lib";
-import type { WalletOnboardingStepType } from "./components/WalletOnboarding";
+import { getFeatureFilteredMenuMap } from "views/menuMap";
 
 const onboardingStepKeys = [
   "welcome",
@@ -48,8 +53,9 @@ const onboardingStepKeys = [
 
 export function View() {
   const { loading: preloadLoading } = useAppPreload();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { account, isInGuestMode } = useAuth();
+  const { isFeatureEnabled } = useFeatureFlags();
   const navigate = useNavigate();
   const location = useLocation();
   const onboardingStorageKey =
@@ -61,7 +67,7 @@ export function View() {
 
   const showOnboarding =
     isAnonymousVisitor || !fromLocal(onboardingStorageKey);
-  const onboardingSteps = useMemo<WalletOnboardingStepType[]>(
+  const onboardingSteps = useMemo<OnboardingStepType[]>(
     () =>
       onboardingStepKeys.map((stepKey) => ({
         title: t(`_pages:onboarding.${stepKey}.title`),
@@ -74,6 +80,11 @@ export function View() {
           ) : undefined,
       })),
     [t],
+  );
+
+  const featureFilteredMenuMap = useMemo(
+    () => getFeatureFilteredMenuMap(isFeatureEnabled, i18n.resolvedLanguage),
+    [isFeatureEnabled, i18n.resolvedLanguage],
   );
 
   const bottomNavigationItems = useMemo<BottomNavigationItemType[]>(
@@ -115,20 +126,36 @@ export function View() {
     >
       <NavbarProvider>
         <BottomNavActionProvider>
-          {showOnboarding && <WalletOnboarding steps={onboardingSteps} />}
-          <Header />
-          <ErrorBoundary FallbackComponent={Error}>
-            <TableOptionsProvider>
-              <Outlet />
-            </TableOptionsProvider>
-          </ErrorBoundary>
-          <Footer />
-          <BottomNavigation
-            items={bottomNavigationItems}
-            isItemActive={isBottomNavItemActive}
-          />
-          <Tooltip id="tooltip" />
-          <Notification />
+          {showOnboarding && (
+            <Onboarding remountStepOnChange steps={onboardingSteps} />
+          )}
+          <AppShell
+            header={
+              <>
+                <OfflineBanner />
+                <DashboardHeader menuMap={featureFilteredMenuMap} />
+              </>
+            }
+            footer={
+              <DashboardFooter
+                copyrightText={t("_pages:footer.copyright")}
+                bottomNavSpacing
+              />
+            }
+            bottomNavigation={
+              <BottomNavigation
+                items={bottomNavigationItems}
+                isItemActive={isBottomNavItemActive}
+              />
+            }
+            extras={<Tooltip id="tooltip" />}
+          >
+            <ErrorBoundary FallbackComponent={Error}>
+              <TableOptionsProvider>
+                <Outlet />
+              </TableOptionsProvider>
+            </ErrorBoundary>
+          </AppShell>
         </BottomNavActionProvider>
       </NavbarProvider>
     </ConfigProvider>

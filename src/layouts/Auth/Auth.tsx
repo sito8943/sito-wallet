@@ -3,10 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 // @sito/dashboard-app
-import { Error, Notification } from "@sito/dashboard-app";
-
-// providers
-import { useAuth } from "@sito/dashboard-app";
+import { AuthShell, Error, useAuth } from "@sito/dashboard-app";
 
 // lib
 import { AppRoutes } from "lib";
@@ -27,9 +24,10 @@ export const Auth = () => {
   }, [account.email, location.pathname, navigate]);
 
   return (
-    <ErrorBoundary FallbackComponent={Error}>
-      <Outlet />
-      <Notification />
-    </ErrorBoundary>
+    <AuthShell>
+      <ErrorBoundary FallbackComponent={Error}>
+        <Outlet />
+      </ErrorBoundary>
+    </AuthShell>
   );
 };

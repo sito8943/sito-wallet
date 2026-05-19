@@ -27,6 +27,9 @@ vi.mock("@sito/dashboard-app", () => ({
     <div data-testid="error-ui">{error?.message}</div>
   ),
   Notification: () => <div data-testid="notification" />,
+  AuthShell: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="auth-shell">{children}</div>
+  ),
 }));
 
 vi.mock("lib", () => ({
