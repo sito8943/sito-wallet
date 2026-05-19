@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ItemCardTitle } from "./ItemCardTitle";
 
 // @sito/dashboard-app
-import type { BaseEntityDto} from "@sito/dashboard-app";
+import type { BaseEntityDto } from "@sito/dashboard-app";
 import { Actions } from "@sito/dashboard-app";
 
 // types

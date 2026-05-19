@@ -1,6 +1,7 @@
 import type { SubscriptionBillingUnit, SubscriptionStatus } from "lib";
 
-export const DEFAULT_SUBSCRIPTION_BILLING_UNIT: SubscriptionBillingUnit = "MONTH";
+export const DEFAULT_SUBSCRIPTION_BILLING_UNIT: SubscriptionBillingUnit =
+  "MONTH";
 export const DEFAULT_SUBSCRIPTION_STATUS: SubscriptionStatus = "ACTIVE";
 
 export const LEGACY_SUBSCRIPTION_BILLING_UNIT_BY_CODE: Record<

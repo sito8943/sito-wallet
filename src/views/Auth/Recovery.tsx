@@ -10,9 +10,13 @@ import {
   Loading,
   State,
   TextInput,
+  buildAuthRedirectUrl,
   isHttpError,
   useNotification,
 } from "@sito/dashboard-app";
+
+// config
+import { config } from "../../config";
 
 // lib
 import { AppRoutes } from "lib";
@@ -21,7 +25,7 @@ import { AppRoutes } from "lib";
 import { useManager } from "providers";
 
 import type { RecoveryFormType } from "./types";
-import { buildAuthRedirectUrl, getAuthErrorMessage } from "./utils";
+import { getAuthErrorMessage } from "./getAuthErrorMessage";
 
 /**
  * Recovery page
@@ -46,8 +50,14 @@ export function Recovery() {
 
   const isLoading = loadingAction !== null;
 
-  const forgotRedirectTo = buildAuthRedirectUrl(AppRoutes.resetPassword);
-  const confirmRedirectTo = buildAuthRedirectUrl(AppRoutes.confirmEmailSuccess);
+  const forgotRedirectTo = buildAuthRedirectUrl(
+    AppRoutes.resetPassword,
+    config.thisUrl || undefined,
+  );
+  const confirmRedirectTo = buildAuthRedirectUrl(
+    AppRoutes.confirmEmailSuccess,
+    config.thisUrl || undefined,
+  );
 
   const onForgotPassword = async ({ email }: RecoveryFormType) => {
     setLoadingAction("forgot");
@@ -57,7 +67,7 @@ export function Recovery() {
         redirectTo: forgotRedirectTo,
       });
       showSuccessNotification({
-        message: response.message || t("_pages:auth.recovery.sent"),
+        message: response?.message || t("_pages:auth.recovery.sent"),
       });
     } catch (error) {
       const message = isHttpError(error)
@@ -81,7 +91,8 @@ export function Recovery() {
         redirectTo: confirmRedirectTo,
       });
       showSuccessNotification({
-        message: response.message || t("_pages:auth.recovery.confirmationSent"),
+        message:
+          response?.message || t("_pages:auth.recovery.confirmationSent"),
       });
     } catch (error) {
       const message = isHttpError(error)

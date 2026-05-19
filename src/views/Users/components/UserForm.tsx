@@ -1,11 +1,7 @@
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import {
-  CheckInput,
-  PasswordInput,
-  TextInput,
-} from "@sito/dashboard-app";
+import { CheckInput, PasswordInput, TextInput } from "@sito/dashboard-app";
 
 import { Tables } from "lib";
 
@@ -116,9 +112,7 @@ export function UserForm(props: UserFormPropsType) {
               checked={!!field.value}
               disabled={isLoading}
               onBlur={field.onBlur}
-              onChange={(event) =>
-                field.onChange(event.currentTarget.checked)
-              }
+              onChange={(event) => field.onChange(event.currentTarget.checked)}
             />
           </div>
         )}

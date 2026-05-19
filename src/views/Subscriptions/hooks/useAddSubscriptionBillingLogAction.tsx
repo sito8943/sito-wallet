@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 
 // @sito/dashboard-app
-import type { ActionType} from "@sito/dashboard-app";
+import type { ActionType } from "@sito/dashboard-app";
 import { useTranslation } from "@sito/dashboard-app";
 
 // icons

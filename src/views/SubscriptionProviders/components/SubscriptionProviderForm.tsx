@@ -35,7 +35,7 @@ export function SubscriptionProviderForm(
     control,
     name: "file",
   });
- /*  const currentPhoto =
+  /*  const currentPhoto =
     (useWatch({
       control,
       name: "photo",

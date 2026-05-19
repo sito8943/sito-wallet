@@ -10,8 +10,7 @@ import { FormDialog, AutocompleteInput } from "@sito/dashboard-app";
 import { useTransactionCategoriesCommon } from "../../../hooks/queries/useTransactionCategoriesCommon";
 
 // lib
-import type {
-  CommonTransactionCategoryDto} from "lib";
+import type { CommonTransactionCategoryDto } from "lib";
 import {
   Tables,
   hasMixedTransactionCategoryTypes,
@@ -80,9 +79,7 @@ export function AssignCategoryDialog(
         name="categories"
         rules={{
           validate: (value) => {
-            const parsedCategories = Array.isArray(value)
-              ? (value)
-              : [];
+            const parsedCategories = Array.isArray(value) ? value : [];
 
             if (!parsedCategories.length) {
               return t("_entities:transaction.category.required");

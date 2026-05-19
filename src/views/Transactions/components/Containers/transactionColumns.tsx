@@ -1,19 +1,15 @@
 import type { TFunction } from "i18next";
 
 // @sito/dashboard
-import type {
-  Option,
-  ColumnType} from "@sito/dashboard-app";
+import type { Option, ColumnType } from "@sito/dashboard-app";
 import {
   FilterTypes,
   enumToKeyValueArray,
-  getFormattedDateTime
+  getFormattedDateTime,
 } from "@sito/dashboard-app";
 
 // lib
-import type {
-  CommonTransactionCategoryDto,
-  TransactionDto} from "lib";
+import type { CommonTransactionCategoryDto, TransactionDto } from "lib";
 import {
   TransactionType,
   getPrimaryTransactionCategory,

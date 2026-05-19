@@ -31,7 +31,8 @@ import { useManager, useRegisterBottomNavAction } from "providers";
 import type {
   FilterSubscriptionProviderDto,
   ImportPreviewSubscriptionProviderDto,
-  SubscriptionProviderDto} from "lib";
+  SubscriptionProviderDto,
+} from "lib";
 import {
   Tables,
   TablesCamelCase,
@@ -240,7 +241,9 @@ export function SubscriptionProviders() {
             renderComponent={(subscriptionProvider) => (
               <SubscriptionProviderCard
                 actions={getActions(subscriptionProvider)}
-                onClick={(id: number) => editSubscriptionProvider.openDialog(id)}
+                onClick={(id: number) =>
+                  editSubscriptionProvider.openDialog(id)
+                }
                 selectionMode={mobileSelection.selectionMode}
                 selected={mobileSelection.isSelected(subscriptionProvider.id)}
                 onSelect={mobileSelection.onToggleRowSelection}

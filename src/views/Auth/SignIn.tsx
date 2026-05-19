@@ -7,8 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./styles.css";
 
 // @sito/dashboard-app
-import type {
-  SessionDto} from "@sito/dashboard-app";
+import type { SessionDto } from "@sito/dashboard-app";
 import {
   useNotification,
   useAuth,
@@ -31,7 +30,7 @@ import { AppRoutes, randomBackgroundColor } from "lib";
 // components
 import { TextLogo } from "components";
 import type { SignInFormType } from "./types";
-import { getAuthErrorMessage } from "./utils";
+import { getAuthErrorMessage } from "./getAuthErrorMessage";
 
 const color: "primary" | "secondary" | "tertiary" | "quaternary" =
   randomBackgroundColor();
@@ -107,9 +106,7 @@ export function SignIn() {
           }`}
         >
           <TextLogo variant={color} />
-          <h1 className={`auth-title`}>
-            {t("_pages:auth.signIn.title")}
-          </h1>
+          <h1 className={`auth-title`}>{t("_pages:auth.signIn.title")}</h1>
         </div>
 
         <div className="form-container w-full">

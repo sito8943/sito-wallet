@@ -3,21 +3,14 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 // @sito/dashboard-app
-import type {
-  QueryParam,
-  QueryResult} from "@sito/dashboard-app";
-import {
-  useAuth,
-  useTableOptions,
-} from "@sito/dashboard-app";
+import type { QueryParam, QueryResult } from "@sito/dashboard-app";
+import { useAuth, useTableOptions } from "@sito/dashboard-app";
 
 // providers
 import { useManager, useOfflineManager } from "providers";
 
 // lib
-import type {
-  TransactionDto,
-  FilterTransactionDto} from "lib";
+import type { TransactionDto, FilterTransactionDto } from "lib";
 import {
   applyHideDeletedEntitiesPreference,
   defaultTransactionsListFilters,

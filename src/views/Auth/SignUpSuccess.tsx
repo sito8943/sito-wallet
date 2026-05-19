@@ -5,17 +5,19 @@ import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
   Loading,
+  buildAuthRedirectUrl,
   isHttpError,
   useNotification,
 } from "@sito/dashboard-app";
 
+import { config } from "../../config";
 import { TextLogo } from "components";
 import { AppRoutes, randomBackgroundColor } from "lib";
 import { useManager } from "providers";
 
 import "./styles.css";
 import type { SignUpSuccessLocationState } from "./types";
-import { buildAuthRedirectUrl, getAuthErrorMessage } from "./utils";
+import { getAuthErrorMessage } from "./getAuthErrorMessage";
 
 const color: "primary" | "secondary" | "tertiary" | "quaternary" =
   randomBackgroundColor();
@@ -30,7 +32,10 @@ export function SignUpSuccess() {
   const [isResending, setIsResending] = useState(false);
   const locationState = location.state as SignUpSuccessLocationState | null;
   const email = locationState?.email?.trim() ?? "";
-  const confirmRedirectTo = buildAuthRedirectUrl(AppRoutes.confirmEmailSuccess);
+  const confirmRedirectTo = buildAuthRedirectUrl(
+    AppRoutes.confirmEmailSuccess,
+    config.thisUrl || undefined,
+  );
 
   const onResendConfirmEmail = async () => {
     if (email.length === 0) {
@@ -46,7 +51,7 @@ export function SignUpSuccess() {
       });
       showSuccessNotification({
         message:
-          response.message || t("_pages:auth.recovery.confirmationSent"),
+          response?.message || t("_pages:auth.recovery.confirmationSent"),
       });
     } catch (error) {
       const message = isHttpError(error)
@@ -74,9 +79,7 @@ export function SignUpSuccess() {
           }`}
         >
           <TextLogo variant={color} />
-          <h1 className="auth-title">
-            {t("_pages:auth.signUpSuccess.title")}
-          </h1>
+          <h1 className="auth-title">{t("_pages:auth.signUpSuccess.title")}</h1>
         </div>
         <p
           className={`w-full mb-4 transition-all duration-500 ease-in-out delay-300 ${

@@ -11,29 +11,22 @@ import {
   Loading,
   PasswordInput,
   State,
+  extractAuthQueryParamFromLocation,
+  extractRecoveryAccessTokenFromLocation,
+  hasAuthErrorParamsInLocation,
   isHttpError,
   useNotification,
 } from "@sito/dashboard-app";
+import type { ResetPasswordDto } from "@sito/dashboard-app";
 
 // providers
 import { useManager } from "providers";
 
 // lib
-import type {
-  ResetPasswordDto} from "lib";
-import {
-  AppRoutes,
-  AuthRouteQueryParam,
-  AuthRouteQueryParamType
-} from "lib";
+import { AppRoutes, AuthRouteQueryParam, AuthRouteQueryParamType } from "lib";
 
 import type { UpdatePasswordFormType } from "./types";
-import {
-  extractAuthQueryParamFromLocation,
-  extractRecoveryAccessTokenFromLocation,
-  getAuthErrorMessage,
-  hasAuthErrorParamsInLocation,
-} from "./utils";
+import { getAuthErrorMessage } from "./getAuthErrorMessage";
 
 /**
  * UpdatePassword page
@@ -69,7 +62,8 @@ export function UpdatePassword() {
   );
 
   const accessToken = useMemo(
-    () => extractRecoveryAccessTokenFromLocation(location.hash, location.search),
+    () =>
+      extractRecoveryAccessTokenFromLocation(location.hash, location.search),
     [location.hash, location.search],
   );
 
@@ -86,7 +80,10 @@ export function UpdatePassword() {
     );
     const normalizedTokenType = tokenType?.toLowerCase() ?? null;
 
-    if (!tokenHash || normalizedTokenType !== AuthRouteQueryParamType.recovery) {
+    if (
+      !tokenHash ||
+      normalizedTokenType !== AuthRouteQueryParamType.recovery
+    ) {
       return null;
     }
 

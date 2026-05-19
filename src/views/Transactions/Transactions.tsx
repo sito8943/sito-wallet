@@ -4,8 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito-dashboard-app
-import type {
-  TabsType} from "@sito/dashboard-app";
+import type { TabsType } from "@sito/dashboard-app";
 import {
   Page,
   useDeleteDialog,
@@ -61,7 +60,8 @@ import type {
   FilterTransactionDto,
   TransactionDto,
   ImportPreviewTransactionDto,
-  CommonAccountDto} from "lib";
+  CommonAccountDto,
+} from "lib";
 import {
   Tables,
   TransactionType,
@@ -210,9 +210,7 @@ export function Transactions() {
 
       return manager.Transactions.export(
         applyHideDeletedEntitiesPreference(
-          normalizeListFilters(
-            baseFilters as Record<string, unknown>,
-          ),
+          normalizeListFilters(baseFilters as Record<string, unknown>),
           hideDeletedEntities,
         ) as FilterTransactionDto,
       );
@@ -235,9 +233,7 @@ export function Transactions() {
         <input
           type="checkbox"
           checked={values.includeCurrentAccount}
-          onChange={(e) =>
-            setValue("includeCurrentAccount", e.target.checked)
-          }
+          onChange={(e) => setValue("includeCurrentAccount", e.target.checked)}
           className="accent-bg-primary"
         />
         <span className="text-text">

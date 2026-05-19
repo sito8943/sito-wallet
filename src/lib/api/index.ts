@@ -1,7 +1,5 @@
 export * from "./Manager";
 export * from "./OfflineManager";
-export { default as AuthApiClient } from "./AuthApiClient";
-export * from "./AuthApiClient";
 export * from "./OfflineAuthApiClient";
 export * from "./OfflineFeatureFlagClient";
 export { default as FeatureFlagClient } from "./FeatureFlagClient";

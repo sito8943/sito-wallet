@@ -4,19 +4,15 @@ import { useMemo } from "react";
 
 // providers
 import { useManager, useOfflineManager } from "providers";
-import type { QueryResult} from "@sito/dashboard-app";
+import type { QueryResult } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
 // types
 import type { UseFetchPropsType } from "./types.ts";
 
 // lib
-import type {
-  DashboardDto,
-  FilterDashboardDto} from "lib";
-import {
-  normalizeHardDeleteFilters,
-} from "lib";
+import type { DashboardDto, FilterDashboardDto } from "lib";
+import { normalizeHardDeleteFilters } from "lib";
 import { DashboardsQueryKeys } from "./queryKeys/dashboardsQueryKeys";
 
 export { DashboardsQueryKeys };

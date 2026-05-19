@@ -52,7 +52,8 @@ import {
 import type {
   AccountDto,
   FilterAccountDto,
-  ImportPreviewAccountDto} from "lib";
+  ImportPreviewAccountDto,
+} from "lib";
 import {
   Tables,
   isFeatureDisabledBusinessError,

@@ -9,7 +9,7 @@ import type {
 } from "@sito/dashboard-app";
 
 // lib
-import type { FeatureFlagKey} from "lib";
+import type { FeatureFlagKey } from "lib";
 import { AppRoutes, isAdminSession } from "lib";
 
 export enum PageId {

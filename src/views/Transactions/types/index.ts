@@ -99,8 +99,7 @@ export interface TransactionsMobileFiltersFormType extends FieldValues {
   sortingOrder: SortOrder;
 }
 
-export interface TransactionsMobileFiltersDialogPropsType
-  extends TriggerFormDialogPropsType<TransactionsMobileFiltersFormType> {
+export interface TransactionsMobileFiltersDialogPropsType extends TriggerFormDialogPropsType<TransactionsMobileFiltersFormType> {
   categories: CommonTransactionCategoryDto[];
   hideDeletedEntities?: boolean;
   handleClear: () => void;

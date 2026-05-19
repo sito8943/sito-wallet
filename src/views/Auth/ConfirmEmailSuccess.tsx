@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { Button, Loading } from "@sito/dashboard-app";
+import {
+  Button,
+  Loading,
+  extractAuthQueryParamFromLocation,
+  hasAuthErrorParamsInLocation,
+} from "@sito/dashboard-app";
 
 import { TextLogo } from "components";
 import {
@@ -12,11 +17,6 @@ import {
   randomBackgroundColor,
 } from "lib";
 import { useManager } from "providers";
-
-import {
-  extractAuthQueryParamFromLocation,
-  hasAuthErrorParamsInLocation,
-} from "./utils";
 
 import "./styles.css";
 
@@ -91,12 +91,7 @@ export function ConfirmEmailSuccess() {
     return () => {
       cancelled = true;
     };
-  }, [
-    location.hash,
-    location.search,
-    manager,
-    navigate,
-  ]);
+  }, [location.hash, location.search, manager, navigate]);
 
   useEffect(() => {
     setTimeout(() => {

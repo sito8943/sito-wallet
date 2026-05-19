@@ -11,13 +11,8 @@ import { WalletTable } from "components";
 import { useTransactionsList } from "../../../../hooks/queries/useTransactionsList";
 
 // lib
-import type {
-  TransactionDto} from "lib";
-import {
-  EntityName,
-  normalizeListFilters,
-  useParseColumns,
-} from "lib";
+import type { TransactionDto } from "lib";
+import { EntityName, normalizeListFilters, useParseColumns } from "lib";
 
 // types
 import type { TransactionContainerPropsType } from "./types";

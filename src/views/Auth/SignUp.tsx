@@ -7,9 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./styles.css";
 
 // @sito/dashboard-app
-import type {
-  RegisterDto,
-  SessionDto} from "@sito/dashboard-app";
+import type { RegisterDto, SessionDto } from "@sito/dashboard-app";
 import {
   State,
   TextInput,
@@ -32,7 +30,7 @@ import { AppRoutes, randomBackgroundColor } from "lib";
 import type { SignUpFormType, SignUpSuccessLocationState } from "./types";
 
 // utils
-import { getAuthErrorMessage } from "./utils";
+import { getAuthErrorMessage } from "./getAuthErrorMessage";
 
 const color: "primary" | "secondary" | "tertiary" | "quaternary" =
   randomBackgroundColor();
@@ -78,12 +76,10 @@ export function SignUp() {
     },
     mutationFn: async (data: SignUpFormType) => {
       signUpEmailRef.current = data.email.trim();
-      return await manager.Auth.register(
-        {
-          email: data.email,
-          password: data.password,
-        } as RegisterDto,
-      );
+      return await manager.Auth.register({
+        email: data.email,
+        password: data.password,
+      } as RegisterDto);
     },
     onSuccess: () => {
       const locationState: SignUpSuccessLocationState | null =

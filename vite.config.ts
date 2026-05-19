@@ -278,7 +278,10 @@ export default defineConfig(({ command, mode }) => {
         { find: /^react\/(.*)$/, replacement: `${appReactRoot}/$1` },
         { find: /^react-dom$/, replacement: appReactDomRoot },
         { find: /^react-dom\/(.*)$/, replacement: `${appReactDomRoot}/$1` },
-        { find: "assets", replacement: path.resolve(__dirname, "./src/assets") },
+        {
+          find: "assets",
+          replacement: path.resolve(__dirname, "./src/assets"),
+        },
         {
           find: "components",
           replacement: path.resolve(__dirname, "./src/components"),

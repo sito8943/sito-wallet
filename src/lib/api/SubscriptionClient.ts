@@ -1,11 +1,5 @@
-import type {
-  QueryParam,
-  QueryResult} from "@sito/dashboard-app";
-import {
-  BaseClient,
-  Methods,
-  parseQueries,
-} from "@sito/dashboard-app";
+import type { QueryParam, QueryResult } from "@sito/dashboard-app";
+import { BaseClient, Methods, parseQueries } from "@sito/dashboard-app";
 
 import { Tables } from "./types";
 
@@ -82,14 +76,20 @@ export default class SubscriptionClient extends BaseClient<
     subscriptionId: number,
     data: AddSubscriptionBillingLogDto,
   ): Promise<number> {
-    return await this.api.post(`${this.table}/${subscriptionId}/billing-logs`, data);
+    return await this.api.post(
+      `${this.table}/${subscriptionId}/billing-logs`,
+      data,
+    );
   }
 
   async createRenewal(
     subscriptionId: number,
     data: AddSubscriptionRenewalDto = {},
   ): Promise<number> {
-    return await this.api.post(`${this.table}/${subscriptionId}/renewals`, data);
+    return await this.api.post(
+      `${this.table}/${subscriptionId}/renewals`,
+      data,
+    );
   }
 
   async getBillingLogs(

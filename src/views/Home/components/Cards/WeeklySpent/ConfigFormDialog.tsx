@@ -6,13 +6,12 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @sito/dashboard-app
-import type {
-  Option} from "@sito/dashboard-app";
+import type { Option } from "@sito/dashboard-app";
 import {
   AutocompleteInput,
   enumToKeyValueArray,
   FormDialog,
-  SelectInput
+  SelectInput,
 } from "@sito/dashboard-app";
 
 // hooks

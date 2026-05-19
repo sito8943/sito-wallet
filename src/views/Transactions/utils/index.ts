@@ -6,7 +6,8 @@ import type {
   TransactionDto,
   UpdateTransactionDto,
   AssignTransactionAccountDto,
-  AssignTransactionCategoryDto} from "lib";
+  AssignTransactionCategoryDto,
+} from "lib";
 import {
   getPrimaryTransactionCategory,
   getTransactionCategories,
@@ -45,7 +46,9 @@ export const dtoToForm = (dto: TransactionDto): TransactionFormType => {
     categories,
     accountId: dto.account?.id ?? 0,
     categoryIds: categories.map((category) => category.id),
-    date: dto.date ? formatForDatetimeLocal(dto.date) : formatForDatetimeLocal(),
+    date: dto.date
+      ? formatForDatetimeLocal(dto.date)
+      : formatForDatetimeLocal(),
   };
 };
 

@@ -15,7 +15,8 @@ import type { UseTransactionTypeResumePropsType } from "./types.ts";
 // lib
 import type {
   FilterTransactionTypeResumeDto,
-  TransactionTypeResumeDto} from "lib";
+  TransactionTypeResumeDto,
+} from "lib";
 import {
   TransactionType,
   applyHideDeletedEntitiesPreference,

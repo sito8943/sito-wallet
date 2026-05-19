@@ -63,7 +63,10 @@ export function useWeeklyTransactionsList(
 
         return result;
       } catch (error) {
-        console.warn("API failed, loading weekly transactions from IndexedDB", error);
+        console.warn(
+          "API failed, loading weekly transactions from IndexedDB",
+          error,
+        );
 
         return await offlineManager.Transactions.get(
           WEEKLY_TRANSACTIONS_LIST_QUERY,

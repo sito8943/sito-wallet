@@ -15,7 +15,8 @@ import type { UseTransactionsGroupedByTypePropsType } from "./types.ts";
 // lib
 import type {
   FilterTransactionGroupedByTypeDto,
-  TransactionTypeGroupedDto} from "lib";
+  TransactionTypeGroupedDto,
+} from "lib";
 import {
   applyHideDeletedEntitiesPreference,
   normalizeCommonFilters,

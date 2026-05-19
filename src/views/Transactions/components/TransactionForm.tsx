@@ -3,8 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Controller, useWatch } from "react-hook-form";
 
 // @sito/dashboard-app
-import type {
-  Option} from "@sito/dashboard-app";
+import type { Option } from "@sito/dashboard-app";
 import {
   ParagraphInput,
   TextInput,
@@ -15,8 +14,7 @@ import {
 import type { TransactionFormPropsType } from "../types";
 
 // lib
-import type {
-  CommonTransactionCategoryDto} from "lib";
+import type { CommonTransactionCategoryDto } from "lib";
 import {
   Tables,
   hasMixedTransactionCategoryTypes,
@@ -101,9 +99,7 @@ export function TransactionForm(props: TransactionFormPropsType) {
         name="categories"
         rules={{
           validate: (value) => {
-            const parsedCategories = Array.isArray(value)
-              ? (value)
-              : [];
+            const parsedCategories = Array.isArray(value) ? value : [];
 
             if (!parsedCategories.length) {
               return t("_entities:transaction.category.required");

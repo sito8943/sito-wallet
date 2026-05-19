@@ -7,10 +7,7 @@ import { usePostDialog } from "@sito/dashboard-app";
 import { SubscriptionsQueryKeys } from "hooks";
 import { useManager } from "providers";
 
-import type {
-  AddSubscriptionBillingLogDto,
-  SubscriptionDto,
-} from "lib";
+import type { AddSubscriptionBillingLogDto, SubscriptionDto } from "lib";
 
 import {
   emptySubscriptionBillingLogForm,
@@ -47,7 +44,9 @@ export function useAddSubscriptionBillingLogDialog() {
         data,
       );
     },
-    onSuccessMessage: t("_pages:subscriptions.actions.billingLog.successMessage"),
+    onSuccessMessage: t(
+      "_pages:subscriptions.actions.billingLog.successMessage",
+    ),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         ...SubscriptionsQueryKeys.all(),

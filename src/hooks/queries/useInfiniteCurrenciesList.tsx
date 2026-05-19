@@ -3,16 +3,14 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 // providers
 import { useManager, useOfflineManager } from "providers";
-import type { QueryParam} from "@sito/dashboard-app";
+import type { QueryParam } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
 // types
 import type { UseFetchPropsType } from "./types.ts";
 
 // lib
-import type {
-  CurrencyDto,
-  FilterCurrencyDto} from "lib";
+import type { CurrencyDto, FilterCurrencyDto } from "lib";
 import {
   applyHideDeletedEntitiesPreference,
   defaultCurrenciesListFilters,

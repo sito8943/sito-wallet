@@ -9,9 +9,7 @@ import { useManager, useOfflineManager } from "providers";
 import type { UseTransactionTypeResumePropsType } from "./types.ts";
 
 // lib
-import type {
-  CommonTransactionDto,
-  FilterTransactionDto} from "lib";
+import type { CommonTransactionDto, FilterTransactionDto } from "lib";
 import {
   applyHideDeletedEntitiesPreference,
   normalizeCommonFilters,

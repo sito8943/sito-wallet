@@ -1,7 +1,4 @@
-import type {
-  SessionAccountDto,
-  SessionDto,
-} from "@sito/dashboard-app";
+import type { SessionAccountDto, SessionDto } from "@sito/dashboard-app";
 
 export enum FormMode {
   Add,

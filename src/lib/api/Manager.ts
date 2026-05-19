@@ -8,10 +8,12 @@ import FeatureFlagClient from "./FeatureFlagClient";
 import SubscriptionProviderClient from "./SubscriptionProviderClient";
 import SubscriptionClient from "./SubscriptionClient";
 import UserClient from "./UserClient";
-import AuthApiClient from "./AuthApiClient";
-
 // @sito/dashboard-app
-import { IManager } from "@sito/dashboard-app";
+import {
+  IManager,
+  RestAuthApiClient,
+  type IAuthApiClient,
+} from "@sito/dashboard-app";
 
 // config
 import { config } from "../../config";
@@ -29,7 +31,20 @@ export class Manager extends IManager {
     new SubscriptionProviderClient();
   subscriptions: SubscriptionClient = new SubscriptionClient();
   users: UserClient = new UserClient();
-  authApi: AuthApiClient = new AuthApiClient();
+  authApi: IAuthApiClient = new RestAuthApiClient(
+    config.apiUrl,
+    config.auth.user,
+    {
+      rememberKey: config.auth.remember,
+      refreshTokenKey: config.auth.refreshTokenKey,
+      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
+    },
+    {
+      endpoints: {
+        confirmEmailFallback: "auth/email/confirm/verify",
+      },
+    },
+  );
 
   constructor() {
     super(config.apiUrl, config.auth.user, {
@@ -97,7 +112,7 @@ export class Manager extends IManager {
     return this.users;
   }
 
-  get AuthApi(): AuthApiClient {
+  get AuthApi(): IAuthApiClient {
     return this.authApi;
   }
 }

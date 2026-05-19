@@ -1,12 +1,12 @@
-import { type HttpError } from "@sito/dashboard-app";
-
-import type {
-  AcceptedResponseDto,
-  ConfirmEmailDto,
-  ForgotPasswordDto,
-  ResendConfirmEmailDto,
-  ResetPasswordDto,
-} from "./AuthApiClient";
+import {
+  type AcceptedResponseDto,
+  type ConfirmEmailDto,
+  type ForgotPasswordDto,
+  type HttpError,
+  type IAuthApiClient,
+  type ResendConfirmEmailDto,
+  type ResetPasswordDto,
+} from "@sito/dashboard-app";
 
 const OFFLINE_AUTH_MESSAGE = "Offline mode is active";
 
@@ -17,7 +17,7 @@ const createOfflineAuthError = (): HttpError =>
     message: OFFLINE_AUTH_MESSAGE,
   });
 
-export class OfflineAuthApiClient {
+export class OfflineAuthApiClient implements IAuthApiClient {
   async forgotPassword(_data: ForgotPasswordDto): Promise<AcceptedResponseDto> {
     throw createOfflineAuthError();
   }

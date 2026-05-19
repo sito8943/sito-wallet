@@ -1,4 +1,4 @@
-import type { DashboardDto, AddDashboardDto} from "lib";
+import type { DashboardDto, AddDashboardDto } from "lib";
 import { DashboardCardType } from "lib";
 import type { DashboardFormType } from "../types";
 

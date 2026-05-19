@@ -13,10 +13,9 @@ import type {
   ImportPreviewAccountDto,
   AdjustBalanceDto,
   TransactionDto,
-  ImportDto} from "lib";
-import {
-  parseJSONFile,
+  ImportDto,
 } from "lib";
+import { parseJSONFile } from "lib";
 
 // config
 import { config } from "../../config";

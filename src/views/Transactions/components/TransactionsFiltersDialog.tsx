@@ -3,8 +3,7 @@ import { Controller, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
-import type {
-  Option} from "@sito/dashboard-app";
+import type { Option } from "@sito/dashboard-app";
 import {
   AutocompleteInput,
   FormDialog,

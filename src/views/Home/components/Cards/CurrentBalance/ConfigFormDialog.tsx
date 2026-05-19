@@ -11,7 +11,10 @@ import { useAccountsCommon } from "../../../../../hooks/queries/useAccountsCommo
 import { Tables } from "lib";
 
 // types
-import type { ConfigFormDialogPropsType, CurrentBalanceFormType } from "./types";
+import type {
+  ConfigFormDialogPropsType,
+  CurrentBalanceFormType,
+} from "./types";
 
 export const ConfigFormDialog = (
   props: ConfigFormDialogPropsType<CurrentBalanceFormType>,

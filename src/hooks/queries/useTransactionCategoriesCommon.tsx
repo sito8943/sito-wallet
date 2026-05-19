@@ -8,7 +8,8 @@ import { useAuth } from "@sito/dashboard-app";
 // lib
 import type {
   CommonTransactionCategoryDto,
-  FilterTransactionCategoryDto} from "lib";
+  FilterTransactionCategoryDto,
+} from "lib";
 import {
   applyHideDeletedEntitiesPreference,
   normalizeCommonFilters,

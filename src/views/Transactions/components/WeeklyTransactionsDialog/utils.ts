@@ -2,8 +2,7 @@ import type { TFunction } from "i18next";
 
 import { getFormattedDateTime } from "@sito/dashboard-app";
 
-import type {
-  TransactionDto} from "lib";
+import type { TransactionDto } from "lib";
 import {
   TransactionType,
   getPrimaryTransactionCategory,
@@ -45,7 +44,9 @@ export const getWeeklyTransactionCategoryLabel = (
 
   return categories
     .map((category) =>
-      category.auto ? t("_entities:transactionCategory.name.init") : category.name,
+      category.auto
+        ? t("_entities:transactionCategory.name.init")
+        : category.name,
     )
     .join(", ");
 };

@@ -15,7 +15,7 @@ import type { UseSingleActionPropTypes } from "@sito/dashboard-app";
 import { AccountActions } from "../types";
 
 // lib
-import type { AccountDto} from "lib";
+import type { AccountDto } from "lib";
 import { getTransactionsRouteWithAccountId } from "lib";
 
 export const useViewTransactionsAction = (

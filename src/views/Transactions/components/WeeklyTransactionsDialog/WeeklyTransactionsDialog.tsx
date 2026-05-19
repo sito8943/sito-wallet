@@ -1,8 +1,7 @@
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import type {
-  SortOrder} from "@sito/dashboard-app";
+import type { SortOrder } from "@sito/dashboard-app";
 import {
   Dialog,
   Empty,

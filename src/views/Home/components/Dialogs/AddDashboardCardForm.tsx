@@ -3,11 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Controller } from "react-hook-form";
 
 // @sito/dashboard
-import {
-  enumToKeyValueArray,
-  useAuth,
-  SelectInput,
-} from "@sito/dashboard-app";
+import { enumToKeyValueArray, useAuth, SelectInput } from "@sito/dashboard-app";
 
 // types
 import type { DashboardFormPropsType } from "../../types";

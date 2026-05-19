@@ -33,10 +33,9 @@ import type {
   ImportPreviewAccountDto,
   ImportPreviewCurrencyDto,
   ImportPreviewTransactionDto,
-  TransactionDto} from "lib";
-import {
-  Tables
+  TransactionDto,
 } from "lib";
+import { Tables } from "lib";
 
 // types
 import type { OnboardingSetupPropsType } from "./types";

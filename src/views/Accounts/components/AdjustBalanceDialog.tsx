@@ -13,7 +13,10 @@ import { faScaleBalanced } from "@fortawesome/free-solid-svg-icons";
 import { Currency } from "views/Currencies/components/Currency";
 
 // types
-import type { AdjustBalanceDialogPropsType, AdjustBalanceFormType } from "../types";
+import type {
+  AdjustBalanceDialogPropsType,
+  AdjustBalanceFormType,
+} from "../types";
 
 export function AdjustBalanceDialog(props: AdjustBalanceDialogPropsType) {
   const { selectedAccount, control, setValue, open, isLoading } = props;

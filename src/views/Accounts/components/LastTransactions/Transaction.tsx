@@ -46,7 +46,9 @@ export const Transaction = (props: TransactionPropsType) => {
 
     return transactionCategories
       .map((category) =>
-        category.auto ? t("_entities:transactionCategory.name.init") : category.name,
+        category.auto
+          ? t("_entities:transactionCategory.name.init")
+          : category.name,
       )
       .join(", ");
   }, [t, transactionCategories]);
@@ -80,7 +82,9 @@ export const Transaction = (props: TransactionPropsType) => {
           ) : (
             <p>{parsedCategoryName}</p>
           )}
-          <p className="lowercase">{date ? `- ${timeAge(new Date(date))}` : ""}</p>
+          <p className="lowercase">
+            {date ? `- ${timeAge(new Date(date))}` : ""}
+          </p>
         </div>
         <p className="text-xs text-left">{parsedDescription}</p>
       </div>

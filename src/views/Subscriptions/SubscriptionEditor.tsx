@@ -83,58 +83,64 @@ export function SubscriptionEditor() {
   const addBillingLog = useAddSubscriptionBillingLogDialog();
   const addRenewal = useAddSubscriptionRenewalMutation();
 
-  const { control, handleSubmit, isLoading: isSubmitting, onSubmit, reset, setValue } =
-    useMutationForm<
-      SubscriptionFormType,
-      SubscriptionFormType,
-      SubscriptionDto,
-      SubscriptionFormType
-    >({
-      defaultValues: emptySubscriptionForm,
-      queryKey: SubscriptionsQueryKeys.all().queryKey,
-      mutationFn: async (values: SubscriptionFormType) => {
-        if (!subscriptionsClient) {
-          throw new Error("subscriptions.featureDisabled");
+  const {
+    control,
+    handleSubmit,
+    isLoading: isSubmitting,
+    onSubmit,
+    reset,
+    setValue,
+  } = useMutationForm<
+    SubscriptionFormType,
+    SubscriptionFormType,
+    SubscriptionDto,
+    SubscriptionFormType
+  >({
+    defaultValues: emptySubscriptionForm,
+    queryKey: SubscriptionsQueryKeys.all().queryKey,
+    mutationFn: async (values: SubscriptionFormType) => {
+      if (!subscriptionsClient) {
+        throw new Error("subscriptions.featureDisabled");
+      }
+
+      if (isEditMode) {
+        if (!subscriptionId) {
+          throw new Error("Invalid subscription id");
         }
 
-        if (isEditMode) {
-          if (!subscriptionId) {
-            throw new Error("Invalid subscription id");
-          }
-
-          return await subscriptionsClient.update(
-            subscriptionFormToUpdateDto(values),
-          );
-        }
-
-        return await subscriptionsClient.insert(
-          subscriptionFormToCreateDto(values),
+        return await subscriptionsClient.update(
+          subscriptionFormToUpdateDto(values),
         );
-      },
-      onSuccess: async () => {
-        showSuccessNotification({
-          message: isEditMode
-            ? t("_pages:common.actions.edit.successMessage")
-            : t("_pages:common.actions.add.successMessage"),
-        });
+      }
 
-        navigate(AppRoutes.subscriptions);
-      },
-      onError: (error) => {
-        if (isHttpError(error) && error.status === 400) {
-          showErrorNotification({
-            message: String(
-              error.message ?? t("_pages:featureFlags.moduleUnavailable"),
-            ),
-          });
-          return;
-        }
+      return await subscriptionsClient.insert(
+        subscriptionFormToCreateDto(values),
+      );
+    },
+    onSuccess: async () => {
+      showSuccessNotification({
+        message: isEditMode
+          ? t("_pages:common.actions.edit.successMessage")
+          : t("_pages:common.actions.add.successMessage"),
+      });
 
+      navigate(AppRoutes.subscriptions);
+    },
+    onError: (error) => {
+      if (isHttpError(error) && error.status === 400) {
         showErrorNotification({
-          message: parseErrorMessage(error, t("_accessibility:errors.500")),
+          message: String(
+            error.message ?? t("_pages:featureFlags.moduleUnavailable"),
+          ),
         });
-      },
-    });
+        return;
+      }
+
+      showErrorNotification({
+        message: parseErrorMessage(error, t("_accessibility:errors.500")),
+      });
+    },
+  });
 
   const subscriptionQuery = useQuery({
     queryKey: [
@@ -210,9 +216,14 @@ export function SubscriptionEditor() {
         <ErrorView error={new Error(t("_accessibility:errors.404"))} />
       ) : subscriptionQuery.error ? (
         <ErrorView
-          error={new Error(
-            parseErrorMessage(subscriptionQuery.error, t("_accessibility:errors.500")),
-          )}
+          error={
+            new Error(
+              parseErrorMessage(
+                subscriptionQuery.error,
+                t("_accessibility:errors.500"),
+              ),
+            )
+          }
         />
       ) : (
         <div className="subscription-editor-layout">
@@ -226,7 +237,12 @@ export function SubscriptionEditor() {
               cancelLabel={t("_accessibility:buttons.cancel")}
               submitDisabled={isLoading}
               cancelDisabled={isLoading}
-              renderActions={({ buttonProps, cancelLabel, onCancel, submitLabel }) => (
+              renderActions={({
+                buttonProps,
+                cancelLabel,
+                onCancel,
+                submitLabel,
+              }) => (
                 <div className="flex gap-2 max-sm:flex-col-reverse">
                   <Button
                     {...buttonProps.cancel}

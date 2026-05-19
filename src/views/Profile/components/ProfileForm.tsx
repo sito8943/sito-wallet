@@ -4,8 +4,7 @@ import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import type {
-  Option} from "@sito/dashboard-app";
+import type { Option } from "@sito/dashboard-app";
 import {
   Button,
   CheckInput,
@@ -164,7 +163,9 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
                   }}
                 />
                 <div className="flex flex-col">
-                  <h3 className="text-xl">{currentName || profile.name || ""}</h3>
+                  <h3 className="text-xl">
+                    {currentName || profile.name || ""}
+                  </h3>
                   <p className="text-sm text-text-muted">
                     {t("_pages:profile.labels.username")}:{" "}
                     {profile.user?.username ?? "-"}
@@ -278,7 +279,9 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
                   checked={!!field.value}
                   disabled={formDisabled}
                   onBlur={field.onBlur}
-                  onChange={(event) => field.onChange(event.currentTarget.checked)}
+                  onChange={(event) =>
+                    field.onChange(event.currentTarget.checked)
+                  }
                 />
               )}
             />

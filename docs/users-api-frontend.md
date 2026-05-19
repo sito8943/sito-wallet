@@ -9,14 +9,14 @@ Auth: `Authorization: Bearer <accessToken>` — **all endpoints require `ROLE_AD
 
 ### `UserDTO` (response)
 
-| Field        | Type              | Notes                          |
-| ------------ | ----------------- | ------------------------------ |
-| `username`   | string            |                                |
-| `password`   | string            | hashed (BCrypt) — do not show  |
-| `email`      | string            | unique                         |
-| `admin`      | boolean           | admin role flag                |
-| `updatedAt`  | string (ISO date-time) |                           |
-| `deletedAt`  | string (ISO date-time) \| null | soft-delete marker  |
+| Field       | Type                           | Notes                         |
+| ----------- | ------------------------------ | ----------------------------- |
+| `username`  | string                         |                               |
+| `password`  | string                         | hashed (BCrypt) — do not show |
+| `email`     | string                         | unique                        |
+| `admin`     | boolean                        | admin role flag               |
+| `updatedAt` | string (ISO date-time)         |                               |
+| `deletedAt` | string (ISO date-time) \| null | soft-delete marker            |
 
 > ⚠️ `UserDTO` currently omits `id` and `createdAt`. Use `CommonUserDTO` (`/users/common`) if you need the id.
 
@@ -29,22 +29,22 @@ Auth: `Authorization: Bearer <accessToken>` — **all endpoints require `ROLE_AD
 
 ### `CreateUserRequest` (body)
 
-| Field      | Type    | Required | Notes                                          |
-| ---------- | ------- | -------- | ---------------------------------------------- |
-| `email`    | string  | yes      | unique                                         |
-| `password` | string  | yes      | plain text — server hashes via BCrypt          |
-| `username` | string  | no       | auto-derived from email prefix when omitted    |
-| `admin`    | boolean | no       | default `false`                                |
+| Field      | Type    | Required | Notes                                       |
+| ---------- | ------- | -------- | ------------------------------------------- |
+| `email`    | string  | yes      | unique                                      |
+| `password` | string  | yes      | plain text — server hashes via BCrypt       |
+| `username` | string  | no       | auto-derived from email prefix when omitted |
+| `admin`    | boolean | no       | default `false`                             |
 
 ### `UpdateUserRequest` (body)
 
-| Field      | Type    | Required | Notes                                |
-| ---------- | ------- | -------- | ------------------------------------ |
-| `id`       | number  | yes      | target user id                       |
-| `email`    | string  | no       |                                      |
-| `password` | string  | no       | only re-hashed when present          |
-| `username` | string  | no       |                                      |
-| `admin`    | boolean | no       |                                      |
+| Field      | Type    | Required | Notes                       |
+| ---------- | ------- | -------- | --------------------------- |
+| `id`       | number  | yes      | target user id              |
+| `email`    | string  | no       |                             |
+| `password` | string  | no       | only re-hashed when present |
+| `username` | string  | no       |                             |
+| `admin`    | boolean | no       |                             |
 
 ### `GetUserRequest` (query, extends `IFilterDTO`)
 
@@ -58,27 +58,27 @@ Endpoint-specific query fields:
 
 Inherited from `IFilterDTO`:
 
-| Param             | Type                                            | Default    |
-| ----------------- | ----------------------------------------------- | ---------- |
-| `page`            | int                                             | `0`        |
-| `pageSize`        | int                                             | `99`       |
-| `sort`            | string (field name)                             | `"id"`     |
-| `order`           | `ASC` \| `DESC`                                 | `DESC`     |
-| `softDeleteScope` | `ACTIVE` \| `DELETED` \| `ALL`                  | `ACTIVE`   |
-| `deleted`         | boolean (shortcut → sets scope to `DELETED`)    | `false`    |
-| `filters`         | comma list `field<op>value` (`==`,`>`,`>=`,`<`,`<=`) | `""`  |
+| Param             | Type                                                 | Default  |
+| ----------------- | ---------------------------------------------------- | -------- |
+| `page`            | int                                                  | `0`      |
+| `pageSize`        | int                                                  | `99`     |
+| `sort`            | string (field name)                                  | `"id"`   |
+| `order`           | `ASC` \| `DESC`                                      | `DESC`   |
+| `softDeleteScope` | `ACTIVE` \| `DELETED` \| `ALL`                       | `ACTIVE` |
+| `deleted`         | boolean (shortcut → sets scope to `DELETED`)         | `false`  |
+| `filters`         | comma list `field<op>value` (`==`,`>`,`>=`,`<`,`<=`) | `""`     |
 
 Example: `?page=0&pageSize=20&sort=email&order=ASC&filters=id>=10,id<=50`
 
 ### `PageResponse<T>` (response wrapper)
 
-| Field           | Type      |
-| --------------- | --------- |
-| `items`         | `T[]`     |
-| `currentPage`   | number    |
-| `pageSize`      | number    |
-| `totalElements` | number    |
-| `totalPages`    | number    |
+| Field           | Type   |
+| --------------- | ------ |
+| `items`         | `T[]`  |
+| `currentPage`   | number |
+| `pageSize`      | number |
+| `totalElements` | number |
+| `totalPages`    | number |
 
 ---
 
@@ -225,13 +225,13 @@ Example: `?page=0&pageSize=20&sort=email&order=ASC&filters=id>=10,id<=50`
 
 Handled by `GlobalExceptionHandler`. Typical shape:
 
-| Status | Cause                                                |
-| ------ | ---------------------------------------------------- |
-| `401`  | Missing / invalid / blacklisted JWT                  |
-| `403`  | Authenticated but not admin                          |
-| `404`  | User id not found                                    |
-| `409`  | Duplicate email                                      |
-| `400`  | Validation error in request body or query           |
+| Status | Cause                                     |
+| ------ | ----------------------------------------- |
+| `401`  | Missing / invalid / blacklisted JWT       |
+| `403`  | Authenticated but not admin               |
+| `404`  | User id not found                         |
+| `409`  | Duplicate email                           |
+| `400`  | Validation error in request body or query |
 
 ---
 
@@ -239,14 +239,14 @@ Handled by `GlobalExceptionHandler`. Typical shape:
 
 `POST /auth/login`, `/auth/register`, `/auth/refresh`, `/auth/session` return `AuthDto`:
 
-| Field                  | Type    |
-| ---------------------- | ------- |
-| `id`                   | number  |
-| `username`             | string  |
-| `email`                | string  |
-| `admin`                | boolean |
-| `token`                | string  |
-| `refreshToken`         | string  |
+| Field                  | Type                   |
+| ---------------------- | ---------------------- |
+| `id`                   | number                 |
+| `username`             | string                 |
+| `email`                | string                 |
+| `admin`                | boolean                |
+| `token`                | string                 |
+| `refreshToken`         | string                 |
 | `accessTokenExpiresAt` | string (ISO date-time) |
 
 Frontend should store `admin` from this payload and use it to gate the users CRUD UI.

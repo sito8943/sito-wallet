@@ -6,9 +6,7 @@ import { useManager, useOfflineManager } from "providers";
 import { useAuth } from "@sito/dashboard-app";
 
 // lib
-import type {
-  CommonCurrencyDto,
-  FilterCurrencyDto} from "lib";
+import type { CommonCurrencyDto, FilterCurrencyDto } from "lib";
 import {
   applyHideDeletedEntitiesPreference,
   normalizeCommonFilters,

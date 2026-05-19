@@ -2,8 +2,7 @@ import { useEffect, useMemo } from "react";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import type {
-  Option} from "@sito/dashboard-app";
+import type { Option } from "@sito/dashboard-app";
 import {
   AutocompleteInput,
   ParagraphInput,
@@ -51,7 +50,9 @@ export function SubscriptionBillingLogForm(
       {selectedSubscription ? (
         <p className="text-sm text-text-muted">
           {t("_pages:subscriptions.actions.billingLog.for")}:
-          <strong className="ml-1 text-text">{selectedSubscription.name}</strong>
+          <strong className="ml-1 text-text">
+            {selectedSubscription.name}
+          </strong>
         </p>
       ) : null}
 
@@ -73,7 +74,9 @@ export function SubscriptionBillingLogForm(
             step="0.01"
             value={value ?? ""}
             label={t("_entities:subscriptionBillingLog.amount.label")}
-            placeholder={t("_entities:subscriptionBillingLog.amount.placeholder")}
+            placeholder={t(
+              "_entities:subscriptionBillingLog.amount.placeholder",
+            )}
             autoComplete={`${Tables.Subscriptions}-${t("_entities:subscriptionBillingLog.amount.label")}`}
             {...rest}
           />
@@ -109,7 +112,9 @@ export function SubscriptionBillingLogForm(
             value={value}
             onChange={(nextValue) => onChange(nextValue)}
             label={t("_entities:subscriptionBillingLog.currency.label")}
-            placeholder={t("_entities:subscriptionBillingLog.currency.placeholder")}
+            placeholder={t(
+              "_entities:subscriptionBillingLog.currency.placeholder",
+            )}
             autoComplete={`${Tables.Subscriptions}-${t("_entities:subscriptionBillingLog.currency.label")}`}
             multiple={false}
             {...rest}

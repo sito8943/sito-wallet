@@ -98,7 +98,9 @@ vi.mock("@sito/dashboard-app", () => ({
           return;
         }
 
-        const option = options?.find((item) => String(item.id) === e.target.value);
+        const option = options?.find(
+          (item) => String(item.id) === e.target.value,
+        );
         onChange?.(option ?? null);
       }}
       aria-label={label}
@@ -127,12 +129,9 @@ const mockCategoriesCommon = vi.fn(() => ({
 vi.mock("../../../../hooks/queries/useAccountsCommon", () => ({
   useAccountsCommon: () => mockAccountsCommon(),
 }));
-vi.mock(
-  "../../../../hooks/queries/useTransactionCategoriesCommon",
-  () => ({
-    useTransactionCategoriesCommon: () => mockCategoriesCommon(),
-  }),
-);
+vi.mock("../../../../hooks/queries/useTransactionCategoriesCommon", () => ({
+  useTransactionCategoriesCommon: () => mockCategoriesCommon(),
+}));
 
 vi.mock("lib", () => ({
   Tables: { Transactions: "transactions" },

@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { t } from "i18next";
 
 // @sito/dashboard-app
-import type { BaseEntityDto, ColumnType} from "@sito/dashboard-app";
+import type { BaseEntityDto, ColumnType } from "@sito/dashboard-app";
 import { FilterTypes } from "@sito/dashboard-app";
 
 // lib
@@ -128,11 +128,7 @@ export const useParseColumns = <TDto extends BaseEntityDto>(
           key,
           label:
             label ??
-            t(
-              `_entities:${isBaseColumn(key) ? "base" : entity}.${
-                key
-              }.label`,
-            ),
+            t(`_entities:${isBaseColumn(key) ? "base" : entity}.${key}.label`),
           renderBody,
           pos: pos ?? 0,
           ...rest,

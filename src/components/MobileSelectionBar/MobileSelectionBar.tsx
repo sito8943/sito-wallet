@@ -2,12 +2,8 @@ import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import type {
-  ActionType,
-  BaseEntityDto} from "@sito/dashboard-app";
-import {
-  TableSelectionBar,
-} from "@sito/dashboard-app";
+import type { ActionType, BaseEntityDto } from "@sito/dashboard-app";
+import { TableSelectionBar } from "@sito/dashboard-app";
 
 // icons
 import { faXmark } from "@fortawesome/free-solid-svg-icons";

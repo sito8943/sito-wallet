@@ -21,7 +21,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 // lib
-import type { UserDto} from "lib";
+import type { UserDto } from "lib";
 import { isFeatureDisabledBusinessError } from "lib";
 
 // components

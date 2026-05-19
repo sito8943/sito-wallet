@@ -12,9 +12,7 @@ vi.mock("@sito/dashboard-app", () => ({
       const dependency = dependencies[item.page];
       return dependency ? isFeatureEnabled(dependency) : true;
     }),
-  normalizeMenuDividers: (
-    menu: Array<{ type?: string }>,
-  ) =>
+  normalizeMenuDividers: (menu: Array<{ type?: string }>) =>
     menu.filter(
       (item, index, items) =>
         item.type !== "divider" ||

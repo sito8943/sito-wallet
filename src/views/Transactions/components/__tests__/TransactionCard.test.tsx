@@ -30,25 +30,27 @@ vi.mock("lib", () => ({
     Out: 0,
     In: 1,
   },
-  getTransactionCategories: (
-    transaction: {
-      categories?: Array<{ id: number }>;
-      category?: { id: number } | null;
-    },
-  ) => {
-    if (Array.isArray(transaction.categories) && transaction.categories.length) {
+  getTransactionCategories: (transaction: {
+    categories?: Array<{ id: number }>;
+    category?: { id: number } | null;
+  }) => {
+    if (
+      Array.isArray(transaction.categories) &&
+      transaction.categories.length
+    ) {
       return transaction.categories;
     }
 
     return transaction.category ? [transaction.category] : [];
   },
-  getPrimaryTransactionCategory: (
-    transaction: {
-      categories?: Array<{ id: number }>;
-      category?: { id: number } | null;
-    },
-  ) => {
-    if (Array.isArray(transaction.categories) && transaction.categories.length) {
+  getPrimaryTransactionCategory: (transaction: {
+    categories?: Array<{ id: number }>;
+    category?: { id: number } | null;
+  }) => {
+    if (
+      Array.isArray(transaction.categories) &&
+      transaction.categories.length
+    ) {
       return transaction.categories[0];
     }
 
@@ -96,7 +98,9 @@ describe("TransactionCard", () => {
   it("opens edit dialog on normal click", () => {
     const onClick = vi.fn();
 
-    render(<TransactionCard {...baseTransaction} actions={[]} onClick={onClick} />);
+    render(
+      <TransactionCard {...baseTransaction} actions={[]} onClick={onClick} />,
+    );
 
     fireEvent.click(screen.getByRole("button"));
 

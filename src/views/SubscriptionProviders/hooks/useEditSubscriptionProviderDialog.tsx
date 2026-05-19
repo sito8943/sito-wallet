@@ -1,13 +1,15 @@
 import { useTranslation } from "react-i18next";
 
-import { isHttpError, useNotification, usePutDialog } from "@sito/dashboard-app";
+import {
+  isHttpError,
+  useNotification,
+  usePutDialog,
+} from "@sito/dashboard-app";
 
 import { SubscriptionProvidersQueryKeys } from "hooks";
 import { useManager } from "providers";
 
-import type {
-  SubscriptionProviderDto,
-} from "lib";
+import type { SubscriptionProviderDto } from "lib";
 
 import {
   emptySubscriptionProviderForm,
@@ -61,7 +63,10 @@ export function useEditSubscriptionProviderDialog() {
     onSuccessMessage: t("_pages:common.actions.edit.successMessage"),
     title: t("_pages:subscriptionProviders.forms.edit"),
     onError: (error) => {
-      if (isHttpError(error) && (error.status === 400 || error.status === 409)) {
+      if (
+        isHttpError(error) &&
+        (error.status === 400 || error.status === 409)
+      ) {
         return showErrorNotification({
           message: String(error.message ?? t("_accessibility:errors.500")),
         });

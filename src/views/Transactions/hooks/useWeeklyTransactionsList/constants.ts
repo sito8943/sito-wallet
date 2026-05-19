@@ -1,4 +1,4 @@
-import type { QueryParam} from "@sito/dashboard-app";
+import type { QueryParam } from "@sito/dashboard-app";
 import { SortOrder } from "@sito/dashboard-app";
 
 import type { TransactionDto } from "lib";

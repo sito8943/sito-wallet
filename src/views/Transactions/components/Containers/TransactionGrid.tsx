@@ -2,8 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
-import type {
-  ActionType} from "@sito/dashboard-app";
+import type { ActionType } from "@sito/dashboard-app";
 import {
   Error,
   SortOrder,

@@ -45,7 +45,8 @@ import { useAddCurrency, useEditCurrency } from "./hooks";
 import type {
   CurrencyDto,
   FilterCurrencyDto,
-  ImportPreviewCurrencyDto} from "lib";
+  ImportPreviewCurrencyDto,
+} from "lib";
 import {
   Tables,
   isFeatureDisabledBusinessError,
@@ -54,7 +55,7 @@ import {
 } from "lib";
 
 // styles
-import "./styles.css"
+import "./styles.css";
 
 export function Currencies() {
   const { t } = useTranslation();
@@ -116,7 +117,7 @@ export function Currencies() {
     fileProcessor: (file, options) =>
       manager.Currencies.processImport(file, options?.override),
     mutationFn: (data) => manager.Currencies.import(data),
-   /*  renderCustomPreview: (
+    /*  renderCustomPreview: (
       items: ImportPreviewCurrencyDto[] | null | undefined,
     ) => <CurrencyTable items={items} />, */
     ...CurrenciesQueryKeys.all(),

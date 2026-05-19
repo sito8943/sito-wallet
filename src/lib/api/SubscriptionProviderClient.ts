@@ -10,10 +10,9 @@ import type {
   ImportPreviewSubscriptionProviderDto,
   SubscriptionProviderImportItemDto,
   SubscriptionProviderDto,
-  UpdateSubscriptionProviderDto} from "lib";
-import {
-  parseJSONFile
+  UpdateSubscriptionProviderDto,
 } from "lib";
+import { parseJSONFile } from "lib";
 
 import { config } from "../../config";
 
@@ -34,10 +33,10 @@ const isRequestOptions = (
 ): value is RequestOptions =>
   Boolean(
     value &&
-      typeof value === "object" &&
-      !Array.isArray(value) &&
-      !(value instanceof Headers) &&
-      ("headers" in value || "credentials" in value),
+    typeof value === "object" &&
+    !Array.isArray(value) &&
+    !(value instanceof Headers) &&
+    ("headers" in value || "credentials" in value),
   );
 
 const parseErrorMessage = (payload: unknown, fallback: string): string => {
@@ -61,17 +60,11 @@ export default class SubscriptionProviderClient extends BaseClient<
   ImportPreviewSubscriptionProviderDto
 > {
   constructor() {
-    super(
-      Tables.SubscriptionProviders,
-      config.apiUrl,
-      config.auth.user,
-      true,
-      {
-        rememberKey: config.auth.remember,
-        refreshTokenKey: config.auth.refreshTokenKey,
-        accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-      },
-    );
+    super(Tables.SubscriptionProviders, config.apiUrl, config.auth.user, true, {
+      rememberKey: config.auth.remember,
+      refreshTokenKey: config.auth.refreshTokenKey,
+      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
+    });
   }
 
   async updatePhoto(id: number, file: File): Promise<SubscriptionProviderDto> {
@@ -82,15 +75,12 @@ export default class SubscriptionProviderClient extends BaseClient<
       ? tokenConfig
       : { headers: tokenConfig };
 
-    const response = await fetch(
-      `${config.apiUrl}${this.table}/${id}/photo`,
-      {
-        method: Methods.PATCH,
-        headers: requestConfig.headers,
-        credentials: requestConfig.credentials,
-        body: formData,
-      },
-    );
+    const response = await fetch(`${config.apiUrl}${this.table}/${id}/photo`, {
+      method: Methods.PATCH,
+      headers: requestConfig.headers,
+      credentials: requestConfig.credentials,
+      body: formData,
+    });
 
     const payloadText = await response.text();
     let payload: unknown = null;

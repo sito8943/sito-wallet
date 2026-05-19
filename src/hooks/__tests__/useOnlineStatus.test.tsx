@@ -29,8 +29,7 @@ const updateSnapshot = (
       nextValues.isServerReachable ?? snapshot.isServerReachable,
     isOnline: false,
   };
-  snapshot.isOnline =
-    snapshot.isBrowserOnline && snapshot.isServerReachable;
+  snapshot.isOnline = snapshot.isBrowserOnline && snapshot.isServerReachable;
   emitSnapshot();
 };
 

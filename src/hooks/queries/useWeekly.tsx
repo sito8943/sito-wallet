@@ -12,7 +12,8 @@ import { useManager, useOfflineManager } from "providers";
 // lib
 import type {
   FilterWeeklyTransactionDto,
-  TransactionWeeklySpentDto} from "lib";
+  TransactionWeeklySpentDto,
+} from "lib";
 import {
   TransactionType,
   applyHideDeletedEntitiesPreference,

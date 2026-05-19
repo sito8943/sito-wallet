@@ -19,10 +19,9 @@ import type {
   ImportPreviewTransactionDto,
   ImportDto,
   AssignTransactionAccountDto,
-  AssignTransactionCategoryDto} from "lib";
-import {
-  parseJSONFile
+  AssignTransactionCategoryDto,
 } from "lib";
+import { parseJSONFile } from "lib";
 
 // utils
 import { config } from "../../config";

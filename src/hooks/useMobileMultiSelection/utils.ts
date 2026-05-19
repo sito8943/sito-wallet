@@ -18,20 +18,17 @@ export function getSharedMultiActions<TRow extends BaseEntityDto>(
         currentActions.map((action) => [action.id, action]),
       );
 
-      return rowActions.reduce<ActionType<TRow>[]>(
-        (sharedActions, action) => {
-          const currentAction = currentActionsMap.get(action.id);
-          if (!currentAction) return sharedActions;
+      return rowActions.reduce<ActionType<TRow>[]>((sharedActions, action) => {
+        const currentAction = currentActionsMap.get(action.id);
+        if (!currentAction) return sharedActions;
 
-          sharedActions.push({
-            ...currentAction,
-            ...action,
-            disabled: !!(action.disabled || currentAction.disabled),
-          });
-          return sharedActions;
-        },
-        [],
-      );
+        sharedActions.push({
+          ...currentAction,
+          ...action,
+          disabled: !!(action.disabled || currentAction.disabled),
+        });
+        return sharedActions;
+      }, []);
     },
     [],
   );

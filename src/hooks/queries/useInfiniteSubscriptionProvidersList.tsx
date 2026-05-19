@@ -1,14 +1,15 @@
 import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import type { QueryParam} from "@sito/dashboard-app";
+import type { QueryParam } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
 import { useManager } from "providers";
 
 import type {
   FilterSubscriptionProviderDto,
-  SubscriptionProviderDto} from "lib";
+  SubscriptionProviderDto,
+} from "lib";
 import {
   applyHideDeletedEntitiesPreference,
   defaultSubscriptionProvidersListFilters,
@@ -55,7 +56,10 @@ export function useInfiniteSubscriptionProvidersList(
   );
 
   return useInfiniteQuery({
-    ...SubscriptionProvidersQueryKeys.infiniteList(parsedQueries, parsedFilters),
+    ...SubscriptionProvidersQueryKeys.infiniteList(
+      parsedQueries,
+      parsedFilters,
+    ),
     enabled: !!account?.id && !!subscriptionProvidersClient,
     initialPageParam: 0,
     queryFn: async ({ pageParam }) => {

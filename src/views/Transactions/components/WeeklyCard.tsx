@@ -60,7 +60,9 @@ export const WeeklyCard = (props: WeeklyCardProps) => {
           <div className="flex flex-wrap gap-1 items-end">
             <p
               className={`text-2xl font-bold self-start poppins ${
-                type === TransactionType.Out ? "text-bg-error" : "text-bg-success"
+                type === TransactionType.Out
+                  ? "text-bg-error"
+                  : "text-bg-success"
               }`}
             >
               {isLoading ? "…" : data?.currentWeek}{" "}

@@ -8,7 +8,8 @@ import { useManager } from "providers";
 
 import type {
   CommonSubscriptionProviderDto,
-  FilterSubscriptionProviderDto} from "lib";
+  FilterSubscriptionProviderDto,
+} from "lib";
 import {
   defaultSubscriptionProvidersListFilters,
   normalizeCommonFilters,
@@ -30,9 +31,9 @@ export function useSubscriptionProvidersCommon(
   const commonFilters = useMemo(
     () =>
       ({
-        ...normalizeCommonFilters(
+        ...(normalizeCommonFilters(
           defaultSubscriptionProvidersListFilters,
-        ) as FilterSubscriptionProviderDto,
+        ) as FilterSubscriptionProviderDto),
         ...(onlyEnabled ? { filters: "enabled==true" } : {}),
       }) as FilterSubscriptionProviderDto,
     [onlyEnabled],

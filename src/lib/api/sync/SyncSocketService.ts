@@ -8,10 +8,9 @@ import type {
   SyncSocketEvent,
   SyncSocketSessionErrorEvent,
   SyncSocketSessionFinishedEvent,
-  SyncSocketSessionOpenedEvent} from "./types";
-import {
-  SYNC_ENTITY_ORDER
+  SyncSocketSessionOpenedEvent,
 } from "./types";
+import { SYNC_ENTITY_ORDER } from "./types";
 
 const SYNC_SOCKET_DESTINATION = "/user/queue/sync-status";
 const SYNC_SOCKET_PATH = "/ws";

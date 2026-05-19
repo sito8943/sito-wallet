@@ -1,7 +1,12 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { Error as ErrorView, Loading, Page, useAuth } from "@sito/dashboard-app";
+import {
+  Error as ErrorView,
+  Loading,
+  Page,
+  useAuth,
+} from "@sito/dashboard-app";
 
 // hooks
 import { ProfileQueryKeys, useMyProfile, useMobileNavbar } from "hooks";

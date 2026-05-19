@@ -1,12 +1,9 @@
 import { useCallback } from "react";
 
-import type { ActionType} from "@sito/dashboard-app";
+import type { ActionType } from "@sito/dashboard-app";
 import { useTranslation } from "@sito/dashboard-app";
 
-import {
-  faAdd,
-  faCircleNotch,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import type { SubscriptionDto } from "lib";

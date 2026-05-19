@@ -48,9 +48,7 @@ describe("ProfileLanguageSyncProvider", () => {
 
     expect(screen.getByText("content")).toBeInTheDocument();
 
-    await waitFor(() =>
-      expect(mockChangeLanguage).toHaveBeenCalledWith("es"),
-    );
+    await waitFor(() => expect(mockChangeLanguage).toHaveBeenCalledWith("es"));
   });
 
   it("does not change the app language when it already matches the profile", async () => {
@@ -68,9 +66,7 @@ describe("ProfileLanguageSyncProvider", () => {
       </ProfileLanguageSyncProvider>,
     );
 
-    await waitFor(() =>
-      expect(mockChangeLanguage).not.toHaveBeenCalled(),
-    );
+    await waitFor(() => expect(mockChangeLanguage).not.toHaveBeenCalled());
   });
 
   it("does not change the app language in guest mode", async () => {
@@ -85,8 +81,6 @@ describe("ProfileLanguageSyncProvider", () => {
       </ProfileLanguageSyncProvider>,
     );
 
-    await waitFor(() =>
-      expect(mockChangeLanguage).not.toHaveBeenCalled(),
-    );
+    await waitFor(() => expect(mockChangeLanguage).not.toHaveBeenCalled());
   });
 });

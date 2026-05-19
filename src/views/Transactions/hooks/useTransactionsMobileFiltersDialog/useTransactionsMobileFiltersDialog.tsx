@@ -3,32 +3,23 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
-import type {
-  Option,
-  SoftDeleteScope} from "@sito/dashboard-app";
-import {
-  useFormDialog,
-  useTableOptions,
-} from "@sito/dashboard-app";
+import type { Option, SoftDeleteScope } from "@sito/dashboard-app";
+import { useFormDialog, useTableOptions } from "@sito/dashboard-app";
 
 // hooks
 import { TransactionsQueryKeys } from "hooks";
 
 // lib
-import type {
-  CommonTransactionCategoryDto,
-  TransactionType} from "lib";
-import {
-  normalizeListFilters
-} from "lib";
+import type { CommonTransactionCategoryDto, TransactionType } from "lib";
+import { normalizeListFilters } from "lib";
 
 // types
-import {
-  DEFAULT_SORTING_BY,
-  DEFAULT_SORTING_ORDER,
-} from "./constants";
+import { DEFAULT_SORTING_BY, DEFAULT_SORTING_ORDER } from "./constants";
 import { parseSortOrder } from "./utils";
-import type { TransactionsMobileFiltersDialogPropsType, TransactionsMobileFiltersFormType } from "views/Transactions/types";
+import type {
+  TransactionsMobileFiltersDialogPropsType,
+  TransactionsMobileFiltersFormType,
+} from "views/Transactions/types";
 
 export function useTransactionsMobileFiltersDialog(
   categories: CommonTransactionCategoryDto[],

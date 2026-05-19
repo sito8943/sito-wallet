@@ -1,8 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import type {
-  UseActionDialog} from "@sito/dashboard-app";
+import type { UseActionDialog } from "@sito/dashboard-app";
 import {
   useEditAction,
   usePutDialog,

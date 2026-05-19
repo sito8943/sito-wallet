@@ -1,6 +1,7 @@
 # Subscription Manager - Frontend Integration
 
 ## Base
+
 - Base URL: usa tu `API_URL` actual.
 - Auth: todos los endpoints requieren `Authorization: Bearer <token>`.
 - Recursos:
@@ -8,11 +9,13 @@
   - `/subscriptions`
 
 ## Feature flag
+
 - Flag de bootstrap: `subscriptionsEnabled` en `GET /app/features`.
 - Si esta en `false`, ocultar rutas/menus de subscriptions.
 - Si frontend llama igual, backend responde `400` con `subscriptions.featureDisabled`.
 
 Ejemplo:
+
 ```json
 {
   "features": {
@@ -28,24 +31,29 @@ Ejemplo:
 ## Enums y codigos
 
 ### `SubscriptionBillingUnit`
+
 - `DAY` = `0`
 - `MONTH` = `1`
 - `YEAR` = `2`
 
 ### `SubscriptionStatus`
+
 - `ACTIVE` = `0`
 - `PAUSED` = `1`
 - `CANCELED` = `2`
 
 Notas:
+
 - En body JSON, enviar nombres (`"MONTH"`, `"ACTIVE"`) para evitar ambiguedad.
 - En filtros de query (`filters=...`) backend acepta nombre y codigo.
 
 ## Subscription Providers
 
 ### 1) Crear provider
+
 - `POST /subscription-providers`
 - Body:
+
 ```json
 {
   "name": "Netflix",
@@ -55,16 +63,20 @@ Notas:
   "enabled": true
 }
 ```
+
 - Response `200`: `id` (`number`).
 
 ### 2) Crear provider en lote
+
 - `POST /subscription-providers/batch`
 - Body: `CreateSubscriptionProviderCommand[]`
 - Response `200`: cantidad creada (`number`).
 
 ### 3) Actualizar provider
+
 - `PATCH /subscription-providers/{id}`
 - Body (importante: backend valida `id` en body):
+
 ```json
 {
   "id": 7,
@@ -75,33 +87,40 @@ Notas:
   "enabled": true
 }
 ```
+
 - Response `200`: `id` (`number`).
 - `name` es obligatorio tambien en update.
 
 ### 4) Soft delete / restore provider
+
 - `DELETE /subscription-providers`
 - `PATCH /subscription-providers/restore`
 - Body en ambos: `Long[]` (ejemplo: `[7, 8]`)
 
 ### 5) Listados provider
+
 - `GET /subscription-providers` -> `PageResponse<SubscriptionProviderDTO>`
 - `GET /subscription-providers/common` -> `CommonSubscriptionProviderDTO[]`
 - `GET /subscription-providers/export` -> `SubscriptionProviderDTO[]`
 - `GET /subscription-providers/{id}` -> `SubscriptionProviderDTO`
 
 Filtros utiles en `GET /subscription-providers` / `export`:
+
 - `softDeleteScope=ACTIVE|DELETED|ALL`
 - `filters=enabled==true`
 - `filters=id>=1,id<=100`
 
 Nota:
+
 - Para selects de alta de suscripciones, usar `GET /subscription-providers/common?filters=enabled==true` para no ofrecer providers deshabilitados.
 
 ## Subscriptions
 
 ### 1) Crear subscription
+
 - `POST /subscriptions`
 - Body:
+
 ```json
 {
   "name": "Netflix Premium",
@@ -121,9 +140,11 @@ Nota:
   "notificationDaysBefore": 3
 }
 ```
+
 - Response `200`: `id` (`number`).
 
 Reglas clave:
+
 - `providerId` requerido y provider debe estar habilitado.
 - `amount > 0`.
 - `billingFrequency >= 1`.
@@ -140,13 +161,16 @@ Reglas clave:
 - `userId` no hace falta enviarlo desde UI (backend lo resuelve por token).
 
 ### 2) Crear en lote
+
 - `POST /subscriptions/batch`
 - Body: `CreateSubscriptionCommand[]`
 - Response `200`: cantidad creada (`number`).
 
 ### 3) Actualizar subscription
+
 - `PATCH /subscriptions/{id}`
 - Body (backend usa `id` del body):
+
 ```json
 {
   "id": 15,
@@ -161,9 +185,11 @@ Reglas clave:
   "notificationEnabled": false
 }
 ```
+
 - Response `200`: `id` (`number`).
 
 Notas:
+
 - En update se aplican solo campos enviados (no null).
 - Para desasociar cuenta, enviar `accountId: 0` (o negativo).
 - `endsAt` solo se actualiza cuando llega valor no null (no se limpia con `null` en el contrato actual).
@@ -171,17 +197,20 @@ Notas:
 - En el contrato actual `PATCH /subscriptions/{id}` exige `id` en body (`id is required`).
 
 ### 4) Soft delete / restore subscription
+
 - `DELETE /subscriptions`
 - `PATCH /subscriptions/restore`
 - Body en ambos: `Long[]` (ejemplo: `[15, 16]`)
 
 ### 5) Listados subscription
+
 - `GET /subscriptions` -> `PageResponse<SubscriptionDTO>`
 - `GET /subscriptions/common` -> `CommonSubscriptionDTO[]`
 - `GET /subscriptions/export` -> `SubscriptionDTO[]`
 - `GET /subscriptions/{id}` -> `SubscriptionDTO`
 
 #### Filtros en `GET /subscriptions` / `export`
+
 - `softDeleteScope=ACTIVE|DELETED|ALL`
 - `providerId=7`
 - `currencyId=1`
@@ -191,6 +220,7 @@ Notas:
 - `filters=nextRenewalAt>=2026-04-01T00:00:00,nextRenewalAt<=2026-04-30T23:59:59`
 
 Ejemplo:
+
 ```http
 GET /subscriptions?softDeleteScope=ACTIVE&filters=status==ACTIVE,billingUnit==MONTH,nextRenewalAt>=2026-04-01T00:00:00,nextRenewalAt<=2026-04-30T23:59:59&page=0&pageSize=20&sort=nextRenewalAt&order=ASC
 ```
@@ -198,8 +228,10 @@ GET /subscriptions?softDeleteScope=ACTIVE&filters=status==ACTIVE,billingUnit==MO
 ## Billing Logs
 
 ### 1) Crear billing log
+
 - `POST /subscriptions/{id}/billing-logs`
 - Body:
+
 ```json
 {
   "amount": 19.99,
@@ -208,9 +240,11 @@ GET /subscriptions?softDeleteScope=ACTIVE&filters=status==ACTIVE,billingUnit==MO
   "note": "Pago tarjeta VISA"
 }
 ```
+
 - Response `200`: `id` del billing log.
 
 Reglas:
+
 - No permite logs para subscriptions `CANCELED`.
 - Recalcula `lastPaidAt` y `nextRenewalAt` en la subscription.
 - Si no envias `currencyId`, el log hereda la moneda de la suscripcion.
@@ -224,6 +258,7 @@ Reglas:
 - Si `transactionsEnabled=false` y hay auto-transaccion, falla con `transactions.featureDisabled`.
 
 ### 2) Listar billing logs
+
 - `GET /subscriptions/{id}/billing-logs`
 - Response: `PageResponse<SubscriptionBillingLogDTO>`
 - Filtros:
@@ -231,14 +266,17 @@ Reglas:
   - `filters=paidAt>=2026-01-01T00:00:00,paidAt<=2026-12-31T23:59:59`
 
 ## Renewals (para Calendar/UI)
+
 - `GET /subscriptions/renewals?from=...&to=...`
 
 Ejemplo:
+
 ```http
 GET /subscriptions/renewals?from=2026-04-01T00:00:00&to=2026-04-30T23:59:59
 ```
 
 Respuesta:
+
 ```json
 [
   {
@@ -253,6 +291,7 @@ Respuesta:
 ```
 
 Reglas:
+
 - Si no envias `from`, backend usa `now`.
 - Si no envias `to`, backend usa `from + 30 dias`.
 - Si `to < from`, backend responde `400` con `to must be greater than or equal to from`.
@@ -261,6 +300,7 @@ Reglas:
 ## Forma de respuesta
 
 ### `SubscriptionDTO` (lectura)
+
 ```json
 {
   "id": 15,
@@ -300,6 +340,7 @@ Reglas:
 ```
 
 ### `PageResponse<T>`
+
 ```json
 {
   "items": [],
@@ -311,6 +352,7 @@ Reglas:
 ```
 
 ## Errores frecuentes para UI
+
 - `subscriptions.featureDisabled`
 - `name is required`
 - `providerId is required`
@@ -442,6 +484,7 @@ export interface PageResponse<T> {
 ```
 
 ## Checklist de integracion frontend
+
 1. Cargar y validar `subscriptionsEnabled` antes de mostrar el modulo.
 2. Para formularios create/update, validar reglas locales (`amount`, `billingFrequency`, `notificationDaysBefore`, `endsAt >= startsAt`).
 3. En `PATCH /{id}`, enviar tambien `id` en body para alinear contrato actual.

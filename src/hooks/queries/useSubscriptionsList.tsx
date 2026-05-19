@@ -2,14 +2,12 @@ import { useMemo } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
-import type { QueryResult} from "@sito/dashboard-app";
+import type { QueryResult } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
 import { useManager } from "providers";
 
-import type {
-  FilterSubscriptionDto,
-  SubscriptionDto} from "lib";
+import type { FilterSubscriptionDto, SubscriptionDto } from "lib";
 import {
   applyHideDeletedEntitiesPreference,
   defaultSubscriptionsListFilters,

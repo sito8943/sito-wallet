@@ -46,7 +46,9 @@ export const About = () => {
         ]}
       />
       <section>
-        <h3 className="text-2xl max-sm:text-xl font-bold">{t("_pages:about.howTo.title")}</h3>
+        <h3 className="text-2xl max-sm:text-xl font-bold">
+          {t("_pages:about.howTo.title")}
+        </h3>
         <p className="mt-2">{t("_pages:about.howTo.body")}</p>
 
         <ul className="mt-5 grid grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-5">
@@ -64,7 +66,9 @@ export const About = () => {
       </section>
 
       <section className="mt-8 bg-base p-5 rounded-2xl">
-        <h3 className="text-2xl max-sm:text-xl font-bold">{t("_pages:about.legal.title")}</h3>
+        <h3 className="text-2xl max-sm:text-xl font-bold">
+          {t("_pages:about.legal.title")}
+        </h3>
         <p className="mt-2">{t("_pages:about.legal.body")}</p>
         <ul className="mt-4 list-disc list-inside space-y-1">
           {legalLinks.map((link) => (

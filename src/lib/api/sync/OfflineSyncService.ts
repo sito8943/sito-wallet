@@ -11,10 +11,9 @@ import type {
   SyncBulkErrorItem,
   SyncHttpError,
   SyncPayload,
-  SyncQueueOperation} from "./types";
-import {
-  SYNC_ENTITY_ORDER
+  SyncQueueOperation,
 } from "./types";
+import { SYNC_ENTITY_ORDER } from "./types";
 
 const isObjectPayload = (
   value: SyncPayload,

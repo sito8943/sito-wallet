@@ -65,8 +65,7 @@ export function View() {
     isInGuestMode(),
   );
 
-  const showOnboarding =
-    isAnonymousVisitor || !fromLocal(onboardingStorageKey);
+  const showOnboarding = isAnonymousVisitor || !fromLocal(onboardingStorageKey);
   const onboardingSteps = useMemo<OnboardingStepType[]>(
     () =>
       onboardingStepKeys.map((stepKey) => ({

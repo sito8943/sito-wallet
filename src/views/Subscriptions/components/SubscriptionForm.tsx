@@ -2,8 +2,7 @@ import { useMemo } from "react";
 import { Controller, useWatch } from "react-hook-form";
 
 // @sito/dashboard-app
-import type {
-  Option} from "@sito/dashboard-app";
+import type { Option } from "@sito/dashboard-app";
 import {
   AutocompleteInput,
   CheckInput,
@@ -14,16 +13,12 @@ import {
 } from "@sito/dashboard-app";
 
 // hooks
-import {
-  useCurrenciesCommon,
-  useSubscriptionProvidersCommon,
-} from "hooks";
+import { useCurrenciesCommon, useSubscriptionProvidersCommon } from "hooks";
 import { useAccountsCommon } from "../../../hooks/queries/useAccountsCommon";
 import { useTransactionCategoriesCommon } from "../../../hooks/queries/useTransactionCategoriesCommon";
 
 // lib
-import type {
-  CommonTransactionCategoryDto} from "lib";
+import type { CommonTransactionCategoryDto } from "lib";
 import {
   FormMode,
   normalizeSelectedTransactionCategories,

@@ -1,9 +1,6 @@
 import type { QueryParam } from "@sito/dashboard-app";
 
-import type {
-  FilterTransactionCategoryDto,
-  TransactionCategoryDto,
-} from "lib";
+import type { FilterTransactionCategoryDto, TransactionCategoryDto } from "lib";
 
 export const TransactionCategoriesQueryKeys = {
   all: () => ({

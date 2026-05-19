@@ -8,8 +8,10 @@ export type BaseCardPropsType = {
   children: ReactNode;
 };
 
-export type ConfigFormDialogPropsType<TForm extends FieldValues> =
-  Omit<FormDialogPropsType<TForm>, "title">;
+export type ConfigFormDialogPropsType<TForm extends FieldValues> = Omit<
+  FormDialogPropsType<TForm>,
+  "title"
+>;
 
 type Common = {
   id: number;

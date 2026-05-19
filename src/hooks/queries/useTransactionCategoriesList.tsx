@@ -4,16 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 
 // providers
 import { useManager, useOfflineManager } from "providers";
-import type { QueryResult} from "@sito/dashboard-app";
+import type { QueryResult } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
 // types
 import type { UseFetchPropsType } from "./types.ts";
 
 // lib
-import type {
-  TransactionCategoryDto,
-  FilterTransactionCategoryDto} from "lib";
+import type { TransactionCategoryDto, FilterTransactionCategoryDto } from "lib";
 import {
   applyHideDeletedEntitiesPreference,
   defaultTransactionCategoriesListFilters,

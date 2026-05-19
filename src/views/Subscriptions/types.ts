@@ -23,8 +23,12 @@ export interface SubscriptionCardPropsType extends SubscriptionDto {
 }
 
 export interface SubscriptionFormType
-  extends FieldValues,
-    Omit<SubscriptionDto, "createdAt" | "updatedAt" | "category" | "categories"> {
+  extends
+    FieldValues,
+    Omit<
+      SubscriptionDto,
+      "createdAt" | "updatedAt" | "category" | "categories"
+    > {
   categories: CommonTransactionCategoryDto[];
 }
 

@@ -10,15 +10,14 @@ const {
   mockToLocal,
   mockIsMac,
   mockUseAuth,
-} =
-  vi.hoisted(() => ({
-    mockNavigate: vi.fn(),
-    mockTimeAge: vi.fn(() => "just now"),
-    mockFromLocal: vi.fn(() => null),
-    mockToLocal: vi.fn(),
-    mockIsMac: vi.fn(() => false),
-    mockUseAuth: vi.fn(() => ({ account: { email: "user@example.com" } })),
-  }));
+} = vi.hoisted(() => ({
+  mockNavigate: vi.fn(),
+  mockTimeAge: vi.fn(() => "just now"),
+  mockFromLocal: vi.fn(() => null),
+  mockToLocal: vi.fn(),
+  mockIsMac: vi.fn(() => false),
+  mockUseAuth: vi.fn(() => ({ account: { email: "user@example.com" } })),
+}));
 
 // ─── Module mocks ──────────────────────────────────────────────────────────────
 

@@ -17,13 +17,8 @@ import {
 import type { BasicProviderPropTypes } from "../types";
 
 // lib
-import type {
-  SyncSocketEvent} from "lib";
-import {
-  offlineSyncService,
-  syncSocketService,
-  toSyncHttpError,
-} from "lib";
+import type { SyncSocketEvent } from "lib";
+import { offlineSyncService, syncSocketService, toSyncHttpError } from "lib";
 
 export const OfflineSyncProvider = (props: BasicProviderPropTypes) => {
   const { children } = props;
