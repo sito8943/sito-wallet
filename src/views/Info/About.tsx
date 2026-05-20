@@ -1,11 +1,16 @@
 import { useTranslation, Trans } from "react-i18next";
-import { Link } from "react-router-dom";
 
-// types
-import type { HowToStep } from "./types";
+import {
+  LegalLinksList,
+  LegalPage,
+  LegalSection,
+  richTextComponents,
+} from "@sito/dashboard-app";
 
-// lib
 import { AppRoutes } from "lib";
+
+import { PORTFOLIO_LINK_URL } from "./constants";
+import type { HowToStep } from "./types";
 
 export const About = () => {
   const { t } = useTranslation();
@@ -30,21 +35,25 @@ export const About = () => {
   ];
 
   return (
-    <main className="py-10 px-5 gap-5">
-      <h2 className="text-4xl max-xs:text-2xl">{t("_pages:about.title")}</h2>
-      <Trans
-        i18nKey="_pages:about.body"
-        components={[
-          <p />,
-          <strong />,
-          <a
-            href="https://sito8943.com?utm_source=sitowallet&utm_medium=about_page&utm_campaign=portfolio_link"
-            target="_blank"
-            rel="noopener"
-            className="primary underline font-bold!"
-          />,
-        ]}
-      />
+    <LegalPage
+      title={t("_pages:about.title")}
+      intro={
+        <Trans
+          i18nKey="_pages:about.body"
+          components={{
+            ...richTextComponents,
+            a: (
+              <a
+                href={PORTFOLIO_LINK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="primary underline font-bold!"
+              />
+            ),
+          }}
+        />
+      }
+    >
       <section>
         <h3 className="text-2xl max-sm:text-xl font-bold">
           {t("_pages:about.howTo.title")}
@@ -65,24 +74,13 @@ export const About = () => {
         </ul>
       </section>
 
-      <section className="mt-8 bg-base p-5 rounded-2xl">
-        <h3 className="text-2xl max-sm:text-xl font-bold">
-          {t("_pages:about.legal.title")}
-        </h3>
-        <p className="mt-2">{t("_pages:about.legal.body")}</p>
-        <ul className="mt-4 list-disc list-inside space-y-1">
-          {legalLinks.map((link) => (
-            <li key={link.to}>
-              <Link to={link.to} className="primary underline font-bold!">
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <LegalSection title={t("_pages:about.legal.title")} className="mt-8">
+        <p>{t("_pages:about.legal.body")}</p>
+        <LegalLinksList links={legalLinks} />
         <p className="mt-4 text-sm text-text-muted">
           {t("_pages:about.legal.updated")}
         </p>
-      </section>
-    </main>
+      </LegalSection>
+    </LegalPage>
   );
 };

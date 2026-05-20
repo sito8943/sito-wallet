@@ -1,266 +1,62 @@
-import { useEffect, useMemo, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import "./styles.css";
 
-// @sito/dashboard-app
 import {
-  Button,
-  Loading,
-  PasswordInput,
-  State,
-  extractAuthQueryParamFromLocation,
-  extractRecoveryAccessTokenFromLocation,
-  hasAuthErrorParamsInLocation,
+  AuthUpdatePasswordView,
   isHttpError,
   useNotification,
 } from "@sito/dashboard-app";
-import type { ResetPasswordDto } from "@sito/dashboard-app";
 
-// providers
+import { TextLogo } from "components";
+import { AppRoutes, randomBackgroundColor } from "lib";
 import { useManager } from "providers";
 
-// lib
-import { AppRoutes, AuthRouteQueryParam, AuthRouteQueryParamType } from "lib";
-
-import type { UpdatePasswordFormType } from "./types";
 import { getAuthErrorMessage } from "./getAuthErrorMessage";
 
-/**
- * UpdatePassword page
- * @returns UpdatePassword page component
- */
+const color: "primary" | "secondary" | "tertiary" | "quaternary" =
+  randomBackgroundColor();
+
 export function UpdatePassword() {
   const { t } = useTranslation();
-  const location = useLocation();
-  const navigate = useNavigate();
   const manager = useManager();
   const { showErrorNotification, showSuccessNotification } = useNotification();
 
-  const [appear, setAppear] = useState(false);
-
-  const { handleSubmit, control, setError } = useForm<UpdatePasswordFormType>({
-    defaultValues: {
-      password: "",
-      rPassword: "",
-    },
-  });
-
-  const resetPasswordMutation = useMutation<void, unknown, ResetPasswordDto>({
-    mutationFn: async (payload) => {
-      await manager.AuthApi.resetPassword(payload);
-    },
-  });
-
-  const saving = resetPasswordMutation.isPending;
-
-  const hasAuthErrorParams = useMemo(
-    () => hasAuthErrorParamsInLocation(location.hash, location.search),
-    [location.hash, location.search],
-  );
-
-  const accessToken = useMemo(
-    () =>
-      extractRecoveryAccessTokenFromLocation(location.hash, location.search),
-    [location.hash, location.search],
-  );
-
-  const recoveryToken = useMemo(() => {
-    const tokenHash = extractAuthQueryParamFromLocation(
-      location.hash,
-      location.search,
-      AuthRouteQueryParam.tokenHash,
-    );
-    const tokenType = extractAuthQueryParamFromLocation(
-      location.hash,
-      location.search,
-      AuthRouteQueryParam.type,
-    );
-    const normalizedTokenType = tokenType?.toLowerCase() ?? null;
-
-    if (
-      !tokenHash ||
-      normalizedTokenType !== AuthRouteQueryParamType.recovery
-    ) {
-      return null;
-    }
-
-    return {
-      tokenHash,
-      tokenType: normalizedTokenType,
-    };
-  }, [location.hash, location.search]);
-
-  const onSubmit = async (data: UpdatePasswordFormType) => {
-    if (data.password !== data.rPassword) {
-      setError("rPassword", {
-        type: "validate",
-        message: t("_accessibility:errors.differentPasswords"),
-      });
-      return;
-    }
-
-    if (hasAuthErrorParams) {
-      showErrorNotification({
-        message: t("_pages:auth.updatePassword.invalidToken"),
-      });
-      return;
-    }
-
-    const resetPayload = recoveryToken
-      ? {
-          tokenHash: recoveryToken.tokenHash,
-          type: recoveryToken.tokenType,
-          newPassword: data.password,
-        }
-      : accessToken
-        ? {
-            accessToken,
-            newPassword: data.password,
-          }
-        : null;
-
-    if (!resetPayload) {
-      showErrorNotification({
-        message: t("_pages:auth.updatePassword.invalidToken"),
-      });
-      return;
-    }
-
-    try {
-      await resetPasswordMutation.mutateAsync(resetPayload);
-      showSuccessNotification({
-        message: t("_pages:auth.updatePassword.sent"),
-      });
-
-      setTimeout(() => {
-        navigate(AppRoutes.signIn);
-      }, 1200);
-    } catch (error) {
-      const message = isHttpError(error)
-        ? getAuthErrorMessage(t, error.status, "updatePassword")
-        : getAuthErrorMessage(t);
-
-      showErrorNotification({ message });
-    }
-  };
-
-  useEffect(() => {
-    setTimeout(() => {
-      setAppear(true);
-    }, 500);
-  }, []);
-
   return (
-    <div className="w-full h-screen flex items-center justify-center">
-      <form
-        onSubmit={(event) => {
-          void handleSubmit(onSubmit)(event);
-        }}
-        className={`${appear ? "blur-appear" : ""} auth-form`}
-      >
-        <h1
-          className={`w-full text-2xl md:text-3xl mb-1 transition-all duration-500 ease-in-out delay-200 ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          {t("_pages:auth.updatePassword.title")}
-        </h1>
+    <AuthUpdatePasswordView
+      authApi={manager.AuthApi}
+      logo={<TextLogo variant={color} />}
+      title={t("_pages:auth.updatePassword.title")}
+      passwordLabel={t("_entities:user.password.label")}
+      confirmPasswordLabel={t("_entities:user.rPassword.label")}
+      passwordRequiredMessage={t("_entities:user.password.required")}
+      confirmPasswordRequiredMessage={t("_entities:user.password.required")}
+      passwordMismatchMessage={t("_accessibility:errors.differentPasswords")}
+      submitLabel={t("_pages:auth.updatePassword.submit")}
+      submitAriaLabel={t("_pages:auth.updatePassword.submit")}
+      signInQuestion={t("_pages:auth.updatePassword.toLogin.question")}
+      signInLabel={t("_pages:auth.updatePassword.toLogin.link")}
+      signInTo={AppRoutes.signIn}
+      onSuccess={() =>
+        showSuccessNotification({
+          message: t("_pages:auth.updatePassword.sent"),
+        })
+      }
+      onInvalidToken={() =>
+        showErrorNotification({
+          message: t("_pages:auth.updatePassword.invalidToken"),
+        })
+      }
+      onPasswordMismatch={() =>
+        showErrorNotification({
+          message: t("_accessibility:errors.differentPasswords"),
+        })
+      }
+      onError={(error) => {
+        const message = isHttpError(error)
+          ? getAuthErrorMessage(t, error.status, "updatePassword")
+          : getAuthErrorMessage(t);
 
-        <div className="form-container w-full">
-          <div
-            className={`w-full transition-all duration-500 ease-in-out delay-300 ${
-              appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-            }`}
-          >
-            <Controller
-              control={control}
-              disabled={saving}
-              name="password"
-              render={({ field, fieldState }) => (
-                <PasswordInput
-                  {...field}
-                  id="password"
-                  value={field.value ?? ""}
-                  inputClassName="peer"
-                  label={t("_entities:user.password.label")}
-                  required
-                  helperText={fieldState.error?.message}
-                  state={fieldState.error ? State.error : State.default}
-                />
-              )}
-              rules={{ required: `${t("_entities:user.password.required")}` }}
-            />
-          </div>
-          <div
-            className={`w-full transition-all duration-500 ease-in-out delay-[400ms] ${
-              appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-            }`}
-          >
-            <Controller
-              control={control}
-              disabled={saving}
-              name="rPassword"
-              render={({ field, fieldState }) => (
-                <PasswordInput
-                  {...field}
-                  id="rPassword"
-                  value={field.value ?? ""}
-                  inputClassName="peer"
-                  label={t("_entities:user.rPassword.label")}
-                  required
-                  helperText={fieldState.error?.message}
-                  state={fieldState.error ? State.error : State.default}
-                />
-              )}
-              rules={{ required: `${t("_entities:user.password.required")}` }}
-            />
-          </div>
-        </div>
-
-        <div
-          className={`self-start transition-all duration-500 ease-in-out delay-[500ms] ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          <p className="ml-1">
-            {t("_pages:auth.updatePassword.toLogin.question")}
-            <Link
-              to={AppRoutes.signIn}
-              className={`ml-1 primary text-sm underline text-left`}
-            >
-              {t("_pages:auth.updatePassword.toLogin.link")}
-            </Link>
-          </p>
-        </div>
-
-        <div
-          className={`flex max-xs:flex-col gap-3 mt-6 w-full duration-500 ease-in-out delay-[600ms] ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          <Button
-            type="submit"
-            variant="submit"
-            color="primary"
-            disabled={saving}
-            className="!px-8"
-            aria-label={t("_pages:auth.updatePassword.submit")}
-          >
-            {saving && (
-              <Loading
-                className="w-auto!"
-                color="stroke-base"
-                loaderClass="!w-6"
-                strokeWidth="6"
-              />
-            )}
-            {t("_pages:auth.updatePassword.submit")}
-          </Button>
-        </div>
-      </form>
-    </div>
+        showErrorNotification({ message });
+      }}
+    />
   );
 }

@@ -7,16 +7,11 @@ export type SignInFormType = AuthDto<{
 export type SignUpFormType = {
   email: string;
   password: string;
-  rPassword: string;
+  confirmPassword: string;
 };
 
 export type RecoveryFormType = {
   email: string;
-};
-
-export type UpdatePasswordFormType = {
-  password: string;
-  rPassword: string;
 };
 
 export type SignUpSuccessLocationState = {

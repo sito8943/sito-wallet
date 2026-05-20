@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
+  AuthResultView,
   Button,
   Loading,
   buildAuthRedirectUrl,
@@ -28,7 +29,6 @@ export function SignUpSuccess() {
   const location = useLocation();
   const navigate = useNavigate();
   const { showErrorNotification, showSuccessNotification } = useNotification();
-  const [appear, setAppear] = useState(false);
   const [isResending, setIsResending] = useState(false);
   const locationState = location.state as SignUpSuccessLocationState | null;
   const email = locationState?.email?.trim() ?? "";
@@ -64,40 +64,18 @@ export function SignUpSuccess() {
     }
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      setAppear(true);
-    }, 500);
-  }, []);
-
   return (
-    <div className="w-full h-screen flex items-center justify-center">
-      <div className={`${appear ? "blur-appear" : ""} auth-form`}>
-        <div
-          className={`mb-5 flex flex-col gap-10 justify-start items-start w-full transition-all duration-500 ease-in-out delay-200 ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          <TextLogo variant={color} />
-          <h1 className="auth-title">{t("_pages:auth.signUpSuccess.title")}</h1>
-        </div>
-        <p
-          className={`w-full mb-4 transition-all duration-500 ease-in-out delay-300 ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          {t("_pages:auth.signUpSuccess.description")}
-        </p>
-        <div
-          className={`flex max-xs:flex-col gap-3 w-full transition-all duration-500 ease-in-out delay-[400ms] ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
+    <AuthResultView
+      logo={<TextLogo variant={color} />}
+      title={t("_pages:auth.signUpSuccess.title")}
+      description={t("_pages:auth.signUpSuccess.description")}
+      actions={
+        <>
           <Button
             type="button"
             variant="submit"
             color="primary"
-            className="!px-8"
+            className="auth-action-button"
             disabled={isResending}
             onClick={() => navigate(AppRoutes.signIn)}
             aria-label={t("_pages:auth.signUpSuccess.toSignIn")}
@@ -107,7 +85,7 @@ export function SignUpSuccess() {
           <Button
             type="button"
             variant="outlined"
-            className="!px-8"
+            className="auth-action-button"
             disabled={isResending}
             onClick={() => {
               void onResendConfirmEmail();
@@ -116,16 +94,16 @@ export function SignUpSuccess() {
           >
             {isResending && (
               <Loading
-                className="w-auto!"
+                className="auth-loading"
                 color="stroke-primary"
-                loaderClass="!w-6"
+                loaderClass="auth-loading-icon"
                 strokeWidth="6"
               />
             )}
             {t("_pages:auth.signUpSuccess.resend")}
           </Button>
-        </div>
-      </div>
-    </div>
+        </>
+      }
+    />
   );
 }
