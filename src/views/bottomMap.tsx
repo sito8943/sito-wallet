@@ -6,13 +6,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
-import type { BottomNavItemType } from "@sito/dashboard-app";
+import {
+  filterNavigationByFeatureFlags,
+  type BottomNavItemType,
+  type FeatureEnabledFn,
+} from "@sito/dashboard-app";
 
 // sitemap;
 import { PageId } from "./sitemap";
 
 // lib
 import { AppRoutes } from "lib";
+import type { FeatureFlagKey } from "lib";
 
 export const bottomMap: BottomNavItemType<PageId>[] = [
   {
@@ -44,3 +49,18 @@ export const bottomMap: BottomNavItemType<PageId>[] = [
     position: "right",
   },
 ];
+
+const bottomFeatureDependencies: Partial<Record<PageId, FeatureFlagKey>> = {
+  [PageId.Transactions]: "transactionsEnabled",
+  [PageId.Accounts]: "accountsEnabled",
+};
+
+export const getFeatureFilteredBottomMap = (
+  isFeatureEnabled: FeatureEnabledFn<FeatureFlagKey>,
+): BottomNavItemType<PageId>[] => {
+  return filterNavigationByFeatureFlags(
+    bottomMap,
+    isFeatureEnabled,
+    bottomFeatureDependencies,
+  );
+};

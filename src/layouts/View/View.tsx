@@ -39,7 +39,7 @@ import { OnboardingSetup } from "./components/OnboardingSetup";
 
 // config
 import { config } from "../../config";
-import { bottomMap } from "../../views/bottomMap";
+import { getFeatureFilteredBottomMap } from "../../views/bottomMap";
 import { isAnonymousVisitorSession } from "lib";
 import { getFeatureFilteredMenuMap } from "views/menuMap";
 
@@ -88,7 +88,7 @@ export function View() {
 
   const bottomNavigationItems = useMemo<BottomNavigationItemType[]>(
     () =>
-      bottomMap.map((item) => {
+      getFeatureFilteredBottomMap(isFeatureEnabled).map((item) => {
         const label = t(`_pages:${item.page}.title`);
 
         return {
@@ -100,7 +100,7 @@ export function View() {
           ariaLabel: label,
         };
       }),
-    [t],
+    [isFeatureEnabled, t],
   );
 
   const isBottomNavItemActive = (

@@ -1,6 +1,7 @@
 import loadable from "@loadable/component";
+import { defineRouteComponents } from "@sito/dashboard-app";
 
-export const routeComponents = {
+export const routeComponents = defineRouteComponents({
   SignUp: loadable(() =>
     import("views/Auth/SignUp").then((module) => ({
       default: module.SignUp,
@@ -125,4 +126,4 @@ export const routeComponents = {
       default: module.TermsAndConditions,
     })),
   ),
-};
+});

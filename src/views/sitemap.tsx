@@ -7,6 +7,12 @@ import type {
   SessionAccountDto,
   ViewPageType,
 } from "@sito/dashboard-app";
+import {
+  createPathMap,
+  filterSitemap,
+  findPathInSitemap,
+  flattenSitemap as flattenSitemapBase,
+} from "@sito/dashboard-app";
 
 // lib
 import type { FeatureFlagKey } from "lib";
@@ -89,48 +95,16 @@ const pageFeatureDependencies: Partial<Record<PageId, FeatureFlagKey>> = {
   [PageId.Currencies]: "currenciesEnabled",
 };
 
-const isPageFeatureEnabled = (
-  page: ViewPageType<PageId>,
-  isFeatureEnabled: FeatureEnabledFn<FeatureFlagKey>,
-): boolean => {
-  const dependency = pageFeatureDependencies[page.key];
-  if (!dependency) return true;
-
-  return isFeatureEnabled(dependency);
-};
-
-const isPageAccessible = (
-  page: ViewPageType<PageId>,
-  account?: SessionAccountDto,
-): boolean => {
-  if (!page.access) return true;
-  return page.access(account);
-};
-
-const filterSitemapByFeatures = (
-  routes: ViewPageType<PageId>[],
-  isFeatureEnabled: FeatureEnabledFn<FeatureFlagKey>,
-  account?: SessionAccountDto,
-): ViewPageType<PageId>[] => {
-  return routes
-    .filter(
-      (route) =>
-        isPageFeatureEnabled(route, isFeatureEnabled) &&
-        isPageAccessible(route, account),
-    )
-    .map((route) => ({
-      ...route,
-      children: route.children
-        ? filterSitemapByFeatures(route.children, isFeatureEnabled, account)
-        : undefined,
-    }));
-};
-
 export const getFeatureFilteredSitemap = (
   isFeatureEnabled: FeatureEnabledFn<FeatureFlagKey>,
   account?: SessionAccountDto,
 ): ViewPageType<PageId>[] => {
-  return filterSitemapByFeatures(sitemap, isFeatureEnabled, account);
+  return filterSitemap(
+    sitemap,
+    isFeatureEnabled,
+    pageFeatureDependencies,
+    account,
+  );
 };
 
 /**
@@ -145,18 +119,9 @@ export const findPathInChildren = (
   basePage: ViewPageType<PageId>,
   currentPath = "",
 ) => {
-  let path = "";
-  const baseChildren = basePage.children ?? [];
-  for (let i = 0; i < baseChildren.length; ++i) {
-    const page = baseChildren[i];
-    if (page.key === targetPageId) return (path = `${currentPath}${page.path}`);
-
-    if (page.children) {
-      path = findPathInChildren(targetPageId, page, currentPath + page.path);
-      if (path) return currentPath + page.path;
-    }
-  }
-  return path;
+  return (
+    findPathInSitemap(basePage.children ?? [], targetPageId, currentPath) ?? ""
+  );
 };
 
 /**
@@ -165,31 +130,10 @@ export const findPathInChildren = (
  * @returns complete bath
  */
 export const findPath = (targetPageId: PageId) => {
-  let path = "";
-  for (let i = 0; i < sitemap.length; i++) {
-    const page = sitemap[i];
-    if (page.key === targetPageId) return page.path;
-    if (page.children) {
-      path = findPathInChildren(
-        targetPageId,
-        page,
-        page.path === "/" ? "" : page.path,
-      );
-      if (path) {
-        break;
-      }
-    }
-  }
-  return path;
+  return findPathInSitemap(sitemap, targetPageId) ?? "";
 };
 
-const pathMap: Record<PageId, string> = sitemap.reduce(
-  (acc, { key, path }) => {
-    acc[key] = path;
-    return acc;
-  },
-  {} as Record<PageId, string>,
-);
+const pathMap = createPathMap(sitemap);
 
 export const getPathByKey = (key: PageId): string | undefined => pathMap[key];
 
@@ -203,18 +147,9 @@ export const flattenSitemap = (
   routes: ViewPageType<PageId>[],
   basePath = "",
 ): NamedViewPageType[] => {
-  const result = [];
-
-  for (const route of routes) {
-    const fullPath = `${basePath.replace(/\/$/, "")}${route.path}`;
-
-    const name = t(`_pages:pages.${route.key}`);
-
-    result.push({ key: route.key, path: fullPath, name, role: route.role });
-
-    if (route.children)
-      result.push(...flattenSitemap(route.children, fullPath));
-  }
-
-  return result;
+  return flattenSitemapBase(
+    routes,
+    (route) => t(`_pages:pages.${route.key}`),
+    basePath,
+  );
 };

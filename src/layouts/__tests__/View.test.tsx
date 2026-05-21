@@ -161,7 +161,7 @@ vi.mock("../../config", () => ({
 }));
 
 vi.mock("../../views/bottomMap", () => ({
-  bottomMap: [
+  getFeatureFilteredBottomMap: () => [
     {
       id: "home",
       page: "home",

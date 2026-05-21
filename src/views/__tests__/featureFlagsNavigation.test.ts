@@ -12,6 +12,25 @@ vi.mock("@sito/dashboard-app", () => ({
       const dependency = dependencies[item.page];
       return dependency ? isFeatureEnabled(dependency) : true;
     }),
+  filterSitemap: (
+    routes: Array<{ key: string; children?: unknown[] }>,
+    isFeatureEnabled: (key: FeatureFlagKey) => boolean,
+    dependencies: Partial<Record<string, FeatureFlagKey>>,
+  ) =>
+    routes.filter((route) => {
+      const dependency = dependencies[route.key];
+      return dependency ? isFeatureEnabled(dependency) : true;
+    }),
+  createPathMap: (routes: Array<{ key: string; path: string }>) =>
+    Object.fromEntries(routes.map((route) => [route.key, route.path])),
+  findPathInSitemap: (
+    routes: Array<{ key: string; path: string }>,
+    targetPageId: string,
+  ) => routes.find((route) => route.key === targetPageId)?.path,
+  flattenSitemap: (
+    routes: Array<{ key: string; path: string }>,
+    getName: (route: { key: string; path: string }) => string,
+  ) => routes.map((route) => ({ ...route, name: getName(route) })),
   normalizeMenuDividers: (menu: Array<{ type?: string }>) =>
     menu.filter(
       (item, index, items) =>
