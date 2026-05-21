@@ -25,6 +25,9 @@ export function UpdatePassword() {
       authApi={manager.AuthApi}
       logo={<TextLogo variant={color} />}
       title={t("_pages:auth.updatePassword.title")}
+      showBackButton
+      backTo={AppRoutes.signIn}
+      backButtonLabel={t("_accessibility:buttons.back")}
       passwordLabel={t("_entities:user.password.label")}
       confirmPasswordLabel={t("_entities:user.rPassword.label")}
       passwordRequiredMessage={t("_entities:user.password.required")}

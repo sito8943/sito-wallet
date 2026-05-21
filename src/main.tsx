@@ -1,4 +1,5 @@
 import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 import "react-tooltip/dist/react-tooltip.css";
 
 // app
@@ -22,9 +23,11 @@ import { initI18n } from "./i18";
 const bootstrap = async () => {
   await initI18n();
   ReactDOM.createRoot(document.getElementById("root")!).render(
-    <SitoWalletProvider>
-      <App />
-    </SitoWalletProvider>,
+    <BrowserRouter>
+      <SitoWalletProvider>
+        <App />
+      </SitoWalletProvider>
+    </BrowserRouter>,
   );
 };
 

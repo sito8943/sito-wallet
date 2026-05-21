@@ -34,6 +34,9 @@ export function SignUp() {
     <AuthSignUpView
       title={t("_pages:auth.signUp.title")}
       titleClassName="w-full text-2xl md:text-3xl mb-1"
+      showBackButton
+      backTo={AppRoutes.signIn}
+      backButtonLabel={t("_accessibility:buttons.back")}
       headerExtra={
         <div className={`mb-3 p-0.5 rounded-xl w-full real-${color}`} />
       }

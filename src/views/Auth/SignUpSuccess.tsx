@@ -3,9 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
-  AuthResultView,
-  Button,
-  Loading,
+  AuthSignUpConfirmationView,
   buildAuthRedirectUrl,
   isHttpError,
   useNotification,
@@ -16,7 +14,6 @@ import { TextLogo } from "components";
 import { AppRoutes, randomBackgroundColor } from "lib";
 import { useManager } from "providers";
 
-import "./styles.css";
 import type { SignUpSuccessLocationState } from "./types";
 import { getAuthErrorMessage } from "./getAuthErrorMessage";
 
@@ -65,45 +62,20 @@ export function SignUpSuccess() {
   };
 
   return (
-    <AuthResultView
+    <AuthSignUpConfirmationView
       logo={<TextLogo variant={color} />}
       title={t("_pages:auth.signUpSuccess.title")}
+      showBackButton
+      backTo={AppRoutes.signIn}
+      backButtonLabel={t("_accessibility:buttons.back")}
       description={t("_pages:auth.signUpSuccess.description")}
-      actions={
-        <>
-          <Button
-            type="button"
-            variant="submit"
-            color="primary"
-            className="auth-action-button"
-            disabled={isResending}
-            onClick={() => navigate(AppRoutes.signIn)}
-            aria-label={t("_pages:auth.signUpSuccess.toSignIn")}
-          >
-            {t("_pages:auth.signUpSuccess.toSignIn")}
-          </Button>
-          <Button
-            type="button"
-            variant="outlined"
-            className="auth-action-button"
-            disabled={isResending}
-            onClick={() => {
-              void onResendConfirmEmail();
-            }}
-            aria-label={t("_pages:auth.signUpSuccess.resend")}
-          >
-            {isResending && (
-              <Loading
-                className="auth-loading"
-                color="stroke-primary"
-                loaderClass="auth-loading-icon"
-                strokeWidth="6"
-              />
-            )}
-            {t("_pages:auth.signUpSuccess.resend")}
-          </Button>
-        </>
-      }
+      toSignInLabel={t("_pages:auth.signUpSuccess.toSignIn")}
+      toSignInAriaLabel={t("_pages:auth.signUpSuccess.toSignIn")}
+      resendLabel={t("_pages:auth.signUpSuccess.resend")}
+      resendAriaLabel={t("_pages:auth.signUpSuccess.resend")}
+      isResending={isResending}
+      onSignIn={() => navigate(AppRoutes.signIn)}
+      onResendConfirmEmail={onResendConfirmEmail}
     />
   );
 }

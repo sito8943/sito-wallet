@@ -1,7 +1,3 @@
-export type RecoveryFormType = {
-  email: string;
-};
-
 export type SignUpSuccessLocationState = {
   email: string;
 };

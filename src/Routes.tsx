@@ -1,6 +1,6 @@
 // layouts
 import { View, Auth } from "./layouts";
-import { BrowserRouter, Routes as ReactRoutes, Route } from "react-router-dom";
+import { Routes as ReactRoutes, Route } from "react-router-dom";
 import { useAuth } from "@sito/dashboard-app";
 import { useFeatureFlags } from "providers";
 import { AppRoutes, isAdminSession } from "lib";
@@ -38,8 +38,7 @@ export const Routes = () => {
   } = routeComponents;
 
   return (
-    <BrowserRouter>
-      <ReactRoutes>
+    <ReactRoutes>
         <Route path={AppRoutes.authRoot} element={<Auth />}>
           <Route path={AppRoutes.signIn} element={<SignIn />} />
           <Route path={AppRoutes.signUp} element={<SignUp />} />
@@ -154,7 +153,6 @@ export const Routes = () => {
           />
           <Route path={AppRoutes.notFound} element={<NotFound />} />
         </Route>
-      </ReactRoutes>
-    </BrowserRouter>
+    </ReactRoutes>
   );
 };

@@ -3,7 +3,11 @@ import { useTranslation } from "react-i18next";
 import { useQueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
-import { usePostDialog } from "@sito/dashboard-app";
+import {
+  isHttpError,
+  useNotification,
+  usePostDialog,
+} from "@sito/dashboard-app";
 
 // hooks
 import { useAdjustBalanceAction } from "./useAdjustBalanceAction";
@@ -24,6 +28,7 @@ import {
 
 export const useAdjustBalanceMutation = () => {
   const { t } = useTranslation();
+  const { showErrorNotification } = useNotification();
 
   const manager = useManager();
   const queryClient = useQueryClient();
@@ -45,6 +50,15 @@ export const useAdjustBalanceMutation = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ ...TransactionsQueryKeys.all() });
       setSelectedAccount(null);
+    },
+    onError: (error) => {
+      const message = isHttpError(error)
+        ? t(`_accessibility:errors.${error.status}`, {
+            defaultValue: t("_accessibility:errors.500"),
+          })
+        : error.message || t("_accessibility:errors.500");
+
+      showErrorNotification({ message });
     },
     title: t("_pages:accounts.actions.adjustBalance.dialog.title"),
     ...AccountsQueryKeys.all(),

@@ -1,8 +1,6 @@
-import type { To } from "react-router-dom";
-import { Outlet, useNavigate, useLocation, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
-import type { ComponentType } from "react";
 import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -11,7 +9,6 @@ import {
   AppShell,
   BottomNavActionProvider,
   BottomNavigation,
-  ConfigProvider,
   DashboardFooter,
   DashboardHeader,
   Error,
@@ -24,7 +21,6 @@ import {
   useAuth,
 } from "@sito/dashboard-app";
 import type {
-  BaseLinkPropsType,
   BottomNavigationItemType,
   OnboardingStepType,
 } from "@sito/dashboard-app";
@@ -34,7 +30,7 @@ import { useFeatureFlags } from "providers";
 import { useAppPreload } from "hooks";
 
 // components
-import { OfflineBanner, SearchModal } from "components";
+import { OfflineBanner } from "components";
 import { OnboardingSetup } from "./components/OnboardingSetup";
 
 // config
@@ -56,8 +52,6 @@ export function View() {
   const { t, i18n } = useTranslation();
   const { account, isInGuestMode } = useAuth();
   const { isFeatureEnabled } = useFeatureFlags();
-  const navigate = useNavigate();
-  const location = useLocation();
   const onboardingStorageKey =
     typeof config.onboarding === "string" ? config.onboarding : "onboarding";
   const isAnonymousVisitor = isAnonymousVisitorSession(
@@ -117,46 +111,39 @@ export function View() {
   if (preloadLoading) return <SplashScreen />;
 
   return (
-    <ConfigProvider
-      navigate={(route) => navigate(route as To)}
-      location={location}
-      linkComponent={Link as unknown as ComponentType<BaseLinkPropsType>}
-      searchComponent={SearchModal}
-    >
-      <NavbarProvider>
-        <BottomNavActionProvider>
-          {showOnboarding && (
-            <Onboarding remountStepOnChange steps={onboardingSteps} />
-          )}
-          <AppShell
-            header={
-              <>
-                <OfflineBanner />
-                <DashboardHeader menuMap={featureFilteredMenuMap} />
-              </>
-            }
-            footer={
-              <DashboardFooter
-                copyrightText={t("_pages:footer.copyright")}
-                bottomNavSpacing
-              />
-            }
-            bottomNavigation={
-              <BottomNavigation
-                items={bottomNavigationItems}
-                isItemActive={isBottomNavItemActive}
-              />
-            }
-            extras={<Tooltip id="tooltip" />}
-          >
-            <ErrorBoundary FallbackComponent={Error}>
-              <TableOptionsProvider>
-                <Outlet />
-              </TableOptionsProvider>
-            </ErrorBoundary>
-          </AppShell>
-        </BottomNavActionProvider>
-      </NavbarProvider>
-    </ConfigProvider>
+    <NavbarProvider>
+      <BottomNavActionProvider>
+        {showOnboarding && (
+          <Onboarding remountStepOnChange steps={onboardingSteps} />
+        )}
+        <AppShell
+          header={
+            <>
+              <OfflineBanner />
+              <DashboardHeader menuMap={featureFilteredMenuMap} />
+            </>
+          }
+          footer={
+            <DashboardFooter
+              copyrightText={t("_pages:footer.copyright")}
+              bottomNavSpacing
+            />
+          }
+          bottomNavigation={
+            <BottomNavigation
+              items={bottomNavigationItems}
+              isItemActive={isBottomNavItemActive}
+            />
+          }
+          extras={<Tooltip id="tooltip" />}
+        >
+          <ErrorBoundary FallbackComponent={Error}>
+            <TableOptionsProvider>
+              <Outlet />
+            </TableOptionsProvider>
+          </ErrorBoundary>
+        </AppShell>
+      </BottomNavActionProvider>
+    </NavbarProvider>
   );
 }

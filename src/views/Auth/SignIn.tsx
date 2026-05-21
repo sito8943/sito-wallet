@@ -49,6 +49,7 @@ export function SignIn() {
       guestLabel={t("_pages:auth.signIn.guest")}
       guestAriaLabel={t("_pages:auth.signIn.guest")}
       onSubmit={async (values) => {
+        console.log("Submitting sign in form with values:", values);
         const session = await manager.Auth.login(values);
         logUser(session, values.rememberMe);
         setGuestMode(false);
