@@ -228,11 +228,13 @@
       "currenciesTitle": "Suggested currencies",
       "categoriesTitle": "Suggested categories",
       "accountsTitle": "Suggested accounts",
-      "subscriptionProvidersTitle": "Suggested subscription providers",
-      "dashboardTitle": "Suggested dashboard layout"
+      "subscriptionProvidersTitle": "Suggested subscription providers"
     },
     "currencies": {
       "hint": "Detected default: {{code}}"
+    },
+    "errors": {
+      "selectAtLeastOne": "Select at least one option"
     },
     "categories": {
       "incomeTitle": "Income",
@@ -271,16 +273,6 @@
       "empty": "No providers available for your region.",
       "loadError": "Couldn't load providers.",
       "convertedHint": "(≈ converted)"
-    },
-    "dashboard": {
-      "hint": "We'll create these cards for you.",
-      "apply": "Apply default layout",
-      "sizeLabel": "Size: {{size}}",
-      "cards": {
-        "typeResume": "Type resume",
-        "weeklySpent": "Weekly spent",
-        "currentBalance": "Current balance"
-      }
     }
   },
   "auth": {

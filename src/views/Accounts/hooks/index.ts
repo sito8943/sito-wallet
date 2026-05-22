@@ -5,3 +5,4 @@ export * from "./useSyncAccountAction";
 export * from "./useSyncAccountMutation";
 export * from "./useAdjustBalanceAction";
 export * from "./useAdjustBalanceMutation";
+export * from "./useAddPrefabAccountsDialog";

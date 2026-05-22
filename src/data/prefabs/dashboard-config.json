@@ -1,7 +1,0 @@
-{
-  "cards": [
-    { "type": 2, "position": 0, "size": "large" },
-    { "type": 1, "position": 1, "size": "medium" },
-    { "type": 0, "position": 2, "size": "medium" }
-  ]
-}

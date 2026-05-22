@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { useQueryClient } from "@tanstack/react-query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,
@@ -30,14 +29,11 @@ import { useManager, useRegisterBottomNavAction } from "providers";
 // components
 import {
   AddCurrencyDialog,
+  AddPrefabCurrenciesDialog,
   CurrencyCard,
   EditCurrencyDialog,
 } from "./components";
-import {
-  MobileSelectionBar,
-  PrefabCurrencySuggestions,
-  PrefabSuggestionsDialog,
-} from "components";
+import { MobileSelectionBar } from "components";
 
 // hooks
 import {
@@ -46,7 +42,11 @@ import {
   useMobileNavbar,
   useMobileMultiSelection,
 } from "hooks";
-import { useAddCurrency, useEditCurrency } from "./hooks";
+import {
+  useAddCurrency,
+  useAddPrefabCurrenciesDialog,
+  useEditCurrency,
+} from "./hooks";
 
 // types
 import type {
@@ -67,11 +67,10 @@ import "./styles.css";
 export function Currencies() {
   const { t } = useTranslation();
   const { showErrorNotification } = useNotification();
-  const queryClient = useQueryClient();
 
   const manager = useManager();
 
-  const [prefabOpen, setPrefabOpen] = useState(false);
+  const prefabCurrencies = useAddPrefabCurrenciesDialog();
 
   const {
     data,
@@ -211,7 +210,7 @@ export function Currencies() {
                     icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
                     id: "prefab-suggestions",
                     disabled: isLoading,
-                    onClick: () => setPrefabOpen(true),
+                    onClick: () => prefabCurrencies.openDialog(),
                     tooltip: t("_pages:prefabs.trySuggestions"),
                   },
                 ]}
@@ -235,20 +234,7 @@ export function Currencies() {
           <ConfirmationDialog {...deleteCurrency} />
           <ConfirmationDialog {...restoreCurrency} />
           <ImportDialog {...importCurrencies} />
-          <PrefabSuggestionsDialog
-            open={prefabOpen}
-            title={t("_pages:prefabs.dialog.currenciesTitle")}
-            onClose={() => setPrefabOpen(false)}
-            onComplete={() =>
-              void queryClient.invalidateQueries({
-                queryKey: CurrenciesQueryKeys.all().queryKey,
-              })
-            }
-          >
-            {(handleComplete) => (
-              <PrefabCurrencySuggestions onComplete={handleComplete} />
-            )}
-          </PrefabSuggestionsDialog>
+          <AddPrefabCurrenciesDialog {...prefabCurrencies} />
         </>
       ) : (
         <Error error={error} />

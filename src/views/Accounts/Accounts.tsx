@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { useQueryClient } from "@tanstack/react-query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,
@@ -31,14 +30,11 @@ import { useManager, useRegisterBottomNavAction } from "providers";
 import {
   AddAccountDialog,
   AccountCard,
+  AddPrefabAccountsDialog,
   EditAccountDialog,
   AdjustBalanceDialog,
 } from "./components";
-import {
-  MobileSelectionBar,
-  PrefabAccountSuggestions,
-  PrefabSuggestionsDialog,
-} from "components";
+import { MobileSelectionBar } from "components";
 
 // hooks
 import {
@@ -49,6 +45,7 @@ import {
 } from "hooks";
 import {
   useAddAccountDialog,
+  useAddPrefabAccountsDialog,
   useEditAccountDialog,
   useSyncAccountMutation,
   useViewTransactionsAction,
@@ -74,11 +71,10 @@ import "./styles.css";
 export function Accounts() {
   const { t } = useTranslation();
   const { showErrorNotification } = useNotification();
-  const queryClient = useQueryClient();
 
   const manager = useManager();
 
-  const [prefabOpen, setPrefabOpen] = useState(false);
+  const prefabAccounts = useAddPrefabAccountsDialog();
 
   const {
     data,
@@ -228,7 +224,7 @@ export function Accounts() {
                     icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
                     id: "prefab-suggestions",
                     disabled: isLoading,
-                    onClick: () => setPrefabOpen(true),
+                    onClick: () => prefabAccounts.openDialog(),
                     tooltip: t("_pages:prefabs.trySuggestions"),
                   },
                 ]}
@@ -253,20 +249,7 @@ export function Accounts() {
           <ConfirmationDialog {...restoreAccount} />
           <ImportDialog {...importAccounts} />
           <AdjustBalanceDialog {...adjustBalance} />
-          <PrefabSuggestionsDialog
-            open={prefabOpen}
-            title={t("_pages:prefabs.dialog.accountsTitle")}
-            onClose={() => setPrefabOpen(false)}
-            onComplete={() =>
-              void queryClient.invalidateQueries({
-                queryKey: AccountsQueryKeys.all().queryKey,
-              })
-            }
-          >
-            {(handleComplete) => (
-              <PrefabAccountSuggestions onComplete={handleComplete} />
-            )}
-          </PrefabSuggestionsDialog>
+          <AddPrefabAccountsDialog {...prefabAccounts} />
         </>
       ) : (
         <Error error={error} />

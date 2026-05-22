@@ -6,6 +6,13 @@ import type { ActionType, FormDialogPropsType } from "@sito/dashboard-app";
 // lib
 import type { CurrencyDto } from "lib";
 
+export interface PrefabCurrenciesFormType extends FieldValues {
+  codes: string[];
+}
+
+export type AddPrefabCurrenciesDialogPropsType =
+  FormDialogPropsType<PrefabCurrenciesFormType>;
+
 export interface CurrencyCardPropsType extends CurrencyDto {
   actions: ActionType<CurrencyDto>[];
   onClick: (id: number) => void;

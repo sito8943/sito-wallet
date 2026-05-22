@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { useQueryClient } from "@tanstack/react-query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,
@@ -27,17 +26,14 @@ import {
 // providers
 import { useManager, useRegisterBottomNavAction } from "providers";
 
-// components]=
+// components
 import {
+  AddPrefabCategoriesDialog,
   AddTransactionCategoryDialog,
   TransactionCategoryCard,
   EditTransactionCategoryDialog,
 } from "./components";
-import {
-  MobileSelectionBar,
-  PrefabCategorySuggestions,
-  PrefabSuggestionsDialog,
-} from "components";
+import { MobileSelectionBar } from "components";
 
 // hooks
 import {
@@ -47,6 +43,7 @@ import {
   useMobileMultiSelection,
 } from "hooks";
 import {
+  useAddPrefabCategoriesDialog,
   useAddTransactionCategoryDialog,
   useEditTransactionCategoryDialog,
 } from "./hooks";
@@ -71,11 +68,10 @@ import "./styles.css";
 export function TransactionCategories() {
   const { t } = useTranslation();
   const { showErrorNotification } = useNotification();
-  const queryClient = useQueryClient();
 
   const manager = useManager();
 
-  const [prefabOpen, setPrefabOpen] = useState(false);
+  const prefabCategories = useAddPrefabCategoriesDialog();
 
   const {
     data,
@@ -217,7 +213,7 @@ export function TransactionCategories() {
                     icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
                     id: "prefab-suggestions",
                     disabled: isLoading,
-                    onClick: () => setPrefabOpen(true),
+                    onClick: () => prefabCategories.openDialog(),
                     tooltip: t("_pages:prefabs.trySuggestions"),
                   },
                 ]}
@@ -241,20 +237,7 @@ export function TransactionCategories() {
           <ConfirmationDialog {...deleteTransactionCategory} />
           <ConfirmationDialog {...restoreTransactionCategory} />
           <ImportDialog {...importTransactionCategories} />
-          <PrefabSuggestionsDialog
-            open={prefabOpen}
-            title={t("_pages:prefabs.dialog.categoriesTitle")}
-            onClose={() => setPrefabOpen(false)}
-            onComplete={() =>
-              void queryClient.invalidateQueries({
-                queryKey: TransactionCategoriesQueryKeys.all().queryKey,
-              })
-            }
-          >
-            {(handleComplete) => (
-              <PrefabCategorySuggestions onComplete={handleComplete} />
-            )}
-          </PrefabSuggestionsDialog>
+          <AddPrefabCategoriesDialog {...prefabCategories} />
         </>
       ) : (
         <Error error={error} />

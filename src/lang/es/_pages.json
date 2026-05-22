@@ -228,11 +228,13 @@
       "currenciesTitle": "Monedas sugeridas",
       "categoriesTitle": "Categorías sugeridas",
       "accountsTitle": "Cuentas sugeridas",
-      "subscriptionProvidersTitle": "Proveedores sugeridos",
-      "dashboardTitle": "Layout de dashboard sugerido"
+      "subscriptionProvidersTitle": "Proveedores sugeridos"
     },
     "currencies": {
       "hint": "Predeterminada detectada: {{code}}"
+    },
+    "errors": {
+      "selectAtLeastOne": "Selecciona al menos una opción"
     },
     "categories": {
       "incomeTitle": "Ingresos",
@@ -271,16 +273,6 @@
       "empty": "No hay proveedores disponibles para tu región.",
       "loadError": "No se pudieron cargar los proveedores.",
       "convertedHint": "(≈ convertido)"
-    },
-    "dashboard": {
-      "hint": "Crearemos estas tarjetas por ti.",
-      "apply": "Aplicar layout por defecto",
-      "sizeLabel": "Tamaño: {{size}}",
-      "cards": {
-        "typeResume": "Resumen por tipo",
-        "weeklySpent": "Gasto semanal",
-        "currentBalance": "Saldo actual"
-      }
     }
   },
   "auth": {

@@ -46,3 +46,10 @@ export interface UpdateSubscriptionProviderMutationDto {
   file: File | null;
   removePhoto: boolean;
 }
+
+export interface PrefabSubscriptionProvidersFormType extends FieldValues {
+  keys: string[];
+}
+
+export type AddPrefabSubscriptionProvidersDialogPropsType =
+  FormDialogPropsType<PrefabSubscriptionProvidersFormType>;

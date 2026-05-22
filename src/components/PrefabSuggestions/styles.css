@@ -84,22 +84,6 @@
   @apply px-3 py-2 rounded-lg;
 }
 
-.prefab-suggestions-dashboard-preview {
-  @apply grid grid-cols-2 gap-3 w-full;
-}
-
-.prefab-suggestions-dashboard-card {
-  @apply flex flex-col gap-1 p-3 rounded-lg bg-base-light border border-border;
-}
-
-.prefab-suggestions-dashboard-card-large {
-  @apply col-span-2;
-}
-
-.prefab-suggestions-dashboard-card-medium {
-  @apply col-span-1;
-}
-
 .prefab-suggestions-actions {
   @apply flex justify-end gap-2 pt-2;
 }

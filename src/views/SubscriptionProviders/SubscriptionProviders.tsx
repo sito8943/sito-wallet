@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { useQueryClient } from "@tanstack/react-query";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -30,11 +29,7 @@ import {
   useMobileMultiSelection,
   useMobileNavbar,
 } from "hooks";
-import {
-  MobileSelectionBar,
-  PrefabSubscriptionProviderSuggestions,
-  PrefabSuggestionsDialog,
-} from "components";
+import { MobileSelectionBar } from "components";
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 import type {
@@ -51,11 +46,13 @@ import {
 } from "lib";
 
 import {
+  AddPrefabSubscriptionProvidersDialog,
   AddSubscriptionProviderDialog,
   EditSubscriptionProviderDialog,
   SubscriptionProviderCard,
 } from "./components";
 import {
+  useAddPrefabSubscriptionProvidersDialog,
   useAddSubscriptionProviderDialog,
   useEditSubscriptionProviderDialog,
 } from "./hooks";
@@ -65,13 +62,12 @@ import "./styles.css";
 export function SubscriptionProviders() {
   const { t } = useTranslation();
   const { showErrorNotification } = useNotification();
-  const queryClient = useQueryClient();
 
   const manager = useManager();
   const subscriptionProvidersClient =
     "SubscriptionProviders" in manager ? manager.SubscriptionProviders : null;
 
-  const [prefabOpen, setPrefabOpen] = useState(false);
+  const prefabSubscriptionProviders = useAddPrefabSubscriptionProvidersDialog();
 
   const {
     data,
@@ -253,7 +249,7 @@ export function SubscriptionProviders() {
                     icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
                     id: "prefab-suggestions",
                     disabled: isLoading || !subscriptionProvidersClient,
-                    onClick: () => setPrefabOpen(true),
+                    onClick: () => prefabSubscriptionProviders.openDialog(),
                     tooltip: t("_pages:prefabs.trySuggestions"),
                   },
                 ]}
@@ -279,22 +275,9 @@ export function SubscriptionProviders() {
           <ConfirmationDialog {...deleteSubscriptionProvider} />
           <ConfirmationDialog {...restoreSubscriptionProvider} />
           <ImportDialog {...importSubscriptionProviders} />
-          <PrefabSuggestionsDialog
-            open={prefabOpen}
-            title={t("_pages:prefabs.dialog.subscriptionProvidersTitle")}
-            onClose={() => setPrefabOpen(false)}
-            onComplete={() =>
-              void queryClient.invalidateQueries({
-                queryKey: SubscriptionProvidersQueryKeys.all().queryKey,
-              })
-            }
-          >
-            {(handleComplete) => (
-              <PrefabSubscriptionProviderSuggestions
-                onComplete={handleComplete}
-              />
-            )}
-          </PrefabSuggestionsDialog>
+          <AddPrefabSubscriptionProvidersDialog
+            {...prefabSubscriptionProviders}
+          />
         </>
       ) : (
         <ErrorView error={error} />

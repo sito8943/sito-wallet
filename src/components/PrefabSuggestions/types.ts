@@ -1,3 +1,5 @@
+import type { CommonCurrencyDto, PrefabSubscriptionProviderDto } from "lib";
+
 export type PrefabCurrency = {
   code: string;
   name: string;
@@ -21,31 +23,37 @@ export type PrefabAccount = {
   color: string;
 };
 
-export type PrefabDashboardCard = {
-  type: number;
-  position: number;
-  size: string;
-};
-
-export type PrefabDashboardConfig = {
-  cards: PrefabDashboardCard[];
-};
-
 export type AccountConfigEntry = {
   balance: number;
   currencyId: number;
 };
 
-import type { ReactNode } from "react";
-
-export type PrefabSuggestionPropsType = {
-  onComplete?: () => void;
+export type PrefabCurrenciesGridPropsType = {
+  value: string[];
+  onChange: (next: string[]) => void;
+  disabled?: boolean;
 };
 
-export type PrefabSuggestionsDialogPropsType = {
-  open: boolean;
-  title: string;
-  onClose: () => void;
-  onComplete?: () => void;
-  children: (handleComplete: () => void) => ReactNode;
+export type PrefabCategoriesGridPropsType = {
+  value: string[];
+  onChange: (next: string[]) => void;
+  disabled?: boolean;
+};
+
+export type PrefabSubscriptionProvidersGridPropsType = {
+  value: string[];
+  onChange: (next: string[]) => void;
+  disabled?: boolean;
+  providers: PrefabSubscriptionProviderDto[];
+  defaultCurrencyCode: string;
+};
+
+export type PrefabAccountsFieldValue = Record<string, AccountConfigEntry>;
+
+export type PrefabAccountsFieldPropsType = {
+  value: PrefabAccountsFieldValue;
+  onChange: (next: PrefabAccountsFieldValue) => void;
+  disabled?: boolean;
+  currencies: CommonCurrencyDto[];
+  defaultCurrencyId: number;
 };

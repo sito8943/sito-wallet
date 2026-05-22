@@ -35,3 +35,10 @@ export type AddTransactionCategoryDialogPropsType =
 
 export type EditTransactionCategoryDialogPropsType =
   FormDialogPropsType<TransactionCategoryFormType>;
+
+export interface PrefabCategoriesFormType extends FieldValues {
+  keys: string[];
+}
+
+export type AddPrefabCategoriesDialogPropsType =
+  FormDialogPropsType<PrefabCategoriesFormType>;
