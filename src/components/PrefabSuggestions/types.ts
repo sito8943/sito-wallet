@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 export type PrefabCurrency = {
   code: string;
   name: string;
@@ -35,25 +33,9 @@ export type PrefabDashboardConfig = {
 
 export type AccountConfigEntry = {
   balance: number;
-  currencyCode: string;
+  currencyId: number;
 };
 
-export type PrefabOnboardingState = {
-  selectedCurrencyCodes: string[];
-  selectedCategoryKeys: string[];
-  selectedAccountKeys: string[];
-  accountConfig: Record<string, AccountConfigEntry>;
-  selectedProviderKeys: string[];
+export type PrefabSuggestionPropsType = {
+  onComplete?: () => void;
 };
-
-export type PrefabStepKey =
-  | "currencies"
-  | "transactions"
-  | "accounts"
-  | "subscriptions"
-  | "dashboard";
-
-export interface OnboardingPrefabStepPropsType {
-  stepKey: PrefabStepKey;
-  content?: ReactNode;
-}

@@ -16,10 +16,6 @@ import {
   resolveRequiredEntityKeys,
   toggleSelectedEntityKey,
 } from "../OnboardingEntitySelection";
-import {
-  PrefabOnboardingProvider,
-  usePrefabOnboardingSteps,
-} from "../OnboardingPrefabs";
 import { WalletOnboarding } from "../WalletOnboarding";
 import type { WalletOnboardingStepType } from "../WalletOnboarding";
 
@@ -28,14 +24,6 @@ type WalletOnboardingWizardPropsType = {
 };
 
 export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
-  return (
-    <PrefabOnboardingProvider>
-      <WalletOnboardingWizardInner {...props} />
-    </PrefabOnboardingProvider>
-  );
-}
-
-function WalletOnboardingWizardInner(props: WalletOnboardingWizardPropsType) {
   const { initialEnabledEntityKeys } = props;
   const { t } = useTranslation();
   const { account } = useAuth();
@@ -44,9 +32,6 @@ function WalletOnboardingWizardInner(props: WalletOnboardingWizardPropsType) {
   const { applyFeaturePayload } = useFeatureFlags();
 
   const [selectedEntityKeys, setSelectedEntityKeys] = useState<
-    UserEntityConfigKey[]
-  >(() => initialEnabledEntityKeys ?? [...USER_ENTITY_CONFIG_KEYS]);
-  const [confirmedEntityKeys, setConfirmedEntityKeys] = useState<
     UserEntityConfigKey[]
   >(() => initialEnabledEntityKeys ?? [...USER_ENTITY_CONFIG_KEYS]);
 
@@ -76,7 +61,6 @@ function WalletOnboardingWizardInner(props: WalletOnboardingWizardPropsType) {
       }
     }
 
-    setConfirmedEntityKeys(resolvedEntityKeys);
     applyFeaturePayload(userEntityConfigsToFeaturePayload(configs));
     return true;
   }, [
@@ -87,10 +71,6 @@ function WalletOnboardingWizardInner(props: WalletOnboardingWizardPropsType) {
     showErrorNotification,
     t,
   ]);
-
-  const prefabSteps = usePrefabOnboardingSteps({
-    enabledEntityKeys: confirmedEntityKeys,
-  });
 
   const steps = useMemo<WalletOnboardingStepType[]>(
     () => [
@@ -111,20 +91,13 @@ function WalletOnboardingWizardInner(props: WalletOnboardingWizardPropsType) {
         ),
         beforeNext: handleEntitiesNext,
       },
-      ...prefabSteps,
       {
         key: "get_started",
         title: t("_pages:onboarding.get_started.title"),
         body: t("_pages:onboarding.get_started.body"),
       },
     ],
-    [
-      handleEntitiesNext,
-      handleToggleEntity,
-      prefabSteps,
-      selectedEntityKeys,
-      t,
-    ],
+    [handleEntitiesNext, handleToggleEntity, selectedEntityKeys, t],
   );
 
   return <WalletOnboarding remountStepOnChange steps={steps} />;

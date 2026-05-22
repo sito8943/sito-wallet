@@ -219,66 +219,59 @@
         "createProvider": "Crear proveedor",
         "importProviders": "Importar proveedores"
       }
+    }
+  },
+  "prefabs": {
+    "addSelected": "Añadir seleccionados",
+    "currencies": {
+      "hint": "Predeterminada detectada: {{code}}"
     },
-    "prefabs": {
-      "currencies": {
-        "title": "Elige tus monedas",
-        "body": "Hemos preseleccionado una según tu región. Añade las demás que vayas a usar.",
-        "hint": "Predeterminada detectada: {{code}}"
-      },
-      "categories": {
-        "title": "Elige tus categorías iniciales",
-        "body": "Desmarca las que no necesites. Podrás añadir más después.",
-        "incomeTitle": "Ingresos",
-        "expenseTitle": "Gastos",
-        "items": {
-          "salary": { "name": "Salario" },
-          "freelance": { "name": "Freelance" },
-          "gifts_in": { "name": "Regalos" },
-          "investments": { "name": "Inversiones" },
-          "refunds": { "name": "Reembolsos" },
-          "food": { "name": "Comida" },
-          "transport": { "name": "Transporte" },
-          "housing": { "name": "Vivienda" },
-          "utilities": { "name": "Servicios" },
-          "entertainment": { "name": "Entretenimiento" },
-          "health": { "name": "Salud" },
-          "subscriptions": { "name": "Suscripciones" },
-          "shopping": { "name": "Compras" },
-          "education": { "name": "Educación" },
-          "savings": { "name": "Ahorros" }
-        }
-      },
-      "accounts": {
-        "title": "Configura tus cuentas",
-        "body": "Selecciona las cuentas con las que empezarás y define su saldo inicial.",
-        "balance": "Saldo inicial",
-        "currency": "Moneda",
-        "items": {
-          "cash": { "name": "Efectivo" },
-          "main_bank": { "name": "Banco principal" },
-          "savings": { "name": "Ahorros" },
-          "credit_card": { "name": "Tarjeta de crédito" },
-          "digital_wallet": { "name": "Billetera digital" }
-        }
-      },
-      "subscriptions": {
-        "title": "Elige tus suscripciones",
-        "body": "Cargamos proveedores populares para tu región. Salta este paso si no aplica.",
-        "empty": "No hay proveedores disponibles para tu región.",
-        "loadError": "No se pudieron cargar los proveedores. Puedes saltar este paso.",
-        "convertedHint": "(≈ convertido)"
-      },
-      "dashboard": {
-        "title": "Tu dashboard inicial",
-        "body": "Este es el layout predeterminado. Podrás reorganizar u ocultar tarjetas después.",
-        "hint": "Crearemos estas tarjetas por ti.",
-        "sizeLabel": "Tamaño: {{size}}",
-        "cards": {
-          "typeResume": "Resumen por tipo",
-          "weeklySpent": "Gasto semanal",
-          "currentBalance": "Saldo actual"
-        }
+    "categories": {
+      "incomeTitle": "Ingresos",
+      "expenseTitle": "Gastos",
+      "items": {
+        "salary": { "name": "Salario" },
+        "freelance": { "name": "Freelance" },
+        "gifts_in": { "name": "Regalos" },
+        "investments": { "name": "Inversiones" },
+        "refunds": { "name": "Reembolsos" },
+        "food": { "name": "Comida" },
+        "transport": { "name": "Transporte" },
+        "housing": { "name": "Vivienda" },
+        "utilities": { "name": "Servicios" },
+        "entertainment": { "name": "Entretenimiento" },
+        "health": { "name": "Salud" },
+        "subscriptions": { "name": "Suscripciones" },
+        "shopping": { "name": "Compras" },
+        "education": { "name": "Educación" },
+        "savings": { "name": "Ahorros" }
+      }
+    },
+    "accounts": {
+      "balance": "Saldo inicial",
+      "currency": "Moneda",
+      "requiresCurrencies": "Añade una moneda primero para sugerir cuentas.",
+      "items": {
+        "cash": { "name": "Efectivo" },
+        "main_bank": { "name": "Banco principal" },
+        "savings": { "name": "Ahorros" },
+        "credit_card": { "name": "Tarjeta de crédito" },
+        "digital_wallet": { "name": "Billetera digital" }
+      }
+    },
+    "subscriptions": {
+      "empty": "No hay proveedores disponibles para tu región.",
+      "loadError": "No se pudieron cargar los proveedores.",
+      "convertedHint": "(≈ convertido)"
+    },
+    "dashboard": {
+      "hint": "Crearemos estas tarjetas por ti.",
+      "apply": "Aplicar layout por defecto",
+      "sizeLabel": "Tamaño: {{size}}",
+      "cards": {
+        "typeResume": "Resumen por tipo",
+        "weeklySpent": "Gasto semanal",
+        "currentBalance": "Saldo actual"
       }
     }
   },

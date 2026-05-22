@@ -1,101 +1,105 @@
-@import "../../../../styles/variables.css";
+@import "../../styles/variables.css";
 
-.prefab-onboarding-step {
+.prefab-suggestions {
   @apply flex flex-col gap-4 w-full;
 }
 
-.prefab-onboarding-hint {
+.prefab-suggestions-hint {
   @apply text-sm text-text-muted;
 }
 
-.prefab-onboarding-section {
+.prefab-suggestions-section {
   @apply flex flex-col gap-2;
 }
 
-.prefab-onboarding-section-title {
+.prefab-suggestions-section-title {
   @apply text-sm font-semibold text-text;
 }
 
-.prefab-onboarding-grid {
+.prefab-suggestions-grid {
   @apply grid w-full gap-3 grid-cols-2 sm:grid-cols-3;
 }
 
-.prefab-onboarding-card {
+.prefab-suggestions-card {
   @apply flex items-center gap-3 rounded-lg border border-border bg-base-light p-3 text-left text-text transition cursor-pointer;
 }
 
-.prefab-onboarding-card:hover {
+.prefab-suggestions-card:hover {
   @apply border-primary bg-base;
 }
 
-.prefab-onboarding-card:focus-visible {
+.prefab-suggestions-card:focus-visible {
   @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-base;
 }
 
-.prefab-onboarding-card-selected {
+.prefab-suggestions-card-selected {
   @apply border-primary bg-base text-primary;
 }
 
-.prefab-onboarding-card-symbol {
+.prefab-suggestions-card-symbol {
   @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bg-primary text-info text-lg font-semibold;
 }
 
-.prefab-onboarding-card-dot {
+.prefab-suggestions-card-dot {
   @apply h-3 w-3 shrink-0 rounded-full;
 }
 
-.prefab-onboarding-card-copy {
+.prefab-suggestions-card-copy {
   @apply flex min-w-0 flex-col gap-1;
 }
 
-.prefab-onboarding-card-title {
+.prefab-suggestions-card-title {
   @apply text-sm font-semibold;
 }
 
-.prefab-onboarding-card-description {
+.prefab-suggestions-card-description {
   @apply text-xs leading-snug text-text-muted;
 }
 
-.prefab-onboarding-account-card {
+.prefab-suggestions-account-card {
   @apply flex flex-col gap-2 rounded-lg border border-border bg-base-light p-3 transition;
 }
 
-.prefab-onboarding-account-toggle {
+.prefab-suggestions-account-toggle {
   @apply flex items-center gap-3 cursor-pointer text-left;
 }
 
-.prefab-onboarding-account-fields {
+.prefab-suggestions-account-fields {
   @apply flex gap-2 flex-wrap pt-2;
 }
 
-.prefab-onboarding-field {
+.prefab-suggestions-field {
   @apply flex flex-col gap-1 text-xs text-text-muted flex-1 min-w-24;
 }
 
-.prefab-onboarding-provider-logo {
+.prefab-suggestions-provider-logo {
   @apply h-10 w-10 shrink-0 rounded-full object-contain bg-base;
 }
 
-.prefab-onboarding-empty {
-  @apply items-center justify-center min-h-32;
+.prefab-suggestions-empty {
+  @apply flex items-center justify-center min-h-32 text-text-muted;
 }
 
-.prefab-onboarding-error {
+.prefab-suggestions-error {
   @apply px-3 py-2 rounded-lg;
 }
 
-.prefab-onboarding-dashboard-preview {
-  @apply grid grid-cols-2 gap-3;
+.prefab-suggestions-dashboard-preview {
+  @apply grid grid-cols-2 gap-3 w-full;
 }
 
-.prefab-onboarding-dashboard-card {
+.prefab-suggestions-dashboard-card {
   @apply flex flex-col gap-1 p-3 rounded-lg bg-base-light border border-border;
 }
 
-.prefab-onboarding-dashboard-card-large {
+.prefab-suggestions-dashboard-card-large {
   @apply col-span-2;
 }
 
-.prefab-onboarding-dashboard-card-medium {
+.prefab-suggestions-dashboard-card-medium {
   @apply col-span-1;
+}
+
+.prefab-suggestions-actions {
+  @apply flex justify-end gap-2 pt-2;
 }

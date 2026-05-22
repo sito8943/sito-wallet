@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "@tanstack/react-query";
 
 import {
   ConfirmationDialog,
-  Empty,
   Error as ErrorView,
-  GlobalActions,
   ImportDialog,
   Page,
   PrettyGrid,
@@ -16,16 +15,16 @@ import {
   useRestoreDialog,
 } from "@sito/dashboard-app";
 
-import { faAdd, faBuilding } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import {
   SubscriptionProvidersQueryKeys,
   useInfiniteSubscriptionProvidersList,
   useMobileMultiSelection,
   useMobileNavbar,
 } from "hooks";
-import { MobileSelectionBar } from "components";
+import {
+  MobileSelectionBar,
+  PrefabSubscriptionProviderSuggestions,
+} from "components";
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 import type {
@@ -56,6 +55,7 @@ import "./styles.css";
 export function SubscriptionProviders() {
   const { t } = useTranslation();
   const { showErrorNotification } = useNotification();
+  const queryClient = useQueryClient();
 
   const manager = useManager();
   const subscriptionProvidersClient =
@@ -223,19 +223,12 @@ export function SubscriptionProviders() {
               void fetchNextPage();
             }}
             emptyComponent={
-              <Empty
-                message={t("_pages:subscriptionProviders.empty")}
-                iconProps={{
-                  icon: faBuilding,
-                  className: "text-5xl max-md:text-3xl text-text-muted",
-                }}
-                action={{
-                  icon: <FontAwesomeIcon icon={faAdd} />,
-                  id: GlobalActions.Add,
-                  disabled: isLoading || !subscriptionProvidersClient,
-                  onClick: () => addSubscriptionProvider.openDialog(),
-                  tooltip: t("_pages:subscriptionProviders.add"),
-                }}
+              <PrefabSubscriptionProviderSuggestions
+                onComplete={() =>
+                  void queryClient.invalidateQueries({
+                    queryKey: SubscriptionProvidersQueryKeys.all().queryKey,
+                  })
+                }
               />
             }
             renderComponent={(subscriptionProvider) => (

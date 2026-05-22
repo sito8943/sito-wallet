@@ -219,66 +219,59 @@
         "createProvider": "Create provider",
         "importProviders": "Import providers"
       }
+    }
+  },
+  "prefabs": {
+    "addSelected": "Add selected",
+    "currencies": {
+      "hint": "Detected default: {{code}}"
     },
-    "prefabs": {
-      "currencies": {
-        "title": "Pick your currencies",
-        "body": "We pre-selected one based on your locale. Add the others you plan to use.",
-        "hint": "Detected default: {{code}}"
-      },
-      "categories": {
-        "title": "Pick your starter categories",
-        "body": "Untick anything you don't need. You can add more later.",
-        "incomeTitle": "Income",
-        "expenseTitle": "Expense",
-        "items": {
-          "salary": { "name": "Salary" },
-          "freelance": { "name": "Freelance" },
-          "gifts_in": { "name": "Gifts" },
-          "investments": { "name": "Investments" },
-          "refunds": { "name": "Refunds" },
-          "food": { "name": "Food" },
-          "transport": { "name": "Transport" },
-          "housing": { "name": "Housing" },
-          "utilities": { "name": "Utilities" },
-          "entertainment": { "name": "Entertainment" },
-          "health": { "name": "Health" },
-          "subscriptions": { "name": "Subscriptions" },
-          "shopping": { "name": "Shopping" },
-          "education": { "name": "Education" },
-          "savings": { "name": "Savings" }
-        }
-      },
-      "accounts": {
-        "title": "Set up your accounts",
-        "body": "Pick the accounts you want to start with and set their opening balance.",
-        "balance": "Initial balance",
-        "currency": "Currency",
-        "items": {
-          "cash": { "name": "Cash" },
-          "main_bank": { "name": "Main Bank" },
-          "savings": { "name": "Savings" },
-          "credit_card": { "name": "Credit Card" },
-          "digital_wallet": { "name": "Digital Wallet" }
-        }
-      },
-      "subscriptions": {
-        "title": "Pick your subscriptions",
-        "body": "We loaded popular providers for your region. Skip if none apply.",
-        "empty": "No providers available for your region.",
-        "loadError": "Couldn't load providers. You can skip this step.",
-        "convertedHint": "(≈ converted)"
-      },
-      "dashboard": {
-        "title": "Your starter dashboard",
-        "body": "Here's the default layout. You can rearrange or hide cards later.",
-        "hint": "We'll create these cards for you.",
-        "sizeLabel": "Size: {{size}}",
-        "cards": {
-          "typeResume": "Type resume",
-          "weeklySpent": "Weekly spent",
-          "currentBalance": "Current balance"
-        }
+    "categories": {
+      "incomeTitle": "Income",
+      "expenseTitle": "Expense",
+      "items": {
+        "salary": { "name": "Salary" },
+        "freelance": { "name": "Freelance" },
+        "gifts_in": { "name": "Gifts" },
+        "investments": { "name": "Investments" },
+        "refunds": { "name": "Refunds" },
+        "food": { "name": "Food" },
+        "transport": { "name": "Transport" },
+        "housing": { "name": "Housing" },
+        "utilities": { "name": "Utilities" },
+        "entertainment": { "name": "Entertainment" },
+        "health": { "name": "Health" },
+        "subscriptions": { "name": "Subscriptions" },
+        "shopping": { "name": "Shopping" },
+        "education": { "name": "Education" },
+        "savings": { "name": "Savings" }
+      }
+    },
+    "accounts": {
+      "balance": "Initial balance",
+      "currency": "Currency",
+      "requiresCurrencies": "Add a currency first to suggest accounts.",
+      "items": {
+        "cash": { "name": "Cash" },
+        "main_bank": { "name": "Main Bank" },
+        "savings": { "name": "Savings" },
+        "credit_card": { "name": "Credit Card" },
+        "digital_wallet": { "name": "Digital Wallet" }
+      }
+    },
+    "subscriptions": {
+      "empty": "No providers available for your region.",
+      "loadError": "Couldn't load providers.",
+      "convertedHint": "(≈ converted)"
+    },
+    "dashboard": {
+      "hint": "We'll create these cards for you.",
+      "apply": "Apply default layout",
+      "sizeLabel": "Size: {{size}}",
+      "cards": {
+        "typeResume": "Type resume",
+        "weeklySpent": "Weekly spent",
+        "currentBalance": "Current balance"
       }
     }
   },

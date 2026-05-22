@@ -1,14 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
 import {
   useDeleteDialog,
   useRestoreDialog,
   useExportActionMutate,
-  GlobalActions,
   Page,
-  Empty,
   Error,
   ConfirmationDialog,
   useImportDialog,
@@ -20,10 +19,6 @@ import {
 // providers
 import { useManager, useRegisterBottomNavAction } from "providers";
 
-// icons
-import { faAdd, faWallet } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 // components
 import {
   AddAccountDialog,
@@ -31,7 +26,7 @@ import {
   EditAccountDialog,
   AdjustBalanceDialog,
 } from "./components";
-import { MobileSelectionBar } from "components";
+import { MobileSelectionBar, PrefabAccountSuggestions } from "components";
 
 // hooks
 import {
@@ -67,6 +62,7 @@ import "./styles.css";
 export function Accounts() {
   const { t } = useTranslation();
   const { showErrorNotification } = useNotification();
+  const queryClient = useQueryClient();
 
   const manager = useManager();
 
@@ -200,19 +196,12 @@ export function Accounts() {
               void fetchNextPage();
             }}
             emptyComponent={
-              <Empty
-                message={t("_pages:accounts.empty")}
-                iconProps={{
-                  icon: faWallet,
-                  className: "text-5xl max-md:text-3xl text-gray-400",
-                }}
-                action={{
-                  icon: <FontAwesomeIcon icon={faAdd} />,
-                  id: GlobalActions.Add,
-                  disabled: isLoading,
-                  onClick: () => addAccount.openDialog(),
-                  tooltip: t("_pages:accounts.add"),
-                }}
+              <PrefabAccountSuggestions
+                onComplete={() =>
+                  void queryClient.invalidateQueries({
+                    queryKey: AccountsQueryKeys.all().queryKey,
+                  })
+                }
               />
             }
             renderComponent={(account) => (

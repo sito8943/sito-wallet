@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
 import {
@@ -15,6 +16,7 @@ import {
   CurrentBalanceCard,
 } from "../components/Cards";
 import { AddDashboardCardDialog } from "../components";
+import { PrefabDashboardSuggestions } from "components";
 
 // styles
 import "./styles.css";
@@ -31,6 +33,7 @@ import { useManager, useRegisterBottomNavAction } from "providers";
 
 export const Dashboard = () => {
   const { data, isLoading, error } = useDashboardsList({});
+  const queryClient = useQueryClient();
 
   const manager = useManager();
 
@@ -98,9 +101,21 @@ export const Dashboard = () => {
     useCallback(() => openAddDashboardRef.current(), []),
   );
 
+  const hasCards = (cards?.length ?? 0) > 0;
+  const showPrefabs = !isLoading && !hasCards;
+
   return !error ? (
     <section id="dashboard">
-      <ul className={cards?.length ? "dashboard" : "dashboard empty"}>
+      {showPrefabs && (
+        <PrefabDashboardSuggestions
+          onComplete={() =>
+            void queryClient.invalidateQueries({
+              queryKey: DashboardsQueryKeys.all().queryKey,
+            })
+          }
+        />
+      )}
+      <ul className={hasCards ? "dashboard" : "dashboard empty"}>
         {cards}
         <li>
           <AddCard

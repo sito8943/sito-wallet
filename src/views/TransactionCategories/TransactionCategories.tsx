@@ -1,25 +1,20 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "@tanstack/react-query";
 
 // @sito-dashboard
 import {
   Page,
-  Empty,
   Error,
   useDeleteDialog,
   useRestoreDialog,
   useExportActionMutate,
-  GlobalActions,
   ConfirmationDialog,
   ImportDialog,
   useImportDialog,
   PrettyGrid,
   useNotification,
 } from "@sito/dashboard-app";
-
-// icons
-import { faAdd, faTags } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // providers
 import { useManager, useRegisterBottomNavAction } from "providers";
@@ -30,7 +25,7 @@ import {
   TransactionCategoryCard,
   EditTransactionCategoryDialog,
 } from "./components";
-import { MobileSelectionBar } from "components";
+import { MobileSelectionBar, PrefabCategorySuggestions } from "components";
 
 // hooks
 import {
@@ -64,6 +59,7 @@ import "./styles.css";
 export function TransactionCategories() {
   const { t } = useTranslation();
   const { showErrorNotification } = useNotification();
+  const queryClient = useQueryClient();
 
   const manager = useManager();
 
@@ -189,19 +185,12 @@ export function TransactionCategories() {
               void fetchNextPage();
             }}
             emptyComponent={
-              <Empty
-                message={t("_pages:transactionCategories.empty")}
-                iconProps={{
-                  icon: faTags,
-                  className: "text-5xl max-md:text-3xl text-gray-400",
-                }}
-                action={{
-                  icon: <FontAwesomeIcon icon={faAdd} />,
-                  id: GlobalActions.Add,
-                  disabled: isLoading,
-                  onClick: () => addTransactionCategory.openDialog(),
-                  tooltip: t("_pages:transactionCategories.add"),
-                }}
+              <PrefabCategorySuggestions
+                onComplete={() =>
+                  void queryClient.invalidateQueries({
+                    queryKey: TransactionCategoriesQueryKeys.all().queryKey,
+                  })
+                }
               />
             }
             renderComponent={(transactionCategory) => (
