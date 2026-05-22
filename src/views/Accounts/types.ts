@@ -4,6 +4,7 @@ import type { FieldValues } from "react-hook-form";
 // @sito/dashboard-app
 import type {
   ActionType,
+  ConfirmationDialogPropsType,
   FormDialogPropsType,
   TriggerFormDialogPropsType,
 } from "@sito/dashboard-app";
@@ -47,7 +48,9 @@ export interface AdjustBalanceFormType {
   description: string;
 }
 
-export interface AdjustBalanceDialogPropsType extends TriggerFormDialogPropsType<AdjustBalanceFormType> {
+export interface AdjustBalanceDialogPropsType
+  extends TriggerFormDialogPropsType<AdjustBalanceFormType> {
+  confirmationProps?: ConfirmationDialogPropsType;
   selectedAccount: AccountDto | null;
 }
 

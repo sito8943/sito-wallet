@@ -316,6 +316,8 @@
           "currentBalance": "Saldo actual",
           "newBalance": "Nuevo saldo",
           "submit": "Guardar",
+          "confirmTitle": "Confirmar ajuste de saldo",
+          "confirmMessage": "¿Quieres aplicar este nuevo saldo a la cuenta?",
           "sameBalance": "El nuevo saldo debe ser diferente al saldo actual"
         }
       }

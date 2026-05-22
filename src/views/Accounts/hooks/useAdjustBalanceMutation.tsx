@@ -61,6 +61,10 @@ export const useAdjustBalanceMutation = () => {
       showErrorNotification({ message });
     },
     title: t("_pages:accounts.actions.adjustBalance.dialog.title"),
+    confirmation: {
+      title: t("_pages:accounts.actions.adjustBalance.dialog.confirmTitle"),
+      message: t("_pages:accounts.actions.adjustBalance.dialog.confirmMessage"),
+    },
     ...AccountsQueryKeys.all(),
   });
 

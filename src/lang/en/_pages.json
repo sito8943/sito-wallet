@@ -315,6 +315,8 @@
           "currentBalance": "Current balance",
           "newBalance": "New balance",
           "submit": "Save",
+          "confirmTitle": "Confirm balance adjustment",
+          "confirmMessage": "Do you want to apply this new balance to the account?",
           "sameBalance": "New balance must be different from current balance"
         }
       }

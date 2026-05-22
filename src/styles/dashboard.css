@@ -221,3 +221,7 @@ select > option {
 .empty-container {
   @apply px-1 py-6;
 }
+
+.page-main {
+  min-height: calc(100vh - 88px);
+}
