@@ -5,3 +5,4 @@ export * from "./UpdateSubscriptionProviderDto";
 export * from "./FilterSubscriptionProviderDto";
 export * from "./SubscriptionProviderImportItemDto";
 export * from "./ImportPreviewSubscriptionProviderDto";
+export * from "./PrefabSubscriptionProviderDto";

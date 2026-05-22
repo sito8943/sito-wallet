@@ -1,0 +1,15 @@
+[
+  { "code": "USD", "name": "US Dollar", "symbol": "$", "type": "fiat" },
+  { "code": "EUR", "name": "Euro", "symbol": "€", "type": "fiat" },
+  { "code": "GBP", "name": "British Pound", "symbol": "£", "type": "fiat" },
+  { "code": "COP", "name": "Colombian Peso", "symbol": "$", "type": "fiat" },
+  { "code": "MXN", "name": "Mexican Peso", "symbol": "$", "type": "fiat" },
+  { "code": "ARS", "name": "Argentine Peso", "symbol": "$", "type": "fiat" },
+  { "code": "BRL", "name": "Brazilian Real", "symbol": "R$", "type": "fiat" },
+  { "code": "CLP", "name": "Chilean Peso", "symbol": "$", "type": "fiat" },
+  { "code": "PEN", "name": "Peruvian Sol", "symbol": "S/", "type": "fiat" },
+  { "code": "BTC", "name": "Bitcoin", "symbol": "₿", "type": "crypto" },
+  { "code": "ETH", "name": "Ethereum", "symbol": "Ξ", "type": "crypto" },
+  { "code": "USDT", "name": "Tether", "symbol": "₮", "type": "crypto" },
+  { "code": "CUP", "name": "Moneda Nacional", "symbol": "CUP", "type": "fiat" }
+]

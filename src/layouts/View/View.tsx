@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
@@ -18,7 +18,6 @@ import {
   TableOptionsProvider,
   toLocal,
   useAuth,
-  useNotification,
 } from "@sito/dashboard-app";
 import type { BottomNavigationItemType } from "@sito/dashboard-app";
 
@@ -29,21 +28,16 @@ import { useAppPreload, useOnlineStatus } from "hooks";
 // components
 import { OfflineBanner } from "components";
 import {
-  OnboardingEntitySelection,
   configsToEnabledEntityKeys,
   entityKeysToConfigs,
-  entityKeysToOnboardingSetupStepKeys,
   resolveRequiredEntityKeys,
-  toggleSelectedEntityKey,
 } from "./components/OnboardingEntitySelection";
-import { OnboardingSetup } from "./components/OnboardingSetup";
-import { WalletOnboarding } from "./components/WalletOnboarding";
+import { WalletOnboardingWizard } from "./components/WalletOnboardingWizard";
 
 // config
 import { config } from "../../config";
 import { getFeatureFilteredBottomMap } from "../../views/bottomMap";
 import {
-  USER_ENTITY_CONFIG_KEYS,
   type UserEntityConfigKey,
   isAnonymousVisitorSession,
   userEntityConfigsToFeaturePayload,
@@ -54,7 +48,6 @@ export function View() {
   const { loading: preloadLoading } = useAppPreload();
   const { t, i18n } = useTranslation();
   const { account, isInGuestMode } = useAuth();
-  const { showErrorNotification } = useNotification();
   const manager = useManager();
   const isOnline = useOnlineStatus();
   const { applyFeaturePayload, isFeatureEnabled } = useFeatureFlags();
@@ -65,12 +58,9 @@ export function View() {
     isInGuestMode(),
   );
   const isLoggedSession = Boolean(account?.id) && !isInGuestMode();
-  const [selectedEntityKeys, setSelectedEntityKeys] = useState<
-    UserEntityConfigKey[]
-  >(() => [...USER_ENTITY_CONFIG_KEYS]);
-  const [confirmedEntityKeys, setConfirmedEntityKeys] = useState<
-    UserEntityConfigKey[]
-  >(() => [...USER_ENTITY_CONFIG_KEYS]);
+  const [initialEnabledEntityKeys, setInitialEnabledEntityKeys] = useState<
+    UserEntityConfigKey[] | undefined
+  >(undefined);
 
   const showOnboarding = isAnonymousVisitor || !fromLocal(onboardingStorageKey);
 
@@ -88,8 +78,7 @@ export function View() {
 
         const resolvedEntityKeys = resolveRequiredEntityKeys(enabledEntityKeys);
         const resolvedConfigs = entityKeysToConfigs(resolvedEntityKeys);
-        setSelectedEntityKeys(resolvedEntityKeys);
-        setConfirmedEntityKeys(resolvedEntityKeys);
+        setInitialEnabledEntityKeys(resolvedEntityKeys);
         applyFeaturePayload(userEntityConfigsToFeaturePayload(resolvedConfigs));
       })
       .catch(() => {});
@@ -104,95 +93,6 @@ export function View() {
     manager.UserEntityConfigs,
     showOnboarding,
   ]);
-
-  const handleToggleEntity = useCallback((entityKey: UserEntityConfigKey) => {
-    setSelectedEntityKeys((previous) =>
-      toggleSelectedEntityKey(previous, entityKey),
-    );
-  }, []);
-
-  const handleEntitiesNext = useCallback(async () => {
-    if (selectedEntityKeys.length === 0) {
-      showErrorNotification({
-        message: t("_pages:onboarding.entities.errors.empty"),
-      });
-
-      return false;
-    }
-
-    const resolvedEntityKeys = resolveRequiredEntityKeys(selectedEntityKeys);
-    const configs = entityKeysToConfigs(resolvedEntityKeys);
-
-    if (isLoggedSession && isOnline) {
-      try {
-        await manager.UserEntityConfigs.putBatch({ entities: configs });
-      } catch {
-        showErrorNotification({
-          message: t("_accessibility:errors.500"),
-        });
-
-        return false;
-      }
-    }
-
-    setConfirmedEntityKeys(resolvedEntityKeys);
-    applyFeaturePayload(userEntityConfigsToFeaturePayload(configs));
-
-    return true;
-  }, [
-    applyFeaturePayload,
-    isLoggedSession,
-    isOnline,
-    manager.UserEntityConfigs,
-    selectedEntityKeys,
-    showErrorNotification,
-    t,
-  ]);
-
-  const onboardingSetupStepKeys = useMemo(
-    () => entityKeysToOnboardingSetupStepKeys(confirmedEntityKeys),
-    [confirmedEntityKeys],
-  );
-
-  const onboardingSteps = useMemo(
-    () => [
-      {
-        key: "welcome",
-        title: t("_pages:onboarding.welcome.title"),
-        body: t("_pages:onboarding.welcome.body"),
-      },
-      {
-        key: "entities",
-        title: t("_pages:onboarding.entities.title"),
-        body: t("_pages:onboarding.entities.body"),
-        content: (
-          <OnboardingEntitySelection
-            selectedEntityKeys={selectedEntityKeys}
-            onToggleEntity={handleToggleEntity}
-          />
-        ),
-        beforeNext: handleEntitiesNext,
-      },
-      ...onboardingSetupStepKeys.map((stepKey) => ({
-        key: stepKey,
-        title: t(`_pages:onboarding.${stepKey}.title`),
-        body: t(`_pages:onboarding.${stepKey}.body`),
-        content: <OnboardingSetup stepKey={stepKey} />,
-      })),
-      {
-        key: "get_started",
-        title: t("_pages:onboarding.get_started.title"),
-        body: t("_pages:onboarding.get_started.body"),
-      },
-    ],
-    [
-      handleEntitiesNext,
-      handleToggleEntity,
-      onboardingSetupStepKeys,
-      selectedEntityKeys,
-      t,
-    ],
-  );
 
   const featureFilteredMenuMap = useMemo(
     () => getFeatureFilteredMenuMap(isFeatureEnabled, i18n.resolvedLanguage),
@@ -233,7 +133,9 @@ export function View() {
     <NavbarProvider>
       <BottomNavActionProvider>
         {showOnboarding && (
-          <WalletOnboarding remountStepOnChange steps={onboardingSteps} />
+          <WalletOnboardingWizard
+            initialEnabledEntityKeys={initialEnabledEntityKeys}
+          />
         )}
         <AppShell
           header={

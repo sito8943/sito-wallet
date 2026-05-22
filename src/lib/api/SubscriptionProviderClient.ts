@@ -8,6 +8,7 @@ import type {
   FilterSubscriptionProviderDto,
   ImportDto,
   ImportPreviewSubscriptionProviderDto,
+  PrefabSubscriptionProviderDto,
   SubscriptionProviderImportItemDto,
   SubscriptionProviderDto,
   UpdateSubscriptionProviderDto,
@@ -158,5 +159,20 @@ export default class SubscriptionProviderClient extends BaseClient<
     };
 
     return await this.api.post(`${this.table}/import`, parsedData);
+  }
+
+  async getPrefabs(params?: {
+    country?: string;
+    category?: string;
+  }): Promise<PrefabSubscriptionProviderDto[]> {
+    const search = new URLSearchParams();
+    if (params?.country) search.set("country", params.country);
+    if (params?.category) search.set("category", params.category);
+    const query = search.toString();
+    const path = `prefabs/subscription-providers${query ? `?${query}` : ""}`;
+    return await this.api.doQuery<PrefabSubscriptionProviderDto[]>(
+      path,
+      Methods.GET,
+    );
   }
 }
