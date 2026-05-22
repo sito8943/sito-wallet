@@ -1,18 +1,108 @@
 [
-  { "key": "salary", "name": "Salary", "type": "income", "icon": "faMoneyBillWave", "color": "#22C55E" },
-  { "key": "freelance", "name": "Freelance", "type": "income", "icon": "faLaptopCode", "color": "#10B981" },
-  { "key": "gifts_in", "name": "Gifts", "type": "income", "icon": "faGift", "color": "#A855F7" },
-  { "key": "investments", "name": "Investments", "type": "income", "icon": "faChartLine", "color": "#0EA5E9" },
-  { "key": "refunds", "name": "Refunds", "type": "income", "icon": "faRotateLeft", "color": "#14B8A6" },
+  {
+    "key": "salary",
+    "name": "Salary",
+    "type": "income",
+    "icon": "faMoneyBillWave",
+    "color": "#22C55E"
+  },
+  {
+    "key": "freelance",
+    "name": "Freelance",
+    "type": "income",
+    "icon": "faLaptopCode",
+    "color": "#10B981"
+  },
+  {
+    "key": "gifts_in",
+    "name": "Gifts",
+    "type": "income",
+    "icon": "faGift",
+    "color": "#A855F7"
+  },
+  {
+    "key": "investments",
+    "name": "Investments",
+    "type": "income",
+    "icon": "faChartLine",
+    "color": "#0EA5E9"
+  },
+  {
+    "key": "refunds",
+    "name": "Refunds",
+    "type": "income",
+    "icon": "faRotateLeft",
+    "color": "#14B8A6"
+  },
 
-  { "key": "food", "name": "Food", "type": "expense", "icon": "faUtensils", "color": "#F97316" },
-  { "key": "transport", "name": "Transport", "type": "expense", "icon": "faCarSide", "color": "#0EA5E9" },
-  { "key": "housing", "name": "Housing", "type": "expense", "icon": "faHouse", "color": "#8B5CF6" },
-  { "key": "utilities", "name": "Utilities", "type": "expense", "icon": "faBolt", "color": "#EAB308" },
-  { "key": "entertainment", "name": "Entertainment", "type": "expense", "icon": "faFilm", "color": "#EC4899" },
-  { "key": "health", "name": "Health", "type": "expense", "icon": "faHeartPulse", "color": "#EF4444" },
-  { "key": "subscriptions", "name": "Subscriptions", "type": "expense", "icon": "faRepeat", "color": "#6366F1" },
-  { "key": "shopping", "name": "Shopping", "type": "expense", "icon": "faBagShopping", "color": "#F43F5E" },
-  { "key": "education", "name": "Education", "type": "expense", "icon": "faGraduationCap", "color": "#3B82F6" },
-  { "key": "savings", "name": "Savings", "type": "expense", "icon": "faPiggyBank", "color": "#22C55E" }
+  {
+    "key": "food",
+    "name": "Food",
+    "type": "expense",
+    "icon": "faUtensils",
+    "color": "#F97316"
+  },
+  {
+    "key": "transport",
+    "name": "Transport",
+    "type": "expense",
+    "icon": "faCarSide",
+    "color": "#0EA5E9"
+  },
+  {
+    "key": "housing",
+    "name": "Housing",
+    "type": "expense",
+    "icon": "faHouse",
+    "color": "#8B5CF6"
+  },
+  {
+    "key": "utilities",
+    "name": "Utilities",
+    "type": "expense",
+    "icon": "faBolt",
+    "color": "#EAB308"
+  },
+  {
+    "key": "entertainment",
+    "name": "Entertainment",
+    "type": "expense",
+    "icon": "faFilm",
+    "color": "#EC4899"
+  },
+  {
+    "key": "health",
+    "name": "Health",
+    "type": "expense",
+    "icon": "faHeartPulse",
+    "color": "#EF4444"
+  },
+  {
+    "key": "subscriptions",
+    "name": "Subscriptions",
+    "type": "expense",
+    "icon": "faRepeat",
+    "color": "#6366F1"
+  },
+  {
+    "key": "shopping",
+    "name": "Shopping",
+    "type": "expense",
+    "icon": "faBagShopping",
+    "color": "#F43F5E"
+  },
+  {
+    "key": "education",
+    "name": "Education",
+    "type": "expense",
+    "icon": "faGraduationCap",
+    "color": "#3B82F6"
+  },
+  {
+    "key": "savings",
+    "name": "Savings",
+    "type": "expense",
+    "icon": "faPiggyBank",
+    "color": "#22C55E"
+  }
 ]

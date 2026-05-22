@@ -47,7 +47,9 @@ export function PrefabAccountsStep() {
               {selected && cfg && (
                 <div className="prefab-onboarding-account-fields">
                   <label className="prefab-onboarding-field">
-                    <span>{t("_pages:onboarding.prefabs.accounts.balance")}</span>
+                    <span>
+                      {t("_pages:onboarding.prefabs.accounts.balance")}
+                    </span>
                     <input
                       type="number"
                       className="input"
@@ -61,7 +63,9 @@ export function PrefabAccountsStep() {
                     />
                   </label>
                   <label className="prefab-onboarding-field">
-                    <span>{t("_pages:onboarding.prefabs.accounts.currency")}</span>
+                    <span>
+                      {t("_pages:onboarding.prefabs.accounts.currency")}
+                    </span>
                     <select
                       className="input"
                       value={cfg.currencyCode}

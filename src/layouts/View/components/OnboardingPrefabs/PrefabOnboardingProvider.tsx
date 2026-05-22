@@ -12,7 +12,10 @@ import { useTranslation } from "react-i18next";
 
 import { useManager } from "providers";
 import { detectCountry, detectCurrency } from "lib";
-import type { AddTransactionCategoryDto, PrefabSubscriptionProviderDto } from "lib";
+import type {
+  AddTransactionCategoryDto,
+  PrefabSubscriptionProviderDto,
+} from "lib";
 import { TransactionType } from "lib";
 
 import {
@@ -24,10 +27,7 @@ import {
 } from "./constants";
 
 import "./styles.css";
-import type {
-  AccountConfigEntry,
-  PrefabOnboardingState,
-} from "./types";
+import type { AccountConfigEntry, PrefabOnboardingState } from "./types";
 import {
   loadPrefabState,
   mapAccountType,
@@ -39,7 +39,11 @@ import {
   type PrefabOnboardingContextValue,
 } from "./prefabOnboardingContext";
 
-export function PrefabOnboardingProvider({ children }: { children: ReactNode }) {
+export function PrefabOnboardingProvider({
+  children,
+}: {
+  children: ReactNode;
+}) {
   const { t } = useTranslation();
   const manager = useManager();
   const { showErrorNotification } = useNotification();
@@ -61,7 +65,9 @@ export function PrefabOnboardingProvider({ children }: { children: ReactNode }) 
     return loaded;
   });
 
-  const [providers, setProviders] = useState<PrefabSubscriptionProviderDto[]>([]);
+  const [providers, setProviders] = useState<PrefabSubscriptionProviderDto[]>(
+    [],
+  );
   const [providersLoading, setProvidersLoading] = useState(false);
   const [providersError, setProvidersError] = useState<string | null>(null);
   const providersLoadedRef = useRef(false);
@@ -137,7 +143,9 @@ export function PrefabOnboardingProvider({ children }: { children: ReactNode }) 
 
     try {
       if (!("SubscriptionProviders" in manager)) {
-        setProvidersError(t("_pages:onboarding.prefabs.subscriptions.loadError"));
+        setProvidersError(
+          t("_pages:onboarding.prefabs.subscriptions.loadError"),
+        );
         return;
       }
       const data = await manager.SubscriptionProviders.getPrefabs({ country });
@@ -217,7 +225,9 @@ export function PrefabOnboardingProvider({ children }: { children: ReactNode }) 
       const result = await manager.Currencies.get();
       const items = Array.isArray(result)
         ? result
-        : (result as { items?: { id: number; symbol: string; name: string }[] }).items ?? [];
+        : ((
+            result as { items?: { id: number; symbol: string; name: string }[] }
+          ).items ?? []);
       for (const item of items) {
         for (const prefab of PREFAB_CURRENCIES) {
           if (
@@ -303,12 +313,7 @@ export function PrefabOnboardingProvider({ children }: { children: ReactNode }) 
       notifyError();
       return false;
     }
-  }, [
-    manager,
-    notifyError,
-    providers,
-    state.selectedProviderKeys,
-  ]);
+  }, [manager, notifyError, providers, state.selectedProviderKeys]);
 
   const commitDashboard = useCallback(async (): Promise<boolean> => {
     const payload = PREFAB_DASHBOARD.cards.map((card) => ({
@@ -388,4 +393,3 @@ export function PrefabOnboardingProvider({ children }: { children: ReactNode }) 
     </PrefabOnboardingContext.Provider>
   );
 }
-
