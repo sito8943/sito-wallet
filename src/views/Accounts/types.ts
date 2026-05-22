@@ -48,8 +48,7 @@ export interface AdjustBalanceFormType {
   description: string;
 }
 
-export interface AdjustBalanceDialogPropsType
-  extends TriggerFormDialogPropsType<AdjustBalanceFormType> {
+export interface AdjustBalanceDialogPropsType extends TriggerFormDialogPropsType<AdjustBalanceFormType> {
   confirmationProps?: ConfirmationDialogPropsType;
   selectedAccount: AccountDto | null;
 }

@@ -41,9 +41,7 @@ export function AdjustBalanceDialog(props: AdjustBalanceDialogPropsType) {
           <div className="flex items-center gap-2 text-text-muted text-sm">
             <FontAwesomeIcon icon={faScaleBalanced} />
             <span>
-              {t(
-                "_pages:accounts.actions.adjustBalance.dialog.currentBalance",
-              )}
+              {t("_pages:accounts.actions.adjustBalance.dialog.currentBalance")}
               :{" "}
               <strong>
                 {selectedAccount.balance}{" "}
