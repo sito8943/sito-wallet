@@ -1,14 +1,9 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useQueryClient } from "@tanstack/react-query";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 // @sito/dashboard-app
 import {
   useDeleteDialog,
   Error,
-  Button,
   ConfirmationDialog,
 } from "@sito/dashboard-app";
 
@@ -20,10 +15,6 @@ import {
   CurrentBalanceCard,
 } from "../components/Cards";
 import { AddDashboardCardDialog } from "../components";
-import {
-  PrefabDashboardSuggestions,
-  PrefabSuggestionsDialog,
-} from "components";
 
 // styles
 import "./styles.css";
@@ -39,13 +30,9 @@ import { DashboardCardType } from "lib";
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 export const Dashboard = () => {
-  const { t } = useTranslation();
   const { data, isLoading, error } = useDashboardsList({});
-  const queryClient = useQueryClient();
 
   const manager = useManager();
-
-  const [prefabOpen, setPrefabOpen] = useState(false);
 
   const addDashboardCard = useAddDashboardCard();
 
@@ -112,7 +99,6 @@ export const Dashboard = () => {
   );
 
   const hasCards = (cards?.length ?? 0) > 0;
-  const showPrefabs = !isLoading && !hasCards;
 
   return !error ? (
     <section id="dashboard">
@@ -126,37 +112,9 @@ export const Dashboard = () => {
         </li>
       </ul>
 
-      {showPrefabs && (
-        <div className="flex justify-center pt-4">
-          <Button
-            type="button"
-            color="primary"
-            variant="outlined"
-            onClick={() => setPrefabOpen(true)}
-          >
-            <FontAwesomeIcon icon={faWandMagicSparkles} />
-            {t("_pages:prefabs.trySuggestions")}
-          </Button>
-        </div>
-      )}
-
       {/* Dialogs */}
       <AddDashboardCardDialog {...addDashboardCard} />
       <ConfirmationDialog {...deleteDashboardCard} />
-      <PrefabSuggestionsDialog
-        open={prefabOpen}
-        title={t("_pages:prefabs.dialog.dashboardTitle")}
-        onClose={() => setPrefabOpen(false)}
-        onComplete={() =>
-          void queryClient.invalidateQueries({
-            queryKey: DashboardsQueryKeys.all().queryKey,
-          })
-        }
-      >
-        {(handleComplete) => (
-          <PrefabDashboardSuggestions onComplete={handleComplete} />
-        )}
-      </PrefabSuggestionsDialog>
     </section>
   ) : (
     <Error error={error} />

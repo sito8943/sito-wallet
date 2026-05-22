@@ -4,6 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faAdd,
   faBuilding,
   faWandMagicSparkles,
 } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +13,7 @@ import {
   ConfirmationDialog,
   Empty,
   Error as ErrorView,
+  GlobalActions,
   ImportDialog,
   Page,
   PrettyGrid,
@@ -239,13 +241,22 @@ export function SubscriptionProviders() {
                   icon: faBuilding,
                   className: "text-5xl max-md:text-3xl text-text-muted",
                 }}
-                action={{
-                  icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
-                  id: "prefab-suggestions",
-                  disabled: isLoading || !subscriptionProvidersClient,
-                  onClick: () => setPrefabOpen(true),
-                  tooltip: t("_pages:prefabs.trySuggestions"),
-                }}
+                action={[
+                  {
+                    icon: <FontAwesomeIcon icon={faAdd} />,
+                    id: GlobalActions.Add,
+                    disabled: isLoading || !subscriptionProvidersClient,
+                    onClick: () => addSubscriptionProvider.openDialog(),
+                    tooltip: t("_pages:subscriptionProviders.add"),
+                  },
+                  {
+                    icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
+                    id: "prefab-suggestions",
+                    disabled: isLoading || !subscriptionProvidersClient,
+                    onClick: () => setPrefabOpen(true),
+                    tooltip: t("_pages:prefabs.trySuggestions"),
+                  },
+                ]}
               />
             }
             renderComponent={(subscriptionProvider) => (

@@ -36,6 +36,16 @@ export type AccountConfigEntry = {
   currencyId: number;
 };
 
+import type { ReactNode } from "react";
+
 export type PrefabSuggestionPropsType = {
   onComplete?: () => void;
+};
+
+export type PrefabSuggestionsDialogPropsType = {
+  open: boolean;
+  title: string;
+  onClose: () => void;
+  onComplete?: () => void;
+  children: (handleComplete: () => void) => ReactNode;
 };

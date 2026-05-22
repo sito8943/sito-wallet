@@ -2,13 +2,18 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "@tanstack/react-query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTags, faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAdd,
+  faTags,
+  faWandMagicSparkles,
+} from "@fortawesome/free-solid-svg-icons";
 
 // @sito-dashboard
 import {
   Page,
   Error,
   Empty,
+  GlobalActions,
   useDeleteDialog,
   useRestoreDialog,
   useExportActionMutate,
@@ -200,13 +205,22 @@ export function TransactionCategories() {
                   icon: faTags,
                   className: "text-5xl max-md:text-3xl text-text-muted",
                 }}
-                action={{
-                  icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
-                  id: "prefab-suggestions",
-                  disabled: isLoading,
-                  onClick: () => setPrefabOpen(true),
-                  tooltip: t("_pages:prefabs.trySuggestions"),
-                }}
+                action={[
+                  {
+                    icon: <FontAwesomeIcon icon={faAdd} />,
+                    id: GlobalActions.Add,
+                    disabled: isLoading,
+                    onClick: () => addTransactionCategory.openDialog(),
+                    tooltip: t("_pages:transactionCategories.add"),
+                  },
+                  {
+                    icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
+                    id: "prefab-suggestions",
+                    disabled: isLoading,
+                    onClick: () => setPrefabOpen(true),
+                    tooltip: t("_pages:prefabs.trySuggestions"),
+                  },
+                ]}
               />
             }
             renderComponent={(transactionCategory) => (

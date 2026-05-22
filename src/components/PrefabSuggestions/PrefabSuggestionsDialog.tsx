@@ -1,17 +1,10 @@
-import type { ReactNode } from "react";
 import { useCallback } from "react";
 
 import { Dialog } from "@sito/dashboard-app";
 
-import "./styles.css";
+import type { PrefabSuggestionsDialogPropsType } from "./types";
 
-export type PrefabSuggestionsDialogPropsType = {
-  open: boolean;
-  title: string;
-  onClose: () => void;
-  onComplete?: () => void;
-  children: (handleComplete: () => void) => ReactNode;
-};
+import "./styles.css";
 
 export function PrefabSuggestionsDialog(
   props: PrefabSuggestionsDialogPropsType,
@@ -24,12 +17,7 @@ export function PrefabSuggestionsDialog(
   }, [onClose, onComplete]);
 
   return (
-    <Dialog
-      open={open}
-      title={title}
-      handleClose={onClose}
-      mobileFullScreen
-    >
+    <Dialog open={open} title={title} handleClose={onClose}>
       <div className="p-4">{children(handleComplete)}</div>
     </Dialog>
   );

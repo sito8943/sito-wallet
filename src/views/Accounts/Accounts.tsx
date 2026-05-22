@@ -2,7 +2,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "@tanstack/react-query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWallet, faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAdd,
+  faWallet,
+  faWandMagicSparkles,
+} from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
 import {
@@ -12,6 +16,7 @@ import {
   Page,
   Error,
   Empty,
+  GlobalActions,
   ConfirmationDialog,
   useImportDialog,
   ImportDialog,
@@ -211,13 +216,22 @@ export function Accounts() {
                   icon: faWallet,
                   className: "text-5xl max-md:text-3xl text-text-muted",
                 }}
-                action={{
-                  icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
-                  id: "prefab-suggestions",
-                  disabled: isLoading,
-                  onClick: () => setPrefabOpen(true),
-                  tooltip: t("_pages:prefabs.trySuggestions"),
-                }}
+                action={[
+                  {
+                    icon: <FontAwesomeIcon icon={faAdd} />,
+                    id: GlobalActions.Add,
+                    disabled: isLoading,
+                    onClick: () => addAccount.openDialog(),
+                    tooltip: t("_pages:accounts.add"),
+                  },
+                  {
+                    icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
+                    id: "prefab-suggestions",
+                    disabled: isLoading,
+                    onClick: () => setPrefabOpen(true),
+                    tooltip: t("_pages:prefabs.trySuggestions"),
+                  },
+                ]}
               />
             }
             renderComponent={(account) => (

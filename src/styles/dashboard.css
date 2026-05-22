@@ -222,6 +222,7 @@ select > option {
   @apply px-1 py-6;
 }
 
+main,
 .page-main {
   min-height: calc(100vh - 88px);
 }
