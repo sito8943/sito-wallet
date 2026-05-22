@@ -66,8 +66,8 @@ export function WalletOnboarding(props: WalletOnboardingPropsType) {
           label: "",
           content: (
             <WalletOnboardingStep
-              key={remountStepOnChange ? `${step.key}-${id}` : step.key}
               {...step}
+              key={remountStepOnChange ? `${step.key}-${id}` : step.key}
               final={index === steps.length - 1}
               loading={loadingStepKey === step.key}
               onClickNext={() => {
