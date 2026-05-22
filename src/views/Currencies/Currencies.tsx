@@ -1,6 +1,8 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "@tanstack/react-query";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCoins, faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
 import {
@@ -9,6 +11,7 @@ import {
   useExportActionMutate,
   Page,
   Error,
+  Empty,
   ConfirmationDialog,
   ImportDialog,
   useImportDialog,
@@ -25,7 +28,11 @@ import {
   CurrencyCard,
   EditCurrencyDialog,
 } from "./components";
-import { MobileSelectionBar, PrefabCurrencySuggestions } from "components";
+import {
+  MobileSelectionBar,
+  PrefabCurrencySuggestions,
+  PrefabSuggestionsDialog,
+} from "components";
 
 // hooks
 import {
@@ -58,6 +65,8 @@ export function Currencies() {
   const queryClient = useQueryClient();
 
   const manager = useManager();
+
+  const [prefabOpen, setPrefabOpen] = useState(false);
 
   const {
     data,
@@ -179,12 +188,19 @@ export function Currencies() {
               void fetchNextPage();
             }}
             emptyComponent={
-              <PrefabCurrencySuggestions
-                onComplete={() =>
-                  void queryClient.invalidateQueries({
-                    queryKey: CurrenciesQueryKeys.all().queryKey,
-                  })
-                }
+              <Empty
+                message={t("_pages:currencies.empty")}
+                iconProps={{
+                  icon: faCoins,
+                  className: "text-5xl max-md:text-3xl text-text-muted",
+                }}
+                action={{
+                  icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
+                  id: "prefab-suggestions",
+                  disabled: isLoading,
+                  onClick: () => setPrefabOpen(true),
+                  tooltip: t("_pages:prefabs.trySuggestions"),
+                }}
               />
             }
             renderComponent={(account) => (
@@ -205,6 +221,20 @@ export function Currencies() {
           <ConfirmationDialog {...deleteCurrency} />
           <ConfirmationDialog {...restoreCurrency} />
           <ImportDialog {...importCurrencies} />
+          <PrefabSuggestionsDialog
+            open={prefabOpen}
+            title={t("_pages:prefabs.dialog.currenciesTitle")}
+            onClose={() => setPrefabOpen(false)}
+            onComplete={() =>
+              void queryClient.invalidateQueries({
+                queryKey: CurrenciesQueryKeys.all().queryKey,
+              })
+            }
+          >
+            {(handleComplete) => (
+              <PrefabCurrencySuggestions onComplete={handleComplete} />
+            )}
+          </PrefabSuggestionsDialog>
         </>
       ) : (
         <Error error={error} />

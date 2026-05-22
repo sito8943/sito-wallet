@@ -21,10 +21,7 @@ export function PrefabAccountSuggestions(props: PrefabSuggestionPropsType) {
   const { data: currencies, isLoading: currenciesLoading } =
     useCurrenciesCommon();
 
-  const defaultCurrencyId = useMemo(
-    () => currencies?.[0]?.id,
-    [currencies],
-  );
+  const defaultCurrencyId = useMemo(() => currencies?.[0]?.id, [currencies]);
 
   const [selected, setSelected] = useState<string[]>([]);
   const [config, setConfig] = useState<Record<string, AccountConfigEntry>>({});
@@ -90,7 +87,14 @@ export function PrefabAccountSuggestions(props: PrefabSuggestionPropsType) {
     } finally {
       setSubmitting(false);
     }
-  }, [config, manager.Accounts, onComplete, selected, showErrorNotification, t]);
+  }, [
+    config,
+    manager.Accounts,
+    onComplete,
+    selected,
+    showErrorNotification,
+    t,
+  ]);
 
   if (currenciesLoading) {
     return (

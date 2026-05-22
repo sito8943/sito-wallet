@@ -1,9 +1,16 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "@tanstack/react-query";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBuilding,
+  faWandMagicSparkles,
+} from "@fortawesome/free-solid-svg-icons";
+
 import {
   ConfirmationDialog,
+  Empty,
   Error as ErrorView,
   ImportDialog,
   Page,
@@ -24,6 +31,7 @@ import {
 import {
   MobileSelectionBar,
   PrefabSubscriptionProviderSuggestions,
+  PrefabSuggestionsDialog,
 } from "components";
 import { useManager, useRegisterBottomNavAction } from "providers";
 
@@ -60,6 +68,8 @@ export function SubscriptionProviders() {
   const manager = useManager();
   const subscriptionProvidersClient =
     "SubscriptionProviders" in manager ? manager.SubscriptionProviders : null;
+
+  const [prefabOpen, setPrefabOpen] = useState(false);
 
   const {
     data,
@@ -223,12 +233,19 @@ export function SubscriptionProviders() {
               void fetchNextPage();
             }}
             emptyComponent={
-              <PrefabSubscriptionProviderSuggestions
-                onComplete={() =>
-                  void queryClient.invalidateQueries({
-                    queryKey: SubscriptionProvidersQueryKeys.all().queryKey,
-                  })
-                }
+              <Empty
+                message={t("_pages:subscriptionProviders.empty")}
+                iconProps={{
+                  icon: faBuilding,
+                  className: "text-5xl max-md:text-3xl text-text-muted",
+                }}
+                action={{
+                  icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
+                  id: "prefab-suggestions",
+                  disabled: isLoading || !subscriptionProvidersClient,
+                  onClick: () => setPrefabOpen(true),
+                  tooltip: t("_pages:prefabs.trySuggestions"),
+                }}
               />
             }
             renderComponent={(subscriptionProvider) => (
@@ -251,6 +268,22 @@ export function SubscriptionProviders() {
           <ConfirmationDialog {...deleteSubscriptionProvider} />
           <ConfirmationDialog {...restoreSubscriptionProvider} />
           <ImportDialog {...importSubscriptionProviders} />
+          <PrefabSuggestionsDialog
+            open={prefabOpen}
+            title={t("_pages:prefabs.dialog.subscriptionProvidersTitle")}
+            onClose={() => setPrefabOpen(false)}
+            onComplete={() =>
+              void queryClient.invalidateQueries({
+                queryKey: SubscriptionProvidersQueryKeys.all().queryKey,
+              })
+            }
+          >
+            {(handleComplete) => (
+              <PrefabSubscriptionProviderSuggestions
+                onComplete={handleComplete}
+              />
+            )}
+          </PrefabSuggestionsDialog>
         </>
       ) : (
         <ErrorView error={error} />

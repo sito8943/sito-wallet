@@ -223,6 +223,14 @@
   },
   "prefabs": {
     "addSelected": "Añadir seleccionados",
+    "trySuggestions": "Probar sugerencias",
+    "dialog": {
+      "currenciesTitle": "Monedas sugeridas",
+      "categoriesTitle": "Categorías sugeridas",
+      "accountsTitle": "Cuentas sugeridas",
+      "subscriptionProvidersTitle": "Proveedores sugeridos",
+      "dashboardTitle": "Layout de dashboard sugerido"
+    },
     "currencies": {
       "hint": "Predeterminada detectada: {{code}}"
     },

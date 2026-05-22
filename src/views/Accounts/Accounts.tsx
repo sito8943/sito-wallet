@@ -1,6 +1,8 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "@tanstack/react-query";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWallet, faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
 import {
@@ -9,6 +11,7 @@ import {
   useExportActionMutate,
   Page,
   Error,
+  Empty,
   ConfirmationDialog,
   useImportDialog,
   ImportDialog,
@@ -26,7 +29,11 @@ import {
   EditAccountDialog,
   AdjustBalanceDialog,
 } from "./components";
-import { MobileSelectionBar, PrefabAccountSuggestions } from "components";
+import {
+  MobileSelectionBar,
+  PrefabAccountSuggestions,
+  PrefabSuggestionsDialog,
+} from "components";
 
 // hooks
 import {
@@ -65,6 +72,8 @@ export function Accounts() {
   const queryClient = useQueryClient();
 
   const manager = useManager();
+
+  const [prefabOpen, setPrefabOpen] = useState(false);
 
   const {
     data,
@@ -196,12 +205,19 @@ export function Accounts() {
               void fetchNextPage();
             }}
             emptyComponent={
-              <PrefabAccountSuggestions
-                onComplete={() =>
-                  void queryClient.invalidateQueries({
-                    queryKey: AccountsQueryKeys.all().queryKey,
-                  })
-                }
+              <Empty
+                message={t("_pages:accounts.empty")}
+                iconProps={{
+                  icon: faWallet,
+                  className: "text-5xl max-md:text-3xl text-text-muted",
+                }}
+                action={{
+                  icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
+                  id: "prefab-suggestions",
+                  disabled: isLoading,
+                  onClick: () => setPrefabOpen(true),
+                  tooltip: t("_pages:prefabs.trySuggestions"),
+                }}
               />
             }
             renderComponent={(account) => (
@@ -223,6 +239,20 @@ export function Accounts() {
           <ConfirmationDialog {...restoreAccount} />
           <ImportDialog {...importAccounts} />
           <AdjustBalanceDialog {...adjustBalance} />
+          <PrefabSuggestionsDialog
+            open={prefabOpen}
+            title={t("_pages:prefabs.dialog.accountsTitle")}
+            onClose={() => setPrefabOpen(false)}
+            onComplete={() =>
+              void queryClient.invalidateQueries({
+                queryKey: AccountsQueryKeys.all().queryKey,
+              })
+            }
+          >
+            {(handleComplete) => (
+              <PrefabAccountSuggestions onComplete={handleComplete} />
+            )}
+          </PrefabSuggestionsDialog>
         </>
       ) : (
         <Error error={error} />

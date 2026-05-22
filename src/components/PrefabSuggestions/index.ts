@@ -1,3 +1,4 @@
+export * from "./PrefabSuggestionsDialog";
 export * from "./PrefabCurrencySuggestions";
 export * from "./PrefabCategorySuggestions";
 export * from "./PrefabAccountSuggestions";

@@ -223,6 +223,14 @@
   },
   "prefabs": {
     "addSelected": "Add selected",
+    "trySuggestions": "Try suggestions",
+    "dialog": {
+      "currenciesTitle": "Suggested currencies",
+      "categoriesTitle": "Suggested categories",
+      "accountsTitle": "Suggested accounts",
+      "subscriptionProvidersTitle": "Suggested subscription providers",
+      "dashboardTitle": "Suggested dashboard layout"
+    },
     "currencies": {
       "hint": "Detected default: {{code}}"
     },
