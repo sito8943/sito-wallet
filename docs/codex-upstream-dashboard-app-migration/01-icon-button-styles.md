@@ -2,7 +2,7 @@
 
 ## Contexto local a absorber
 
-1. Fuente local: `sito-wallet/web/src/components/Buttons/styles.css`.
+1. Fuente local histórica: `sito-wallet/web/src/components/Buttons/styles.css`.
 2. Reglas visuales que hoy existen ahí:
 3. `.icon-button` con base neutral redondeada.
 4. `.icon-button.error:hover` con estilo de error invertido.
@@ -33,3 +33,4 @@
 ## Done de este caso
 
 1. El consumidor ya no necesita `src/components/Buttons/styles.css` para que `IconButton` se vea correctamente.
+2. `src/components/Buttons/styles.css` fue eliminado del consumidor.

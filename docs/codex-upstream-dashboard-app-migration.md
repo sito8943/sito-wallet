@@ -19,7 +19,7 @@ Este documento ahora es índice. Las instrucciones operativas están separadas p
 
 ## Estado auditado en `sito-wallet/web` (fuente de verdad)
 
-1. IconButton styles locales: `src/components/Buttons/styles.css` (archivo actualmente sin imports directos).
+1. IconButton styles locales: absorbidos en `@sito/dashboard-app`; `src/components/Buttons/styles.css` eliminado.
 2. Fork local de ImportDialog: `src/components/Dialog/ImportDialog.tsx` + `src/components/Dialog/ImportDialog/*`.
 3. Fork local de hook de import: `src/hooks/useImportDialog.tsx`.
 4. Fork local de PrettyGrid: `src/components/PrettyGrid/*`.

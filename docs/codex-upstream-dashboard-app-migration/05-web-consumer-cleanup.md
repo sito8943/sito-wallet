@@ -20,7 +20,7 @@ Eliminar forks locales una vez que la versión nueva de `@sito/dashboard-app` ya
 12. `src/components/Dialog/ImportDialog/Error.tsx`
 13. `src/components/Dialog/ImportDialog/Loading.tsx`
 14. `src/components/Dialog/ImportDialog/Preview.tsx`
-15. `src/components/Buttons/styles.css` si sigue sin uso.
+15. `src/components/Buttons/styles.css` ya fue eliminado.
 16. Limpiar exports muertos:
 17. `src/hooks/index.ts` quitar `export * from "./useImportDialog";`.
 18. `src/components/index.ts` quitar export de `PrettyGrid` si ya no existe.
