@@ -153,6 +153,27 @@
       "title": "Bienvenido a Sito Wallet",
       "body": "Tu asistente personal para organizar tu dinero, ahorrar más y tomar decisiones financieras inteligentes."
     },
+    "entities": {
+      "title": "Elige las funcionalidades de tu app",
+      "body": "Activa solo las áreas que quieres usar ahora. Ajustaremos el onboarding según tu selección.",
+      "cards": {
+        "currencies": {
+          "description": "Divisas y símbolos para valorar tus datos."
+        },
+        "accounts": {
+          "description": "Cuentas, efectivo y saldos para organizar tu dinero."
+        },
+        "transactions": {
+          "description": "Ingresos, gastos y categorías para seguir tus movimientos."
+        },
+        "subscriptions": {
+          "description": "Pagos recurrentes, proveedores y renovaciones."
+        }
+      },
+      "errors": {
+        "empty": "Selecciona al menos una entidad para continuar."
+      }
+    },
     "currencies": {
       "title": "Gestiona todas tus monedas",
       "body": "Añade y administra cualquier divisa para llevar el control de tus finanzas en todo el mundo."
@@ -164,6 +185,10 @@
     "transactions": {
       "title": "Control total de tus movimientos",
       "body": "Registra ingresos y gastos en segundos, y clasifícalos para saber exactamente a dónde va tu dinero."
+    },
+    "subscriptions": {
+      "title": "Ten tus suscripciones bajo control",
+      "body": "Organiza pagos recurrentes, proveedores y renovaciones para anticiparte a cada cargo."
     },
     "get_started": {
       "title": "Listo para tomar el control",
@@ -187,6 +212,12 @@
         "description": "Así tendrás el alta inicial lista antes de empezar a registrar movimientos a mano.",
         "createCategory": "Crear categoría",
         "import": "Importar movimientos"
+      },
+      "subscriptions": {
+        "title": "Deja listos tus proveedores de suscripción.",
+        "description": "Puedes crear un proveedor o importar tu catálogo antes de añadir pagos recurrentes.",
+        "createProvider": "Crear proveedor",
+        "importProviders": "Importar proveedores"
       }
     }
   },

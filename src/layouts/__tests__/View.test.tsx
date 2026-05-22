@@ -16,6 +16,8 @@ const {
   mockUseAuth,
   mockTranslate,
   mockUseAppPreload,
+  mockApplyFeaturePayload,
+  mockGetUserEntityConfigs,
 } = vi.hoisted(() => {
   const mockIsInGuestMode = vi.fn(() => false);
   const mockTranslate = vi.fn((key: string) => key);
@@ -28,6 +30,8 @@ const {
     completedTaskKeys: [],
     failedTaskKeys: [],
   }));
+  const mockApplyFeaturePayload = vi.fn();
+  const mockGetUserEntityConfigs = vi.fn(() => Promise.resolve([]));
   return {
     mockNavigate: vi.fn(),
     mockFromLocal: vi.fn(() => null),
@@ -36,6 +40,8 @@ const {
     mockUseAuth,
     mockTranslate,
     mockUseAppPreload,
+    mockApplyFeaturePayload,
+    mockGetUserEntityConfigs,
   };
 });
 
@@ -113,12 +119,9 @@ vi.mock("@sito/dashboard-app", () => ({
   ToTop: () => <div data-testid="to-top" />,
   Notification: () => <div data-testid="notification" />,
   BottomNavigation: () => <div data-testid="bottom-navigation" />,
-  Onboarding: ({ steps }: { steps: MockOnboardingStep[] }) => (
-    <div
-      data-testid="onboarding"
-      data-steps={steps.map((step) => `${step.title}|${step.body}`).join(",")}
-    />
-  ),
+  useNotification: () => ({
+    showErrorNotification: vi.fn(),
+  }),
   SplashScreen: () => <div data-testid="splash-screen" />,
   BaseLinkPropsType: class {},
 }));
@@ -132,6 +135,7 @@ vi.mock("react-i18next", () => ({
 
 vi.mock("hooks", () => ({
   useAppPreload: () => mockUseAppPreload(),
+  useOnlineStatus: () => true,
 }));
 
 vi.mock("components", () => ({
@@ -140,7 +144,25 @@ vi.mock("components", () => ({
 }));
 
 vi.mock("providers", () => ({
-  useFeatureFlags: () => ({ isFeatureEnabled: () => true }),
+  useFeatureFlags: () => ({
+    applyFeaturePayload: mockApplyFeaturePayload,
+    isFeatureEnabled: () => true,
+  }),
+  useManager: () => ({
+    UserEntityConfigs: {
+      getAll: mockGetUserEntityConfigs,
+      putBatch: vi.fn(() => Promise.resolve([])),
+    },
+  }),
+}));
+
+vi.mock("../../layouts/View/components/WalletOnboarding", () => ({
+  WalletOnboarding: ({ steps }: { steps: MockOnboardingStep[] }) => (
+    <div
+      data-testid="onboarding"
+      data-steps={steps.map((step) => `${step.title}|${step.body}`).join(",")}
+    />
+  ),
 }));
 
 vi.mock("views/menuMap", () => ({

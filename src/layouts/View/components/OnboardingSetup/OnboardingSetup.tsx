@@ -3,6 +3,7 @@ import { Button, ImportDialog, useImportDialog } from "@sito/dashboard-app";
 import {
   faCloudUpload,
   faCoins,
+  faRepeat,
   faTags,
   faWallet,
 } from "@fortawesome/free-solid-svg-icons";
@@ -15,15 +16,18 @@ import { useManager } from "providers";
 import {
   AccountsQueryKeys,
   CurrenciesQueryKeys,
+  SubscriptionProvidersQueryKeys,
   TransactionsQueryKeys,
 } from "hooks";
 import { useAddAccountDialog } from "views/Accounts/hooks";
 import { useAddCurrency } from "views/Currencies/hooks/useAddCurrency";
+import { useAddSubscriptionProviderDialog } from "views/SubscriptionProviders/hooks";
 import { useAddTransactionCategoryDialog } from "views/TransactionCategories/hooks";
 
 // components
 import { AddAccountDialog } from "views/Accounts/components";
 import { AddCurrencyDialog } from "views/Currencies/components";
+import { AddSubscriptionProviderDialog } from "views/SubscriptionProviders/components";
 import { AddTransactionCategoryDialog } from "views/TransactionCategories/components";
 
 // lib
@@ -32,7 +36,9 @@ import type {
   CurrencyDto,
   ImportPreviewAccountDto,
   ImportPreviewCurrencyDto,
+  ImportPreviewSubscriptionProviderDto,
   ImportPreviewTransactionDto,
+  SubscriptionProviderDto,
   TransactionDto,
 } from "lib";
 import { Tables } from "lib";
@@ -51,6 +57,9 @@ export function OnboardingSetup(props: OnboardingSetupPropsType) {
   const addCurrency = useAddCurrency();
   const addAccount = useAddAccountDialog();
   const addTransactionCategory = useAddTransactionCategoryDialog();
+  const addSubscriptionProvider = useAddSubscriptionProviderDialog();
+  const subscriptionProvidersClient =
+    "SubscriptionProviders" in manager ? manager.SubscriptionProviders : null;
 
   const importCurrencies = useImportDialog<
     CurrencyDto,
@@ -80,6 +89,31 @@ export function OnboardingSetup(props: OnboardingSetupPropsType) {
       manager.Transactions.processImport(file, options?.override),
     mutationFn: (data) => manager.Transactions.import(data),
     ...TransactionsQueryKeys.all(),
+  });
+
+  const importSubscriptionProviders = useImportDialog<
+    SubscriptionProviderDto,
+    ImportPreviewSubscriptionProviderDto
+  >({
+    entity: Tables.SubscriptionProviders,
+    fileProcessor: (file, options) => {
+      if (!subscriptionProvidersClient) {
+        throw new Error("subscriptions.featureDisabled");
+      }
+
+      return subscriptionProvidersClient.processImport(
+        file,
+        options?.override,
+      );
+    },
+    mutationFn: (data) => {
+      if (!subscriptionProvidersClient) {
+        throw new Error("subscriptions.featureDisabled");
+      }
+
+      return subscriptionProvidersClient.import(data);
+    },
+    ...SubscriptionProvidersQueryKeys.all(),
   });
 
   if (stepKey === "currencies") {
@@ -146,6 +180,40 @@ export function OnboardingSetup(props: OnboardingSetupPropsType) {
         </div>
         <AddAccountDialog {...addAccount} />
         <ImportDialog {...importAccounts} />
+      </>
+    );
+  }
+
+  if (stepKey === "subscriptions") {
+    return (
+      <>
+        <div className="onboarding-setup">
+          <p className="onboarding-setup-title">
+            {t("_pages:onboarding.setup.subscriptions.title")}
+          </p>
+          <p className="onboarding-setup-description">
+            {t("_pages:onboarding.setup.subscriptions.description")}
+          </p>
+          <div className="onboarding-setup-actions">
+            <Button onClick={() => addSubscriptionProvider.openDialog()}>
+              <span className="onboarding-setup-button-content">
+                <FontAwesomeIcon icon={faRepeat} />
+                {t("_pages:onboarding.setup.subscriptions.createProvider")}
+              </span>
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => importSubscriptionProviders.action().onClick()}
+            >
+              <span className="onboarding-setup-button-content">
+                <FontAwesomeIcon icon={faCloudUpload} />
+                {t("_pages:onboarding.setup.subscriptions.importProviders")}
+              </span>
+            </Button>
+          </div>
+        </div>
+        <AddSubscriptionProviderDialog {...addSubscriptionProvider} />
+        <ImportDialog {...importSubscriptionProviders} />
       </>
     );
   }

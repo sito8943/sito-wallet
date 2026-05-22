@@ -5,23 +5,29 @@ import type { AppFeatures } from "../../lib/api/featureFlags/types";
 
 import { config } from "../../config";
 
-const { mockGetFeatures, mockUseManager, mockUseAuth } = vi.hoisted(() => {
-  const mockGetFeatures = vi.fn();
-  const mockUseManager = vi.fn(() => ({
-    FeatureFlags: {
-      getFeatures: mockGetFeatures,
-    },
-  }));
-  const mockUseAuth = vi.fn(() => ({
-    account: { id: 1 },
-  }));
+const { mockGetFeatures, mockGetUserEntityConfigs, mockUseManager, mockUseAuth } =
+  vi.hoisted(() => {
+    const mockGetFeatures = vi.fn();
+    const mockGetUserEntityConfigs = vi.fn(() => Promise.resolve([]));
+    const mockUseManager = vi.fn(() => ({
+      FeatureFlags: {
+        getFeatures: mockGetFeatures,
+      },
+      UserEntityConfigs: {
+        getAll: mockGetUserEntityConfigs,
+      },
+    }));
+    const mockUseAuth = vi.fn(() => ({
+      account: { id: 1 },
+    }));
 
-  return {
-    mockGetFeatures,
-    mockUseManager,
-    mockUseAuth,
-  };
-});
+    return {
+      mockGetFeatures,
+      mockGetUserEntityConfigs,
+      mockUseManager,
+      mockUseAuth,
+    };
+  });
 
 vi.mock("../useSWManager", () => ({
   useManager: () => mockUseManager(),
@@ -90,6 +96,28 @@ vi.mock("lib", () => {
 
       return features[key as keyof AppFeatures];
     },
+    userEntityConfigsToFeaturePayload: (
+      configs: Array<{ entityKey: string; enabled: boolean }>,
+    ) => {
+      const payload: Partial<AppFeatures> = {};
+
+      for (const config of configs) {
+        if (config.entityKey === "CURRENCIES") {
+          payload.currenciesEnabled = config.enabled;
+        }
+        if (config.entityKey === "ACCOUNTS") {
+          payload.accountsEnabled = config.enabled;
+        }
+        if (config.entityKey === "TRANSACTIONS") {
+          payload.transactionsEnabled = config.enabled;
+        }
+        if (config.entityKey === "SUBSCRIPTIONS") {
+          payload.subscriptionsEnabled = config.enabled;
+        }
+      }
+
+      return payload;
+    },
   };
 });
 
@@ -153,6 +181,8 @@ describe("FeatureFlagsProvider", () => {
   beforeEach(() => {
     localStorage.clear();
     mockGetFeatures.mockReset();
+    mockGetUserEntityConfigs.mockReset();
+    mockGetUserEntityConfigs.mockResolvedValue([]);
     mockUseManager.mockClear();
     mockUseAuth.mockReturnValue({
       account: { id: 1 },

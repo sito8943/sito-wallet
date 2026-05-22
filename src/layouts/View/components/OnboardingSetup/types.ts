@@ -1,4 +1,8 @@
-export type OnboardingSetupStepKey = "currencies" | "accounts" | "transactions";
+export type OnboardingSetupStepKey =
+  | "currencies"
+  | "accounts"
+  | "transactions"
+  | "subscriptions";
 
 export interface OnboardingSetupPropsType {
   stepKey: OnboardingSetupStepKey;

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
@@ -14,65 +14,184 @@ import {
   Error,
   fromLocal,
   NavbarProvider,
-  Onboarding,
   SplashScreen,
   TableOptionsProvider,
   toLocal,
   useAuth,
+  useNotification,
 } from "@sito/dashboard-app";
-import type {
-  BottomNavigationItemType,
-  OnboardingStepType,
-} from "@sito/dashboard-app";
+import type { BottomNavigationItemType } from "@sito/dashboard-app";
 
 // providers
-import { useFeatureFlags } from "providers";
-import { useAppPreload } from "hooks";
+import { useFeatureFlags, useManager } from "providers";
+import { useAppPreload, useOnlineStatus } from "hooks";
 
 // components
 import { OfflineBanner } from "components";
+import {
+  OnboardingEntitySelection,
+  configsToEnabledEntityKeys,
+  entityKeysToConfigs,
+  entityKeysToOnboardingSetupStepKeys,
+  resolveRequiredEntityKeys,
+  toggleSelectedEntityKey,
+} from "./components/OnboardingEntitySelection";
 import { OnboardingSetup } from "./components/OnboardingSetup";
+import { WalletOnboarding } from "./components/WalletOnboarding";
 
 // config
 import { config } from "../../config";
 import { getFeatureFilteredBottomMap } from "../../views/bottomMap";
-import { isAnonymousVisitorSession } from "lib";
+import {
+  USER_ENTITY_CONFIG_KEYS,
+  type UserEntityConfigKey,
+  isAnonymousVisitorSession,
+  userEntityConfigsToFeaturePayload,
+} from "lib";
 import { getFeatureFilteredMenuMap } from "views/menuMap";
-
-const onboardingStepKeys = [
-  "welcome",
-  "currencies",
-  "accounts",
-  "transactions",
-  "get_started",
-];
 
 export function View() {
   const { loading: preloadLoading } = useAppPreload();
   const { t, i18n } = useTranslation();
   const { account, isInGuestMode } = useAuth();
-  const { isFeatureEnabled } = useFeatureFlags();
+  const { showErrorNotification } = useNotification();
+  const manager = useManager();
+  const isOnline = useOnlineStatus();
+  const { applyFeaturePayload, isFeatureEnabled } = useFeatureFlags();
   const onboardingStorageKey =
     typeof config.onboarding === "string" ? config.onboarding : "onboarding";
   const isAnonymousVisitor = isAnonymousVisitorSession(
     account,
     isInGuestMode(),
   );
+  const isLoggedSession = Boolean(account?.id) && !isInGuestMode();
+  const [selectedEntityKeys, setSelectedEntityKeys] = useState<
+    UserEntityConfigKey[]
+  >(() => [...USER_ENTITY_CONFIG_KEYS]);
+  const [confirmedEntityKeys, setConfirmedEntityKeys] = useState<
+    UserEntityConfigKey[]
+  >(() => [...USER_ENTITY_CONFIG_KEYS]);
 
   const showOnboarding = isAnonymousVisitor || !fromLocal(onboardingStorageKey);
-  const onboardingSteps = useMemo<OnboardingStepType[]>(
-    () =>
-      onboardingStepKeys.map((stepKey) => ({
+
+  useEffect(() => {
+    if (!showOnboarding || !isLoggedSession || !isOnline) return;
+
+    let mounted = true;
+
+    manager.UserEntityConfigs.getAll()
+      .then((configs) => {
+        if (!mounted || configs.length === 0) return;
+
+        const enabledEntityKeys = configsToEnabledEntityKeys(configs);
+        if (enabledEntityKeys.length === 0) return;
+
+        const resolvedEntityKeys = resolveRequiredEntityKeys(enabledEntityKeys);
+        const resolvedConfigs = entityKeysToConfigs(resolvedEntityKeys);
+        setSelectedEntityKeys(resolvedEntityKeys);
+        setConfirmedEntityKeys(resolvedEntityKeys);
+        applyFeaturePayload(userEntityConfigsToFeaturePayload(resolvedConfigs));
+      })
+      .catch(() => {});
+
+    return () => {
+      mounted = false;
+    };
+  }, [
+    applyFeaturePayload,
+    isLoggedSession,
+    isOnline,
+    manager.UserEntityConfigs,
+    showOnboarding,
+  ]);
+
+  const handleToggleEntity = useCallback((entityKey: UserEntityConfigKey) => {
+    setSelectedEntityKeys((previous) =>
+      toggleSelectedEntityKey(previous, entityKey),
+    );
+  }, []);
+
+  const handleEntitiesNext = useCallback(async () => {
+    if (selectedEntityKeys.length === 0) {
+      showErrorNotification({
+        message: t("_pages:onboarding.entities.errors.empty"),
+      });
+
+      return false;
+    }
+
+    const resolvedEntityKeys = resolveRequiredEntityKeys(selectedEntityKeys);
+    const configs = entityKeysToConfigs(resolvedEntityKeys);
+
+    if (isLoggedSession && isOnline) {
+      try {
+        await manager.UserEntityConfigs.putBatch({ entities: configs });
+      } catch {
+        showErrorNotification({
+          message: t("_accessibility:errors.500"),
+        });
+
+        return false;
+      }
+    }
+
+    setConfirmedEntityKeys(resolvedEntityKeys);
+    applyFeaturePayload(userEntityConfigsToFeaturePayload(configs));
+
+    return true;
+  }, [
+    applyFeaturePayload,
+    isLoggedSession,
+    isOnline,
+    manager.UserEntityConfigs,
+    selectedEntityKeys,
+    showErrorNotification,
+    t,
+  ]);
+
+  const onboardingSetupStepKeys = useMemo(
+    () => entityKeysToOnboardingSetupStepKeys(confirmedEntityKeys),
+    [confirmedEntityKeys],
+  );
+
+  const onboardingSteps = useMemo(
+    () => [
+      {
+        key: "welcome",
+        title: t("_pages:onboarding.welcome.title"),
+        body: t("_pages:onboarding.welcome.body"),
+      },
+      {
+        key: "entities",
+        title: t("_pages:onboarding.entities.title"),
+        body: t("_pages:onboarding.entities.body"),
+        content: (
+          <OnboardingEntitySelection
+            selectedEntityKeys={selectedEntityKeys}
+            onToggleEntity={handleToggleEntity}
+          />
+        ),
+        beforeNext: handleEntitiesNext,
+      },
+      ...onboardingSetupStepKeys.map((stepKey) => ({
+        key: stepKey,
         title: t(`_pages:onboarding.${stepKey}.title`),
         body: t(`_pages:onboarding.${stepKey}.body`),
-        content:
-          stepKey === "currencies" ||
-          stepKey === "accounts" ||
-          stepKey === "transactions" ? (
-            <OnboardingSetup stepKey={stepKey} />
-          ) : undefined,
+        content: <OnboardingSetup stepKey={stepKey} />,
       })),
-    [t],
+      {
+        key: "get_started",
+        title: t("_pages:onboarding.get_started.title"),
+        body: t("_pages:onboarding.get_started.body"),
+      },
+    ],
+    [
+      handleEntitiesNext,
+      handleToggleEntity,
+      onboardingSetupStepKeys,
+      selectedEntityKeys,
+      t,
+    ],
   );
 
   const featureFilteredMenuMap = useMemo(
@@ -114,7 +233,7 @@ export function View() {
     <NavbarProvider>
       <BottomNavActionProvider>
         {showOnboarding && (
-          <Onboarding remountStepOnChange steps={onboardingSteps} />
+          <WalletOnboarding remountStepOnChange steps={onboardingSteps} />
         )}
         <AppShell
           header={

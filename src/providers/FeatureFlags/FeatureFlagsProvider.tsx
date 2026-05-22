@@ -10,7 +10,9 @@ import {
   mergeAppFeatures,
   persistFeatureFlags,
   readPersistedFeatureFlags,
+  userEntityConfigsToFeaturePayload,
 } from "lib";
+import type { AppFeaturesPayload } from "lib";
 
 // types
 import type { FeatureFlagsContextType } from "./types";
@@ -42,12 +44,42 @@ export const FeatureFlagsProvider = (props: BasicProviderPropTypes) => {
     setFeatures(defaults);
   }, [defaults, storageKey]);
 
+  const applyFeaturePayload = useCallback(
+    (payload: AppFeaturesPayload) => {
+      const nextFeatures = mergeAppFeatures({
+        defaults,
+        persisted: features,
+        payload,
+      });
+
+      setFeatures(nextFeatures);
+      persistFeatureFlags(storageKey, nextFeatures);
+
+      return nextFeatures;
+    },
+    [defaults, features, storageKey],
+  );
+
   const refreshFeatures = useCallback(async () => {
     const persisted = readPersistedFeatureFlags(storageKey);
 
     try {
-      const payload = await manager.FeatureFlags.getFeatures();
-      const nextFeatures = mergeAppFeatures({ defaults, persisted, payload });
+      const [payload, entityConfigs] = await Promise.all([
+        manager.FeatureFlags.getFeatures(),
+        manager.UserEntityConfigs.getAll().catch(() => []),
+      ]);
+      const entityPayload =
+        entityConfigs.length > 0
+          ? userEntityConfigsToFeaturePayload(entityConfigs)
+          : null;
+      const nextFeatures = mergeAppFeatures({
+        defaults,
+        persisted,
+        payload: {
+          ...payload,
+          ...(entityPayload ?? {}),
+        },
+      });
 
       setFeatures(nextFeatures);
       persistFeatureFlags(storageKey, nextFeatures);
@@ -83,11 +115,18 @@ export const FeatureFlagsProvider = (props: BasicProviderPropTypes) => {
   const value = useMemo(
     () => ({
       features,
+      applyFeaturePayload,
       isFeatureEnabled,
       refreshFeatures,
       clearFeatures,
     }),
-    [clearFeatures, features, isFeatureEnabled, refreshFeatures],
+    [
+      applyFeaturePayload,
+      clearFeatures,
+      features,
+      isFeatureEnabled,
+      refreshFeatures,
+    ],
   );
 
   return (

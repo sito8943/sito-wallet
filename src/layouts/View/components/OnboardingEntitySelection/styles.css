@@ -1,0 +1,65 @@
+@import "../../../../styles/variables.css";
+
+.onboarding-entity-selection {
+  @apply grid w-full gap-3 grid-cols-2;
+}
+
+.onboarding-entity-card {
+  @apply flex max-sm:flex-col sm:min-h-32 items-start max-sm:items-center max-sm:justify-center gap-3 cursor-pointer rounded-lg border border-border bg-base-light p-4 text-left text-text transition;
+  opacity: 0;
+  animation: onboarding-entity-card-in 360ms ease-out forwards;
+  animation-delay: var(--onboarding-entity-delay);
+}
+
+.onboarding-entity-card:hover {
+  @apply border-primary bg-base;
+}
+
+.onboarding-entity-card:focus-visible {
+  @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-base;
+}
+
+.onboarding-entity-card-selected {
+  @apply border-primary bg-base text-primary;
+}
+
+.onboarding-entity-card-icon {
+  @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bg-primary text-info;
+}
+
+.onboarding-entity-card-copy {
+  @apply flex min-w-0 flex-col gap-1;
+}
+
+.onboarding-entity-card-title {
+  @apply text-sm font-semibold;
+}
+
+.onboarding-entity-card-description {
+  @apply text-sm leading-snug text-text-muted max-sm:hidden;
+}
+
+@keyframes onboarding-entity-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+:root[data-sito-motion="none"] .onboarding-entity-card {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-sito-motion="always"]) .onboarding-entity-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

@@ -2,6 +2,7 @@ import { IManager } from "@sito/dashboard-app";
 import { OfflineAuthClient } from "./OfflineAuthClient";
 import { OfflineFeatureFlagClient } from "./OfflineFeatureFlagClient";
 import { OfflineAuthApiClient } from "./OfflineAuthApiClient";
+import { OfflineUserEntityConfigClient } from "./OfflineUserEntityConfigClient";
 
 // offline clients
 import {
@@ -26,6 +27,8 @@ export class OfflineManager extends IManager {
   dashboard: DashboardIndexedDBClient = new DashboardIndexedDBClient();
   profiles: ProfileIndexedDBClient = new ProfileIndexedDBClient();
   featureFlags: OfflineFeatureFlagClient = new OfflineFeatureFlagClient();
+  userEntityConfigs: OfflineUserEntityConfigClient =
+    new OfflineUserEntityConfigClient();
   authApi: OfflineAuthApiClient = new OfflineAuthApiClient();
 
   constructor() {
@@ -65,6 +68,10 @@ export class OfflineManager extends IManager {
 
   get FeatureFlags(): OfflineFeatureFlagClient {
     return this.featureFlags;
+  }
+
+  get UserEntityConfigs(): OfflineUserEntityConfigClient {
+    return this.userEntityConfigs;
   }
 
   get AuthApi(): OfflineAuthApiClient {

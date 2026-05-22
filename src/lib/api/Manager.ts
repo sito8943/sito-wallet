@@ -8,6 +8,7 @@ import FeatureFlagClient from "./FeatureFlagClient";
 import SubscriptionProviderClient from "./SubscriptionProviderClient";
 import SubscriptionClient from "./SubscriptionClient";
 import UserClient from "./UserClient";
+import UserEntityConfigClient from "./UserEntityConfigClient";
 // @sito/dashboard-app
 import {
   IManager,
@@ -31,6 +32,7 @@ export class Manager extends IManager {
     new SubscriptionProviderClient();
   subscriptions: SubscriptionClient = new SubscriptionClient();
   users: UserClient = new UserClient();
+  userEntityConfigs: UserEntityConfigClient = new UserEntityConfigClient();
   authApi: IAuthApiClient = new RestAuthApiClient(
     config.apiUrl,
     config.auth.user,
@@ -110,6 +112,10 @@ export class Manager extends IManager {
 
   get Users(): UserClient {
     return this.users;
+  }
+
+  get UserEntityConfigs(): UserEntityConfigClient {
+    return this.userEntityConfigs;
   }
 
   get AuthApi(): IAuthApiClient {
