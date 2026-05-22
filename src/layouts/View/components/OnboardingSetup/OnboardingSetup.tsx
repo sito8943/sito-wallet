@@ -101,10 +101,7 @@ export function OnboardingSetup(props: OnboardingSetupPropsType) {
         throw new Error("subscriptions.featureDisabled");
       }
 
-      return subscriptionProvidersClient.processImport(
-        file,
-        options?.override,
-      );
+      return subscriptionProvidersClient.processImport(file, options?.override);
     },
     mutationFn: (data) => {
       if (!subscriptionProvidersClient) {

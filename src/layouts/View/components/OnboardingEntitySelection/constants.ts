@@ -32,6 +32,7 @@ export const ONBOARDING_ENTITY_OPTIONS: OnboardingEntityOptionType[] = [
     key: UserEntityConfigKey.Subscriptions,
     entityName: EntityName.Subscription,
     icon: faRepeat,
-    descriptionKey: "_pages:onboarding.entities.cards.subscriptions.description",
+    descriptionKey:
+      "_pages:onboarding.entities.cards.subscriptions.description",
   },
 ];

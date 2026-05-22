@@ -42,9 +42,7 @@ export function WalletOnboarding(props: WalletOnboardingPropsType) {
       setLoadingStepKey(step.key);
 
       try {
-        const canContinue = step.beforeNext
-          ? await step.beforeNext()
-          : true;
+        const canContinue = step.beforeNext ? await step.beforeNext() : true;
 
         if (!canContinue) return;
 

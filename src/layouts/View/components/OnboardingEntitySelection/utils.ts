@@ -1,10 +1,7 @@
 import type { OnboardingSetupStepKey } from "../OnboardingSetup";
 
 import type { UserEntityConfigDto, UserEntityConfigKey } from "lib";
-import {
-  USER_ENTITY_CONFIG_KEYS,
-  UserEntityConfigKey as EntityKey,
-} from "lib";
+import { USER_ENTITY_CONFIG_KEYS, UserEntityConfigKey as EntityKey } from "lib";
 
 export const toggleSelectedEntityKey = (
   selectedEntityKeys: UserEntityConfigKey[],

@@ -13,8 +13,7 @@ export interface WalletOnboardingPropsType {
   remountStepOnChange?: boolean;
 }
 
-export interface WalletOnboardingStepPropsType
-  extends WalletOnboardingStepType {
+export interface WalletOnboardingStepPropsType extends WalletOnboardingStepType {
   final?: boolean;
   loading?: boolean;
   onClickNext: () => void;
