@@ -1,13 +1,12 @@
 import { useMemo } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
-import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
 import { useAuth } from "@sito/dashboard-app";
 
 // providers
-import { useManager, useOfflineManager } from "providers";
+import { useManager } from "providers";
 
 // lib
 import type {
@@ -36,17 +35,15 @@ export function useWeekly(
       ) as FilterWeeklyTransactionDto,
     [props, hideDeletedEntities],
   );
-  const { t } = useTranslation();
 
   const manager = useManager();
-  const offlineManager = useOfflineManager();
   const { account } = useAuth();
   return useQuery({
     ...TransactionsQueryKeys.weekly({
       ...filters,
     }),
     enabled: !!account?.id,
-    queryFn: async () => {
+    queryFn: () => {
       const query = {
         type: filters?.type ?? TransactionType.In,
         account: filters?.account,
@@ -55,24 +52,7 @@ export function useWeekly(
           : {}),
       } as FilterWeeklyTransactionDto;
 
-      try {
-        return await manager.Transactions.weekly(query);
-      } catch (error) {
-        console.warn(
-          "API failed, loading weekly transactions from IndexedDB",
-          error,
-        );
-
-        try {
-          return await offlineManager.Transactions.weekly(query);
-        } catch (offlineError) {
-          throw new Error(
-            `${t("_accessibility:errors.unknownError")} ${
-              (offlineError as Error).message
-            }`,
-          );
-        }
-      }
+      return manager.Transactions.weekly(query);
     },
   });
 }

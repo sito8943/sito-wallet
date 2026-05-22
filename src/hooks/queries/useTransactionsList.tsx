@@ -7,7 +7,7 @@ import type { QueryParam, QueryResult } from "@sito/dashboard-app";
 import { useAuth, useTableOptions } from "@sito/dashboard-app";
 
 // providers
-import { useManager, useOfflineManager } from "providers";
+import { useManager } from "providers";
 
 // lib
 import type { TransactionDto, FilterTransactionDto } from "lib";
@@ -38,7 +38,6 @@ export function useTransactionsList(props: {
   } = props;
 
   const manager = useManager();
-  const offlineManager = useOfflineManager();
   const { account } = useAuth();
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
@@ -70,22 +69,6 @@ export function useTransactionsList(props: {
       ...parsedFilters,
     }),
     enabled: !!account?.id,
-    queryFn: async () => {
-      try {
-        const result = await manager.Transactions.get(
-          parsedQueries,
-          parsedFilters,
-        );
-
-        await offlineManager.Transactions.seed(result.items).catch(() => {});
-        return result;
-      } catch (error) {
-        console.warn("API failed, loading transactions from IndexedDB", error);
-        return await offlineManager.Transactions.get(
-          parsedQueries,
-          parsedFilters,
-        );
-      }
-    },
+    queryFn: () => manager.Transactions.get(parsedQueries, parsedFilters),
   });
 }

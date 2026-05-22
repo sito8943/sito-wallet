@@ -62,7 +62,6 @@ vi.mock("@sito/dashboard-app", () => ({
   BaseClient: class {},
   APIClient: class {},
   AuthClient: class {},
-  IndexedDBClient: class {},
   IManager: class {},
   Methods: {
     GET: "GET",

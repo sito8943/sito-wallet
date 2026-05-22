@@ -1,13 +1,12 @@
 import { useMemo } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
-import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
 import { useAuth } from "@sito/dashboard-app";
 
 // providers
-import { useManager, useOfflineManager } from "providers";
+import { useManager } from "providers";
 
 // types
 import type { UseTransactionTypeResumePropsType } from "./types.ts";
@@ -39,10 +38,8 @@ export function useTransactionTypeResume(
       ) as FilterTransactionTypeResumeDto,
     [props, hideDeletedEntities],
   );
-  const { t } = useTranslation();
 
   const manager = useManager();
-  const offlineManager = useOfflineManager();
   const { account } = useAuth();
 
   return useQuery({
@@ -50,30 +47,13 @@ export function useTransactionTypeResume(
       ...filters,
     }),
     enabled: !!account?.id,
-    queryFn: async () => {
+    queryFn: () => {
       const query = {
         ...filters,
         type: filters?.type ?? TransactionType.In,
       } as FilterTransactionTypeResumeDto;
 
-      try {
-        return await manager.Transactions.getTypeResume(query);
-      } catch (error) {
-        console.warn(
-          "API failed, loading transaction type resume from IndexedDB",
-          error,
-        );
-
-        try {
-          return await offlineManager.Transactions.getTypeResume(query);
-        } catch (offlineError) {
-          throw new Error(
-            `${t("_accessibility:errors.unknownError")} ${
-              (offlineError as Error).message
-            }`,
-          );
-        }
-      }
+      return manager.Transactions.getTypeResume(query);
     },
   });
 }

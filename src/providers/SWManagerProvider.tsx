@@ -1,33 +1,14 @@
 import { useState } from "react";
 import { ManagerProvider } from "@sito/dashboard-app";
 
-// types
 import type { BasicProviderPropTypes } from "./types";
 
-// hooks
-import { useOnlineStatus } from "hooks";
+import { Manager } from "lib";
 
-// lib
-import { Manager, OfflineManager } from "lib";
-import { OfflineManagerContext } from "./Offline/OfflineManagerContext";
-
-/**
- * Manager Provider
- * Swaps between online (REST) and offline (IndexedDB) managers reactively.
- * Also exposes the offline manager for seeding IndexedDB after API fetches.
- */
 export const SWManagerProvider = (props: BasicProviderPropTypes) => {
   const { children } = props;
 
-  const [onlineManager] = useState(() => new Manager());
-  const [offlineManager] = useState(() => new OfflineManager());
-  const isOnline = useOnlineStatus();
+  const [manager] = useState(() => new Manager());
 
-  const activeManager = isOnline ? onlineManager : offlineManager;
-
-  return (
-    <OfflineManagerContext.Provider value={offlineManager}>
-      <ManagerProvider manager={activeManager}>{children}</ManagerProvider>
-    </OfflineManagerContext.Provider>
-  );
+  return <ManagerProvider manager={manager}>{children}</ManagerProvider>;
 };

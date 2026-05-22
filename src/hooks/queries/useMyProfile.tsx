@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 // providers
-import { useManager, useOfflineManager } from "providers";
+import { useManager } from "providers";
 
 // @sito/dashboard-app
 import { useAuth } from "@sito/dashboard-app";
@@ -19,26 +19,12 @@ export function useMyProfile(
   const { ensure = false, defaultName = "" } = props;
 
   const manager = useManager();
-  const offlineManager = useOfflineManager();
   const { account } = useAuth();
 
   return useQuery({
     ...ProfileQueryKeys.me(),
     enabled: !!account?.id,
-    queryFn: async () => {
-      try {
-        const result = ensure
-          ? await manager.Profiles.ensureMine(defaultName)
-          : await manager.Profiles.me();
-
-        offlineManager.Profiles.seed([result]).catch(() => {});
-        return result;
-      } catch (error) {
-        console.warn("API failed, loading profile from IndexedDB", error);
-        return ensure
-          ? await offlineManager.Profiles.ensureMine(defaultName)
-          : await offlineManager.Profiles.me();
-      }
-    },
+    queryFn: () =>
+      ensure ? manager.Profiles.ensureMine(defaultName) : manager.Profiles.me(),
   });
 }

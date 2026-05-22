@@ -3,7 +3,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 // providers
-import { useManager, useOfflineManager } from "providers";
+import { useManager } from "providers";
 import type { QueryResult } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
@@ -15,7 +15,6 @@ import type { CurrencyDto, FilterCurrencyDto } from "lib";
 import {
   applyHideDeletedEntitiesPreference,
   defaultCurrenciesListFilters,
-  fetchCurrenciesList,
   normalizeListFilters,
 } from "lib";
 import { useHideDeletedEntitiesPreference } from "./useHideDeletedEntitiesPreference";
@@ -38,13 +37,12 @@ export function useCurrenciesList(
   );
 
   const manager = useManager();
-  const offlineManager = useOfflineManager();
   const { account } = useAuth();
 
   return useQuery({
     ...CurrenciesQueryKeys.list(normalizedFilters),
     enabled: !!account?.id,
     queryFn: () =>
-      fetchCurrenciesList(manager, offlineManager, normalizedFilters),
+      manager.Currencies.get(undefined, { ...normalizedFilters }),
   });
 }

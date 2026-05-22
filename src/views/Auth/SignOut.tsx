@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth, SplashScreen } from "@sito/dashboard-app";
 
 // providers
-import { useFeatureFlags, useOfflineManager } from "providers";
+import { useFeatureFlags } from "providers";
 
 // lib
 import {
@@ -21,7 +21,6 @@ import {
 export function SignOut() {
   const { logoutUser } = useAuth();
   const { clearFeatures } = useFeatureFlags();
-  const offlineManager = useOfflineManager();
 
   const navigate = useNavigate();
 
@@ -30,17 +29,15 @@ export function SignOut() {
       clearPersistedPublicSessionAccount();
       clearAllTableOptions();
       clearFeatures();
-      await offlineManager.clearIndexedDatabases();
       await logoutUser();
     } catch (error) {
-      // do nothing, we want to try to clear as much as possible even if some steps fail
       console.error("Error during sign out:", error);
     }
 
     setTimeout(() => {
       navigate(AppRoutes.signIn);
     }, 1000);
-  }, [clearFeatures, logoutUser, navigate, offlineManager]);
+  }, [clearFeatures, logoutUser, navigate]);
 
   useEffect(() => {
     void logic();

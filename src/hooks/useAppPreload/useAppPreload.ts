@@ -3,11 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 // @sito/dashboard-app
 import { useAuth } from "@sito/dashboard-app";
 
-// lib
-import { preloadOfflineBootstrapData } from "lib";
-
 // providers
-import { useFeatureFlags, useManager, useOfflineManager } from "providers";
+import { useFeatureFlags } from "providers";
 
 // hooks
 import { useOnlineStatus } from "../useOnlineStatus";
@@ -26,23 +23,12 @@ export function useAppPreload(
   options: UseAppPreloadOptions = {},
 ): UseAppPreloadResult {
   const { account, isInGuestMode } = useAuth();
-  const manager = useManager();
-  const offlineManager = useOfflineManager();
 
   const { refreshFeatures } = useFeatureFlags();
   const isOnline = useOnlineStatus();
   const isGuestMode = isInGuestMode();
 
   const extraTasks = options.extraTasks ?? EMPTY_PRELOAD_TASKS;
-
-  const offlineBootstrapTask = useMemo<AppPreloadTask>(
-    () => ({
-      key: "offline-bootstrap",
-      enabled: Boolean(account?.id) && !isGuestMode && isOnline,
-      run: async () => preloadOfflineBootstrapData(manager, offlineManager),
-    }),
-    [account?.id, isGuestMode, isOnline, manager, offlineManager],
-  );
 
   const tasksToRefreshFeatures = useMemo<AppPreloadTask>(
     () => ({
@@ -55,10 +41,8 @@ export function useAppPreload(
 
   const requiredTasks = useMemo(
     () =>
-      [...extraTasks, offlineBootstrapTask, tasksToRefreshFeatures].filter(
-        (task) => task.enabled,
-      ),
-    [extraTasks, offlineBootstrapTask, tasksToRefreshFeatures],
+      [...extraTasks, tasksToRefreshFeatures].filter((task) => task.enabled),
+    [extraTasks, tasksToRefreshFeatures],
   );
 
   const requiredTasksSignature = useMemo(

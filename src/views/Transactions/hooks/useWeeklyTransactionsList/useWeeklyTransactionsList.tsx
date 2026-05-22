@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { useAuth } from "@sito/dashboard-app";
 
-import { useManager, useOfflineManager } from "providers";
+import { useManager } from "providers";
 
 import type { FilterTransactionDto } from "lib";
 
@@ -24,7 +24,6 @@ export function useWeeklyTransactionsList(
   const { account } = useAuth();
 
   const manager = useManager();
-  const offlineManager = useOfflineManager();
 
   const dateRange = useMemo(
     () => getWeeklyTransactionsDateRange(weekScope),
@@ -52,28 +51,8 @@ export function useWeeklyTransactionsList(
       filters,
     ],
     enabled: open && !!account?.id && !!accountId,
-    queryFn: async () => {
-      try {
-        const result = await manager.Transactions.get(
-          WEEKLY_TRANSACTIONS_LIST_QUERY,
-          filters,
-        );
-
-        await offlineManager.Transactions.seed(result.items).catch(() => {});
-
-        return result;
-      } catch (error) {
-        console.warn(
-          "API failed, loading weekly transactions from IndexedDB",
-          error,
-        );
-
-        return await offlineManager.Transactions.get(
-          WEEKLY_TRANSACTIONS_LIST_QUERY,
-          filters,
-        );
-      }
-    },
+    queryFn: () =>
+      manager.Transactions.get(WEEKLY_TRANSACTIONS_LIST_QUERY, filters),
   });
 
   return {

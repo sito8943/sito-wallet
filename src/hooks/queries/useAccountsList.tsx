@@ -3,7 +3,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 // providers
-import { useManager, useOfflineManager } from "providers";
+import { useManager } from "providers";
 import type { QueryResult } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
@@ -15,7 +15,6 @@ import type { AccountDto, FilterAccountDto } from "lib";
 import {
   applyHideDeletedEntitiesPreference,
   defaultAccountsListFilters,
-  fetchAccountsList,
   normalizeListFilters,
 } from "lib";
 import { useHideDeletedEntitiesPreference } from "./useHideDeletedEntitiesPreference";
@@ -38,13 +37,11 @@ export function useAccountsList(
   );
 
   const manager = useManager();
-  const offlineManager = useOfflineManager();
   const { account } = useAuth();
 
   return useQuery({
     ...AccountsQueryKeys.list(normalizedFilters),
     enabled: !!account?.id,
-    queryFn: () =>
-      fetchAccountsList(manager, offlineManager, normalizedFilters),
+    queryFn: () => manager.Accounts.get(undefined, { ...normalizedFilters }),
   });
 }

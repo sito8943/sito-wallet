@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 // providers
-import { useManager, useOfflineManager } from "providers";
+import { useManager } from "providers";
 import type { QueryParam } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
@@ -32,7 +32,6 @@ export function useInfiniteTransactionCategoriesList(
   } = props;
 
   const manager = useManager();
-  const offlineManager = useOfflineManager();
   const { account } = useAuth();
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
@@ -61,27 +60,14 @@ export function useInfiniteTransactionCategoriesList(
     ),
     enabled: !!account?.id,
     initialPageParam: 0,
-    queryFn: async ({ pageParam }) => {
+    queryFn: ({ pageParam }) => {
       const currentPage = typeof pageParam === "number" ? pageParam : 0;
       const requestQuery = {
         ...parsedQueries,
         currentPage,
       };
 
-      try {
-        const result = await manager.TransactionCategories.get(
-          requestQuery,
-          parsedFilters,
-        );
-        offlineManager.TransactionCategories.seed(result.items).catch(() => {});
-        return result;
-      } catch (error) {
-        console.warn("API failed, loading categories from IndexedDB", error);
-        return await offlineManager.TransactionCategories.get(
-          requestQuery,
-          parsedFilters,
-        );
-      }
+      return manager.TransactionCategories.get(requestQuery, parsedFilters);
     },
     getNextPageParam: (lastPage) => {
       const nextPage = lastPage.currentPage + 1;

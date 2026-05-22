@@ -3,7 +3,6 @@ import { act } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockLogoutUser = vi.fn(() => Promise.resolve());
-const mockClearIndexedDatabases = vi.fn(() => Promise.resolve());
 const mockClearFeatures = vi.fn();
 const mockClearPersistedPublicSessionAccount = vi.fn();
 const mockNavigate = vi.fn();
@@ -16,9 +15,6 @@ vi.mock("@sito/dashboard-app", () => ({
 }));
 
 vi.mock("providers", () => ({
-  useOfflineManager: () => ({
-    clearIndexedDatabases: mockClearIndexedDatabases,
-  }),
   useFeatureFlags: () => ({
     clearFeatures: mockClearFeatures,
   }),
@@ -45,14 +41,13 @@ describe("SignOut", () => {
   beforeEach(() => {
     vi.useFakeTimers();
     mockLogoutUser.mockReset();
-    mockClearIndexedDatabases.mockReset();
     mockClearFeatures.mockReset();
     mockClearPersistedPublicSessionAccount.mockReset();
     mockClearAllTableOptions.mockReset();
     mockNavigate.mockReset();
   });
 
-  it("clears local snapshot and indexed databases before navigating to sign-in", async () => {
+  it("clears local snapshot before navigating to sign-in", async () => {
     render(<SignOut />);
 
     await act(async () => {
@@ -63,7 +58,6 @@ describe("SignOut", () => {
     expect(mockClearPersistedPublicSessionAccount).toHaveBeenCalled();
     expect(mockClearAllTableOptions).toHaveBeenCalled();
     expect(mockClearFeatures).toHaveBeenCalled();
-    expect(mockClearIndexedDatabases).toHaveBeenCalled();
     expect(mockLogoutUser).toHaveBeenCalled();
 
     await act(async () => {

@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 // providers
-import { useManager, useOfflineManager } from "providers";
+import { useManager } from "providers";
 import { useAuth } from "@sito/dashboard-app";
 
 // lib
@@ -17,28 +17,19 @@ import { AccountsQueryKeys } from "./queryKeys/accountsQueryKeys";
 
 export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
   const manager = useManager();
-  const offlineManager = useOfflineManager();
   const { account } = useAuth();
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   return useQuery({
     ...AccountsQueryKeys.common(),
     enabled: !!account?.id,
-    queryFn: async () => {
+    queryFn: () => {
       const commonFilters = applyHideDeletedEntitiesPreference(
         normalizeCommonFilters(),
         hideDeletedEntities,
       ) as FilterAccountDto;
 
-      try {
-        return await manager.Accounts.commonGet(commonFilters);
-      } catch (error) {
-        console.warn(
-          "API failed, loading common accounts from IndexedDB",
-          error,
-        );
-        return await offlineManager.Accounts.commonGet(commonFilters);
-      }
+      return manager.Accounts.commonGet(commonFilters);
     },
   });
 }

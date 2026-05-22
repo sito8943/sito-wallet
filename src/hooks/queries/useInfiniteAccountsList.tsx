@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 // providers
-import { useManager, useOfflineManager } from "providers";
+import { useManager } from "providers";
 import type { QueryParam } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
@@ -29,7 +29,6 @@ export function useInfiniteAccountsList(
   } = props;
 
   const manager = useManager();
-  const offlineManager = useOfflineManager();
   const { account } = useAuth();
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
@@ -55,21 +54,14 @@ export function useInfiniteAccountsList(
     ...AccountsQueryKeys.infiniteList(parsedQueries, parsedFilters),
     enabled: !!account?.id,
     initialPageParam: 0,
-    queryFn: async ({ pageParam }) => {
+    queryFn: ({ pageParam }) => {
       const currentPage = typeof pageParam === "number" ? pageParam : 0;
       const requestQuery = {
         ...parsedQueries,
         currentPage,
       };
 
-      try {
-        const result = await manager.Accounts.get(requestQuery, parsedFilters);
-        offlineManager.Accounts.seed(result.items).catch(() => {});
-        return result;
-      } catch (error) {
-        console.warn("API failed, loading accounts from IndexedDB", error);
-        return await offlineManager.Accounts.get(requestQuery, parsedFilters);
-      }
+      return manager.Accounts.get(requestQuery, parsedFilters);
     },
     getNextPageParam: (lastPage) => {
       const nextPage = lastPage.currentPage + 1;

@@ -1,4 +1,4 @@
-import { type ComponentType, useCallback, useMemo, useState } from "react";
+import { type ComponentType, useCallback, useState } from "react";
 import { Link, useLocation, useNavigate, type To } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -11,16 +11,11 @@ import { SearchModal } from "components";
 
 import { type BasicProviderPropTypes } from "./types";
 
-// hooks
-import { useOnlineStatus } from "hooks";
-
 // lib
-import { Manager, OfflineManager } from "lib";
+import { Manager } from "lib";
 
 import { AuthAccountPersistenceProvider } from "./AuthAccountPersistenceProvider";
-import { OfflineSyncProvider } from "./Offline/OfflineSyncProvider";
 import { FeatureFlagsProvider } from "./FeatureFlags/FeatureFlagsProvider";
-import { OfflineManagerContext } from "./Offline/OfflineManagerContext";
 import { ProfileLanguageSyncProvider } from "./ProfileLanguageSyncProvider";
 
 // config
@@ -30,26 +25,12 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
   const authConfig = config.auth;
 
   const { t, i18n } = useTranslation();
-  const [onlineManager] = useState(() => new Manager());
-  const [offlineManager] = useState(() => new OfflineManager());
-  const isOnline = useOnlineStatus();
-  const activeManager = isOnline ? onlineManager : offlineManager;
+  const [manager] = useState(() => new Manager());
   const navigate = useNavigate();
   const location = useLocation();
   const navigateFn = useCallback(
     (route: string | number) => navigate(route as To),
     [navigate],
-  );
-
-  const appWrapperProvider = useMemo(
-    () => ({
-      provider: ({ children: providerChildren }: BasicProviderPropTypes) => (
-        <OfflineManagerContext.Provider value={offlineManager}>
-          {providerChildren}
-        </OfflineManagerContext.Provider>
-      ),
-    }),
-    [offlineManager],
   );
 
   return (
@@ -60,16 +41,13 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
         linkComponent: Link as unknown as ComponentType<BaseLinkPropsType>,
         searchComponent: SearchModal,
       }}
-      manager={{ manager: activeManager }}
+      manager={{ manager }}
       auth={authConfig}
-      appWrapperProvider={appWrapperProvider}
     >
       <TranslationProvider t={t} language={i18n.language}>
         <AuthAccountPersistenceProvider>
           <ProfileLanguageSyncProvider>
-            <FeatureFlagsProvider>
-              <OfflineSyncProvider>{children}</OfflineSyncProvider>
-            </FeatureFlagsProvider>
+            <FeatureFlagsProvider>{children}</FeatureFlagsProvider>
           </ProfileLanguageSyncProvider>
         </AuthAccountPersistenceProvider>
       </TranslationProvider>

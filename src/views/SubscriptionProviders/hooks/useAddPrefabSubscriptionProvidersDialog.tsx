@@ -54,7 +54,7 @@ export function useAddPrefabSubscriptionProvidersDialog() {
         ]) ?? [];
 
       return form.keys
-        .map((key) => {
+        .map((key): AddSubscriptionProviderDto | null => {
           const prefab = providers.find((p) => p.key === key);
           if (!prefab) return null;
           return {

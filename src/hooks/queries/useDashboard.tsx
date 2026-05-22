@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
 // providers
-import { useManager, useOfflineManager } from "providers";
+import { useManager } from "providers";
 import type { QueryResult } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
@@ -28,26 +28,12 @@ export function useDashboardsList(
   );
 
   const manager = useManager();
-  const offlineManager = useOfflineManager();
   const { account } = useAuth();
 
   return useQuery({
     ...DashboardsQueryKeys.list(),
     enabled: !!account?.id,
-    queryFn: async () => {
-      try {
-        const result = await manager.Dashboard.get(undefined, {
-          ...normalizedFilters,
-        });
-
-        offlineManager.Dashboard.seed(result.items).catch(() => {});
-        return result;
-      } catch (error) {
-        console.warn("API failed, loading dashboards from IndexedDB", error);
-        return await offlineManager.Dashboard.get(undefined, {
-          ...normalizedFilters,
-        });
-      }
-    },
+    queryFn: () =>
+      manager.Dashboard.get(undefined, { ...normalizedFilters }),
   });
 }

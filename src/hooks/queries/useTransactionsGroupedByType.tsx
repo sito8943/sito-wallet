@@ -1,13 +1,12 @@
 import { useMemo } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
-import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
 import { useAuth } from "@sito/dashboard-app";
 
 // providers
-import { useManager, useOfflineManager } from "providers";
+import { useManager } from "providers";
 
 // types
 import type { UseTransactionsGroupedByTypePropsType } from "./types.ts";
@@ -41,34 +40,13 @@ export function useTransactionsGroupedByType(
       accountId: props.accountId,
     };
   }, [props, hideDeletedEntities]);
-  const { t } = useTranslation();
 
   const manager = useManager();
-  const offlineManager = useOfflineManager();
   const { account } = useAuth();
 
   return useQuery({
     ...TransactionsQueryKeys.groupedByType(filters),
     enabled: !!account?.id && !!filters.accountId,
-    queryFn: async () => {
-      try {
-        return await manager.Transactions.getGroupedByType(filters);
-      } catch (error) {
-        console.warn(
-          "API failed, loading grouped transactions by type from IndexedDB",
-          error,
-        );
-
-        try {
-          return await offlineManager.Transactions.getGroupedByType(filters);
-        } catch (offlineError) {
-          throw new Error(
-            `${t("_accessibility:errors.unknownError")} ${
-              (offlineError as Error).message
-            }`,
-          );
-        }
-      }
-    },
+    queryFn: () => manager.Transactions.getGroupedByType(filters),
   });
 }

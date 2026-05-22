@@ -3,7 +3,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 // providers
-import { useManager, useOfflineManager } from "providers";
+import { useManager } from "providers";
 
 // types
 import type { UseTransactionTypeResumePropsType } from "./types.ts";
@@ -19,12 +19,9 @@ import { useHideDeletedEntitiesPreference } from "./useHideDeletedEntitiesPrefer
 import { TransactionsQueryKeys } from "./queryKeys/transactionsQueryKeys";
 
 export function useTransactionsCommon(
-  //TODO FIX THIS
   props: UseTransactionTypeResumePropsType,
 ): UseQueryResult<CommonTransactionDto[]> {
   const manager = useManager();
-  const offlineManager = useOfflineManager();
-
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   const filters = useMemo(
@@ -38,16 +35,6 @@ export function useTransactionsCommon(
 
   return useQuery({
     ...TransactionsQueryKeys.common(filters),
-    queryFn: async () => {
-      try {
-        return await manager.Transactions.commonGet(filters);
-      } catch (error) {
-        console.warn(
-          "API failed, loading common transactions from IndexedDB",
-          error,
-        );
-        return await offlineManager.Transactions.commonGet(filters);
-      }
-    },
+    queryFn: () => manager.Transactions.commonGet(filters),
   });
 }

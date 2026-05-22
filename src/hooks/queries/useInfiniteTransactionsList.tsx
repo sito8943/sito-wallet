@@ -6,7 +6,7 @@ import type { QueryParam } from "@sito/dashboard-app";
 import { useAuth, useTableOptions } from "@sito/dashboard-app";
 
 // providers
-import { useManager, useOfflineManager } from "providers";
+import { useManager } from "providers";
 
 // lib
 import type { TransactionDto, FilterTransactionDto } from "lib";
@@ -31,7 +31,6 @@ export function useInfiniteTransactionsList(props: {
   } = props;
 
   const manager = useManager();
-  const offlineManager = useOfflineManager();
   const { account } = useAuth();
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
@@ -66,28 +65,14 @@ export function useInfiniteTransactionsList(props: {
     ...TransactionsQueryKeys.infiniteList(parsedQueries, parsedFilters),
     enabled: !!account?.id,
     initialPageParam: 0,
-    queryFn: async ({ pageParam }) => {
+    queryFn: ({ pageParam }) => {
       const currentPage = typeof pageParam === "number" ? pageParam : 0;
       const requestQuery = {
         ...parsedQueries,
         currentPage,
       };
 
-      try {
-        const result = await manager.Transactions.get(
-          requestQuery,
-          parsedFilters,
-        );
-
-        await offlineManager.Transactions.seed(result.items).catch(() => {});
-        return result;
-      } catch (error) {
-        console.warn("API failed, loading transactions from IndexedDB", error);
-        return await offlineManager.Transactions.get(
-          requestQuery,
-          parsedFilters,
-        );
-      }
+      return manager.Transactions.get(requestQuery, parsedFilters);
     },
     getNextPageParam: (lastPage) => {
       const nextPage = lastPage.currentPage + 1;

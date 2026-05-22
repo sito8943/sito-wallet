@@ -3,7 +3,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 // providers
-import { useManager, useOfflineManager } from "providers";
+import { useManager } from "providers";
 import type { QueryResult } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
@@ -15,7 +15,6 @@ import type { TransactionCategoryDto, FilterTransactionCategoryDto } from "lib";
 import {
   applyHideDeletedEntitiesPreference,
   defaultTransactionCategoriesListFilters,
-  fetchTransactionCategoriesList,
   normalizeListFilters,
 } from "lib";
 import { useHideDeletedEntitiesPreference } from "./useHideDeletedEntitiesPreference";
@@ -41,17 +40,12 @@ export function useTransactionCategoriesList(
   );
 
   const manager = useManager();
-  const offlineManager = useOfflineManager();
   const { account } = useAuth();
 
   return useQuery({
     ...TransactionCategoriesQueryKeys.list(normalizedFilters),
     enabled: !!account?.id,
     queryFn: () =>
-      fetchTransactionCategoriesList(
-        manager,
-        offlineManager,
-        normalizedFilters,
-      ),
+      manager.TransactionCategories.get(undefined, { ...normalizedFilters }),
   });
 }

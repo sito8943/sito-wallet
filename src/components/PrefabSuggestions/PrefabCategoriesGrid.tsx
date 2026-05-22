@@ -2,10 +2,7 @@ import { useTranslation } from "react-i18next";
 
 import { PREFAB_CATEGORIES } from "./constants";
 import { toggleInArray } from "./utils";
-import type {
-  PrefabCategoriesGridPropsType,
-  PrefabCategory,
-} from "./types";
+import type { PrefabCategoriesGridPropsType, PrefabCategory } from "./types";
 
 import "./styles.css";
 
