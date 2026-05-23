@@ -9,4 +9,3 @@ export * from "./MobileSelectionBar";
 export * from "./ColorVignette";
 export * from "./UpdateDialog";
 export * from "./PrefabSuggestions";
-export * from "./OnboardingDraftReplay";

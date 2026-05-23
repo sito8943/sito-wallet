@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { usePostDialog } from "@sito/dashboard-app";
 
 // providers
-import { useManager, useOnboardingDraft } from "providers";
+import { useManager } from "providers";
 
 // hooks
 import { TransactionCategoriesQueryKeys } from "hooks";
@@ -16,14 +16,12 @@ import { addEmptyTransactionCategory, formToDto } from "../utils";
 import type { TransactionCategoryFormType } from "../types";
 
 // lib
-import { draftTransactionCategoryToDto } from "lib";
 import type { AddTransactionCategoryDto, TransactionCategoryDto } from "lib";
 
 export function useAddTransactionCategoryDialog() {
   const { t } = useTranslation();
 
   const manager = useManager();
-  const { isAnonymous, addTransactionCategories } = useOnboardingDraft();
 
   const { handleSubmit, ...rest } = usePostDialog<
     AddTransactionCategoryDto,
@@ -32,20 +30,7 @@ export function useAddTransactionCategoryDialog() {
   >({
     formToDto,
     defaultValues: addEmptyTransactionCategory,
-    mutationFn: async (data) => {
-      if (isAnonymous) {
-        const [added] = addTransactionCategories([
-          {
-            name: data.name,
-            description: data.description,
-            color: data.color,
-            type: data.type,
-          },
-        ]);
-        return draftTransactionCategoryToDto(added);
-      }
-      return manager.TransactionCategories.insert(data);
-    },
+    mutationFn: (data) => manager.TransactionCategories.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:transactionCategories.forms.add"),
     ...TransactionCategoriesQueryKeys.all(),

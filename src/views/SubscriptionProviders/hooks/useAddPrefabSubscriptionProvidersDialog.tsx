@@ -6,7 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useNotification, usePostDialog } from "@sito/dashboard-app";
 
 // providers
-import { useManager, useOnboardingDraft } from "providers";
+import { useManager } from "providers";
 
 // hooks
 import { SubscriptionProvidersQueryKeys } from "hooks";
@@ -29,7 +29,6 @@ export function useAddPrefabSubscriptionProvidersDialog() {
   const { showErrorNotification } = useNotification();
   const manager = useManager();
   const queryClient = useQueryClient();
-  const { isAnonymous, addSubscriptionProviders } = useOnboardingDraft();
 
   const queryKey = useMemo(
     () => SubscriptionProvidersQueryKeys.all().queryKey,
@@ -81,18 +80,6 @@ export function useAddPrefabSubscriptionProvidersDialog() {
       };
     },
     mutationFn: async (payload) => {
-      if (isAnonymous) {
-        addSubscriptionProviders(
-          payload.items.map((item, index) => ({
-            name: item.name,
-            description: item.description ?? null,
-            website: item.website ?? null,
-            photo: item.photo ?? null,
-            prefabKey: payload.keys[index],
-          })),
-        );
-        return;
-      }
       if (!("SubscriptionProviders" in manager)) {
         throw new Error("SubscriptionProviders manager unavailable");
       }

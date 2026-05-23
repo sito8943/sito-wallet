@@ -1,25 +1,17 @@
 @reference "../../../../styles/variables.css";
 
 .onboarding-setup {
-  @apply w-full rounded-3xl border border-border bg-base-light p-4 text-left;
+  @apply w-full rounded-3xl border border-border bg-base-light p-4 text-center;
+}
+
+.onboarding-setup-icon {
+  @apply inline-flex items-center justify-center text-4xl text-bg-primary;
 }
 
 .onboarding-setup-title {
-  @apply font-semibold text-text text-center text-balance;
+  @apply mt-3 font-semibold text-text text-center text-balance;
 }
 
 .onboarding-setup-description {
   @apply mt-2 text-sm text-text-muted;
-}
-
-.onboarding-setup-actions {
-  @apply mt-4 flex gap-3 sm:flex-row items-center justify-center;
-}
-
-.onboarding-setup-actions .button {
-  @apply justify-center;
-}
-
-.onboarding-setup-button-content {
-  @apply flex items-center justify-center gap-2;
 }

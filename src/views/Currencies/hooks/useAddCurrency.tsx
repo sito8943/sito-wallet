@@ -9,7 +9,7 @@ import {
 } from "@sito/dashboard-app";
 
 // providers
-import { useManager, useOnboardingDraft } from "providers";
+import { useManager } from "providers";
 
 // hooks
 import { CurrenciesQueryKeys } from "hooks";
@@ -18,7 +18,6 @@ import { CurrenciesQueryKeys } from "hooks";
 import { addEmptyCurrency, formToDto } from "../utils";
 
 // lib
-import { draftCurrencyToDto } from "lib";
 import type { AddCurrencyDto, CurrencyDto } from "lib";
 
 // types
@@ -28,7 +27,6 @@ export function useAddCurrency() {
   const { t } = useTranslation();
   const { showErrorNotification } = useNotification();
   const manager = useManager();
-  const { isAnonymous, addCurrencies } = useOnboardingDraft();
 
   const queryKey = useMemo(() => CurrenciesQueryKeys.all().queryKey, []);
 
@@ -39,19 +37,7 @@ export function useAddCurrency() {
   >({
     formToDto,
     defaultValues: addEmptyCurrency,
-    mutationFn: async (data) => {
-      if (isAnonymous) {
-        const [added] = addCurrencies([
-          {
-            name: data.name,
-            symbol: data.symbol,
-            description: data.description,
-          },
-        ]);
-        return draftCurrencyToDto(added);
-      }
-      return manager.Currencies.insert(data);
-    },
+    mutationFn: (data) => manager.Currencies.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:currencies.forms.add"),
     onError: (error) => {

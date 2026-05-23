@@ -13,8 +13,5 @@ export interface OnboardingSetupPropsType {
 export interface OnboardingSetupStepPropsType {
   titleKey: string;
   descriptionKey: string;
-  createIcon: IconDefinition;
-  onCreate: () => void;
-  onImport?: () => void;
-  onPrefab?: () => void;
+  icon: IconDefinition;
 }

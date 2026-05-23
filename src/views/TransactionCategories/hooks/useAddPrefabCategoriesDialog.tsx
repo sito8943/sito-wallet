@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth, useNotification, usePostDialog } from "@sito/dashboard-app";
 
 // providers
-import { useManager, useOnboardingDraft } from "providers";
+import { useManager } from "providers";
 
 // components
 import { PREFAB_CATEGORIES } from "components";
@@ -28,7 +28,6 @@ export function useAddPrefabCategoriesDialog() {
   const { account } = useAuth();
   const { showErrorNotification } = useNotification();
   const manager = useManager();
-  const { isAnonymous, addTransactionCategories } = useOnboardingDraft();
 
   const queryKey = useMemo(
     () => TransactionCategoriesQueryKeys.all().queryKey,
@@ -75,18 +74,6 @@ export function useAddPrefabCategoriesDialog() {
       };
     },
     mutationFn: async (payload) => {
-      if (isAnonymous) {
-        addTransactionCategories(
-          payload.items.map((item, index) => ({
-            name: item.name,
-            description: item.description,
-            color: item.color,
-            type: item.type,
-            prefabKey: payload.keys[index],
-          })),
-        );
-        return;
-      }
       await manager.TransactionCategories.insertMany(payload.items);
     },
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),

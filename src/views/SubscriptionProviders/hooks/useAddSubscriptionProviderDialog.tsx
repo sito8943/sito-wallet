@@ -8,9 +8,8 @@ import {
 } from "@sito/dashboard-app";
 
 import { SubscriptionProvidersQueryKeys } from "hooks";
-import { useManager, useOnboardingDraft } from "providers";
+import { useManager } from "providers";
 
-import { draftSubscriptionProviderToDto } from "lib";
 import type { SubscriptionProviderDto } from "lib";
 
 import {
@@ -30,7 +29,6 @@ export function useAddSubscriptionProviderDialog() {
   const manager = useManager();
   const subscriptionProvidersClient =
     "SubscriptionProviders" in manager ? manager.SubscriptionProviders : null;
-  const { isAnonymous, addSubscriptionProviders } = useOnboardingDraft();
 
   const queryKey = useMemo(
     () => SubscriptionProvidersQueryKeys.all().queryKey,
@@ -45,17 +43,6 @@ export function useAddSubscriptionProviderDialog() {
     formToDto: subscriptionProviderFormToCreateDto,
     defaultValues: emptyAddSubscriptionProviderForm,
     mutationFn: async ({ payload, file }) => {
-      if (isAnonymous) {
-        const [added] = addSubscriptionProviders([
-          {
-            name: payload.name,
-            description: payload.description ?? null,
-            website: payload.website ?? null,
-            photo: payload.photo ?? null,
-          },
-        ]);
-        return draftSubscriptionProviderToDto(added);
-      }
       if (!subscriptionProvidersClient) {
         throw new Error("subscriptions.featureDisabled");
       }

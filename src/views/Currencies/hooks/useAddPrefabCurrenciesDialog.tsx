@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth, useNotification, usePostDialog } from "@sito/dashboard-app";
 
 // providers
-import { useManager, useOnboardingDraft } from "providers";
+import { useManager } from "providers";
 
 // components
 import { PREFAB_CURRENCIES } from "components";
@@ -27,7 +27,6 @@ export function useAddPrefabCurrenciesDialog() {
   const { account } = useAuth();
   const { showErrorNotification } = useNotification();
   const manager = useManager();
-  const { isAnonymous, addCurrencies } = useOnboardingDraft();
 
   const queryKey = useMemo(() => CurrenciesQueryKeys.all().queryKey, []);
 
@@ -55,17 +54,6 @@ export function useAddPrefabCurrenciesDialog() {
       }),
     }),
     mutationFn: async (payload) => {
-      if (isAnonymous) {
-        addCurrencies(
-          payload.items.map((item, index) => ({
-            name: item.name,
-            symbol: item.symbol,
-            description: item.description,
-            prefabCode: payload.codes[index],
-          })),
-        );
-        return;
-      }
       await manager.Currencies.insertMany(payload.items);
     },
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),

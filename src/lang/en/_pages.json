@@ -170,19 +170,19 @@
     },
     "currencies": {
       "title": "Manage your currencies",
-      "body": ""
+      "body": "Add and track any currency to keep control of your finances anywhere in the world."
     },
     "accounts": {
       "title": "All your accounts in One Place",
-      "body": ""
+      "body": "Record bank accounts, cash, or cryptocurrencies and get a complete view of your money."
     },
     "transactions": {
       "title": "Full control of your Transactions",
-      "body": ""
+      "body": "Log income and expenses in seconds, and categorize them to know exactly where your money goes."
     },
     "subscriptions": {
       "title": "Keep your subscriptions under control",
-      "body": ""
+      "body": "Organize recurring payments, providers, and renewals so every charge is predictable."
     },
     "get_started": {
       "title": "You're Ready to Take Control",
