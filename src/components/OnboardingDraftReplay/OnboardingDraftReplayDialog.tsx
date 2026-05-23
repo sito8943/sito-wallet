@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { ConfirmationDialog } from "@sito/dashboard-app";
+import { Dialog, DialogActions } from "@sito/dashboard-app";
 
 import { countDraftItems } from "lib";
 
@@ -29,15 +29,27 @@ export function OnboardingDraftReplayDialog(
   ];
 
   return (
-    <ConfirmationDialog
+    <Dialog
       open={open}
       title={t("_pages:onboarding.replay.title")}
       handleClose={onLater}
-      handleSubmit={onMerge}
-      isLoading={isLoading}
-      extraActions={extraActions}
     >
       <p>{t("_pages:onboarding.replay.message", { count: total })}</p>
-    </ConfirmationDialog>
+      <DialogActions
+        primaryText={t("_pages:onboarding.replay.actions.merge")}
+        cancelText={t("_pages:onboarding.replay.actions.later")}
+        onPrimaryClick={onMerge}
+        onCancel={onLater}
+        isLoading={isLoading}
+        disabled={isLoading}
+        primaryType="button"
+        containerClassName="mt-5"
+        primaryName={t("_pages:onboarding.replay.actions.merge")}
+        primaryAriaLabel={t("_pages:onboarding.replay.actions.merge")}
+        cancelName={t("_pages:onboarding.replay.actions.later")}
+        cancelAriaLabel={t("_pages:onboarding.replay.actions.later")}
+        extraActions={extraActions}
+      />
+    </Dialog>
   );
 }

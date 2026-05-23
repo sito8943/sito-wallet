@@ -75,9 +75,9 @@ export const replayDraft = async (
 
   const existingCurrencies =
     mode === "merge"
-      ? await manager.Currencies.commonGet(
-          createEmptyCurrencyFilter(),
-        ).catch(() => [])
+      ? await manager.Currencies.commonGet(createEmptyCurrencyFilter()).catch(
+          () => [],
+        )
       : [];
   const currencyByName = new Map(
     existingCurrencies.map((c) => [normalizeName(c.name), c]),
