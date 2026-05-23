@@ -94,9 +94,7 @@ export const OnboardingDraftProvider = ({
   );
 
   const addSubscriptionProviders = useCallback(
-    (
-      inputs: AddSubscriptionProviderInput[],
-    ): DraftSubscriptionProvider[] => {
+    (inputs: AddSubscriptionProviderInput[]): DraftSubscriptionProvider[] => {
       const { draft: nextDraft, added } = appendSubscriptionProviders(
         draftRef.current,
         inputs,
@@ -107,12 +105,9 @@ export const OnboardingDraftProvider = ({
     [],
   );
 
-  const setSelectedEntityKeys = useCallback(
-    (keys: UserEntityConfigKey[]) => {
-      setDraft((current) => ({ ...current, selectedEntityKeys: keys }));
-    },
-    [],
-  );
+  const setSelectedEntityKeys = useCallback((keys: UserEntityConfigKey[]) => {
+    setDraft((current) => ({ ...current, selectedEntityKeys: keys }));
+  }, []);
 
   const value = useMemo(
     () => ({

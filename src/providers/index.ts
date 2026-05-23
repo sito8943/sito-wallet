@@ -4,6 +4,7 @@ export * from "./AuthAccountPersistenceProvider";
 export * from "./ProfileLanguageSyncProvider";
 export * from "./FeatureFlags/";
 export * from "./OnboardingDraft";
+export * from "./OnboardingDraftReplay";
 export {
   BottomNavActionProvider,
   useBottomNavAction,

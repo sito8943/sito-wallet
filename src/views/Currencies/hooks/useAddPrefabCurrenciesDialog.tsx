@@ -15,15 +15,13 @@ import { CurrenciesQueryKeys } from "hooks";
 
 // lib
 import { detectCountry, detectCurrency } from "lib";
-import type { AddCurrencyDto, CurrencyDto } from "lib";
+import type { CurrencyDto } from "lib";
 
 // types
-import type { PrefabCurrenciesFormType } from "../types";
-
-interface PrefabCurrenciesPayload {
-  items: AddCurrencyDto[];
-  codes: string[];
-}
+import type {
+  PrefabCurrenciesFormType,
+  PrefabCurrenciesPayload,
+} from "../types";
 
 export function useAddPrefabCurrenciesDialog() {
   const { t } = useTranslation();

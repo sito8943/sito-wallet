@@ -34,4 +34,3 @@ export type PrefabSubscriptionProvidersGridPropsType = {
   providers: PrefabSubscriptionProviderDto[];
   defaultCurrencyCode: string;
 };
-

@@ -2,8 +2,9 @@ import { useTranslation } from "react-i18next";
 
 import { ConfirmationDialog } from "@sito/dashboard-app";
 
+import { countDraftItems } from "lib";
+
 import type { OnboardingDraftReplayDialogPropsType } from "./types";
-import { countDraftItems } from "./utils";
 
 export function OnboardingDraftReplayDialog(
   props: OnboardingDraftReplayDialogPropsType,

@@ -54,6 +54,48 @@ export const getDefaultUserEntityConfigs = (): UserEntityConfigDto[] => {
   }));
 };
 
+export const resolveRequiredEntityKeys = (
+  selectedEntityKeys: UserEntityConfigKey[],
+): UserEntityConfigKey[] => {
+  const resolved = new Set(selectedEntityKeys);
+
+  if (resolved.has(UserEntityConfigKey.Subscriptions)) {
+    resolved.add(UserEntityConfigKey.Transactions);
+    resolved.add(UserEntityConfigKey.Accounts);
+    resolved.add(UserEntityConfigKey.Currencies);
+  }
+
+  if (resolved.has(UserEntityConfigKey.Transactions)) {
+    resolved.add(UserEntityConfigKey.Accounts);
+    resolved.add(UserEntityConfigKey.Currencies);
+  }
+
+  if (resolved.has(UserEntityConfigKey.Accounts)) {
+    resolved.add(UserEntityConfigKey.Currencies);
+  }
+
+  return USER_ENTITY_CONFIG_KEYS.filter((entityKey) => resolved.has(entityKey));
+};
+
+export const entityKeysToConfigs = (
+  enabledEntityKeys: UserEntityConfigKey[],
+): UserEntityConfigDto[] => {
+  return USER_ENTITY_CONFIG_KEYS.map((entityKey) => ({
+    entityKey,
+    enabled: enabledEntityKeys.includes(entityKey),
+  }));
+};
+
+export const configsToEnabledEntityKeys = (
+  configs: UserEntityConfigDto[],
+): UserEntityConfigKey[] => {
+  return USER_ENTITY_CONFIG_KEYS.filter((entityKey) =>
+    configs.some(
+      (config) => config.entityKey === entityKey && config.enabled === true,
+    ),
+  );
+};
+
 export const normalizeUserEntityConfigResponse = (
   response: unknown,
 ): UserEntityConfigDto[] => {

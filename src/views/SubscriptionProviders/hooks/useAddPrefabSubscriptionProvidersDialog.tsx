@@ -20,12 +20,10 @@ import type {
 } from "lib";
 
 // types
-import type { PrefabSubscriptionProvidersFormType } from "../types";
-
-interface PrefabSubscriptionProvidersPayload {
-  items: AddSubscriptionProviderDto[];
-  keys: string[];
-}
+import type {
+  PrefabSubscriptionProvidersFormType,
+  PrefabSubscriptionProvidersPayload,
+} from "../types";
 
 export function useAddPrefabSubscriptionProvidersDialog() {
   const { t } = useTranslation();

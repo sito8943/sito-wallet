@@ -51,5 +51,10 @@ export interface PrefabSubscriptionProvidersFormType extends FieldValues {
   keys: string[];
 }
 
+export interface PrefabSubscriptionProvidersPayload {
+  items: AddSubscriptionProviderDto[];
+  keys: string[];
+}
+
 export type AddPrefabSubscriptionProvidersDialogPropsType =
   FormDialogPropsType<PrefabSubscriptionProvidersFormType>;

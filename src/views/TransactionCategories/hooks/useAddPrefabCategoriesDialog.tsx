@@ -18,12 +18,10 @@ import { TransactionType } from "lib";
 import type { AddTransactionCategoryDto, TransactionCategoryDto } from "lib";
 
 // types
-import type { PrefabCategoriesFormType } from "../types";
-
-interface PrefabCategoriesPayload {
-  items: AddTransactionCategoryDto[];
-  keys: string[];
-}
+import type {
+  PrefabCategoriesFormType,
+  PrefabCategoriesPayload,
+} from "../types";
 
 export function useAddPrefabCategoriesDialog() {
   const { t } = useTranslation();

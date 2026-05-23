@@ -5,26 +5,11 @@ import {
   ONBOARDING_DRAFT_TTL_MS,
   ONBOARDING_DRAFT_VERSION,
 } from "./constants";
+import { isValidDraft } from "./utils";
 import type { OnboardingDraft } from "./types";
 
 const isBrowser = (): boolean =>
   typeof window !== "undefined" && typeof window.localStorage !== "undefined";
-
-const isValidDraft = (value: unknown): value is OnboardingDraft => {
-  if (typeof value !== "object" || value === null) return false;
-  const v = value as Record<string, unknown>;
-  return (
-    typeof v.version === "number" &&
-    typeof v.createdAt === "number" &&
-    typeof v.updatedAt === "number" &&
-    typeof v.nextLocalId === "number" &&
-    Array.isArray(v.currencies) &&
-    Array.isArray(v.accounts) &&
-    Array.isArray(v.transactionCategories) &&
-    Array.isArray(v.subscriptionProviders) &&
-    Array.isArray(v.selectedEntityKeys)
-  );
-};
 
 export const readDraft = (): OnboardingDraft | null => {
   if (!isBrowser()) return null;

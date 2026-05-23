@@ -1,7 +1,12 @@
 import type { OnboardingSetupStepKey } from "../OnboardingSetup";
 
-import type { UserEntityConfigDto, UserEntityConfigKey } from "lib";
-import { USER_ENTITY_CONFIG_KEYS, UserEntityConfigKey as EntityKey } from "lib";
+import type { UserEntityConfigKey } from "lib";
+import { UserEntityConfigKey as EntityKey } from "lib";
+export {
+  configsToEnabledEntityKeys,
+  entityKeysToConfigs,
+  resolveRequiredEntityKeys,
+} from "lib";
 
 export const toggleSelectedEntityKey = (
   selectedEntityKeys: UserEntityConfigKey[],
@@ -12,48 +17,6 @@ export const toggleSelectedEntityKey = (
   }
 
   return [...selectedEntityKeys, entityKey];
-};
-
-export const resolveRequiredEntityKeys = (
-  selectedEntityKeys: UserEntityConfigKey[],
-): UserEntityConfigKey[] => {
-  const resolved = new Set(selectedEntityKeys);
-
-  if (resolved.has(EntityKey.Subscriptions)) {
-    resolved.add(EntityKey.Transactions);
-    resolved.add(EntityKey.Accounts);
-    resolved.add(EntityKey.Currencies);
-  }
-
-  if (resolved.has(EntityKey.Transactions)) {
-    resolved.add(EntityKey.Accounts);
-    resolved.add(EntityKey.Currencies);
-  }
-
-  if (resolved.has(EntityKey.Accounts)) {
-    resolved.add(EntityKey.Currencies);
-  }
-
-  return USER_ENTITY_CONFIG_KEYS.filter((entityKey) => resolved.has(entityKey));
-};
-
-export const entityKeysToConfigs = (
-  enabledEntityKeys: UserEntityConfigKey[],
-): UserEntityConfigDto[] => {
-  return USER_ENTITY_CONFIG_KEYS.map((entityKey) => ({
-    entityKey,
-    enabled: enabledEntityKeys.includes(entityKey),
-  }));
-};
-
-export const configsToEnabledEntityKeys = (
-  configs: UserEntityConfigDto[],
-): UserEntityConfigKey[] => {
-  return USER_ENTITY_CONFIG_KEYS.filter((entityKey) =>
-    configs.some(
-      (config) => config.entityKey === entityKey && config.enabled === true,
-    ),
-  );
 };
 
 export const entityKeysToOnboardingSetupStepKeys = (

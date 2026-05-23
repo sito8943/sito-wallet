@@ -4,9 +4,14 @@ import type { FieldValues } from "react-hook-form";
 import type { ActionType, FormDialogPropsType } from "@sito/dashboard-app";
 
 // lib
-import type { CurrencyDto } from "lib";
+import type { AddCurrencyDto, CurrencyDto } from "lib";
 
 export interface PrefabCurrenciesFormType extends FieldValues {
+  codes: string[];
+}
+
+export interface PrefabCurrenciesPayload {
+  items: AddCurrencyDto[];
   codes: string[];
 }
 

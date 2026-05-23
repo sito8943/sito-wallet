@@ -4,7 +4,7 @@ import type { FieldValues } from "react-hook-form";
 import type { ActionType, FormDialogPropsType } from "@sito/dashboard-app";
 
 // lib
-import type { TransactionCategoryDto } from "lib";
+import type { AddTransactionCategoryDto, TransactionCategoryDto } from "lib";
 
 export * from "./actions";
 
@@ -37,6 +37,11 @@ export type EditTransactionCategoryDialogPropsType =
   FormDialogPropsType<TransactionCategoryFormType>;
 
 export interface PrefabCategoriesFormType extends FieldValues {
+  keys: string[];
+}
+
+export interface PrefabCategoriesPayload {
+  items: AddTransactionCategoryDto[];
   keys: string[];
 }
 

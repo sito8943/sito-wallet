@@ -26,7 +26,7 @@ import { useFeatureFlags, useManager } from "providers";
 import { useAppPreload, useOnlineStatus } from "hooks";
 
 // components
-import { OfflineBanner, OnboardingDraftReplayManager } from "components";
+import { OfflineBanner } from "components";
 import {
   configsToEnabledEntityKeys,
   entityKeysToConfigs,
@@ -132,7 +132,6 @@ export function View() {
   return (
     <NavbarProvider>
       <BottomNavActionProvider>
-        <OnboardingDraftReplayManager />
         {showOnboarding && (
           <WalletOnboardingWizard
             initialEnabledEntityKeys={initialEnabledEntityKeys}

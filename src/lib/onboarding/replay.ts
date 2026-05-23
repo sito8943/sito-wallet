@@ -1,69 +1,17 @@
-import type {
-  AddAccountDto,
-  AddCurrencyDto,
-  AddSubscriptionProviderDto,
-  AddTransactionCategoryDto,
-  CommonAccountDto,
-  CommonCurrencyDto,
-  CommonSubscriptionProviderDto,
-  CommonTransactionCategoryDto,
-  FilterAccountDto,
-  FilterCurrencyDto,
-  FilterSubscriptionProviderDto,
-  FilterTransactionCategoryDto,
-  OnboardingDraft,
-  UserEntityConfigDto,
-} from "lib";
-
+import type { UserEntityConfigDto } from "../api/userEntityConfigs/types";
+import type { FilterAccountDto } from "../entities/account/FilterAccountDto";
+import type { FilterCurrencyDto } from "../entities/currency/FilterCurrencyDto";
+import type { FilterSubscriptionProviderDto } from "../entities/subscriptionProvider/FilterSubscriptionProviderDto";
+import type { FilterTransactionCategoryDto } from "../entities/transactionCategory/FilterTransactionCategoryDto";
 import { normalizeCommonFilters } from "../utils/filterNormalization";
-
-export type ReplayMode = "merge" | "discard";
-
-export interface ReplayCounts {
-  created: number;
-  reused: number;
-  skipped: number;
-}
-
-export interface ReplayResult {
-  currencies: ReplayCounts;
-  accounts: ReplayCounts;
-  transactionCategories: ReplayCounts;
-  subscriptionProviders: ReplayCounts;
-  configsApplied: boolean;
-}
-
-export interface ReplayManager {
-  Currencies: {
-    commonGet: (filter: FilterCurrencyDto) => Promise<CommonCurrencyDto[]>;
-    insert: (
-      dto: AddCurrencyDto,
-    ) => Promise<{ id: number; name: string; symbol: string }>;
-  };
-  Accounts: {
-    commonGet: (filter: FilterAccountDto) => Promise<CommonAccountDto[]>;
-    insert: (dto: AddAccountDto) => Promise<{ id: number; name: string }>;
-  };
-  TransactionCategories: {
-    commonGet: (
-      filter: FilterTransactionCategoryDto,
-    ) => Promise<CommonTransactionCategoryDto[]>;
-    insert: (
-      dto: AddTransactionCategoryDto,
-    ) => Promise<{ id: number; name: string }>;
-  };
-  SubscriptionProviders?: {
-    commonGet: (
-      filter: FilterSubscriptionProviderDto,
-    ) => Promise<CommonSubscriptionProviderDto[]>;
-    insert: (
-      dto: AddSubscriptionProviderDto,
-    ) => Promise<{ id: number; name: string }>;
-  };
-  UserEntityConfigs: {
-    putBatch: (payload: { entities: UserEntityConfigDto[] }) => Promise<unknown>;
-  };
-}
+import type {
+  ExistingDataSummary,
+  OnboardingDraft,
+  ReplayCounts,
+  ReplayManager,
+  ReplayMode,
+  ReplayResult,
+} from "./types";
 
 const emptyCounts = (): ReplayCounts => ({
   created: 0,
@@ -71,18 +19,10 @@ const emptyCounts = (): ReplayCounts => ({
   skipped: 0,
 });
 
-const normalizeName = (name: string): string =>
-  name.trim().toLocaleLowerCase();
+const normalizeName = (name: string): string => name.trim().toLocaleLowerCase();
 
 const emptyFilter = <T extends object>(): T =>
   normalizeCommonFilters() as unknown as T;
-
-export interface ExistingDataSummary {
-  currencies: number;
-  accounts: number;
-  transactionCategories: number;
-  subscriptionProviders: number;
-}
 
 export const fetchExistingDataSummary = async (
   manager: ReplayManager,

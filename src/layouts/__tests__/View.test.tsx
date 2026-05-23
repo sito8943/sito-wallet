@@ -140,9 +140,6 @@ vi.mock("hooks", () => ({
 vi.mock("components", () => ({
   SearchModal: () => <div data-testid="search-modal" />,
   OfflineBanner: () => <div data-testid="offline-banner" />,
-  OnboardingDraftReplayManager: () => (
-    <div data-testid="onboarding-draft-replay" />
-  ),
 }));
 
 vi.mock("providers", () => ({

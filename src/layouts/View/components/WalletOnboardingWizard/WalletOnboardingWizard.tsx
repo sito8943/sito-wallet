@@ -46,11 +46,14 @@ export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
     UserEntityConfigKey[]
   >(() => initialEnabledEntityKeys ?? [...USER_ENTITY_CONFIG_KEYS]);
 
-  const handleToggleEntity = useCallback((entityKey: UserEntityConfigKey) => {
-    setSelectedEntityKeys((previous) =>
-      toggleSelectedEntityKey(previous, entityKey),
-    );
-  }, [setSelectedEntityKeys]);
+  const handleToggleEntity = useCallback(
+    (entityKey: UserEntityConfigKey) => {
+      setSelectedEntityKeys((previous) =>
+        toggleSelectedEntityKey(previous, entityKey),
+      );
+    },
+    [setSelectedEntityKeys],
+  );
 
   const handleEntitiesNext = useCallback(async () => {
     if (selectedEntityKeys.length === 0) {

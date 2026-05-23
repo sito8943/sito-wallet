@@ -3,26 +3,26 @@ import { useTranslation } from "react-i18next";
 
 import { useAuth, useNotification } from "@sito/dashboard-app";
 
-import { useManager, useOnboardingDraft } from "providers";
-
+import { OnboardingDraftReplayDialog } from "components";
 import {
+  entityKeysToConfigs,
   fetchExistingDataSummary,
   hasExistingData,
   isAnonymousVisitorSession,
+  countDraftItems,
   isDraftEmpty,
   replayDraft,
+  resolveRequiredEntityKeys,
   type ReplayMode,
 } from "lib";
 
-import {
-  entityKeysToConfigs,
-  resolveRequiredEntityKeys,
-} from "../../layouts/View/components/OnboardingEntitySelection";
+import { useManager } from "../useSWManager";
+import { useOnboardingDraft } from "../OnboardingDraft";
+import type { BasicProviderPropTypes } from "../types";
 
-import { OnboardingDraftReplayDialog } from "./OnboardingDraftReplayDialog";
-import { countDraftItems } from "./utils";
-
-export function OnboardingDraftReplayManager() {
+export const OnboardingDraftReplayProvider = ({
+  children,
+}: BasicProviderPropTypes) => {
   const { t } = useTranslation();
   const { account, isInGuestMode } = useAuth();
   const { showErrorNotification, showSuccessNotification } = useNotification();
@@ -117,23 +117,26 @@ export function OnboardingDraftReplayManager() {
     };
   }, [account?.id, draft, isAnonymous, manager, runReplay]);
 
-  if (!open) return null;
-
   return (
-    <OnboardingDraftReplayDialog
-      open={open}
-      draft={draft}
-      isLoading={isLoading}
-      onMerge={() => {
-        void runReplay("merge");
-      }}
-      onDiscard={() => {
-        clear();
-        setOpen(false);
-      }}
-      onLater={() => {
-        setOpen(false);
-      }}
-    />
+    <>
+      {children}
+      {open && (
+        <OnboardingDraftReplayDialog
+          open={open}
+          draft={draft}
+          isLoading={isLoading}
+          onMerge={() => {
+            void runReplay("merge");
+          }}
+          onDiscard={() => {
+            clear();
+            setOpen(false);
+          }}
+          onLater={() => {
+            setOpen(false);
+          }}
+        />
+      )}
+    </>
   );
-}
+};
