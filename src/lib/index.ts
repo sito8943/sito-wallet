@@ -12,3 +12,6 @@ export * from "./routes";
 
 // types
 export * from "./types";
+
+// onboarding
+export * from "./onboarding";

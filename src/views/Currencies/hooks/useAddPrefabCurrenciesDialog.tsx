@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth, useNotification, usePostDialog } from "@sito/dashboard-app";
 
 // providers
-import { useManager } from "providers";
+import { useManager, useOnboardingDraft } from "providers";
 
 // components
 import { PREFAB_CURRENCIES } from "components";
@@ -20,11 +20,17 @@ import type { AddCurrencyDto, CurrencyDto } from "lib";
 // types
 import type { PrefabCurrenciesFormType } from "../types";
 
+interface PrefabCurrenciesPayload {
+  items: AddCurrencyDto[];
+  codes: string[];
+}
+
 export function useAddPrefabCurrenciesDialog() {
   const { t } = useTranslation();
   const { account } = useAuth();
   const { showErrorNotification } = useNotification();
   const manager = useManager();
+  const { isAnonymous, addCurrencies } = useOnboardingDraft();
 
   const queryKey = useMemo(() => CurrenciesQueryKeys.all().queryKey, []);
 
@@ -34,13 +40,14 @@ export function useAddPrefabCurrenciesDialog() {
   );
 
   const { handleSubmit, ...rest } = usePostDialog<
-    AddCurrencyDto[],
+    PrefabCurrenciesPayload,
     CurrencyDto,
     PrefabCurrenciesFormType
   >({
     defaultValues,
-    formToDto: (form) =>
-      form.codes.map((code) => {
+    formToDto: (form) => ({
+      codes: form.codes,
+      items: form.codes.map((code) => {
         const prefab = PREFAB_CURRENCIES.find((c) => c.code === code);
         return {
           name: prefab?.name ?? code,
@@ -49,7 +56,21 @@ export function useAddPrefabCurrenciesDialog() {
           userId: account?.id ?? 0,
         };
       }),
-    mutationFn: (data) => manager.Currencies.insertMany(data),
+    }),
+    mutationFn: async (payload) => {
+      if (isAnonymous) {
+        addCurrencies(
+          payload.items.map((item, index) => ({
+            name: item.name,
+            symbol: item.symbol,
+            description: item.description,
+            prefabCode: payload.codes[index],
+          })),
+        );
+        return undefined as unknown as CurrencyDto;
+      }
+      return manager.Currencies.insertMany(payload.items);
+    },
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:prefabs.dialog.currenciesTitle"),
     onError: () =>

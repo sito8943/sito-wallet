@@ -50,22 +50,6 @@
   @apply text-xs leading-snug text-text-muted;
 }
 
-.prefab-suggestions-account-card {
-  @apply flex flex-col gap-2 rounded-lg border border-border bg-base-light p-3 transition;
-}
-
-.prefab-suggestions-account-toggle {
-  @apply flex items-center gap-3 cursor-pointer text-left;
-}
-
-.prefab-suggestions-account-fields {
-  @apply flex gap-2 flex-wrap pt-2;
-}
-
-.prefab-suggestions-field {
-  @apply flex flex-col gap-1 text-xs text-text-muted flex-1 min-w-24;
-}
-
 .prefab-suggestions-provider-logo {
   @apply h-10 w-10 shrink-0 rounded-full object-contain bg-base;
 }

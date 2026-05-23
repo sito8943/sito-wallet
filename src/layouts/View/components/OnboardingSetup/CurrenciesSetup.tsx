@@ -4,7 +4,7 @@ import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { ImportDialog, useImportDialog } from "@sito/dashboard-app";
 
 // providers
-import { useManager } from "providers";
+import { useManager, useOnboardingDraft } from "providers";
 
 // hooks
 import { CurrenciesQueryKeys } from "hooks";
@@ -28,6 +28,7 @@ import { OnboardingSetupStep } from "./OnboardingSetupStep";
 
 export function CurrenciesSetup() {
   const manager = useManager();
+  const { isAnonymous } = useOnboardingDraft();
   const addCurrency = useAddCurrency();
   const prefabCurrencies = useAddPrefabCurrenciesDialog();
 
@@ -49,11 +50,13 @@ export function CurrenciesSetup() {
         descriptionKey="_pages:onboarding.setup.currencies.description"
         createIcon={faCoins}
         onCreate={() => addCurrency.openDialog()}
-        onImport={() => importCurrencies.action().onClick()}
+        onImport={
+          isAnonymous ? undefined : () => importCurrencies.action().onClick()
+        }
         onPrefab={() => prefabCurrencies.openDialog()}
       />
       <AddCurrencyDialog {...addCurrency} />
-      <ImportDialog {...importCurrencies} />
+      {!isAnonymous && <ImportDialog {...importCurrencies} />}
       <AddPrefabCurrenciesDialog {...prefabCurrencies} />
     </>
   );

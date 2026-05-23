@@ -1,4 +1,4 @@
-import type { CommonCurrencyDto, PrefabSubscriptionProviderDto } from "lib";
+import type { PrefabSubscriptionProviderDto } from "lib";
 
 export type PrefabCurrency = {
   code: string;
@@ -13,19 +13,6 @@ export type PrefabCategory = {
   type: "income" | "expense";
   icon: string;
   color: string;
-};
-
-export type PrefabAccount = {
-  key: string;
-  name: string;
-  type: "cash" | "bank" | "savings" | "credit" | "wallet";
-  icon: string;
-  color: string;
-};
-
-export type AccountConfigEntry = {
-  balance: number;
-  currencyId: number;
 };
 
 export type PrefabCurrenciesGridPropsType = {
@@ -48,12 +35,3 @@ export type PrefabSubscriptionProvidersGridPropsType = {
   defaultCurrencyCode: string;
 };
 
-export type PrefabAccountsFieldValue = Record<string, AccountConfigEntry>;
-
-export type PrefabAccountsFieldPropsType = {
-  value: PrefabAccountsFieldValue;
-  onChange: (next: PrefabAccountsFieldValue) => void;
-  disabled?: boolean;
-  currencies: CommonCurrencyDto[];
-  defaultCurrencyId: number;
-};

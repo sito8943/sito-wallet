@@ -29,22 +29,26 @@ export function OnboardingSetupStep(props: OnboardingSetupStepPropsType) {
             </span>
           </span>
         </Button>
-        <Button variant="outlined" onClick={onImport}>
-          <span className="onboarding-setup-button-content">
-            <FontAwesomeIcon icon={faCloudUpload} />
-            <span className="max-sm:hidden">
-              {t("_accessibility:buttons.import")}
+        {onImport && (
+          <Button variant="outlined" onClick={onImport}>
+            <span className="onboarding-setup-button-content">
+              <FontAwesomeIcon icon={faCloudUpload} />
+              <span className="max-sm:hidden">
+                {t("_accessibility:buttons.import")}
+              </span>
             </span>
-          </span>
-        </Button>
-        <Button variant="submit" color="primary" onClick={onPrefab}>
-          <span className="onboarding-setup-button-content">
-            <FontAwesomeIcon icon={faWandMagicSparkles} />
-            <span className="max-sm:hidden">
-              {t("_pages:prefabs.trySuggestions")}
+          </Button>
+        )}
+        {onPrefab && (
+          <Button variant="submit" color="primary" onClick={onPrefab}>
+            <span className="onboarding-setup-button-content">
+              <FontAwesomeIcon icon={faWandMagicSparkles} />
+              <span className="max-sm:hidden">
+                {t("_pages:prefabs.trySuggestions")}
+              </span>
             </span>
-          </span>
-        </Button>
+          </Button>
+        )}
       </div>
     </div>
   );

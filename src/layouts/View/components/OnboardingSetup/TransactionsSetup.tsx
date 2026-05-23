@@ -4,7 +4,7 @@ import { faTags } from "@fortawesome/free-solid-svg-icons";
 import { ImportDialog, useImportDialog } from "@sito/dashboard-app";
 
 // providers
-import { useManager } from "providers";
+import { useManager, useOnboardingDraft } from "providers";
 
 // hooks
 import { TransactionsQueryKeys } from "hooks";
@@ -28,6 +28,7 @@ import { OnboardingSetupStep } from "./OnboardingSetupStep";
 
 export function TransactionsSetup() {
   const manager = useManager();
+  const { isAnonymous } = useOnboardingDraft();
   const addTransactionCategory = useAddTransactionCategoryDialog();
   const prefabCategories = useAddPrefabCategoriesDialog();
 
@@ -49,11 +50,13 @@ export function TransactionsSetup() {
         descriptionKey="_pages:onboarding.setup.transactions.description"
         createIcon={faTags}
         onCreate={() => addTransactionCategory.openDialog()}
-        onImport={() => importTransactions.action().onClick()}
+        onImport={
+          isAnonymous ? undefined : () => importTransactions.action().onClick()
+        }
         onPrefab={() => prefabCategories.openDialog()}
       />
       <AddTransactionCategoryDialog {...addTransactionCategory} />
-      <ImportDialog {...importTransactions} />
+      {!isAnonymous && <ImportDialog {...importTransactions} />}
       <AddPrefabCategoriesDialog {...prefabCategories} />
     </>
   );

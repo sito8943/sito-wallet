@@ -15,6 +15,6 @@ export interface OnboardingSetupStepPropsType {
   descriptionKey: string;
   createIcon: IconDefinition;
   onCreate: () => void;
-  onImport: () => void;
-  onPrefab: () => void;
+  onImport?: () => void;
+  onPrefab?: () => void;
 }

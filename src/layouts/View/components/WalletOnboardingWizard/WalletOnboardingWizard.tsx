@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth, useNotification } from "@sito/dashboard-app";
 
 // providers
-import { useFeatureFlags, useManager } from "providers";
+import { useFeatureFlags, useManager, useOnboardingDraft } from "providers";
 
 import {
   OnboardingEntitySelection,
@@ -36,6 +36,8 @@ export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
   const { showErrorNotification } = useNotification();
   const manager = useManager();
   const { applyFeaturePayload } = useFeatureFlags();
+  const { isAnonymous, setSelectedEntityKeys: setDraftSelectedEntityKeys } =
+    useOnboardingDraft();
 
   const [selectedEntityKeys, setSelectedEntityKeys] = useState<
     UserEntityConfigKey[]
@@ -48,9 +50,7 @@ export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
     setSelectedEntityKeys((previous) =>
       toggleSelectedEntityKey(previous, entityKey),
     );
-  }, []);
-
-  console.log(selectedEntityKeys);
+  }, [setSelectedEntityKeys]);
 
   const handleEntitiesNext = useCallback(async () => {
     if (selectedEntityKeys.length === 0) {
@@ -70,6 +70,8 @@ export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
         showErrorNotification({ message: t("_accessibility:errors.500") });
         return false;
       }
+    } else if (isAnonymous) {
+      setDraftSelectedEntityKeys(resolvedEntityKeys);
     }
 
     setConfirmedEntityKeys(resolvedEntityKeys);
@@ -78,8 +80,10 @@ export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
   }, [
     account?.id,
     applyFeaturePayload,
+    isAnonymous,
     manager.UserEntityConfigs,
     selectedEntityKeys,
+    setDraftSelectedEntityKeys,
     showErrorNotification,
     t,
   ]);

@@ -53,13 +53,6 @@ export interface AdjustBalanceDialogPropsType extends TriggerFormDialogPropsType
   selectedAccount: AccountDto | null;
 }
 
-export interface PrefabAccountsFormType extends FieldValues {
-  items: Record<string, { balance: number; currencyId: number }>;
-}
-
-export type AddPrefabAccountsDialogPropsType =
-  FormDialogPropsType<PrefabAccountsFormType>;
-
 export enum AccountActions {
   ViewTransactions = "viewTransactions",
   AddTransaction = "addTransaction",

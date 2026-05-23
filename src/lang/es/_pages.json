@@ -205,6 +205,17 @@
         "title": "Deja listos tus proveedores de suscripción.",
         "description": ""
       }
+    },
+    "replay": {
+      "title": "Restaurar tu configuración del onboarding",
+      "message": "Completaste el onboarding sin sesión. Guardamos {{count}} elemento(s). Tu cuenta ya tiene datos. ¿Qué prefieres?",
+      "actions": {
+        "merge": "Fusionar con existente",
+        "discard": "Descartar lo guardado",
+        "later": "Decidir luego"
+      },
+      "success": "Tu configuración fue aplicada a tu cuenta.",
+      "error": "Algo salió mal al aplicar tu configuración guardada."
     }
   },
   "prefabs": {
@@ -213,7 +224,6 @@
     "dialog": {
       "currenciesTitle": "Monedas sugeridas",
       "categoriesTitle": "Categorías sugeridas",
-      "accountsTitle": "Cuentas sugeridas",
       "subscriptionProvidersTitle": "Proveedores sugeridos"
     },
     "currencies": {
@@ -241,18 +251,6 @@
         "shopping": { "name": "Compras" },
         "education": { "name": "Educación" },
         "savings": { "name": "Ahorros" }
-      }
-    },
-    "accounts": {
-      "balance": "Saldo inicial",
-      "currency": "Moneda",
-      "requiresCurrencies": "Añade una moneda primero para sugerir cuentas.",
-      "items": {
-        "cash": { "name": "Efectivo" },
-        "main_bank": { "name": "Banco principal" },
-        "savings": { "name": "Ahorros" },
-        "credit_card": { "name": "Tarjeta de crédito" },
-        "digital_wallet": { "name": "Billetera digital" }
       }
     },
     "subscriptions": {

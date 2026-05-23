@@ -4,20 +4,14 @@ import { faWallet } from "@fortawesome/free-solid-svg-icons";
 import { ImportDialog, useImportDialog } from "@sito/dashboard-app";
 
 // providers
-import { useManager } from "providers";
+import { useManager, useOnboardingDraft } from "providers";
 
 // hooks
 import { AccountsQueryKeys } from "hooks";
-import {
-  useAddAccountDialog,
-  useAddPrefabAccountsDialog,
-} from "views/Accounts/hooks";
+import { useAddAccountDialog } from "views/Accounts/hooks";
 
 // components
-import {
-  AddAccountDialog,
-  AddPrefabAccountsDialog,
-} from "views/Accounts/components";
+import { AddAccountDialog } from "views/Accounts/components";
 
 // lib
 import type { AccountDto, ImportPreviewAccountDto } from "lib";
@@ -28,8 +22,8 @@ import { OnboardingSetupStep } from "./OnboardingSetupStep";
 
 export function AccountsSetup() {
   const manager = useManager();
+  const { isAnonymous } = useOnboardingDraft();
   const addAccount = useAddAccountDialog();
-  const prefabAccounts = useAddPrefabAccountsDialog();
 
   const importAccounts = useImportDialog<AccountDto, ImportPreviewAccountDto>({
     entity: Tables.Accounts,
@@ -46,12 +40,12 @@ export function AccountsSetup() {
         descriptionKey="_pages:onboarding.setup.accounts.description"
         createIcon={faWallet}
         onCreate={() => addAccount.openDialog()}
-        onImport={() => importAccounts.action().onClick()}
-        onPrefab={() => prefabAccounts.openDialog()}
+        onImport={
+          isAnonymous ? undefined : () => importAccounts.action().onClick()
+        }
       />
       <AddAccountDialog {...addAccount} />
-      <ImportDialog {...importAccounts} />
-      <AddPrefabAccountsDialog {...prefabAccounts} />
+      {!isAnonymous && <ImportDialog {...importAccounts} />}
     </>
   );
 }

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth, useNotification, usePostDialog } from "@sito/dashboard-app";
 
 // providers
-import { useManager } from "providers";
+import { useManager, useOnboardingDraft } from "providers";
 
 // components
 import { PREFAB_CATEGORIES } from "components";
@@ -20,11 +20,17 @@ import type { AddTransactionCategoryDto, TransactionCategoryDto } from "lib";
 // types
 import type { PrefabCategoriesFormType } from "../types";
 
+interface PrefabCategoriesPayload {
+  items: AddTransactionCategoryDto[];
+  keys: string[];
+}
+
 export function useAddPrefabCategoriesDialog() {
   const { t } = useTranslation();
   const { account } = useAuth();
   const { showErrorNotification } = useNotification();
   const manager = useManager();
+  const { isAnonymous, addTransactionCategories } = useOnboardingDraft();
 
   const queryKey = useMemo(
     () => TransactionCategoriesQueryKeys.all().queryKey,
@@ -37,29 +43,54 @@ export function useAddPrefabCategoriesDialog() {
   );
 
   const { handleSubmit, ...rest } = usePostDialog<
-    AddTransactionCategoryDto[],
+    PrefabCategoriesPayload,
     TransactionCategoryDto,
     PrefabCategoriesFormType
   >({
     defaultValues,
-    formToDto: (form) =>
-      form.keys
+    formToDto: (form) => {
+      const entries = form.keys
         .map((key) => {
           const prefab = PREFAB_CATEGORIES.find((c) => c.key === key);
           if (!prefab) return null;
           return {
-            name: t(`_pages:prefabs.categories.items.${key}.name`),
-            description: "",
-            color: prefab.color,
-            userId: account?.id ?? 0,
-            type:
-              prefab.type === "income"
-                ? TransactionType.In
-                : TransactionType.Out,
+            key,
+            item: {
+              name: t(`_pages:prefabs.categories.items.${key}.name`),
+              description: "",
+              color: prefab.color,
+              userId: account?.id ?? 0,
+              type:
+                prefab.type === "income"
+                  ? TransactionType.In
+                  : TransactionType.Out,
+            } as AddTransactionCategoryDto,
           };
         })
-        .filter((v): v is AddTransactionCategoryDto => v !== null),
-    mutationFn: (data) => manager.TransactionCategories.insertMany(data),
+        .filter(
+          (v): v is { key: string; item: AddTransactionCategoryDto } =>
+            v !== null,
+        );
+      return {
+        items: entries.map((e) => e.item),
+        keys: entries.map((e) => e.key),
+      };
+    },
+    mutationFn: async (payload) => {
+      if (isAnonymous) {
+        addTransactionCategories(
+          payload.items.map((item, index) => ({
+            name: item.name,
+            description: item.description,
+            color: item.color,
+            type: item.type,
+            prefabKey: payload.keys[index],
+          })),
+        );
+        return undefined as unknown as TransactionCategoryDto;
+      }
+      return manager.TransactionCategories.insertMany(payload.items);
+    },
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:prefabs.dialog.categoriesTitle"),
     onError: () =>

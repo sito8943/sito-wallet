@@ -4,7 +4,7 @@ import { faRepeat } from "@fortawesome/free-solid-svg-icons";
 import { ImportDialog, useImportDialog } from "@sito/dashboard-app";
 
 // providers
-import { useManager } from "providers";
+import { useManager, useOnboardingDraft } from "providers";
 
 // hooks
 import { SubscriptionProvidersQueryKeys } from "hooks";
@@ -31,6 +31,7 @@ import { OnboardingSetupStep } from "./OnboardingSetupStep";
 
 export function SubscriptionsSetup() {
   const manager = useManager();
+  const { isAnonymous } = useOnboardingDraft();
   const addSubscriptionProvider = useAddSubscriptionProviderDialog();
   const prefabSubscriptionProviders = useAddPrefabSubscriptionProvidersDialog();
   const subscriptionProvidersClient =
@@ -63,11 +64,15 @@ export function SubscriptionsSetup() {
         descriptionKey="_pages:onboarding.setup.subscriptions.description"
         createIcon={faRepeat}
         onCreate={() => addSubscriptionProvider.openDialog()}
-        onImport={() => importSubscriptionProviders.action().onClick()}
+        onImport={
+          isAnonymous
+            ? undefined
+            : () => importSubscriptionProviders.action().onClick()
+        }
         onPrefab={() => prefabSubscriptionProviders.openDialog()}
       />
       <AddSubscriptionProviderDialog {...addSubscriptionProvider} />
-      <ImportDialog {...importSubscriptionProviders} />
+      {!isAnonymous && <ImportDialog {...importSubscriptionProviders} />}
       <AddPrefabSubscriptionProvidersDialog {...prefabSubscriptionProviders} />
     </>
   );

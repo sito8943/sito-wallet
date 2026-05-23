@@ -6,7 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useNotification, usePostDialog } from "@sito/dashboard-app";
 
 // providers
-import { useManager } from "providers";
+import { useManager, useOnboardingDraft } from "providers";
 
 // hooks
 import { SubscriptionProvidersQueryKeys } from "hooks";
@@ -22,11 +22,17 @@ import type {
 // types
 import type { PrefabSubscriptionProvidersFormType } from "../types";
 
+interface PrefabSubscriptionProvidersPayload {
+  items: AddSubscriptionProviderDto[];
+  keys: string[];
+}
+
 export function useAddPrefabSubscriptionProvidersDialog() {
   const { t } = useTranslation();
   const { showErrorNotification } = useNotification();
   const manager = useManager();
   const queryClient = useQueryClient();
+  const { isAnonymous, addSubscriptionProviders } = useOnboardingDraft();
 
   const queryKey = useMemo(
     () => SubscriptionProvidersQueryKeys.all().queryKey,
@@ -39,7 +45,7 @@ export function useAddPrefabSubscriptionProvidersDialog() {
   );
 
   const { handleSubmit, ...rest } = usePostDialog<
-    AddSubscriptionProviderDto[],
+    PrefabSubscriptionProvidersPayload,
     SubscriptionProviderDto,
     PrefabSubscriptionProvidersFormType
   >({
@@ -53,24 +59,47 @@ export function useAddPrefabSubscriptionProvidersDialog() {
           country,
         ]) ?? [];
 
-      return form.keys
-        .map((key): AddSubscriptionProviderDto | null => {
+      const entries = form.keys
+        .map((key) => {
           const prefab = providers.find((p) => p.key === key);
           if (!prefab) return null;
           return {
-            name: prefab.name,
-            description: prefab.description ?? null,
-            website: prefab.website ?? null,
-            photo: prefab.image ?? null,
+            key,
+            item: {
+              name: prefab.name,
+              description: prefab.description ?? null,
+              website: prefab.website ?? null,
+              photo: prefab.image ?? null,
+            } as AddSubscriptionProviderDto,
           };
         })
-        .filter((v): v is AddSubscriptionProviderDto => v !== null);
+        .filter(
+          (v): v is { key: string; item: AddSubscriptionProviderDto } =>
+            v !== null,
+        );
+
+      return {
+        items: entries.map((e) => e.item),
+        keys: entries.map((e) => e.key),
+      };
     },
-    mutationFn: (data) => {
+    mutationFn: async (payload) => {
+      if (isAnonymous) {
+        addSubscriptionProviders(
+          payload.items.map((item, index) => ({
+            name: item.name,
+            description: item.description ?? null,
+            website: item.website ?? null,
+            photo: item.photo ?? null,
+            prefabKey: payload.keys[index],
+          })),
+        );
+        return undefined as unknown as SubscriptionProviderDto;
+      }
       if (!("SubscriptionProviders" in manager)) {
         throw new Error("SubscriptionProviders manager unavailable");
       }
-      return manager.SubscriptionProviders.insertMany(data);
+      return manager.SubscriptionProviders.insertMany(payload.items);
     },
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:prefabs.dialog.subscriptionProvidersTitle"),

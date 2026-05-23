@@ -205,6 +205,17 @@
         "title": "Set up your subscription providers.",
         "description": "Create a provider or import your catalog before adding recurring payments."
       }
+    },
+    "replay": {
+      "title": "Restore your onboarding setup",
+      "message": "You filled out the onboarding while signed out. We saved {{count}} item(s). Your account already has some data. How would you like to proceed?",
+      "actions": {
+        "merge": "Merge with existing",
+        "discard": "Discard saved",
+        "later": "Decide later"
+      },
+      "success": "Onboarding setup applied to your account.",
+      "error": "Something went wrong while applying your saved setup."
     }
   },
   "prefabs": {
@@ -213,7 +224,6 @@
     "dialog": {
       "currenciesTitle": "Suggested currencies",
       "categoriesTitle": "Suggested categories",
-      "accountsTitle": "Suggested accounts",
       "subscriptionProvidersTitle": "Suggested subscription providers"
     },
     "currencies": {
@@ -241,18 +251,6 @@
         "shopping": { "name": "Shopping" },
         "education": { "name": "Education" },
         "savings": { "name": "Savings" }
-      }
-    },
-    "accounts": {
-      "balance": "Initial balance",
-      "currency": "Currency",
-      "requiresCurrencies": "Add a currency first to suggest accounts.",
-      "items": {
-        "cash": { "name": "Cash" },
-        "main_bank": { "name": "Main Bank" },
-        "savings": { "name": "Savings" },
-        "credit_card": { "name": "Credit Card" },
-        "digital_wallet": { "name": "Digital Wallet" }
       }
     },
     "subscriptions": {

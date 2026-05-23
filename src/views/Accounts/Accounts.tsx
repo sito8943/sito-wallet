@@ -1,11 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAdd,
-  faWallet,
-  faWandMagicSparkles,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faWallet } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
 import {
@@ -30,7 +26,6 @@ import { useManager, useRegisterBottomNavAction } from "providers";
 import {
   AddAccountDialog,
   AccountCard,
-  AddPrefabAccountsDialog,
   EditAccountDialog,
   AdjustBalanceDialog,
 } from "./components";
@@ -45,7 +40,6 @@ import {
 } from "hooks";
 import {
   useAddAccountDialog,
-  useAddPrefabAccountsDialog,
   useEditAccountDialog,
   useSyncAccountMutation,
   useViewTransactionsAction,
@@ -73,8 +67,6 @@ export function Accounts() {
   const { showErrorNotification } = useNotification();
 
   const manager = useManager();
-
-  const prefabAccounts = useAddPrefabAccountsDialog();
 
   const {
     data,
@@ -220,13 +212,6 @@ export function Accounts() {
                     onClick: () => addAccount.openDialog(),
                     tooltip: t("_pages:accounts.add"),
                   },
-                  {
-                    icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
-                    id: "prefab-suggestions",
-                    disabled: isLoading,
-                    onClick: () => prefabAccounts.openDialog(),
-                    tooltip: t("_pages:prefabs.trySuggestions"),
-                  },
                 ]}
               />
             }
@@ -249,7 +234,6 @@ export function Accounts() {
           <ConfirmationDialog {...restoreAccount} />
           <ImportDialog {...importAccounts} />
           <AdjustBalanceDialog {...adjustBalance} />
-          <AddPrefabAccountsDialog {...prefabAccounts} />
         </>
       ) : (
         <Error error={error} />

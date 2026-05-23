@@ -140,6 +140,9 @@ vi.mock("hooks", () => ({
 vi.mock("components", () => ({
   SearchModal: () => <div data-testid="search-modal" />,
   OfflineBanner: () => <div data-testid="offline-banner" />,
+  OnboardingDraftReplayManager: () => (
+    <div data-testid="onboarding-draft-replay" />
+  ),
 }));
 
 vi.mock("providers", () => ({
@@ -152,6 +155,27 @@ vi.mock("providers", () => ({
       getAll: mockGetUserEntityConfigs,
       putBatch: vi.fn(() => Promise.resolve([])),
     },
+  }),
+  useOnboardingDraft: () => ({
+    draft: {
+      version: 1,
+      createdAt: 0,
+      updatedAt: 0,
+      nextLocalId: -1,
+      currencies: [],
+      accounts: [],
+      transactionCategories: [],
+      subscriptionProviders: [],
+      selectedEntityKeys: [],
+    },
+    isAnonymous: false,
+    addCurrencies: vi.fn(),
+    addAccounts: vi.fn(),
+    addTransactionCategories: vi.fn(),
+    addSubscriptionProviders: vi.fn(),
+    setSelectedEntityKeys: vi.fn(),
+    clear: vi.fn(),
+    refreshFromStorage: vi.fn(),
   }),
 }));
 
