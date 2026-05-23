@@ -293,6 +293,11 @@ export function Transactions() {
     ],
   );
 
+  const openAddTransaction = useCallback(
+    () => addTransaction.openDialog(),
+    [addTransaction],
+  );
+
   const accountDesktopTabs = useMemo(() => {
     return (accounts?.items?.map((item) => ({
       id: item.id,
@@ -308,6 +313,7 @@ export function Transactions() {
           showFilters={showFilters}
           setShowFilters={setShowFilters}
           onCategoryClick={editTransactionCategory.openDialog}
+          onAddTransaction={openAddTransaction}
         />
       ),
     })) ?? []) as TabsType[];
@@ -317,6 +323,7 @@ export function Transactions() {
     editTransactionCategory.openDialog,
     getTableActions,
     hideDeletedEntities,
+    openAddTransaction,
     parsedCategories,
     showFilters,
   ]);
@@ -334,6 +341,7 @@ export function Transactions() {
           hideDeletedEntities={hideDeletedEntities}
           showFilters={showFilters}
           setShowFilters={setShowFilters}
+          onAddTransaction={openAddTransaction}
         />
       ),
     })) ?? []) as TabsType[];
@@ -342,6 +350,7 @@ export function Transactions() {
     editTransaction,
     getGridActions,
     hideDeletedEntities,
+    openAddTransaction,
     parsedCategories,
     showFilters,
     setShowFilters,

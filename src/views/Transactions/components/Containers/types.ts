@@ -18,4 +18,5 @@ export type TransactionContainerPropsType = {
   showFilters?: boolean;
   setShowFilters?: Dispatch<SetStateAction<boolean>>;
   onCategoryClick?: (id: number) => void;
+  onAddTransaction?: () => void;
 };

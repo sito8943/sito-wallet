@@ -4,7 +4,9 @@ import { useTranslation } from "react-i18next";
 // @sito/dashboard
 import type { ActionType } from "@sito/dashboard-app";
 import {
+  Empty,
   Error,
+  GlobalActions,
   SortOrder,
   Loading,
   PrettyGrid,
@@ -12,7 +14,7 @@ import {
 } from "@sito/dashboard-app";
 
 // icons
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faReceipt, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
@@ -43,6 +45,7 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
     hideDeletedEntities = false,
     showFilters = false,
     setShowFilters,
+    onAddTransaction,
   } = props;
 
   const {
@@ -197,7 +200,25 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
         data={items}
         className="max-sm:pb-6"
         itemClassName="w-full min-w-0"
-        emptyMessage={t("_pages:transactions.empty")}
+        emptyComponent={
+          <Empty
+            message={t("_pages:transactions.empty")}
+            iconProps={{
+              icon: faReceipt,
+              className: "text-5xl max-md:text-3xl text-text-muted",
+            }}
+            action={
+              onAddTransaction
+                ? {
+                    icon: <FontAwesomeIcon icon={faAdd} />,
+                    id: GlobalActions.Add,
+                    onClick: onAddTransaction,
+                    tooltip: t("_pages:transactions.add"),
+                  }
+                : undefined
+            }
+          />
+        }
         loading={isLoading}
         hasMore={!!hasNextPage}
         loadingMore={isFetchingNextPage}

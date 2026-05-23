@@ -2,7 +2,16 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
-import { Error, useTableOptions } from "@sito/dashboard-app";
+import {
+  Empty,
+  Error,
+  GlobalActions,
+  useTableOptions,
+} from "@sito/dashboard-app";
+
+// icons
+import { faAdd, faReceipt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
 import { WalletTable } from "components";
@@ -29,6 +38,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
     setShowFilters,
     hideDeletedEntities = false,
     onCategoryClick,
+    onAddTransaction,
   } = props;
   const { filters: tableFilters } = useTableOptions();
 
@@ -90,9 +100,33 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
 
   // #endregion
 
-  return error ? (
-    <Error error={error} />
-  ) : (
+  if (error) return <Error error={error} />;
+
+  const hasNoTransactions = !isLoading && (data?.items?.length ?? 0) === 0;
+
+  if (hasNoTransactions) {
+    return (
+      <Empty
+        message={t("_pages:transactions.empty")}
+        iconProps={{
+          icon: faReceipt,
+          className: "text-5xl max-md:text-3xl text-text-muted",
+        }}
+        action={
+          onAddTransaction
+            ? {
+                icon: <FontAwesomeIcon icon={faAdd} />,
+                id: GlobalActions.Add,
+                onClick: onAddTransaction,
+                tooltip: t("_pages:transactions.add"),
+              }
+            : undefined
+        }
+      />
+    );
+  }
+
+  return (
     <WalletTable
       total={data?.totalElements ?? 0}
       data={data?.items ?? []}
