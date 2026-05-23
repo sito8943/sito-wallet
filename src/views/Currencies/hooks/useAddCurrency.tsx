@@ -18,6 +18,7 @@ import { CurrenciesQueryKeys } from "hooks";
 import { addEmptyCurrency, formToDto } from "../utils";
 
 // lib
+import { draftCurrencyToDto } from "lib";
 import type { AddCurrencyDto, CurrencyDto } from "lib";
 
 // types
@@ -47,13 +48,7 @@ export function useAddCurrency() {
             description: data.description,
           },
         ]);
-        return {
-          id: added.localId,
-          name: added.name,
-          symbol: added.symbol,
-          description: added.description,
-          user: null,
-        } as CurrencyDto;
+        return draftCurrencyToDto(added);
       }
       return manager.Currencies.insert(data);
     },

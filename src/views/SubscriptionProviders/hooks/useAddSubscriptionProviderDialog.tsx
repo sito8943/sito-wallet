@@ -10,6 +10,7 @@ import {
 import { SubscriptionProvidersQueryKeys } from "hooks";
 import { useManager, useOnboardingDraft } from "providers";
 
+import { draftSubscriptionProviderToDto } from "lib";
 import type { SubscriptionProviderDto } from "lib";
 
 import {
@@ -53,13 +54,7 @@ export function useAddSubscriptionProviderDialog() {
             photo: payload.photo ?? null,
           },
         ]);
-        return {
-          id: added.localId,
-          name: added.name,
-          description: added.description ?? null,
-          website: added.website ?? null,
-          photo: added.photo ?? null,
-        } as unknown as SubscriptionProviderDto;
+        return draftSubscriptionProviderToDto(added);
       }
       if (!subscriptionProvidersClient) {
         throw new Error("subscriptions.featureDisabled");

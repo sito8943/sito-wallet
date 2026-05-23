@@ -16,6 +16,7 @@ import { addEmptyTransactionCategory, formToDto } from "../utils";
 import type { TransactionCategoryFormType } from "../types";
 
 // lib
+import { draftTransactionCategoryToDto } from "lib";
 import type { AddTransactionCategoryDto, TransactionCategoryDto } from "lib";
 
 export function useAddTransactionCategoryDialog() {
@@ -41,15 +42,7 @@ export function useAddTransactionCategoryDialog() {
             type: data.type,
           },
         ]);
-        return {
-          id: added.localId,
-          name: added.name,
-          description: added.description,
-          color: added.color,
-          type: added.type,
-          auto: false,
-          user: null,
-        } as TransactionCategoryDto;
+        return draftTransactionCategoryToDto(added);
       }
       return manager.TransactionCategories.insert(data);
     },

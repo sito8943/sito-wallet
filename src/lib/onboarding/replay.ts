@@ -3,7 +3,6 @@ import type { FilterAccountDto } from "../entities/account/FilterAccountDto";
 import type { FilterCurrencyDto } from "../entities/currency/FilterCurrencyDto";
 import type { FilterSubscriptionProviderDto } from "../entities/subscriptionProvider/FilterSubscriptionProviderDto";
 import type { FilterTransactionCategoryDto } from "../entities/transactionCategory/FilterTransactionCategoryDto";
-import { normalizeCommonFilters } from "../utils/filterNormalization";
 import type {
   ExistingDataSummary,
   OnboardingDraft,
@@ -21,23 +20,25 @@ const emptyCounts = (): ReplayCounts => ({
 
 const normalizeName = (name: string): string => name.trim().toLocaleLowerCase();
 
-const emptyFilter = <T extends object>(): T =>
-  normalizeCommonFilters() as unknown as T;
+const createEmptyCurrencyFilter = (): FilterCurrencyDto => ({});
+const createEmptyAccountFilter = (): FilterAccountDto => ({});
+const createEmptyTransactionCategoryFilter =
+  (): FilterTransactionCategoryDto => ({});
+const createEmptySubscriptionProviderFilter =
+  (): FilterSubscriptionProviderDto => ({});
 
 export const fetchExistingDataSummary = async (
   manager: ReplayManager,
 ): Promise<ExistingDataSummary> => {
   const [currencies, accounts, categories, providers] = await Promise.all([
-    manager.Currencies.commonGet(emptyFilter<FilterCurrencyDto>()).catch(
-      () => [],
-    ),
-    manager.Accounts.commonGet(emptyFilter<FilterAccountDto>()).catch(() => []),
+    manager.Currencies.commonGet(createEmptyCurrencyFilter()).catch(() => []),
+    manager.Accounts.commonGet(createEmptyAccountFilter()).catch(() => []),
     manager.TransactionCategories.commonGet(
-      emptyFilter<FilterTransactionCategoryDto>(),
+      createEmptyTransactionCategoryFilter(),
     ).catch(() => []),
     manager.SubscriptionProviders
       ? manager.SubscriptionProviders.commonGet(
-          emptyFilter<FilterSubscriptionProviderDto>(),
+          createEmptySubscriptionProviderFilter(),
         ).catch(() => [])
       : Promise.resolve([]),
   ]);
@@ -75,7 +76,7 @@ export const replayDraft = async (
   const existingCurrencies =
     mode === "merge"
       ? await manager.Currencies.commonGet(
-          emptyFilter<FilterCurrencyDto>(),
+          createEmptyCurrencyFilter(),
         ).catch(() => [])
       : [];
   const currencyByName = new Map(
@@ -107,7 +108,7 @@ export const replayDraft = async (
   const existingCategories =
     mode === "merge"
       ? await manager.TransactionCategories.commonGet(
-          emptyFilter<FilterTransactionCategoryDto>(),
+          createEmptyTransactionCategoryFilter(),
         ).catch(() => [])
       : [];
   const categoryByName = new Map(
@@ -138,7 +139,7 @@ export const replayDraft = async (
     const existingProviders =
       mode === "merge"
         ? await manager.SubscriptionProviders.commonGet(
-            emptyFilter<FilterSubscriptionProviderDto>(),
+            createEmptySubscriptionProviderFilter(),
           ).catch(() => [])
         : [];
     const providerByName = new Map(

@@ -13,8 +13,7 @@ const isObject = (value: unknown): value is Record<string, unknown> =>
 const isFiniteNumber = (value: unknown): value is number =>
   typeof value === "number" && Number.isFinite(value);
 
-const isString = (value: unknown): value is string =>
-  typeof value === "string";
+const isString = (value: unknown): value is string => typeof value === "string";
 
 const isOptionalString = (value: unknown): value is string | undefined =>
   value === undefined || isString(value);

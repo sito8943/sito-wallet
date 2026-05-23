@@ -15,7 +15,7 @@ import { TransactionCategoriesQueryKeys } from "hooks";
 
 // lib
 import { TransactionType } from "lib";
-import type { AddTransactionCategoryDto, TransactionCategoryDto } from "lib";
+import type { AddTransactionCategoryDto } from "lib";
 
 // types
 import type {
@@ -42,7 +42,7 @@ export function useAddPrefabCategoriesDialog() {
 
   const { handleSubmit, ...rest } = usePostDialog<
     PrefabCategoriesPayload,
-    TransactionCategoryDto,
+    void,
     PrefabCategoriesFormType
   >({
     defaultValues,
@@ -62,7 +62,7 @@ export function useAddPrefabCategoriesDialog() {
                 prefab.type === "income"
                   ? TransactionType.In
                   : TransactionType.Out,
-            } as AddTransactionCategoryDto,
+            },
           };
         })
         .filter(
@@ -85,9 +85,9 @@ export function useAddPrefabCategoriesDialog() {
             prefabKey: payload.keys[index],
           })),
         );
-        return undefined as unknown as TransactionCategoryDto;
+        return;
       }
-      return manager.TransactionCategories.insertMany(payload.items);
+      await manager.TransactionCategories.insertMany(payload.items);
     },
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:prefabs.dialog.categoriesTitle"),

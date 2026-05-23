@@ -16,7 +16,6 @@ import { detectCountry } from "lib";
 import type {
   AddSubscriptionProviderDto,
   PrefabSubscriptionProviderDto,
-  SubscriptionProviderDto,
 } from "lib";
 
 // types
@@ -44,7 +43,7 @@ export function useAddPrefabSubscriptionProvidersDialog() {
 
   const { handleSubmit, ...rest } = usePostDialog<
     PrefabSubscriptionProvidersPayload,
-    SubscriptionProviderDto,
+    void,
     PrefabSubscriptionProvidersFormType
   >({
     defaultValues,
@@ -68,7 +67,7 @@ export function useAddPrefabSubscriptionProvidersDialog() {
               description: prefab.description ?? null,
               website: prefab.website ?? null,
               photo: prefab.image ?? null,
-            } as AddSubscriptionProviderDto,
+            },
           };
         })
         .filter(
@@ -92,12 +91,12 @@ export function useAddPrefabSubscriptionProvidersDialog() {
             prefabKey: payload.keys[index],
           })),
         );
-        return undefined as unknown as SubscriptionProviderDto;
+        return;
       }
       if (!("SubscriptionProviders" in manager)) {
         throw new Error("SubscriptionProviders manager unavailable");
       }
-      return manager.SubscriptionProviders.insertMany(payload.items);
+      await manager.SubscriptionProviders.insertMany(payload.items);
     },
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:prefabs.dialog.subscriptionProvidersTitle"),

@@ -63,14 +63,7 @@ export const OnboardingDraftReplayProvider = ({
         setOpen(false);
       }
     },
-    [
-      clear,
-      draft,
-      manager,
-      showErrorNotification,
-      showSuccessNotification,
-      t,
-    ],
+    [clear, draft, manager, showErrorNotification, showSuccessNotification, t],
   );
 
   useEffect(() => {

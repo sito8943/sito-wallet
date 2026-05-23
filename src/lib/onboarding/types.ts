@@ -110,7 +110,9 @@ export interface ReplayManager {
     ) => Promise<{ id: number; name: string }>;
   };
   UserEntityConfigs: {
-    putBatch: (payload: { entities: UserEntityConfigDto[] }) => Promise<unknown>;
+    putBatch: (payload: {
+      entities: UserEntityConfigDto[];
+    }) => Promise<unknown>;
   };
 }
 

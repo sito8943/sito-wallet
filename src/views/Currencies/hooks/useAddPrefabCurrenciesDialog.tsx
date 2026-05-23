@@ -15,7 +15,6 @@ import { CurrenciesQueryKeys } from "hooks";
 
 // lib
 import { detectCountry, detectCurrency } from "lib";
-import type { CurrencyDto } from "lib";
 
 // types
 import type {
@@ -39,7 +38,7 @@ export function useAddPrefabCurrenciesDialog() {
 
   const { handleSubmit, ...rest } = usePostDialog<
     PrefabCurrenciesPayload,
-    CurrencyDto,
+    void,
     PrefabCurrenciesFormType
   >({
     defaultValues,
@@ -65,9 +64,9 @@ export function useAddPrefabCurrenciesDialog() {
             prefabCode: payload.codes[index],
           })),
         );
-        return undefined as unknown as CurrencyDto;
+        return;
       }
-      return manager.Currencies.insertMany(payload.items);
+      await manager.Currencies.insertMany(payload.items);
     },
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:prefabs.dialog.currenciesTitle"),

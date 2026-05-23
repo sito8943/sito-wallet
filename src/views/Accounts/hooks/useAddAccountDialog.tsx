@@ -16,7 +16,7 @@ import { formToAddDto, addEmptyAccount } from "../utils";
 import type { AccountFormType } from "../types";
 
 // lib
-import { AccountType } from "lib";
+import { AccountType, draftAccountToDto } from "lib";
 import type { AccountDto, AddAccountDto } from "lib";
 
 export function useAddAccountDialog() {
@@ -43,15 +43,7 @@ export function useAddAccountDialog() {
             currencyLocalId: data.currencyId,
           },
         ]);
-        return {
-          id: added.localId,
-          name: added.name,
-          description: added.description,
-          balance: added.balance,
-          type: added.type,
-          currency: null,
-          user: null,
-        } as AccountDto;
+        return draftAccountToDto(added);
       }
       return manager.Accounts.insert(data);
     },
