@@ -47,17 +47,14 @@ import { getFeatureFilteredMenuMap } from "views/menuMap";
 export function View() {
   const { loading: preloadLoading } = useAppPreload();
   const { t, i18n } = useTranslation();
-  const { account, isInGuestMode } = useAuth();
+  const { account } = useAuth();
   const manager = useManager();
   const isOnline = useOnlineStatus();
   const { applyFeaturePayload, isFeatureEnabled } = useFeatureFlags();
   const onboardingStorageKey =
     typeof config.onboarding === "string" ? config.onboarding : "onboarding";
-  const isAnonymousVisitor = isAnonymousVisitorSession(
-    account,
-    isInGuestMode(),
-  );
-  const isLoggedSession = Boolean(account?.id) && !isInGuestMode();
+  const isAnonymousVisitor = isAnonymousVisitorSession(account);
+  const isLoggedSession = Boolean(account?.id);
   const [initialEnabledEntityKeys, setInitialEnabledEntityKeys] = useState<
     UserEntityConfigKey[] | undefined
   >(undefined);

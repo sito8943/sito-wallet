@@ -18,7 +18,6 @@ VITE_REMEMBER="remember_wallet"
 VITE_REFRESH_TOKEN_KEY="refresh_token_wallet"
 VITE_ACCESS_TOKEN_EXPIRES_AT_KEY="access_token_expires_at_wallet"
 VITE_ONBOARDING="onboarding_wallet"
-VITE_GUEST_MODE="guest_mode_wallet"
 VITE_RECENT_SEARCHES="recent_searches_wallet"
 
 VITE_SUPABASE_CO=""

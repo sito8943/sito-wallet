@@ -12,18 +12,15 @@ const {
   mockNavigate,
   mockFromLocal,
   mockToLocal,
-  mockIsInGuestMode,
   mockUseAuth,
   mockTranslate,
   mockUseAppPreload,
   mockApplyFeaturePayload,
   mockGetUserEntityConfigs,
 } = vi.hoisted(() => {
-  const mockIsInGuestMode = vi.fn(() => false);
   const mockTranslate = vi.fn((key: string) => key);
   const mockUseAuth = vi.fn(() => ({
     account: { email: "" },
-    isInGuestMode: mockIsInGuestMode,
   }));
   const mockUseAppPreload = vi.fn(() => ({
     loading: false,
@@ -36,7 +33,6 @@ const {
     mockNavigate: vi.fn(),
     mockFromLocal: vi.fn(() => null),
     mockToLocal: vi.fn(),
-    mockIsInGuestMode,
     mockUseAuth,
     mockTranslate,
     mockUseAppPreload,
@@ -210,19 +206,15 @@ const SignInPage = () => <div data-testid="sign-in">Sign In</div>;
 
 function renderView({
   email = "user@example.com",
-  guestMode = false,
   onboardingDone = false,
   initialPath = "/",
 }: {
   email?: string | null;
-  guestMode?: boolean;
   onboardingDone?: boolean;
   initialPath?: string;
 } = {}) {
-  mockIsInGuestMode.mockReturnValue(guestMode);
   mockUseAuth.mockReturnValue({
     account: email === null ? null : { email },
-    isInGuestMode: mockIsInGuestMode,
   });
   mockFromLocal.mockImplementation((key: string) => {
     if (key === "test-onboarding") return onboardingDone ? true : null;
@@ -248,7 +240,6 @@ describe("View layout", () => {
     mockNavigate.mockReset();
     mockFromLocal.mockReset().mockReturnValue(null);
     mockToLocal.mockReset();
-    mockIsInGuestMode.mockReturnValue(false);
     mockTranslate.mockReset().mockImplementation((key: string) => key);
     mockUseAppPreload.mockReset().mockReturnValue({
       loading: false,
@@ -272,11 +263,6 @@ describe("View layout", () => {
     it("keeps showing Onboarding for anonymous visitors even if the localStorage key is set", () => {
       renderView({ email: null, onboardingDone: true });
       expect(screen.getByTestId("onboarding")).toBeInTheDocument();
-    });
-
-    it("does NOT show Onboarding when localStorage key is set for guest mode", () => {
-      renderView({ email: null, guestMode: true, onboardingDone: true });
-      expect(screen.queryByTestId("onboarding")).toBeNull();
     });
 
     it("saves onboarding flag to localStorage for authenticated first visits", () => {

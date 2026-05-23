@@ -22,21 +22,20 @@ const EMPTY_TASK_KEYS: string[] = [];
 export function useAppPreload(
   options: UseAppPreloadOptions = {},
 ): UseAppPreloadResult {
-  const { account, isInGuestMode } = useAuth();
+  const { account } = useAuth();
 
   const { refreshFeatures } = useFeatureFlags();
   const isOnline = useOnlineStatus();
-  const isGuestMode = isInGuestMode();
 
   const extraTasks = options.extraTasks ?? EMPTY_PRELOAD_TASKS;
 
   const tasksToRefreshFeatures = useMemo<AppPreloadTask>(
     () => ({
       key: "refresh-features",
-      enabled: Boolean(account?.id) && !isGuestMode,
+      enabled: Boolean(account?.id),
       run: async () => refreshFeatures(),
     }),
-    [account?.id, isGuestMode, refreshFeatures],
+    [account?.id, refreshFeatures],
   );
 
   const requiredTasks = useMemo(
@@ -50,11 +49,10 @@ export function useAppPreload(
       [
         account?.id ?? "anonymous",
         account?.token ?? "no-token",
-        isGuestMode ? "guest" : "authenticated",
         isOnline ? "online" : "offline",
         ...requiredTasks.map((task) => task.key),
       ].join("|"),
-    [account?.id, account?.token, isGuestMode, isOnline, requiredTasks],
+    [account?.id, account?.token, isOnline, requiredTasks],
   );
 
   const [hasSettledOnce, setHasSettledOnce] = useState(false);

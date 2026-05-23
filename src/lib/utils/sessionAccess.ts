@@ -11,9 +11,8 @@ export const hasAuthenticatedSession = (
 
 export const isAnonymousVisitorSession = (
   account?: WalletSessionAccountDto | null,
-  isGuestMode = false,
 ): boolean => {
-  return !hasAuthenticatedSession(account) && !isGuestMode;
+  return !hasAuthenticatedSession(account);
 };
 
 export const isAdminSession = (

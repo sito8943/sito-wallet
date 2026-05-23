@@ -18,7 +18,6 @@ vi.mock("react-router-dom", async () => {
 
 const mockUseAuth = vi.fn(() => ({
   account: { email: "" },
-  isInGuestMode: vi.fn(() => false),
 }));
 
 vi.mock("@sito/dashboard-app", () => ({
@@ -56,8 +55,7 @@ function renderAuth(
 ) {
   mockUseAuth.mockReturnValue({
     account: { email: account.email ?? "" },
-    isInGuestMode: vi.fn(() => false),
-  });
+    });
 
   return render(
     <MemoryRouter initialEntries={[initialEntry]}>
@@ -108,8 +106,7 @@ describe("Auth layout", () => {
     it("does NOT call navigate when account has no email property", () => {
       mockUseAuth.mockReturnValue({
         account: {},
-        isInGuestMode: vi.fn(() => false),
-      });
+            });
 
       render(
         <MemoryRouter initialEntries={["/auth/sign-in"]}>

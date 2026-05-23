@@ -11,14 +11,12 @@ import { Dashboard } from "./sections";
 
 export function Home() {
   const { t } = useTranslation();
-  const { account, isInGuestMode } = useAuth();
+  const { account } = useAuth();
 
   return (
     <main className="items-center justify-start md:pt-20 max-md:pt-10 max-sm:pt-5 gap-10 max-md:gap-5">
       <h2 className="self-center justify-self-center text-4xl max-md:text-3xl max-xs:text-2xl">
-        {t("_pages:home.welcome", {
-          user: isInGuestMode() ? t("_pages:home.guest") : account?.username,
-        })}
+        {t("_pages:home.welcome", { user: account?.username })}
       </h2>
       <div className="md:w-1/2 w-5/6">
         <SearchWrapper />

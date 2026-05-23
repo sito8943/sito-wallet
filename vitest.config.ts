@@ -74,7 +74,6 @@ export default defineConfig({
       VITE_SUPABASE_ANON: "test-anon-key",
       VITE_CACHE: "test-cache",
       VITE_ONBOARDING: "test-onboarding",
-      VITE_GUEST_MODE: "test-guest-mode",
       VITE_RECENT_SEARCHES: "test-recent-searches",
       VITE_FEATURE_FLAGS_STORAGE_KEY: "test-feature-flags",
       VITE_FEATURE_BALANCE_GREATER_THAN_ZERO_DEFAULT: "false",

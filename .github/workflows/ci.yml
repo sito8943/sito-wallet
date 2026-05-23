@@ -81,7 +81,6 @@ jobs:
           VITE_SUPABASE_ANON: ${{ secrets.VITE_SUPABASE_ANON }}
           VITE_CACHE: ${{ secrets.VITE_CACHE }}
           VITE_ONBOARDING: ${{ secrets.VITE_ONBOARDING }}
-          VITE_GUEST_MODE: ${{ secrets.VITE_GUEST_MODE }}
           VITE_RECENT_SEARCHES: ${{ secrets.VITE_RECENT_SEARCHES }}
           VITE_INDEXED_DB_NAME: sito_wallet_indexed_db
           VITE_SERVER_PROBE_INTERVAL: 15000

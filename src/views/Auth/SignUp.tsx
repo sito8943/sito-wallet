@@ -5,7 +5,6 @@ import type { RegisterDto } from "@sito/dashboard-app";
 import {
   AuthSignUpView,
   isHttpError,
-  useAuth,
   useNotification,
 } from "@sito/dashboard-app";
 
@@ -25,7 +24,6 @@ const color: "primary" | "secondary" | "tertiary" | "quaternary" =
  */
 export function SignUp() {
   const { t } = useTranslation();
-  const { setGuestMode } = useAuth();
   const { showErrorNotification } = useNotification();
   const manager = useManager();
   const navigate = useNavigate();
@@ -51,8 +49,6 @@ export function SignUp() {
       signInQuestion={t("_pages:auth.signUp.toLogin.question")}
       signInLabel={t("_pages:auth.signUp.toLogin.link")}
       signInTo={AppRoutes.signIn}
-      guestLabel={t("_pages:auth.signUp.guest")}
-      guestAriaLabel={t("_pages:auth.signUp.guest")}
       onSubmit={async (values) => {
         const signUpEmail = values.email.trim();
         await manager.Auth.register({
@@ -69,10 +65,6 @@ export function SignUp() {
         }
 
         navigate(AppRoutes.signUpSuccess);
-      }}
-      onStartAsGuest={() => {
-        setGuestMode(true);
-        navigate(AppRoutes.home);
       }}
       onPasswordMismatch={() =>
         showErrorNotification({

@@ -29,7 +29,6 @@
   },
   "home": {
     "title": "Inicio",
-    "guest": "Invitado",
     "appName": "Sito Wallet",
     "welcome": "Bienvenido {{user}}",
     "dashboard": {
@@ -262,7 +261,6 @@
   "auth": {
     "signIn": {
       "submit": "Entrar",
-      "guest": "Entrar como invitado",
       "title": "Iniciar sesión",
       "remember": "Mantener sesión iniciada",
       "accountRecovery": {
@@ -276,7 +274,6 @@
     },
     "signUp": {
       "submit": "Crear cuenta",
-      "guest": "Entrar como invitado",
       "title": "Registrarse",
       "toLogin": {
         "question": "¿Ya tienes cuenta?",

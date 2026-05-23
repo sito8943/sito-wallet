@@ -25,7 +25,6 @@ describe("ProfileLanguageSyncProvider", () => {
     mockChangeLanguage.mockClear();
     mockUseAuth.mockReturnValue({
       account: { id: 7, email: "sito@example.com" },
-      isInGuestMode: () => false,
     });
     mockUseMyProfile.mockReturnValue({
       data: { language: "es-ES" },
@@ -69,18 +68,4 @@ describe("ProfileLanguageSyncProvider", () => {
     await waitFor(() => expect(mockChangeLanguage).not.toHaveBeenCalled());
   });
 
-  it("does not change the app language in guest mode", async () => {
-    mockUseAuth.mockReturnValue({
-      account: { id: 7, email: "sito@example.com" },
-      isInGuestMode: () => true,
-    });
-
-    render(
-      <ProfileLanguageSyncProvider>
-        <div>content</div>
-      </ProfileLanguageSyncProvider>,
-    );
-
-    await waitFor(() => expect(mockChangeLanguage).not.toHaveBeenCalled());
-  });
 });

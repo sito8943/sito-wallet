@@ -53,7 +53,7 @@ export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
       remountStepOnChange
       steps={steps}
       signInPath={AppRoutes.signIn}
-      guestPath={AppRoutes.home}
+      onStartAsGuest={() => {}}
     />
   );
 }

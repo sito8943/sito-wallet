@@ -15,7 +15,6 @@ const {
   VITE_SUPABASE_CO,
   VITE_SUPABASE_ANON,
   VITE_ONBOARDING,
-  VITE_GUEST_MODE,
   VITE_RECENT_SEARCHES,
   VITE_INDEXED_DB_NAME,
   VITE_APP_VERSION,
@@ -100,7 +99,6 @@ export const config = {
   supabaseCo: VITE_SUPABASE_CO,
   supabaseAnon: VITE_SUPABASE_ANON,
   onboarding: VITE_ONBOARDING,
-  guestMode: VITE_GUEST_MODE,
   indexedDBName: VITE_INDEXED_DB_NAME,
   server: {
     probeInterval: Number(VITE_SERVER_PROBE_INTERVAL) || 15000,
@@ -120,6 +118,5 @@ export const config = {
     refreshTokenKey: authRefreshTokenKey,
     accessTokenExpiresAtKey: authAccessTokenExpiresAtKey,
     accountSnapshotKey: authAccountSnapshotKey,
-    guestMode: VITE_GUEST_MODE,
   },
 };

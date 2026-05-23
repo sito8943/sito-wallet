@@ -24,7 +24,7 @@ const color: "primary" | "secondary" | "tertiary" | "quaternary" =
  */
 export function SignIn() {
   const { t } = useTranslation();
-  const { logUser, setGuestMode } = useAuth();
+  const { logUser } = useAuth();
   const { showErrorNotification } = useNotification();
   const manager = useManager();
   const navigate = useNavigate();
@@ -46,17 +46,10 @@ export function SignIn() {
       recoveryQuestion={t("_pages:auth.signIn.accountRecovery.question")}
       recoveryLabel={t("_pages:auth.signIn.accountRecovery.link")}
       recoveryTo={AppRoutes.recovery}
-      guestLabel={t("_pages:auth.signIn.guest")}
-      guestAriaLabel={t("_pages:auth.signIn.guest")}
       onSubmit={async (values) => {
         console.log("Submitting sign in form with values:", values);
         const session = await manager.Auth.login(values);
         logUser(session, values.rememberMe);
-        setGuestMode(false);
-        navigate(AppRoutes.home);
-      }}
-      onStartAsGuest={() => {
-        setGuestMode(true);
         navigate(AppRoutes.home);
       }}
       onError={(error) => {

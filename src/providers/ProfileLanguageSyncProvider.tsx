@@ -13,14 +13,13 @@ export const ProfileLanguageSyncProvider = ({
   children,
 }: BasicProviderPropTypes) => {
   const { i18n } = useTranslation();
-  const { account, isInGuestMode } = useAuth();
+  const { account } = useAuth();
   const profileQuery = useMyProfile();
 
-  const isGuestMode = isInGuestMode();
   const profileLanguage = profileQuery.data?.language;
 
   useEffect(() => {
-    if (!account?.id || isGuestMode || !profileLanguage) return;
+    if (!account?.id || !profileLanguage) return;
 
     const nextLanguage = normalizeSupportedLanguage(profileLanguage);
     const currentLanguage = normalizeSupportedLanguage(
@@ -30,7 +29,7 @@ export const ProfileLanguageSyncProvider = ({
     if (currentLanguage === nextLanguage) return;
 
     void i18n.changeLanguage(nextLanguage);
-  }, [account?.id, i18n, isGuestMode, profileLanguage]);
+  }, [account?.id, i18n, profileLanguage]);
 
   return <>{children}</>;
 };
