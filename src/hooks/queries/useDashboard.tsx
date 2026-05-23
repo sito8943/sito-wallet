@@ -33,7 +33,6 @@ export function useDashboardsList(
   return useQuery({
     ...DashboardsQueryKeys.list(),
     enabled: !!account?.id,
-    queryFn: () =>
-      manager.Dashboard.get(undefined, { ...normalizedFilters }),
+    queryFn: () => manager.Dashboard.get(undefined, { ...normalizedFilters }),
   });
 }

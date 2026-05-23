@@ -42,7 +42,6 @@ export function useCurrenciesList(
   return useQuery({
     ...CurrenciesQueryKeys.list(normalizedFilters),
     enabled: !!account?.id,
-    queryFn: () =>
-      manager.Currencies.get(undefined, { ...normalizedFilters }),
+    queryFn: () => manager.Currencies.get(undefined, { ...normalizedFilters }),
   });
 }

@@ -6,6 +6,7 @@ import {
   faRepeat,
   faTags,
   faWallet,
+  faWandMagicSparkles,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -19,16 +20,38 @@ import {
   SubscriptionProvidersQueryKeys,
   TransactionsQueryKeys,
 } from "hooks";
-import { useAddAccountDialog } from "views/Accounts/hooks";
+import {
+  useAddAccountDialog,
+  useAddPrefabAccountsDialog,
+} from "views/Accounts/hooks";
 import { useAddCurrency } from "views/Currencies/hooks/useAddCurrency";
-import { useAddSubscriptionProviderDialog } from "views/SubscriptionProviders/hooks";
-import { useAddTransactionCategoryDialog } from "views/TransactionCategories/hooks";
+import { useAddPrefabCurrenciesDialog } from "views/Currencies/hooks";
+import {
+  useAddSubscriptionProviderDialog,
+  useAddPrefabSubscriptionProvidersDialog,
+} from "views/SubscriptionProviders/hooks";
+import {
+  useAddTransactionCategoryDialog,
+  useAddPrefabCategoriesDialog,
+} from "views/TransactionCategories/hooks";
 
 // components
-import { AddAccountDialog } from "views/Accounts/components";
-import { AddCurrencyDialog } from "views/Currencies/components";
-import { AddSubscriptionProviderDialog } from "views/SubscriptionProviders/components";
-import { AddTransactionCategoryDialog } from "views/TransactionCategories/components";
+import {
+  AddAccountDialog,
+  AddPrefabAccountsDialog,
+} from "views/Accounts/components";
+import {
+  AddCurrencyDialog,
+  AddPrefabCurrenciesDialog,
+} from "views/Currencies/components";
+import {
+  AddSubscriptionProviderDialog,
+  AddPrefabSubscriptionProvidersDialog,
+} from "views/SubscriptionProviders/components";
+import {
+  AddTransactionCategoryDialog,
+  AddPrefabCategoriesDialog,
+} from "views/TransactionCategories/components";
 
 // lib
 import type {
@@ -58,6 +81,10 @@ export function OnboardingSetup(props: OnboardingSetupPropsType) {
   const addAccount = useAddAccountDialog();
   const addTransactionCategory = useAddTransactionCategoryDialog();
   const addSubscriptionProvider = useAddSubscriptionProviderDialog();
+  const prefabCurrencies = useAddPrefabCurrenciesDialog();
+  const prefabAccounts = useAddPrefabAccountsDialog();
+  const prefabCategories = useAddPrefabCategoriesDialog();
+  const prefabSubscriptionProviders = useAddPrefabSubscriptionProvidersDialog();
   const subscriptionProvidersClient =
     "SubscriptionProviders" in manager ? manager.SubscriptionProviders : null;
 
@@ -114,6 +141,7 @@ export function OnboardingSetup(props: OnboardingSetupPropsType) {
   });
 
   if (stepKey === "currencies") {
+    console.log(stepKey, prefabCurrencies.open);
     return (
       <>
         <div className="onboarding-setup">
@@ -124,10 +152,10 @@ export function OnboardingSetup(props: OnboardingSetupPropsType) {
             {t("_pages:onboarding.setup.currencies.description")}
           </p>
           <div className="onboarding-setup-actions">
-            <Button onClick={() => addCurrency.openDialog()}>
+            <Button variant="outlined" onClick={() => addCurrency.openDialog()}>
               <span className="onboarding-setup-button-content">
                 <FontAwesomeIcon icon={faCoins} />
-                {t("_pages:onboarding.setup.currencies.create")}
+                {t("_accessibility:buttons.create")}
               </span>
             </Button>
             <Button
@@ -136,13 +164,24 @@ export function OnboardingSetup(props: OnboardingSetupPropsType) {
             >
               <span className="onboarding-setup-button-content">
                 <FontAwesomeIcon icon={faCloudUpload} />
-                {t("_pages:onboarding.setup.currencies.import")}
+                {t("_accessibility:buttons.import")}
+              </span>
+            </Button>
+            <Button
+              variant="submit"
+              color="primary"
+              onClick={() => prefabCurrencies.openDialog()}
+            >
+              <span className="onboarding-setup-button-content">
+                <FontAwesomeIcon icon={faWandMagicSparkles} />
+                {t("_pages:prefabs.trySuggestions")}
               </span>
             </Button>
           </div>
         </div>
         <AddCurrencyDialog {...addCurrency} />
         <ImportDialog {...importCurrencies} />
+        <AddPrefabCurrenciesDialog {...prefabCurrencies} />
       </>
     );
   }
@@ -161,7 +200,7 @@ export function OnboardingSetup(props: OnboardingSetupPropsType) {
             <Button onClick={() => addAccount.openDialog()}>
               <span className="onboarding-setup-button-content">
                 <FontAwesomeIcon icon={faWallet} />
-                {t("_pages:onboarding.setup.accounts.create")}
+                {t("_accessibility:buttons.create")}
               </span>
             </Button>
             <Button
@@ -170,13 +209,23 @@ export function OnboardingSetup(props: OnboardingSetupPropsType) {
             >
               <span className="onboarding-setup-button-content">
                 <FontAwesomeIcon icon={faCloudUpload} />
-                {t("_pages:onboarding.setup.accounts.import")}
+                {t("_accessibility:buttons.import")}
+              </span>
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => prefabAccounts.openDialog()}
+            >
+              <span className="onboarding-setup-button-content">
+                <FontAwesomeIcon icon={faWandMagicSparkles} />
+                {t("_pages:prefabs.trySuggestions")}
               </span>
             </Button>
           </div>
         </div>
         <AddAccountDialog {...addAccount} />
         <ImportDialog {...importAccounts} />
+        <AddPrefabAccountsDialog {...prefabAccounts} />
       </>
     );
   }
@@ -195,7 +244,7 @@ export function OnboardingSetup(props: OnboardingSetupPropsType) {
             <Button onClick={() => addSubscriptionProvider.openDialog()}>
               <span className="onboarding-setup-button-content">
                 <FontAwesomeIcon icon={faRepeat} />
-                {t("_pages:onboarding.setup.subscriptions.createProvider")}
+                {t("_accessibility:buttons.create")}
               </span>
             </Button>
             <Button
@@ -204,13 +253,25 @@ export function OnboardingSetup(props: OnboardingSetupPropsType) {
             >
               <span className="onboarding-setup-button-content">
                 <FontAwesomeIcon icon={faCloudUpload} />
-                {t("_pages:onboarding.setup.subscriptions.importProviders")}
+                {t("_accessibility:buttons.import")}
+              </span>
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => prefabSubscriptionProviders.openDialog()}
+            >
+              <span className="onboarding-setup-button-content">
+                <FontAwesomeIcon icon={faWandMagicSparkles} />
+                {t("_pages:prefabs.trySuggestions")}
               </span>
             </Button>
           </div>
         </div>
         <AddSubscriptionProviderDialog {...addSubscriptionProvider} />
         <ImportDialog {...importSubscriptionProviders} />
+        <AddPrefabSubscriptionProvidersDialog
+          {...prefabSubscriptionProviders}
+        />
       </>
     );
   }
@@ -228,7 +289,7 @@ export function OnboardingSetup(props: OnboardingSetupPropsType) {
           <Button onClick={() => addTransactionCategory.openDialog()}>
             <span className="onboarding-setup-button-content">
               <FontAwesomeIcon icon={faTags} />
-              {t("_pages:onboarding.setup.transactions.createCategory")}
+              {t("_accessibility:buttons.create")}
             </span>
           </Button>
           <Button
@@ -237,13 +298,23 @@ export function OnboardingSetup(props: OnboardingSetupPropsType) {
           >
             <span className="onboarding-setup-button-content">
               <FontAwesomeIcon icon={faCloudUpload} />
-              {t("_pages:onboarding.setup.transactions.import")}
+              {t("_accessibility:buttons.import")}
+            </span>
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={() => prefabCategories.openDialog()}
+          >
+            <span className="onboarding-setup-button-content">
+              <FontAwesomeIcon icon={faWandMagicSparkles} />
+              {t("_pages:prefabs.trySuggestions")}
             </span>
           </Button>
         </div>
       </div>
       <AddTransactionCategoryDialog {...addTransactionCategory} />
       <ImportDialog {...importTransactions} />
+      <AddPrefabCategoriesDialog {...prefabCategories} />
     </>
   );
 }

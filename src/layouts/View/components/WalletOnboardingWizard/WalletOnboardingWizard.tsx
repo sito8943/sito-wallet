@@ -5,7 +5,7 @@ import { useAuth, useNotification } from "@sito/dashboard-app";
 
 import { useFeatureFlags, useManager } from "providers";
 import {
-  type UserEntityConfigKey,
+  UserEntityConfigKey,
   USER_ENTITY_CONFIG_KEYS,
   userEntityConfigsToFeaturePayload,
 } from "lib";
@@ -16,8 +16,42 @@ import {
   resolveRequiredEntityKeys,
   toggleSelectedEntityKey,
 } from "../OnboardingEntitySelection";
+import { OnboardingSetup } from "../OnboardingSetup";
+import type { OnboardingSetupStepKey } from "../OnboardingSetup";
 import { WalletOnboarding } from "../WalletOnboarding";
 import type { WalletOnboardingStepType } from "../WalletOnboarding";
+
+const ENTITY_STEP_ORDER: Array<{
+  entityKey: UserEntityConfigKey;
+  stepKey: OnboardingSetupStepKey;
+  titleKey: string;
+  bodyKey: string;
+}> = [
+  {
+    entityKey: UserEntityConfigKey.Currencies,
+    stepKey: "currencies",
+    titleKey: "_pages:onboarding.currencies.title",
+    bodyKey: "_pages:onboarding.currencies.body",
+  },
+  {
+    entityKey: UserEntityConfigKey.Accounts,
+    stepKey: "accounts",
+    titleKey: "_pages:onboarding.accounts.title",
+    bodyKey: "_pages:onboarding.accounts.body",
+  },
+  {
+    entityKey: UserEntityConfigKey.Transactions,
+    stepKey: "transactions",
+    titleKey: "_pages:onboarding.transactions.title",
+    bodyKey: "_pages:onboarding.transactions.body",
+  },
+  {
+    entityKey: UserEntityConfigKey.Subscriptions,
+    stepKey: "subscriptions",
+    titleKey: "_pages:onboarding.subscriptions.title",
+    bodyKey: "_pages:onboarding.subscriptions.body",
+  },
+];
 
 type WalletOnboardingWizardPropsType = {
   initialEnabledEntityKeys?: UserEntityConfigKey[];
@@ -32,6 +66,9 @@ export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
   const { applyFeaturePayload } = useFeatureFlags();
 
   const [selectedEntityKeys, setSelectedEntityKeys] = useState<
+    UserEntityConfigKey[]
+  >(() => initialEnabledEntityKeys ?? [...USER_ENTITY_CONFIG_KEYS]);
+  const [confirmedEntityKeys, setConfirmedEntityKeys] = useState<
     UserEntityConfigKey[]
   >(() => initialEnabledEntityKeys ?? [...USER_ENTITY_CONFIG_KEYS]);
 
@@ -61,6 +98,7 @@ export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
       }
     }
 
+    setConfirmedEntityKeys(resolvedEntityKeys);
     applyFeaturePayload(userEntityConfigsToFeaturePayload(configs));
     return true;
   }, [
@@ -71,6 +109,19 @@ export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
     showErrorNotification,
     t,
   ]);
+
+  const entitySteps = useMemo<WalletOnboardingStepType[]>(
+    () =>
+      ENTITY_STEP_ORDER.filter(({ entityKey }) =>
+        confirmedEntityKeys.includes(entityKey),
+      ).map(({ stepKey, titleKey, bodyKey }) => ({
+        key: `entity_${stepKey}`,
+        title: t(titleKey),
+        body: t(bodyKey),
+        content: <OnboardingSetup stepKey={stepKey} />,
+      })),
+    [confirmedEntityKeys, t],
+  );
 
   const steps = useMemo<WalletOnboardingStepType[]>(
     () => [
@@ -91,13 +142,20 @@ export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
         ),
         beforeNext: handleEntitiesNext,
       },
+      ...entitySteps,
       {
         key: "get_started",
         title: t("_pages:onboarding.get_started.title"),
         body: t("_pages:onboarding.get_started.body"),
       },
     ],
-    [handleEntitiesNext, handleToggleEntity, selectedEntityKeys, t],
+    [
+      entitySteps,
+      handleEntitiesNext,
+      handleToggleEntity,
+      selectedEntityKeys,
+      t,
+    ],
   );
 
   return <WalletOnboarding remountStepOnChange steps={steps} />;

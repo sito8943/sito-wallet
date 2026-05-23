@@ -28,6 +28,8 @@
     "next": "Next",
     "reset": "Reset",
     "skip": "Skip",
+    "create": "Create",
+    "import": "Import",
     "startAsGuest": "Start as guest",
     "signIn": "Sign in",
     "toTop": "Go to top",

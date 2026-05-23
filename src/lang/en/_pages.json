@@ -197,27 +197,19 @@
     "setup": {
       "currencies": {
         "title": "Start with your main currency or load your currencies from a file.",
-        "description": "You can create your first currency right here or reuse a previous export.",
-        "create": "Create currency",
-        "import": "Import currencies"
+        "description": "You can create your first currency right here or reuse a previous export."
       },
       "accounts": {
         "title": "Set up your first account without leaving onboarding.",
-        "description": "Create one account manually or import several at once to get started faster.",
-        "create": "Create account",
-        "import": "Import accounts"
+        "description": "Create one account manually or import several at once to get started faster."
       },
       "transactions": {
         "title": "Prepare your base categories or bring in your history directly.",
-        "description": "This leaves your initial setup ready before you start entering transactions by hand.",
-        "createCategory": "Create category",
-        "import": "Import transactions"
+        "description": "This leaves your initial setup ready before you start entering transactions by hand."
       },
       "subscriptions": {
         "title": "Set up your subscription providers.",
-        "description": "Create a provider or import your catalog before adding recurring payments.",
-        "createProvider": "Create provider",
-        "importProviders": "Import providers"
+        "description": "Create a provider or import your catalog before adding recurring payments."
       }
     }
   },

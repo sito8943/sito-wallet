@@ -197,27 +197,19 @@
     "setup": {
       "currencies": {
         "title": "Empieza con tu divisa principal o carga tus monedas desde un archivo.",
-        "description": "Puedes crear tu primera moneda aquí mismo o reutilizar una exportación previa.",
-        "create": "Crear moneda",
-        "import": "Importar monedas"
+        "description": "Puedes crear tu primera moneda aquí mismo o reutilizar una exportación previa."
       },
       "accounts": {
         "title": "Deja preparada tu primera cuenta sin salir del onboarding.",
-        "description": "Crea una cuenta manualmente o importa varias de una vez para arrancar más rápido.",
-        "create": "Crear cuenta",
-        "import": "Importar cuentas"
+        "description": "Crea una cuenta manualmente o importa varias de una vez para arrancar más rápido."
       },
       "transactions": {
         "title": "Prepara tus categorías base o trae directamente tu histórico.",
-        "description": "Así tendrás el alta inicial lista antes de empezar a registrar movimientos a mano.",
-        "createCategory": "Crear categoría",
-        "import": "Importar movimientos"
+        "description": "Así tendrás el alta inicial lista antes de empezar a registrar movimientos a mano."
       },
       "subscriptions": {
         "title": "Deja listos tus proveedores de suscripción.",
-        "description": "Puedes crear un proveedor o importar tu catálogo antes de añadir pagos recurrentes.",
-        "createProvider": "Crear proveedor",
-        "importProviders": "Importar proveedores"
+        "description": "Puedes crear un proveedor o importar tu catálogo antes de añadir pagos recurrentes."
       }
     }
   },
