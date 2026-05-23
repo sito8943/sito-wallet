@@ -1,4 +1,4 @@
-@import "../../../../styles/variables.css";
+@reference "../../../../styles/variables.css";
 
 .onboarding-entity-selection {
   @apply grid w-full gap-3 grid-cols-2;
@@ -6,17 +6,11 @@
 
 .onboarding-entity-card {
   @apply flex max-sm:flex-col sm:min-h-32 items-start max-sm:items-center max-sm:justify-center gap-3 cursor-pointer rounded-lg border border-border bg-base-light p-4 text-left text-text transition;
+  @apply hover:border-primary hover:bg-base;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base;
   opacity: 0;
   animation: onboarding-entity-card-in 360ms ease-out forwards;
   animation-delay: var(--onboarding-entity-delay);
-}
-
-.onboarding-entity-card:hover {
-  @apply border-primary bg-base;
-}
-
-.onboarding-entity-card:focus-visible {
-  @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-base;
 }
 
 .onboarding-entity-card-selected {

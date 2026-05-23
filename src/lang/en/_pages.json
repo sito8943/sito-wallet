@@ -154,15 +154,9 @@
       "body": "Your personal assistant to organize your money, save more, and make smarter financial decisions."
     },
     "entities": {
-      "title": "Choose your app functionality",
-      "body": "Enable only the areas you want to use now. We will adjust onboarding to your selection.",
+      "title": "Choose your functionalities",
+      "body": "Enable only the areas you want to use now. ",
       "cards": {
-        "currencies": {
-          "description": "Currencies and symbols for valuing your data."
-        },
-        "accounts": {
-          "description": "Accounts, cash, and balances to organize your money."
-        },
         "transactions": {
           "description": "Income, expenses, and categories to track your activity."
         },
@@ -175,20 +169,20 @@
       }
     },
     "currencies": {
-      "title": "Manage All Your Currencies",
-      "body": "Add and track any currency to keep control of your finances anywhere in the world."
+      "title": "Manage your currencies",
+      "body": ""
     },
     "accounts": {
-      "title": "All Your Accounts in One Place",
-      "body": "Record bank accounts, cash, or cryptocurrencies and get a complete view of your money."
+      "title": "All your accounts in One Place",
+      "body": ""
     },
     "transactions": {
-      "title": "Full Control of Your Transactions",
-      "body": "Log income and expenses in seconds, and categorize them to know exactly where your money goes."
+      "title": "Full control of your Transactions",
+      "body": ""
     },
     "subscriptions": {
-      "title": "Keep Your Subscriptions Under Control",
-      "body": "Organize recurring payments, providers, and renewals so every charge is predictable."
+      "title": "Keep your subscriptions under control",
+      "body": ""
     },
     "get_started": {
       "title": "You're Ready to Take Control",

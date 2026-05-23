@@ -1,3 +1,5 @@
+import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+
 export type OnboardingSetupStepKey =
   | "currencies"
   | "accounts"
@@ -6,4 +8,13 @@ export type OnboardingSetupStepKey =
 
 export interface OnboardingSetupPropsType {
   stepKey: OnboardingSetupStepKey;
+}
+
+export interface OnboardingSetupStepPropsType {
+  titleKey: string;
+  descriptionKey: string;
+  createIcon: IconDefinition;
+  onCreate: () => void;
+  onImport: () => void;
+  onPrefab: () => void;
 }

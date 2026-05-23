@@ -61,7 +61,7 @@ src/components/MyComponent/
 
 ```css
 /* styles.css */
-@import "../../styles/variables.css"; /* adjust depth */
+@reference "../../styles/variables.css"; /* adjust depth */
 
 .my-component {
   @apply flex items-center gap-2 bg-base p-3 rounded-2xl;

@@ -1,11 +1,11 @@
-@import "../../../../styles/variables.css";
+@reference "../../../../styles/variables.css";
 
 .onboarding-setup {
   @apply w-full rounded-3xl border border-border bg-base-light p-4 text-left;
 }
 
 .onboarding-setup-title {
-  @apply font-semibold text-text;
+  @apply font-semibold text-text text-center text-balance;
 }
 
 .onboarding-setup-description {
@@ -13,7 +13,7 @@
 }
 
 .onboarding-setup-actions {
-  @apply mt-4 flex flex-col gap-3 sm:flex-row items-center justify-center;
+  @apply mt-4 flex gap-3 sm:flex-row items-center justify-center;
 }
 
 .onboarding-setup-actions .button {

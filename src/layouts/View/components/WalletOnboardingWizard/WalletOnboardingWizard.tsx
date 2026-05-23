@@ -3,12 +3,8 @@ import { useTranslation } from "react-i18next";
 
 import { useAuth, useNotification } from "@sito/dashboard-app";
 
+// providers
 import { useFeatureFlags, useManager } from "providers";
-import {
-  UserEntityConfigKey,
-  USER_ENTITY_CONFIG_KEYS,
-  userEntityConfigsToFeaturePayload,
-} from "lib";
 
 import {
   OnboardingEntitySelection,
@@ -17,45 +13,21 @@ import {
   toggleSelectedEntityKey,
 } from "../OnboardingEntitySelection";
 import { OnboardingSetup } from "../OnboardingSetup";
-import type { OnboardingSetupStepKey } from "../OnboardingSetup";
 import { WalletOnboarding } from "../WalletOnboarding";
 import type { WalletOnboardingStepType } from "../WalletOnboarding";
 
-const ENTITY_STEP_ORDER: Array<{
-  entityKey: UserEntityConfigKey;
-  stepKey: OnboardingSetupStepKey;
-  titleKey: string;
-  bodyKey: string;
-}> = [
-  {
-    entityKey: UserEntityConfigKey.Currencies,
-    stepKey: "currencies",
-    titleKey: "_pages:onboarding.currencies.title",
-    bodyKey: "_pages:onboarding.currencies.body",
-  },
-  {
-    entityKey: UserEntityConfigKey.Accounts,
-    stepKey: "accounts",
-    titleKey: "_pages:onboarding.accounts.title",
-    bodyKey: "_pages:onboarding.accounts.body",
-  },
-  {
-    entityKey: UserEntityConfigKey.Transactions,
-    stepKey: "transactions",
-    titleKey: "_pages:onboarding.transactions.title",
-    bodyKey: "_pages:onboarding.transactions.body",
-  },
-  {
-    entityKey: UserEntityConfigKey.Subscriptions,
-    stepKey: "subscriptions",
-    titleKey: "_pages:onboarding.subscriptions.title",
-    bodyKey: "_pages:onboarding.subscriptions.body",
-  },
-];
+// lib
+import {
+  USER_ENTITY_CONFIG_KEYS,
+  userEntityConfigsToFeaturePayload,
+  type UserEntityConfigKey,
+} from "lib";
 
-type WalletOnboardingWizardPropsType = {
-  initialEnabledEntityKeys?: UserEntityConfigKey[];
-};
+// types
+import type { WalletOnboardingWizardPropsType } from "./types";
+
+// constants
+import { ENTITY_STEP_ORDER } from "./constants";
 
 export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
   const { initialEnabledEntityKeys } = props;
@@ -77,6 +49,8 @@ export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
       toggleSelectedEntityKey(previous, entityKey),
     );
   }, []);
+
+  console.log(selectedEntityKeys);
 
   const handleEntitiesNext = useCallback(async () => {
     if (selectedEntityKeys.length === 0) {

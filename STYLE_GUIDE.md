@@ -29,7 +29,7 @@ src/
 - Tailwind v4 is imported in `variables.css` via `@import "tailwindcss";`.
 - Tokens live under `@theme { --color-... }` and are consumed through the project's semantic classes (e.g., `bg-base`, `text-text`, `bg-bg-primary`, `text-bg-success`).
 - In `components.css`, use `@reference "./variables.css";` and `@apply` to compose utilities into reusable classes.
-- In component `styles.css`, import tokens at the top: `@import "../../styles/variables.css";` (adjust the relative path to depth).
+- In component `styles.css`, import tokens at the top: `@reference "../../styles/variables.css";` (adjust the relative path to depth).
 
 Examples (real excerpts):
 
@@ -48,11 +48,11 @@ Examples (real excerpts):
 
 1. Create `src/components/MyComponent/`.
 2. Add `MyComponent.tsx` and `styles.css`.
-3. In `styles.css`, import tokens: `@import "../../styles/variables.css";`.
+3. In `styles.css`, import tokens: `@reference "../../styles/variables.css";`.
 4. Define a root class and modifiers:
 
 ```css
-@import "../../styles/variables.css";
+@reference "../../styles/variables.css";
 
 .my-component {
   @apply flex items-center gap-2 bg-base p-3 rounded-2xl;

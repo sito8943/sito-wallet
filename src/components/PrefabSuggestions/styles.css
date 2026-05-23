@@ -1,4 +1,4 @@
-@import "../../styles/variables.css";
+@reference "../../styles/variables.css";
 
 .prefab-suggestions {
   @apply flex flex-col gap-4 w-full;
@@ -22,14 +22,8 @@
 
 .prefab-suggestions-card {
   @apply flex items-center gap-3 rounded-lg border border-border bg-base-light p-3 text-left text-text transition cursor-pointer;
-}
-
-.prefab-suggestions-card:hover {
-  @apply border-primary bg-base;
-}
-
-.prefab-suggestions-card:focus-visible {
-  @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-base;
+  @apply hover:border-primary hover:bg-base;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base;
 }
 
 .prefab-suggestions-card-selected {
