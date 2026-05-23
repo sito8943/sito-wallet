@@ -55,7 +55,7 @@ function renderAuth(
 ) {
   mockUseAuth.mockReturnValue({
     account: { email: account.email ?? "" },
-    });
+  });
 
   return render(
     <MemoryRouter initialEntries={[initialEntry]}>
@@ -106,7 +106,7 @@ describe("Auth layout", () => {
     it("does NOT call navigate when account has no email property", () => {
       mockUseAuth.mockReturnValue({
         account: {},
-            });
+      });
 
       render(
         <MemoryRouter initialEntries={["/auth/sign-in"]}>

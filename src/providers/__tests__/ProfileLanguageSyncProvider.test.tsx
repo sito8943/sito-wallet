@@ -67,5 +67,4 @@ describe("ProfileLanguageSyncProvider", () => {
 
     await waitFor(() => expect(mockChangeLanguage).not.toHaveBeenCalled());
   });
-
 });
