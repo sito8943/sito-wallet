@@ -123,6 +123,12 @@ vi.mock("@sito/dashboard-app", () => ({
   }),
   SplashScreen: () => <div data-testid="splash-screen" />,
   BaseLinkPropsType: class {},
+  Onboarding: ({ steps }: { steps: MockOnboardingStep[] }) => (
+    <div
+      data-testid="onboarding"
+      data-steps={steps.map((step) => `${step.title}|${step.body}`).join(",")}
+    />
+  ),
 }));
 
 vi.mock("react-i18next", () => ({
@@ -153,15 +159,6 @@ vi.mock("providers", () => ({
       putBatch: vi.fn(() => Promise.resolve([])),
     },
   }),
-}));
-
-vi.mock("../../layouts/View/components/WalletOnboarding", () => ({
-  WalletOnboarding: ({ steps }: { steps: MockOnboardingStep[] }) => (
-    <div
-      data-testid="onboarding"
-      data-steps={steps.map((step) => `${step.title}|${step.body}`).join(",")}
-    />
-  ),
 }));
 
 vi.mock("views/menuMap", () => ({
@@ -301,7 +298,7 @@ describe("View layout", () => {
           .getAttribute("data-steps")
           ?.split(",")
           .map((step) => step.split("|")[0]) ?? [];
-      expect(steps).toHaveLength(5);
+      expect(steps).toHaveLength(6);
       expect(steps).toContain("_pages:onboarding.welcome.title");
       expect(steps).toContain("_pages:onboarding.get_started.title");
     });
