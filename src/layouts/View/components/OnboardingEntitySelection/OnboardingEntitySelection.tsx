@@ -15,7 +15,7 @@ export function OnboardingEntitySelection(
 ) {
   const { selectedEntityKeys, onToggleEntity } = props;
 
-  console.log(selectedEntityKeys)
+  console.log(selectedEntityKeys);
 
   const { t } = useTranslation();
 
@@ -27,7 +27,7 @@ export function OnboardingEntitySelection(
           "--onboarding-entity-delay": `${index * 70}ms`,
         };
 
-        console.log(selected, option.key)
+        console.log(selected, option.key);
 
         return (
           <button

@@ -68,9 +68,7 @@ export function SubscriptionsSetup() {
       />
       <AddSubscriptionProviderDialog {...addSubscriptionProvider} />
       <ImportDialog {...importSubscriptionProviders} />
-      <AddPrefabSubscriptionProvidersDialog
-        {...prefabSubscriptionProviders}
-      />
+      <AddPrefabSubscriptionProvidersDialog {...prefabSubscriptionProviders} />
     </>
   );
 }

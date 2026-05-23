@@ -98,6 +98,8 @@ export function WalletOnboarding(props: WalletOnboardingPropsType) {
         onTabChange={(id) => setCurrentStep(Number(id))}
         tabs={tabs}
         useLinks={false}
+        className="onboarding-tab-main"
+        tabsContainerClassName="onboarding-tab-container"
       />
     </div>
   );
