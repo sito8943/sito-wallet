@@ -8,7 +8,8 @@ import { faList } from "@fortawesome/free-solid-svg-icons";
 import { IconButton } from "@sito/dashboard-app";
 
 // hooks
-import { useCurrenciesCommon, useSubscriptionsRenewalsForecast } from "hooks";
+import { useSubscriptionsRenewalsForecast } from "hooks";
+import { useCurrenciesCommon } from "hooks/queries/useCurrenciesCommon";
 import { useRenewalsDialog } from "./useRenewalsDialog";
 
 // lib

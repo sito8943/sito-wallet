@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Dialog } from "@sito/dashboard-app";
 
 // hooks
-import { useCurrenciesCommon } from "hooks";
+import { useCurrenciesCommon } from "hooks/queries/useCurrenciesCommon";
 
 // components
 import { Currency } from "../../../../Currencies";

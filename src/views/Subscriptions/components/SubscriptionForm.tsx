@@ -13,8 +13,9 @@ import {
 } from "@sito/dashboard-app";
 
 // hooks
-import { useCurrenciesCommon, useSubscriptionProvidersCommon } from "hooks";
+import { useSubscriptionProvidersCommon } from "hooks";
 import { useAccountsCommon } from "../../../hooks/queries/useAccountsCommon";
+import { useCurrenciesCommon } from "../../../hooks/queries/useCurrenciesCommon";
 import { useTransactionCategoriesCommon } from "../../../hooks/queries/useTransactionCategoriesCommon";
 
 // lib

@@ -28,6 +28,7 @@
       "components": ["./src/components"],
       "lib": ["./src/lib"],
       "hooks": ["./src/hooks"],
+      "hooks/*": ["./src/hooks/*"],
       "layouts": ["./src/layouts"],
       "views": ["./src/views"],
       "views/*": ["./src/views/*"],

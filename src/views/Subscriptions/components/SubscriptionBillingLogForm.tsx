@@ -9,7 +9,7 @@ import {
   TextInput,
 } from "@sito/dashboard-app";
 
-import { useCurrenciesCommon } from "hooks";
+import { useCurrenciesCommon } from "hooks/queries/useCurrenciesCommon";
 import { Tables } from "lib";
 
 import type { AddSubscriptionBillingLogDialogPropsType } from "../types";

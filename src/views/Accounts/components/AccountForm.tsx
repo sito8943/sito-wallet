@@ -26,7 +26,7 @@ import { Tables, AccountType } from "lib";
 import { icons } from "./utils";
 
 // hooks
-import { useCurrenciesCommon } from "hooks";
+import { useCurrenciesCommon } from "hooks/queries/useCurrenciesCommon";
 
 export function AccountForm(props: AccountFormPropsType) {
   const { control, isLoading, setValue, open } = props;
