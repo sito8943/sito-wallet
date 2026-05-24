@@ -31,4 +31,11 @@ export default class UserClient extends BaseClient<
       accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
     });
   }
+
+  async reset(id: number, hard: boolean): Promise<void> {
+    await this.api.post<void, { hard: boolean }>(
+      `${this.table}/${id}/reset`,
+      { hard },
+    );
+  }
 }

@@ -517,6 +517,21 @@
       "edit": "Editar usuario",
       "editAria": "Haz clic para editar el usuario",
       "passwordEditHint": "Deja vacío para mantener la actual"
+    },
+    "reset": {
+      "action": "Restablecer",
+      "actionAria": "Restablecer datos del usuario",
+      "dialog": {
+        "title": "¿Restablecer usuario?",
+        "description": "Esto elimina cuentas, transacciones, categorías, monedas, dashboard, suscripciones, sesiones de sync y refresh tokens de {{user}}. La fila de usuario (email, contraseña, flag admin) se conserva y el perfil se restablece a valores por defecto.",
+        "hardLabel": "Eliminación física (irreversible)",
+        "hardHint": "Borra filas físicamente de la base de datos. No se puede deshacer.",
+        "softHint": "Marca las filas como eliminadas (recuperable limpiando deletedAt).",
+        "confirmHard": "Escribe el nombre de usuario para confirmar la eliminación física",
+        "confirmMismatch": "El nombre de usuario no coincide"
+      },
+      "successMessage": "Usuario restablecido correctamente",
+      "errorMessage": "No se pudo restablecer el usuario"
     }
   },
   "footer": {

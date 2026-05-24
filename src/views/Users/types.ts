@@ -4,6 +4,28 @@ import type { ActionType, FormDialogPropsType } from "@sito/dashboard-app";
 
 import type { UserDto } from "lib";
 
+export interface ResetUserTarget {
+  id: number;
+  username: string;
+}
+
+export interface UseResetUserReturnType {
+  open: boolean;
+  title: string;
+  isLoading: boolean;
+  handleSubmit: () => void;
+  handleClose: () => void;
+  target: ResetUserTarget | null;
+  hard: boolean;
+  setHard: (value: boolean) => void;
+  confirmText: string;
+  setConfirmText: (value: string) => void;
+  submitDisabled: boolean;
+  action: (record: UserDto) => ActionType<UserDto>;
+}
+
+export type ResetUserDialogPropsType = UseResetUserReturnType;
+
 export interface UserCardPropsType extends UserDto {
   actions: ActionType<UserDto>[];
   onClick: (id: number) => void;

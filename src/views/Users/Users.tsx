@@ -26,7 +26,12 @@ import { isFeatureDisabledBusinessError } from "lib";
 
 // components
 import { MobileSelectionBar } from "components";
-import { AddUserDialog, EditUserDialog, UserCard } from "./components";
+import {
+  AddUserDialog,
+  EditUserDialog,
+  ResetUserDialog,
+  UserCard,
+} from "./components";
 
 // hooks
 import {
@@ -35,7 +40,7 @@ import {
   useMobileMultiSelection,
   useMobileNavbar,
 } from "hooks";
-import { useAddUser, useEditUser } from "./hooks";
+import { useAddUser, useEditUser, useResetUser } from "./hooks";
 
 // styles
 import "./styles.css";
@@ -87,13 +92,15 @@ export function Users() {
 
   const addUser = useAddUser();
   const editUser = useEditUser();
+  const resetUser = useResetUser();
 
   const getActions = useCallback(
     (record: UserDto) => [
+      resetUser.action(record),
       deleteUser.action(record),
       restoreUser.action(record),
     ],
-    [deleteUser, restoreUser],
+    [deleteUser, restoreUser, resetUser],
   );
 
   const mobileSelection = useMobileMultiSelection<UserDto>({
@@ -175,6 +182,7 @@ export function Users() {
 
           <AddUserDialog {...addUser} />
           <EditUserDialog {...editUser} />
+          <ResetUserDialog {...resetUser} />
           <ConfirmationDialog {...deleteUser} />
           <ConfirmationDialog {...restoreUser} />
         </>
