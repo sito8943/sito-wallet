@@ -41,6 +41,14 @@
         "refresh": "Actualizar saldo",
         "noAccount": "Selecciona una cuenta"
       },
+      "subscriptionForecast": {
+        "placeholder": "Escribe un título",
+        "count": "{{count}} renovación(es)",
+        "details": {
+          "title": "Próximas renovaciones",
+          "empty": "Sin renovaciones en este rango"
+        }
+      },
       "addCard": {
         "title": "Seleccionar tipo de tarjeta"
       }

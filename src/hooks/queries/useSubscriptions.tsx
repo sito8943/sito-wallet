@@ -3,5 +3,9 @@
 export { SubscriptionsQueryKeys } from "./queryKeys/subscriptionsQueryKeys";
 export { useSubscriptionsList } from "./useSubscriptionsList";
 export { useInfiniteSubscriptionsList } from "./useInfiniteSubscriptionsList";
-export type { UseSubscriptionsRenewalsProps } from "./types";
+export type {
+  UseSubscriptionsRenewalsForecastProps,
+  UseSubscriptionsRenewalsProps,
+} from "./types";
 export { useSubscriptionsRenewals } from "./useSubscriptionsRenewals";
+export { useSubscriptionsRenewalsForecast } from "./useSubscriptionsRenewalsForecast";

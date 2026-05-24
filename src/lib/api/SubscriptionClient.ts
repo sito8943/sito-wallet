@@ -10,10 +10,12 @@ import type {
   CommonSubscriptionDto,
   FilterSubscriptionBillingLogDto,
   FilterSubscriptionDto,
+  GetSubscriptionRenewalsQuery,
   ImportPreviewDto,
   SubscriptionBillingLogDto,
   SubscriptionDto,
   SubscriptionRenewalDto,
+  SubscriptionRenewalForecastDto,
   UpdateSubscriptionDto,
 } from "lib";
 
@@ -63,6 +65,45 @@ export default class SubscriptionClient extends BaseClient<
       : `${this.table}/renewals`;
 
     return await this.api.doQuery<SubscriptionRenewalDto[]>(
+      builtUrl,
+      Methods.GET,
+      undefined,
+      {
+        ...this.api.defaultTokenAcquirer(),
+      },
+    );
+  }
+
+  async renewalsForecast(
+    query?: GetSubscriptionRenewalsQuery,
+  ): Promise<SubscriptionRenewalForecastDto> {
+    const searchParams = new URLSearchParams();
+
+    if (query?.subscriptionId) {
+      searchParams.set("subscriptionId", String(query.subscriptionId));
+    }
+    if (query?.range) {
+      searchParams.set("range", query.range);
+    }
+    if (query?.timezone) {
+      searchParams.set("timezone", query.timezone);
+    }
+    if (query?.month) {
+      searchParams.set("month", query.month);
+    }
+    if (query?.from) {
+      searchParams.set("from", query.from);
+    }
+    if (query?.to) {
+      searchParams.set("to", query.to);
+    }
+
+    const queryString = searchParams.toString();
+    const builtUrl = queryString
+      ? `${this.table}/renewals/forecast?${queryString}`
+      : `${this.table}/renewals/forecast`;
+
+    return await this.api.doQuery<SubscriptionRenewalForecastDto>(
       builtUrl,
       Methods.GET,
       undefined,

@@ -310,7 +310,24 @@
       "values": {
         "TypeResume": "Type Resume",
         "CurrentBalance": "Current Balance",
-        "WeeklySpent": "Weekly Spent"
+        "WeeklySpent": "Weekly Spent",
+        "SubscriptionForecast": "Subscription Forecast"
+      }
+    }
+  },
+  "subscriptionRenewal": {
+    "range": {
+      "label": "Range",
+      "values": {
+        "CurrentWeek": "Current week",
+        "NextWeek": "Next week",
+        "LastWeek": "Last week",
+        "CurrentMonth": "Current month",
+        "NextMonth": "Next month",
+        "LastMonth": "Last month",
+        "CurrentYear": "Current year",
+        "NextYear": "Next year",
+        "LastYear": "Last year"
       }
     }
   }

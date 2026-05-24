@@ -13,6 +13,7 @@ import {
   TransactionTypeResume,
   WeeklySpentCard,
   CurrentBalanceCard,
+  SubscriptionForecastCard,
 } from "../components/Cards";
 import { AddDashboardCardDialog } from "../components";
 
@@ -27,12 +28,18 @@ import { useAddDashboardCard } from "../hooks";
 import { DashboardCardType } from "lib";
 
 // providers
-import { useManager, useRegisterBottomNavAction } from "providers";
+import {
+  useFeatureFlags,
+  useManager,
+  useRegisterBottomNavAction,
+} from "providers";
 
 export const Dashboard = () => {
   const { data, isLoading, error } = useDashboardsList({});
 
   const manager = useManager();
+  const { isFeatureEnabled } = useFeatureFlags();
+  const subscriptionsEnabled = isFeatureEnabled("subscriptionsEnabled");
 
   const addDashboardCard = useAddDashboardCard();
 
@@ -86,9 +93,22 @@ export const Dashboard = () => {
               />
             </li>
           );
+        case DashboardCardType.SubscriptionForecast:
+          if (!subscriptionsEnabled) return null;
+          return (
+            <li key={item.id}>
+              <SubscriptionForecastCard
+                onDelete={() => {
+                  void deleteDashboardCard.onClick([item.id]);
+                }}
+                key={item.id}
+                {...item}
+              />
+            </li>
+          );
       }
     });
-  }, [data, deleteDashboardCard]);
+  }, [data, deleteDashboardCard, subscriptionsEnabled]);
 
   const openAddDashboardRef = useRef(addDashboardCard.openDialog);
   useEffect(() => {

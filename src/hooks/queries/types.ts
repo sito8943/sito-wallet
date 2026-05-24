@@ -12,6 +12,7 @@ import type {
 import type {
   FilterTransactionGroupedByTypeDto,
   FilterTransactionTypeResumeDto,
+  GetSubscriptionRenewalsQuery,
 } from "lib";
 
 export type UseFetchPropsType<TRow, TFilterDto = BaseFilterDto> = {
@@ -42,6 +43,9 @@ export type UseSubscriptionsRenewalsProps = {
   from?: string;
   to?: string;
 };
+
+export type UseSubscriptionsRenewalsForecastProps =
+  GetSubscriptionRenewalsQuery;
 
 export type UseSubscriptionProvidersCommonProps = {
   onlyEnabled?: boolean;

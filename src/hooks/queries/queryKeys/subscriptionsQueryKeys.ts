@@ -1,6 +1,10 @@
 import type { QueryParam } from "@sito/dashboard-app";
 
-import type { FilterSubscriptionDto, SubscriptionDto } from "lib";
+import type {
+  FilterSubscriptionDto,
+  GetSubscriptionRenewalsQuery,
+  SubscriptionDto,
+} from "lib";
 
 export const SubscriptionsQueryKeys = {
   all: () => ({
@@ -25,5 +29,12 @@ export const SubscriptionsQueryKeys = {
   }),
   renewals: (from?: string, to?: string) => ({
     queryKey: [...SubscriptionsQueryKeys.all().queryKey, "renewals", from, to],
+  }),
+  renewalsForecast: (query: GetSubscriptionRenewalsQuery) => ({
+    queryKey: [
+      ...SubscriptionsQueryKeys.all().queryKey,
+      "renewals-forecast",
+      query,
+    ],
   }),
 };

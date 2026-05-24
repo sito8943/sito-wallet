@@ -9,4 +9,8 @@ export * from "./AddSubscriptionBillingLogDto";
 export * from "./SubscriptionBillingLogDto";
 export * from "./FilterSubscriptionBillingLogDto";
 export * from "./SubscriptionRenewalDto";
+export * from "./SubscriptionRenewalTotalDto";
+export * from "./SubscriptionRenewalForecastDto";
+export * from "./RenewalRangePreset";
+export * from "./GetSubscriptionRenewalsQuery";
 export * from "./AddSubscriptionRenewalDto";

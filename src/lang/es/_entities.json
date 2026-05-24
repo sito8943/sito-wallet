@@ -311,7 +311,24 @@
       "values": {
         "TypeResume": "Resumen de tipo",
         "CurrentBalance": "Saldo actual",
-        "WeeklySpent": "Gasto semanal"
+        "WeeklySpent": "Gasto semanal",
+        "SubscriptionForecast": "Pronóstico de suscripciones"
+      }
+    }
+  },
+  "subscriptionRenewal": {
+    "range": {
+      "label": "Rango",
+      "values": {
+        "CurrentWeek": "Semana actual",
+        "NextWeek": "Próxima semana",
+        "LastWeek": "Semana pasada",
+        "CurrentMonth": "Mes actual",
+        "NextMonth": "Próximo mes",
+        "LastMonth": "Mes pasado",
+        "CurrentYear": "Año actual",
+        "NextYear": "Próximo año",
+        "LastYear": "Año pasado"
       }
     }
   }

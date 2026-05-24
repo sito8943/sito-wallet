@@ -11,10 +11,15 @@ import type { DashboardFormPropsType } from "../../types";
 // lib
 import { DashboardCardType } from "lib";
 
+// providers
+import { useFeatureFlags } from "providers";
+
 export function AddDashboardCardForm(props: DashboardFormPropsType) {
   const { control, setValue, isLoading, open } = props;
   const { t } = useTranslation();
   const { account } = useAuth();
+  const { isFeatureEnabled } = useFeatureFlags();
+  const subscriptionsEnabled = isFeatureEnabled("subscriptionsEnabled");
 
   useEffect(() => {
     if (account && setValue) setValue("userId", account?.id ?? 0);
@@ -22,12 +27,18 @@ export function AddDashboardCardForm(props: DashboardFormPropsType) {
 
   const typeOptions = useMemo(
     () => [
-      ...(enumToKeyValueArray(DashboardCardType)?.map(({ key, value }) => ({
-        id: value as number,
-        name: t(`_entities:userDashboardCard.type.values.${key}`),
-      })) ?? []),
+      ...(enumToKeyValueArray(DashboardCardType)
+        ?.filter(({ value }) =>
+          value === DashboardCardType.SubscriptionForecast
+            ? subscriptionsEnabled
+            : true,
+        )
+        .map(({ key, value }) => ({
+          id: value as number,
+          name: t(`_entities:userDashboardCard.type.values.${key}`),
+        })) ?? []),
     ],
-    [t],
+    [subscriptionsEnabled, t],
   );
 
   return (

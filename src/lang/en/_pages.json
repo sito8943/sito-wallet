@@ -41,6 +41,14 @@
         "refresh": "Refresh balance",
         "noAccount": "Select an account"
       },
+      "subscriptionForecast": {
+        "placeholder": "Type the title",
+        "count": "{{count}} renewal(s)",
+        "details": {
+          "title": "Upcoming renewals",
+          "empty": "No renewals in this range"
+        }
+      },
       "addCard": {
         "title": "Select Card Type"
       }
