@@ -13,10 +13,7 @@ import { SubscriptionProvidersQueryKeys } from "hooks";
 
 // lib
 import { detectCountry } from "lib";
-import type {
-  AddSubscriptionProviderDto,
-  PrefabSubscriptionProviderDto,
-} from "lib";
+import type { PrefabSubscriptionProviderDto } from "lib";
 
 // types
 import type {
@@ -69,10 +66,7 @@ export function useAddPrefabSubscriptionProvidersDialog() {
             },
           };
         })
-        .filter(
-          (v): v is { key: string; item: AddSubscriptionProviderDto } =>
-            v !== null,
-        );
+        .filter((v): v is NonNullable<typeof v> => v !== null);
 
       return {
         items: entries.map((e) => e.item),

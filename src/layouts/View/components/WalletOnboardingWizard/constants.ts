@@ -1,5 +1,5 @@
 import { UserEntityConfigKey } from "lib";
-import { type OnboardingSetupStepKey } from "../OnboardingSetup";
+import { type OnboardingSetupStepKey } from "./types";
 
 export const ENTITY_STEP_ORDER: Array<{
   entityKey: UserEntityConfigKey;

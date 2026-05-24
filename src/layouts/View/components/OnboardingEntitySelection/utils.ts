@@ -1,4 +1,4 @@
-import type { OnboardingSetupStepKey } from "../OnboardingSetup";
+import type { OnboardingSetupStepKey } from "../WalletOnboardingWizard";
 
 import type { UserEntityConfigKey } from "lib";
 import { UserEntityConfigKey as EntityKey } from "lib";
