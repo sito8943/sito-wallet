@@ -42,7 +42,7 @@ export default class TransactionClient extends BaseClient<
   FilterTransactionDto,
   ImportPreviewTransactionDto
 > {
-  private sanitizeFiltersExpression(filters?: string): string | undefined {
+  private stripTrashKeysFromFilter(filters?: string): string | undefined {
     if (typeof filters !== "string") return undefined;
 
     const sanitized = filters
@@ -102,9 +102,9 @@ export default class TransactionClient extends BaseClient<
   ): string | undefined {
     const values: string[] = [];
 
-    const sanitizedFilters = this.sanitizeFiltersExpression(filters);
-    if (sanitizedFilters) {
-      values.push(sanitizedFilters);
+    const cleanedFilters = this.stripTrashKeysFromFilter(filters);
+    if (cleanedFilters) {
+      values.push(cleanedFilters);
     }
 
     if (date?.start) {
