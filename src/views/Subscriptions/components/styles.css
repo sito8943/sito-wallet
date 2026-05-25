@@ -1,9 +1,5 @@
 @reference "../../../styles/variables.css";
 
-.subscription-card-title-row {
-  @apply flex w-full items-start justify-between gap-2;
-}
-
 .subscription-card-amount {
   @apply text-sm font-semibold whitespace-nowrap;
 }
@@ -14,10 +10,6 @@
 
 .subscription-card-description {
   @apply text-start;
-}
-
-.subscription-card-description--empty {
-  @apply italic text-xs;
 }
 
 .subscription-card-meta {

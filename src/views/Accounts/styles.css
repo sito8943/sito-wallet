@@ -1,21 +1,5 @@
 @reference "../../styles/variables.css";
 
-.account-selection-bar {
-  @apply sm:hidden top-12 bg-base py-2 sticky z-10;
-}
-
-.account-selection-bar .table-selection-bar {
-  margin-bottom: 0;
-}
-
-.accounts-grid {
-  @apply max-sm:pb-6;
-}
-
 .accounts-grid-item {
   @apply max-md:w-full w-auto;
-}
-
-.accounts-empty-icon {
-  @apply text-5xl max-md:text-3xl text-text-muted;
 }

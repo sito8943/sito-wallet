@@ -19,8 +19,6 @@ import { AccountActions } from "../types";
 // lib
 import type { AccountDto } from "lib";
 
-import "./styles.css";
-
 export const useSyncAccountAction = (
   props: UseSingleActionPropTypes<number>,
 ) => {

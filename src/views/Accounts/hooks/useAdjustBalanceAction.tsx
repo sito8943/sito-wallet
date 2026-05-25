@@ -15,8 +15,6 @@ import type { UseAdjustBalanceActionProps } from "./types";
 // lib
 import type { AccountDto } from "lib";
 
-import "./styles.css";
-
 export const useAdjustBalanceAction = (props: UseAdjustBalanceActionProps) => {
   const { t } = useTranslation();
 

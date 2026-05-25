@@ -69,3 +69,108 @@ a.primary {
 .text-quaternary {
   @apply text-quaternary;
 }
+
+.account-selection-bar,
+.subscription-selection-bar,
+.subscription-provider-selection-bar,
+.transaction-category-selection-bar,
+.currency-selection-bar {
+  @apply sm:hidden top-12 sticky z-10 py-2;
+}
+
+.account-selection-bar,
+.subscription-provider-selection-bar,
+.transaction-category-selection-bar,
+.currency-selection-bar {
+  @apply bg-base;
+}
+
+.subscription-selection-bar {
+  @apply bg-base-light;
+}
+
+.account-selection-bar .table-selection-bar,
+.subscription-selection-bar .table-selection-bar,
+.subscription-provider-selection-bar .table-selection-bar,
+.transaction-category-selection-bar .table-selection-bar,
+.currency-selection-bar .table-selection-bar {
+  @apply mb-0;
+}
+
+.accounts-grid,
+.subscriptions-grid,
+.subscription-providers-grid,
+.transaction-categories-grid,
+.currencies-grid {
+  @apply max-sm:pb-6;
+}
+
+.accounts-empty-icon,
+.subscriptions-empty-icon,
+.subscription-providers-empty-icon,
+.transaction-categories-empty-icon,
+.currencies-empty-icon {
+  @apply text-5xl max-md:text-3xl text-text-muted;
+}
+
+.account-action-icon,
+.transaction-action-icon {
+  @apply text-bg-primary;
+}
+
+.transaction-category-card-title-row,
+.subscription-provider-card-title-row,
+.currency-card-title-row,
+.user-card-title-row,
+.subscription-card-title-row {
+  @apply flex w-full items-start justify-between gap-2;
+}
+
+.account-description--empty,
+.transaction-category-card-description--empty,
+.subscription-provider-card-description--empty,
+.currency-card-description--empty,
+.subscription-card-description--empty,
+.transaction-card-description--empty {
+  @apply !text-xs italic;
+}
+
+.account-description--deleted,
+.transaction-category-card-description--deleted,
+.subscription-provider-card-description--deleted,
+.currency-card-description--deleted,
+.user-card-email--deleted,
+.transaction-card-description--deleted {
+  @apply !text-bg-error;
+}
+
+.account-form-row,
+.transaction-category-form-row {
+  @apply flex gap-5;
+}
+
+.account-form-type-input,
+.transaction-category-form-type-input,
+.dashboard-card-select-input {
+  @apply !pl-7;
+}
+
+.account-form-type-icon,
+.dashboard-card-select-icon {
+  @apply absolute left-2 text-sm text-text;
+}
+
+.reset-user-dialog-toggle,
+.user-form-admin-toggle {
+  @apply flex items-center justify-between gap-3 rounded-xl border border-border bg-base-light p-3;
+}
+
+.reset-user-dialog-toggle-copy,
+.user-form-admin-copy {
+  @apply flex flex-col gap-1;
+}
+
+.reset-user-dialog-toggle-hint,
+.user-form-admin-helper {
+  @apply text-sm text-text-muted;
+}

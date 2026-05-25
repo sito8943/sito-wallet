@@ -52,14 +52,6 @@
   @apply flex items-center justify-start gap-2 max-xs:flex-col;
 }
 
-.dashboard-card-select-input {
-  @apply !pl-7;
-}
-
-.dashboard-card-select-icon {
-  @apply absolute left-2 text-sm text-text;
-}
-
 .current-balance-content {
   @apply mt-auto flex w-full items-center justify-between;
 }

@@ -25,8 +25,6 @@ import { TransactionActions } from "../types";
 // utils
 import { assignCategoryFormToDto, emptyAssignCategoryForm } from "../utils";
 
-import "./styles.css";
-
 export function useAssignTransactionCategoryAction(): UseActionDialog<
   TransactionDto,
   AssignTransactionCategoryFormType

@@ -4,14 +4,6 @@
   @apply text-start mb-2;
 }
 
-.account-description--empty {
-  @apply !text-xs italic;
-}
-
-.account-description--deleted {
-  @apply !text-bg-error;
-}
-
 .account-card-container {
   @apply md:w-100 max-md:w-full;
 }
@@ -44,17 +36,6 @@
   @apply sm:hidden;
 }
 
-.account-form-row {
-  @apply flex gap-5;
-}
-
-.account-form-type-input {
-  @apply !pl-7;
-}
-
-.account-form-type-icon {
-  @apply absolute left-2 text-text text-sm;
-}
 
 .adjust-balance-current {
   @apply flex items-center gap-2 text-text-muted text-sm;

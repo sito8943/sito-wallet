@@ -61,9 +61,6 @@ import {
   normalizeListFilters,
 } from "lib";
 
-// styles
-import "./styles.css";
-
 export function Currencies() {
   const { t } = useTranslation();
   const { showErrorNotification } = useNotification();

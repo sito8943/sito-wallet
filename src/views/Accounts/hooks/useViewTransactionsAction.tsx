@@ -18,8 +18,6 @@ import { AccountActions } from "../types";
 import type { AccountDto } from "lib";
 import { getTransactionsRouteWithAccountId } from "lib";
 
-import "./styles.css";
-
 export const useViewTransactionsAction = (
   props: Omit<UseSingleActionPropTypes<number>, "onClick">,
 ) => {

@@ -57,8 +57,6 @@ import {
   useEditSubscriptionProviderDialog,
 } from "./hooks";
 
-import "./styles.css";
-
 export function SubscriptionProviders() {
   const { t } = useTranslation();
   const { showErrorNotification } = useNotification();

@@ -1,21 +1,5 @@
 @reference "../../styles/variables.css";
 
-.subscription-selection-bar {
-  @apply bg-base-light sm:hidden top-12 sticky z-10 py-2;
-}
-
-.subscription-selection-bar .table-selection-bar {
-  margin-bottom: 0;
-}
-
-.subscriptions-grid {
-  @apply max-sm:pb-6;
-}
-
-.subscriptions-empty-icon {
-  @apply text-5xl max-md:text-3xl text-text-muted;
-}
-
 .subscription-editor-layout {
   @apply grid w-full max-w-7xl self-center gap-4 py-3 lg:grid-cols-[minmax(0,1fr)_22rem];
 }

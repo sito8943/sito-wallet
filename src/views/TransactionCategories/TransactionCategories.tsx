@@ -62,9 +62,6 @@ import {
   normalizeListFilters,
 } from "lib";
 
-// styles
-import "./styles.css";
-
 export function TransactionCategories() {
   const { t } = useTranslation();
   const { showErrorNotification } = useNotification();

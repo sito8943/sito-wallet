@@ -4,20 +4,8 @@
   @apply !h-12 !cursor-pointer !p-1;
 }
 
-.transaction-category-form-row {
-  @apply flex gap-5;
-}
-
-.transaction-category-form-type-input {
-  @apply !pl-7;
-}
-
 .transaction-category-form-type-icon {
   @apply absolute left-2 -translate-y-[50%] text-text text-sm;
-}
-
-.transaction-category-card-title-row {
-  @apply flex w-full items-start justify-between gap-2;
 }
 
 .transaction-category-card-color-dot {
@@ -56,13 +44,6 @@
   @apply text-start mb-2 max-xs:mb-0 max-xs:w-full max-xs:overflow-hidden max-xs:text-ellipsis max-xs:whitespace-nowrap max-sm:!text-xs max-xs:text-text-muted;
 }
 
-.transaction-category-card-description--empty {
-  @apply !text-xs italic;
-}
-
-.transaction-category-card-description--deleted {
-  @apply !text-bg-error;
-}
 
 .transaction-category-card-desktop-type {
   @apply max-sm:!hidden;

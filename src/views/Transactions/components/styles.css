@@ -89,14 +89,6 @@
   @apply text-start w-full overflow-hidden text-ellipsis whitespace-nowrap;
 }
 
-.transaction-card-description--empty {
-  @apply !text-xs italic;
-}
-
-.transaction-card-description--deleted {
-  @apply !text-bg-error;
-}
-
 .transaction-card-meta {
   @apply text-xs text-left flex gap-1;
 }

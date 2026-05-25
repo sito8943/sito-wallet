@@ -8,18 +8,6 @@
   @apply text-sm text-text-muted text-balance;
 }
 
-.reset-user-dialog-toggle {
-  @apply flex items-center justify-between gap-3 rounded-xl border border-border bg-base-light p-3;
-}
-
-.reset-user-dialog-toggle-copy {
-  @apply flex flex-col gap-1;
-}
-
-.reset-user-dialog-toggle-hint {
-  @apply text-sm text-text-muted;
-}
-
 .reset-user-dialog-toggle-input {
   @apply h-4 w-4 accent-bg-error;
 }
@@ -44,24 +32,8 @@
   @apply text-xs text-error;
 }
 
-.user-form-admin-toggle {
-  @apply flex items-center justify-between gap-3 rounded-xl border border-border bg-base-light p-3;
-}
-
-.user-form-admin-copy {
-  @apply flex flex-col gap-1;
-}
-
-.user-form-admin-helper {
-  @apply text-sm text-text-muted;
-}
-
 .user-form-admin-input {
   @apply h-4 w-4 accent-bg-primary;
-}
-
-.user-card-title-row {
-  @apply flex w-full items-start justify-between gap-2;
 }
 
 .user-card-container {
@@ -78,8 +50,4 @@
 
 .user-card-email {
   @apply text-start text-sm text-text-muted;
-}
-
-.user-card-email--deleted {
-  @apply !text-bg-error;
 }
