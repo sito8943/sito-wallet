@@ -161,10 +161,10 @@ export const ConfigFormDialog = (
             <FontAwesomeIcon
               icon={icons[(type ?? 0) as keyof typeof icons]}
               className={classNames(
-                "dashboard-card-select-icon",
+                "dashboard-card-select-icon vertical-center",
                 Number(type) === TransactionType.In
-                  ? "dashboard-card-select-icon--income"
-                  : "dashboard-card-select-icon--expense",
+                  ? "dashboard-card-select-icon--income inverted-success"
+                  : "dashboard-card-select-icon--expense inverted-error",
               )}
             />
           </SelectInput>

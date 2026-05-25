@@ -44,7 +44,7 @@ export const RenewalsDialog = (props: RenewalsDialogPropsType) => {
       className="renewals-dialog"
     >
       {renewals.length === 0 ? (
-        <p className="renewals-dialog-empty">
+        <p className="renewals-dialog-empty poppins">
           {t("_pages:home.dashboard.subscriptionForecast.details.empty")}
         </p>
       ) : (
@@ -59,10 +59,10 @@ export const RenewalsDialog = (props: RenewalsDialogPropsType) => {
             return (
               <li
                 key={`${renewal.subscriptionId}-${renewal.nextRenewalAt}-${index}`}
-                className="renewals-dialog-item"
+                className="renewals-dialog-item base-border"
               >
                 <div className="renewals-dialog-item-copy">
-                  <p className="renewals-dialog-item-title">
+                  <p className="renewals-dialog-item-title poppins">
                     {renewal.subscriptionName}
                   </p>
                   {renewal.providerName ? (
@@ -72,7 +72,7 @@ export const RenewalsDialog = (props: RenewalsDialogPropsType) => {
                   ) : null}
                   <p className="renewals-dialog-item-date">{dateLabel}</p>
                 </div>
-                <p className="renewals-dialog-item-amount">
+                <p className="renewals-dialog-item-amount poppins">
                   {renewal.amount}{" "}
                   <Currency name={currency.name} symbol={currency.symbol} />
                 </p>

@@ -105,7 +105,7 @@ export const SubscriptionForecastCard = (
       >
         {() => (
           <div className="subscription-forecast-content">
-            <p className="subscription-forecast-count">
+            <p className="subscription-forecast-count poppins">
               {t("_pages:home.dashboard.subscriptionForecast.count", {
                 count,
               })}
@@ -113,7 +113,7 @@ export const SubscriptionForecastCard = (
             <div className="subscription-forecast-summary">
               <div className="subscription-forecast-totals">
                 {totals.length === 0 ? (
-                  <p className="subscription-forecast-total">
+                  <p className="subscription-forecast-total poppins">
                     {isLoading ? "…" : "0"}
                   </p>
                 ) : (
@@ -122,7 +122,7 @@ export const SubscriptionForecastCard = (
                     return (
                       <p
                         key={`${total.currency ?? "none"}-${index}`}
-                        className="subscription-forecast-total"
+                        className="subscription-forecast-total poppins"
                       >
                         {total.amount}{" "}
                         <Currency

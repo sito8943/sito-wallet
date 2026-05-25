@@ -32,7 +32,7 @@ select > option {
 
 .text-input,
 .select-input {
-  @apply border-2 border-border/40 !pl-2 rounded-lg;
+  @apply border-2 border-border/40 rounded-lg;
 }
 
 .text-input-label {

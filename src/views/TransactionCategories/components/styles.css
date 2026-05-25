@@ -13,15 +13,7 @@
 }
 
 .transaction-category-form-type-icon {
-  @apply absolute left-2 vertical-center -translate-y-[50%] text-text text-sm;
-}
-
-.transaction-category-form-type-icon--income {
-  @apply inverted-success;
-}
-
-.transaction-category-form-type-icon--expense {
-  @apply inverted-error;
+  @apply absolute left-2 -translate-y-[50%] text-text text-sm;
 }
 
 .transaction-category-card-title-row {

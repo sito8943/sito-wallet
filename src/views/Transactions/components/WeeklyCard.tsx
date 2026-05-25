@@ -72,11 +72,11 @@ export const WeeklyCard = (props: WeeklyCardProps) => {
         )}
       >
         <div className="weekly-card-content">
-          <h3 className="weekly-card-title">{title}</h3>
+          <h3 className="weekly-card-title poppins">{title}</h3>
           <div className="weekly-card-values">
             <p
               className={classNames(
-                "weekly-card-current",
+                "weekly-card-current poppins",
                 currentValueClassName,
               )}
             >
@@ -86,7 +86,7 @@ export const WeeklyCard = (props: WeeklyCardProps) => {
             {!!difference && !!data?.previousWeek && (
               <p
                 className={classNames(
-                  "weekly-card-difference",
+                  "weekly-card-difference poppins",
                   differenceClassName,
                 )}
               >

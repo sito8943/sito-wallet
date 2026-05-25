@@ -110,7 +110,7 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
       )}
     >
       {() => (
-        <p className="weekly-spent-amount">
+        <p className="weekly-spent-amount poppins">
           {isLoading ? "…" : amount} <Currency name={name} symbol={symbol} />
         </p>
       )}

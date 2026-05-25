@@ -93,8 +93,8 @@ export const ConfigFormDialog = (
               className={classNames(
                 "dashboard-card-select-icon",
                 Number(type) === TransactionType.In
-                  ? "dashboard-card-select-icon--income"
-                  : "dashboard-card-select-icon--expense",
+                  ? "dashboard-card-select-icon--income inverted-success"
+                  : "dashboard-card-select-icon--expense inverted-error",
               )}
             />
           </SelectInput>

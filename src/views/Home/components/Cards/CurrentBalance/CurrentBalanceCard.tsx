@@ -116,7 +116,7 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
       >
         {() => (
           <div className="current-balance-content">
-            <p className="current-balance-amount">
+            <p className="current-balance-amount poppins">
               {isLoading ? "…" : balance}{" "}
               <Currency name={currencyName} symbol={symbol} />
             </p>

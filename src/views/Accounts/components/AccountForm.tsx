@@ -135,7 +135,7 @@ export function AccountForm(props: AccountFormPropsType) {
             >
               <FontAwesomeIcon
                 icon={icons[(type ?? 0) as keyof typeof icons]}
-                className="account-form-type-icon"
+                className="account-form-type-icon vertical-center"
               />
             </SelectInput>
           )}

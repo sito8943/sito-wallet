@@ -19,21 +19,19 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputPropsType>(
     const { searching, setSearching, onClick } = props;
 
     return (
-      <div>
-        <TextInput
-          ref={ref}
-          onClick={(e) => {
-            e.stopPropagation();
-            onClick();
-          }}
-          value={searching}
-          placeholder={t("_pages:search.placeholder")}
-          onChange={(e) => setSearching((e.target as HTMLInputElement).value)}
-          inputClassName="search-input-control"
-        >
-          <FontAwesomeIcon icon={faSearch} className="search-input-icon" />
-        </TextInput>
-      </div>
+      <TextInput
+        ref={ref}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick();
+        }}
+        value={searching}
+        placeholder={t("_pages:search.placeholder")}
+        onChange={(e) => setSearching((e.target as HTMLInputElement).value)}
+        inputClassName="search-input-control"
+      >
+        <FontAwesomeIcon icon={faSearch} className="search-input-icon" />
+      </TextInput>
     );
   },
 );

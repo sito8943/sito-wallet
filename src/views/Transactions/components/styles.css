@@ -134,7 +134,7 @@
 }
 
 .weekly-card-title {
-  @apply text-lg poppins;
+  @apply text-lg;
 }
 
 .weekly-card-values {
@@ -142,7 +142,7 @@
 }
 
 .weekly-card-current {
-  @apply text-2xl font-bold self-start poppins;
+  @apply text-2xl font-bold self-start;
 }
 
 .weekly-card-current--expense {
@@ -154,7 +154,7 @@
 }
 
 .weekly-card-difference {
-  @apply text-sm font-bold self-start poppins;
+  @apply text-sm font-bold self-start;
 }
 
 .weekly-card-difference--expense-up {

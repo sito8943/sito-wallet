@@ -132,10 +132,10 @@ export function TransactionCategoryForm(
               <FontAwesomeIcon
                 icon={icons[(type ?? 0) as keyof typeof icons]}
                 className={classNames(
-                  "transaction-category-form-type-icon",
+                  "transaction-category-form-type-icon vertical-center",
                   Number(type) === TransactionType.In
-                    ? "transaction-category-form-type-icon--income"
-                    : "transaction-category-form-type-icon--expense",
+                    ? "transaction-category-form-type-icon--income inverted-success"
+                    : "transaction-category-form-type-icon--expense inverted-error",
                 )}
               />
             </SelectInput>

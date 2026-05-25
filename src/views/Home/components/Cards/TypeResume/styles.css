@@ -4,16 +4,8 @@
   @apply mt-2 self-end text-lg;
 }
 
-.type-resume-icon--income {
-  @apply inverted-success;
-}
-
-.type-resume-icon--expense {
-  @apply inverted-error;
-}
-
 .type-resume-amount {
-  @apply poppins self-end text-4xl font-bold;
+  @apply self-end text-4xl font-bold;
 }
 
 .type-resume-amount--income {

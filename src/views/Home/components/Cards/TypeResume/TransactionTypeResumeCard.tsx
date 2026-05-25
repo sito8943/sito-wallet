@@ -103,13 +103,13 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
             className={classNames(
               "type-resume-icon",
               Number(formConfig.type) === TransactionType.In
-                ? "type-resume-icon--income"
-                : "type-resume-icon--expense",
+                ? "type-resume-icon--income inverted-success"
+                : "type-resume-icon--expense inverted-error",
             )}
           />
           <p
             className={classNames(
-              "type-resume-amount",
+              "type-resume-amount poppins",
               formConfig.type === TransactionType.In
                 ? "type-resume-amount--income"
                 : "type-resume-amount--expense",
