@@ -18,7 +18,7 @@ export function useResetUser(): UseResetUserReturnType {
   const { t } = useTranslation();
   const { showErrorNotification, showSuccessNotification } = useNotification();
   const queryClient = useQueryClient();
-  const { account, logoutUser } = useAuth();
+  const { account } = useAuth();
 
   const manager = useManager();
   const usersClient = "Users" in manager ? manager.Users : null;
@@ -45,11 +45,14 @@ export function useResetUser(): UseResetUserReturnType {
       showSuccessNotification({
         message: t("_pages:users.reset.successMessage"),
       });
-      await queryClient.invalidateQueries({ ...UsersQueryKeys.all() });
       close();
-      if (account?.id && account.id === resetId) {
-        await logoutUser();
+
+      if (account?.id === resetId) {
+        await queryClient.invalidateQueries();
+        return;
       }
+
+      await queryClient.invalidateQueries({ ...UsersQueryKeys.all() });
     },
     onError: () => {
       showErrorNotification({

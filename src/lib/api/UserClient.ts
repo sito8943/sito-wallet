@@ -33,15 +33,8 @@ export default class UserClient extends BaseClient<
   }
 
   async reset(id: number, hard: boolean): Promise<void> {
-    try {
-      await this.api.post<void, { hard: boolean }>(
-        `${this.table}/${id}/reset`,
-        {
-          hard,
-        },
-      );
-    } catch (err) {
-      console.log(err);
-    }
+    await this.api.post<void, { hard: boolean }>(`${this.table}/${id}/reset`, {
+      hard,
+    });
   }
 }
