@@ -14,6 +14,8 @@ import { Tables } from "lib";
 
 import type { AddSubscriptionBillingLogDialogPropsType } from "../types";
 
+import "./styles.css";
+
 export function SubscriptionBillingLogForm(
   props: AddSubscriptionBillingLogDialogPropsType,
 ) {
@@ -48,9 +50,9 @@ export function SubscriptionBillingLogForm(
       />
 
       {selectedSubscription ? (
-        <p className="text-sm text-text-muted">
+        <p className="subscription-billing-log-current">
           {t("_pages:subscriptions.actions.billingLog.for")}:
-          <strong className="ml-1 text-text">
+          <strong className="subscription-billing-log-current-name">
             {selectedSubscription.name}
           </strong>
         </p>

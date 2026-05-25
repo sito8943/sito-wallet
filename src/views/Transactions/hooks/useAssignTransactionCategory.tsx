@@ -73,7 +73,9 @@ export function useAssignTransactionCategoryAction(): UseActionDialog<
     (record: TransactionDto) => ({
       id: TransactionActions.AssignCategory,
       tooltip: t("_pages:transactions.actions.assignCategory.text"),
-      icon: <FontAwesomeIcon className="transaction-action-icon" icon={faTags} />,
+      icon: (
+        <FontAwesomeIcon className="transaction-action-icon" icon={faTags} />
+      ),
       onClick: () => handleOpenDialog([record]),
       multiple: true,
       onMultipleClick: handleOpenDialog,

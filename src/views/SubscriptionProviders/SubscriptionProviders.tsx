@@ -223,7 +223,7 @@ export function SubscriptionProviders() {
           />
           <PrettyGrid
             data={items}
-            className="full-grid max-sm:pb-6"
+            className="full-grid subscription-providers-grid"
             hasMore={!!hasNextPage}
             loadingMore={isFetchingNextPage}
             onLoadMore={() => {
@@ -235,7 +235,7 @@ export function SubscriptionProviders() {
                 message={t("_pages:subscriptionProviders.empty")}
                 iconProps={{
                   icon: faBuilding,
-                  className: "text-5xl max-md:text-3xl text-text-muted",
+                  className: "subscription-providers-empty-icon",
                 }}
                 action={[
                   {

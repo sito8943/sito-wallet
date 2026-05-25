@@ -37,15 +37,11 @@ export function CurrencyCard(props: CurrencyCardPropsType) {
           <div className="currency-card-title-main">
             <ItemCardTitle>{name}</ItemCardTitle>
             {hasSymbol ? (
-              <span className="currency-card-symbol-inline">
-                ({symbol})
-              </span>
+              <span className="currency-card-symbol-inline">({symbol})</span>
             ) : null}
           </div>
           {hasSymbol ? (
-            <span className="currency-card-symbol-badge">
-              {symbol}
-            </span>
+            <span className="currency-card-symbol-badge">{symbol}</span>
           ) : null}
         </div>
       }

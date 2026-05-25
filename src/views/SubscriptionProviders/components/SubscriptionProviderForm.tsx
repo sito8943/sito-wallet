@@ -25,6 +25,8 @@ import type { SubscriptionProviderFormPropsType } from "../types";
 // constants
 import { PHOTO_ACCEPT, SUBSCRIPTION_PROVIDER_FILE_INPUT_ID } from "./constants";
 
+import "./styles.css";
+
 export function SubscriptionProviderForm(
   props: SubscriptionProviderFormPropsType,
 ) {
@@ -118,7 +120,7 @@ export function SubscriptionProviderForm(
             id={SUBSCRIPTION_PROVIDER_FILE_INPUT_ID}
             unstyled
             accept={PHOTO_ACCEPT}
-            inputClassName="hidden"
+            inputClassName="subscription-provider-file-input"
             onChange={(event) => {
               const file = event.currentTarget.files?.[0] ?? null;
               onChange(file);

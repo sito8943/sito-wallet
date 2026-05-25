@@ -31,6 +31,8 @@ import {
 // types
 import type { SubscriptionFormPropsType } from "../types";
 
+import "./styles.css";
+
 export function SubscriptionForm(props: SubscriptionFormPropsType) {
   const { control, isLoading, mode = FormMode.Add } = props;
   const { t } = useTranslation();
@@ -104,7 +106,7 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
         name="id"
       />
 
-      <div className="grid gap-5 md:grid-cols-2">
+      <div className="subscription-form-grid">
         <Controller
           control={control}
           rules={{
@@ -147,7 +149,7 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
           )}
         />
 
-        <div className="grid grid-cols-2 gap-5">
+        <div className="subscription-form-frequency-grid">
           <Controller
             control={control}
             rules={{
@@ -281,15 +283,15 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
             id="subscription-auto-create-transaction"
             checked={!!value}
             label={t("_entities:subscription.autoCreateTransaction.label")}
-            inputClassName="h-4 w-4"
-            containerClassName="mb-5"
+            inputClassName="subscription-form-toggle-input"
+            containerClassName="subscription-form-toggle"
             onChange={(event) => onChange(event.currentTarget.checked)}
           />
         )}
       />
 
       {autoCreateTransaction && (
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="subscription-form-grid">
           <Controller
             control={control}
             rules={{

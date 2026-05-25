@@ -34,6 +34,8 @@ import type { ProfileFormPropsType, ProfileFormType } from "../types";
 import { getErrorMessage, normalizeProfileLanguage } from "../utils";
 import SectionDivider from "../SectionDivider";
 
+import "./styles.css";
+
 export function ProfileForm({ profile }: ProfileFormPropsType) {
   const { t, i18n } = useTranslation();
   const manager = useManager();
@@ -135,23 +137,23 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
   });
 
   return (
-    <div className="w-full max-w-2xl self-center base-border sm:p-6 p-2 rounded-2xl flex flex-col gap-6">
+    <div className="profile-form-shell">
       <form
-        className="flex flex-col gap-6"
+        className="profile-form"
         onSubmit={(event) => {
           event.preventDefault();
           void onSubmit(event);
         }}
       >
-        <section id="personal" className="flex flex-col gap-1">
-          <div className="flex flex-col gap-1">
-            <h3 className="text-xs uppercase tracking-wide text-text-muted">
+        <section id="personal" className="profile-section-personal">
+          <div className="profile-section-heading">
+            <h3 className="profile-section-title">
               {t("_pages:profile.sections.personal")}
             </h3>
           </div>
-          <div className="flex flex-col gap-6">
-            <div className="flex max-sm:flex-col max-sm:items-start items-center gap-4">
-              <div className="flex items-center justify-start gap-4">
+          <div className="profile-personal-content">
+            <div className="profile-personal-header">
+              <div className="profile-personal-identity">
                 <ProfilePhoto
                   profile={profile}
                   isUploading={isUploading}
@@ -162,11 +164,11 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
                     void deletePhoto();
                   }}
                 />
-                <div className="flex flex-col">
-                  <h3 className="text-xl">
+                <div className="profile-personal-copy">
+                  <h3 className="profile-personal-name">
                     {currentName || profile.name || ""}
                   </h3>
-                  <p className="text-sm text-text-muted">
+                  <p className="profile-personal-username">
                     {t("_pages:profile.labels.username")}:{" "}
                     {profile.user?.username ?? "-"}
                   </p>
@@ -241,22 +243,22 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
 
         <SectionDivider />
 
-        <section id="data" className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1">
-            <h3 className="text-xs uppercase tracking-wide text-text-muted">
+        <section id="data" className="profile-section-data">
+          <div className="profile-section-heading">
+            <h3 className="profile-section-title">
               {t("_pages:profile.sections.data")}
             </h3>
-            <p className="text-sm text-text-muted">
+            <p className="profile-section-helper">
               {t("_pages:profile.helper.hideDeletedEntities")}
             </p>
           </div>
 
-          <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-base-light p-3">
-            <div className="flex flex-col gap-1">
+          <div className="profile-toggle">
+            <div className="profile-toggle-copy">
               <span id="hide-deleted-entities-label">
                 {t("_pages:profile.labels.hideDeletedEntities")}
               </span>
-              <span className="text-sm text-text-muted">
+              <span className="profile-toggle-hint">
                 {currentHideDeletedEntities
                   ? t("_pages:profile.values.enabled")
                   : t("_pages:profile.values.disabled")}
@@ -274,7 +276,7 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
                   label=""
                   labelClassName="hidden"
                   containerClassName="shrink-0"
-                  inputClassName="h-4 w-4 accent-bg-primary"
+                  inputClassName="profile-toggle-input"
                   aria-labelledby="hide-deleted-entities-label"
                   checked={!!field.value}
                   disabled={formDisabled}
@@ -290,12 +292,12 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
 
         <SectionDivider />
 
-        <div className="flex">
+        <div className="profile-actions">
           <Button
             type="submit"
             variant="submit"
             color="primary"
-            className="max-sm:w-full"
+            className="profile-save-button"
             disabled={saveDisabled}
           >
             {t("_pages:profile.actions.save")}

@@ -4,6 +4,7 @@ import { Controller, useWatch } from "react-hook-form";
 
 // @sito/dashboard-app
 import {
+  classNames,
   enumToKeyValueArray,
   useAuth,
   ParagraphInput,
@@ -23,6 +24,8 @@ import { Tables, TransactionType } from "lib";
 // utils
 import { icons } from "../../Transactions/components/utils";
 import { normalizeTransactionCategoryColor } from "../utils";
+
+import "./styles.css";
 
 export function TransactionCategoryForm(
   props: TransactionCategoryFormPropsType,
@@ -106,12 +109,12 @@ export function TransactionCategoryForm(
             )}`}
             label={t("_entities:base.color.label")}
             aria-label={t("_accessibility:labels.colorPicker")}
-            inputClassName="!h-12 !cursor-pointer !p-1"
+            inputClassName="transaction-category-color-input"
             {...rest}
           />
         )}
       />
-      <div className="flex gap-5">
+      <div className="transaction-category-form-row">
         <Controller
           control={control}
           name="type"
@@ -128,11 +131,12 @@ export function TransactionCategoryForm(
             >
               <FontAwesomeIcon
                 icon={icons[(type ?? 0) as keyof typeof icons]}
-                className={`absolute left-2 vertical-center -translate-y-[50%] text-text text-sm ${
+                className={classNames(
+                  "transaction-category-form-type-icon",
                   Number(type) === TransactionType.In
-                    ? "inverted-success"
-                    : "inverted-error"
-                }`}
+                    ? "transaction-category-form-type-icon--income"
+                    : "transaction-category-form-type-icon--expense",
+                )}
               />
             </SelectInput>
           )}

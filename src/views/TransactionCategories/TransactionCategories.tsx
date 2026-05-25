@@ -187,7 +187,7 @@ export function TransactionCategories() {
           />
           <PrettyGrid
             data={items}
-            className="full-grid max-sm:pb-6"
+            className="full-grid transaction-categories-grid"
             hasMore={!!hasNextPage}
             loadingMore={isFetchingNextPage}
             onLoadMore={() => {
@@ -199,7 +199,7 @@ export function TransactionCategories() {
                 message={t("_pages:transactionCategories.empty")}
                 iconProps={{
                   icon: faTags,
-                  className: "text-5xl max-md:text-3xl text-text-muted",
+                  className: "transaction-categories-empty-icon",
                 }}
                 action={[
                   {

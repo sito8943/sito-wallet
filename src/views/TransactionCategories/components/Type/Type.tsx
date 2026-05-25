@@ -14,6 +14,8 @@ import { icons } from "../../../Transactions/components/utils";
 // types
 import type { TypePropsType } from "./types";
 
+import "./styles.css";
+
 export const Type = (props: TypePropsType) => {
   const { type, noText = false, filled = true, className = "" } = props;
 
@@ -30,7 +32,7 @@ export const Type = (props: TypePropsType) => {
     <Chip
       className={chipClassName}
       text={
-        <div className="flex gap-2 items-center justify-center">
+        <div className="transaction-category-type-text">
           <FontAwesomeIcon
             className={className}
             icon={icons[(type ?? 0) as keyof typeof icons]}

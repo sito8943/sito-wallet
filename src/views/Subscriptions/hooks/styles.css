@@ -1,0 +1,5 @@
+@reference "../../../styles/variables.css";
+
+.subscription-action-icon {
+  @apply text-bg-primary;
+}

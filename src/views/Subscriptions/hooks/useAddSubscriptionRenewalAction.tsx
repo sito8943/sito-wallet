@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 
+import { classNames } from "@sito/dashboard-app";
 import type { ActionType } from "@sito/dashboard-app";
 import { useTranslation } from "@sito/dashboard-app";
 
@@ -11,6 +12,8 @@ import type { SubscriptionDto } from "lib";
 import { SubscriptionAction } from "../types";
 import { toSubscriptionStatus } from "../utils";
 import type { UseAddSubscriptionRenewalActionProps } from "./types";
+
+import "./styles.css";
 
 export function useAddSubscriptionRenewalAction(
   props: UseAddSubscriptionRenewalActionProps,
@@ -30,7 +33,7 @@ export function useAddSubscriptionRenewalAction(
         icon: (
           <FontAwesomeIcon
             icon={isLoading ? faCircleNotch : faAdd}
-            className={`text-bg-primary ${isLoading ? "rotate" : ""}`}
+            className={classNames("subscription-action-icon", isLoading && "rotate")}
           />
         ),
         tooltip: isCanceled

@@ -19,8 +19,10 @@ import type { ProfilePhotoPropsType } from "../types";
 // components
 import { Image } from "components";
 
+import "./styles.css";
+
 const profilePhotoFallback = (
-  <FontAwesomeIcon icon={faUser} className="text-4xl text-text-muted" />
+  <FontAwesomeIcon icon={faUser} className="profile-photo-fallback" />
 );
 
 export function ProfilePhoto({
@@ -50,10 +52,10 @@ export function ProfilePhoto({
   const hasPhoto = !!profile.photo;
 
   return (
-    <div className="flex flex-col items-center gap-3">
-      <div className="relative">
+    <div className="profile-photo">
+      <div className="profile-photo-frame">
         <div
-          className={`w-28 h-28 rounded-2xl overflow-hidden bg-base border-2 border-border flex items-center justify-center${hasPhoto ? " cursor-pointer" : ""}`}
+          className={`profile-photo-preview${hasPhoto ? " profile-photo-preview--clickable" : ""}`}
           onClick={hasPhoto ? handleFileSelect : undefined}
           title={hasPhoto ? t("_pages:profile.photo.upload") : undefined}
         >
@@ -61,17 +63,17 @@ export function ProfilePhoto({
             <Image
               endpoint={profile.photo!}
               fallback={profilePhotoFallback}
-              className="w-full h-full object-cover"
+              className="profile-photo-image"
               alt={profile.name}
             />
           ) : (
             profilePhotoFallback
           )}
           {isUploading && (
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+            <div className="profile-photo-overlay">
               <FontAwesomeIcon
                 icon={faSpinner}
-                className="text-2xl text-white rotate"
+                className="profile-photo-spinner"
               />
             </div>
           )}
@@ -84,7 +86,7 @@ export function ProfilePhoto({
             color="primary"
             data-tooltip-id="tooltip"
             data-tooltip-content={t("_pages:profile.photo.upload")}
-            className="top-1 right-1 absolute"
+            className="profile-photo-action"
           />
         )}
         {hasPhoto && (
@@ -95,7 +97,7 @@ export function ProfilePhoto({
             color="error"
             data-tooltip-id="tooltip"
             data-tooltip-content={t("_pages:profile.photo.delete")}
-            className="top-1 right-1 absolute"
+            className="profile-photo-action"
           />
         )}
       </div>
@@ -103,7 +105,7 @@ export function ProfilePhoto({
         id="profile-photo-file-input"
         unstyled
         accept="image/jpeg,image/png,image/webp"
-        inputClassName="hidden"
+        inputClassName="profile-photo-file-input"
         disabled={isUploading}
         onChange={handleFileChange}
       />

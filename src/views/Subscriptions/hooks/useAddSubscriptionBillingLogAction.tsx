@@ -18,6 +18,8 @@ import type { UseAddSubscriptionBillingLogActionProps } from "./types";
 // utils
 import { toSubscriptionStatus } from "../utils";
 
+import "./styles.css";
+
 export function useAddSubscriptionBillingLogAction(
   props: UseAddSubscriptionBillingLogActionProps,
 ) {
@@ -34,7 +36,10 @@ export function useAddSubscriptionBillingLogAction(
         hidden: hidden || !!record.deletedAt,
         disabled: !!record.deletedAt || isCanceled,
         icon: (
-          <FontAwesomeIcon icon={faFileInvoice} className="text-bg-primary" />
+          <FontAwesomeIcon
+            icon={faFileInvoice}
+            className="subscription-action-icon"
+          />
         ),
         tooltip: isCanceled
           ? t("_pages:subscriptions.actions.billingLog.disabled")

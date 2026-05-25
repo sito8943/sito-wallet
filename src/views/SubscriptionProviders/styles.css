@@ -7,3 +7,11 @@
 .subscription-provider-selection-bar .table-selection-bar {
   margin-bottom: 0;
 }
+
+.subscription-providers-grid {
+  @apply max-sm:pb-6;
+}
+
+.subscription-providers-empty-icon {
+  @apply text-5xl max-md:text-3xl text-text-muted;
+}

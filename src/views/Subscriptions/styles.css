@@ -8,12 +8,32 @@
   margin-bottom: 0;
 }
 
+.subscriptions-grid {
+  @apply max-sm:pb-6;
+}
+
+.subscriptions-empty-icon {
+  @apply text-5xl max-md:text-3xl text-text-muted;
+}
+
 .subscription-editor-layout {
   @apply grid w-full max-w-7xl self-center gap-4 py-3 lg:grid-cols-[minmax(0,1fr)_22rem];
 }
 
 .subscription-editor-form {
   @apply rounded-2xl;
+}
+
+.subscription-editor-actions {
+  @apply flex gap-2 max-sm:flex-col-reverse;
+}
+
+.subscription-editor-action-button {
+  @apply max-sm:w-full;
+}
+
+.subscription-editor-form-content {
+  @apply flex flex-col gap-4;
 }
 
 .subscription-editor-sidebar {

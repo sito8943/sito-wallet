@@ -1,0 +1,37 @@
+@reference "../../../styles/variables.css";
+
+.subscription-provider-file-input {
+  @apply hidden;
+}
+
+.subscription-provider-card-title-row {
+  @apply flex w-full items-start justify-between gap-2;
+}
+
+.subscription-provider-card-link {
+  @apply inline-flex items-center gap-1 text-xs text-bg-primary underline;
+}
+
+.subscription-provider-card-content {
+  @apply gap-2;
+}
+
+.subscription-provider-card-container {
+  @apply max-xs:min-h-0 max-xs:rounded-xl max-xs:p-2.5;
+}
+
+.subscription-provider-card-description {
+  @apply text-start text-sm text-text-muted;
+}
+
+.subscription-provider-card-description--empty {
+  @apply !text-xs italic;
+}
+
+.subscription-provider-card-description--deleted {
+  @apply !text-bg-error;
+}
+
+.subscription-provider-card-photo {
+  @apply inline-flex items-center gap-1 text-xs text-text-muted;
+}

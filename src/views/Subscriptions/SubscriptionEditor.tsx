@@ -243,12 +243,12 @@ export function SubscriptionEditor() {
                 onCancel,
                 submitLabel,
               }) => (
-                <div className="flex gap-2 max-sm:flex-col-reverse">
+                <div className="subscription-editor-actions">
                   <Button
                     {...buttonProps.cancel}
                     variant="outlined"
                     onClick={onCancel}
-                    className="max-sm:w-full"
+                    className="subscription-editor-action-button"
                   >
                     {cancelLabel}
                   </Button>
@@ -256,14 +256,14 @@ export function SubscriptionEditor() {
                     {...buttonProps.submit}
                     variant="submit"
                     color="primary"
-                    className="max-sm:w-full"
+                    className="subscription-editor-action-button"
                   >
                     {submitLabel}
                   </Button>
                 </div>
               )}
             >
-              <div className="flex flex-col gap-4">
+              <div className="subscription-editor-form-content">
                 <SubscriptionForm
                   control={control}
                   isLoading={isLoading}

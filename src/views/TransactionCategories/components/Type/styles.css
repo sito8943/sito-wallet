@@ -1,0 +1,5 @@
+@reference "../../../../styles/variables.css";
+
+.transaction-category-type-text {
+  @apply flex gap-2 items-center justify-center;
+}

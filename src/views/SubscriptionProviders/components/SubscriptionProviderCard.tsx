@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { classNames } from "@sito/dashboard-app";
 
 // icons
 import { faExternalLink, faImage } from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +10,8 @@ import { ItemCard, ItemCardTitle } from "components";
 
 // types
 import type { SubscriptionProviderCardPropsType } from "../types";
+
+import "./styles.css";
 
 const ensureAbsoluteUrl = (value: string): string => {
   if (/^https?:\/\//i.test(value)) return value;
@@ -44,7 +47,7 @@ export function SubscriptionProviderCard(
   return (
     <ItemCard
       title={
-        <div className="flex w-full items-start justify-between gap-2">
+        <div className="subscription-provider-card-title-row">
           <ItemCardTitle>
             {name}{" "}
             {parsedWebsite ? (
@@ -53,7 +56,7 @@ export function SubscriptionProviderCard(
                 target="_blank"
                 rel="noreferrer"
                 onClick={(event) => event.stopPropagation()}
-                className="inline-flex items-center gap-1 text-xs text-bg-primary underline"
+                className="subscription-provider-card-link"
               >
                 <FontAwesomeIcon icon={faExternalLink} />
               </a>
@@ -70,19 +73,21 @@ export function SubscriptionProviderCard(
       onToggleSelection={() => onSelect?.(id)}
       onLongPressSelection={() => onLongPress?.(id)}
       actions={actions}
-      className="gap-2"
-      containerClassName="max-xs:min-h-0 max-xs:rounded-xl max-xs:p-2.5"
+      className="subscription-provider-card-content"
+      containerClassName="subscription-provider-card-container"
     >
       <p
-        className={`${description ? "" : "!text-xs italic"} text-start text-sm text-text-muted ${
-          deleted ? "!text-bg-error" : ""
-        }`}
+        className={classNames(
+          "subscription-provider-card-description",
+          !description && "subscription-provider-card-description--empty",
+          deleted && "subscription-provider-card-description--deleted",
+        )}
       >
         {parsedDescription}
       </p>
 
       {hasPhoto ? (
-        <p className="inline-flex items-center gap-1 text-xs text-text-muted">
+        <p className="subscription-provider-card-photo">
           <FontAwesomeIcon icon={faImage} />
           {t("_entities:subscriptionProvider.photo.label")}
         </p>

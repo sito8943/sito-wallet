@@ -210,7 +210,7 @@ export function Subscriptions() {
           />
           <PrettyGrid
             data={items}
-            className="full-grid max-sm:pb-6"
+            className="full-grid subscriptions-grid"
             hasMore={!!hasNextPage}
             loadingMore={isFetchingNextPage}
             onLoadMore={() => {
@@ -222,7 +222,7 @@ export function Subscriptions() {
                 message={t("_pages:subscriptions.empty")}
                 iconProps={{
                   icon: faRepeat,
-                  className: "text-5xl max-md:text-3xl text-text-muted",
+                  className: "subscriptions-empty-icon",
                 }}
                 action={{
                   icon: <FontAwesomeIcon icon={faAdd} />,

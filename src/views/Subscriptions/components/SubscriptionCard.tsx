@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { classNames } from "@sito/dashboard-app";
 
 import { ItemCard, ItemCardTitle } from "components";
 
@@ -8,6 +9,8 @@ import { Currency } from "views/Currencies/components/Currency";
 import { SUBSCRIPTION_STATUS_BADGE_CLASSNAME } from "../constants";
 import type { SubscriptionCardPropsType } from "../types";
 import { toSubscriptionStatus } from "../utils";
+
+import "./styles.css";
 
 export function SubscriptionCard(props: SubscriptionCardPropsType) {
   const { t } = useTranslation();
@@ -47,9 +50,9 @@ export function SubscriptionCard(props: SubscriptionCardPropsType) {
   return (
     <ItemCard
       title={
-        <div className="flex w-full items-start justify-between gap-2">
+        <div className="subscription-card-title-row">
           <ItemCardTitle>{name}</ItemCardTitle>
-          <span className="text-sm font-semibold whitespace-nowrap">
+          <span className="subscription-card-amount">
             {amount}{" "}
             <Currency name={currency?.name} symbol={currency?.symbol} />
           </span>
@@ -64,19 +67,27 @@ export function SubscriptionCard(props: SubscriptionCardPropsType) {
       onToggleSelection={() => onSelect?.(id)}
       onLongPressSelection={() => onLongPress?.(id)}
       actions={actions}
-      className="gap-2"
+      className="subscription-card-content"
     >
-      <p className={`${description ? "" : "italic text-xs"} text-start`}>
+      <p
+        className={classNames(
+          "subscription-card-description",
+          !description && "subscription-card-description--empty",
+        )}
+      >
         {parsedDescription}
       </p>
-      <p className="text-sm text-text-muted text-start">
+      <p className="subscription-card-meta">
         {t("_entities:subscription.provider.label")}: {provider?.name ?? "-"}
       </p>
-      <p className="text-sm text-text-muted text-start">
+      <p className="subscription-card-meta">
         {t("_pages:subscriptions.labels.nextRenewal")}: {renewalLabel}
       </p>
       <span
-        className={`inline-flex w-fit rounded-full px-2 py-0.5 text-xs ${SUBSCRIPTION_STATUS_BADGE_CLASSNAME[parsedStatus]}`}
+        className={classNames(
+          "subscription-card-status",
+          SUBSCRIPTION_STATUS_BADGE_CLASSNAME[parsedStatus],
+        )}
       >
         {t(`_entities:subscription.status.values.${parsedStatus}`)}
       </span>

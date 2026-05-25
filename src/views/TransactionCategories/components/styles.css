@@ -1,0 +1,77 @@
+@reference "../../../styles/variables.css";
+
+.transaction-category-color-input {
+  @apply !h-12 !cursor-pointer !p-1;
+}
+
+.transaction-category-form-row {
+  @apply flex gap-5;
+}
+
+.transaction-category-form-type-icon {
+  @apply absolute left-2 vertical-center -translate-y-[50%] text-text text-sm;
+}
+
+.transaction-category-form-type-icon--income {
+  @apply inverted-success;
+}
+
+.transaction-category-form-type-icon--expense {
+  @apply inverted-error;
+}
+
+.transaction-category-card-title-row {
+  @apply flex w-full items-start justify-between gap-2;
+}
+
+.transaction-category-card-color-dot {
+  @apply w-2 h-2 rounded-full block;
+}
+
+.transaction-category-card-mobile-type {
+  @apply sm:!hidden max-xs:inline-flex shrink-0 items-center justify-center gap-1 rounded-full border !px-2 !py-1 text-xs max-xs:px-1.5 max-xs:py-0.5;
+}
+
+.transaction-category-card-mobile-type--income {
+  @apply bg-bg-success/10 !text-bg-success border-bg-success/30;
+}
+
+.transaction-category-card-mobile-type--expense {
+  @apply bg-bg-error/10 !text-bg-error border-bg-error/30;
+}
+
+.transaction-category-card-mobile-type-text {
+  @apply flex gap-2 items-center justify-center text-xs;
+}
+
+.transaction-category-card-mobile-type-label {
+  @apply max-xs:hidden;
+}
+
+.transaction-category-card-content {
+  @apply gap-2 max-sm:gap-1;
+}
+
+.transaction-category-card-container {
+  @apply max-sm:min-h-0 max-sm:rounded-xl max-sm:p-2.5;
+}
+
+.transaction-category-card-description {
+  @apply text-start mb-2 max-xs:mb-0 max-xs:w-full max-xs:overflow-hidden max-xs:text-ellipsis max-xs:whitespace-nowrap max-sm:!text-xs max-xs:text-text-muted;
+}
+
+.transaction-category-card-description--empty {
+  @apply !text-xs italic;
+}
+
+.transaction-category-card-description--deleted {
+  @apply !text-bg-error;
+}
+
+.transaction-category-card-desktop-type {
+  @apply max-sm:!hidden;
+}
+
+.transaction-category-card-desktop-type-text {
+  @apply flex gap-2 items-center justify-center;
+}

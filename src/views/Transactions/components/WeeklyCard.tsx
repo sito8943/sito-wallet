@@ -74,7 +74,12 @@ export const WeeklyCard = (props: WeeklyCardProps) => {
         <div className="weekly-card-content">
           <h3 className="weekly-card-title">{title}</h3>
           <div className="weekly-card-values">
-            <p className={classNames("weekly-card-current", currentValueClassName)}>
+            <p
+              className={classNames(
+                "weekly-card-current",
+                currentValueClassName,
+              )}
+            >
               {isLoading ? "…" : data?.currentWeek}{" "}
               <Currency name={name} symbol={symbol} />
             </p>

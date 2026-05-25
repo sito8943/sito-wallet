@@ -17,6 +17,8 @@ import { ProfileForm } from "./components";
 // utils
 import { toRenderableError } from "./utils";
 
+import "./components/styles.css";
+
 export function Profile() {
   const { t } = useTranslation();
   const { account } = useAuth();
@@ -44,7 +46,7 @@ export function Profile() {
           )}
         />
       ) : !profile ? (
-        <div className="w-full flex justify-center items-center py-10">
+        <div className="profile-loading">
           <Loading />
         </div>
       ) : (
