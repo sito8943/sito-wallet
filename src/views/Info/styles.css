@@ -1,7 +1,7 @@
 @reference "../../styles/variables.css";
 
 .about-link {
-  @apply primary underline font-bold!;
+  @apply underline font-bold!;
 }
 
 .about-how-to-title {

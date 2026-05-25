@@ -49,7 +49,7 @@ export const About = () => {
                 href={PORTFOLIO_LINK_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="about-link"
+                className="about-link primary"
               />
             ),
           }}
