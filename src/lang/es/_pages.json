@@ -74,10 +74,10 @@
       "hideDeletedEntities": "Ocultar elementos eliminados"
     },
     "helper": {
-      "photo": "Tipos permitidos: JPG, PNG, WEBP. Tamaño maximo: 5 MB.",
+      "photo": "Tipos permitidos: JPG, PNG, WEBP. Tamaño máximo: 5 MB.",
       "photoAdvice": "Por favor, evita subir fotos personales. Te recomendamos usar avatares o imagenes abstractas.",
-      "language": "Elige el idioma de la aplicacion para tu perfil.",
-      "hideDeletedEntities": "Si esta activado, los elementos eliminados no se mostraran en las listas."
+      "language": "Elige el idioma de la aplicación para tu perfil.",
+      "hideDeletedEntities": "Si está activado, los elementos eliminados no se mostrarán en las listas."
     },
     "messages": {
       "updated": "Perfil actualizado correctamente",
@@ -89,7 +89,7 @@
       "enabled": "Activo",
       "disabled": "Inactivo",
       "languageSpanish": "Español",
-      "languageEnglish": "Ingles"
+      "languageEnglish": "Inglés"
     },
     "errors": {
       "nameRequired": "El nombre es requerido",
@@ -447,13 +447,13 @@
     }
   },
   "transactionCategories": {
-    "title": "Categorias",
+    "title": "Categorías",
     "empty": "No tienes ninguna categoría. Agrega una para empezar.",
-    "add": "Agregar una categoria",
+    "add": "Agregar una categoría",
     "forms": {
-      "add": "Nueva categoria",
-      "edit": "Editar categoria",
-      "editAria": "Haz clic para editar la categoria"
+      "add": "Nueva categoría",
+      "edit": "Editar categoría",
+      "editAria": "Haz clic para editar la categoría"
     }
   },
   "currencies": {

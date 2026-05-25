@@ -151,7 +151,8 @@
     "name": {
       "label": "Name",
       "init": "Automatically created",
-      "placeholder": "Ex: Food"
+      "placeholder": "Ex: Food",
+      "unique": "A category with that name already exists"
     },
     "description": {
       "init": "Automatically created"

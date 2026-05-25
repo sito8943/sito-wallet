@@ -115,6 +115,7 @@
   },
   "messages": {
     "saved": "Saved successfully",
+    "empty": "Nothing to show",
     "message": "Nothing to show"
   },
   "components": {

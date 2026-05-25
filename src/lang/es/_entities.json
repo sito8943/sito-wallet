@@ -14,7 +14,7 @@
     },
     "transactionCategory": {
       "singular": "Categoria",
-      "plural": "Categorias"
+      "plural": "Categorías"
     },
     "subscription": {
       "singular": "Suscripción",
@@ -134,8 +134,8 @@
     },
     "category": {
       "label": "Categoria",
-      "placeholder": "Selecciona una categoria",
-      "required": "La categoria es requerida"
+      "placeholder": "Selecciona una categoría",
+      "required": "La categoría es requerida"
     },
     "account": {
       "label": "Cuenta",
