@@ -33,7 +33,10 @@ export function useAddSubscriptionRenewalAction(
         icon: (
           <FontAwesomeIcon
             icon={isLoading ? faCircleNotch : faAdd}
-            className={classNames("subscription-action-icon", isLoading && "rotate")}
+            className={classNames(
+              "subscription-action-icon",
+              isLoading && "rotate",
+            )}
           />
         ),
         tooltip: isCanceled

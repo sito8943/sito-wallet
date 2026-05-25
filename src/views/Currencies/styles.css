@@ -5,7 +5,7 @@
 }
 
 .currency-selection-bar .table-selection-bar {
-  @apply mb-0
+  @apply mb-0;
 }
 
 .currencies-grid {

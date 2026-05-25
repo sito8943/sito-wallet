@@ -1,5 +1,7 @@
+import "./components/styles.css";
+
 const SectionDivider = () => {
-  return <div className="w-full border-t border-border" />;
+  return <div className="profile-section-divider" />;
 };
 
 export default SectionDivider;

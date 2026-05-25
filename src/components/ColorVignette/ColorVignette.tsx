@@ -1,13 +1,16 @@
 import { css } from "@emotion/css";
+import { classNames } from "@sito/dashboard-app";
 
 // types
 import type { ColorVignettePropsType } from "./types";
+
+import "./styles.css";
 
 const ColorVignette = (props: ColorVignettePropsType) => {
   const { color } = props;
   return (
     <span
-      className={`w-2 h-2 rounded-full block border border-border ${css({ backgroundColor: color })}`}
+      className={classNames("color-vignette", css({ backgroundColor: color }))}
     ></span>
   );
 };

@@ -11,6 +11,8 @@ import { TextInput } from "@sito/dashboard-app";
 // types
 import type { SearchInputPropsType } from "./types";
 
+import "./styles.css";
+
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputPropsType>(
   (props, ref) => {
     const { t } = useTranslation();
@@ -27,11 +29,11 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputPropsType>(
           value={searching}
           placeholder={t("_pages:search.placeholder")}
           onChange={(e) => setSearching((e.target as HTMLInputElement).value)}
-          inputClassName="!pl-9"
+          inputClassName="search-input-control"
         >
           <FontAwesomeIcon
             icon={faSearch}
-            className="absolute top-3.5 left-3.5"
+            className="search-input-icon"
           />
         </TextInput>
       </div>

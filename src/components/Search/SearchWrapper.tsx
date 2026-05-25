@@ -26,6 +26,8 @@ import type { SearchResultType, SearchWrapperPropsType } from "./types";
 // config
 import { config } from "../../config";
 
+import "./styles.css";
+
 export const SearchWrapper = (props: SearchWrapperPropsType) => {
   const { isModal = false } = props;
 
@@ -130,7 +132,7 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
   }, [isModal, openOnKeyCombination]);
 
   return (
-    <div role="search" className="relative">
+    <div role="search" className="search-wrapper">
       <SearchInput
         ref={inputRef}
         onClick={() => {

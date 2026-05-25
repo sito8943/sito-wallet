@@ -56,6 +56,10 @@
   @apply text-sm text-text-muted;
 }
 
+.profile-section-divider {
+  @apply w-full border-t border-border;
+}
+
 .profile-toggle {
   @apply flex items-center justify-between gap-3 rounded-xl border border-border bg-base-light p-3;
 }

@@ -1,0 +1,5 @@
+@reference "../../styles/variables.css";
+
+.color-vignette {
+  @apply block h-2 w-2 rounded-full border border-border;
+}

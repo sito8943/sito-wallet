@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { Loading, IconButton } from "@sito/dashboard-app";
+import { Loading, IconButton, classNames } from "@sito/dashboard-app";
 
 // icons
 import { faBroom } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +12,8 @@ import type { SearchResultPropsType } from "./types";
 
 // components
 import PageResult from "./PageResult";
+
+import "./styles.css";
 
 export const SearchResult = (props: SearchResultPropsType) => {
   const {
@@ -71,24 +73,27 @@ export const SearchResult = (props: SearchResultPropsType) => {
   return (
     <div
       ref={containerRef}
-      className={`flex flex-col animated gap-2 ${
-        !isModal ? "z-10 bg-base elevated absolute" : ""
-      } w-full p-2 rounded-md mt-2 ${
+      className={classNames(
+        "search-results animated",
+        !isModal && "search-results--dropdown elevated",
         show || isModal
-          ? "translate-y-0 opacity-100"
-          : "pointer-events-none translate-y-2 opacity-0"
-      }`}
+          ? "search-results--open"
+          : "search-results--closed",
+      )}
     >
       {!items.length && !!searching.length && !isLoading && (
-        <p className="text-sm">{t("_pages:search.noResult")}</p>
+        <p className="search-results-empty">{t("_pages:search.noResult")}</p>
       )}
       {isLoading && (
-        <div className="flex gap-2 items-center justify-start pl-1">
-          <Loading className="mt-0.5" loaderClass="w-10 h-10" />
+        <div className="search-results-loading">
+          <Loading
+            className="search-results-loader"
+            loaderClass="search-results-loader-icon"
+          />
         </div>
       )}
       {!!items.length && !!searching.length && (
-        <ul className="text-sm">
+        <ul className="search-results-list">
           {items.map((item) => (
             <li key={item.path ?? `${item.name}-${item.time}`}>
               {item.type === "page" && (
@@ -105,8 +110,8 @@ export const SearchResult = (props: SearchResultPropsType) => {
       )}
       <>
         {!!recent?.length && (
-          <div className="flex items-center justify-between px-1">
-            <p className="text-xs uppercase tracking-wide opacity-70">
+          <div className="search-results-header">
+            <p className="search-results-title">
               {t("_pages:search.recentSearches")}
             </p>
             <IconButton
@@ -119,7 +124,7 @@ export const SearchResult = (props: SearchResultPropsType) => {
           </div>
         )}
         {recent?.length ? (
-          <ul>
+          <ul className="search-results-list">
             {recent.map((item, index) => (
               <li key={item.path ?? `${item.name}-${item.time ?? index}`}>
                 {item.type === "page" && (
@@ -134,7 +139,7 @@ export const SearchResult = (props: SearchResultPropsType) => {
             ))}
           </ul>
         ) : (
-          <p className="text-center text-sm text-text-muted/50">
+          <p className="search-results-empty-recent">
             {t("_pages:search.noRecentSearches")}
           </p>
         )}

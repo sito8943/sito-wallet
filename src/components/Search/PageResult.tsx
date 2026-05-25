@@ -8,6 +8,8 @@ import { faLink } from "@fortawesome/free-solid-svg-icons";
 // types
 import type { PageResultPropsType } from "./types";
 
+import "./styles.css";
+
 /**
  *
  * @param {object} props component props
@@ -19,19 +21,21 @@ const PageResult = (props: PageResultPropsType) => {
 
   return (
     <Link
-      className="flex gap-2 items-center p-2 text-slate-800 hover:text-white hover:bg-primary rounded group"
+      className="search-page-result group"
       to={path}
       onClick={onClick}
     >
       <FontAwesomeIcon
-        className="text-slate-400 dark:text-slate-500 group-hover:text-white group-hover:text-opacity-50"
+        className="search-page-result-icon"
         icon={faLink}
       />
-      <p>
+      <p className="search-page-result-label">
         {name}{" "}
-        <span className="text-xs">({t("_pages:search.types.page")})</span>
+        <span className="search-page-result-type">
+          ({t("_pages:search.types.page")})
+        </span>
       </p>
-      <span className="text-xs flex-1 text-end text-slate-400 dark:text-slate-500 group-hover:text-white group-hover:text-opacity-50">
+      <span className="search-page-result-time">
         {time}
       </span>
     </Link>

@@ -9,6 +9,8 @@ import { SearchWrapper } from "components";
 // types
 import type { SearchModalPropsType } from "./types";
 
+import "./styles.css";
+
 export const SearchModal = (props: SearchModalPropsType) => {
   const { t } = useTranslation();
 
@@ -17,7 +19,7 @@ export const SearchModal = (props: SearchModalPropsType) => {
   return (
     <Dialog
       open={open}
-      className="md:w-1/2 w-5/6"
+      className="search-modal"
       title={t("_pages:search.label")}
       handleClose={onClose}
     >
