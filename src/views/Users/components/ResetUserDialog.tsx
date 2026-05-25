@@ -1,10 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import {
-  CheckInput,
-  ConfirmationDialog,
-  TextInput,
-} from "@sito/dashboard-app";
+import { CheckInput, ConfirmationDialog, TextInput } from "@sito/dashboard-app";
 
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
