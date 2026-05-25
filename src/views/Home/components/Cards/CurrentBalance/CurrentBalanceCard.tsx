@@ -11,7 +11,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
-import { IconButton } from "@sito/dashboard-app";
+import { IconButton, classNames } from "@sito/dashboard-app";
 
 // hooks
 import { AccountsQueryKeys } from "../../../../../hooks/queries/queryKeys/accountsQueryKeys";
@@ -27,7 +27,7 @@ import { ActiveFilters } from "./ActiveFilters";
 import { DashboardCard } from "../DashboardCard";
 
 // styles
-import "../TypeResume/styles.css";
+import "../styles.css";
 
 // types
 import type { CurrentBalanceFormType, CurrentBalancePropsType } from "./types";
@@ -115,13 +115,13 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
         )}
       >
         {() => (
-          <div className="flex items-center justify-between w-full mt-auto">
-            <p className="!text-4xl font-bold poppins">
+          <div className="current-balance-content">
+            <p className="current-balance-amount">
               {isLoading ? "…" : balance}{" "}
               <Currency name={currencyName} symbol={symbol} />
             </p>
             {account && (
-              <div className="flex items-center gap-1">
+              <div className="current-balance-actions">
                 <IconButton
                   disabled={adjustBalance.isLoading}
                   onClick={() => {
@@ -136,7 +136,7 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
                     void handleRefresh();
                   }}
                   icon={isSyncing ? faCircleNotch : faArrowsRotate}
-                  className={isSyncing ? "rotate" : ""}
+                  className={classNames(isSyncing && "rotate")}
                 />
               </div>
             )}

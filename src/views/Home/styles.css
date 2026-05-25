@@ -1,0 +1,13 @@
+@reference "../../styles/variables.css";
+
+.home {
+  @apply items-center justify-start gap-10 md:pt-20 max-md:gap-5 max-md:pt-10 max-sm:pt-5;
+}
+
+.home-title {
+  @apply self-center justify-self-center text-4xl max-md:text-3xl max-xs:text-2xl;
+}
+
+.home-search {
+  @apply w-5/6 md:w-1/2;
+}

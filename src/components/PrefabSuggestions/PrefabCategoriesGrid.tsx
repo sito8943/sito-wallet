@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
 
+import { classNames } from "@sito/dashboard-app";
+
 import { PREFAB_CATEGORIES } from "./constants";
 import { toggleInArray } from "./utils";
 import type { PrefabCategoriesGridPropsType, PrefabCategory } from "./types";
@@ -58,9 +60,10 @@ function PrefabCategoriesSection(props: SectionProps) {
               key={item.key}
               type="button"
               disabled={disabled}
-              className={`prefab-suggestions-card ${
-                isSelected ? "prefab-suggestions-card-selected" : ""
-              }`}
+              className={classNames(
+                "prefab-suggestions-card",
+                isSelected && "prefab-suggestions-card-selected",
+              )}
               aria-pressed={isSelected}
               onClick={() => onToggle(item.key)}
             >

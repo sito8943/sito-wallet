@@ -1,0 +1,37 @@
+@reference "../../styles/variables.css";
+
+.text-logo {
+  @apply mx-auto flex flex-col items-center gap-2;
+}
+
+.text-logo-vector {
+  @apply h-18 w-31;
+}
+
+.text-logo-title {
+  @apply text-4xl font-bold;
+}
+
+.text-logo-title--primary {
+  @apply text-primary;
+}
+
+.text-logo-title--secondary {
+  @apply text-secondary;
+}
+
+.text-logo-title--tertiary {
+  @apply text-tertiary;
+}
+
+.text-logo-title--quaternary {
+  @apply text-quaternary;
+}
+
+.text-logo-title--white {
+  @apply text-base-light;
+}
+
+.text-logo-title--black {
+  @apply text-text;
+}

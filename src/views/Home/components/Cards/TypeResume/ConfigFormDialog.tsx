@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // @sito/dashboard-app
 import type { Option } from "@sito/dashboard-app";
 import {
+  classNames,
   enumToKeyValueArray,
   FormDialog,
   AutocompleteInput,
@@ -30,6 +31,8 @@ import type {
 
 // utils
 import { icons } from "../../../../Transactions/components/utils";
+
+import "../styles.css";
 
 export const ConfigFormDialog = (
   props: ConfigFormDialogPropsType<TypeResumeTypeFormType>,
@@ -82,7 +85,7 @@ export const ConfigFormDialog = (
             )}`}
             onChange={(v) => onChange(v)}
             options={accounts ?? []}
-            containerClassName="!w-full"
+            containerClassName="dashboard-card-autocomplete-full"
             {...rest}
           />
         )}
@@ -92,7 +95,7 @@ export const ConfigFormDialog = (
         <p className="text-input-label input-widget-label input-label-normal">
           {t("_entities:transaction.date.label")}
         </p>
-        <div className="flex max-xs:flex-col items-center justify-start gap-2">
+        <div className="dashboard-card-range-row">
           <Controller
             control={props.control}
             name={"date.start"}
@@ -135,7 +138,7 @@ export const ConfigFormDialog = (
             autoComplete={`${Tables.Transactions}-${t(
               "_entities:entities.transactionCategory.plural",
             )}`}
-            containerClassName="!w-[unset] flex-1"
+            containerClassName="dashboard-card-autocomplete-grow"
             onChange={(value) => onChange(value)}
             {...rest}
           />
@@ -152,16 +155,17 @@ export const ConfigFormDialog = (
             value={value}
             onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
             label={t("_entities:transactionCategory.type.label")}
-            inputClassName="!pl-7"
+            inputClassName="dashboard-card-select-input"
             {...rest}
           >
             <FontAwesomeIcon
               icon={icons[(type ?? 0) as keyof typeof icons]}
-              className={`absolute left-2 vertical-center text-text text-sm ${
+              className={classNames(
+                "dashboard-card-select-icon",
                 Number(type) === TransactionType.In
-                  ? "inverted-success"
-                  : "inverted-error"
-              }`}
+                  ? "dashboard-card-select-icon--income"
+                  : "dashboard-card-select-icon--expense",
+              )}
             />
           </SelectInput>
         )}

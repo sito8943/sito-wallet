@@ -5,6 +5,8 @@ import { useOnlineStatus } from "hooks";
 
 import type { OfflineBannerProps } from "./types";
 
+import "./styles.css";
+
 /**
  * Offline banner wrapper that keeps app-level visibility control
  * while delegating the base UI to @sito/dashboard-app.
@@ -18,7 +20,7 @@ export function OfflineBanner({ forceVisible = false }: OfflineBannerProps) {
   return (
     <DashboardAppOfflineBanner
       isOnline={false}
-      className="sticky top-0 z-10"
+      className="offline-banner"
       message={t("_accessibility:offline.banner")}
     />
   );

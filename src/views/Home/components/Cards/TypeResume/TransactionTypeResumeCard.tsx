@@ -2,6 +2,8 @@ import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQueryClient } from "@tanstack/react-query";
 
+import { classNames } from "@sito/dashboard-app";
+
 // lib
 import { TransactionType } from "lib";
 
@@ -98,18 +100,20 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         <>
           <FontAwesomeIcon
             icon={icons[(formConfig.type ?? 0) as keyof typeof icons]}
-            className={`text-lg mt-2 self-end ${
+            className={classNames(
+              "type-resume-icon",
               Number(formConfig.type) === TransactionType.In
-                ? "inverted-success"
-                : "inverted-error"
-            }`}
+                ? "type-resume-icon--income"
+                : "type-resume-icon--expense",
+            )}
           />
           <p
-            className={`!text-4xl font-bold self-end poppins ${
+            className={classNames(
+              "type-resume-amount",
               formConfig.type === TransactionType.In
-                ? "!text-bg-success"
-                : "!text-bg-error"
-            }`}
+                ? "type-resume-amount--income"
+                : "type-resume-amount--expense",
+            )}
           >
             {data?.total}{" "}
             <Currency

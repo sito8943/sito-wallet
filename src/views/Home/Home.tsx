@@ -9,16 +9,18 @@ import { SearchWrapper } from "components";
 // sections
 import { Dashboard } from "./sections";
 
+import "./styles.css";
+
 export function Home() {
   const { t } = useTranslation();
   const { account } = useAuth();
 
   return (
-    <main className="items-center justify-start md:pt-20 max-md:pt-10 max-sm:pt-5 gap-10 max-md:gap-5">
-      <h2 className="self-center justify-self-center text-4xl max-md:text-3xl max-xs:text-2xl">
+    <main className="home">
+      <h2 className="home-title">
         {t("_pages:home.welcome", { user: account?.username })}
       </h2>
-      <div className="md:w-1/2 w-5/6">
+      <div className="home-search">
         <SearchWrapper />
       </div>
       <Dashboard />

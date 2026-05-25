@@ -1,17 +1,25 @@
 @reference "../../../../../styles/variables.css";
 
-.type-resume-main {
-  @apply items-stretch;
+.type-resume-icon {
+  @apply mt-2 self-end text-lg;
 }
 
-.type-resume-main-loading {
-  @apply flex items-center justify-center rounded-2xl backdrop-blur-xl bg-base/80 w-full h-full absolute top-0 left-0;
+.type-resume-icon--income {
+  @apply inverted-success;
 }
 
-.type-resume-header {
-  @apply flex items-center justify-between gap-5;
+.type-resume-icon--expense {
+  @apply inverted-error;
 }
 
-.type-resume-title {
-  @apply text-3xl max-sm:text-lg w-full;
+.type-resume-amount {
+  @apply poppins self-end text-4xl font-bold;
+}
+
+.type-resume-amount--income {
+  @apply text-bg-success;
+}
+
+.type-resume-amount--expense {
+  @apply text-bg-error;
 }

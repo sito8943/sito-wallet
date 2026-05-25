@@ -5,6 +5,7 @@ import {
   useDeleteDialog,
   Error,
   ConfirmationDialog,
+  classNames,
 } from "@sito/dashboard-app";
 
 // components
@@ -122,7 +123,7 @@ export const Dashboard = () => {
 
   return !error ? (
     <section id="dashboard">
-      <ul className={hasCards ? "dashboard" : "dashboard empty"}>
+      <ul className={classNames("dashboard", !hasCards && "empty")}>
         {cards}
         <li>
           <AddCard

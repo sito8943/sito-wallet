@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Option } from "@sito/dashboard-app";
 import {
   AutocompleteInput,
+  classNames,
   enumToKeyValueArray,
   FormDialog,
   SelectInput,
@@ -25,6 +26,8 @@ import type { ConfigFormDialogPropsType, WeeklySpentFormType } from "./types";
 
 // utils
 import { icons } from "../../../../Transactions/components/utils";
+
+import "../styles.css";
 
 export const ConfigFormDialog = (
   props: ConfigFormDialogPropsType<WeeklySpentFormType>,
@@ -66,7 +69,7 @@ export const ConfigFormDialog = (
             )}`}
             onChange={(v) => onChange(v)}
             options={accounts ?? []}
-            containerClassName="!w-full"
+            containerClassName="dashboard-card-autocomplete-full"
             {...rest}
           />
         )}
@@ -82,16 +85,17 @@ export const ConfigFormDialog = (
             value={value}
             onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
             label={t("_entities:transactionCategory.type.label")}
-            inputClassName="!pl-7"
+            inputClassName="dashboard-card-select-input"
             {...rest}
           >
             <FontAwesomeIcon
               icon={icons[(type ?? 0) as keyof typeof icons]}
-              className={`absolute left-2 vertical-center text-text text-sm ${
+              className={classNames(
+                "dashboard-card-select-icon",
                 Number(type) === TransactionType.In
-                  ? "inverted-success"
-                  : "inverted-error"
-              }`}
+                  ? "dashboard-card-select-icon--income"
+                  : "dashboard-card-select-icon--expense",
+              )}
             />
           </SelectInput>
         )}

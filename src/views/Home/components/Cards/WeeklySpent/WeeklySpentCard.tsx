@@ -16,7 +16,7 @@ import { ActiveFilters } from "./ActiveFilters";
 import { DashboardCard } from "../DashboardCard";
 
 // styles
-import "../TypeResume/styles.css";
+import "../styles.css";
 
 // types
 import type {
@@ -110,7 +110,7 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
       )}
     >
       {() => (
-        <p className="!text-4xl font-bold self-end poppins !text-bg-error">
+        <p className="weekly-spent-amount">
           {isLoading ? "…" : amount} <Currency name={name} symbol={symbol} />
         </p>
       )}

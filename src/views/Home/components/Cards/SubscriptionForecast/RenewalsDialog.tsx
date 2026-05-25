@@ -13,6 +13,8 @@ import { Currency } from "../../../../Currencies";
 // types
 import type { RenewalsDialogPropsType } from "./types";
 
+import "../styles.css";
+
 export const RenewalsDialog = (props: RenewalsDialogPropsType) => {
   const { open, closeDialog, renewals } = props;
   const { t, i18n } = useTranslation();
@@ -39,14 +41,14 @@ export const RenewalsDialog = (props: RenewalsDialogPropsType) => {
       open={open}
       handleClose={closeDialog}
       title={t("_pages:home.dashboard.subscriptionForecast.details.title")}
-      className="md:w-1/2 w-5/6"
+      className="renewals-dialog"
     >
       {renewals.length === 0 ? (
-        <p className="text-text-muted poppins py-4">
+        <p className="renewals-dialog-empty">
           {t("_pages:home.dashboard.subscriptionForecast.details.empty")}
         </p>
       ) : (
-        <ul className="flex flex-col gap-2 py-2 max-h-[60vh] overflow-y-auto">
+        <ul className="renewals-dialog-list">
           {renewals.map((renewal, index) => {
             const currency = resolveCurrency(renewal.currency);
             const renewalDate = new Date(renewal.nextRenewalAt);
@@ -57,20 +59,20 @@ export const RenewalsDialog = (props: RenewalsDialogPropsType) => {
             return (
               <li
                 key={`${renewal.subscriptionId}-${renewal.nextRenewalAt}-${index}`}
-                className="flex items-center justify-between gap-3 py-2 base-border rounded-2xl px-3"
+                className="renewals-dialog-item"
               >
-                <div className="flex flex-col min-w-0">
-                  <p className="font-semibold poppins truncate">
+                <div className="renewals-dialog-item-copy">
+                  <p className="renewals-dialog-item-title">
                     {renewal.subscriptionName}
                   </p>
                   {renewal.providerName ? (
-                    <p className="text-xs text-text-muted truncate">
+                    <p className="renewals-dialog-item-meta">
                       {renewal.providerName}
                     </p>
                   ) : null}
-                  <p className="text-xs text-text-muted">{dateLabel}</p>
+                  <p className="renewals-dialog-item-date">{dateLabel}</p>
                 </div>
-                <p className="font-bold poppins shrink-0">
+                <p className="renewals-dialog-item-amount">
                   {renewal.amount}{" "}
                   <Currency name={currency.name} symbol={currency.symbol} />
                 </p>

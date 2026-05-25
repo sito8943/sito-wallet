@@ -23,7 +23,7 @@ import { RenewalsDialog } from "./RenewalsDialog";
 import { DashboardCard } from "../DashboardCard";
 
 // styles
-import "../TypeResume/styles.css";
+import "../styles.css";
 
 // types
 import type {
@@ -104,16 +104,16 @@ export const SubscriptionForecastCard = (
         )}
       >
         {() => (
-          <div className="flex flex-col gap-2 w-full mt-auto">
-            <p className="text-sm text-text-muted poppins">
+          <div className="subscription-forecast-content">
+            <p className="subscription-forecast-count">
               {t("_pages:home.dashboard.subscriptionForecast.count", {
                 count,
               })}
             </p>
-            <div className="flex items-end justify-between gap-2 w-full">
-              <div className="flex flex-col gap-1">
+            <div className="subscription-forecast-summary">
+              <div className="subscription-forecast-totals">
                 {totals.length === 0 ? (
-                  <p className="!text-2xl font-bold poppins">
+                  <p className="subscription-forecast-total">
                     {isLoading ? "…" : "0"}
                   </p>
                 ) : (
@@ -122,7 +122,7 @@ export const SubscriptionForecastCard = (
                     return (
                       <p
                         key={`${total.currency ?? "none"}-${index}`}
-                        className="!text-2xl font-bold poppins"
+                        className="subscription-forecast-total"
                       >
                         {total.amount}{" "}
                         <Currency

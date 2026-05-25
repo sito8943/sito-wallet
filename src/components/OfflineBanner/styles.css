@@ -1,0 +1,5 @@
+@reference "../../styles/variables.css";
+
+.offline-banner {
+  @apply sticky top-0 z-10;
+}

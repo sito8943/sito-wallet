@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
 
+import { classNames } from "@sito/dashboard-app";
+
 import { FALLBACK_CURRENCY } from "./constants";
 import { toggleInArray } from "./utils";
 import type { PrefabSubscriptionProvidersGridPropsType } from "./types";
@@ -30,9 +32,10 @@ export function PrefabSubscriptionProvidersGrid(
             key={provider.key}
             type="button"
             disabled={disabled}
-            className={`prefab-suggestions-card ${
-              isSelected ? "prefab-suggestions-card-selected" : ""
-            }`}
+            className={classNames(
+              "prefab-suggestions-card",
+              isSelected && "prefab-suggestions-card-selected",
+            )}
             aria-pressed={isSelected}
             onClick={() => onChange(toggleInArray(value, provider.key))}
           >

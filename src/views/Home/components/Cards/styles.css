@@ -3,3 +3,139 @@
 .base-card {
   @apply relative items-center justify-start flex flex-col gap-3 p-5 h-58 min-w-60;
 }
+
+.base-card--add {
+  @apply !p-0 transition hover:bg-hover-primary/5;
+}
+
+.base-card-button {
+  @apply h-full w-full;
+}
+
+.dashboard-card {
+  @apply items-stretch;
+}
+
+.dashboard-card-loading {
+  @apply absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-2xl bg-base/80 backdrop-blur-xl;
+}
+
+.dashboard-card-header {
+  @apply flex items-center justify-between gap-5;
+}
+
+.dashboard-card-title {
+  @apply w-full text-3xl max-sm:text-lg;
+}
+
+.dashboard-card-title-loading {
+  @apply mt-1;
+}
+
+.dashboard-card-title-success {
+  @apply mt-1 text-bg-success;
+}
+
+.dashboard-card-active-filters {
+  @apply flex flex-wrap items-center justify-start gap-2;
+}
+
+.dashboard-card-autocomplete-full {
+  @apply !w-full;
+}
+
+.dashboard-card-autocomplete-grow {
+  @apply flex-1 !w-[unset];
+}
+
+.dashboard-card-range-row {
+  @apply flex items-center justify-start gap-2 max-xs:flex-col;
+}
+
+.dashboard-card-select-input {
+  @apply !pl-7;
+}
+
+.dashboard-card-select-icon {
+  @apply absolute left-2 text-sm text-text vertical-center;
+}
+
+.dashboard-card-select-icon--income {
+  @apply inverted-success;
+}
+
+.dashboard-card-select-icon--expense {
+  @apply inverted-error;
+}
+
+.current-balance-content {
+  @apply mt-auto flex w-full items-center justify-between;
+}
+
+.current-balance-amount {
+  @apply poppins text-4xl font-bold;
+}
+
+.current-balance-actions {
+  @apply flex items-center gap-1;
+}
+
+.subscription-forecast-content {
+  @apply mt-auto flex w-full flex-col gap-2;
+}
+
+.subscription-forecast-count {
+  @apply poppins text-sm text-text-muted;
+}
+
+.subscription-forecast-summary {
+  @apply flex w-full items-end justify-between gap-2;
+}
+
+.subscription-forecast-totals {
+  @apply flex flex-col gap-1;
+}
+
+.subscription-forecast-total {
+  @apply poppins text-2xl font-bold;
+}
+
+.renewals-dialog {
+  @apply w-5/6 md:w-1/2;
+}
+
+.renewals-dialog-empty {
+  @apply poppins py-4 text-text-muted;
+}
+
+.renewals-dialog-list {
+  @apply flex max-h-[60vh] flex-col gap-2 overflow-y-auto py-2;
+}
+
+.renewals-dialog-item {
+  @apply base-border flex items-center justify-between gap-3 rounded-2xl px-3 py-2;
+}
+
+.renewals-dialog-item-copy {
+  @apply flex min-w-0 flex-col;
+}
+
+.renewals-dialog-item-title {
+  @apply poppins truncate font-semibold;
+}
+
+.renewals-dialog-item-meta {
+  @apply truncate text-xs text-text-muted;
+}
+
+.renewals-dialog-item-date {
+  @apply text-xs text-text-muted;
+}
+
+.renewals-dialog-item-amount {
+  @apply poppins shrink-0 font-bold;
+}
+
+.weekly-spent-amount {
+  @apply poppins self-end text-4xl font-bold text-bg-error;
+}

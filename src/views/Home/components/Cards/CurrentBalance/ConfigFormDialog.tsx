@@ -16,6 +16,8 @@ import type {
   CurrentBalanceFormType,
 } from "./types";
 
+import "../styles.css";
+
 export const ConfigFormDialog = (
   props: ConfigFormDialogPropsType<CurrentBalanceFormType>,
 ) => {
@@ -38,7 +40,7 @@ export const ConfigFormDialog = (
             )}`}
             onChange={(v) => onChange(v)}
             options={accounts ?? []}
-            containerClassName="!w-full"
+            containerClassName="dashboard-card-autocomplete-full"
             {...rest}
           />
         )}

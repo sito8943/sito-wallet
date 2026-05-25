@@ -6,10 +6,12 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons";
 // components
 import { BaseCard } from "../BaseCard";
 
+import "../styles.css";
+
 export const AddCard = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
-    <BaseCard className="!p-0 hover:bg-hover-primary/5 transition">
-      <button {...props} className="w-full h-full">
+    <BaseCard className="base-card--add">
+      <button {...props} className="base-card-button">
         <FontAwesomeIcon icon={faAdd} />
       </button>
     </BaseCard>

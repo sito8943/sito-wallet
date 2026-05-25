@@ -9,6 +9,8 @@ import type { ActiveFiltersPropsType } from "./types";
 // lib
 import { TransactionType } from "lib";
 
+import "../styles.css";
+
 export const ActiveFilters = (props: ActiveFiltersPropsType) => {
   const {
     type,
@@ -24,7 +26,7 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-wrap gap-2 items-center justify-start">
+    <div className="dashboard-card-active-filters">
       {!!accounts?.length && (
         <ArrayChip
           id="account"

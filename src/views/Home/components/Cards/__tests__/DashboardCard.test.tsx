@@ -31,6 +31,8 @@ vi.mock("providers", () => ({
 }));
 
 vi.mock("@sito/dashboard-app", () => ({
+  classNames: (...classes: Array<string | false | null | undefined>) =>
+    classes.filter(Boolean).join(" "),
   useNotification: () => ({
     showErrorNotification: mockShowErrorNotification,
   }),
@@ -240,7 +242,9 @@ describe("DashboardCard", () => {
 
       await waitFor(
         () => {
-          const successIcon = document.querySelector(".text-bg-success");
+          const successIcon = document.querySelector(
+            ".dashboard-card-title-success",
+          );
           expect(successIcon).toBeInTheDocument();
         },
         { timeout: 3000 },
@@ -265,7 +269,7 @@ describe("DashboardCard", () => {
       await waitFor(
         () => {
           expect(
-            document.querySelector(".text-bg-success"),
+            document.querySelector(".dashboard-card-title-success"),
           ).toBeInTheDocument();
         },
         { timeout: 3000 },
@@ -278,7 +282,9 @@ describe("DashboardCard", () => {
 
       await waitFor(
         () => {
-          expect(document.querySelector(".text-bg-success")).toBeNull();
+          expect(
+            document.querySelector(".dashboard-card-title-success"),
+          ).toBeNull();
         },
         { timeout: 3000 },
       );

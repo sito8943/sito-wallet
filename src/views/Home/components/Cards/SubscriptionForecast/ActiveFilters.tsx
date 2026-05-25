@@ -9,6 +9,8 @@ import type { ActiveFiltersPropsType } from "./types";
 // utils
 import { formatRangeWindow } from "./utils";
 
+import "../styles.css";
+
 const PRESET_TO_KEY: Record<string, string> = {
   CURRENT_WEEK: "CurrentWeek",
   NEXT_WEEK: "NextWeek",
@@ -30,7 +32,7 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
   const windowLabel = formatRangeWindow(range, from, to, i18n.language);
 
   return (
-    <div className="flex flex-wrap gap-2 items-center justify-start">
+    <div className="dashboard-card-active-filters">
       <Chip
         text={
           <p

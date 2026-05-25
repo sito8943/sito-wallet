@@ -1,3 +1,5 @@
+import { classNames } from "@sito/dashboard-app";
+
 import { PREFAB_CURRENCIES } from "./constants";
 import { toggleInArray } from "./utils";
 import type { PrefabCurrenciesGridPropsType } from "./types";
@@ -16,9 +18,10 @@ export function PrefabCurrenciesGrid(props: PrefabCurrenciesGridPropsType) {
             key={currency.code}
             type="button"
             disabled={disabled}
-            className={`prefab-suggestions-card ${
-              isSelected ? "prefab-suggestions-card-selected" : ""
-            }`}
+            className={classNames(
+              "prefab-suggestions-card",
+              isSelected && "prefab-suggestions-card-selected",
+            )}
             aria-pressed={isSelected}
             onClick={() => onChange(toggleInArray(value, currency.code))}
           >

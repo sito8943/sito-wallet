@@ -20,6 +20,7 @@ import { useDebouncedCallback } from "use-debounce";
 import {
   IconButton,
   Loading,
+  classNames,
   useNotification,
   useMutationForm,
 } from "@sito/dashboard-app";
@@ -36,6 +37,8 @@ import type { DashboardCardProps } from "./types";
 
 // providers
 import { useManager } from "providers";
+
+import "./styles.css";
 
 export type { DashboardCardProps } from "./types";
 
@@ -124,11 +127,11 @@ export const DashboardCard = <TForm extends FieldValues>(
   const headerDisabled = isBusy || updateTitle.isPending || formProps.isLoading;
 
   return (
-    <BaseCard className={`type-resume-main ${className}`}>
-      {loadingOverlay ? <Loading className="type-resume-main-loading" /> : null}
-      <div className="type-resume-header">
+    <BaseCard className={classNames("dashboard-card", className)}>
+      {loadingOverlay ? <Loading className="dashboard-card-loading" /> : null}
+      <div className="dashboard-card-header">
         <input
-          className="type-resume-title poppins"
+          className="dashboard-card-title poppins"
           value={cardTitle}
           placeholder={t(
             "_pages:home.dashboard.transactionTypeResume.placeholder",
@@ -138,11 +141,13 @@ export const DashboardCard = <TForm extends FieldValues>(
             debounced(e.target.value);
           }}
         />
-        {updateTitle.isPending ? <Loading className="mt-1" /> : null}
+        {updateTitle.isPending ? (
+          <Loading className="dashboard-card-title-loading" />
+        ) : null}
         {titleSuccess ? (
           <FontAwesomeIcon
             icon={faCheckCircle}
-            className="mt-1 text-bg-success"
+            className="dashboard-card-title-success"
           />
         ) : null}
         <IconButton
@@ -153,7 +158,7 @@ export const DashboardCard = <TForm extends FieldValues>(
         <IconButton
           disabled={headerDisabled}
           onClick={onDelete}
-          className={`error`}
+          className="error"
           icon={faTrash}
         />
       </div>
