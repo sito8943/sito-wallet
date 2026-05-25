@@ -524,9 +524,9 @@
         "title": "Reset user?",
         "description": "This wipes accounts, transactions, categories, currencies, dashboard, subscriptions, sync sessions and refresh tokens for {{user}}. The user row (email, password, admin flag) is preserved and the profile is reset to defaults.",
         "hardLabel": "Hard delete (irreversible)",
-        "hardHint": "Permanently deletes rows from the database. Cannot be undone.",
+        "hardHint": "Permanently deletes rows from the database. Cannot be undone. Type the username to confirm hard reset",
         "softHint": "Marks rows as deleted (recoverable by clearing deletedAt).",
-        "confirmHard": "Type the username to confirm hard reset",
+        "confirmHard": "Username",
         "confirmMismatch": "Username does not match"
       },
       "successMessage": "User reset successfully",

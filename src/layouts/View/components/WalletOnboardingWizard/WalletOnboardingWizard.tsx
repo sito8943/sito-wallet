@@ -52,8 +52,9 @@ export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
     <Onboarding
       remountStepOnChange
       steps={steps}
+      alwaysHideIcon
+      showLabelOnMobile
       signInPath={AppRoutes.signIn}
-      onStartAsGuest={() => {}}
     />
   );
 }

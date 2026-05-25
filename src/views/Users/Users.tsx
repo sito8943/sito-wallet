@@ -144,7 +144,7 @@ export function Users() {
           />
           <PrettyGrid
             data={items}
-            className="full-grid max-sm:pb-6"
+            className="max-sm:pb-6"
             hasMore={!!hasNextPage}
             loadingMore={isFetchingNextPage}
             onLoadMore={() => {

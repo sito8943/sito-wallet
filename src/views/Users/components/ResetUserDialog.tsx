@@ -25,7 +25,8 @@ export function ResetUserDialog(props: ResetUserDialogPropsType) {
   } = props;
 
   const username = target?.username ?? "";
-  const showMismatch = hard && confirmText.length > 0 && confirmText !== username;
+  const showMismatch =
+    hard && confirmText.length > 0 && confirmText !== username;
 
   return (
     <ConfirmationDialog
@@ -36,7 +37,7 @@ export function ResetUserDialog(props: ResetUserDialogPropsType) {
       handleSubmit={submitDisabled ? () => undefined : handleSubmit}
     >
       <div className="flex flex-col gap-4">
-        <p className="text-sm text-text-muted">
+        <p className="text-sm text-text-muted text-balance">
           {t("_pages:users.reset.dialog.description", { user: username })}
         </p>
 
@@ -69,10 +70,15 @@ export function ResetUserDialog(props: ResetUserDialogPropsType) {
         </div>
 
         {hard ? (
-          <div className="flex flex-col gap-2 rounded-xl bg-bg-error p-3 text-error">
+          <div className="flex flex-col gap-10 rounded-xl bg-bg-error p-3 text-error">
             <div className="flex items-center gap-2 text-sm font-semibold">
-              <FontAwesomeIcon icon={faTriangleExclamation} />
-              <span>{t("_pages:users.reset.dialog.hardHint")}</span>
+              <FontAwesomeIcon
+                className="text-xl"
+                icon={faTriangleExclamation}
+              />
+              <span className="text-xs">
+                {t("_pages:users.reset.dialog.hardHint")}
+              </span>
             </div>
             <TextInput
               required

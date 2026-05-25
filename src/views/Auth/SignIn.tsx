@@ -47,7 +47,6 @@ export function SignIn() {
       recoveryLabel={t("_pages:auth.signIn.accountRecovery.link")}
       recoveryTo={AppRoutes.recovery}
       onSubmit={async (values) => {
-        console.log("Submitting sign in form with values:", values);
         const session = await manager.Auth.login(values);
         logUser(session, values.rememberMe);
         navigate(AppRoutes.home);
