@@ -198,14 +198,14 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
       )}
       <PrettyGrid
         data={items}
-        className="max-sm:pb-6"
-        itemClassName="w-full min-w-0"
+        className="transaction-grid"
+        itemClassName="transaction-grid-item"
         emptyComponent={
           <Empty
             message={t("_pages:transactions.empty")}
             iconProps={{
               icon: faReceipt,
-              className: "text-5xl max-md:text-3xl text-text-muted",
+              className: "transaction-grid-empty-icon",
             }}
             action={
               onAddTransaction

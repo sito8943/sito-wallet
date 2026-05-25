@@ -6,6 +6,7 @@ import {
   IconButton,
   Loading,
   SelectInput,
+  classNames,
   useEditAction,
 } from "@sito/dashboard-app";
 
@@ -34,6 +35,8 @@ import {
   AdjustBalanceDialog,
   EditAccountDialog,
 } from "views/Accounts";
+
+import "./styles.css";
 
 const AccountShower = (props: AccountCarouselPropsType) => {
   const {
@@ -106,8 +109,8 @@ const AccountShower = (props: AccountCarouselPropsType) => {
   }, []);
 
   const renderAccountSelector = (id: string, name: string) => (
-    <div className="flex items-center gap-2">
-      <div className="w-full">
+    <div className="transaction-account-shower">
+      <div className="transaction-account-shower-select">
         <SelectInput
           id={id}
           name={name}
@@ -123,26 +126,30 @@ const AccountShower = (props: AccountCarouselPropsType) => {
         onClick={() => onOpenFilters?.()}
         name={t("_accessibility:buttons.filters")}
         aria-label={t("_accessibility:ariaLabels.filters")}
-        className="!w-10 !h-10 !min-w-10"
+        className="transaction-account-shower-filter-button"
       />
     </div>
   );
 
   return (
     <>
-      <div className={`${className}`}>
+      <div className={className}>
         {isLoading && (
-          <div className="flex gap-2 items-center justify-start pl-1">
-            <Loading className="mt-0.5" loaderClass="w-10 h-10" />
+          <div className="transaction-account-shower-loading">
+            <Loading
+              className="transaction-account-shower-loader"
+              loaderClass="transaction-account-shower-loader-icon"
+            />
           </div>
         )}
         {error && <Error />}
         <div
-          className={`bg-base-light fixed left-0 top-12 z-30 px-4 py-2 origin-top transition-all duration-200 ease-out ${
+          className={classNames(
+            "transaction-account-shower-panel",
             showFixedAccountSelector
-              ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
-              : "opacity-0 -translate-y-2 scale-95 pointer-events-none"
-          }`}
+              ? "transaction-account-shower-panel--visible"
+              : "transaction-account-shower-panel--hidden",
+          )}
         >
           {renderAccountSelector("account-id-fixed", "account-id-fixed")}
         </div>
@@ -153,13 +160,15 @@ const AccountShower = (props: AccountCarouselPropsType) => {
           actions={selectedAccount ? getActions(selectedAccount) : []}
           {...selectedAccount}
           hideDescription
-          containerClassName="w-full"
+          containerClassName="transaction-account-shower-card"
           name={
             <div
               ref={accountNameRef}
-              className={`mb-2 w-full sticky top-14 bg-base-light rounded-lg transition-opacity duration-200 ${
-                showFixedAccountSelector ? "opacity-0 pointer-events-none" : ""
-              }`}
+              className={classNames(
+                "transaction-account-shower-card-title",
+                showFixedAccountSelector &&
+                  "transaction-account-shower-card-title--hidden",
+              )}
             >
               {renderAccountSelector("account-id", "account-id")}
             </div>

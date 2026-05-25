@@ -1,5 +1,57 @@
 @reference "../../../styles/variables.css";
 
+.transactions-filter-grid {
+  @apply grid grid-cols-2 gap-2;
+}
+
+.transaction-account-shower {
+  @apply flex items-center gap-2;
+}
+
+.transaction-account-shower-select {
+  @apply w-full;
+}
+
+.transaction-account-shower-filter-button {
+  @apply !w-10 !h-10 !min-w-10;
+}
+
+.transaction-account-shower-loading {
+  @apply flex gap-2 items-center justify-start pl-1;
+}
+
+.transaction-account-shower-loader {
+  @apply mt-0.5;
+}
+
+.transaction-account-shower-loader-icon {
+  @apply w-10 h-10;
+}
+
+.transaction-account-shower-panel {
+  @apply bg-base-light fixed left-0 top-12 z-30 px-4 py-2 origin-top transition-all duration-200 ease-out;
+}
+
+.transaction-account-shower-panel--visible {
+  @apply opacity-100 translate-y-0 scale-100 pointer-events-auto;
+}
+
+.transaction-account-shower-panel--hidden {
+  @apply opacity-0 -translate-y-2 scale-95 pointer-events-none;
+}
+
+.transaction-account-shower-card {
+  @apply w-full;
+}
+
+.transaction-account-shower-card-title {
+  @apply mb-2 w-full sticky top-14 bg-base-light rounded-lg transition-opacity duration-200;
+}
+
+.transaction-account-shower-card-title--hidden {
+  @apply opacity-0 pointer-events-none;
+}
+
 .weekly-transactions-dialog-mobile-list .transaction-card {
   min-height: 58px;
   @apply bg-base-light;
@@ -7,4 +59,116 @@
 
 .transaction-card {
   @apply relative flex justify-between items-center gap-2 w-full min-w-0 overflow-hidden p-2 pr-3 rounded-lg;
+}
+
+.transaction-card--deleted {
+  @apply !border-bg-error border-2 opacity-60;
+}
+
+.transaction-card--selected {
+  @apply !border-bg-primary border-2 bg-base;
+}
+
+.transaction-card--selectable {
+  @apply border-border border bg-base;
+}
+
+.transaction-card--idle {
+  @apply bg-base hover:!bg-hover-primary hover:!text-white;
+}
+
+.transaction-card-type {
+  @apply bg-base-dark px-3 py-3.5 rounded-full;
+}
+
+.transaction-card-body {
+  @apply flex-1 min-w-0 max-w-full flex flex-col justify-center items-start;
+}
+
+.transaction-card-description {
+  @apply text-start w-full overflow-hidden text-ellipsis whitespace-nowrap;
+}
+
+.transaction-card-description--empty {
+  @apply !text-xs italic;
+}
+
+.transaction-card-description--deleted {
+  @apply !text-bg-error;
+}
+
+.transaction-card-meta {
+  @apply text-xs text-left flex gap-1;
+}
+
+.transaction-card-amount {
+  @apply shrink-0;
+}
+
+.transaction-card-selection-indicator--selected {
+  @apply text-primary;
+}
+
+.transaction-card-selection-indicator--idle {
+  @apply text-text-muted;
+}
+
+.weekly-card {
+  @apply !h-auto !py-2;
+}
+
+.weekly-card-button {
+  @apply w-full text-left;
+}
+
+.weekly-card-button--interactive {
+  @apply cursor-pointer transition hover:opacity-80;
+}
+
+.weekly-card-button--disabled {
+  @apply cursor-default disabled:opacity-100;
+}
+
+.weekly-card-content {
+  @apply flex flex-col gap-2 w-full;
+}
+
+.weekly-card-title {
+  @apply text-lg poppins;
+}
+
+.weekly-card-values {
+  @apply flex flex-wrap gap-1 items-end;
+}
+
+.weekly-card-current {
+  @apply text-2xl font-bold self-start poppins;
+}
+
+.weekly-card-current--expense {
+  @apply text-bg-error;
+}
+
+.weekly-card-current--income {
+  @apply text-bg-success;
+}
+
+.weekly-card-difference {
+  @apply text-sm font-bold self-start poppins;
+}
+
+.weekly-card-difference--expense-up {
+  @apply text-bg-error;
+}
+
+.weekly-card-difference--expense-down {
+  @apply text-bg-success;
+}
+
+.weekly-card-difference--income-up {
+  @apply text-bg-success;
+}
+
+.weekly-card-difference--income-down {
+  @apply text-bg-error;
 }

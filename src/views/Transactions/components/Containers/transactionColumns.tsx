@@ -21,6 +21,8 @@ import { Currency } from "views/Currencies/components/Currency";
 import { Type } from "views/TransactionCategories/components/Type";
 import { ColorVignette } from "components";
 
+import "./styles.css";
+
 export const getTransactionTypeOptions = (t: TFunction): Option[] =>
   enumToKeyValueArray(TransactionType)?.map((item) => ({
     id: item.value,
@@ -64,13 +66,13 @@ export const getTransactionColumns = (
                 event.stopPropagation();
                 onCategoryClick(category.id);
               }}
-              className="flex items-center gap-2 text-primary hover:underline cursor-pointer"
+              className="transaction-table-category-button"
             >
               {category.color && <ColorVignette color={category.color} />}
               {category.name}
             </button>
           ) : (
-            <p key={category.id} className="flex items-center gap-2">
+            <p key={category.id} className="transaction-table-category-label">
               {category.color && <ColorVignette color={category.color} />}
               {category.name}
             </p>
@@ -108,7 +110,7 @@ export const getTransactionColumns = (
         options: getTransactionTypeOptions(t),
       },
       renderBody: (_: unknown, entity: TransactionDto) => (
-        <div className="w-fit">
+        <div className="transaction-table-type-cell">
           <Type
             type={
               getPrimaryTransactionCategory(entity)?.type ?? TransactionType.In
@@ -125,7 +127,7 @@ export const getTransactionColumns = (
         placeholder: t("_entities:base.description.placeholder"),
       },
       renderBody: (value: unknown, entity: TransactionDto) => (
-        <span className="truncate">
+        <span className="transaction-table-description">
           {entity.auto
             ? t("_entities:transactionCategory.name.init")
             : renderEmpty(

@@ -1,0 +1,5 @@
+@reference "../../../styles/variables.css";
+
+.transaction-action-icon {
+  @apply text-bg-primary;
+}

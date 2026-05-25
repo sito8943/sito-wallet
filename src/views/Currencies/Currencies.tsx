@@ -184,7 +184,7 @@ export function Currencies() {
           />
           <PrettyGrid
             data={items}
-            className="full-grid max-sm:pb-6"
+            className="currencies-grid full-grid"
             hasMore={!!hasNextPage}
             loadingMore={isFetchingNextPage}
             onLoadMore={() => {
@@ -196,7 +196,7 @@ export function Currencies() {
                 message={t("_pages:currencies.empty")}
                 iconProps={{
                   icon: faCoins,
-                  className: "text-5xl max-md:text-3xl text-text-muted",
+                  className: "currencies-empty-icon",
                 }}
                 action={[
                   {

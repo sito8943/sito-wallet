@@ -16,10 +16,22 @@
   @apply border border-border rounded-xl bg-base-light;
 }
 
+.weekly-transactions-table-wrapper--desktop {
+  @apply max-sm:hidden;
+}
+
 .weekly-transactions-table-content {
   @apply max-h-[60vh] overflow-auto;
 }
 
 .weekly-transactions-dialog-mobile-list {
   @apply flex flex-col gap-2 max-h-[60vh] overflow-auto pb-1;
+}
+
+.weekly-transactions-dialog-mobile-list--mobile {
+  @apply sm:hidden;
+}
+
+.weekly-transactions-type-cell {
+  @apply w-fit;
 }

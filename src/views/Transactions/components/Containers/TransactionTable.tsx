@@ -29,6 +29,8 @@ import type { TransactionContainerPropsType } from "./types";
 // utils
 import { getTransactionColumns } from "./transactionColumns";
 
+import "./styles.css";
+
 export const TransactionTable = (props: TransactionContainerPropsType) => {
   const {
     accountId,
@@ -110,7 +112,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
         message={t("_pages:transactions.empty")}
         iconProps={{
           icon: faReceipt,
-          className: "text-5xl max-md:text-3xl text-text-muted",
+          className: "transaction-table-empty-icon",
         }}
         action={
           onAddTransaction
@@ -134,7 +136,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
       isLoading={isLoading}
       entity={EntityName.Transaction}
       columns={columns}
-      contentClassName="transactions-table-body base-border"
+      contentClassName="transactions-table-body transaction-table-content"
       filterOptions={filterOptions}
     />
   );

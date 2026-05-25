@@ -1,9 +1,45 @@
 @reference "../../../../styles/variables.css";
 
 .transaction-grid-selection-bar {
-  @apply top-27 bg-white pb-2 sticky z-10;
+  @apply top-27 bg-base pb-2 sticky z-10;
 }
 
 .transaction-grid-selection-bar .table-selection-bar {
   margin-bottom: 0;
+}
+
+.transaction-grid {
+  @apply max-sm:pb-6;
+}
+
+.transaction-grid-item {
+  @apply w-full min-w-0;
+}
+
+.transaction-grid-empty-icon {
+  @apply text-5xl max-md:text-3xl text-text-muted;
+}
+
+.transaction-table-empty-icon {
+  @apply text-5xl max-md:text-3xl text-text-muted;
+}
+
+.transaction-table-category-button {
+  @apply flex items-center gap-2 text-primary hover:underline cursor-pointer;
+}
+
+.transaction-table-category-label {
+  @apply flex items-center gap-2;
+}
+
+.transaction-table-type-cell {
+  @apply w-fit;
+}
+
+.transaction-table-description {
+  @apply truncate;
+}
+
+.transaction-table-content {
+  @apply base-border;
 }

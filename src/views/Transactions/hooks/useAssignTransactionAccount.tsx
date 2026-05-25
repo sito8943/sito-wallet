@@ -25,6 +25,8 @@ import { TransactionActions } from "../types";
 // utils
 import { assignAccountFormToDto, emptyAssignAccountForm } from "../utils";
 
+import "./styles.css";
+
 export function useAssignTransactionAccountAction(): UseActionDialog<
   TransactionDto,
   AssignTransactionAccountFormType
@@ -67,7 +69,7 @@ export function useAssignTransactionAccountAction(): UseActionDialog<
       tooltip: t("_pages:transactions.actions.assignAccount.text"),
       icon: (
         <FontAwesomeIcon
-          className="text-bg-primary"
+          className="transaction-action-icon"
           icon={faArrowRightArrowLeft}
         />
       ),

@@ -1,10 +1,13 @@
 import { useTranslation } from "react-i18next";
+import { classNames } from "@sito/dashboard-app";
 
 // components
 import { ItemCard, ItemCardTitle } from "components";
 
 // types
 import type { CurrencyCardPropsType } from "../types";
+
+import "./styles.css";
 
 export function CurrencyCard(props: CurrencyCardPropsType) {
   const { t } = useTranslation();
@@ -30,17 +33,17 @@ export function CurrencyCard(props: CurrencyCardPropsType) {
   return (
     <ItemCard
       title={
-        <div className="flex w-full items-start justify-between gap-2">
-          <div className="min-w-0 flex items-baseline gap-1">
+        <div className="currency-card-title-row">
+          <div className="currency-card-title-main">
             <ItemCardTitle>{name}</ItemCardTitle>
             {hasSymbol ? (
-              <span className="text-sm text-text-muted max-xs:hidden">
+              <span className="currency-card-symbol-inline">
                 ({symbol})
               </span>
             ) : null}
           </div>
           {hasSymbol ? (
-            <span className="hidden max-xs:inline-flex shrink-0 items-center justify-center rounded-full border border-border bg-base-light px-2 py-0.5 text-xs text-text-muted">
+            <span className="currency-card-symbol-badge">
               {symbol}
             </span>
           ) : null}
@@ -55,13 +58,15 @@ export function CurrencyCard(props: CurrencyCardPropsType) {
       onToggleSelection={() => onSelect?.(id)}
       onLongPressSelection={() => onLongPress?.(id)}
       actions={actions}
-      className="gap-2 max-xs:gap-1"
-      containerClassName="max-xs:min-h-0 max-xs:rounded-xl max-xs:p-2.5"
+      className="currency-card-content"
+      containerClassName="currency-card-container"
     >
       <p
-        className={`${description ? "" : "!text-xs italic"} text-start max-xs:w-full max-xs:overflow-hidden max-xs:text-ellipsis max-xs:whitespace-nowrap max-xs:text-sm max-xs:text-text-muted ${
-          deleted ? "!text-bg-error" : ""
-        }`}
+        className={classNames(
+          "currency-card-description",
+          !description && "currency-card-description--empty",
+          deleted && "currency-card-description--deleted",
+        )}
       >
         {parsedDescription}
       </p>

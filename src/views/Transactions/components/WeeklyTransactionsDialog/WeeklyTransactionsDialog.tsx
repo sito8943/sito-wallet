@@ -98,7 +98,7 @@ export const WeeklyTransactionsDialog = (
             <TableOptionsProvider
               initialState={WEEKLY_TRANSACTIONS_TABLE_INITIAL_STATE}
             >
-              <div className="weekly-transactions-table-wrapper max-sm:hidden">
+              <div className="weekly-transactions-table-wrapper weekly-transactions-table-wrapper--desktop">
                 <WalletTable
                   total={sortedItems.length}
                   data={sortedItems}
@@ -119,7 +119,7 @@ export const WeeklyTransactionsDialog = (
               </div>
             </TableOptionsProvider>
 
-            <div className="weekly-transactions-dialog-mobile-list sm:hidden!">
+            <div className="weekly-transactions-dialog-mobile-list weekly-transactions-dialog-mobile-list--mobile">
               {items.map((transaction) => (
                 <TransactionCard
                   key={transaction.id}

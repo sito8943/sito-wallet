@@ -16,6 +16,8 @@ import {
   getWeeklyTransactionType,
 } from "./utils";
 
+import "./styles.css";
+
 export const getWeeklyTransactionsTableColumns = (
   t: TFunction,
 ): ColumnType<TransactionDto>[] => [
@@ -31,7 +33,7 @@ export const getWeeklyTransactionsTableColumns = (
     label: t("_entities:transactionCategory.type.label"),
     sortable: true,
     renderBody: (_value: unknown, transaction: TransactionDto) => (
-      <div className="w-fit">
+      <div className="weekly-transactions-type-cell">
         <Type type={getWeeklyTransactionType(transaction)} />
       </div>
     ),

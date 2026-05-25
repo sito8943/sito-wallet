@@ -9,6 +9,8 @@ import type { ImportPreviewCurrencyDto } from "lib";
 import { EntityName, useParseColumns } from "lib";
 import type { CurrencyTableProps } from "./types";
 
+import "./styles.css";
+
 export const CurrencyTable = (props: CurrencyTableProps) => {
   const { items } = props;
   const { t } = useTranslation();
@@ -26,10 +28,10 @@ export const CurrencyTable = (props: CurrencyTableProps) => {
         renderBody: (value: unknown, entity: ImportPreviewCurrencyDto) => {
           const parsedValue = typeof value === "string" ? value : "";
           return (
-            <div className="flex flex-col">
-              <span className="font-medium text-gray-900">{parsedValue}</span>
+            <div className="currency-table-name-cell">
+              <span className="currency-table-name">{parsedValue}</span>
               {entity.symbol && (
-                <span className="text-xs text-gray-500">{entity.symbol}</span>
+                <span className="currency-table-symbol">{entity.symbol}</span>
               )}
             </div>
           );
@@ -61,13 +63,13 @@ export const CurrencyTable = (props: CurrencyTableProps) => {
   if (!data.length) return null;
 
   return (
-    <div className="mt-4">
-      <p className="text-sm text-gray-600">
+    <div className="currency-table">
+      <p className="currency-table-count">
         {t("_pages:common.actions.import.previewCount", {
           count: data.length,
         })}
       </p>
-      <div className="mt-2 rounded border border-gray-200">
+      <div className="currency-table-shell">
         <WalletTable
           total={data.length}
           data={data}

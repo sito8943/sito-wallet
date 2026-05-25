@@ -25,6 +25,8 @@ import { TransactionActions } from "../types";
 // utils
 import { assignCategoryFormToDto, emptyAssignCategoryForm } from "../utils";
 
+import "./styles.css";
+
 export function useAssignTransactionCategoryAction(): UseActionDialog<
   TransactionDto,
   AssignTransactionCategoryFormType
@@ -71,7 +73,7 @@ export function useAssignTransactionCategoryAction(): UseActionDialog<
     (record: TransactionDto) => ({
       id: TransactionActions.AssignCategory,
       tooltip: t("_pages:transactions.actions.assignCategory.text"),
-      icon: <FontAwesomeIcon className="text-bg-primary" icon={faTags} />,
+      icon: <FontAwesomeIcon className="transaction-action-icon" icon={faTags} />,
       onClick: () => handleOpenDialog([record]),
       multiple: true,
       onMultipleClick: handleOpenDialog,

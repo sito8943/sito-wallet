@@ -23,6 +23,8 @@ import {
   parseSortOrder,
 } from "../hooks";
 
+import "./styles.css";
+
 export const TransactionsMobileFilters = (
   props: TransactionsMobileFiltersDialogPropsType,
 ) => {
@@ -135,7 +137,7 @@ export const TransactionsMobileFilters = (
           />
         )}
       />
-      <div className="grid grid-cols-2 gap-2">
+      <div className="transactions-filter-grid">
         <Controller
           control={control}
           name="type"
@@ -193,7 +195,7 @@ export const TransactionsMobileFilters = (
         )}
       />
 
-      <div className="grid grid-cols-2 gap-2">
+      <div className="transactions-filter-grid">
         <Controller
           control={control}
           name="dateStart"
@@ -246,7 +248,7 @@ export const TransactionsMobileFilters = (
         />
       ) : null}
       {effectiveSoftDeleteScopeValue === "DELETED" ? (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="transactions-filter-grid">
           <Controller
             control={control}
             name="deletedAtStart"
@@ -281,7 +283,7 @@ export const TransactionsMobileFilters = (
           />
         </div>
       ) : null}
-      <div className="grid grid-cols-2 gap-2">
+      <div className="transactions-filter-grid">
         <Controller
           control={control}
           name="sortingBy"
