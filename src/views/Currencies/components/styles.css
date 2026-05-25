@@ -28,7 +28,6 @@
   @apply text-start max-xs:w-full max-xs:overflow-hidden max-xs:text-ellipsis max-xs:whitespace-nowrap max-xs:text-sm max-xs:text-text-muted;
 }
 
-
 .currency-table {
   @apply mt-4;
 }

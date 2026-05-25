@@ -20,7 +20,6 @@
   @apply text-start text-sm text-text-muted;
 }
 
-
 .subscription-provider-card-photo {
   @apply inline-flex items-center gap-1 text-xs text-text-muted;
 }

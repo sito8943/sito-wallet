@@ -36,7 +36,6 @@
   @apply sm:hidden;
 }
 
-
 .adjust-balance-current {
   @apply flex items-center gap-2 text-text-muted text-sm;
 }
