@@ -7,10 +7,12 @@ import {
   Empty,
   Error as ErrorView,
   GlobalActions,
+  ImportDialog,
   Page,
   PrettyGrid,
   useDeleteDialog,
   useExportActionMutate,
+  useImportDialog,
   useNotification,
   useRestoreDialog,
   useTranslation,
@@ -43,7 +45,11 @@ import {
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 // lib
-import type { FilterSubscriptionDto, SubscriptionDto } from "lib";
+import type {
+  FilterSubscriptionDto,
+  ImportPreviewSubscriptionDto,
+  SubscriptionDto,
+} from "lib";
 import {
   AppRoutes,
   Tables,
@@ -122,6 +128,26 @@ export function Subscriptions() {
     },
   });
 
+  const importSubscriptions = useImportDialog<
+    SubscriptionDto,
+    ImportPreviewSubscriptionDto
+  >({
+    entity: Tables.Subscriptions,
+    fileProcessor: async (file, options) => {
+      if (!subscriptionsClient)
+        throw new Error("subscriptions.featureDisabled");
+
+      return await subscriptionsClient.processImport(file, options?.override);
+    },
+    mutationFn: async (data) => {
+      if (!subscriptionsClient)
+        throw new Error("subscriptions.featureDisabled");
+
+      return await subscriptionsClient.import(data);
+    },
+    ...SubscriptionsQueryKeys.all(),
+  });
+
   const getActions = useCallback(
     (record: SubscriptionDto) => [
       addRenewal.action(record),
@@ -138,8 +164,11 @@ export function Subscriptions() {
   });
 
   const pageToolbar = useMemo(
-    () => (subscriptionsClient ? [exportSubscriptions.action()] : []),
-    [exportSubscriptions, subscriptionsClient],
+    () =>
+      subscriptionsClient
+        ? [exportSubscriptions.action(), importSubscriptions.action()]
+        : [],
+    [exportSubscriptions, importSubscriptions, subscriptionsClient],
   );
 
   useMobileNavbar(t("_pages:subscriptions.title"), pageToolbar);
@@ -224,6 +253,7 @@ export function Subscriptions() {
           <AddSubscriptionBillingLogDialog {...addBillingLog} />
           <ConfirmationDialog {...deleteSubscription} />
           <ConfirmationDialog {...restoreSubscription} />
+          <ImportDialog {...importSubscriptions} />
         </>
       ) : (
         <ErrorView error={error} />

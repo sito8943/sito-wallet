@@ -11,13 +11,15 @@ import type {
   FilterSubscriptionBillingLogDto,
   FilterSubscriptionDto,
   GetSubscriptionRenewalsQuery,
-  ImportPreviewDto,
+  ImportDto,
+  ImportPreviewSubscriptionDto,
   SubscriptionBillingLogDto,
   SubscriptionDto,
   SubscriptionRenewalDto,
   SubscriptionRenewalForecastDto,
   UpdateSubscriptionDto,
 } from "lib";
+import { parseJSONFile } from "lib";
 
 import { config } from "../../config";
 
@@ -34,7 +36,7 @@ export default class SubscriptionClient extends BaseClient<
   AddSubscriptionDto,
   UpdateSubscriptionDto,
   FilterSubscriptionDto,
-  ImportPreviewDto
+  ImportPreviewSubscriptionDto
 > {
   constructor() {
     super(Tables.Subscriptions, config.apiUrl, config.auth.user, true, {
@@ -131,6 +133,25 @@ export default class SubscriptionClient extends BaseClient<
       `${this.table}/${subscriptionId}/renewals`,
       data,
     );
+  }
+
+  async processImport(
+    file: File,
+    override?: boolean,
+  ): Promise<ImportPreviewSubscriptionDto[]> {
+    const items = await parseJSONFile<SubscriptionDto>(file);
+    return await this.api.doQuery<ImportPreviewSubscriptionDto[]>(
+      `${this.table}/import/process${override ? `?override=true` : ""}`,
+      Methods.POST,
+      items,
+      {
+        ...this.api.defaultTokenAcquirer(),
+      },
+    );
+  }
+
+  async import(data: ImportDto<ImportPreviewSubscriptionDto>): Promise<number> {
+    return await this.api.post(`${this.table}/import`, data);
   }
 
   async getBillingLogs(

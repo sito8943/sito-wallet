@@ -5,6 +5,7 @@ export * from "./SubscriptionDto";
 export * from "./AddSubscriptionDto";
 export * from "./UpdateSubscriptionDto";
 export * from "./FilterSubscriptionDto";
+export * from "./ImportPreviewSubscriptionDto";
 export * from "./AddSubscriptionBillingLogDto";
 export * from "./SubscriptionBillingLogDto";
 export * from "./FilterSubscriptionBillingLogDto";
