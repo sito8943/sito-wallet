@@ -31,10 +31,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputPropsType>(
           onChange={(e) => setSearching((e.target as HTMLInputElement).value)}
           inputClassName="search-input-control"
         >
-          <FontAwesomeIcon
-            icon={faSearch}
-            className="search-input-icon"
-          />
+          <FontAwesomeIcon icon={faSearch} className="search-input-icon" />
         </TextInput>
       </div>
     );

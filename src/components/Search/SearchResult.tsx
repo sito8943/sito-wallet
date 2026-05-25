@@ -76,9 +76,7 @@ export const SearchResult = (props: SearchResultPropsType) => {
       className={classNames(
         "search-results animated",
         !isModal && "search-results--dropdown elevated",
-        show || isModal
-          ? "search-results--open"
-          : "search-results--closed",
+        show || isModal ? "search-results--open" : "search-results--closed",
       )}
     >
       {!items.length && !!searching.length && !isLoading && (

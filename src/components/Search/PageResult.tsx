@@ -20,24 +20,15 @@ const PageResult = (props: PageResultPropsType) => {
   const { t } = useTranslation();
 
   return (
-    <Link
-      className="search-page-result group"
-      to={path}
-      onClick={onClick}
-    >
-      <FontAwesomeIcon
-        className="search-page-result-icon"
-        icon={faLink}
-      />
+    <Link className="search-page-result group" to={path} onClick={onClick}>
+      <FontAwesomeIcon className="search-page-result-icon" icon={faLink} />
       <p className="search-page-result-label">
         {name}{" "}
         <span className="search-page-result-type">
           ({t("_pages:search.types.page")})
         </span>
       </p>
-      <span className="search-page-result-time">
-        {time}
-      </span>
+      <span className="search-page-result-time">{time}</span>
     </Link>
   );
 };
