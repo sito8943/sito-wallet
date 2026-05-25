@@ -80,9 +80,7 @@ export const About = () => {
       >
         <p>{t("_pages:about.legal.body")}</p>
         <LegalLinksList links={legalLinks} />
-        <p className="about-legal-updated">
-          {t("_pages:about.legal.updated")}
-        </p>
+        <p className="about-legal-updated">{t("_pages:about.legal.updated")}</p>
       </LegalSection>
     </LegalPage>
   );

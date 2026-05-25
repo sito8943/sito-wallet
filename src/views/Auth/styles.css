@@ -8,6 +8,14 @@
   @apply w-full text-2xl max-sm:text-xl mb-1 max-md:text-center;
 }
 
+.auth-sign-up-title {
+  @apply mb-1 w-full text-2xl md:text-3xl;
+}
+
+.auth-sign-up-accent {
+  @apply mb-3 w-full rounded-xl p-0.5;
+}
+
 @media (width < 40rem) {
   .auth-form {
     width: 100%;

@@ -23,7 +23,10 @@ function TextLogo(props: TextLogoProps) {
     <div className="text-logo">
       <Vector className="text-logo-vector" variant={variant} />
       <h1
-        className={classNames("text-logo-title", titleVariantClassName[variant])}
+        className={classNames(
+          "text-logo-title",
+          titleVariantClassName[variant],
+        )}
       >
         Sito Wallet
       </h1>

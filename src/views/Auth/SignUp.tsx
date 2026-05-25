@@ -20,10 +20,10 @@ const color: "primary" | "secondary" | "tertiary" | "quaternary" =
   randomBackgroundColor();
 
 const signUpAccentClassName = {
-  primary: "auth-sign-up-accent--primary",
-  secondary: "auth-sign-up-accent--secondary",
-  tertiary: "auth-sign-up-accent--tertiary",
-  quaternary: "auth-sign-up-accent--quaternary",
+  primary: "auth-sign-up-accent--primary real-primary",
+  secondary: "auth-sign-up-accent--secondary real-secondary",
+  tertiary: "auth-sign-up-accent--tertiary real-tertiary",
+  quaternary: "auth-sign-up-accent--quaternary real-quaternary",
 } as const;
 
 /**
