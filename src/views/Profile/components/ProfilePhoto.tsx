@@ -76,7 +76,7 @@ export function ProfilePhoto({
             <div className="profile-photo-overlay">
               <FontAwesomeIcon
                 icon={faSpinner}
-                className="profile-photo-spinner"
+                className="profile-photo-spinner rotate"
               />
             </div>
           )}

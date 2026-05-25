@@ -33,7 +33,7 @@
 }
 
 .transaction-account-shower-panel--visible {
-  @apply opacity-100 translate-y-0 scale-100 pointer-events-auto;
+  @apply opacity-100 translate-y-0 scale-100 pointer-events-auto w-full;
 }
 
 .transaction-account-shower-panel--hidden {

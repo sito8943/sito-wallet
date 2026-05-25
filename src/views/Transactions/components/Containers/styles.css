@@ -39,7 +39,3 @@
 .transaction-table-description {
   @apply truncate;
 }
-
-.transaction-table-content {
-  @apply base-border;
-}

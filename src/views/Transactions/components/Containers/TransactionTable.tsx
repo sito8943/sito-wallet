@@ -136,7 +136,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
       isLoading={isLoading}
       entity={EntityName.Transaction}
       columns={columns}
-      contentClassName="transactions-table-body transaction-table-content"
+      contentClassName="transactions-table-body transaction-table-content base-border"
       filterOptions={filterOptions}
     />
   );

@@ -137,7 +137,7 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
   });
 
   return (
-    <div className="profile-form-shell">
+    <div className="profile-form-shell base-border">
       <form
         className="profile-form"
         onSubmit={(event) => {
