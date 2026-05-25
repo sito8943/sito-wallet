@@ -177,19 +177,19 @@
     },
     "currencies": {
       "title": "Gestiona tus monedas",
-      "body": ""
+      "body": "Añade y controla cualquier moneda para mantener tus finanzas bajo control en cualquier parte del mundo."
     },
     "accounts": {
       "title": "Todas tus cuentas en un solo lugar",
-      "body": ""
+      "body": "Registra cuentas bancarias, efectivo o criptomonedas y obtén una visión completa de tu dinero."
     },
     "transactions": {
       "title": "Control total de tus movimientos",
-      "body": ""
+      "body": "Registra ingresos y gastos en segundos, y clasifícalos para saber exactamente adónde va tu dinero."
     },
     "subscriptions": {
       "title": "Ten tus suscripciones bajo control",
-      "body": ""
+      "body": "Organiza pagos recurrentes, proveedores y renovaciones para que cada cargo sea previsible."
     },
     "get_started": {
       "title": "Listo para tomar el control",
@@ -198,19 +198,19 @@
     "setup": {
       "currencies": {
         "title": "Empieza con tu divisa principal o carga tus monedas desde un archivo.",
-        "description": ""
+        "description": "Puedes crear tu primera moneda aquí mismo o reutilizar una exportación anterior."
       },
       "accounts": {
         "title": "Deja preparada tu primera cuenta",
-        "description": ""
+        "description": "Crea una cuenta manualmente o importa varias a la vez para empezar más rápido."
       },
       "transactions": {
         "title": "Prepara tus categorías base",
-        "description": ""
+        "description": "Así dejas lista la configuración inicial antes de introducir movimientos a mano."
       },
       "subscriptions": {
         "title": "Deja listos tus proveedores de suscripción.",
-        "description": ""
+        "description": "Crea un proveedor o importa tu catálogo antes de añadir pagos recurrentes."
       }
     },
     "replay": {
