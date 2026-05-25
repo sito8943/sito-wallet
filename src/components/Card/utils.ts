@@ -1,8 +1,6 @@
 const MOBILE_CONTEXT_MENU_MEDIA_QUERY = "(pointer: coarse)";
 
-export function shouldPreventMobileContextMenu(
-  hasLongPressSelection: boolean,
-) {
+export function shouldPreventMobileContextMenu(hasLongPressSelection: boolean) {
   if (!hasLongPressSelection || typeof window === "undefined") return false;
 
   if (typeof navigator !== "undefined" && navigator.maxTouchPoints > 0) {
