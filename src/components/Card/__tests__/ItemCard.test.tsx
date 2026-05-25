@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, createEvent, fireEvent, render, screen } from "@testing-library/react";
 
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
@@ -24,6 +24,10 @@ const defaultAction = {
 
 afterEach(() => {
   vi.useRealTimers();
+  Object.defineProperty(window.navigator, "maxTouchPoints", {
+    configurable: true,
+    value: 0,
+  });
 });
 
 describe("ItemCard", () => {
@@ -103,5 +107,31 @@ describe("ItemCard", () => {
 
     expect(onLongPressSelection).toHaveBeenCalledTimes(1);
     expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it("prevents the mobile context menu when long press selection is enabled", () => {
+    Object.defineProperty(window.navigator, "maxTouchPoints", {
+      configurable: true,
+      value: 1,
+    });
+
+    render(
+      <ItemCard
+        title="Title"
+        name="Edit item"
+        deleted={false}
+        onLongPressSelection={() => undefined}
+        actions={[defaultAction]}
+      >
+        <span>Content</span>
+      </ItemCard>,
+    );
+
+    const content = screen.getByText("Content");
+    const contextMenuEvent = createEvent.contextMenu(content);
+
+    fireEvent(content, contextMenuEvent);
+
+    expect(contextMenuEvent.defaultPrevented).toBe(true);
   });
 });

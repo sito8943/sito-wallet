@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, createEvent, fireEvent, render, screen } from "@testing-library/react";
 
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
@@ -92,6 +92,10 @@ const baseTransaction = {
 
 afterEach(() => {
   vi.useRealTimers();
+  Object.defineProperty(window.navigator, "maxTouchPoints", {
+    configurable: true,
+    value: 0,
+  });
 });
 
 describe("TransactionCard", () => {
@@ -153,5 +157,28 @@ describe("TransactionCard", () => {
 
     expect(onLongPress).toHaveBeenCalledWith(42);
     expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it("prevents the mobile context menu when long press selection is enabled", () => {
+    Object.defineProperty(window.navigator, "maxTouchPoints", {
+      configurable: true,
+      value: 1,
+    });
+
+    render(
+      <TransactionCard
+        {...baseTransaction}
+        actions={[]}
+        onClick={() => undefined}
+        onLongPress={() => undefined}
+      />,
+    );
+
+    const button = screen.getByRole("button");
+    const contextMenuEvent = createEvent.contextMenu(button);
+
+    fireEvent(button, contextMenuEvent);
+
+    expect(contextMenuEvent.defaultPrevented).toBe(true);
   });
 });

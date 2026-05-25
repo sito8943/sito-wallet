@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
+import type { MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 // icons
@@ -14,6 +15,7 @@ import { Actions, classNames } from "@sito/dashboard-app";
 
 // types
 import type { ItemCardPropsType } from "./types.ts";
+import { shouldPreventMobileContextMenu } from "./utils";
 
 // styles
 import "./styles.css";
@@ -78,6 +80,15 @@ export function ItemCard<TRow extends BaseEntityDto>(
     onClick?.();
   }, [deleted, onClick, onToggleSelection, selectionMode]);
 
+  const handleContextMenu = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      if (!shouldPreventMobileContextMenu(!!onLongPressSelection)) return;
+
+      event.preventDefault();
+    },
+    [onLongPressSelection],
+  );
+
   const hasInteractions =
     !!onClick || !!onToggleSelection || !!onLongPressSelection;
 
@@ -106,6 +117,7 @@ export function ItemCard<TRow extends BaseEntityDto>(
         onTouchEnd={clearTouchTimeout}
         onTouchCancel={clearTouchTimeout}
         onTouchMove={clearTouchTimeout}
+        onContextMenu={handleContextMenu}
         {...rest}
         aria-label={
           selectionMode
