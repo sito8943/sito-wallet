@@ -7,6 +7,8 @@ import { Tables } from "lib";
 
 import type { UserFormPropsType } from "../types";
 
+import "./styles.css";
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function UserForm(props: UserFormPropsType) {
@@ -92,12 +94,12 @@ export function UserForm(props: UserFormPropsType) {
         name="admin"
         disabled={isLoading}
         render={({ field }) => (
-          <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-base-light p-3">
-            <div className="flex flex-col gap-1">
+          <div className="user-form-admin-toggle">
+            <div className="user-form-admin-copy">
               <span id="user-admin-label">
                 {t("_entities:user.admin.label")}
               </span>
-              <span className="text-sm text-text-muted">
+              <span className="user-form-admin-helper">
                 {t("_entities:user.admin.helper")}
               </span>
             </div>
@@ -107,7 +109,7 @@ export function UserForm(props: UserFormPropsType) {
               label=""
               labelClassName="hidden"
               containerClassName="shrink-0"
-              inputClassName="h-4 w-4 accent-bg-primary"
+              inputClassName="user-form-admin-input"
               aria-labelledby="user-admin-label"
               checked={!!field.value}
               disabled={isLoading}

@@ -10,6 +10,8 @@ import { useTransactionsList } from "../../../../hooks/queries/useTransactionsLi
 // components
 import { Transaction } from "./Transaction";
 
+import "./styles.css";
+
 export const LastTransactions = (props: LastTransactionsPropsType) => {
   const { accountId, currency } = props;
 
@@ -26,13 +28,13 @@ export const LastTransactions = (props: LastTransactionsPropsType) => {
   });
 
   return (
-    <div className="flex w-full pt-5">
+    <div className="account-last-transactions">
       {isLoading ? (
-        <div className="flex items-center justify-center w-full">
+        <div className="account-last-transactions-loading">
           <Loading />
         </div>
       ) : (
-        <ul className="w-full gap-2 flex flex-col">
+        <ul className="account-last-transactions-list">
           {data?.items?.map((transaction) => (
             <Transaction
               {...transaction}

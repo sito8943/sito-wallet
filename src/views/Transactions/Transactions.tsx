@@ -229,14 +229,14 @@ export function Transactions() {
       });
     },
     renderExtraFields: ({ values, setValue }) => (
-      <label className="flex items-center gap-2 cursor-pointer">
+      <label className="transactions-export-toggle">
         <input
           type="checkbox"
           checked={values.includeCurrentAccount}
           onChange={(e) => setValue("includeCurrentAccount", e.target.checked)}
-          className="accent-bg-primary"
+          className="transactions-export-toggle-input"
         />
-        <span className="text-text">
+        <span className="transactions-export-toggle-text">
           {t("_pages:transactions.export.includeCurrentAccount")}
         </span>
       </label>
@@ -446,7 +446,7 @@ export function Transactions() {
           message={t("_pages:accounts.empty")}
           iconProps={{
             icon: faWallet,
-            className: "text-5xl max-md:text-3xl text-gray-400",
+            className: "transactions-empty-icon",
           }}
           action={{
             icon: <FontAwesomeIcon icon={faAdd} />,

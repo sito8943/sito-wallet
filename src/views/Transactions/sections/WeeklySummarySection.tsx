@@ -5,6 +5,8 @@ import { TransactionType } from "lib";
 import { WeeklyCard } from "../components/WeeklyCard";
 import type { WeeklySummarySectionProps } from "./types";
 
+import "../styles.css";
+
 export const WeeklySummarySection = (props: WeeklySummarySectionProps) => {
   const { selectedAccount, onOpenWeeklyTransactions } = props;
   const { t } = useTranslation();
@@ -12,7 +14,7 @@ export const WeeklySummarySection = (props: WeeklySummarySectionProps) => {
   if (!selectedAccount) return null;
 
   return (
-    <div className="mb-4 grid grid-cols-2 gap-4 max-md:grid-cols-1 max-sm:hidden">
+    <div className="transactions-weekly-summary">
       <WeeklyCard
         type={TransactionType.Out}
         title={t("_pages:transactions.cards.weeklySpent.title")}

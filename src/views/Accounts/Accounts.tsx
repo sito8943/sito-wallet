@@ -189,8 +189,8 @@ export function Accounts() {
           />
           <PrettyGrid
             data={items}
-            className="max-sm:pb-6"
-            itemClassName="max-md:w-full w-auto"
+            className="accounts-grid"
+            itemClassName="accounts-grid-item"
             hasMore={!!hasNextPage}
             loadingMore={isFetchingNextPage}
             onLoadMore={() => {
@@ -202,7 +202,7 @@ export function Accounts() {
                 message={t("_pages:accounts.empty")}
                 iconProps={{
                   icon: faWallet,
-                  className: "text-5xl max-md:text-3xl text-text-muted",
+                  className: "accounts-empty-icon",
                 }}
                 action={[
                   {

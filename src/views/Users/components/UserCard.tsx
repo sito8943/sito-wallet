@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { classNames } from "@sito/dashboard-app";
 
 import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ItemCard, ItemCardTitle } from "components";
 
 import type { UserCardPropsType } from "../types";
+
+import "./styles.css";
 
 export function UserCard(props: UserCardPropsType) {
   const { t } = useTranslation();
@@ -29,10 +32,10 @@ export function UserCard(props: UserCardPropsType) {
   return (
     <ItemCard
       title={
-        <div className="flex w-full items-start justify-between gap-2">
+        <div className="user-card-title-row">
           <ItemCardTitle>{username || email}</ItemCardTitle>
           {admin ? (
-            <span className="inline-flex items-center gap-1 rounded-full bg-bg-primary px-2 py-0.5 text-xs text-base">
+            <span className="user-card-admin-badge">
               <FontAwesomeIcon icon={faShieldHalved} />
               {t("_entities:user.admin.label")}
             </span>
@@ -48,11 +51,14 @@ export function UserCard(props: UserCardPropsType) {
       onToggleSelection={() => onSelect?.(id)}
       onLongPressSelection={() => onLongPress?.(id)}
       actions={actions}
-      className="gap-2"
-      containerClassName="max-xs:min-h-0 max-xs:rounded-xl max-xs:p-2.5"
+      className="user-card-content"
+      containerClassName="user-card-container"
     >
       <p
-        className={`text-start text-sm text-text-muted ${deleted ? "!text-bg-error" : ""}`}
+        className={classNames(
+          "user-card-email",
+          deleted && "user-card-email--deleted",
+        )}
       >
         {email}
       </p>

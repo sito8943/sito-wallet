@@ -23,6 +23,8 @@ import type {
   AdjustBalanceFormType,
 } from "../types";
 
+import "./styles.css";
+
 export function AdjustBalanceDialog(props: AdjustBalanceDialogPropsType) {
   const { selectedAccount, control, setValue, open, isLoading } = props;
   const { t } = useTranslation();
@@ -38,7 +40,7 @@ export function AdjustBalanceDialog(props: AdjustBalanceDialogPropsType) {
     <>
       <FormDialog<AdjustBalanceFormType> {...props}>
         {selectedAccount && (
-          <div className="flex items-center gap-2 text-text-muted text-sm">
+          <div className="adjust-balance-current">
             <FontAwesomeIcon icon={faScaleBalanced} />
             <span>
               {t("_pages:accounts.actions.adjustBalance.dialog.currentBalance")}

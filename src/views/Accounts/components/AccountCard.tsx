@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { classNames } from "@sito/dashboard-app";
 
 // @sito/dashboard-app
 import { Chip } from "@sito/dashboard-app";
@@ -20,6 +21,8 @@ import { Currency } from "views/Currencies/components/Currency";
 
 // utils
 import { icons } from "./utils";
+
+import "./styles.css";
 
 export function AccountCard(props: AccountCardPropsType) {
   const { t } = useTranslation();
@@ -73,28 +76,30 @@ export function AccountCard(props: AccountCardPropsType) {
           : undefined
       }
       actions={actions}
-      containerClassName={containerClassName ?? "md:w-100 max-md:w-full"}
+      containerClassName={containerClassName ?? "account-card-container"}
     >
       {!hideDescription && (
         <p
-          className={`${description ? "" : "!text-xs italic"} text-start mb-2 ${
-            deleted ? "!text-bg-error" : ""
-          }`}
+          className={classNames(
+            "account-description",
+            !description && "account-description--empty",
+            deleted && "account-description--deleted",
+          )}
         >
           {description ? description : t("_entities:base.description.empty")}
         </p>
       )}
       <div className="chip-container">
         <Chip
-          className="max-sm:!px-2"
+          className="account-card-type-chip"
           text={
             <>
-              <span className="max-sm:hidden">
+              <span className="account-card-type-text">
                 {t(
                   `_entities:account.type.values.${String(AccountType[type])}`,
                 )}
               </span>
-              <span className="sm:hidden">
+              <span className="account-card-type-icon">
                 <FontAwesomeIcon icon={icons[type]} />
               </span>
             </>
@@ -102,11 +107,15 @@ export function AccountCard(props: AccountCardPropsType) {
         />
         {showCurrency && (
           <Chip
-            className="max-sm:!px-3"
+            className="account-card-currency-chip"
             text={
               <>
-                <span className="max-sm:hidden">{currency?.name}</span>
-                <span className="sm:hidden">{currency?.symbol}</span>
+                <span className="account-card-currency-name">
+                  {currency?.name}
+                </span>
+                <span className="account-card-currency-symbol">
+                  {currency?.symbol}
+                </span>
               </>
             }
           />
@@ -114,7 +123,7 @@ export function AccountCard(props: AccountCardPropsType) {
         <Chip
           text={
             <>
-              <span className="max-sm:hidden">{`${t("_entities:account.balance.label")}: `}</span>
+              <span className="account-card-balance-label">{`${t("_entities:account.balance.label")}: `}</span>
               <span>{balance} </span>
               <Currency name={currency?.name} symbol={currency?.symbol} />
             </>

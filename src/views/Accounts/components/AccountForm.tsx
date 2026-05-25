@@ -28,6 +28,8 @@ import { icons } from "./utils";
 // hooks
 import { useCurrenciesCommon } from "hooks/queries/useCurrenciesCommon";
 
+import "./styles.css";
+
 export function AccountForm(props: AccountFormPropsType) {
   const { control, isLoading, setValue, open } = props;
   const { t } = useTranslation();
@@ -115,7 +117,7 @@ export function AccountForm(props: AccountFormPropsType) {
           )}
         />
       )}
-      <div className="flex gap-5">
+      <div className="account-form-row">
         <Controller
           control={control}
           name="type"
@@ -133,7 +135,7 @@ export function AccountForm(props: AccountFormPropsType) {
             >
               <FontAwesomeIcon
                 icon={icons[(type ?? 0) as keyof typeof icons]}
-                className="absolute left-2 vertical-center text-text text-sm"
+                className="account-form-type-icon vertical-center"
               />
             </SelectInput>
           )}

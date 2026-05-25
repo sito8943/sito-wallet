@@ -1,7 +1,40 @@
 @reference "../../styles/variables.css";
+
 .account-tabs {
   width: calc(100vw - 40px) !important;
   overflow: auto;
+}
+
+.transactions-export-toggle {
+  @apply flex items-center gap-2 cursor-pointer;
+}
+
+.transactions-export-toggle-input {
+  @apply accent-bg-primary;
+}
+
+.transactions-export-toggle-text {
+  @apply text-text;
+}
+
+.transactions-empty-icon {
+  @apply text-5xl max-md:text-3xl text-text-muted;
+}
+
+.transactions-desktop-tabs {
+  @apply max-sm:hidden;
+}
+
+.transactions-mobile-account-shower {
+  @apply sm:hidden mb-4;
+}
+
+.transactions-mobile-tabs {
+  @apply min-sm:hidden;
+}
+
+.transactions-weekly-summary {
+  @apply mb-4 grid grid-cols-2 gap-4 max-md:grid-cols-1 max-sm:hidden;
 }
 
 .mobile-account-tabs {

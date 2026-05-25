@@ -7,3 +7,51 @@
 .chip-container {
   @apply flex gap-2 flex-wrap;
 }
+
+.item-card {
+  @apply flex flex-col justify-between items-start min-h-40 w-full rounded-2xl p-3 bg-base;
+}
+
+.item-card--deleted {
+  @apply !border-bg-error border-2 opacity-60;
+}
+
+.item-card--selected {
+  @apply !border-bg-success border-2;
+}
+
+.item-card--idle {
+  @apply hover:!border-hover-primary;
+}
+
+.item-card-content {
+  @apply h-full w-full flex flex-col justify-start items-start;
+}
+
+.item-card-content--clickable {
+  @apply cursor-pointer;
+}
+
+.item-card-selection-indicator {
+  @apply self-end text-sm;
+}
+
+.item-card-selection-indicator--selected {
+  @apply text-bg-success;
+}
+
+.item-card-selection-indicator--idle {
+  @apply text-text-muted;
+}
+
+.item-card-title {
+  @apply max-sm:text-sm flex items-center gap-2 text-start;
+}
+
+.item-card-title--deleted {
+  @apply !text-bg-error;
+}
+
+.item-card-title--active {
+  @apply !text-text;
+}

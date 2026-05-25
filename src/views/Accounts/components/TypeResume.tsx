@@ -27,14 +27,14 @@ const TypeResume = (props: TypeResumePropsType) => {
   const expenseTotal = data?.expenseTotal ?? 0;
 
   return (
-    <div className="w-full my-2">
-      <div className="grid grid-cols-2 gap-2">
+    <div className="type-group-wrapper">
+      <div className="type-group-grid">
         <div className="type-group">
-          <h4 className="text-sm text-text-muted">
+          <h4 className="type-group-title">
             {t("_entities:transactionCategory:type.values.In")}
           </h4>
-          <div className="flex items-center gap-2">
-            <p className="text-lg font-semibold text-bg-success">
+          <div className="type-group-value-row">
+            <p className="type-group-value--income">
               {isLoading ? "..." : incomeTotal}{" "}
               <Currency name={currency?.name} symbol={currency?.symbol} />
             </p>
@@ -42,11 +42,11 @@ const TypeResume = (props: TypeResumePropsType) => {
           </div>
         </div>
         <div className="type-group">
-          <h4 className="text-sm text-text-muted">
+          <h4 className="type-group-title">
             {t("_entities:transactionCategory:type.values.Out")}
           </h4>
-          <div className="flex items-center gap-2">
-            <p className="text-lg font-semibold text-bg-error">
+          <div className="type-group-value-row">
+            <p className="type-group-value--expense">
               {isLoading ? "..." : expenseTotal}{" "}
               <Currency name={currency?.name} symbol={currency?.symbol} />
             </p>

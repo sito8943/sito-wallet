@@ -18,6 +18,8 @@ import { AccountActions } from "../types";
 import type { AccountDto } from "lib";
 import { getTransactionsRouteWithAccountId } from "lib";
 
+import "./styles.css";
+
 export const useViewTransactionsAction = (
   props: Omit<UseSingleActionPropTypes<number>, "onClick">,
 ) => {
@@ -33,7 +35,7 @@ export const useViewTransactionsAction = (
       id: AccountActions.ViewTransactions,
       hidden: !!record.deletedAt || hidden || !transactionsEnabled,
       disabled: !!record.deletedAt || !transactionsEnabled,
-      icon: <FontAwesomeIcon className="text-bg-primary" icon={faClock} />,
+      icon: <FontAwesomeIcon className="account-action-icon" icon={faClock} />,
       tooltip: t("_pages:accounts.actions.viewTransactions.text"),
       onClick: () => {
         navigate(getTransactionsRouteWithAccountId(record.id));

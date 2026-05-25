@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
+import { classNames } from "@sito/dashboard-app";
 import type { ActionType } from "@sito/dashboard-app";
 
 // icons
@@ -18,6 +19,8 @@ import { AccountActions } from "../types";
 // lib
 import type { AccountDto } from "lib";
 
+import "./styles.css";
+
 export const useSyncAccountAction = (
   props: UseSingleActionPropTypes<number>,
 ) => {
@@ -32,7 +35,7 @@ export const useSyncAccountAction = (
       disabled: !!record.deletedAt,
       icon: (
         <FontAwesomeIcon
-          className={`text-bg-primary ${isLoading ? "rotate" : ""}`}
+          className={classNames("account-action-icon", isLoading && "rotate")}
           icon={isLoading ? faCircleNotch : faArrowsRotate}
         />
       ),

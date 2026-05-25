@@ -7,3 +7,11 @@
 .user-selection-bar .table-selection-bar {
   margin-bottom: 0;
 }
+
+.users-grid {
+  @apply max-sm:pb-6;
+}
+
+.users-empty-icon {
+  @apply text-5xl max-md:text-3xl text-text-muted;
+}

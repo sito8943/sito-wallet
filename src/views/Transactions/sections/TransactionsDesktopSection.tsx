@@ -1,6 +1,8 @@
 import { TabsLayout } from "@sito/dashboard-app";
 import type { TransactionsDesktopSectionProps } from "./types";
 
+import "../styles.css";
+
 export const TransactionsDesktopSection = (
   props: TransactionsDesktopSectionProps,
 ) => {
@@ -10,7 +12,7 @@ export const TransactionsDesktopSection = (
     <TabsLayout
       defaultTab={tabValue}
       tabs={tabs}
-      className="max-sm:hidden"
+      className="transactions-desktop-tabs"
       tabsContainerClassName="account-tabs"
     />
   );

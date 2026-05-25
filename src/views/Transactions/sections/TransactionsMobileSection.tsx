@@ -3,6 +3,8 @@ import { TabsLayout } from "@sito/dashboard-app";
 import AccountShower from "../components/AccountShower";
 import type { TransactionsMobileSectionProps } from "./types";
 
+import "../styles.css";
+
 export const TransactionsMobileSection = (
   props: TransactionsMobileSectionProps,
 ) => {
@@ -26,12 +28,12 @@ export const TransactionsMobileSection = (
         onAccountChange={onAccountChange}
         onOpenFilters={onOpenFilters}
         error={accountError}
-        className="sm:hidden mb-4"
+        className="transactions-mobile-account-shower"
       />
       <TabsLayout
         currentTab={tabValue}
         tabs={tabs}
-        className="min-sm:hidden"
+        className="transactions-mobile-tabs"
         tabsContainerClassName="mobile-account-tabs"
       />
     </>

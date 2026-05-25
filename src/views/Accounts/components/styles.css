@@ -1,5 +1,85 @@
 @reference "../../../styles/variables.css";
 
+.account-description {
+  @apply text-start mb-2;
+}
+
+.account-description--empty {
+  @apply !text-xs italic;
+}
+
+.account-description--deleted {
+  @apply !text-bg-error;
+}
+
+.account-card-container {
+  @apply md:w-100 max-md:w-full;
+}
+
+.account-card-type-chip {
+  @apply max-sm:!px-2;
+}
+
+.account-card-currency-chip {
+  @apply max-sm:!px-3;
+}
+
+.account-card-balance-label {
+  @apply max-sm:hidden;
+}
+
+.account-card-type-text {
+  @apply max-sm:hidden;
+}
+
+.account-card-type-icon {
+  @apply sm:hidden;
+}
+
+.account-card-currency-name {
+  @apply max-sm:hidden;
+}
+
+.account-card-currency-symbol {
+  @apply sm:hidden;
+}
+
+.account-form-row {
+  @apply flex gap-5;
+}
+
+.account-form-type-icon {
+  @apply absolute left-2 text-text text-sm;
+}
+
+.adjust-balance-current {
+  @apply flex items-center gap-2 text-text-muted text-sm;
+}
+
+.type-group-wrapper {
+  @apply w-full my-2;
+}
+
+.type-group-grid {
+  @apply grid grid-cols-2 gap-2;
+}
+
 .type-group {
   @apply bg-base-light rounded-xl p-2 px-3 flex flex-col items-start justify-start;
+}
+
+.type-group-title {
+  @apply text-sm text-text-muted;
+}
+
+.type-group-value-row {
+  @apply flex items-center gap-2;
+}
+
+.type-group-value--income {
+  @apply text-lg font-semibold text-bg-success;
+}
+
+.type-group-value--expense {
+  @apply text-lg font-semibold text-bg-error;
 }

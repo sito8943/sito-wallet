@@ -1,0 +1,5 @@
+@reference "../../../styles/variables.css";
+
+.account-action-icon {
+  @apply text-bg-primary;
+}

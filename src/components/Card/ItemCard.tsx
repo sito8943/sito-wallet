@@ -10,7 +10,7 @@ import { ItemCardTitle } from "./ItemCardTitle";
 
 // @sito/dashboard-app
 import type { BaseEntityDto } from "@sito/dashboard-app";
-import { Actions } from "@sito/dashboard-app";
+import { Actions, classNames } from "@sito/dashboard-app";
 
 // types
 import type { ItemCardPropsType } from "./types.ts";
@@ -83,18 +83,24 @@ export function ItemCard<TRow extends BaseEntityDto>(
 
   return (
     <div
-      className={`${containerClassName} flex flex-col justify-between items-start min-h-40 w-full rounded-2xl p-3 bg-base group ${
+      className={classNames(
+        "item-card group animated",
         deleted
-          ? "!border-bg-error border-2 opacity-60"
+          ? "item-card--deleted"
           : selectionMode
             ? selected
-              ? "!border-bg-success border-2"
-              : "base-border"
-            : "base-border hover:!border-hover-primary"
-      } animated`}
+              ? "item-card--selected base-border"
+              : "item-card--selectable"
+            : "item-card--idle base-border",
+        containerClassName,
+      )}
     >
       <div
-        className={`${deleted || !hasInteractions ? "" : "cursor-pointer"} h-full w-full flex flex-col justify-start items-start ${className}`}
+        className={classNames(
+          "item-card-content",
+          !deleted && hasInteractions && "item-card-content--clickable",
+          className,
+        )}
         onClick={handleClick}
         onTouchStart={handleTouchStart}
         onTouchEnd={clearTouchTimeout}
@@ -110,7 +116,12 @@ export function ItemCard<TRow extends BaseEntityDto>(
       >
         {selectionMode && !deleted ? (
           <span
-            className={`self-end text-sm ${selected ? "text-bg-success" : "text-text-muted"}`}
+            className={classNames(
+              "item-card-selection-indicator",
+              selected
+                ? "item-card-selection-indicator--selected"
+                : "item-card-selection-indicator--idle",
+            )}
           >
             <FontAwesomeIcon icon={selected ? faCircleCheck : faCircle} />
           </span>

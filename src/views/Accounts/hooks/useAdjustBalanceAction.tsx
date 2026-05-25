@@ -15,6 +15,8 @@ import type { UseAdjustBalanceActionProps } from "./types";
 // lib
 import type { AccountDto } from "lib";
 
+import "./styles.css";
+
 export const useAdjustBalanceAction = (props: UseAdjustBalanceActionProps) => {
   const { t } = useTranslation();
 
@@ -26,7 +28,10 @@ export const useAdjustBalanceAction = (props: UseAdjustBalanceActionProps) => {
       hidden: !!record.deletedAt || hidden,
       disabled: !!record.deletedAt,
       icon: (
-        <FontAwesomeIcon className="text-bg-primary" icon={faScaleBalanced} />
+        <FontAwesomeIcon
+          className="account-action-icon"
+          icon={faScaleBalanced}
+        />
       ),
       tooltip: t("_pages:accounts.actions.adjustBalance.text"),
       onClick: () => onClick(record),

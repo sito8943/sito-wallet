@@ -1,11 +1,17 @@
 import { useTranslation } from "react-i18next";
 
-import { CheckInput, ConfirmationDialog, TextInput } from "@sito/dashboard-app";
+import {
+  CheckInput,
+  ConfirmationDialog,
+  TextInput,
+} from "@sito/dashboard-app";
 
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import type { ResetUserDialogPropsType } from "../types";
+
+import "./styles.css";
 
 export function ResetUserDialog(props: ResetUserDialogPropsType) {
   const { t } = useTranslation();
@@ -36,17 +42,17 @@ export function ResetUserDialog(props: ResetUserDialogPropsType) {
       handleClose={handleClose}
       handleSubmit={submitDisabled ? () => undefined : handleSubmit}
     >
-      <div className="flex flex-col gap-4">
-        <p className="text-sm text-text-muted text-balance">
+      <div className="reset-user-dialog-body">
+        <p className="reset-user-dialog-description">
           {t("_pages:users.reset.dialog.description", { user: username })}
         </p>
 
-        <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-base-light p-3">
-          <div className="flex flex-col gap-1">
+        <div className="reset-user-dialog-toggle">
+          <div className="reset-user-dialog-toggle-copy">
             <span id="reset-user-hard-label">
               {t("_pages:users.reset.dialog.hardLabel")}
             </span>
-            <span className="text-sm text-text-muted">
+            <span className="reset-user-dialog-toggle-hint">
               {hard
                 ? t("_pages:users.reset.dialog.hardHint")
                 : t("_pages:users.reset.dialog.softHint")}
@@ -58,7 +64,7 @@ export function ResetUserDialog(props: ResetUserDialogPropsType) {
             label=""
             labelClassName="hidden"
             containerClassName="shrink-0"
-            inputClassName="h-4 w-4 accent-bg-error"
+            inputClassName="reset-user-dialog-toggle-input"
             aria-labelledby="reset-user-hard-label"
             checked={hard}
             disabled={isLoading}
@@ -70,13 +76,13 @@ export function ResetUserDialog(props: ResetUserDialogPropsType) {
         </div>
 
         {hard ? (
-          <div className="flex flex-col gap-10 rounded-xl bg-bg-error p-3 text-error">
-            <div className="flex items-center gap-2 text-sm font-semibold">
+          <div className="reset-user-dialog-hard">
+            <div className="reset-user-dialog-hard-summary">
               <FontAwesomeIcon
-                className="text-xl"
+                className="reset-user-dialog-hard-icon"
                 icon={faTriangleExclamation}
               />
-              <span className="text-xs">
+              <span className="reset-user-dialog-hard-text">
                 {t("_pages:users.reset.dialog.hardHint")}
               </span>
             </div>
@@ -89,7 +95,7 @@ export function ResetUserDialog(props: ResetUserDialogPropsType) {
               onChange={(event) => setConfirmText(event.currentTarget.value)}
             />
             {showMismatch ? (
-              <span className="text-xs text-error">
+              <span className="reset-user-dialog-mismatch">
                 {t("_pages:users.reset.dialog.confirmMismatch")}
               </span>
             ) : null}

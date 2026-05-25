@@ -1,0 +1,41 @@
+@reference "../../../../styles/variables.css";
+
+.account-last-transactions {
+  @apply flex w-full pt-5;
+}
+
+.account-last-transactions-loading {
+  @apply flex items-center justify-center w-full;
+}
+
+.account-last-transactions-list {
+  @apply w-full gap-2 flex flex-col;
+}
+
+.account-last-transaction {
+  @apply rounded-lg bg-base-light p-2 pr-3 flex items-center gap-2 w-full;
+}
+
+.account-last-transaction-type {
+  @apply bg-base-dark px-3 py-3.5 rounded-full;
+}
+
+.account-last-transaction-body {
+  @apply flex flex-col items-start justify-start w-full;
+}
+
+.account-last-transaction-meta {
+  @apply flex items-center gap-1 max-xs:!text-xs;
+}
+
+.account-last-transaction-description {
+  @apply text-xs text-left;
+}
+
+.account-last-transaction-amount {
+  @apply gap-1 text-nowrap;
+}
+
+.account-last-transaction-amount-value {
+  @apply mr-1;
+}

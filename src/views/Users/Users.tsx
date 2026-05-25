@@ -144,7 +144,7 @@ export function Users() {
           />
           <PrettyGrid
             data={items}
-            className="max-sm:pb-6"
+            className="users-grid"
             hasMore={!!hasNextPage}
             loadingMore={isFetchingNextPage}
             onLoadMore={() => {
@@ -156,7 +156,7 @@ export function Users() {
                 message={t("_pages:users.empty")}
                 iconProps={{
                   icon: faUsers,
-                  className: "text-5xl max-md:text-3xl text-text-muted",
+                  className: "users-empty-icon",
                 }}
                 action={{
                   icon: <FontAwesomeIcon icon={faAdd} />,
