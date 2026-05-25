@@ -12,6 +12,8 @@ import { AppRoutes } from "lib";
 import { PORTFOLIO_LINK_URL } from "./constants";
 import type { HowToStep } from "./types";
 
+import "./styles.css";
+
 export const About = () => {
   const { t } = useTranslation();
 
@@ -47,7 +49,7 @@ export const About = () => {
                 href={PORTFOLIO_LINK_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="primary underline font-bold!"
+                className="about-link"
               />
             ),
           }}
@@ -55,16 +57,14 @@ export const About = () => {
       }
     >
       <section>
-        <h3 className="text-2xl max-sm:text-xl font-bold">
-          {t("_pages:about.howTo.title")}
-        </h3>
-        <p className="mt-2">{t("_pages:about.howTo.body")}</p>
+        <h3 className="about-how-to-title">{t("_pages:about.howTo.title")}</h3>
+        <p className="about-how-to-body">{t("_pages:about.howTo.body")}</p>
 
-        <ul className="mt-5 grid grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-5">
+        <ul className="about-steps">
           {steps.map((step, idx) => (
-            <li key={idx} className="bg-base p-5 rounded-2xl">
-              <h4 className="text-xl font-semibold">{step.title}</h4>
-              <ul className="list-disc list-inside mt-2 space-y-1">
+            <li key={idx} className="about-step">
+              <h4 className="about-step-title">{step.title}</h4>
+              <ul className="about-step-items">
                 {step.items.map((item, i) => (
                   <li key={i}>{item}</li>
                 ))}
@@ -74,10 +74,13 @@ export const About = () => {
         </ul>
       </section>
 
-      <LegalSection title={t("_pages:about.legal.title")} className="mt-8">
+      <LegalSection
+        title={t("_pages:about.legal.title")}
+        className="about-legal-section"
+      >
         <p>{t("_pages:about.legal.body")}</p>
         <LegalLinksList links={legalLinks} />
-        <p className="mt-4 text-sm text-text-muted">
+        <p className="about-legal-updated">
           {t("_pages:about.legal.updated")}
         </p>
       </LegalSection>

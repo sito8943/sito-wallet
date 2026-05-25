@@ -1,0 +1,37 @@
+@reference "../../styles/variables.css";
+
+.about-link {
+  @apply primary underline font-bold!;
+}
+
+.about-how-to-title {
+  @apply text-2xl font-bold max-sm:text-xl;
+}
+
+.about-how-to-body {
+  @apply mt-2;
+}
+
+.about-steps {
+  @apply mt-5 grid gap-5 grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1;
+}
+
+.about-step {
+  @apply rounded-2xl bg-base p-5;
+}
+
+.about-step-title {
+  @apply text-xl font-semibold;
+}
+
+.about-step-items {
+  @apply mt-2 list-disc list-inside space-y-1;
+}
+
+.about-legal-section {
+  @apply mt-8;
+}
+
+.about-legal-updated {
+  @apply mt-4 text-sm text-text-muted;
+}

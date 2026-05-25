@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { classNames } from "@sito/dashboard-app";
 
 import { ONBOARDING_ENTITY_OPTIONS } from "./constants";
 import type {
@@ -14,9 +15,6 @@ export function OnboardingEntitySelection(
   props: OnboardingEntitySelectionPropsType,
 ) {
   const { selectedEntityKeys, onToggleEntity } = props;
-
-  console.log(selectedEntityKeys);
-
   const { t } = useTranslation();
 
   return (
@@ -27,15 +25,14 @@ export function OnboardingEntitySelection(
           "--onboarding-entity-delay": `${index * 70}ms`,
         };
 
-        console.log(selected, option.key);
-
         return (
           <button
             key={option.key}
             type="button"
-            className={`onboarding-entity-card ${
-              selected ? "onboarding-entity-card-selected" : ""
-            }`}
+            className={classNames(
+              "onboarding-entity-card",
+              selected && "onboarding-entity-card-selected",
+            )}
             style={style}
             aria-pressed={selected}
             onClick={() => onToggleEntity(option.key)}

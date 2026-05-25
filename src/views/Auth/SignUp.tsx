@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import type { RegisterDto } from "@sito/dashboard-app";
 import {
   AuthSignUpView,
+  classNames,
   isHttpError,
   useNotification,
 } from "@sito/dashboard-app";
@@ -18,6 +19,13 @@ import { getAuthErrorMessage } from "./getAuthErrorMessage";
 const color: "primary" | "secondary" | "tertiary" | "quaternary" =
   randomBackgroundColor();
 
+const signUpAccentClassName = {
+  primary: "auth-sign-up-accent--primary",
+  secondary: "auth-sign-up-accent--secondary",
+  tertiary: "auth-sign-up-accent--tertiary",
+  quaternary: "auth-sign-up-accent--quaternary",
+} as const;
+
 /**
  * Sign Page
  * @returns Sign component
@@ -31,12 +39,17 @@ export function SignUp() {
   return (
     <AuthSignUpView
       title={t("_pages:auth.signUp.title")}
-      titleClassName="w-full text-2xl md:text-3xl mb-1"
+      titleClassName="auth-sign-up-title"
       showBackButton
       backTo={AppRoutes.signIn}
       backButtonLabel={t("_accessibility:buttons.back")}
       headerExtra={
-        <div className={`mb-3 p-0.5 rounded-xl w-full real-${color}`} />
+        <div
+          className={classNames(
+            "auth-sign-up-accent",
+            signUpAccentClassName[color],
+          )}
+        />
       }
       emailLabel={t("_entities:user.email.label")}
       passwordLabel={t("_entities:user.password.label")}

@@ -48,8 +48,12 @@
   @apply flex gap-5;
 }
 
+.account-form-type-input {
+  @apply !pl-7;
+}
+
 .account-form-type-icon {
-  @apply absolute left-2 text-text text-sm;
+  @apply absolute left-2 vertical-center text-text text-sm;
 }
 
 .adjust-balance-current {

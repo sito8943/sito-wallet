@@ -8,6 +8,10 @@
   @apply flex gap-5;
 }
 
+.transaction-category-form-type-input {
+  @apply !pl-7;
+}
+
 .transaction-category-form-type-icon {
   @apply absolute left-2 vertical-center -translate-y-[50%] text-text text-sm;
 }

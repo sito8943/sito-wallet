@@ -126,7 +126,7 @@ export function TransactionCategoryForm(
               value={value}
               onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
               label={t("_entities:transactionCategory.type.label")}
-              inputClassName="!pl-7"
+              inputClassName="transaction-category-form-type-input"
               {...rest}
             >
               <FontAwesomeIcon

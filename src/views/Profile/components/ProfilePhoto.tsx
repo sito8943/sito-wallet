@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
-import { FileInput, IconButton } from "@sito/dashboard-app";
+import { FileInput, IconButton, classNames } from "@sito/dashboard-app";
 
 // types
 import type { ProfilePhotoPropsType } from "../types";
@@ -55,7 +55,10 @@ export function ProfilePhoto({
     <div className="profile-photo">
       <div className="profile-photo-frame">
         <div
-          className={`profile-photo-preview${hasPhoto ? " profile-photo-preview--clickable" : ""}`}
+          className={classNames(
+            "profile-photo-preview",
+            hasPhoto && "profile-photo-preview--clickable",
+          )}
           onClick={hasPhoto ? handleFileSelect : undefined}
           title={hasPhoto ? t("_pages:profile.photo.upload") : undefined}
         >

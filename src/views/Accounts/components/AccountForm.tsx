@@ -130,12 +130,12 @@ export function AccountForm(props: AccountFormPropsType) {
               value={value}
               onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
               label={t("_entities:account.type.label")}
-              inputClassName="!pl-7"
+              inputClassName="account-form-type-input"
               {...rest}
             >
               <FontAwesomeIcon
                 icon={icons[(type ?? 0) as keyof typeof icons]}
-                className="account-form-type-icon vertical-center"
+                className="account-form-type-icon"
               />
             </SelectInput>
           )}
