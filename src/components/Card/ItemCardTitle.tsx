@@ -5,7 +5,7 @@ export const ItemCardTitle = (props: ItemCardTitlePropsType) => {
 
   return (
     <h3
-      className={`text-lg ${className} ${
+      className={`max-sm:text-sm flex items-center gap-2 ${className} ${
         deleted ? "!text-bg-error" : "!text-text"
       } text-start`}
     >

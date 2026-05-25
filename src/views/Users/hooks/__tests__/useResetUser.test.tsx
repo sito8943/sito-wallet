@@ -96,11 +96,13 @@ describe("useResetUser", () => {
     });
 
     act(() => {
-      result.current.action({
-        id: 1,
-        email: "admin@example.com",
-        username: "admin",
-      } as never).onClick?.();
+      result.current
+        .action({
+          id: 1,
+          email: "admin@example.com",
+          username: "admin",
+        } as never)
+        .onClick?.();
     });
 
     act(() => {
@@ -138,11 +140,13 @@ describe("useResetUser", () => {
     });
 
     act(() => {
-      result.current.action({
-        id: 1,
-        email: "admin@example.com",
-        username: "admin",
-      } as never).onClick?.();
+      result.current
+        .action({
+          id: 1,
+          email: "admin@example.com",
+          username: "admin",
+        } as never)
+        .onClick?.();
     });
 
     act(() => {
