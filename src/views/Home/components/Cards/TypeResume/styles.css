@@ -1,9 +1,5 @@
 @reference "../../../../../styles/variables.css";
 
-.type-resume-icon {
-  @apply mt-2 self-end text-lg;
-}
-
 .type-resume-amount {
   @apply self-end text-4xl font-bold;
 }

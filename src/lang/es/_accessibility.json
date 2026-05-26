@@ -132,6 +132,13 @@
     },
     "updatePassword": {
       "401": "El enlace del correo ya expiró. Solicita uno nuevo."
+    },
+    "changePassword": {
+      "400": "Revisa los campos del formulario.",
+      "401": "La contraseña actual es incorrecta.",
+      "404": "No se encontró el usuario autenticado.",
+      "409": "La nueva contraseña entra en conflicto con la actual.",
+      "503": "El servicio de contraseñas no está disponible temporalmente. Inténtalo más tarde."
     }
   },
   "messages": {

@@ -63,10 +63,12 @@
     "sections": {
       "personal": "Personal",
       "photo": "Photo",
-      "data": "Data"
+      "data": "Data",
+      "security": "Security"
     },
     "actions": {
       "save": "Save changes",
+      "changePassword": "Change password",
       "uploadPhoto": "Upload photo",
       "deletePhoto": "Delete photo"
     },
@@ -75,16 +77,19 @@
       "updatedAt": "Updated at",
       "photo": "Photo",
       "language": "Language",
-      "hideDeletedEntities": "Hide deleted items"
+      "hideDeletedEntities": "Hide deleted items",
+      "currentPassword": "Current password"
     },
     "helper": {
       "photo": "Allowed types: JPG, PNG, WEBP. Max size: 5 MB.",
       "photoAdvice": "Please avoid uploading personal photos. We recommend using avatars or abstract images instead.",
       "language": "Choose the app language for your profile.",
-      "hideDeletedEntities": "When enabled, deleted items will not be shown in list views."
+      "hideDeletedEntities": "When enabled, deleted items will not be shown in list views.",
+      "changePassword": "For security, changing your password will sign you out of the current session."
     },
     "messages": {
       "updated": "Profile updated successfully",
+      "passwordUpdated": "Password updated successfully",
       "photoUpdated": "Photo updated successfully",
       "photoDeleted": "Photo deleted successfully",
       "noPhoto": "No photo uploaded"
@@ -98,6 +103,9 @@
     "errors": {
       "nameRequired": "Name is required",
       "nameMax": "Name must be at most 120 characters",
+      "currentPasswordRequired": "Current password is required",
+      "newPasswordRequired": "New password is required",
+      "confirmPasswordRequired": "Password confirmation is required",
       "fileType": "Only JPG, PNG or WEBP files are allowed",
       "fileSize": "Image must be 5 MB or less"
     },

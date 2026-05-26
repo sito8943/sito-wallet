@@ -1,4 +1,5 @@
 export * from "./Manager";
+export * from "./AuthApiClient";
 export { default as FeatureFlagClient } from "./FeatureFlagClient";
 export { default as SubscriptionClient } from "./SubscriptionClient";
 export { default as SubscriptionProviderClient } from "./SubscriptionProviderClient";

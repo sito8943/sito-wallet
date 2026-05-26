@@ -4,8 +4,12 @@
   @apply w-full flex justify-center items-center py-10;
 }
 
+.profile-forms {
+  @apply w-full grid sm:grid-cols-2 gap-6;
+}
+
 .profile-form-shell {
-  @apply w-full max-w-2xl self-center sm:p-6 p-2 rounded-2xl flex flex-col gap-6;
+  @apply w-full max-w-2xl self-center sm:p-6 p-2 rounded-2xl flex flex-col gap-6 h-full;
 }
 
 .profile-form {
@@ -52,8 +56,16 @@
   @apply flex flex-col gap-4;
 }
 
+.profile-section-security {
+  @apply flex flex-col gap-4;
+}
+
 .profile-section-helper {
   @apply text-sm text-text-muted;
+}
+
+.profile-password-fields {
+  @apply flex flex-col gap-4;
 }
 
 .profile-section-divider {

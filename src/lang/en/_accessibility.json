@@ -108,6 +108,13 @@
     },
     "updatePassword": {
       "401": "The email link has expired. Please request a new one."
+    },
+    "changePassword": {
+      "400": "Please review the form fields.",
+      "401": "Current password is incorrect.",
+      "404": "Authenticated user was not found.",
+      "409": "The new password conflicts with the current one.",
+      "503": "Password service is temporarily unavailable. Try again later."
     }
   },
   "offline": {

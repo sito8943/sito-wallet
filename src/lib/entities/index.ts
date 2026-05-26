@@ -7,5 +7,6 @@ export * from "./profile";
 export * from "./subscription";
 export * from "./subscriptionProvider";
 export * from "./user";
+export * from "./auth";
 export * from "./ImportDto";
 export * from "./ImportPreviewDto";

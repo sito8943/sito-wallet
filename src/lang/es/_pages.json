@@ -63,10 +63,12 @@
     "sections": {
       "personal": "Personal",
       "photo": "Foto",
-      "data": "Datos"
+      "data": "Datos",
+      "security": "Seguridad"
     },
     "actions": {
       "save": "Guardar cambios",
+      "changePassword": "Cambiar contraseña",
       "uploadPhoto": "Subir foto",
       "deletePhoto": "Eliminar foto"
     },
@@ -75,16 +77,19 @@
       "updatedAt": "Actualizado en",
       "photo": "Foto",
       "language": "Idioma",
-      "hideDeletedEntities": "Ocultar elementos eliminados"
+      "hideDeletedEntities": "Ocultar elementos eliminados",
+      "currentPassword": "Contraseña actual"
     },
     "helper": {
       "photo": "Tipos permitidos: JPG, PNG, WEBP. Tamaño máximo: 5 MB.",
       "photoAdvice": "Por favor, evita subir fotos personales. Te recomendamos usar avatares o imagenes abstractas.",
       "language": "Elige el idioma de la aplicación para tu perfil.",
-      "hideDeletedEntities": "Si está activado, los elementos eliminados no se mostrarán en las listas."
+      "hideDeletedEntities": "Si está activado, los elementos eliminados no se mostrarán en las listas.",
+      "changePassword": "Por seguridad, al cambiar la contraseña se cerrará tu sesión actual."
     },
     "messages": {
       "updated": "Perfil actualizado correctamente",
+      "passwordUpdated": "Contraseña actualizada correctamente",
       "photoUpdated": "Foto actualizada correctamente",
       "photoDeleted": "Foto eliminada correctamente",
       "noPhoto": "Sin foto subida"
@@ -98,6 +103,9 @@
     "errors": {
       "nameRequired": "El nombre es requerido",
       "nameMax": "El nombre debe tener como máximo 120 caracteres",
+      "currentPasswordRequired": "La contraseña actual es obligatoria",
+      "newPasswordRequired": "La nueva contraseña es obligatoria",
+      "confirmPasswordRequired": "La confirmación de contraseña es obligatoria",
       "fileType": "Solo se permiten archivos JPG, PNG o WEBP",
       "fileSize": "La imagen debe pesar 5 MB o menos"
     },

@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 
@@ -35,6 +34,7 @@ import type {
 } from "./types";
 import { useTypeResumeDialog } from "./useTypeResumeDialog";
 import type { CardConfigOverrideType } from "../types";
+import { Type } from "views/TransactionCategories/components/Type";
 
 export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const { title, config, id, user, onDelete } = props;
@@ -126,15 +126,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
       >
         {({ formConfig }) => (
           <div className="type-resume-content">
-            <FontAwesomeIcon
-              icon={icons[(formConfig.type ?? 0) as keyof typeof icons]}
-              className={classNames(
-                "type-resume-icon",
-                Number(formConfig.type) === TransactionType.In
-                  ? "type-resume-icon--income inverted-success"
-                  : "type-resume-icon--expense inverted-error",
-              )}
-            />
+            <Type type={formConfig.type} filled={false} noText />
             <div className="type-resume-summary">
               <p
                 className={classNames(

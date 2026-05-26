@@ -6,6 +6,12 @@ export type ProfileFormType = {
   hideDeletedEntities: boolean;
 };
 
+export type ChangePasswordFormType = {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+};
+
 export interface ProfileFormPropsType {
   profile: ProfileDto;
 }

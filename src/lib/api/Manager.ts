@@ -9,11 +9,10 @@ import SubscriptionProviderClient from "./SubscriptionProviderClient";
 import SubscriptionClient from "./SubscriptionClient";
 import UserClient from "./UserClient";
 import UserEntityConfigClient from "./UserEntityConfigClient";
+import { AuthApiClient, type WalletAuthApiClient } from "./AuthApiClient";
 // @sito/dashboard-app
 import {
   IManager,
-  RestAuthApiClient,
-  type IAuthApiClient,
 } from "@sito/dashboard-app";
 
 // config
@@ -33,7 +32,7 @@ export class Manager extends IManager {
   subscriptions: SubscriptionClient = new SubscriptionClient();
   users: UserClient = new UserClient();
   userEntityConfigs: UserEntityConfigClient = new UserEntityConfigClient();
-  authApi: IAuthApiClient = new RestAuthApiClient(
+  authApi: WalletAuthApiClient = new AuthApiClient(
     config.apiUrl,
     config.auth.user,
     {
@@ -118,7 +117,7 @@ export class Manager extends IManager {
     return this.userEntityConfigs;
   }
 
-  get AuthApi(): IAuthApiClient {
+  get AuthApi(): WalletAuthApiClient {
     return this.authApi;
   }
 }
