@@ -118,7 +118,7 @@ export const DashboardCard = <TForm extends FieldValues>(
       return await manager.Dashboard.updateCardConfig(data);
     },
     onSuccess: () => {
-      if (onConfigSaved) onConfigSaved(lastSubmittedConfigRef.current);
+      if (onConfigSaved) onConfigSaved(lastSubmittedConfigRef.current ?? "");
       setShowFilters(false);
     },
     onSuccessMessage: t("_accessibility:messages.saved"),
