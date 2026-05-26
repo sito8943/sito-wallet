@@ -1,7 +1,6 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
-import { useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 import { classNames, IconButton } from "@sito/dashboard-app";
@@ -10,7 +9,7 @@ import { classNames, IconButton } from "@sito/dashboard-app";
 import { TransactionType } from "lib";
 
 // hooks
-import { TransactionsQueryKeys, useTransactionTypeResume } from "hooks";
+import { useTransactionTypeResume } from "hooks";
 
 // utils
 import { icons } from "../../../../Transactions/components/utils";
@@ -23,6 +22,7 @@ import { ActiveFilters } from "./ActiveFilters";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { DashboardCard } from "../DashboardCard";
 import { TypeResumeCategoriesDialog } from "./TypeResumeCategoriesDialog";
+import { resolveCardConfig } from "../utils";
 
 // styles
 import "./styles.css";
@@ -34,12 +34,18 @@ import type {
   TypeResumeTypeFormType,
 } from "./types";
 import { useTypeResumeDialog } from "./useTypeResumeDialog";
+import type { CardConfigOverrideType } from "../types";
 
 export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const { title, config, id, user, onDelete } = props;
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
   const typeResumeDialog = useTypeResumeDialog();
+  const [configOverride, setConfigOverride] =
+    useState<CardConfigOverrideType | null>(null);
+  const effectiveConfig = useMemo(
+    () => resolveCardConfig(config, configOverride),
+    [config, configOverride],
+  );
 
   const parseFormConfig = (cfg?: string | null): TypeResumeTypeFormType => {
     try {
@@ -65,7 +71,10 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
     }
   };
 
-  const resolvedFormConfig = useMemo(() => parseFormConfig(config), [config]);
+  const resolvedFormConfig = useMemo(
+    () => parseFormConfig(effectiveConfig),
+    [effectiveConfig],
+  );
 
   const filterConfig = useMemo(() => {
     try {
@@ -98,18 +107,15 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         id={id}
         userId={user?.id ?? 0}
         title={title}
-        config={config}
+        config={effectiveConfig}
         onDelete={onDelete}
         isBusy={isLoading}
         loadingOverlay={isLoading}
         parseFormConfig={parseFormConfig}
         formToDto={(data) => formToDto(data)}
-        onConfigSaved={() => {
-          // Keep original behavior: refresh related queries on save
-          void queryClient.invalidateQueries({
-            ...TransactionsQueryKeys.all(),
-          });
-        }}
+        onConfigSaved={(savedConfig) =>
+          setConfigOverride({ baseConfig: config, savedConfig })
+        }
         ConfigFormDialog={ConfigFormDialog}
         renderActiveFilters={({ formConfig, onSubmit }) => (
           <ActiveFilters

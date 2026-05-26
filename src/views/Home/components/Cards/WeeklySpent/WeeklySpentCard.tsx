@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 // @sito/dashboard-app
 // @sito/dashboard-app
@@ -14,6 +14,7 @@ import { Currency } from "../../../../Currencies";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { ActiveFilters } from "./ActiveFilters";
 import { DashboardCard } from "../DashboardCard";
+import { resolveCardConfig } from "../utils";
 
 // styles
 import "../styles.css";
@@ -24,6 +25,7 @@ import type {
   WeeklySpentPropsType,
   FilterWeeklyConfigType,
 } from "./types";
+import type { CardConfigOverrideType } from "../types";
 
 // utils
 import { formToDto } from "./utils";
@@ -54,6 +56,9 @@ const getCurrentWeekRange = () => {
 
 export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
   const { title, config, id, user, onDelete } = props;
+  const [configOverride, setConfigOverride] =
+    useState<CardConfigOverrideType | null>(null);
+  const effectiveConfig = resolveCardConfig(config, configOverride);
 
   const parseFormConfig = (cfg?: string | null): WeeklySpentFormType => {
     try {
@@ -66,7 +71,7 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
 
   const filterConfig = useMemo(() => {
     try {
-      const parsed = parseFormConfig(config);
+      const parsed = parseFormConfig(effectiveConfig);
       const transformed: FilterWeeklyConfigType = { type: parsed.type };
       transformed.accounts = parsed.accounts?.map((a) => a.id) ?? [];
       return transformed;
@@ -74,7 +79,7 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
       console.error(err);
       return { type: defaultConfig.type } as FilterWeeklyConfigType;
     }
-  }, [config]);
+  }, [effectiveConfig]);
 
   const range = useMemo(() => getCurrentWeekRange(), []);
 
@@ -89,12 +94,15 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
       id={id}
       userId={user?.id ?? 0}
       title={title}
-      config={config}
+      config={effectiveConfig}
       onDelete={onDelete}
       isBusy={isLoading}
       loadingOverlay={isLoading}
       parseFormConfig={parseFormConfig}
       formToDto={(data) => formToDto(data)}
+      onConfigSaved={(savedConfig) =>
+        setConfigOverride({ baseConfig: config, savedConfig })
+      }
       ConfigFormDialog={ConfigFormDialog}
       renderActiveFilters={({ formConfig, onSubmit }) => (
         <ActiveFilters

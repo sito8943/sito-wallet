@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // icons
@@ -21,6 +21,7 @@ import { ConfigFormDialog } from "./ConfigFormDialog";
 import { ActiveFilters } from "./ActiveFilters";
 import { RenewalsDialog } from "./RenewalsDialog";
 import { DashboardCard } from "../DashboardCard";
+import { resolveCardConfig } from "../utils";
 
 // styles
 import "../styles.css";
@@ -30,6 +31,7 @@ import type {
   SubscriptionForecastFormType,
   SubscriptionForecastPropsType,
 } from "./types";
+import type { CardConfigOverrideType } from "../types";
 
 // utils
 import { formToDto, resolveTimezone } from "./utils";
@@ -43,6 +45,9 @@ export const SubscriptionForecastCard = (
 ) => {
   const { title, config, id, user, onDelete } = props;
   const { t } = useTranslation();
+  const [configOverride, setConfigOverride] =
+    useState<CardConfigOverrideType | null>(null);
+  const effectiveConfig = resolveCardConfig(config, configOverride);
 
   const parseFormConfig = (
     cfg?: string | null,
@@ -60,7 +65,10 @@ export const SubscriptionForecastCard = (
     }
   };
 
-  const formConfig = useMemo(() => parseFormConfig(config), [config]);
+  const formConfig = useMemo(
+    () => parseFormConfig(effectiveConfig),
+    [effectiveConfig],
+  );
   const timezone = useMemo(() => resolveTimezone(), []);
 
   const { data, isLoading } = useSubscriptionsRenewalsForecast({
@@ -88,12 +96,15 @@ export const SubscriptionForecastCard = (
         id={id}
         userId={user?.id ?? 0}
         title={title}
-        config={config}
+        config={effectiveConfig}
         onDelete={onDelete}
         isBusy={isLoading}
         loadingOverlay={isLoading}
         parseFormConfig={parseFormConfig}
         formToDto={(data) => formToDto(data)}
+        onConfigSaved={(savedConfig) =>
+          setConfigOverride({ baseConfig: config, savedConfig })
+        }
         ConfigFormDialog={ConfigFormDialog}
         renderActiveFilters={({ formConfig }) => (
           <ActiveFilters

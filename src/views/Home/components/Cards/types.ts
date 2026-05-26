@@ -33,12 +33,17 @@ type ChildrenArgs<TForm> = {
   formConfig: TForm;
 };
 
+export type CardConfigOverrideType = {
+  baseConfig?: string | null;
+  savedConfig: string;
+};
+
 export type DashboardCardProps<TForm extends FieldValues> = Common & {
   parseFormConfig: (config?: string | null) => TForm;
   formToDto: (
     data: TForm & { userId: number; id: number },
   ) => UpdateDashboardCardConfigDto;
-  onConfigSaved?: () => void;
+  onConfigSaved?: (savedConfig: string) => void;
   ConfigFormDialog: (props: ConfigFormDialogPropsType<TForm>) => JSX.Element;
   renderActiveFilters?: (args: RenderFiltersArgs<TForm>) => JSX.Element | null;
   children?: (args: ChildrenArgs<TForm>) => JSX.Element | null;

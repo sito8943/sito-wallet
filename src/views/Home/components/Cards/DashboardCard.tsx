@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { FieldValues, DefaultValues } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -82,6 +82,8 @@ export const DashboardCard = <TForm extends FieldValues>(
     return () => clearTimeout(timer);
   }, [titleSuccess]);
 
+  const lastSubmittedConfigRef = useRef(config);
+
   const updateTitle = useMutation<number, Error, UpdateDashboardCardTitleDto>({
     mutationFn: (data) => manager.Dashboard.updateCardTitle(data),
     onError: (error) => showErrorNotification({ message: error.message }),
@@ -97,10 +99,7 @@ export const DashboardCard = <TForm extends FieldValues>(
   }, [debounced]);
 
   // Config form state
-  const formConfig = useMemo(
-    () => parseFormConfig(config),
-    [config, parseFormConfig],
-  );
+  const formConfig = useMemo(() => parseFormConfig(config), [config, parseFormConfig]);
 
   const formProps = useMutationForm<
     UpdateDashboardCardConfigDto,
@@ -111,10 +110,12 @@ export const DashboardCard = <TForm extends FieldValues>(
     defaultValues: formConfig as DefaultValues<TForm>,
     queryKey: ["dashboards", "card-config", id],
     formToDto: (data: TForm) => formToDto({ ...data, userId: userId ?? 0, id }),
-    mutationFn: async (data: UpdateDashboardCardConfigDto) =>
-      await manager.Dashboard.updateCardConfig(data),
+    mutationFn: async (data: UpdateDashboardCardConfigDto) => {
+      lastSubmittedConfigRef.current = data.config;
+      return await manager.Dashboard.updateCardConfig(data);
+    },
     onSuccess: () => {
-      if (onConfigSaved) onConfigSaved();
+      if (onConfigSaved) onConfigSaved(lastSubmittedConfigRef.current);
       setShowFilters(false);
     },
     onSuccessMessage: t("_accessibility:messages.saved"),

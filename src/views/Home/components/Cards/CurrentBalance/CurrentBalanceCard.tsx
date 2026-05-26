@@ -15,7 +15,6 @@ import { IconButton, classNames } from "@sito/dashboard-app";
 
 // hooks
 import { AccountsQueryKeys } from "../../../../../hooks/queries/queryKeys/accountsQueryKeys";
-import { DashboardsQueryKeys } from "../../../../../hooks/queries/queryKeys/dashboardsQueryKeys";
 import { useAccountsList } from "../../../../../hooks/queries/useAccountsList";
 import { useAdjustBalanceMutation } from "../../../../Accounts/hooks";
 
@@ -25,12 +24,14 @@ import { AdjustBalanceDialog } from "../../../../Accounts/components/AdjustBalan
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { ActiveFilters } from "./ActiveFilters";
 import { DashboardCard } from "../DashboardCard";
+import { resolveCardConfig } from "../utils";
 
 // styles
 import "../styles.css";
 
 // types
 import type { CurrentBalanceFormType, CurrentBalancePropsType } from "./types";
+import type { CardConfigOverrideType } from "../types";
 
 // utils
 import { formToDto } from "./utils";
@@ -47,6 +48,9 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const manager = useManager();
+  const [configOverride, setConfigOverride] =
+    useState<CardConfigOverrideType | null>(null);
+  const effectiveConfig = resolveCardConfig(config, configOverride);
 
   const parseFormConfig = (cfg?: string | null): CurrentBalanceFormType => {
     try {
@@ -59,12 +63,12 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
 
   const accountId = useMemo(() => {
     try {
-      const parsed = parseFormConfig(config);
+      const parsed = parseFormConfig(effectiveConfig);
       return parsed.account?.id;
     } catch {
       return undefined;
     }
-  }, [config]);
+  }, [effectiveConfig]);
 
   const { data, isLoading } = useAccountsList({});
 
@@ -100,15 +104,15 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
         id={id}
         userId={user?.id ?? 0}
         title={title}
-        config={config}
+        config={effectiveConfig}
         onDelete={onDelete}
         isBusy={isLoading}
         loadingOverlay={isLoading}
         parseFormConfig={parseFormConfig}
         formToDto={(data) => formToDto(data)}
-        onConfigSaved={() => {
-          void queryClient.invalidateQueries({ ...DashboardsQueryKeys.all() });
-        }}
+        onConfigSaved={(savedConfig) =>
+          setConfigOverride({ baseConfig: config, savedConfig })
+        }
         ConfigFormDialog={ConfigFormDialog}
         renderActiveFilters={({ formConfig }) => (
           <ActiveFilters account={formConfig.account} />

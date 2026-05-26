@@ -356,9 +356,13 @@ describe("DashboardCard", () => {
       fireEvent.click(screen.getByTestId("icon-btn-filter"));
       fireEvent.click(screen.getByTestId("submit-config"));
 
-      await waitFor(() => expect(onConfigSaved).toHaveBeenCalledTimes(1), {
-        timeout: 3000,
-      });
+      await waitFor(
+        () =>
+          expect(onConfigSaved).toHaveBeenCalledWith(
+            JSON.stringify({ period: "week" }),
+          ),
+        { timeout: 3000 },
+      );
     });
   });
 
