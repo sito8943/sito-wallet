@@ -739,6 +739,86 @@
       }
     ]
   },
+  "seo": {
+    "defaultTitle": "Sito Wallet",
+    "defaultDescription": "Personal finance app to manage accounts, transactions, subscriptions, and currencies with offline support and sync.",
+    "routes": {
+      "home": {
+        "description": "Sito Wallet dashboard to review accounts, balances, transactions, and subscriptions from one place."
+      },
+      "transactions": {
+        "description": "Track income and expenses to understand how your money moves day by day."
+      },
+      "transactionCategories": {
+        "description": "Organize income and expense categories so every transaction stays clearly classified."
+      },
+      "subscriptions": {
+        "description": "Manage recurring payments, renewal dates, and ongoing costs from a single view."
+      },
+      "subscriptionNew": {
+        "title": "New subscription",
+        "description": "Create a new subscription and define its amount, renewal cycle, and provider."
+      },
+      "subscriptionEdit": {
+        "title": "Edit subscription",
+        "description": "Update an existing subscription to keep dates, amounts, and status in sync."
+      },
+      "subscriptionProviders": {
+        "description": "Manage the providers linked to your subscriptions and reuse them in recurring payments."
+      },
+      "accounts": {
+        "description": "Review and organize bank accounts, cash, and digital wallets inside Sito Wallet."
+      },
+      "currencies": {
+        "description": "Manage currencies and prepare the app to work with multiple money formats."
+      },
+      "profile": {
+        "description": "Update your profile, language, and personal preferences in Sito Wallet."
+      },
+      "users": {
+        "description": "Manage users and reset data from the Sito Wallet administration area."
+      },
+      "about": {
+        "description": "Learn about Sito Wallet, a free open-source app to organize personal finances without handling real money."
+      },
+      "cookiesPolicy": {
+        "description": "See how Sito Wallet uses cookies, localStorage, and IndexedDB for sessions, preferences, and offline usage."
+      },
+      "privacyPolicy": {
+        "description": "Review how Sito Wallet processes personal data, the legal basis used, and the rights available to users."
+      },
+      "termsAndConditions": {
+        "description": "Read the Sito Wallet terms of use, including service scope, responsibility, and applicable law."
+      },
+      "signIn": {
+        "description": "Sign in to Sito Wallet to organize your personal finances from any device."
+      },
+      "signUp": {
+        "description": "Create your Sito Wallet account and start organizing accounts, transactions, and subscriptions."
+      },
+      "signUpSuccess": {
+        "description": "Complete your Sito Wallet registration by confirming the activation email sent to your inbox."
+      },
+      "recovery": {
+        "description": "Recover access to your Sito Wallet account if you forgot your password or need a new confirmation email."
+      },
+      "updatePassword": {
+        "description": "Set a new password to regain access to your Sito Wallet account."
+      },
+      "confirmEmailSuccess": {
+        "description": "Your email has been confirmed successfully and you can now sign in to Sito Wallet."
+      },
+      "confirmEmailError": {
+        "description": "The confirmation link is invalid or expired. Request a new one to activate your account."
+      },
+      "signOut": {
+        "description": "Sito Wallet sign-out page."
+      },
+      "notFound": {
+        "description": "The requested page does not exist or is no longer available in Sito Wallet."
+      }
+    }
+  },
   "notFound": {
     "title": "Not Found",
     "body": "The resource you are looking for was not found"

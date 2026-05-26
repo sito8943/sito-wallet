@@ -739,6 +739,86 @@
       }
     ]
   },
+  "seo": {
+    "defaultTitle": "Sito Wallet",
+    "defaultDescription": "App de finanzas personales para gestionar cuentas, movimientos, suscripciones y monedas con soporte offline y sincronización.",
+    "routes": {
+      "home": {
+        "description": "Panel principal de Sito Wallet para revisar cuentas, balances, movimientos y suscripciones desde un solo lugar."
+      },
+      "transactions": {
+        "description": "Registra y consulta ingresos y gastos para entender mejor cómo se mueve tu dinero."
+      },
+      "transactionCategories": {
+        "description": "Organiza tus categorías de gasto e ingreso para clasificar cada movimiento con claridad."
+      },
+      "subscriptions": {
+        "description": "Controla pagos recurrentes, renovaciones y costes periódicos desde una sola vista."
+      },
+      "subscriptionNew": {
+        "title": "Nueva suscripción",
+        "description": "Crea una nueva suscripción y deja configurados sus importes, renovaciones y proveedor."
+      },
+      "subscriptionEdit": {
+        "title": "Editar suscripción",
+        "description": "Actualiza una suscripción existente para mantener fechas, importes y estado al día."
+      },
+      "subscriptionProviders": {
+        "description": "Gestiona los proveedores asociados a tus suscripciones y reutilízalos al crear pagos recurrentes."
+      },
+      "accounts": {
+        "description": "Consulta y organiza tus cuentas bancarias, efectivo o carteras digitales en Sito Wallet."
+      },
+      "currencies": {
+        "description": "Administra tus monedas y deja preparada la app para operar con varias divisas."
+      },
+      "profile": {
+        "description": "Actualiza tu perfil, idioma y preferencias personales dentro de Sito Wallet."
+      },
+      "users": {
+        "description": "Administra usuarios y restablece datos desde la zona de gestión de Sito Wallet."
+      },
+      "about": {
+        "description": "Conoce Sito Wallet, una app gratuita y open source para organizar tus finanzas personales sin operar dinero real."
+      },
+      "cookiesPolicy": {
+        "description": "Consulta cómo Sito Wallet utiliza cookies, localStorage e IndexedDB para sesión, preferencias y uso offline."
+      },
+      "privacyPolicy": {
+        "description": "Revisa cómo Sito Wallet trata los datos personales, qué base legal aplica y qué derechos tienes como usuario."
+      },
+      "termsAndConditions": {
+        "description": "Lee las condiciones de uso de Sito Wallet, incluyendo alcance del servicio, responsabilidad y normativa aplicable."
+      },
+      "signIn": {
+        "description": "Accede a Sito Wallet para seguir y organizar tus finanzas personales desde cualquier dispositivo."
+      },
+      "signUp": {
+        "description": "Crea tu cuenta en Sito Wallet y empieza a organizar cuentas, transacciones y suscripciones."
+      },
+      "signUpSuccess": {
+        "description": "Confirma tu registro en Sito Wallet revisando el correo de activación enviado a tu bandeja de entrada."
+      },
+      "recovery": {
+        "description": "Recupera el acceso a tu cuenta de Sito Wallet si has olvidado tu contraseña o necesitas reenviar la confirmación."
+      },
+      "updatePassword": {
+        "description": "Establece una nueva contraseña para volver a entrar en tu cuenta de Sito Wallet."
+      },
+      "confirmEmailSuccess": {
+        "description": "Tu correo se ha confirmado correctamente y ya puedes iniciar sesión en Sito Wallet."
+      },
+      "confirmEmailError": {
+        "description": "El enlace de confirmación no es válido o ha caducado. Solicita uno nuevo para activar tu cuenta."
+      },
+      "signOut": {
+        "description": "Cierre de sesión de Sito Wallet."
+      },
+      "notFound": {
+        "description": "La página solicitada no existe o ya no está disponible en Sito Wallet."
+      }
+    }
+  },
   "notFound": {
     "title": "No encontrado",
     "body": "El recurso que estás buscando no se encuentra"

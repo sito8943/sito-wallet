@@ -5,13 +5,14 @@ import { SplashScreen } from "@sito/dashboard-app";
 import { UpdateDialog } from "components";
 
 // hooks
-import { useAppSession } from "hooks";
+import { useAppSession, useSeo } from "hooks";
 
 // routes
 import { Routes } from "./Routes";
 
 function App() {
   const loading = useAppSession();
+  useSeo();
 
   if (loading) return <SplashScreen />;
 
