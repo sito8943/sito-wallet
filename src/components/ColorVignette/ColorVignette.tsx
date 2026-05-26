@@ -10,7 +10,10 @@ const ColorVignette = (props: ColorVignettePropsType) => {
   const { color } = props;
   return (
     <span
-      className={classNames("color-vignette base-border", css({ backgroundColor: color }))}
+      className={classNames(
+        "color-vignette base-border",
+        css({ backgroundColor: color }),
+      )}
     ></span>
   );
 };
