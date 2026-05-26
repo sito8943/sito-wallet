@@ -166,8 +166,12 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
       <TypeResumeCategoriesDialog
         {...typeResumeDialog}
         categories={categories}
+        accountId={data?.account?.id ?? resolvedFormConfig.account?.id}
         currencyName={currencyName}
         currencySymbol={currencySymbol}
+        startDate={data?.startDate}
+        endDate={data?.endDate}
+        transactionType={data?.transactionType ?? resolvedFormConfig.type}
       />
     </>
   );

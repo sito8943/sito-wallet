@@ -137,23 +137,39 @@
 }
 
 .type-resume-dialog-list {
-  @apply flex sm:max-h-[60vh] flex-col gap-2 overflow-y-auto py-2;
+  @apply flex sm:max-h-[60vh] flex-col gap-3 overflow-y-auto py-2;
 }
 
 .type-resume-dialog-item {
-  @apply flex items-center justify-between gap-3 rounded-2xl px-3 py-2;
+  @apply flex flex-col gap-2 px-1 py-1;
+}
+
+.type-resume-dialog-trigger {
+  @apply flex w-full items-end justify-between gap-4 text-left;
 }
 
 .type-resume-dialog-item-copy {
-  @apply flex min-w-0 flex-1 flex-col;
+  @apply flex min-w-0 flex-1 flex-col gap-2;
 }
 
-.type-resume-dialog-item-title-row {
-  @apply flex items-center gap-2;
+.type-resume-dialog-item-side {
+  @apply flex shrink-0 items-center gap-2;
 }
 
 .type-resume-dialog-item-color {
-  @apply block h-6 w-1.5 shrink-0 rounded-full;
+  @apply block h-2 w-full shrink-0 rounded-full;
+}
+
+.type-resume-dialog-item-chevron {
+  @apply text-text-muted transition-transform duration-200;
+}
+
+.type-resume-dialog-item-chevron-open {
+  @apply rotate-180;
+}
+
+.type-resume-dialog-item-loading {
+  @apply text-text-muted;
 }
 
 .type-resume-dialog-item-title {
@@ -161,6 +177,42 @@
 }
 
 .type-resume-dialog-item-amount {
+  @apply shrink-0 font-bold;
+}
+
+.type-resume-dialog-accordion {
+  @apply mt-1 flex-nowrap flex-col items-stretch justify-start gap-2;
+}
+
+.type-resume-dialog-transactions-loading {
+  @apply flex items-center justify-center py-3;
+}
+
+.type-resume-dialog-transactions-empty {
+  @apply py-2 text-sm text-text-muted;
+}
+
+.type-resume-transaction-list {
+  @apply flex flex-col gap-2;
+}
+
+.type-resume-transaction-item {
+  @apply flex items-center justify-between gap-3 rounded-2xl bg-base-light px-3 py-2;
+}
+
+.type-resume-transaction-copy {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
+.type-resume-transaction-description {
+  @apply truncate text-sm;
+}
+
+.type-resume-transaction-date {
+  @apply text-xs text-text-muted;
+}
+
+.type-resume-transaction-amount {
   @apply shrink-0 font-bold;
 }
 

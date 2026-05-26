@@ -151,18 +151,16 @@ export default class TransactionClient extends BaseClient<
       throw new Error("accountId is required for transaction type resume");
     }
 
-    const builtUrl = parseQueries<
-      TransactionTypeResumeDto,
-      {
-        filters: string;
-        time?: TransactionTypeResumeTime;
-        type: "IN" | "OUT";
-      }
-    >(`${Tables.Transactions}/type-resume`, undefined, {
+    const searchParams = new URLSearchParams({
       filters: `account==${filters.accountId}`,
-      time: filters.time,
       type: this.parseTransactionTypeResumeType(filters.type),
     });
+
+    if (filters.time) {
+      searchParams.set("time", filters.time);
+    }
+
+    const builtUrl = `${Tables.Transactions}/type-resume?${searchParams.toString()}`;
 
     return await this.api.doQuery<TransactionTypeResumeDto>(
       builtUrl,
