@@ -3,15 +3,12 @@ import {
   Methods,
   RestAuthApiClient,
   type APIClientAuthConfig,
-  type IAuthApiClient,
   type RestAuthApiClientOptions,
 } from "@sito/dashboard-app";
 
-import type { ChangePasswordDto } from "../entities";
+import type { ChangePasswordDto } from "../../entities";
 
-export interface WalletAuthApiClient extends IAuthApiClient {
-  changePassword(data: ChangePasswordDto): Promise<void>;
-}
+import type { WalletAuthApiClient } from "./types";
 
 export class AuthApiClient
   extends RestAuthApiClient

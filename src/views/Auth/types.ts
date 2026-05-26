@@ -7,4 +7,5 @@ export type AuthErrorViewType =
   | "signUp"
   | "recovery"
   | "updatePassword"
+  | "changePassword"
   | "signUpSuccess";

@@ -1,5 +1,3 @@
-import { isHttpError } from "@sito/dashboard-app";
-
 import type { ProfileLanguage } from "lib";
 
 export const getErrorMessage = (error: unknown, fallback: string): string => {
@@ -16,23 +14,6 @@ export const getErrorMessage = (error: unknown, fallback: string): string => {
 export const toRenderableError = (error: unknown, fallback: string): Error => {
   if (error instanceof Error) return error;
   return new Error(getErrorMessage(error, fallback));
-};
-
-export const getChangePasswordErrorMessage = (
-  error: unknown,
-  t: (key: string) => string,
-): string => {
-  if (isHttpError(error)) {
-    const specificKey = `_accessibility:errors.changePassword.${error.status}`;
-    const specificMessage = t(specificKey);
-    if (specificMessage !== specificKey) return specificMessage;
-
-    const genericKey = `_accessibility:errors.${error.status}`;
-    const genericMessage = t(genericKey);
-    if (genericMessage !== genericKey) return genericMessage;
-  }
-
-  return getErrorMessage(error, t("_accessibility:errors.500"));
 };
 
 export const normalizeProfileLanguage = (

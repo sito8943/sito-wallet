@@ -8,6 +8,7 @@ import {
   Button,
   PasswordInput,
   State,
+  isHttpError,
   useAuth,
   useNotification,
 } from "@sito/dashboard-app";
@@ -23,7 +24,7 @@ import {
 
 import type { ChangePasswordFormType } from "../types";
 import SectionDivider from "../SectionDivider";
-import { getChangePasswordErrorMessage } from "../utils";
+import { getAuthErrorMessage } from "../../Auth/getAuthErrorMessage";
 
 export function ChangePasswordForm() {
   const { t } = useTranslation();
@@ -85,7 +86,9 @@ export function ChangePasswordForm() {
       navigate(AppRoutes.signIn);
     } catch (error) {
       showErrorNotification({
-        message: getChangePasswordErrorMessage(error, t),
+        message: isHttpError(error)
+          ? getAuthErrorMessage(t, error.status, "changePassword")
+          : getAuthErrorMessage(t),
       });
     } finally {
       setIsLoggingOut(false);

@@ -11,7 +11,6 @@ import { TransactionType } from "lib";
 import { useTransactionTypeResume } from "hooks";
 
 // utils
-import { icons } from "../../../../Transactions/components/utils";
 import { DEFAULT_TYPE_RESUME_CONFIG } from "./constants";
 import { formToDto } from "./utils";
 

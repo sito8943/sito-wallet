@@ -11,9 +11,7 @@ import UserClient from "./UserClient";
 import UserEntityConfigClient from "./UserEntityConfigClient";
 import { AuthApiClient, type WalletAuthApiClient } from "./AuthApiClient";
 // @sito/dashboard-app
-import {
-  IManager,
-} from "@sito/dashboard-app";
+import { IManager } from "@sito/dashboard-app";
 
 // config
 import { config } from "../../config";
