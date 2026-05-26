@@ -99,7 +99,10 @@ export const DashboardCard = <TForm extends FieldValues>(
   }, [debounced]);
 
   // Config form state
-  const formConfig = useMemo(() => parseFormConfig(config), [config, parseFormConfig]);
+  const formConfig = useMemo(
+    () => parseFormConfig(config),
+    [config, parseFormConfig],
+  );
 
   const formProps = useMutationForm<
     UpdateDashboardCardConfigDto,
