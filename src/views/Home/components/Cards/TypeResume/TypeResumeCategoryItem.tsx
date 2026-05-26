@@ -79,17 +79,13 @@ export const TypeResumeCategoryItem = (
             {category.total}{" "}
             <Currency name={currencyName} symbol={currencySymbol} />
           </p>
-          {isLoading ? (
-            <Loading className="type-resume-dialog-item-loading" />
-          ) : (
-            <FontAwesomeIcon
-              icon={faChevronDown}
-              className={classNames(
-                "type-resume-dialog-item-chevron",
-                open ? "type-resume-dialog-item-chevron-open" : "",
-              )}
-            />
-          )}
+          <FontAwesomeIcon
+            icon={faChevronDown}
+            className={classNames(
+              "type-resume-dialog-item-chevron",
+              open ? "type-resume-dialog-item-chevron-open" : "",
+            )}
+          />
         </div>
       </button>
       <Accordion open={open} contentClassName="type-resume-dialog-accordion">
