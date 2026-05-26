@@ -145,6 +145,17 @@
     "date": {
       "label": "Fecha",
       "required": "La fecha es requerida"
+    },
+    "typeResume": {
+      "time": {
+        "label": "Periodo",
+        "values": {
+          "CurrentDay": "Día actual",
+          "CurrentWeek": "Semana actual",
+          "CurrentMonth": "Mes actual",
+          "CurrentYear": "Año actual"
+        }
+      }
     }
   },
   "transactionCategory": {

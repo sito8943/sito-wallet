@@ -34,7 +34,11 @@
     "dashboard": {
       "transactionTypeResume": {
         "title": "{{transactionType}} per range",
-        "placeholder": "Type the title"
+        "placeholder": "Type the title",
+        "details": {
+          "title": "Resume categories",
+          "empty": "No categories in this range"
+        }
       },
       "currentBalance": {
         "placeholder": "Type the title",

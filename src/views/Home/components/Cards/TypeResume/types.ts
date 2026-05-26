@@ -1,14 +1,12 @@
 import type { FieldValues } from "react-hook-form";
 
-// @sito/dashboard-app
-import type { RangeValue } from "@sito/dashboard-app";
-
 // lib
 import type {
   CommonAccountDto,
-  CommonTransactionCategoryDto,
   DashboardDto,
   TransactionType,
+  TransactionTypeResumeCategoryDto,
+  TransactionTypeResumeTime,
   UpdateDashboardCardConfigDto,
 } from "lib";
 
@@ -22,26 +20,28 @@ export interface TypeResumeTypeFormType
   extends
     Omit<UpdateDashboardCardConfigDto, "config" | "userId" | "id">,
     FieldValues {
-  accounts: CommonAccountDto[];
-  date?: { start: string; end: string };
-  categories: CommonTransactionCategoryDto[];
+  account?: CommonAccountDto;
   type: TransactionType;
+  time: TransactionTypeResumeTime;
 }
 
 export type FilterTypeResumeConfigType = {
-  accounts?: number[];
-  categories?: number[];
+  accountId?: number;
   type: TransactionType;
-  date?: RangeValue<string>;
+  time: TransactionTypeResumeTime;
 };
 
 export type ActiveFiltersPropsType = {
-  accounts?: CommonAccountDto[];
-  clearAccounts: () => void;
-  categories?: CommonTransactionCategoryDto[];
-  clearCategories: () => void;
-  startDate?: string;
-  endDate?: string;
-  clearDate: () => void;
+  account?: CommonAccountDto;
+  clearAccount: () => void;
   type: TransactionType;
+  time: TransactionTypeResumeTime;
+};
+
+export type TypeResumeCategoriesDialogPropsType = {
+  open: boolean;
+  closeDialog: () => void;
+  categories: TransactionTypeResumeCategoryDto[];
+  currencyName?: string;
+  currencySymbol?: string;
 };

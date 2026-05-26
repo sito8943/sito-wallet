@@ -16,27 +16,21 @@ import type {
   FilterTransactionTypeResumeDto,
   TransactionTypeResumeDto,
 } from "lib";
-import {
-  TransactionType,
-  applyHideDeletedEntitiesPreference,
-  normalizeCommonFilters,
-} from "lib";
-import { useHideDeletedEntitiesPreference } from "./useHideDeletedEntitiesPreference";
+import { TransactionType, TransactionTypeResumeTime } from "lib";
 
 import { TransactionsQueryKeys } from "./queryKeys/transactionsQueryKeys";
 
 export function useTransactionTypeResume(
   props: UseTransactionTypeResumePropsType,
 ): UseQueryResult<TransactionTypeResumeDto> {
-  const hideDeletedEntities = useHideDeletedEntitiesPreference();
-
   const filters = useMemo(
     () =>
-      applyHideDeletedEntitiesPreference(
-        normalizeCommonFilters(props),
-        hideDeletedEntities,
-      ) as FilterTransactionTypeResumeDto,
-    [props, hideDeletedEntities],
+      ({
+        accountId: props.accountId,
+        time: props.time ?? TransactionTypeResumeTime.CurrentMonth,
+        type: props.type ?? TransactionType.In,
+      }) as FilterTransactionTypeResumeDto,
+    [props.accountId, props.time, props.type],
   );
 
   const manager = useManager();
@@ -46,14 +40,9 @@ export function useTransactionTypeResume(
     ...TransactionsQueryKeys.typeResume({
       ...filters,
     }),
-    enabled: !!account?.id,
+    enabled: !!account?.id && !!filters.accountId,
     queryFn: () => {
-      const query = {
-        ...filters,
-        type: filters?.type ?? TransactionType.In,
-      } as FilterTransactionTypeResumeDto;
-
-      return manager.Transactions.getTypeResume(query);
+      return manager.Transactions.getTypeResume(filters);
     },
   });
 }

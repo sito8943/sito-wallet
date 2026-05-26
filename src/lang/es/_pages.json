@@ -34,7 +34,11 @@
     "dashboard": {
       "transactionTypeResume": {
         "title": "{{transactionType}} por rango",
-        "placeholder": "Escribe un título"
+        "placeholder": "Escribe un título",
+        "details": {
+          "title": "Categorías del resumen",
+          "empty": "Sin categorías en este rango"
+        }
       },
       "currentBalance": {
         "placeholder": "Escribe un título",

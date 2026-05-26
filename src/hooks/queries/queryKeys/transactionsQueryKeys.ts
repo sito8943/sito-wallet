@@ -1,8 +1,9 @@
 import type { QueryParam } from "@sito/dashboard-app";
 
 import type {
-  FilterTransactionDto,
   FilterTransactionGroupedByTypeDto,
+  FilterTransactionDto,
+  FilterTransactionTypeResumeDto,
   FilterWeeklyTransactionDto,
   TransactionDto,
 } from "lib";
@@ -28,9 +29,9 @@ export const TransactionsQueryKeys = {
   common: (filters: FilterTransactionDto) => ({
     queryKey: [...TransactionsQueryKeys.all().queryKey, "common", filters],
   }),
-  typeResume: (filters: FilterTransactionDto) => ({
+  typeResume: (filters: FilterTransactionTypeResumeDto) => ({
     queryKey: [...TransactionsQueryKeys.all().queryKey, "typeResume", filters],
-    enabled: !!filters.type,
+    enabled: !!filters.accountId && filters.type !== undefined,
   }),
   weekly: (filters: FilterWeeklyTransactionDto) => ({
     queryKey: [...TransactionsQueryKeys.all().queryKey, "weekly", filters],

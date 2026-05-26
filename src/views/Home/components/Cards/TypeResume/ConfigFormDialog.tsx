@@ -12,16 +12,14 @@ import {
   enumToKeyValueArray,
   FormDialog,
   AutocompleteInput,
-  TextInput,
   SelectInput,
 } from "@sito/dashboard-app";
 
 // hooks
 import { useAccountsCommon } from "../../../../../hooks/queries/useAccountsCommon";
-import { useTransactionCategoriesCommon } from "../../../../../hooks/queries/useTransactionCategoriesCommon";
 
 // lib
-import { Tables, TransactionType } from "lib";
+import { Tables, TransactionType, TransactionTypeResumeTime } from "lib";
 
 // types
 import type {
@@ -38,7 +36,6 @@ export const ConfigFormDialog = (
   props: ConfigFormDialogPropsType<TypeResumeTypeFormType>,
 ) => {
   const { control, isLoading, setValue } = props;
-
   const { t } = useTranslation();
 
   const parsedTypes = useMemo(
@@ -50,7 +47,17 @@ export const ConfigFormDialog = (
     [t],
   );
 
+  const parsedTimes = useMemo(
+    () =>
+      enumToKeyValueArray(TransactionTypeResumeTime)?.map((item) => ({
+        id: item.value,
+        value: t(`_entities:transaction.typeResume.time.values.${item.key}`),
+      })) as Option[],
+    [t],
+  );
+
   const type = useWatch({ control, name: "type" });
+  const time = useWatch({ control, name: "time" });
 
   useEffect(() => {
     if (setValue && type === undefined) {
@@ -58,88 +65,31 @@ export const ConfigFormDialog = (
     }
   }, [setValue, type]);
 
-  const { data: accounts } = useAccountsCommon();
-
-  const { data: categories } = useTransactionCategoriesCommon();
-
-  const categoriesByType = useMemo(() => {
-    return categories?.filter((category) => category.type === type) ?? [];
-  }, [categories, type]);
-
   useEffect(() => {
-    if (setValue) setValue("categories", []);
-  }, [setValue, type]);
+    if (setValue && time === undefined) {
+      setValue("time", TransactionTypeResumeTime.CurrentMonth);
+    }
+  }, [setValue, time]);
+
+  const { data: accounts } = useAccountsCommon();
 
   return (
     <FormDialog title={t("_accessibility:buttons.filters")} {...props}>
       <Controller
-        control={props.control}
-        name="accounts"
+        control={control}
+        name="account"
+        rules={{
+          required: t("_entities:transaction.account.required"),
+        }}
         render={({ field: { value, onChange, ...rest } }) => (
           <AutocompleteInput
             value={value}
-            multiple
-            label={t("_entities:entities.account.plural")}
-            autoComplete={`${Tables.Transactions}-${t(
-              "_entities:entities.account.plural",
-            )}`}
-            onChange={(v) => onChange(v)}
+            multiple={false}
+            label={t("_entities:transaction.account.label")}
+            autoComplete={`${Tables.Transactions}-${t("_entities:transaction.account.label")}`}
+            onChange={(nextValue) => onChange(nextValue)}
             options={accounts ?? []}
             containerClassName="dashboard-card-autocomplete-full"
-            {...rest}
-          />
-        )}
-      />
-
-      <div className="range-widget-container">
-        <p className="text-input-label input-widget-label input-label-normal">
-          {t("_entities:transaction.date.label")}
-        </p>
-        <div className="dashboard-card-range-row">
-          <Controller
-            control={props.control}
-            name={"date.start"}
-            render={({ field: { value, ...rest } }) => (
-              <TextInput
-                value={value}
-                placeholder={t(
-                  "_accessibility:components.table.filters.range.start",
-                )}
-                type="date"
-                {...rest}
-              />
-            )}
-          />
-          <Controller
-            control={props.control}
-            name={"date.end"}
-            render={({ field: { value, ...rest } }) => (
-              <TextInput
-                value={value}
-                placeholder={t(
-                  "_accessibility:components.table.filters.range.end",
-                )}
-                type="date"
-                {...rest}
-              />
-            )}
-          />
-        </div>
-      </div>
-      <Controller
-        control={props.control}
-        name="categories"
-        render={({ field: { value, onChange, ...rest } }) => (
-          <AutocompleteInput
-            multiple
-            value={value}
-            options={categoriesByType ?? []}
-            label={t("_entities:entities.transactionCategory.plural")}
-            autoComplete={`${Tables.Transactions}-${t(
-              "_entities:entities.transactionCategory.plural",
-            )}`}
-            containerClassName="dashboard-card-autocomplete-grow"
-            onChange={(value) => onChange(value)}
             {...rest}
           />
         )}
@@ -168,6 +118,22 @@ export const ConfigFormDialog = (
               )}
             />
           </SelectInput>
+        )}
+      />
+      <Controller
+        control={control}
+        name="time"
+        disabled={isLoading}
+        render={({ field: { value, onChange, ...rest } }) => (
+          <SelectInput
+            required
+            options={parsedTimes}
+            value={value}
+            onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
+            label={t("_entities:transaction.typeResume.time.label")}
+            inputClassName="dashboard-card-select-input"
+            {...rest}
+          />
         )}
       />
     </FormDialog>

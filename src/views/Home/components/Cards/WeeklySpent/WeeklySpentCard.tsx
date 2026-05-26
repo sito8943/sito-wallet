@@ -7,7 +7,7 @@ import { useMemo } from "react";
 import { TransactionType } from "lib";
 
 // hooks
-import { useTransactionTypeResume } from "hooks";
+import { useWeekly } from "hooks";
 
 // components
 import { Currency } from "../../../../Currencies";
@@ -35,7 +35,6 @@ import { formToDto } from "./utils";
 const defaultConfig: WeeklySpentFormType = {
   type: TransactionType.In,
   accounts: [],
-  categories: [],
 };
 
 const getCurrentWeekRange = () => {
@@ -79,12 +78,9 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
 
   const range = useMemo(() => getCurrentWeekRange(), []);
 
-  const { data, isLoading } = useTransactionTypeResume({
-    ...filterConfig,
-    date: { start: range.start, end: range.end },
-  });
+  const { data, isLoading } = useWeekly({ ...filterConfig });
 
-  const amount = data?.total ?? 0;
+  const amount = data?.currentWeek ?? 0;
   const symbol = data?.account?.currency?.symbol ?? "";
   const name = data?.account?.currency?.name ?? "";
 

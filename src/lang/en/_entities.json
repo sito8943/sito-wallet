@@ -145,6 +145,17 @@
     "date": {
       "label": "Date",
       "required": "Date is required"
+    },
+    "typeResume": {
+      "time": {
+        "label": "Period",
+        "values": {
+          "CurrentDay": "Current day",
+          "CurrentWeek": "Current week",
+          "CurrentMonth": "Current month",
+          "CurrentYear": "Current year"
+        }
+      }
     }
   },
   "transactionCategory": {

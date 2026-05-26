@@ -20,8 +20,9 @@ import type {
   ImportDto,
   AssignTransactionAccountDto,
   AssignTransactionCategoryDto,
+  TransactionTypeResumeTime,
 } from "lib";
-import { parseJSONFile } from "lib";
+import { parseJSONFile, TransactionType } from "lib";
 
 // utils
 import { config } from "../../config";
@@ -42,6 +43,12 @@ export default class TransactionClient extends BaseClient<
   FilterTransactionDto,
   ImportPreviewTransactionDto
 > {
+  private parseTransactionTypeResumeType(
+    type: FilterTransactionTypeResumeDto["type"],
+  ): "IN" | "OUT" {
+    return Number(type) === TransactionType.Out ? "OUT" : "IN";
+  }
+
   private stripTrashKeysFromFilter(filters?: string): string | undefined {
     if (typeof filters !== "string") return undefined;
 
@@ -140,10 +147,22 @@ export default class TransactionClient extends BaseClient<
   async getTypeResume(
     filters: FilterTransactionTypeResumeDto,
   ): Promise<TransactionTypeResumeDto> {
+    if (filters.accountId === undefined) {
+      throw new Error("accountId is required for transaction type resume");
+    }
+
     const builtUrl = parseQueries<
       TransactionTypeResumeDto,
-      FilterTransactionDto
-    >(`${Tables.Transactions}/type-resume`, undefined, filters);
+      {
+        filters: string;
+        time?: TransactionTypeResumeTime;
+        type: "IN" | "OUT";
+      }
+    >(`${Tables.Transactions}/type-resume`, undefined, {
+      filters: `account==${filters.accountId}`,
+      time: filters.time,
+      type: this.parseTransactionTypeResumeType(filters.type),
+    });
 
     return await this.api.doQuery<TransactionTypeResumeDto>(
       builtUrl,

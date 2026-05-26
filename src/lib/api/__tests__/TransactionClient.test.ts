@@ -91,11 +91,19 @@ describe("TransactionClient", () => {
   it("calls getTypeResume without request body on GET", async () => {
     mockDoQuery.mockResolvedValue({
       total: 10,
-      account: { id: 1, name: "Wallet" },
+      transactionType: 0,
+      account: null,
+      categorizedTotal: 10,
+      duplicatedAmount: 0,
+      categories: [],
     });
 
     const client = new TransactionClient();
-    await client.getTypeResume({ type: "out", account: [1] });
+    await client.getTypeResume({
+      type: 0,
+      time: "currentMonth",
+      accountId: 1,
+    });
 
     expect(mockDoQuery).toHaveBeenCalledWith(
       expect.stringContaining("transactions/type-resume"),
@@ -103,6 +111,12 @@ describe("TransactionClient", () => {
       undefined,
       { Authorization: "Bearer token" },
     );
+
+    const builtUrl = decodeURIComponent(mockDoQuery.mock.calls[0][0] as string);
+    expect(builtUrl).toContain("type=OUT");
+    expect(builtUrl).toContain("time=currentMonth");
+    expect(builtUrl).toContain("filters=account==1");
+    expect(builtUrl).not.toContain("accountId=");
   });
 
   it("calls getGroupedByType without request body on GET", async () => {

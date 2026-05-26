@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { ArrayChip, Chip, RangeChip } from "@sito/dashboard-app";
+import { ArrayChip, Chip } from "@sito/dashboard-app";
 
 // types
 import type { ActiveFiltersPropsType } from "./types";
@@ -12,60 +12,48 @@ import { TransactionType } from "lib";
 import "../styles.css";
 
 export const ActiveFilters = (props: ActiveFiltersPropsType) => {
-  const {
-    type,
-    accounts,
-    categories,
-    startDate,
-    endDate,
-    clearAccounts,
-    clearCategories,
-    clearDate,
-  } = props;
+  const { type, account, clearAccount, time } = props;
 
   const { t } = useTranslation();
+  const accountItems = account ? [account] : [];
+
+  const timeKeyByValue = {
+    currentDay: "CurrentDay",
+    currentWeek: "CurrentWeek",
+    currentMonth: "CurrentMonth",
+    currentYear: "CurrentYear",
+  } as const;
 
   return (
     <div className="dashboard-card-active-filters">
-      {!!accounts?.length && (
+      {!!account && (
         <ArrayChip
           id="account"
           text={t("_entities:entities.account.plural")}
-          items={accounts ?? []}
-          onClearFilter={() => clearAccounts()}
+          items={accountItems}
+          onClearFilter={() => clearAccount()}
         />
       )}
-      {categories?.length ? (
-        <ArrayChip
-          id="category"
-          text={t("_entities:entities.transactionCategory.plural")}
-          items={categories ?? []}
-          onClearFilter={() => clearCategories()}
-        />
-      ) : (
-        <Chip
-          text={
-            <p>
-              {t(
-                `_entities:transactionCategory.type.values.${String(
-                  TransactionType[type],
-                )}`,
-              )}
-            </p>
-          }
-        />
-      )}
-      {(startDate || endDate) && (
-        <RangeChip
-          id={"date"}
-          start={startDate}
-          end={endDate}
-          text={t("_entities:transaction.date.label")}
-          onClearFilter={() => {
-            clearDate();
-          }}
-        />
-      )}
+      <Chip
+        text={
+          <p>
+            {t(
+              `_entities:transactionCategory.type.values.${String(
+                TransactionType[type],
+              )}`,
+            )}
+          </p>
+        }
+      />
+      <Chip
+        text={
+          <p>
+            {t(
+              `_entities:transaction.typeResume.time.values.${timeKeyByValue[time]}`,
+            )}
+          </p>
+        }
+      />
     </div>
   );
 };

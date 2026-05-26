@@ -1,11 +1,13 @@
 import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faList } from "@fortawesome/free-solid-svg-icons";
 import { useQueryClient } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 
-import { classNames } from "@sito/dashboard-app";
+import { classNames, IconButton } from "@sito/dashboard-app";
 
 // lib
-import { TransactionType } from "lib";
+import { TransactionType, TransactionTypeResumeTime } from "lib";
 
 // hooks
 import { TransactionsQueryKeys, useTransactionTypeResume } from "hooks";
@@ -19,6 +21,7 @@ import { Currency } from "../../../../Currencies";
 import { ActiveFilters } from "./ActiveFilters";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { DashboardCard } from "../DashboardCard";
+import { TypeResumeCategoriesDialog } from "./TypeResumeCategoriesDialog";
 
 // styles
 import "./styles.css";
@@ -29,6 +32,7 @@ import type {
   FilterTypeResumeConfigType,
   TypeResumeTypeFormType,
 } from "./types";
+import { useTypeResumeDialog } from "./useTypeResumeDialog";
 
 // providers
 // providers
@@ -36,93 +40,135 @@ import type {
 
 const defaultConfig: TypeResumeTypeFormType = {
   type: TransactionType.In,
-  accounts: [],
-  categories: [],
+  time: TransactionTypeResumeTime.CurrentMonth,
 };
 
 export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const { title, config, id, user, onDelete } = props;
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
+  const typeResumeDialog = useTypeResumeDialog();
 
   const parseFormConfig = (cfg?: string | null): TypeResumeTypeFormType => {
     try {
-      return cfg ? (JSON.parse(cfg) as TypeResumeTypeFormType) : defaultConfig;
+      const parsed = cfg ? (JSON.parse(cfg) as Record<string, unknown>) : {};
+      const legacyAccounts = Array.isArray(parsed.accounts)
+        ? (parsed.accounts as NonNullable<TypeResumeTypeFormType["account"]>[])
+        : [];
+
+      return {
+        account:
+          (parsed.account as TypeResumeTypeFormType["account"]) ??
+          legacyAccounts[0],
+        type: Number(parsed.type ?? defaultConfig.type) as TransactionType,
+        time:
+          (parsed.time as TypeResumeTypeFormType["time"]) ?? defaultConfig.time,
+      };
     } catch (err) {
       console.error(err);
       return defaultConfig;
     }
   };
 
+  const resolvedFormConfig = useMemo(() => parseFormConfig(config), [config]);
+
   const filterConfig = useMemo(() => {
     try {
-      const parsed = parseFormConfig(config);
       const transformed: FilterTypeResumeConfigType = {
-        type: parsed.type,
+        type: resolvedFormConfig.type,
+        time: resolvedFormConfig.time,
       };
-      transformed.accounts = parsed.accounts?.map((a) => a.id) ?? [];
-      transformed.categories = parsed.categories?.map((c) => c.id) ?? [];
-      transformed.date = parsed.date;
+      transformed.accountId = resolvedFormConfig.account?.id;
       return transformed;
     } catch (err) {
       console.error(err);
-      return { type: defaultConfig.type } as FilterTypeResumeConfigType;
+      return {
+        type: defaultConfig.type,
+        time: defaultConfig.time,
+      } as FilterTypeResumeConfigType;
     }
-  }, [config]);
+  }, [resolvedFormConfig]);
 
   const { data, isLoading } = useTransactionTypeResume({ ...filterConfig });
+  const categories = data?.categories ?? [];
+  const currencyName =
+    data?.account?.currency?.name ?? resolvedFormConfig.account?.currency?.name;
+  const currencySymbol =
+    data?.account?.currency?.symbol ??
+    resolvedFormConfig.account?.currency?.symbol;
 
   return (
-    <DashboardCard
-      id={id}
-      userId={user?.id ?? 0}
-      title={title}
-      config={config}
-      onDelete={onDelete}
-      isBusy={isLoading}
-      loadingOverlay={isLoading}
-      parseFormConfig={parseFormConfig}
-      formToDto={(data) => formToDto(data)}
-      onConfigSaved={() => {
-        // Keep original behavior: refresh related queries on save
-        void queryClient.invalidateQueries({ ...TransactionsQueryKeys.all() });
-      }}
-      ConfigFormDialog={ConfigFormDialog}
-      renderActiveFilters={({ formConfig, onSubmit }) => (
-        <ActiveFilters
-          {...formConfig}
-          clearAccounts={() => onSubmit({ ...formConfig, accounts: [] })}
-          clearCategories={() => onSubmit({ ...formConfig, categories: [] })}
-          clearDate={() => onSubmit({ ...formConfig, date: undefined })}
-        />
-      )}
-    >
-      {({ formConfig }) => (
-        <>
-          <FontAwesomeIcon
-            icon={icons[(formConfig.type ?? 0) as keyof typeof icons]}
-            className={classNames(
-              "type-resume-icon",
-              Number(formConfig.type) === TransactionType.In
-                ? "type-resume-icon--income inverted-success"
-                : "type-resume-icon--expense inverted-error",
-            )}
+    <>
+      <DashboardCard
+        id={id}
+        userId={user?.id ?? 0}
+        title={title}
+        config={config}
+        onDelete={onDelete}
+        isBusy={isLoading}
+        loadingOverlay={isLoading}
+        parseFormConfig={parseFormConfig}
+        formToDto={(data) => formToDto(data)}
+        onConfigSaved={() => {
+          // Keep original behavior: refresh related queries on save
+          void queryClient.invalidateQueries({
+            ...TransactionsQueryKeys.all(),
+          });
+        }}
+        ConfigFormDialog={ConfigFormDialog}
+        renderActiveFilters={({ formConfig, onSubmit }) => (
+          <ActiveFilters
+            {...formConfig}
+            clearAccount={() => onSubmit({ ...formConfig, account: undefined })}
           />
-          <p
-            className={classNames(
-              "type-resume-amount poppins",
-              formConfig.type === TransactionType.In
-                ? "type-resume-amount--income"
-                : "type-resume-amount--expense",
-            )}
-          >
-            {data?.total}{" "}
-            <Currency
-              name={data?.account?.currency?.name}
-              symbol={data?.account?.currency?.symbol}
+        )}
+      >
+        {({ formConfig }) => (
+          <div className="type-resume-content">
+            <FontAwesomeIcon
+              icon={icons[(formConfig.type ?? 0) as keyof typeof icons]}
+              className={classNames(
+                "type-resume-icon",
+                Number(formConfig.type) === TransactionType.In
+                  ? "type-resume-icon--income inverted-success"
+                  : "type-resume-icon--expense inverted-error",
+              )}
             />
-          </p>
-        </>
-      )}
-    </DashboardCard>
+            <div className="type-resume-summary">
+              <p
+                className={classNames(
+                  "type-resume-amount poppins",
+                  formConfig.type === TransactionType.In
+                    ? "type-resume-amount--income"
+                    : "type-resume-amount--expense",
+                )}
+              >
+                {isLoading ? "…" : (data?.total ?? 0)}{" "}
+                <Currency
+                  name={currencyName ?? formConfig.account?.currency?.name}
+                  symbol={
+                    currencySymbol ?? formConfig.account?.currency?.symbol
+                  }
+                />
+              </p>
+              <IconButton
+                disabled={isLoading || categories.length === 0}
+                onClick={typeResumeDialog.openDialog}
+                icon={faList}
+                aria-label={t(
+                  "_pages:home.dashboard.transactionTypeResume.details.title",
+                )}
+              />
+            </div>
+          </div>
+        )}
+      </DashboardCard>
+      <TypeResumeCategoriesDialog
+        {...typeResumeDialog}
+        categories={categories}
+        currencyName={currencyName}
+        currencySymbol={currencySymbol}
+      />
+    </>
   );
 };
