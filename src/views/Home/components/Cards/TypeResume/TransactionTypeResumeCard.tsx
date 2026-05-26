@@ -7,13 +7,14 @@ import { useTranslation } from "react-i18next";
 import { classNames, IconButton } from "@sito/dashboard-app";
 
 // lib
-import { TransactionType, TransactionTypeResumeTime } from "lib";
+import { TransactionType } from "lib";
 
 // hooks
 import { TransactionsQueryKeys, useTransactionTypeResume } from "hooks";
 
 // utils
 import { icons } from "../../../../Transactions/components/utils";
+import { DEFAULT_TYPE_RESUME_CONFIG } from "./constants";
 import { formToDto } from "./utils";
 
 // components
@@ -34,15 +35,6 @@ import type {
 } from "./types";
 import { useTypeResumeDialog } from "./useTypeResumeDialog";
 
-// providers
-// providers
-// (none)
-
-const defaultConfig: TypeResumeTypeFormType = {
-  type: TransactionType.In,
-  time: TransactionTypeResumeTime.CurrentMonth,
-};
-
 export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const { title, config, id, user, onDelete } = props;
   const { t } = useTranslation();
@@ -60,13 +52,16 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         account:
           (parsed.account as TypeResumeTypeFormType["account"]) ??
           legacyAccounts[0],
-        type: Number(parsed.type ?? defaultConfig.type) as TransactionType,
+        type: Number(
+          parsed.type ?? DEFAULT_TYPE_RESUME_CONFIG.type,
+        ) as TransactionType,
         time:
-          (parsed.time as TypeResumeTypeFormType["time"]) ?? defaultConfig.time,
+          (parsed.time as TypeResumeTypeFormType["time"]) ??
+          DEFAULT_TYPE_RESUME_CONFIG.time,
       };
     } catch (err) {
       console.error(err);
-      return defaultConfig;
+      return DEFAULT_TYPE_RESUME_CONFIG;
     }
   };
 
@@ -83,8 +78,8 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
     } catch (err) {
       console.error(err);
       return {
-        type: defaultConfig.type,
-        time: defaultConfig.time,
+        type: DEFAULT_TYPE_RESUME_CONFIG.type,
+        time: DEFAULT_TYPE_RESUME_CONFIG.time,
       } as FilterTypeResumeConfigType;
     }
   }, [resolvedFormConfig]);
@@ -166,6 +161,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
       <TypeResumeCategoriesDialog
         {...typeResumeDialog}
         categories={categories}
+        total={data?.total}
         accountId={data?.account?.id ?? resolvedFormConfig.account?.id}
         currencyName={currencyName}
         currencySymbol={currencySymbol}

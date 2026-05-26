@@ -18,6 +18,7 @@ export const TypeResumeCategoriesDialog = (
     open,
     closeDialog,
     categories,
+    total,
     accountId,
     currencyName,
     currencySymbol,
@@ -59,6 +60,7 @@ export const TypeResumeCategoriesDialog = (
                   currentValue === category.id ? null : category.id,
                 )
               }
+              total={total}
               accountId={accountId}
               currencyName={currencyName}
               currencySymbol={currencySymbol}

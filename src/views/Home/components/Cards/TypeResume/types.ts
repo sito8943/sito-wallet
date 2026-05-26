@@ -44,6 +44,7 @@ export type TypeResumeCategoriesDialogPropsType = {
   open: boolean;
   closeDialog: () => void;
   categories: TransactionTypeResumeCategoryDto[];
+  total?: number;
   accountId?: number;
   currencyName?: string;
   currencySymbol?: string;
@@ -56,6 +57,7 @@ export type TypeResumeCategoryItemPropsType = {
   category: TransactionTypeResumeCategoryDto;
   open: boolean;
   onToggle: () => void;
+  total?: number;
   accountId?: number;
   currencyName?: string;
   currencySymbol?: string;

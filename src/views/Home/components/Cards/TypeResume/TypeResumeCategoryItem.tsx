@@ -23,6 +23,7 @@ export const TypeResumeCategoryItem = (
     category,
     open,
     onToggle,
+    total,
     accountId,
     currencyName,
     currencySymbol,
@@ -42,6 +43,13 @@ export const TypeResumeCategoryItem = (
   });
 
   const transactions = useMemo(() => data?.items ?? [], [data?.items]);
+  const colorBarWidth = useMemo(() => {
+    if (!total || total <= 0) return "0%";
+
+    const percentage = (category.total / total) * 100;
+    const normalized = Math.max(0, Math.min(100, percentage));
+    return `${normalized}%`;
+  }, [category.total, total]);
 
   return (
     <li className="type-resume-dialog-item">
@@ -58,7 +66,10 @@ export const TypeResumeCategoryItem = (
           {category.color ? (
             <span
               className="type-resume-dialog-item-color base-border"
-              style={{ backgroundColor: category.color }}
+              style={{
+                backgroundColor: category.color,
+                width: colorBarWidth,
+              }}
               aria-hidden="true"
             />
           ) : null}
