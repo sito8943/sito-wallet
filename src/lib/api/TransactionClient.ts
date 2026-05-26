@@ -20,7 +20,6 @@ import type {
   ImportDto,
   AssignTransactionAccountDto,
   AssignTransactionCategoryDto,
-  TransactionTypeResumeTime,
 } from "lib";
 import { parseJSONFile, TransactionType } from "lib";
 

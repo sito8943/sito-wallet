@@ -128,16 +128,16 @@
   @apply flex w-full items-end justify-between gap-2;
 }
 
-/* .type-resume-dialog {
-  @apply w-5/6 md:w-1/2;
-} */
+.type-resume-dialog {
+  @apply sm:w-5/6;
+}
 
 .type-resume-dialog-empty {
   @apply py-4 text-text-muted;
 }
 
 .type-resume-dialog-list {
-  @apply flex sm:max-h-[60vh] flex-col gap-3 overflow-y-auto py-2;
+  @apply flex sm:max-h-[60vh] flex-col gap-3 overflow-y-auto p-2 bg-base-light rounded-2xl;
 }
 
 .type-resume-dialog-item {

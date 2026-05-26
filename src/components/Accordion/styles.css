@@ -1,7 +1,7 @@
 @reference "../../styles/variables.css";
 
 .accordion-main {
-  transition: grid-template-rows 300ms ease-in-out;
+  transition: grid-template-rows 500ms ease-in-out;
   @apply grid;
 }
 

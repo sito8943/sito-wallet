@@ -57,7 +57,7 @@ export const TypeResumeCategoryItem = (
           </p>
           {category.color ? (
             <span
-              className="type-resume-dialog-item-color"
+              className="type-resume-dialog-item-color base-border"
               style={{ backgroundColor: category.color }}
               aria-hidden="true"
             />
