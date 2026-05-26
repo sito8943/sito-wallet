@@ -15,7 +15,14 @@ import type { UseTypeResumeCategoryTransactionsPropsType } from "./types";
 export const useTypeResumeCategoryTransactions = (
   props: UseTypeResumeCategoryTransactionsPropsType,
 ) => {
-  const { accountId, categoryId, type, startDate = "", endDate = "", open } = props;
+  const {
+    accountId,
+    categoryId,
+    type,
+    startDate = "",
+    endDate = "",
+    open,
+  } = props;
   const { account } = useAuth();
   const manager = useManager();
 
