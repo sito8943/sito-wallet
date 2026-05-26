@@ -83,7 +83,7 @@ export const ConfigFormDialog = (
         }}
         render={({ field: { value, onChange, ...rest } }) => (
           <AutocompleteInput
-            value={value}
+            value={value ?? null}
             multiple={false}
             label={t("_entities:transaction.account.label")}
             autoComplete={`${Tables.Transactions}-${t("_entities:transaction.account.label")}`}

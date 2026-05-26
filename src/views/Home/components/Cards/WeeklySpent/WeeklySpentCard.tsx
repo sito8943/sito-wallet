@@ -7,7 +7,7 @@ import { useMemo } from "react";
 import { TransactionType } from "lib";
 
 // hooks
-import { useWeekly } from "hooks";
+import { useWeekly } from "../../../../../hooks/queries/useWeekly";
 
 // components
 import { Currency } from "../../../../Currencies";
