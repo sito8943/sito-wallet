@@ -9,7 +9,8 @@ export const SEO_PRIVATE_ROBOTS = "noindex,nofollow";
 export const SEO_DEFAULT_TITLE_KEY = "_pages:seo.defaultTitle";
 export const SEO_DEFAULT_DESCRIPTION_KEY = "_pages:seo.defaultDescription";
 export const SEO_NOT_FOUND_TITLE_KEY = "_pages:notFound.title";
-export const SEO_NOT_FOUND_DESCRIPTION_KEY = "_pages:seo.routes.notFound.description";
+export const SEO_NOT_FOUND_DESCRIPTION_KEY =
+  "_pages:seo.routes.notFound.description";
 export const SEO_LOCALE_BY_LANGUAGE = {
   en: "en_US",
   es: "es_ES",

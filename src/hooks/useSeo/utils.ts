@@ -56,9 +56,7 @@ export const resolveSeoRouteDefinition = (
   pathname: string,
 ): SeoRouteDefinition | undefined => {
   return seoRouteDefinitions.find((routeDefinition) =>
-    Boolean(
-      matchPath({ path: routeDefinition.path, end: true }, pathname),
-    ),
+    Boolean(matchPath({ path: routeDefinition.path, end: true }, pathname)),
   );
 };
 
