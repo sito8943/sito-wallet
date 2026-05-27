@@ -29,7 +29,11 @@
 }
 
 .dashboard-card-title-loading {
-  @apply mt-1;
+  @apply mt-1 w-10;
+}
+
+.dashboard-card-title-loader {
+  @apply w-6;
 }
 
 .dashboard-card-title-success {

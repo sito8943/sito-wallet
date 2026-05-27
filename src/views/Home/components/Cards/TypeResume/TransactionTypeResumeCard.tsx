@@ -93,6 +93,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   }, [resolvedFormConfig]);
 
   const { data, isLoading } = useTransactionTypeResume({ ...filterConfig });
+
   const categories = data?.categories ?? [];
   const currencyName =
     data?.account?.currency?.name ?? resolvedFormConfig.account?.currency?.name;

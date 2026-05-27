@@ -1,6 +1,6 @@
 # AGENTS.md — sito-wallet/web
 
-Project-specific rules for AI agents. These override or extend the guidelines in `.sito/dashboard.md` and `.sito/dashboard-app.md`.
+Project-specific rules for AI agents. These override or extend the guidelines in `../shared-docs/dashboard.md` and `../shared-docs/dashboard-app.md`.
 
 ---
 
@@ -12,9 +12,9 @@ Project-specific rules for AI agents. These override or extend the guidelines in
 
 ## Documentation First
 
-- Before writing code or proposing an implementation plan, read and account for all documentation under `.sito/*`.
-- Treat `.sito/*` as a required source of truth for architecture, conventions, and workflows.
-- If documentation in `.sito/*` conflicts with older references (including `.sito/dashboard.md` and `.sito/dashboard-app.md`), prioritize the files that currently exist in `.sito/*`.
+- Before writing code or proposing an implementation plan, read and account for all documentation under `../shared-docs/*`.
+- Treat `../shared-docs/*` as a required source of truth for architecture, conventions, and workflows.
+- If documentation in `../shared-docs/*` conflicts with older references (including `../shared-docs/dashboard.md` and `../shared-docs/dashboard-app.md`), prioritize the files that currently exist in `../shared-docs/*`.
 
 ---
 
@@ -220,7 +220,7 @@ export type MyDialogPropsType = FormDialogPropsType<MyFormType>;
 
 ## General
 
-- Follow all rules in `.sito/dashboard.md` and `.sito/dashboard-app.md`.
+- Follow all rules in `../shared-docs/dashboard.md` and `../shared-docs/dashboard-app.md`.
 - Never import from internal `@sito/dashboard-app` paths.
 - Use `useNotification()` for all user-facing feedback.
 - Never add `any` types.

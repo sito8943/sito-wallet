@@ -146,12 +146,8 @@ export default class TransactionClient extends BaseClient<
   async getTypeResume(
     filters: FilterTransactionTypeResumeDto,
   ): Promise<TransactionTypeResumeDto> {
-    if (filters.accountId === undefined) {
-      throw new Error("accountId is required for transaction type resume");
-    }
-
     const searchParams = new URLSearchParams({
-      filters: `account==${filters.accountId}`,
+      filters: filters.accountId ? `account==${filters.accountId}` : "",
       type: this.parseTransactionTypeResumeType(filters.type),
     });
 

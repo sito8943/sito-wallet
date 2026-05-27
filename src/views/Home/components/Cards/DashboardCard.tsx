@@ -146,7 +146,11 @@ export const DashboardCard = <TForm extends FieldValues>(
           }}
         />
         {updateTitle.isPending ? (
-          <Loading className="dashboard-card-title-loading" />
+          <Loading
+            className="dashboard-card-title-loading"
+            strokeWidth="6"
+            loaderClass="dashboard-card-title-loader"
+          />
         ) : null}
         {titleSuccess ? (
           <FontAwesomeIcon

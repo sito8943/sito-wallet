@@ -78,9 +78,6 @@ export const ConfigFormDialog = (
       <Controller
         control={control}
         name="account"
-        rules={{
-          required: t("_entities:transaction.account.required"),
-        }}
         render={({ field: { value, onChange, ...rest } }) => (
           <AutocompleteInput
             value={value ?? null}
@@ -88,7 +85,13 @@ export const ConfigFormDialog = (
             label={t("_entities:transaction.account.label")}
             autoComplete={`${Tables.Transactions}-${t("_entities:transaction.account.label")}`}
             onChange={(nextValue) => onChange(nextValue)}
-            options={accounts ?? []}
+            options={[
+              {
+                id: "",
+                value: t("_entities:transaction.account.placeholder"),
+              },
+              ...(accounts ?? []),
+            ]}
             containerClassName="dashboard-card-autocomplete-full"
             {...rest}
           />
@@ -100,7 +103,6 @@ export const ConfigFormDialog = (
         disabled={isLoading}
         render={({ field: { value, onChange, ...rest } }) => (
           <SelectInput
-            required
             options={parsedTypes}
             value={value}
             onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
@@ -126,7 +128,6 @@ export const ConfigFormDialog = (
         disabled={isLoading}
         render={({ field: { value, onChange, ...rest } }) => (
           <SelectInput
-            required
             options={parsedTimes}
             value={value}
             onChange={(e) => onChange((e.target as HTMLSelectElement).value)}

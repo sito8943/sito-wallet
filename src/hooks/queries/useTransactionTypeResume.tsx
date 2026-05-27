@@ -26,7 +26,7 @@ export function useTransactionTypeResume(
   const filters = useMemo(
     () =>
       ({
-        accountId: props.accountId,
+        accountId: props.accountId ?? 0,
         time: props.time ?? TransactionTypeResumeTime.CurrentMonth,
         type: props.type ?? TransactionType.In,
       }) as FilterTransactionTypeResumeDto,
@@ -40,7 +40,7 @@ export function useTransactionTypeResume(
     ...TransactionsQueryKeys.typeResume({
       ...filters,
     }),
-    enabled: !!account?.id && !!filters.accountId,
+    enabled: !!account?.id,
     queryFn: () => {
       return manager.Transactions.getTypeResume(filters);
     },
