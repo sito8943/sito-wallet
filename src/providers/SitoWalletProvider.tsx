@@ -1,6 +1,7 @@
 import { type ComponentType, useCallback, useState } from "react";
 import { Link, useLocation, useNavigate, type To } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { QueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
 import { AppProviders, TranslationProvider } from "@sito/dashboard-app";
@@ -26,6 +27,20 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
 
   const { t, i18n } = useTranslation();
   const [manager] = useState(() => new Manager());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: false,
+            retryOnMount: false,
+            refetchOnMount: true,
+            refetchOnReconnect: false,
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+  );
   const navigate = useNavigate();
   const location = useLocation();
   const navigateFn = useCallback(
@@ -41,7 +56,7 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
         linkComponent: Link as unknown as ComponentType<BaseLinkPropsType>,
         searchComponent: SearchModal,
       }}
-      manager={{ manager }}
+      manager={{ manager, queryClient }}
       auth={authConfig}
     >
       <TranslationProvider t={t} language={i18n.language}>

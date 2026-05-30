@@ -2,6 +2,7 @@ import loadable from "@loadable/component";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "@tanstack/react-query";
 
 // @sito-dashboard-app
 import type { TabsType } from "@sito/dashboard-app";
@@ -34,6 +35,7 @@ import {
 import { useAddAccountDialog } from "../Accounts/hooks";
 import { useEditTransactionCategoryDialog } from "../TransactionCategories/hooks";
 import {
+  AccountsQueryKeys,
   TransactionsQueryKeys,
   useMobileNavbar,
   usePersistedTableOptions,
@@ -97,6 +99,7 @@ export function Transactions() {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const tabValue = useMemo(() => {
     const search = new URLSearchParams(location.search);
@@ -178,11 +181,39 @@ export function Transactions() {
 
   const deleteTransaction = useDeleteDialog({
     mutationFn: (data) => manager.Transactions.softDelete(data),
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ ...AccountsQueryKeys.all() }),
+        queryClient.invalidateQueries({
+          queryKey: [...TransactionsQueryKeys.all().queryKey, "weekly"],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [...TransactionsQueryKeys.all().queryKey, "groupedByType"],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [...TransactionsQueryKeys.all().queryKey, "typeResume"],
+        }),
+      ]);
+    },
     ...TransactionsQueryKeys.all(),
   });
 
   const restoreTransaction = useRestoreDialog({
     mutationFn: (data) => manager.Transactions.restore(data),
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ ...AccountsQueryKeys.all() }),
+        queryClient.invalidateQueries({
+          queryKey: [...TransactionsQueryKeys.all().queryKey, "weekly"],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [...TransactionsQueryKeys.all().queryKey, "groupedByType"],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [...TransactionsQueryKeys.all().queryKey, "typeResume"],
+        }),
+      ]);
+    },
     ...TransactionsQueryKeys.all(),
   });
 

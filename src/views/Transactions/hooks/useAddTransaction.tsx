@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
 import { useNotification, usePostDialog } from "@sito/dashboard-app";
@@ -7,7 +8,7 @@ import { useNotification, usePostDialog } from "@sito/dashboard-app";
 import { useManager } from "providers";
 
 // hooks
-import { TransactionsQueryKeys } from "hooks";
+import { AccountsQueryKeys, TransactionsQueryKeys } from "hooks";
 
 // utils
 import { addEmptyTransaction, formToDto } from "../utils";
@@ -30,6 +31,7 @@ export function useAddTransaction(
   const { t } = useTranslation();
 
   const manager = useManager();
+  const queryClient = useQueryClient();
 
   const { showErrorNotification } = useNotification();
 
@@ -42,6 +44,20 @@ export function useAddTransaction(
     defaultValues: addEmptyTransaction(account),
     mutationFn: (data) => manager.Transactions.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ ...AccountsQueryKeys.all() }),
+        queryClient.invalidateQueries({
+          queryKey: [...TransactionsQueryKeys.all().queryKey, "weekly"],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [...TransactionsQueryKeys.all().queryKey, "groupedByType"],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [...TransactionsQueryKeys.all().queryKey, "typeResume"],
+        }),
+      ]);
+    },
     title: t("_pages:transactions.forms.add"),
     onError: (error) => {
       if (error.message === "balance.greaterThan0") {

@@ -46,9 +46,10 @@ export const FeatureFlagsProvider = (props: BasicProviderPropTypes) => {
 
   const applyFeaturePayload = useCallback(
     (payload: AppFeaturesPayload) => {
+      const persisted = readPersistedFeatureFlags(storageKey);
       const nextFeatures = mergeAppFeatures({
         defaults,
-        persisted: features,
+        persisted,
         payload,
       });
 
@@ -57,7 +58,7 @@ export const FeatureFlagsProvider = (props: BasicProviderPropTypes) => {
 
       return nextFeatures;
     },
-    [defaults, features, storageKey],
+    [defaults, storageKey],
   );
 
   const refreshFeatures = useCallback(async () => {
