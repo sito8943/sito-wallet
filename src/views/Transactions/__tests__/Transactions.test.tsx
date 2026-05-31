@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // ─── Module mocks ──────────────────────────────────────────────────────────────
 
 // react-router-dom: spy on useLocation
+let mockLocationSearch = "";
+
 vi.mock("react-router-dom", async () => {
   const actual =
     await vi.importActual<typeof import("react-router-dom")>(
@@ -13,7 +15,10 @@ vi.mock("react-router-dom", async () => {
     );
   return {
     ...actual,
-    useLocation: () => ({ search: "", pathname: "/transactions" }),
+    useLocation: () => ({
+      search: mockLocationSearch,
+      pathname: "/transactions",
+    }),
   };
 });
 
@@ -38,11 +43,23 @@ const mockAccountsList = vi.fn((_props?: unknown) => ({
   error: null,
 }));
 const mockUseMobileNavbar = vi.fn();
+const mockResetSwipe = vi.fn();
+const mockOpenSwipe = vi.fn();
+const mockHandleDialogClose = vi.fn();
 
 vi.mock("hooks", () => ({
   useAccountsList: (props?: unknown) => mockAccountsList(props),
   useMobileNavbar: (...args: unknown[]) => mockUseMobileNavbar(...args),
   usePersistedTableOptions: vi.fn(),
+  useSwipeDeleteState: () => ({
+    swipedId: null,
+    openSwipe: mockOpenSwipe,
+    resetSwipe: mockResetSwipe,
+    handleDialogClose: mockHandleDialogClose,
+  }),
+  AccountsQueryKeys: {
+    all: () => ({ queryKey: ["accounts"] }),
+  },
   TransactionsQueryKeys: {
     all: () => ({ queryKey: ["transactions"] }),
     list: () => ({ queryKey: ["transactions", "list"] }),
@@ -159,9 +176,11 @@ vi.mock("@sito/dashboard-app", () => ({
   GlobalActions: { Add: "add" },
   useDeleteDialog: () => ({
     action: () => ({ id: "delete", onClick: vi.fn() }),
+    handleClose: vi.fn(),
   }),
   useRestoreDialog: () => ({
     action: () => ({ id: "restore", onClick: vi.fn() }),
+    handleClose: vi.fn(),
   }),
   useExportDialog: () => ({
     open: false,
@@ -206,6 +225,10 @@ vi.mock("@sito/dashboard-app", () => ({
   ConfirmationDialog: () => null,
   ImportDialog: () => null,
   ExportDialog: () => null,
+  SortOrder: {
+    ASC: "ASC",
+    DESC: "DESC",
+  },
   TabsType: {},
 }));
 
@@ -379,6 +402,7 @@ import { Transactions } from "../Transactions";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 async function renderTransactions(initialSearch = "") {
+  mockLocationSearch = initialSearch;
   const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   render(
     <QueryClientProvider client={qc}>
@@ -400,7 +424,12 @@ async function renderTransactions(initialSearch = "") {
 // ─── Tests ────────────────────────────────────────────────────────────────────
 describe("Transactions", () => {
   beforeEach(() => {
+    mockLocationSearch = "";
     mockAccountsList.mockClear();
+    mockUseMobileNavbar.mockClear();
+    mockResetSwipe.mockClear();
+    mockOpenSwipe.mockClear();
+    mockHandleDialogClose.mockClear();
     mockAccountsList.mockReturnValue({
       data: {
         items: [
@@ -454,18 +483,7 @@ describe("Transactions", () => {
     });
 
     it("renders tab for accountId=2 when passed in URL", async () => {
-      const qc = new QueryClient({
-        defaultOptions: { queries: { retry: false } },
-      });
-      render(
-        <QueryClientProvider client={qc}>
-          <MemoryRouter initialEntries={["/transactions?accountId=2"]}>
-            <Transactions />
-          </MemoryRouter>
-        </QueryClientProvider>,
-      );
-
-      await screen.findByTestId("tabs-desktop");
+      await renderTransactions("?accountId=2");
       expect(screen.getAllByTestId("tab-2")).toHaveLength(1);
     });
   });

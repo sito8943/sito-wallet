@@ -41,6 +41,10 @@ vi.mock("@sito/dashboard-app", () => ({
 
 vi.mock("lib", () => ({
   Tables: { Transactions: "transactions" },
+  TransactionType: {
+    Out: 0,
+    In: 1,
+  },
   TransactionDto: class {},
   CommonTransactionDto: class {},
   UpdateTransactionDto: class {},

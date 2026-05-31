@@ -18,6 +18,15 @@ const mockUseAuth = vi.fn(() => ({
 
 vi.mock("@sito/dashboard-app", () => ({
   useAuth: () => mockUseAuth(),
+  createPathMap: (
+    routes: Array<{ key: string; path?: string; children?: unknown[] }>,
+  ) =>
+    Object.fromEntries(
+      routes.map((route) => [route.key, route.path]),
+    ) as Record<string, string | undefined>,
+  filterSitemap: (routes: unknown) => routes,
+  findPathInSitemap: () => "",
+  flattenSitemap: () => [],
   FormDialog: ({
     children,
     open,
@@ -156,9 +165,31 @@ vi.mock("hooks", () => ({
   useCurrenciesCommon: () => mockCurrenciesCommon(),
 }));
 
+vi.mock("hooks/queries/useCurrenciesCommon", () => ({
+  useCurrenciesCommon: () => mockCurrenciesCommon(),
+}));
+
 vi.mock("lib", () => ({
   Tables: { Accounts: "accounts" },
   AccountType: { Debit: 0, Credit: 1, Savings: 2 },
+  AppRoutes: {
+    home: "/",
+    profile: "/profile",
+    users: "/users",
+    transactions: "/transactions",
+    transactionCategories: "/transaction-categories",
+    subscriptions: "/subscriptions",
+    subscriptionProviders: "/subscription-providers",
+    accounts: "/accounts",
+    currencies: "/currencies",
+    notFound: "*",
+    about: "/about-us",
+    cookiesPolicy: "/cookies-policy",
+    termsAndConditions: "/terms-and-conditions",
+    privacyPolicy: "/privacy-policy",
+  },
+  isAdminSession: (account?: { admin?: boolean | null }) =>
+    account?.admin === true,
 }));
 
 vi.mock("../utils", () => ({

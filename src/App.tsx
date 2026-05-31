@@ -5,7 +5,8 @@ import { SplashScreen } from "@sito/dashboard-app";
 import { UpdateDialog } from "components";
 
 // hooks
-import { useAppSession, useSeo } from "hooks";
+import { useAppSession } from "./hooks/useAppSession";
+import { useSeo } from "./hooks/useSeo";
 
 // routes
 import { Routes } from "./Routes";

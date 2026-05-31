@@ -10,6 +10,7 @@ const mockUseOnlineStatus = vi.fn();
 const mockReadStoredSessionFromSnapshot = vi.fn();
 const mockReadStoredRememberMe = vi.fn();
 const mockClearPersistedPublicSessionAccount = vi.fn();
+const mockUseSeo = vi.fn();
 
 vi.mock("@sito/dashboard-app", () => ({
   SplashScreen: () => <div data-testid="splash-screen" />,
@@ -26,6 +27,10 @@ vi.mock("@sito/dashboard-app", () => ({
 
 vi.mock("./hooks/useOnlineStatus", () => ({
   useOnlineStatus: () => mockUseOnlineStatus(),
+}));
+
+vi.mock("./hooks/useSeo", () => ({
+  useSeo: () => mockUseSeo(),
 }));
 
 vi.mock("providers", () => ({
@@ -100,6 +105,7 @@ describe("App auth bootstrap", () => {
     mockReadStoredSessionFromSnapshot.mockReset();
     mockReadStoredRememberMe.mockReset();
     mockClearPersistedPublicSessionAccount.mockReset();
+    mockUseSeo.mockReset();
   });
 
   it("rehydrates the stored session when booting offline", async () => {

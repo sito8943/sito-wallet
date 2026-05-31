@@ -42,6 +42,28 @@ import "./styles.css";
 
 export type { DashboardCardProps } from "./types";
 
+const resolveSavedConfig = <TForm extends FieldValues>(
+  dtoConfig: string | undefined,
+  data: TForm,
+  userId: number,
+  id: number,
+) => {
+  if (!dtoConfig) return "";
+
+  try {
+    const parsedDtoConfig = JSON.parse(dtoConfig);
+    const rawSubmitPayload = { ...data, userId, id };
+
+    if (JSON.stringify(parsedDtoConfig) === JSON.stringify(rawSubmitPayload)) {
+      return JSON.stringify(data);
+    }
+  } catch {
+    return dtoConfig;
+  }
+
+  return dtoConfig;
+};
+
 export const DashboardCard = <TForm extends FieldValues>(
   props: DashboardCardProps<TForm>,
 ) => {
@@ -114,7 +136,6 @@ export const DashboardCard = <TForm extends FieldValues>(
     queryKey: ["dashboards", "card-config", id],
     formToDto: (data: TForm) => formToDto({ ...data, userId: userId ?? 0, id }),
     mutationFn: async (data: UpdateDashboardCardConfigDto) => {
-      lastSubmittedConfigRef.current = data.config;
       return await manager.Dashboard.updateCardConfig(data);
     },
     onSuccess: () => {
@@ -125,6 +146,21 @@ export const DashboardCard = <TForm extends FieldValues>(
     onError: () =>
       showErrorNotification({ message: t("_accessibility:errors.500") }),
   });
+
+  const handleConfigSubmit = (data: TForm) => {
+    const dto = formToDto({
+      ...data,
+      userId: userId ?? 0,
+      id,
+    });
+    lastSubmittedConfigRef.current = resolveSavedConfig(
+      dto.config,
+      data,
+      userId ?? 0,
+      id,
+    );
+    return formProps.onSubmit(data);
+  };
 
   const [showFilters, setShowFilters] = useState(false);
 
@@ -174,7 +210,7 @@ export const DashboardCard = <TForm extends FieldValues>(
       {renderActiveFilters
         ? renderActiveFilters({
             formConfig,
-            onSubmit: (updated: TForm) => formProps.onSubmit(updated),
+            onSubmit: handleConfigSubmit,
           })
         : null}
 
@@ -184,6 +220,7 @@ export const DashboardCard = <TForm extends FieldValues>(
         open={showFilters}
         handleClose={() => setShowFilters(false)}
         {...formProps}
+        onSubmit={handleConfigSubmit}
       />
     </BaseCard>
   );

@@ -7,6 +7,10 @@ import {
   screen,
 } from "@testing-library/react";
 
+vi.mock("@use-gesture/react", () => ({
+  useDrag: () => () => ({}),
+}));
+
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key: string) => key,
@@ -14,6 +18,8 @@ vi.mock("react-i18next", () => ({
 }));
 
 vi.mock("@sito/dashboard-app", () => ({
+  classNames: (...classes: Array<string | false | null | undefined>) =>
+    classes.filter(Boolean).join(" "),
   Actions: ({ actions }: { actions: unknown[] }) => (
     <div data-testid="actions-count">{actions.length}</div>
   ),

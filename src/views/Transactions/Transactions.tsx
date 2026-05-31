@@ -439,12 +439,7 @@ export function Transactions() {
         { replace: true },
       );
     },
-    [
-      location.pathname,
-      location.search,
-      navigate,
-      resetTransactionSwipe,
-    ],
+    [location.pathname, location.search, navigate, resetTransactionSwipe],
   );
 
   const handleOpenWeeklyTransactions = useCallback(

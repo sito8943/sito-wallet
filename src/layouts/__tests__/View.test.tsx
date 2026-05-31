@@ -144,6 +144,77 @@ vi.mock("components", () => ({
   OfflineBanner: () => <div data-testid="offline-banner" />,
 }));
 
+vi.mock("lib", () => {
+  const UserEntityConfigKey = {
+    Currencies: "currencies",
+    Accounts: "accounts",
+    Transactions: "transactions",
+    Subscriptions: "subscriptions",
+  } as const;
+
+  const USER_ENTITY_CONFIG_KEYS = [
+    UserEntityConfigKey.Currencies,
+    UserEntityConfigKey.Accounts,
+    UserEntityConfigKey.Transactions,
+    UserEntityConfigKey.Subscriptions,
+  ];
+
+  return {
+    AppRoutes: {
+      signIn: "/auth/sign-in",
+      subscriptionNew: "/subscriptions/new",
+      subscriptionEdit: "/subscriptions/:subscriptionId/edit",
+      signUp: "/auth/sign-up",
+      signUpSuccess: "/auth/sign-up-success",
+      resetPassword: "/auth/reset-password",
+      updatePassword: "/auth/update-password",
+      recovery: "/auth/recovery",
+      confirmEmailSuccess: "/auth/confirm-email-success",
+      confirmEmailError: "/auth/confirm-email-error",
+      signOut: "/sign-out",
+      home: "/",
+      transactions: "/transactions",
+      transactionCategories: "/transaction-categories",
+      subscriptions: "/subscriptions",
+      subscriptionProviders: "/subscription-providers",
+      accounts: "/accounts",
+      currencies: "/currencies",
+      profile: "/profile",
+      users: "/users",
+      about: "/about-us",
+      cookiesPolicy: "/cookies-policy",
+      privacyPolicy: "/privacy-policy",
+      termsAndConditions: "/terms-and-conditions",
+      notFound: "*",
+    },
+    EntityName: {
+      Transaction: "transaction",
+      Subscription: "subscription",
+    },
+    UserEntityConfigKey,
+    USER_ENTITY_CONFIG_KEYS,
+    configsToEnabledEntityKeys: (
+      configs: Array<{ key: string; enabled?: boolean | null }>,
+    ) =>
+      configs
+        .filter((config) => config.enabled !== false)
+        .map((config) => config.key),
+    entityKeysToConfigs: (keys: string[]) =>
+      keys.map((key) => ({ key, enabled: true })),
+    resolveRequiredEntityKeys: (keys: string[]) => {
+      const required = [
+        UserEntityConfigKey.Currencies,
+        UserEntityConfigKey.Accounts,
+      ];
+
+      return Array.from(new Set([...required, ...keys]));
+    },
+    userEntityConfigsToFeaturePayload: (configs: unknown[]) => ({ configs }),
+    isAnonymousVisitorSession: (account?: { id?: number | null } | null) =>
+      !account?.id,
+  };
+});
+
 vi.mock("providers", () => ({
   useFeatureFlags: () => ({
     applyFeaturePayload: mockApplyFeaturePayload,
@@ -208,13 +279,15 @@ function renderView({
   email = "user@example.com",
   onboardingDone = false,
   initialPath = "/",
+  accountId = 99,
 }: {
   email?: string | null;
   onboardingDone?: boolean;
   initialPath?: string;
+  accountId?: number;
 } = {}) {
   mockUseAuth.mockReturnValue({
-    account: email === null ? null : { email },
+    account: email === null ? null : { id: accountId, email },
   });
   mockFromLocal.mockImplementation((key: string) => {
     if (key === "test-onboarding") return onboardingDone ? true : null;
