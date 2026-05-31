@@ -26,6 +26,8 @@ export interface TransactionCardPropsType extends TransactionDto {
   selected?: boolean;
   onSelect?: (id: number) => void;
   onLongPress?: (id: number) => void;
+  swipeDeleteOpen?: boolean;
+  onSwipeDeleteTrigger?: (id: number) => void;
 }
 
 export interface TransactionFormType

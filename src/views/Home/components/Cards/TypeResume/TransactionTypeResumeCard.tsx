@@ -142,7 +142,9 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
                 {isLoading ? "…" : (data?.total ?? 0)}{" "}
                 <Currency
                   name={currencyName ?? formConfig.account?.currency?.name}
-                  symbol={currencySymbol ?? formConfig.account?.currency?.symbol}
+                  symbol={
+                    currencySymbol ?? formConfig.account?.currency?.symbol
+                  }
                 />
               </p>
               <div className="type-resume-actions">

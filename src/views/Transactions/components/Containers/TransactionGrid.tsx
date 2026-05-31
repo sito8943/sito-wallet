@@ -42,10 +42,13 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
     categories,
     getActions,
     editAction,
+    swipedTransactionId = null,
     hideDeletedEntities = false,
     showFilters = false,
     setShowFilters,
     onAddTransaction,
+    onSwipeDeleteTrigger,
+    onSwipeDeleteReset,
   } = props;
 
   const {
@@ -82,12 +85,15 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
     [items, selectedTransactionsSet],
   );
   const selectionMode = selectedRowsData.length > 0;
+  const activeSwipedTransactionId = selectionMode ? null : swipedTransactionId;
 
   const handleClearSelection = useCallback(() => {
     setSelectedTransactions([]);
-  }, []);
+    onSwipeDeleteReset?.();
+  }, [onSwipeDeleteReset]);
 
   const handleToggleSelection = useCallback((transactionId: number) => {
+    onSwipeDeleteReset?.();
     setSelectedTransactions((previous) => {
       if (previous.includes(transactionId)) {
         return previous.filter((id) => id !== transactionId);
@@ -95,14 +101,15 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
 
       return [...previous, transactionId];
     });
-  }, []);
+  }, [onSwipeDeleteReset]);
 
   const handleLongPressSelection = useCallback((transactionId: number) => {
+    onSwipeDeleteReset?.();
     setSelectedTransactions((previous) => {
       if (previous.includes(transactionId)) return previous;
       return [...previous, transactionId];
     });
-  }, []);
+  }, [onSwipeDeleteReset]);
 
   const multiActions = useMemo(() => {
     if (!selectedRowsData.length) return [];
@@ -235,6 +242,8 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
             selected={selectedTransactionsSet.has(transaction.id)}
             onSelect={handleToggleSelection}
             onLongPress={handleLongPressSelection}
+            swipeDeleteOpen={activeSwipedTransactionId === transaction.id}
+            onSwipeDeleteTrigger={onSwipeDeleteTrigger}
             {...transaction}
           />
         )}

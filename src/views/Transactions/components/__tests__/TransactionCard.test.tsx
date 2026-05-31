@@ -7,6 +7,29 @@ import {
   screen,
 } from "@testing-library/react";
 
+let latestDragHandler:
+  | ((state: {
+      down: boolean;
+      movement: [number, number];
+      last: boolean;
+      cancel: () => void;
+    }) => void)
+  | null = null;
+
+vi.mock("@use-gesture/react", () => ({
+  useDrag: (
+    handler: (state: {
+      down: boolean;
+      movement: [number, number];
+      last: boolean;
+      cancel: () => void;
+    }) => void,
+  ) => {
+    latestDragHandler = handler;
+    return () => ({});
+  },
+}));
+
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key: string) => key,
@@ -14,6 +37,8 @@ vi.mock("react-i18next", () => ({
 }));
 
 vi.mock("@sito/dashboard-app", () => ({
+  classNames: (...classes: Array<string | false | null | undefined>) =>
+    classes.filter(Boolean).join(" "),
   useTimeAge: () => ({
     timeAge: () => "1h",
   }),
@@ -98,6 +123,7 @@ const baseTransaction = {
 
 afterEach(() => {
   vi.useRealTimers();
+  latestDragHandler = null;
   Object.defineProperty(window.navigator, "maxTouchPoints", {
     configurable: true,
     value: 0,
@@ -186,5 +212,62 @@ describe("TransactionCard", () => {
     fireEvent(button, contextMenuEvent);
 
     expect(contextMenuEvent.defaultPrevented).toBe(true);
+  });
+
+  it("shows swipe delete affordance and triggers delete at 50% width", () => {
+    Object.defineProperty(window.navigator, "maxTouchPoints", {
+      configurable: true,
+      value: 1,
+    });
+
+    const onDelete = vi.fn();
+
+    render(
+      <TransactionCard
+        {...baseTransaction}
+        actions={[
+          {
+            id: "delete",
+            onClick: onDelete,
+          },
+        ]}
+        onClick={() => undefined}
+      />,
+    );
+
+    const button = screen.getByRole("button");
+    const swipeShell = button.parentElement as HTMLDivElement;
+
+    Object.defineProperty(swipeShell, "offsetWidth", {
+      configurable: true,
+      value: 100,
+    });
+
+    act(() => {
+      latestDragHandler?.({
+        down: true,
+        movement: [40, 0],
+        last: false,
+        cancel: vi.fn(),
+      });
+    });
+
+    expect(
+      document.querySelector(".transaction-card-swipe-delete"),
+    ).toHaveStyle({ width: "40px" });
+    expect(onDelete).not.toHaveBeenCalled();
+
+    act(() => {
+      latestDragHandler?.({
+        down: true,
+        movement: [60, 0],
+        last: false,
+        cancel: vi.fn(),
+      });
+    });
+
+    expect(onDelete).toHaveBeenCalledWith(
+      expect.objectContaining({ id: baseTransaction.id }),
+    );
   });
 });

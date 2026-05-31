@@ -14,9 +14,12 @@ export type TransactionContainerPropsType = {
   categories: CommonTransactionCategoryDto[];
   getActions: (record: TransactionDto) => ActionType<TransactionDto>[];
   editAction: UseActionDialog<TransactionDto, TransactionFormType>;
+  swipedTransactionId?: number | null;
   hideDeletedEntities?: boolean;
   showFilters?: boolean;
   setShowFilters?: Dispatch<SetStateAction<boolean>>;
   onCategoryClick?: (id: number) => void;
   onAddTransaction?: () => void;
+  onSwipeDeleteTrigger?: (id: number) => void;
+  onSwipeDeleteReset?: () => void;
 };

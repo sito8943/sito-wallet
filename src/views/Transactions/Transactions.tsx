@@ -115,6 +115,9 @@ export function Transactions() {
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   const [showFilters, setShowFilters] = useState(false);
+  const [swipedTransactionId, setSwipedTransactionId] = useState<number | null>(
+    null,
+  );
   const [weeklyTransactionsDialog, setWeeklyTransactionsDialog] = useState<{
     open: boolean;
     type: TransactionType;
@@ -375,10 +378,13 @@ export function Transactions() {
           categories={parsedCategories ?? []}
           getActions={getGridActions}
           editAction={editTransaction}
+          swipedTransactionId={swipedTransactionId}
           hideDeletedEntities={hideDeletedEntities}
           showFilters={showFilters}
           setShowFilters={setShowFilters}
           onAddTransaction={openAddTransaction}
+          onSwipeDeleteTrigger={setSwipedTransactionId}
+          onSwipeDeleteReset={() => setSwipedTransactionId(null)}
         />
       ),
     })) ?? []) as TabsType[];
@@ -391,6 +397,7 @@ export function Transactions() {
     parsedCategories,
     showFilters,
     setShowFilters,
+    swipedTransactionId,
   ]);
 
   const pageToolbar = useMemo(() => {
@@ -414,6 +421,8 @@ export function Transactions() {
   const handleAccountChange = useCallback(
     (accountId: number) => {
       if (!accountId) return;
+
+      setSwipedTransactionId(null);
 
       const nextSearch = new URLSearchParams(location.search);
       nextSearch.set(RouteQueryParam.accountId, String(accountId));
@@ -452,6 +461,11 @@ export function Transactions() {
       open: false,
     }));
   }, []);
+
+  const handleDeleteDialogClose = useCallback(() => {
+    setSwipedTransactionId(null);
+    deleteTransaction.handleClose();
+  }, [deleteTransaction]);
 
   return (
     <Page
@@ -519,7 +533,10 @@ export function Transactions() {
       <AddAccountDialog {...addAccount} />
       <EditTransactionDialog {...editTransaction} />
       <AddTransactionDialog {...addTransaction} />
-      <ConfirmationDialog {...deleteTransaction} />
+      <ConfirmationDialog
+        {...deleteTransaction}
+        handleClose={handleDeleteDialogClose}
+      />
       <ConfirmationDialog {...restoreTransaction} />
       <ImportDialog {...importTransactions} />
       <ExportDialog
