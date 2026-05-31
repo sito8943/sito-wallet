@@ -104,7 +104,7 @@ export const DashboardCard = <TForm extends FieldValues>(
     return () => clearTimeout(timer);
   }, [titleSuccess]);
 
-  const lastSubmittedConfigRef = useRef(config);
+  const submittedConfigStore = useRef(config ?? "");
 
   const updateTitle = useMutation<number, Error, UpdateDashboardCardTitleDto>({
     mutationFn: (data) => manager.Dashboard.updateCardTitle(data),
@@ -139,7 +139,7 @@ export const DashboardCard = <TForm extends FieldValues>(
       return await manager.Dashboard.updateCardConfig(data);
     },
     onSuccess: () => {
-      if (onConfigSaved) onConfigSaved(lastSubmittedConfigRef.current ?? "");
+      if (onConfigSaved) onConfigSaved(submittedConfigStore.current);
       setShowFilters(false);
     },
     onSuccessMessage: t("_accessibility:messages.saved"),
@@ -153,7 +153,7 @@ export const DashboardCard = <TForm extends FieldValues>(
       userId: userId ?? 0,
       id,
     });
-    lastSubmittedConfigRef.current = resolveSavedConfig(
+    submittedConfigStore.current = resolveSavedConfig(
       dto.config,
       data,
       userId ?? 0,
@@ -207,8 +207,11 @@ export const DashboardCard = <TForm extends FieldValues>(
         />
       </div>
 
+      {/* submittedConfigStore is only read/written inside the submit handler
+          and the mutation onSuccess callback, never during render. */}
       {renderActiveFilters
-        ? renderActiveFilters({
+        ? // eslint-disable-next-line react-hooks/refs
+          renderActiveFilters({
             formConfig,
             onSubmit: handleConfigSubmit,
           })

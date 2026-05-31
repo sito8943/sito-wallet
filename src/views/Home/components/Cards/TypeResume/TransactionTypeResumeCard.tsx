@@ -149,13 +149,13 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
               </p>
               <div className="type-resume-actions">
                 <IconButton
-                  onClick={addTransaction.openDialog}
+                  onClick={() => addTransaction.openDialog()}
                   icon={faAdd}
                   aria-label={t("_pages:transactions.add")}
                 />
                 <IconButton
                   disabled={isLoading || categories.length === 0}
-                  onClick={typeResumeDialog.openDialog}
+                  onClick={() => typeResumeDialog.openDialog()}
                   icon={faList}
                   aria-label={t(
                     "_pages:home.dashboard.transactionTypeResume.details.title",

@@ -3,5 +3,5 @@ import type { CommonCurrencyDto } from "lib";
 
 export interface CommonAccountDto extends BaseCommonEntityDto {
   name: string;
-  currency: CommonCurrencyDto;
+  currency: CommonCurrencyDto | null;
 }

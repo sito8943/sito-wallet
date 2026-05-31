@@ -133,7 +133,7 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
             {account && (
               <div className="current-balance-actions">
                 <IconButton
-                  onClick={addTransaction.openDialog}
+                  onClick={() => addTransaction.openDialog()}
                   icon={faAdd}
                   aria-label={t("_pages:transactions.add")}
                 />
