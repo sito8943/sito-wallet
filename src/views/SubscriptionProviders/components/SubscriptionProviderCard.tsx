@@ -36,6 +36,8 @@ export function SubscriptionProviderCard(
     selected,
     onSelect,
     onLongPress,
+    swipeDeleteOpen,
+    onSwipeDelete,
   } = props;
 
   const deleted = !!deletedAt;
@@ -73,6 +75,8 @@ export function SubscriptionProviderCard(
       onToggleSelection={() => onSelect?.(id)}
       onLongPressSelection={() => onLongPress?.(id)}
       actions={actions}
+      swipeDeleteOpen={swipeDeleteOpen}
+      onSwipeDelete={onSwipeDelete}
       className="subscription-provider-card-content"
       containerClassName="subscription-provider-card-container"
     >

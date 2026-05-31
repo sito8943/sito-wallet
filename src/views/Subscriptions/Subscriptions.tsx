@@ -28,6 +28,7 @@ import {
   useInfiniteSubscriptionsList,
   useMobileMultiSelection,
   useMobileNavbar,
+  useSwipeDeleteState,
 } from "hooks";
 import {
   useAddSubscriptionBillingLogDialog,
@@ -50,6 +51,7 @@ import type {
   ImportPreviewSubscriptionDto,
   SubscriptionDto,
 } from "lib";
+import { getDeleteAction } from "../../components/Card/utils";
 import {
   AppRoutes,
   Tables,
@@ -101,6 +103,9 @@ export function Subscriptions() {
     },
     ...SubscriptionsQueryKeys.all(),
   });
+  const subscriptionSwipeDelete = useSwipeDeleteState(
+    deleteSubscription.handleClose,
+  );
 
   const restoreSubscription = useRestoreDialog({
     mutationFn: async (ids) => {
@@ -161,6 +166,7 @@ export function Subscriptions() {
   const mobileSelection = useMobileMultiSelection<SubscriptionDto>({
     items,
     getActions,
+    onInteraction: subscriptionSwipeDelete.resetSwipe,
   });
 
   const pageToolbar = useMemo(
@@ -234,9 +240,12 @@ export function Subscriptions() {
               />
             }
             renderComponent={(subscription) => {
+              const actions = getActions(subscription);
+              const deleteAction = getDeleteAction(actions);
+
               return (
                 <SubscriptionCard
-                  actions={getActions(subscription)}
+                  actions={actions}
                   onClick={(id: number) =>
                     navigate(getSubscriptionEditRoute(id))
                   }
@@ -244,6 +253,18 @@ export function Subscriptions() {
                   selected={mobileSelection.isSelected(subscription.id)}
                   onSelect={mobileSelection.onToggleRowSelection}
                   onLongPress={mobileSelection.onLongPressRow}
+                  swipeDeleteOpen={
+                    !mobileSelection.selectionMode &&
+                    subscriptionSwipeDelete.swipedId === subscription.id
+                  }
+                  onSwipeDelete={
+                    deleteAction
+                      ? () => {
+                          subscriptionSwipeDelete.openSwipe(subscription.id);
+                          deleteAction.onClick(subscription);
+                        }
+                      : undefined
+                  }
                   {...subscription}
                 />
               );
@@ -251,7 +272,10 @@ export function Subscriptions() {
           />
 
           <AddSubscriptionBillingLogDialog {...addBillingLog} />
-          <ConfirmationDialog {...deleteSubscription} />
+          <ConfirmationDialog
+            {...deleteSubscription}
+            handleClose={subscriptionSwipeDelete.handleDialogClose}
+          />
           <ConfirmationDialog {...restoreSubscription} />
           <ImportDialog {...importSubscriptions} />
         </>

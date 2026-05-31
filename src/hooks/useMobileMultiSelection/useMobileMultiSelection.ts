@@ -15,7 +15,7 @@ import { getSharedMultiActions } from "./utils";
 export function useMobileMultiSelection<TRow extends BaseEntityDto>(
   props: UseMobileMultiSelectionPropsType<TRow>,
 ): UseMobileMultiSelectionReturnType<TRow> {
-  const { items, getActions } = props;
+  const { items, getActions, onInteraction } = props;
 
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
@@ -29,24 +29,33 @@ export function useMobileMultiSelection<TRow extends BaseEntityDto>(
   const selectionMode = selectedCount > 0;
 
   const clearSelection = useCallback(() => {
+    onInteraction?.();
     setSelectedIds([]);
-  }, []);
+  }, [onInteraction]);
 
-  const onToggleRowSelection = useCallback((id: number) => {
-    setSelectedIds((previous) => {
-      if (previous.includes(id)) {
-        return previous.filter((itemId) => itemId !== id);
-      }
-      return [...previous, id];
-    });
-  }, []);
+  const onToggleRowSelection = useCallback(
+    (id: number) => {
+      onInteraction?.();
+      setSelectedIds((previous) => {
+        if (previous.includes(id)) {
+          return previous.filter((itemId) => itemId !== id);
+        }
+        return [...previous, id];
+      });
+    },
+    [onInteraction],
+  );
 
-  const onLongPressRow = useCallback((id: number) => {
-    setSelectedIds((previous) => {
-      if (previous.includes(id)) return previous;
-      return [...previous, id];
-    });
-  }, []);
+  const onLongPressRow = useCallback(
+    (id: number) => {
+      onInteraction?.();
+      setSelectedIds((previous) => {
+        if (previous.includes(id)) return previous;
+        return [...previous, id];
+      });
+    },
+    [onInteraction],
+  );
 
   const multiActions = useMemo(
     () => getSharedMultiActions(selectedRows, getActions),

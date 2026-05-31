@@ -236,7 +236,7 @@ describe("TransactionCard", () => {
     );
 
     const button = screen.getByRole("button");
-    const swipeShell = button.parentElement as HTMLDivElement;
+    const swipeShell = button.parentElement?.parentElement as HTMLDivElement;
 
     Object.defineProperty(swipeShell, "offsetWidth", {
       configurable: true,
@@ -252,9 +252,9 @@ describe("TransactionCard", () => {
       });
     });
 
-    expect(
-      document.querySelector(".transaction-card-swipe-delete"),
-    ).toHaveStyle({ width: "40px" });
+    expect(document.querySelector(".swipe-delete-background")).toHaveStyle({
+      width: "40px",
+    });
     expect(onDelete).not.toHaveBeenCalled();
 
     act(() => {

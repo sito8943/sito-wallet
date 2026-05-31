@@ -22,6 +22,8 @@ export interface AccountCardPropsType extends Omit<
   selected?: boolean;
   onSelect?: (id: number) => void;
   onLongPress?: (id: number) => void;
+  swipeDeleteOpen?: boolean;
+  onSwipeDelete?: () => void;
   containerClassName?: string;
   showLastTransactions?: boolean;
   showTypeResume?: boolean;

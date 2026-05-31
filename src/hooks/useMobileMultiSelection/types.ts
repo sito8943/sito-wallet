@@ -3,6 +3,7 @@ import type { ActionType, BaseEntityDto } from "@sito/dashboard-app";
 export interface UseMobileMultiSelectionPropsType<TRow extends BaseEntityDto> {
   items: TRow[];
   getActions: (record: TRow) => ActionType<TRow>[];
+  onInteraction?: () => void;
 }
 
 export interface UseMobileMultiSelectionReturnType<TRow extends BaseEntityDto> {

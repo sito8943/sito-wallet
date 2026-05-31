@@ -17,6 +17,8 @@ export type ItemCardPropsType<TEntity extends BaseEntityDto> = {
   selected?: boolean;
   onToggleSelection?: () => void;
   onLongPressSelection?: () => void;
+  swipeDeleteOpen?: boolean;
+  onSwipeDelete?: () => void;
 };
 
 export type ItemCardTitlePropsType = {

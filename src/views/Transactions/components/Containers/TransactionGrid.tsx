@@ -30,6 +30,7 @@ import { useTransactionsMobileFiltersDialog } from "../../hooks";
 
 // lib
 import type { TransactionDto } from "lib";
+import { getDeleteAction } from "../../../../components/Card/utils";
 
 // styles
 import "./styles.css";
@@ -92,24 +93,30 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
     onSwipeDeleteReset?.();
   }, [onSwipeDeleteReset]);
 
-  const handleToggleSelection = useCallback((transactionId: number) => {
-    onSwipeDeleteReset?.();
-    setSelectedTransactions((previous) => {
-      if (previous.includes(transactionId)) {
-        return previous.filter((id) => id !== transactionId);
-      }
+  const handleToggleSelection = useCallback(
+    (transactionId: number) => {
+      onSwipeDeleteReset?.();
+      setSelectedTransactions((previous) => {
+        if (previous.includes(transactionId)) {
+          return previous.filter((id) => id !== transactionId);
+        }
 
-      return [...previous, transactionId];
-    });
-  }, [onSwipeDeleteReset]);
+        return [...previous, transactionId];
+      });
+    },
+    [onSwipeDeleteReset],
+  );
 
-  const handleLongPressSelection = useCallback((transactionId: number) => {
-    onSwipeDeleteReset?.();
-    setSelectedTransactions((previous) => {
-      if (previous.includes(transactionId)) return previous;
-      return [...previous, transactionId];
-    });
-  }, [onSwipeDeleteReset]);
+  const handleLongPressSelection = useCallback(
+    (transactionId: number) => {
+      onSwipeDeleteReset?.();
+      setSelectedTransactions((previous) => {
+        if (previous.includes(transactionId)) return previous;
+        return [...previous, transactionId];
+      });
+    },
+    [onSwipeDeleteReset],
+  );
 
   const multiActions = useMemo(() => {
     if (!selectedRowsData.length) return [];
@@ -234,19 +241,31 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
           void fetchNextPage();
         }}
         loadMoreComponent={<Loading />}
-        renderComponent={(transaction) => (
-          <TransactionCard
-            actions={getActions(transaction)}
-            onClick={(id: number) => editAction.openDialog(id)}
-            selectionMode={selectionMode}
-            selected={selectedTransactionsSet.has(transaction.id)}
-            onSelect={handleToggleSelection}
-            onLongPress={handleLongPressSelection}
-            swipeDeleteOpen={activeSwipedTransactionId === transaction.id}
-            onSwipeDeleteTrigger={onSwipeDeleteTrigger}
-            {...transaction}
-          />
-        )}
+        renderComponent={(transaction) => {
+          const actions = getActions(transaction);
+          const deleteAction = getDeleteAction(actions);
+
+          return (
+            <TransactionCard
+              actions={actions}
+              onClick={(id: number) => editAction.openDialog(id)}
+              selectionMode={selectionMode}
+              selected={selectedTransactionsSet.has(transaction.id)}
+              onSelect={handleToggleSelection}
+              onLongPress={handleLongPressSelection}
+              swipeDeleteOpen={activeSwipedTransactionId === transaction.id}
+              onSwipeDelete={
+                deleteAction
+                  ? () => {
+                      onSwipeDeleteTrigger?.(transaction.id);
+                      deleteAction.onClick(transaction);
+                    }
+                  : undefined
+              }
+              {...transaction}
+            />
+          );
+        }}
       />
     </>
   );

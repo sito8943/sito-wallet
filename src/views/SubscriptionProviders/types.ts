@@ -15,6 +15,8 @@ export interface SubscriptionProviderCardPropsType extends SubscriptionProviderD
   selected?: boolean;
   onSelect?: (id: number) => void;
   onLongPress?: (id: number) => void;
+  swipeDeleteOpen?: boolean;
+  onSwipeDelete?: () => void;
 }
 
 export interface SubscriptionProviderFormType extends FieldValues {

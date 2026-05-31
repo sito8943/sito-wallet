@@ -37,6 +37,7 @@ import {
   AccountsQueryKeys,
   useMobileNavbar,
   useMobileMultiSelection,
+  useSwipeDeleteState,
 } from "hooks";
 import {
   useAddAccountDialog,
@@ -52,6 +53,7 @@ import type {
   FilterAccountDto,
   ImportPreviewAccountDto,
 } from "lib";
+import { getDeleteAction } from "../../components/Card/utils";
 import {
   Tables,
   isFeatureDisabledBusinessError,
@@ -98,6 +100,7 @@ export function Accounts() {
     mutationFn: (data) => manager.Accounts.softDelete(data),
     ...AccountsQueryKeys.all(),
   });
+  const accountSwipeDelete = useSwipeDeleteState(deleteAccount.handleClose);
 
   const restoreAccount = useRestoreDialog({
     mutationFn: (data) => manager.Accounts.restore(data),
@@ -150,6 +153,7 @@ export function Accounts() {
   const mobileSelection = useMobileMultiSelection<AccountDto>({
     items,
     getActions,
+    onInteraction: accountSwipeDelete.resetSwipe,
   });
 
   const pageToolbar = useMemo(() => {
@@ -215,22 +219,42 @@ export function Accounts() {
                 ]}
               />
             }
-            renderComponent={(account) => (
-              <AccountCard
-                actions={getActions(account)}
-                onClick={(id: number) => editAccount.openDialog(id)}
-                selectionMode={mobileSelection.selectionMode}
-                selected={mobileSelection.isSelected(account.id)}
-                onSelect={mobileSelection.onToggleRowSelection}
-                onLongPress={mobileSelection.onLongPressRow}
-                {...account}
-              />
-            )}
+            renderComponent={(account) => {
+              const actions = getActions(account);
+              const deleteAction = getDeleteAction(actions);
+
+              return (
+                <AccountCard
+                  actions={actions}
+                  onClick={(id: number) => editAccount.openDialog(id)}
+                  selectionMode={mobileSelection.selectionMode}
+                  selected={mobileSelection.isSelected(account.id)}
+                  onSelect={mobileSelection.onToggleRowSelection}
+                  onLongPress={mobileSelection.onLongPressRow}
+                  swipeDeleteOpen={
+                    !mobileSelection.selectionMode &&
+                    accountSwipeDelete.swipedId === account.id
+                  }
+                  onSwipeDelete={
+                    deleteAction
+                      ? () => {
+                          accountSwipeDelete.openSwipe(account.id);
+                          deleteAction.onClick(account);
+                        }
+                      : undefined
+                  }
+                  {...account}
+                />
+              );
+            }}
           />
           {/* Dialogs */}
           <AddAccountDialog {...addAccount} />
           <EditAccountDialog {...editAccount} />
-          <ConfirmationDialog {...deleteAccount} />
+          <ConfirmationDialog
+            {...deleteAccount}
+            handleClose={accountSwipeDelete.handleDialogClose}
+          />
           <ConfirmationDialog {...restoreAccount} />
           <ImportDialog {...importAccounts} />
           <AdjustBalanceDialog {...adjustBalance} />

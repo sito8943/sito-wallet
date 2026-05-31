@@ -20,6 +20,8 @@ export interface SubscriptionCardPropsType extends SubscriptionDto {
   selected?: boolean;
   onSelect?: (id: number) => void;
   onLongPress?: (id: number) => void;
+  swipeDeleteOpen?: boolean;
+  onSwipeDelete?: () => void;
 }
 
 export interface SubscriptionFormType

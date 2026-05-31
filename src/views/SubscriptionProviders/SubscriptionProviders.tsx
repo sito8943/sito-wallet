@@ -28,6 +28,7 @@ import {
   useInfiniteSubscriptionProvidersList,
   useMobileMultiSelection,
   useMobileNavbar,
+  useSwipeDeleteState,
 } from "hooks";
 import { MobileSelectionBar } from "components";
 import { useManager, useRegisterBottomNavAction } from "providers";
@@ -37,6 +38,7 @@ import type {
   ImportPreviewSubscriptionProviderDto,
   SubscriptionProviderDto,
 } from "lib";
+import { getDeleteAction } from "../../components/Card/utils";
 import {
   Tables,
   TablesCamelCase,
@@ -99,6 +101,9 @@ export function SubscriptionProviders() {
     },
     ...SubscriptionProvidersQueryKeys.all(),
   });
+  const subscriptionProviderSwipeDelete = useSwipeDeleteState(
+    deleteSubscriptionProvider.handleClose,
+  );
 
   const restoreSubscriptionProvider = useRestoreDialog({
     mutationFn: async (ids) => {
@@ -165,6 +170,7 @@ export function SubscriptionProviders() {
   const mobileSelection = useMobileMultiSelection<SubscriptionProviderDto>({
     items,
     getActions,
+    onInteraction: subscriptionProviderSwipeDelete.resetSwipe,
   });
 
   const pageToolbar = useMemo(
@@ -253,24 +259,47 @@ export function SubscriptionProviders() {
                 ]}
               />
             }
-            renderComponent={(subscriptionProvider) => (
-              <SubscriptionProviderCard
-                actions={getActions(subscriptionProvider)}
-                onClick={(id: number) =>
-                  editSubscriptionProvider.openDialog(id)
-                }
-                selectionMode={mobileSelection.selectionMode}
-                selected={mobileSelection.isSelected(subscriptionProvider.id)}
-                onSelect={mobileSelection.onToggleRowSelection}
-                onLongPress={mobileSelection.onLongPressRow}
-                {...subscriptionProvider}
-              />
-            )}
+            renderComponent={(subscriptionProvider) => {
+              const actions = getActions(subscriptionProvider);
+              const deleteAction = getDeleteAction(actions);
+
+              return (
+                <SubscriptionProviderCard
+                  actions={actions}
+                  onClick={(id: number) =>
+                    editSubscriptionProvider.openDialog(id)
+                  }
+                  selectionMode={mobileSelection.selectionMode}
+                  selected={mobileSelection.isSelected(subscriptionProvider.id)}
+                  onSelect={mobileSelection.onToggleRowSelection}
+                  onLongPress={mobileSelection.onLongPressRow}
+                  swipeDeleteOpen={
+                    !mobileSelection.selectionMode &&
+                    subscriptionProviderSwipeDelete.swipedId ===
+                      subscriptionProvider.id
+                  }
+                  onSwipeDelete={
+                    deleteAction
+                      ? () => {
+                          subscriptionProviderSwipeDelete.openSwipe(
+                            subscriptionProvider.id,
+                          );
+                          deleteAction.onClick(subscriptionProvider);
+                        }
+                      : undefined
+                  }
+                  {...subscriptionProvider}
+                />
+              );
+            }}
           />
 
           <AddSubscriptionProviderDialog {...addSubscriptionProvider} />
           <EditSubscriptionProviderDialog {...editSubscriptionProvider} />
-          <ConfirmationDialog {...deleteSubscriptionProvider} />
+          <ConfirmationDialog
+            {...deleteSubscriptionProvider}
+            handleClose={subscriptionProviderSwipeDelete.handleDialogClose}
+          />
           <ConfirmationDialog {...restoreSubscriptionProvider} />
           <ImportDialog {...importSubscriptionProviders} />
           <AddPrefabSubscriptionProvidersDialog

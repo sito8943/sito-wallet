@@ -2,22 +2,17 @@ import { useCallback, useEffect, useRef } from "react";
 import type { MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 
-// icons
 import { faCircle, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// components
-import { ItemCardTitle } from "./ItemCardTitle";
-
-// @sito/dashboard-app
 import type { BaseEntityDto } from "@sito/dashboard-app";
 import { Actions, classNames } from "@sito/dashboard-app";
 
-// types
+import { ItemCardTitle } from "./ItemCardTitle";
+import { SwipeToDelete } from "./SwipeToDelete";
 import type { ItemCardPropsType } from "./types.ts";
-import { shouldPreventMobileContextMenu } from "./utils";
+import { getDeleteAction, shouldPreventMobileContextMenu } from "./utils";
 
-// styles
 import "./styles.css";
 
 export function ItemCard<TRow extends BaseEntityDto>(
@@ -39,10 +34,13 @@ export function ItemCard<TRow extends BaseEntityDto>(
     selected = false,
     onToggleSelection,
     onLongPressSelection,
+    swipeDeleteOpen = false,
+    onSwipeDelete,
     ...rest
   } = props;
   const touchTimeoutRef = useRef<number | null>(null);
   const longPressTriggeredRef = useRef(false);
+  const deleteAction = getDeleteAction(actions);
 
   const clearTouchTimeout = useCallback(() => {
     if (touchTimeoutRef.current === null) return;
@@ -93,59 +91,66 @@ export function ItemCard<TRow extends BaseEntityDto>(
     !!onClick || !!onToggleSelection || !!onLongPressSelection;
 
   return (
-    <div
-      className={classNames(
-        "item-card group animated",
-        deleted
-          ? "item-card--deleted"
-          : selectionMode
-            ? selected
-              ? "item-card--selected base-border"
-              : "item-card--selectable"
-            : "item-card--idle base-border",
-        containerClassName,
-      )}
+    <SwipeToDelete
+      enabled={!!deleteAction && !!onSwipeDelete && !deleted && !selectionMode}
+      deleteOpen={swipeDeleteOpen}
+      onDeleteTrigger={() => onSwipeDelete?.()}
+      onSwipeStart={clearTouchTimeout}
     >
       <div
         className={classNames(
-          "item-card-content",
-          !deleted && hasInteractions && "item-card-content--clickable",
-          className,
+          "item-card group animated",
+          deleted
+            ? "item-card--deleted"
+            : selectionMode
+              ? selected
+                ? "item-card--selected base-border"
+                : "item-card--selectable"
+              : "item-card--idle base-border",
+          containerClassName,
         )}
-        onClick={handleClick}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={clearTouchTimeout}
-        onTouchCancel={clearTouchTimeout}
-        onTouchMove={clearTouchTimeout}
-        onContextMenu={handleContextMenu}
-        {...rest}
-        aria-label={
-          selectionMode
-            ? t("_accessibility:components.table.selectRow")
-            : (ariaLabel ?? name)
-        }
-        aria-pressed={selectionMode ? selected : undefined}
       >
-        {selectionMode && !deleted ? (
-          <span
-            className={classNames(
-              "item-card-selection-indicator",
-              selected
-                ? "item-card-selection-indicator--selected"
-                : "item-card-selection-indicator--idle",
-            )}
-          >
-            <FontAwesomeIcon icon={selected ? faCircleCheck : faCircle} />
-          </span>
-        ) : null}
-        {typeof title === "string" || typeof title === "number" ? (
-          <ItemCardTitle>{title}</ItemCardTitle>
-        ) : (
-          title
-        )}
-        {children}
+        <div
+          className={classNames(
+            "item-card-content",
+            !deleted && hasInteractions && "item-card-content--clickable",
+            className,
+          )}
+          onClick={handleClick}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={clearTouchTimeout}
+          onTouchCancel={clearTouchTimeout}
+          onTouchMove={clearTouchTimeout}
+          onContextMenu={handleContextMenu}
+          {...rest}
+          aria-label={
+            selectionMode
+              ? t("_accessibility:components.table.selectRow")
+              : (ariaLabel ?? name)
+          }
+          aria-pressed={selectionMode ? selected : undefined}
+        >
+          {selectionMode && !deleted ? (
+            <span
+              className={classNames(
+                "item-card-selection-indicator",
+                selected
+                  ? "item-card-selection-indicator--selected"
+                  : "item-card-selection-indicator--idle",
+              )}
+            >
+              <FontAwesomeIcon icon={selected ? faCircleCheck : faCircle} />
+            </span>
+          ) : null}
+          {typeof title === "string" || typeof title === "number" ? (
+            <ItemCardTitle>{title}</ItemCardTitle>
+          ) : (
+            title
+          )}
+          {children}
+        </div>
+        <Actions actions={selectionMode ? [] : actions} />
       </div>
-      <Actions actions={selectionMode ? [] : actions} />
-    </div>
+    </SwipeToDelete>
   );
 }

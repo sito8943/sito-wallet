@@ -43,6 +43,8 @@ export function TransactionCategoryCard(
     deletedAt,
     color,
     auto,
+    swipeDeleteOpen,
+    onSwipeDelete,
   } = props;
   const deleted = !!deletedAt;
   const typeValue = type ?? TransactionType.Out;
@@ -110,6 +112,8 @@ export function TransactionCategoryCard(
       onToggleSelection={() => onSelect?.(id)}
       onLongPressSelection={() => onLongPress?.(id)}
       actions={actions}
+      swipeDeleteOpen={swipeDeleteOpen}
+      onSwipeDelete={onSwipeDelete}
       className="transaction-category-card-content"
       containerClassName="transaction-category-card-container"
     >

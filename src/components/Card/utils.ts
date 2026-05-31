@@ -1,5 +1,18 @@
+import type { ActionType, BaseEntityDto } from "@sito/dashboard-app";
+
 const MOBILE_CONTEXT_MENU_MEDIA_QUERY = "(pointer: coarse)";
 const MOBILE_VIEWPORT_MEDIA_QUERY = "(max-width: 640px)";
+
+export function getDeleteAction<TRow extends BaseEntityDto>(
+  actions: ActionType<TRow>[],
+): ActionType<TRow> | undefined {
+  return actions.find(
+    (action) =>
+      String(action.id).toLowerCase() === "delete" &&
+      !action.hidden &&
+      !action.disabled,
+  );
+}
 
 export function isCoarsePointerDevice() {
   if (typeof window === "undefined") return false;

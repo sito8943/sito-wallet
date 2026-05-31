@@ -40,6 +40,7 @@ import {
   TransactionsQueryKeys,
   useMobileNavbar,
   usePersistedTableOptions,
+  useSwipeDeleteState,
 } from "hooks";
 import { useAccountsList } from "../../hooks/queries/useAccountsList";
 import { useHideDeletedEntitiesPreference } from "../../hooks/queries/useHideDeletedEntitiesPreference";
@@ -115,9 +116,6 @@ export function Transactions() {
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   const [showFilters, setShowFilters] = useState(false);
-  const [swipedTransactionId, setSwipedTransactionId] = useState<number | null>(
-    null,
-  );
   const [weeklyTransactionsDialog, setWeeklyTransactionsDialog] = useState<{
     open: boolean;
     type: TransactionType;
@@ -206,6 +204,10 @@ export function Transactions() {
     },
     ...TransactionsQueryKeys.all(),
   });
+  const transactionSwipeDelete = useSwipeDeleteState(
+    deleteTransaction.handleClose,
+  );
+  const { resetSwipe: resetTransactionSwipe } = transactionSwipeDelete;
 
   const restoreTransaction = useRestoreDialog({
     mutationFn: (data) => manager.Transactions.restore(data),
@@ -378,13 +380,13 @@ export function Transactions() {
           categories={parsedCategories ?? []}
           getActions={getGridActions}
           editAction={editTransaction}
-          swipedTransactionId={swipedTransactionId}
+          swipedTransactionId={transactionSwipeDelete.swipedId}
           hideDeletedEntities={hideDeletedEntities}
           showFilters={showFilters}
           setShowFilters={setShowFilters}
           onAddTransaction={openAddTransaction}
-          onSwipeDeleteTrigger={setSwipedTransactionId}
-          onSwipeDeleteReset={() => setSwipedTransactionId(null)}
+          onSwipeDeleteTrigger={transactionSwipeDelete.openSwipe}
+          onSwipeDeleteReset={resetTransactionSwipe}
         />
       ),
     })) ?? []) as TabsType[];
@@ -397,7 +399,9 @@ export function Transactions() {
     parsedCategories,
     showFilters,
     setShowFilters,
-    swipedTransactionId,
+    transactionSwipeDelete.openSwipe,
+    resetTransactionSwipe,
+    transactionSwipeDelete.swipedId,
   ]);
 
   const pageToolbar = useMemo(() => {
@@ -422,7 +426,7 @@ export function Transactions() {
     (accountId: number) => {
       if (!accountId) return;
 
-      setSwipedTransactionId(null);
+      resetTransactionSwipe();
 
       const nextSearch = new URLSearchParams(location.search);
       nextSearch.set(RouteQueryParam.accountId, String(accountId));
@@ -435,7 +439,12 @@ export function Transactions() {
         { replace: true },
       );
     },
-    [location.pathname, location.search, navigate],
+    [
+      location.pathname,
+      location.search,
+      navigate,
+      resetTransactionSwipe,
+    ],
   );
 
   const handleOpenWeeklyTransactions = useCallback(
@@ -461,11 +470,6 @@ export function Transactions() {
       open: false,
     }));
   }, []);
-
-  const handleDeleteDialogClose = useCallback(() => {
-    setSwipedTransactionId(null);
-    deleteTransaction.handleClose();
-  }, [deleteTransaction]);
 
   return (
     <Page
@@ -535,7 +539,7 @@ export function Transactions() {
       <AddTransactionDialog {...addTransaction} />
       <ConfirmationDialog
         {...deleteTransaction}
-        handleClose={handleDeleteDialogClose}
+        handleClose={transactionSwipeDelete.handleDialogClose}
       />
       <ConfirmationDialog {...restoreTransaction} />
       <ImportDialog {...importTransactions} />

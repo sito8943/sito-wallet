@@ -25,6 +25,8 @@ export interface CurrencyCardPropsType extends CurrencyDto {
   selected?: boolean;
   onSelect?: (id: number) => void;
   onLongPress?: (id: number) => void;
+  swipeDeleteOpen?: boolean;
+  onSwipeDelete?: () => void;
 }
 
 export interface CurrencyFormType

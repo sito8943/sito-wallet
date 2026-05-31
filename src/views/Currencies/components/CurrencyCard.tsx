@@ -24,6 +24,8 @@ export function CurrencyCard(props: CurrencyCardPropsType) {
     description,
     symbol,
     deletedAt,
+    swipeDeleteOpen,
+    onSwipeDelete,
   } = props;
   const deleted = !!deletedAt;
   const parsedDescription =
@@ -54,6 +56,8 @@ export function CurrencyCard(props: CurrencyCardPropsType) {
       onToggleSelection={() => onSelect?.(id)}
       onLongPressSelection={() => onLongPress?.(id)}
       actions={actions}
+      swipeDeleteOpen={swipeDeleteOpen}
+      onSwipeDelete={onSwipeDelete}
       className="currency-card-content"
       containerClassName="currency-card-container"
     >

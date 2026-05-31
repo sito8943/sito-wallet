@@ -31,6 +31,8 @@ export function SubscriptionCard(props: SubscriptionCardPropsType) {
     selected,
     onSelect,
     onLongPress,
+    swipeDeleteOpen,
+    onSwipeDelete,
   } = props;
 
   const parsedDescription =
@@ -67,6 +69,8 @@ export function SubscriptionCard(props: SubscriptionCardPropsType) {
       onToggleSelection={() => onSelect?.(id)}
       onLongPressSelection={() => onLongPress?.(id)}
       actions={actions}
+      swipeDeleteOpen={swipeDeleteOpen}
+      onSwipeDelete={onSwipeDelete}
       className="subscription-card-content"
     >
       <p

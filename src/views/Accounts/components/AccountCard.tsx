@@ -46,6 +46,8 @@ export function AccountCard(props: AccountCardPropsType) {
     showTypeResume,
     showCurrency = true,
     hideDescription = false,
+    swipeDeleteOpen,
+    onSwipeDelete,
   } = props;
   const deleted = !!deletedAt;
 
@@ -76,6 +78,8 @@ export function AccountCard(props: AccountCardPropsType) {
           : undefined
       }
       actions={actions}
+      swipeDeleteOpen={swipeDeleteOpen}
+      onSwipeDelete={onSwipeDelete}
       containerClassName={containerClassName ?? "account-card-container"}
     >
       {!hideDescription && (

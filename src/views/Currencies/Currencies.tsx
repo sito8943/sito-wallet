@@ -41,6 +41,7 @@ import {
   CurrenciesQueryKeys,
   useMobileNavbar,
   useMobileMultiSelection,
+  useSwipeDeleteState,
 } from "hooks";
 import {
   useAddCurrency,
@@ -54,6 +55,7 @@ import type {
   FilterCurrencyDto,
   ImportPreviewCurrencyDto,
 } from "lib";
+import { getDeleteAction } from "../../components/Card/utils";
 import {
   Tables,
   isFeatureDisabledBusinessError,
@@ -97,6 +99,7 @@ export function Currencies() {
     mutationFn: (data) => manager.Currencies.softDelete(data),
     ...CurrenciesQueryKeys.all(),
   });
+  const currencySwipeDelete = useSwipeDeleteState(deleteCurrency.handleClose);
 
   const restoreCurrency = useRestoreDialog({
     mutationFn: (data) => manager.Currencies.restore(data),
@@ -142,6 +145,7 @@ export function Currencies() {
   const mobileSelection = useMobileMultiSelection<CurrencyDto>({
     items,
     getActions,
+    onInteraction: currencySwipeDelete.resetSwipe,
   });
 
   const pageToolbar = useMemo(() => {
@@ -213,22 +217,42 @@ export function Currencies() {
                 ]}
               />
             }
-            renderComponent={(account) => (
-              <CurrencyCard
-                actions={getActions(account)}
-                onClick={(id: number) => editCurrency.openDialog(id)}
-                selectionMode={mobileSelection.selectionMode}
-                selected={mobileSelection.isSelected(account.id)}
-                onSelect={mobileSelection.onToggleRowSelection}
-                onLongPress={mobileSelection.onLongPressRow}
-                {...account}
-              />
-            )}
+            renderComponent={(account) => {
+              const actions = getActions(account);
+              const deleteAction = getDeleteAction(actions);
+
+              return (
+                <CurrencyCard
+                  actions={actions}
+                  onClick={(id: number) => editCurrency.openDialog(id)}
+                  selectionMode={mobileSelection.selectionMode}
+                  selected={mobileSelection.isSelected(account.id)}
+                  onSelect={mobileSelection.onToggleRowSelection}
+                  onLongPress={mobileSelection.onLongPressRow}
+                  swipeDeleteOpen={
+                    !mobileSelection.selectionMode &&
+                    currencySwipeDelete.swipedId === account.id
+                  }
+                  onSwipeDelete={
+                    deleteAction
+                      ? () => {
+                          currencySwipeDelete.openSwipe(account.id);
+                          deleteAction.onClick(account);
+                        }
+                      : undefined
+                  }
+                  {...account}
+                />
+              );
+            }}
           />
           {/* Dialogs */}
           <AddCurrencyDialog {...addCurrency} />
           <EditCurrencyDialog {...editCurrency} />
-          <ConfirmationDialog {...deleteCurrency} />
+          <ConfirmationDialog
+            {...deleteCurrency}
+            handleClose={currencySwipeDelete.handleDialogClose}
+          />
           <ConfirmationDialog {...restoreCurrency} />
           <ImportDialog {...importCurrencies} />
           <AddPrefabCurrenciesDialog {...prefabCurrencies} />

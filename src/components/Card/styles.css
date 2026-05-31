@@ -8,6 +8,22 @@
   @apply flex gap-2 flex-wrap;
 }
 
+.swipe-delete-shell {
+  @apply relative w-full overflow-hidden rounded-lg;
+}
+
+.swipe-delete-background {
+  @apply absolute inset-y-0 left-0 flex items-center overflow-hidden rounded-lg bg-bg-error text-error;
+}
+
+.swipe-delete-background-icon {
+  @apply min-w-10 pl-3;
+}
+
+.swipe-delete-foreground {
+  @apply will-change-transform;
+}
+
 .item-card {
   @apply flex flex-col justify-between items-start min-h-40 w-full rounded-2xl p-3 bg-base;
 }

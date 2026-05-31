@@ -41,6 +41,7 @@ import {
   TransactionCategoriesQueryKeys,
   useMobileNavbar,
   useMobileMultiSelection,
+  useSwipeDeleteState,
 } from "hooks";
 import {
   useAddPrefabCategoriesDialog,
@@ -54,6 +55,7 @@ import type {
   FilterTransactionCategoryDto,
   ImportPreviewTransactionCategoryDto,
 } from "lib";
+import { getDeleteAction } from "../../components/Card/utils";
 import {
   Tables,
   TablesCamelCase,
@@ -98,6 +100,9 @@ export function TransactionCategories() {
     mutationFn: (data) => manager.TransactionCategories.softDelete(data),
     ...TransactionCategoriesQueryKeys.all(),
   });
+  const transactionCategorySwipeDelete = useSwipeDeleteState(
+    deleteTransactionCategory.handleClose,
+  );
 
   const restoreTransactionCategory = useRestoreDialog({
     mutationFn: (data) => manager.TransactionCategories.restore(data),
@@ -142,6 +147,7 @@ export function TransactionCategories() {
   const mobileSelection = useMobileMultiSelection<TransactionCategoryDto>({
     items,
     getActions,
+    onInteraction: transactionCategorySwipeDelete.resetSwipe,
   });
 
   const pageToolbar = useMemo(() => {
@@ -216,22 +222,47 @@ export function TransactionCategories() {
                 ]}
               />
             }
-            renderComponent={(transactionCategory) => (
-              <TransactionCategoryCard
-                actions={getActions(transactionCategory)}
-                onClick={(id: number) => editTransactionCategory.openDialog(id)}
-                selectionMode={mobileSelection.selectionMode}
-                selected={mobileSelection.isSelected(transactionCategory.id)}
-                onSelect={mobileSelection.onToggleRowSelection}
-                onLongPress={mobileSelection.onLongPressRow}
-                {...transactionCategory}
-              />
-            )}
+            renderComponent={(transactionCategory) => {
+              const actions = getActions(transactionCategory);
+              const deleteAction = getDeleteAction(actions);
+
+              return (
+                <TransactionCategoryCard
+                  actions={actions}
+                  onClick={(id: number) =>
+                    editTransactionCategory.openDialog(id)
+                  }
+                  selectionMode={mobileSelection.selectionMode}
+                  selected={mobileSelection.isSelected(transactionCategory.id)}
+                  onSelect={mobileSelection.onToggleRowSelection}
+                  onLongPress={mobileSelection.onLongPressRow}
+                  swipeDeleteOpen={
+                    !mobileSelection.selectionMode &&
+                    transactionCategorySwipeDelete.swipedId ===
+                      transactionCategory.id
+                  }
+                  onSwipeDelete={
+                    deleteAction
+                      ? () => {
+                          transactionCategorySwipeDelete.openSwipe(
+                            transactionCategory.id,
+                          );
+                          deleteAction.onClick(transactionCategory);
+                        }
+                      : undefined
+                  }
+                  {...transactionCategory}
+                />
+              );
+            }}
           />
           {/* Dialogs */}
           <AddTransactionCategoryDialog {...addTransactionCategory} />
           <EditTransactionCategoryDialog {...editTransactionCategory} />
-          <ConfirmationDialog {...deleteTransactionCategory} />
+          <ConfirmationDialog
+            {...deleteTransactionCategory}
+            handleClose={transactionCategorySwipeDelete.handleDialogClose}
+          />
           <ConfirmationDialog {...restoreTransactionCategory} />
           <ImportDialog {...importTransactionCategories} />
           <AddPrefabCategoriesDialog {...prefabCategories} />
