@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 // icons
 import {
+  faAdd,
   faArrowsRotate,
   faCircleNotch,
   faScaleBalanced,
@@ -17,10 +18,12 @@ import { IconButton, classNames } from "@sito/dashboard-app";
 import { AccountsQueryKeys } from "../../../../../hooks/queries/queryKeys/accountsQueryKeys";
 import { useAccountsList } from "../../../../../hooks/queries/useAccountsList";
 import { useAdjustBalanceMutation } from "../../../../Accounts/hooks";
+import { useAddTransaction } from "../../../../Transactions/hooks";
 
 // components
 import { Currency } from "../../../../Currencies";
 import { AdjustBalanceDialog } from "../../../../Accounts/components/AdjustBalanceDialog";
+import { AddTransactionDialog } from "../../../../Transactions/components";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { ActiveFilters } from "./ActiveFilters";
 import { DashboardCard } from "../DashboardCard";
@@ -84,6 +87,9 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
   const [isSyncing, setIsSyncing] = useState(false);
 
   const adjustBalance = useAdjustBalanceMutation();
+  const addTransaction = useAddTransaction({
+    account,
+  });
 
   const handleRefresh = async () => {
     if (!account) return;
@@ -127,6 +133,11 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
             {account && (
               <div className="current-balance-actions">
                 <IconButton
+                  onClick={addTransaction.openDialog}
+                  icon={faAdd}
+                  aria-label={t("_pages:transactions.add")}
+                />
+                <IconButton
                   disabled={adjustBalance.isLoading}
                   onClick={() => {
                     void adjustBalance.action(account).onClick?.();
@@ -148,6 +159,7 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
         )}
       </DashboardCard>
       <AdjustBalanceDialog {...adjustBalance} />
+      <AddTransactionDialog {...addTransaction} />
     </>
   );
 };

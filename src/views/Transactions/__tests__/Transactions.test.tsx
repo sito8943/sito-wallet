@@ -27,7 +27,7 @@ vi.mock("react-i18next", () => ({
 }));
 
 // Accounts hook
-const mockAccountsList = vi.fn(() => ({
+const mockAccountsList = vi.fn((_props?: unknown) => ({
   data: {
     items: [
       { id: 1, name: "Wallet", currency: { name: "EUR", symbol: "€" } },
@@ -40,7 +40,7 @@ const mockAccountsList = vi.fn(() => ({
 const mockUseMobileNavbar = vi.fn();
 
 vi.mock("hooks", () => ({
-  useAccountsList: () => mockAccountsList(),
+  useAccountsList: (props?: unknown) => mockAccountsList(props),
   useMobileNavbar: (...args: unknown[]) => mockUseMobileNavbar(...args),
   usePersistedTableOptions: vi.fn(),
   TransactionsQueryKeys: {
@@ -50,7 +50,7 @@ vi.mock("hooks", () => ({
 }));
 
 vi.mock("../../../hooks/queries/useAccountsList", () => ({
-  useAccountsList: () => mockAccountsList(),
+  useAccountsList: (props?: unknown) => mockAccountsList(props),
 }));
 vi.mock("../../../hooks/queries/useTransactionCategoriesCommon", () => ({
   useTransactionCategoriesCommon: () => ({
@@ -400,6 +400,7 @@ async function renderTransactions(initialSearch = "") {
 // ─── Tests ────────────────────────────────────────────────────────────────────
 describe("Transactions", () => {
   beforeEach(() => {
+    mockAccountsList.mockClear();
     mockAccountsList.mockReturnValue({
       data: {
         items: [
@@ -413,6 +414,17 @@ describe("Transactions", () => {
   });
 
   describe("tab rendering by account", () => {
+    it("requests accounts sorted by updatedAt desc", async () => {
+      await renderTransactions();
+
+      expect(mockAccountsList).toHaveBeenCalledWith({
+        query: {
+          sortingBy: "updatedAt",
+          sortingOrder: "DESC",
+        },
+      });
+    });
+
     it("renders one tab per account in desktop layout", async () => {
       await renderTransactions();
       expect(screen.getAllByTestId("tab-1")).toHaveLength(1);

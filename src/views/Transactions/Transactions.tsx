@@ -19,6 +19,7 @@ import {
   ImportDialog,
   useImportDialog,
   useNotification,
+  SortOrder,
 } from "@sito/dashboard-app";
 
 // icons
@@ -147,7 +148,12 @@ export function Transactions() {
     data: accounts,
     isLoading: isAccountLoading,
     error: accountError,
-  } = useAccountsList({});
+  } = useAccountsList({
+    query: {
+      sortingBy: "updatedAt",
+      sortingOrder: SortOrder.DESC,
+    },
+  });
 
   useEffect(() => {
     if (

@@ -6,8 +6,11 @@ export const AccountsQueryKeys = {
   all: () => ({
     queryKey: ["accounts"],
   }),
-  list: (filters: FilterAccountDto) => ({
-    queryKey: [...AccountsQueryKeys.all().queryKey, "list", filters],
+  list: (
+    query: Omit<QueryParam<AccountDto>, "currentPage">,
+    filters: FilterAccountDto,
+  ) => ({
+    queryKey: [...AccountsQueryKeys.all().queryKey, "list", query, filters],
   }),
   infiniteList: (
     query: Omit<QueryParam<AccountDto>, "currentPage">,

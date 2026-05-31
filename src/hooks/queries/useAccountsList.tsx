@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 // providers
 import { useManager } from "providers";
-import type { QueryResult } from "@sito/dashboard-app";
+import type { QueryParam, QueryResult } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
 // types
@@ -24,7 +24,10 @@ import { AccountsQueryKeys } from "./queryKeys/accountsQueryKeys";
 export function useAccountsList(
   props: UseFetchPropsType<AccountDto, FilterAccountDto>,
 ): UseQueryResult<QueryResult<AccountDto>> {
-  const { filters = defaultAccountsListFilters } = props;
+  const {
+    filters = defaultAccountsListFilters,
+    query = {} as QueryParam<AccountDto>,
+  } = props;
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   const normalizedFilters = useMemo(
@@ -36,12 +39,21 @@ export function useAccountsList(
     [filters, hideDeletedEntities],
   );
 
+  const parsedQuery = useMemo(
+    () => ({
+      sortingBy: query.sortingBy as keyof AccountDto,
+      sortingOrder: query.sortingOrder,
+      pageSize: query.pageSize,
+    }),
+    [query.pageSize, query.sortingBy, query.sortingOrder],
+  );
+
   const manager = useManager();
   const { account } = useAuth();
 
   return useQuery({
-    ...AccountsQueryKeys.list(normalizedFilters),
+    ...AccountsQueryKeys.list(parsedQuery, normalizedFilters),
     enabled: !!account?.id,
-    queryFn: () => manager.Accounts.get(undefined, { ...normalizedFilters }),
+    queryFn: () => manager.Accounts.get(parsedQuery, { ...normalizedFilters }),
   });
 }

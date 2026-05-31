@@ -11,3 +11,7 @@
 .type-resume-amount--expense {
   @apply text-bg-error;
 }
+
+.type-resume-actions {
+  @apply flex items-center gap-1;
+}

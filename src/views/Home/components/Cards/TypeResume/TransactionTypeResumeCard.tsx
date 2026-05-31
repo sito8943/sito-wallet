@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { faList } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faList } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 
 import { classNames, IconButton } from "@sito/dashboard-app";
@@ -9,6 +9,7 @@ import { TransactionType } from "lib";
 
 // hooks
 import { useTransactionTypeResume } from "hooks";
+import { useAddTransaction } from "../../../../Transactions/hooks";
 
 // utils
 import { DEFAULT_TYPE_RESUME_CONFIG } from "./constants";
@@ -17,6 +18,7 @@ import { formToDto } from "./utils";
 // components
 import { Currency } from "../../../../Currencies";
 import { ActiveFilters } from "./ActiveFilters";
+import { AddTransactionDialog } from "../../../../Transactions/components";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { DashboardCard } from "../DashboardCard";
 import { TypeResumeCategoriesDialog } from "./TypeResumeCategoriesDialog";
@@ -95,11 +97,12 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const { data, isLoading } = useTransactionTypeResume({ ...filterConfig });
 
   const categories = data?.categories ?? [];
-  const currencyName =
-    data?.account?.currency?.name ?? resolvedFormConfig.account?.currency?.name;
-  const currencySymbol =
-    data?.account?.currency?.symbol ??
-    resolvedFormConfig.account?.currency?.symbol;
+  const selectedAccount = data?.account ?? resolvedFormConfig.account ?? null;
+  const currencyName = selectedAccount?.currency?.name;
+  const currencySymbol = selectedAccount?.currency?.symbol;
+  const addTransaction = useAddTransaction({
+    account: selectedAccount,
+  });
 
   return (
     <>
@@ -139,19 +142,24 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
                 {isLoading ? "…" : (data?.total ?? 0)}{" "}
                 <Currency
                   name={currencyName ?? formConfig.account?.currency?.name}
-                  symbol={
-                    currencySymbol ?? formConfig.account?.currency?.symbol
-                  }
+                  symbol={currencySymbol ?? formConfig.account?.currency?.symbol}
                 />
               </p>
-              <IconButton
-                disabled={isLoading || categories.length === 0}
-                onClick={typeResumeDialog.openDialog}
-                icon={faList}
-                aria-label={t(
-                  "_pages:home.dashboard.transactionTypeResume.details.title",
-                )}
-              />
+              <div className="type-resume-actions">
+                <IconButton
+                  onClick={addTransaction.openDialog}
+                  icon={faAdd}
+                  aria-label={t("_pages:transactions.add")}
+                />
+                <IconButton
+                  disabled={isLoading || categories.length === 0}
+                  onClick={typeResumeDialog.openDialog}
+                  icon={faList}
+                  aria-label={t(
+                    "_pages:home.dashboard.transactionTypeResume.details.title",
+                  )}
+                />
+              </div>
             </div>
           </div>
         )}
@@ -167,6 +175,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         endDate={data?.endDate}
         transactionType={data?.transactionType ?? resolvedFormConfig.type}
       />
+      <AddTransactionDialog {...addTransaction} />
     </>
   );
 };
