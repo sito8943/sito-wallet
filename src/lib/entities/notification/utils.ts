@@ -68,7 +68,10 @@ export const translateNotificationText = ({
 }): string => {
   if (!key || !key.trim().length) return fallback;
 
-  const translated = t(key, getNotificationTranslationValues(payload, language));
+  const translated = t(
+    key,
+    getNotificationTranslationValues(payload, language),
+  );
   return translated === key ? fallback : translated;
 };
 
