@@ -42,7 +42,7 @@ export const TypeResumeCategoryItem = (
     open,
   });
 
-  const transactions = useMemo(() => data?.items ?? [], [data?.items]);
+  const transactions = useMemo(() => data ?? [], [data]);
   const colorBarWidth = useMemo(() => {
     if (!total || total <= 0) return "0%";
 

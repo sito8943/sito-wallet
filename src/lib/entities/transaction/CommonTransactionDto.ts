@@ -1,3 +1,7 @@
 import type { BaseCommonEntityDto } from "@sito/dashboard-app";
 
-export type CommonTransactionDto = BaseCommonEntityDto;
+export interface CommonTransactionDto extends BaseCommonEntityDto {
+  description: string | null;
+  amount: number;
+  date: string | null;
+}
