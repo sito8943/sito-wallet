@@ -18,8 +18,6 @@ import type { UseAddSubscriptionBillingLogActionProps } from "./types";
 // utils
 import { toSubscriptionStatus } from "../utils";
 
-import "./styles.css";
-
 export function useAddSubscriptionBillingLogAction(
   props: UseAddSubscriptionBillingLogActionProps,
 ) {

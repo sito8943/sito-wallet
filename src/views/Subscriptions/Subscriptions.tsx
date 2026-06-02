@@ -30,9 +30,7 @@ import {
   useMobileNavbar,
   useSwipeDeleteState,
 } from "hooks";
-import {
-  useAddSubscriptionBillingLogDialog,
-} from "./hooks";
+import { useAddSubscriptionBillingLogDialog } from "./hooks";
 
 // components
 import { MobileSelectionBar } from "components";

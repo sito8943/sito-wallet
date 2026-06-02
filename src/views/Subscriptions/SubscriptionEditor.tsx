@@ -24,9 +24,7 @@ import {
   SubscriptionActivitySidebar,
   SubscriptionForm,
 } from "./components";
-import {
-  useAddSubscriptionBillingLogDialog,
-} from "./hooks";
+import { useAddSubscriptionBillingLogDialog } from "./hooks";
 import type { SubscriptionFormType } from "./types";
 import {
   emptySubscriptionForm,
