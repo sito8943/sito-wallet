@@ -64,6 +64,11 @@ export const routeComponents = defineRouteComponents({
       default: module.Subscriptions,
     })),
   ),
+  Notifications: loadable(() =>
+    import("views/Notifications/Notifications").then((module) => ({
+      default: module.Notifications,
+    })),
+  ),
   SubscriptionEditor: loadable(() =>
     import("views/Subscriptions/SubscriptionEditor").then((module) => ({
       default: module.SubscriptionEditor,

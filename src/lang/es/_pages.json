@@ -1,6 +1,7 @@
 {
   "pages": {
     "home": "Inicio",
+    "notifications": "Notificaciones",
     "profile": "Perfil",
     "accounts": "Cuentas",
     "transactions": "Transacciones",
@@ -56,6 +57,33 @@
       "addCard": {
         "title": "Seleccionar tipo de tarjeta"
       }
+    }
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "empty": "No hay notificaciones para mostrar.",
+    "filters": {
+      "all": "Todas",
+      "unread": "No leídas"
+    },
+    "actions": {
+      "markAsRead": "Marcar como leída",
+      "markAllRead": "Marcar visibles como leídas"
+    },
+    "status": {
+      "read": "Leída",
+      "unread": "No leída"
+    },
+    "messages": {
+      "newNotification": "Tienes una nueva notificación.",
+      "unknownTitle": "Notificación",
+      "unknownMessage": "No hay contenido disponible para esta notificación."
+    }
+  },
+  "notification": {
+    "subscriptionRenewalReminder": {
+      "title": "Próxima renovación",
+      "message": "{{subscriptionName}} renueva el {{nextRenewalAtFormatted}}"
     }
   },
   "profile": {

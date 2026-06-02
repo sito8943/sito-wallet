@@ -1,6 +1,7 @@
 {
   "pages": {
     "home": "Home",
+    "notifications": "Notifications",
     "profile": "Profile",
     "accounts": "Accounts",
     "transactions": "Transactions",
@@ -56,6 +57,33 @@
       "addCard": {
         "title": "Select Card Type"
       }
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "There are no notifications to show.",
+    "filters": {
+      "all": "All",
+      "unread": "Unread"
+    },
+    "actions": {
+      "markAsRead": "Mark as read",
+      "markAllRead": "Mark visible as read"
+    },
+    "status": {
+      "read": "Read",
+      "unread": "Unread"
+    },
+    "messages": {
+      "newNotification": "You have a new notification.",
+      "unknownTitle": "Notification",
+      "unknownMessage": "There is no content available for this notification."
+    }
+  },
+  "notification": {
+    "subscriptionRenewalReminder": {
+      "title": "Upcoming renewal",
+      "message": "{{subscriptionName}} renews on {{nextRenewalAtFormatted}}"
     }
   },
   "profile": {

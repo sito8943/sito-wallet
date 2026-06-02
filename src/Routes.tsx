@@ -20,6 +20,7 @@ export const Routes = () => {
     ConfirmEmailSuccess,
     ConfirmEmailError,
     Home,
+    Notifications,
     NotFound,
     TransactionCategories,
     Subscriptions,
@@ -59,6 +60,7 @@ export const Routes = () => {
       <Route path={AppRoutes.signOut} element={<SignOut />} />
       <Route path={AppRoutes.home} element={<View />}>
         <Route index element={<Home />} />
+        <Route path={AppRoutes.notifications} element={<Notifications />} />
         <Route
           path={AppRoutes.transactions}
           element={

@@ -24,6 +24,7 @@ import {
   faUser,
   faUsers,
   faRepeat,
+  faBell,
 } from "@fortawesome/free-solid-svg-icons";
 
 // lib
@@ -33,6 +34,7 @@ import type { FeatureFlagKey } from "lib";
 export enum MenuKeys {
   Home = "home",
   Transactions = "transactions",
+  Notifications = "notifications",
   TransactionCategories = "transactionCategories",
   Subscriptions = "subscriptions",
   Accounts = "accounts",
@@ -59,6 +61,12 @@ const getMenuMap = (): MenuItemType<MenuKeys>[] => [
     page: MenuKeys.Transactions,
     path: AppRoutes.transactions,
     icon: <FontAwesomeIcon icon={faFileInvoice} />,
+  },
+  {
+    page: MenuKeys.Notifications,
+    path: AppRoutes.notifications,
+    auth: true,
+    icon: <FontAwesomeIcon icon={faBell} />,
   },
   {
     page: MenuKeys.TransactionCategories,

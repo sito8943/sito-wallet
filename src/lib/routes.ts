@@ -11,6 +11,7 @@ export const AppRoutes: { [key: string]: string } = {
   confirmEmailError: "/auth/confirm-email-error",
   signOut: "/sign-out",
   home: "/",
+  notifications: "/notifications",
   transactions: "/transactions",
   transactionCategories: "/transaction-categories",
   subscriptions: "/subscriptions",
