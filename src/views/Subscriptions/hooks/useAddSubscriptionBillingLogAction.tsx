@@ -35,12 +35,7 @@ export function useAddSubscriptionBillingLogAction(
         id: SubscriptionAction.AddBillingLog,
         hidden: hidden || !!record.deletedAt,
         disabled: !!record.deletedAt || isCanceled,
-        icon: (
-          <FontAwesomeIcon
-            icon={faFileInvoice}
-            className="subscription-action-icon"
-          />
-        ),
+        icon: <FontAwesomeIcon icon={faFileInvoice} />,
         tooltip: isCanceled
           ? t("_pages:subscriptions.actions.billingLog.disabled")
           : t("_pages:subscriptions.actions.billingLog.text"),

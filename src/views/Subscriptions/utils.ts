@@ -243,9 +243,15 @@ export const emptySubscriptionBillingLogForm: SubscriptionBillingLogFormType = {
 
 export const subscriptionBillingLogFormToDto = (
   form: SubscriptionBillingLogFormType,
-): AddSubscriptionBillingLogDto => ({
-  amount: parseFiniteNumber(form.amount),
-  paidAt: form.paidAt,
-  currencyId: form.currency?.id ?? null,
-  note: form.note?.trim() || null,
-});
+): AddSubscriptionBillingLogDto => {
+  const amount = parseOptionalFiniteNumber(form.amount);
+  const currencyId = form.currency?.id ?? null;
+  const note = form.note?.trim() || null;
+
+  return {
+    paidAt: form.paidAt,
+    ...(amount !== null ? { amount } : {}),
+    ...(currencyId !== null ? { currencyId } : {}),
+    ...(note !== null ? { note } : {}),
+  };
+};

@@ -5,7 +5,6 @@ import { Tables } from "./types";
 
 import type {
   AddSubscriptionBillingLogDto,
-  AddSubscriptionRenewalDto,
   AddSubscriptionDto,
   CommonSubscriptionDto,
   FilterSubscriptionBillingLogDto,
@@ -121,16 +120,6 @@ export default class SubscriptionClient extends BaseClient<
   ): Promise<number> {
     return await this.api.post(
       `${this.table}/${subscriptionId}/billing-logs`,
-      data,
-    );
-  }
-
-  async createRenewal(
-    subscriptionId: number,
-    data: AddSubscriptionRenewalDto = {},
-  ): Promise<number> {
-    return await this.api.post(
-      `${this.table}/${subscriptionId}/renewals`,
       data,
     );
   }
