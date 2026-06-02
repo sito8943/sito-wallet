@@ -14,4 +14,3 @@ export * from "./SubscriptionRenewalTotalDto";
 export * from "./SubscriptionRenewalForecastDto";
 export * from "./RenewalRangePreset";
 export * from "./GetSubscriptionRenewalsQuery";
-export * from "./AddSubscriptionRenewalDto";

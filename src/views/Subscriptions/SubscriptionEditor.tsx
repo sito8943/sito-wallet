@@ -26,7 +26,6 @@ import {
 } from "./components";
 import {
   useAddSubscriptionBillingLogDialog,
-  useAddSubscriptionRenewalMutation,
 } from "./hooks";
 import type { SubscriptionFormType } from "./types";
 import {
@@ -81,7 +80,6 @@ export function SubscriptionEditor() {
     ? t("_pages:subscriptions.forms.edit")
     : t("_pages:subscriptions.forms.add");
   const addBillingLog = useAddSubscriptionBillingLogDialog();
-  const addRenewal = useAddSubscriptionRenewalMutation();
 
   const {
     control,
@@ -195,11 +193,8 @@ export function SubscriptionEditor() {
   const editorActions = useMemo(() => {
     if (!isEditMode || !subscriptionQuery.data) return [];
 
-    return [
-      addRenewal.action(subscriptionQuery.data),
-      addBillingLog.action(subscriptionQuery.data),
-    ];
-  }, [addBillingLog, addRenewal, isEditMode, subscriptionQuery.data]);
+    return [addBillingLog.action(subscriptionQuery.data)];
+  }, [addBillingLog, isEditMode, subscriptionQuery.data]);
 
   useMobileNavbar(title, editorActions);
 

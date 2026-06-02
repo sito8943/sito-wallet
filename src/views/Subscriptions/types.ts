@@ -62,6 +62,5 @@ export interface SubscriptionActivitySidebarPropsType {
 }
 
 export enum SubscriptionAction {
-  AddRenewal = "addRenewal",
   AddBillingLog = "addBillingLog",
 }

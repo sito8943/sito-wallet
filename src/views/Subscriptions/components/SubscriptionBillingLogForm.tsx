@@ -61,16 +61,25 @@ export function SubscriptionBillingLogForm(
       <Controller
         control={control}
         rules={{
-          required: t("_entities:subscriptionBillingLog.amount.required"),
-          validate: (value) =>
-            Number(value) > 0 ||
-            t("_entities:subscriptionBillingLog.amount.greaterThanZero"),
+          validate: (value) => {
+            if (
+              value === undefined ||
+              value === null ||
+              (typeof value === "string" && value.trim().length === 0)
+            ) {
+              return true;
+            }
+
+            return (
+              Number(value) > 0 ||
+              t("_entities:subscriptionBillingLog.amount.greaterThanZero")
+            );
+          },
         }}
         name="amount"
         disabled={formDisabled}
         render={({ field: { value, ...rest } }) => (
           <TextInput
-            required
             type="number"
             min={0.01}
             step="0.01"
