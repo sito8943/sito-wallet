@@ -3,7 +3,7 @@ import type { TFunction } from "i18next";
 
 import type { NotificationDto } from "lib";
 
-export type NotificationSocketMessageDto = NotificationDto
+export type NotificationSocketMessageDto = NotificationDto;
 
 export interface NotificationSocketRuntime {
   showNotification: (payload: { message: string }) => void;

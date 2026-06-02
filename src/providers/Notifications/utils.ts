@@ -8,9 +8,7 @@ import {
 
 import { config } from "../../config";
 
-import type {
-  HandleNotificationSocketMessageProps,
-} from "./types";
+import type { HandleNotificationSocketMessageProps } from "./types";
 
 export const buildNotificationsSocketUrl = (): string => {
   const socketUrl = new URL(config.serverUrl);
@@ -23,9 +21,7 @@ export const buildNotificationsSocketUrl = (): string => {
   return socketUrl.toString();
 };
 
-const parseSocketMessageBody = (
-  frame: Message,
-): NotificationDto | null => {
+const parseSocketMessageBody = (frame: Message): NotificationDto | null => {
   try {
     return JSON.parse(frame.body) as NotificationDto;
   } catch {
