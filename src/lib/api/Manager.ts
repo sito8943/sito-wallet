@@ -7,6 +7,7 @@ import ProfileClient from "./ProfileClient";
 import FeatureFlagClient from "./FeatureFlagClient";
 import SubscriptionProviderClient from "./SubscriptionProviderClient";
 import SubscriptionClient from "./SubscriptionClient";
+import NotificationClient from "./NotificationClient";
 import UserClient from "./UserClient";
 import UserEntityConfigClient from "./UserEntityConfigClient";
 import { AuthApiClient, type WalletAuthApiClient } from "./AuthApiClient";
@@ -28,6 +29,7 @@ export class Manager extends IManager {
   subscriptionProviders: SubscriptionProviderClient =
     new SubscriptionProviderClient();
   subscriptions: SubscriptionClient = new SubscriptionClient();
+  notifications: NotificationClient = new NotificationClient();
   users: UserClient = new UserClient();
   userEntityConfigs: UserEntityConfigClient = new UserEntityConfigClient();
   authApi: WalletAuthApiClient = new AuthApiClient(
@@ -105,6 +107,10 @@ export class Manager extends IManager {
 
   get Subscriptions(): SubscriptionClient {
     return this.subscriptions;
+  }
+
+  get Notifications(): NotificationClient {
+    return this.notifications;
   }
 
   get Users(): UserClient {

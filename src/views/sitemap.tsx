@@ -21,6 +21,7 @@ import { AppRoutes, isAdminSession } from "lib";
 export enum PageId {
   Home = "home",
   Profile = "profile",
+  Notifications = "notifications",
   Users = "users",
   Transactions = "transactions",
   TransactionCategories = "transactionCategories",
@@ -43,6 +44,11 @@ export const sitemap: ViewPageType<PageId>[] = [
   {
     key: PageId.Profile,
     path: AppRoutes.profile,
+  },
+  {
+    key: PageId.Notifications,
+    path: AppRoutes.notifications,
+    access: (account) => Boolean(account?.id),
   },
   {
     key: PageId.Users,
