@@ -1,11 +1,10 @@
 import type { FieldValues } from "react-hook-form";
-import type { QueryResult } from "@sito/dashboard-app";
 
 // lib
 import type {
   CommonAccountDto,
+  CommonTransactionDto,
   DashboardDto,
-  TransactionDto,
   TransactionType,
   TransactionTypeResumeCategoryDto,
   TransactionTypeResumeTime,
@@ -75,11 +74,10 @@ export type UseTypeResumeCategoryTransactionsPropsType = {
   open: boolean;
 };
 
-export type TypeResumeCategoryTransactionsResultType =
-  QueryResult<TransactionDto>;
+export type TypeResumeCategoryTransactionsResultType = CommonTransactionDto[];
 
 export type TypeResumeTransactionItemPropsType = {
-  transaction: TransactionDto;
+  transaction: CommonTransactionDto;
   currencyName?: string;
   currencySymbol?: string;
 };

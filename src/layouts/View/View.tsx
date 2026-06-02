@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
 import { useEffect, useMemo, useState } from "react";
@@ -38,16 +38,26 @@ import { WalletOnboardingWizard } from "./components/WalletOnboardingWizard";
 import { config } from "../../config";
 import { getFeatureFilteredBottomMap } from "../../views/bottomMap";
 import {
+  AppRoutes,
   type UserEntityConfigKey,
   isAnonymousVisitorSession,
   userEntityConfigsToFeaturePayload,
 } from "lib";
 import { getFeatureFilteredMenuMap } from "views/menuMap";
 
+const PUBLIC_ANONYMOUS_ROUTES = new Set([
+  AppRoutes.about,
+  AppRoutes.cookiesPolicy,
+  AppRoutes.privacyPolicy,
+  AppRoutes.termsAndConditions,
+]);
+
 export function View() {
   const { loading: preloadLoading } = useAppPreload();
   const { t, i18n } = useTranslation();
   const { account } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
   const manager = useManager();
   const isOnline = useOnlineStatus();
   const { applyFeaturePayload, isFeatureEnabled } = useFeatureFlags();
@@ -55,11 +65,28 @@ export function View() {
     typeof config.onboarding === "string" ? config.onboarding : "onboarding";
   const isAnonymousVisitor = isAnonymousVisitorSession(account);
   const isLoggedSession = Boolean(account?.id);
+  const hasSeenOnboarding = Boolean(fromLocal(onboardingStorageKey));
   const [initialEnabledEntityKeys, setInitialEnabledEntityKeys] = useState<
     UserEntityConfigKey[] | undefined
   >(undefined);
 
-  const showOnboarding = isAnonymousVisitor || !fromLocal(onboardingStorageKey);
+  const showOnboarding = !hasSeenOnboarding;
+  const shouldRedirectToSignIn =
+    isAnonymousVisitor &&
+    hasSeenOnboarding &&
+    !PUBLIC_ANONYMOUS_ROUTES.has(location.pathname);
+
+  useEffect(() => {
+    if (!showOnboarding) return;
+
+    toLocal(onboardingStorageKey, true);
+  }, [onboardingStorageKey, showOnboarding]);
+
+  useEffect(() => {
+    if (!shouldRedirectToSignIn) return;
+
+    navigate(AppRoutes.signIn, { replace: true });
+  }, [navigate, shouldRedirectToSignIn]);
 
   useEffect(() => {
     if (!showOnboarding || !isLoggedSession || !isOnline) return;
@@ -118,13 +145,8 @@ export function View() {
     item: BottomNavigationItemType,
   ) => (item.to === "/" ? pathname === "/" : pathname.startsWith(item.to));
 
-  useEffect(() => {
-    if (showOnboarding && !isAnonymousVisitor) {
-      toLocal(onboardingStorageKey, true);
-    }
-  }, [isAnonymousVisitor, onboardingStorageKey, showOnboarding]);
-
   if (preloadLoading) return <SplashScreen />;
+  if (shouldRedirectToSignIn) return <SplashScreen />;
 
   return (
     <NavbarProvider>

@@ -1,4 +1,9 @@
-import { BaseClient, Methods, parseQueries } from "@sito/dashboard-app";
+import {
+  BaseClient,
+  Methods,
+  parseQueries,
+  type QueryParam,
+} from "@sito/dashboard-app";
 
 // enum
 import { Tables } from "./types";
@@ -141,6 +146,26 @@ export default class TransactionClient extends BaseClient<
       refreshTokenKey: config.auth.refreshTokenKey,
       accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
     });
+  }
+
+  async getCommon(
+    filters: FilterTransactionDto,
+    query?: QueryParam<CommonTransactionDto>,
+  ): Promise<CommonTransactionDto[]> {
+    const builtUrl = parseQueries<CommonTransactionDto[], FilterTransactionDto>(
+      `${Tables.Transactions}/common`,
+      query,
+      filters,
+    );
+
+    return await this.api.doQuery<CommonTransactionDto[]>(
+      builtUrl,
+      Methods.GET,
+      undefined,
+      {
+        ...this.api.defaultTokenAcquirer(),
+      },
+    );
   }
 
   async getTypeResume(

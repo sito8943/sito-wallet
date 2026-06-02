@@ -333,9 +333,12 @@ describe("View layout", () => {
       expect(screen.queryByTestId("onboarding")).toBeNull();
     });
 
-    it("keeps showing Onboarding for anonymous visitors even if the localStorage key is set", () => {
+    it("redirects anonymous visitors to sign in when the onboarding flag is already set", () => {
       renderView({ email: null, onboardingDone: true });
-      expect(screen.getByTestId("onboarding")).toBeInTheDocument();
+      expect(screen.queryByTestId("onboarding")).toBeNull();
+      expect(mockNavigate).toHaveBeenCalledWith("/auth/sign-in", {
+        replace: true,
+      });
     });
 
     it("saves onboarding flag to localStorage for authenticated first visits", () => {
@@ -343,9 +346,9 @@ describe("View layout", () => {
       expect(mockToLocal).toHaveBeenCalledWith("test-onboarding", true);
     });
 
-    it("does NOT save the onboarding flag for anonymous visitors", () => {
+    it("saves onboarding flag to localStorage for anonymous first visits", () => {
       renderView({ email: null });
-      expect(mockToLocal).not.toHaveBeenCalled();
+      expect(mockToLocal).toHaveBeenCalledWith("test-onboarding", true);
     });
 
     it("renders with all 5 onboarding steps", () => {
@@ -360,6 +363,16 @@ describe("View layout", () => {
       expect(steps).toHaveLength(6);
       expect(steps).toContain("_pages:onboarding.welcome.title");
       expect(steps).toContain("_pages:onboarding.get_started.title");
+    });
+
+    it("does not redirect anonymous visitors away from public informational routes", () => {
+      renderView({
+        email: null,
+        onboardingDone: true,
+        initialPath: "/privacy-policy",
+      });
+
+      expect(mockNavigate).not.toHaveBeenCalled();
     });
   });
 

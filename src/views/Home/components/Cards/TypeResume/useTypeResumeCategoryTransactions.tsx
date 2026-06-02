@@ -8,7 +8,6 @@ import { useManager } from "providers";
 import type { FilterTransactionDto } from "lib";
 
 import { TransactionsQueryKeys } from "hooks";
-
 import { TYPE_RESUME_TRANSACTIONS_LIST_QUERY } from "./constants";
 import type { UseTypeResumeCategoryTransactionsPropsType } from "./types";
 
@@ -49,6 +48,9 @@ export const useTypeResumeCategoryTransactions = (
     ],
     enabled: open && !!account?.id && !!accountId && !!startDate && !!endDate,
     queryFn: () =>
-      manager.Transactions.get(TYPE_RESUME_TRANSACTIONS_LIST_QUERY, filters),
+      manager.Transactions.getCommon(
+        filters,
+        TYPE_RESUME_TRANSACTIONS_LIST_QUERY,
+      ),
   });
 };

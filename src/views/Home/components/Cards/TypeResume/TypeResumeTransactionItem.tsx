@@ -19,12 +19,8 @@ export const TypeResumeTransactionItem = (
       return t("_entities:base.description.empty");
     }
 
-    if (transaction.auto) {
-      return t("_entities:transactionCategory.description.init");
-    }
-
     return transaction.description;
-  }, [t, transaction.auto, transaction.description]);
+  }, [t, transaction.description]);
 
   const dateLabel = useMemo(() => {
     if (!transaction.date) return "";

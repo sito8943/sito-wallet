@@ -10,10 +10,34 @@ vi.mock("@sito/dashboard-app", () => ({
     GET: "GET",
   },
   parseQueries: vi.fn(
-    (path: string, _query: unknown, filters?: Record<string, unknown>) => {
-      if (!filters) return path;
-
+    (
+      path: string,
+      query?: Record<string, unknown>,
+      filters?: Record<string, unknown>,
+    ) => {
       const search = new URLSearchParams();
+
+      if (query?.sortingBy) {
+        search.append("sort", String(query.sortingBy));
+      }
+
+      if (query?.sortingOrder) {
+        search.append("order", String(query.sortingOrder));
+      }
+
+      if (query?.currentPage !== undefined) {
+        search.append("page", String(query.currentPage));
+      }
+
+      if (query?.pageSize !== undefined) {
+        search.append("pageSize", String(query.pageSize));
+      }
+
+      if (!filters) {
+        const suffix = search.toString();
+        return suffix ? `${path}?${suffix}` : path;
+      }
+
       for (const [key, value] of Object.entries(filters)) {
         if (Array.isArray(value)) {
           value.forEach((item) => search.append(key, String(item)));
@@ -121,6 +145,52 @@ describe("TransactionClient", () => {
     expect(builtUrl).toContain("time=currentMonth");
     expect(builtUrl).toContain("filters=account==1");
     expect(builtUrl).not.toContain("accountId=");
+  });
+
+  it("calls getCommon without request body on GET and includes sorting", async () => {
+    mockDoQuery.mockResolvedValue([
+      {
+        id: 1,
+        amount: 90,
+        description: "Groceries",
+        date: "2026-03-15",
+      },
+    ]);
+
+    const client = new TransactionClient();
+    await client.getCommon(
+      {
+        accountId: 1,
+        category: [2],
+        type: 0,
+        date: {
+          start: "2026-03-01",
+          end: "2026-03-31",
+        },
+        softDeleteScope: "ACTIVE",
+      },
+      {
+        currentPage: 0,
+        pageSize: 100,
+        sortingBy: "amount",
+        sortingOrder: "DESC",
+      },
+    );
+
+    expect(mockDoQuery).toHaveBeenCalledWith(
+      expect.stringContaining("transactions/common"),
+      "GET",
+      undefined,
+      { Authorization: "Bearer token" },
+    );
+
+    const builtUrl = decodeURIComponent(mockDoQuery.mock.calls[0][0] as string);
+    expect(builtUrl).toContain("sort=amount");
+    expect(builtUrl).toContain("order=DESC");
+    expect(builtUrl).toContain("page=0");
+    expect(builtUrl).toContain("pageSize=100");
+    expect(builtUrl).toContain("accountId=1");
+    expect(builtUrl).toContain("category=2");
   });
 
   it("calls getGroupedByType without request body on GET", async () => {
