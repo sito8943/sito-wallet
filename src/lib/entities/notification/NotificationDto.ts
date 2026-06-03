@@ -7,7 +7,7 @@ export interface NotificationDto {
   titleKey: string;
   messageKey: string;
   payload?: NotificationPayload | null;
-  readAt?: string | null;
-  createdAt: string;
-  updatedAt?: string | null;
+  readAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
