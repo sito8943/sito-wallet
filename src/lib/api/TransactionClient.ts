@@ -152,7 +152,7 @@ export default class TransactionClient extends BaseClient<
     filters: FilterTransactionDto,
     query?: QueryParam<CommonTransactionDto>,
   ): Promise<CommonTransactionDto[]> {
-    const builtUrl = parseQueries<CommonTransactionDto[], FilterTransactionDto>(
+    const builtUrl = parseQueries<CommonTransactionDto, FilterTransactionDto>(
       `${Tables.Transactions}/common`,
       query,
       filters,
