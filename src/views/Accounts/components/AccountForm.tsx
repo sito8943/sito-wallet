@@ -143,6 +143,9 @@ export function AccountForm(props: AccountFormPropsType) {
         <Controller
           control={control}
           name="currency"
+          rules={{
+            required: `${t("_entities:account.currency.required")}`,
+          }}
           disabled={isLoading}
           render={({ field: { value, onChange, ...rest } }) => (
             <AutocompleteInput
