@@ -1,0 +1,69 @@
+@reference "../../styles/variables.css";
+
+.debt-editor-layout {
+  @apply grid w-full max-w-7xl self-center gap-4 py-3 lg:grid-cols-[minmax(0,1fr)_22rem];
+}
+
+.debt-editor-form {
+  @apply rounded-2xl;
+}
+
+.debt-editor-actions {
+  @apply flex gap-2 max-sm:flex-col-reverse;
+}
+
+.debt-editor-action-button {
+  @apply max-sm:w-full;
+}
+
+.debt-editor-form-content {
+  @apply flex flex-col gap-4;
+}
+
+.debt-editor-sidebar {
+  @apply bg-base-light border-border sticky top-14 flex h-fit flex-col gap-4 rounded-2xl border p-4;
+}
+
+.debt-activity-section {
+  @apply flex flex-col gap-2;
+}
+
+.debt-activity-section-title {
+  @apply text-text font-semibold;
+}
+
+.debt-activity-loading {
+  @apply mx-auto my-2;
+}
+
+.debt-activity-list {
+  @apply flex flex-col gap-2;
+}
+
+.debt-activity-item {
+  @apply bg-base border-border rounded-xl border p-3;
+}
+
+.debt-activity-item-row {
+  @apply flex items-center justify-between gap-2;
+}
+
+.debt-activity-amount {
+  @apply text-text text-sm font-semibold;
+}
+
+.debt-activity-meta {
+  @apply text-text-muted text-xs;
+}
+
+.debt-activity-note {
+  @apply text-text mt-1 text-sm;
+}
+
+.debt-activity-empty {
+  @apply text-text-muted text-sm;
+}
+
+.debt-activity-error {
+  @apply text-error bg-bg-error rounded-md px-2 py-1 text-sm;
+}

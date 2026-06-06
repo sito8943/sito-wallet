@@ -13,7 +13,8 @@
     "about": "About Sito Wallet",
     "terms-and-conditions": "Terms and Conditions",
     "cookies-policy": "Cookies Policy",
-    "privacy-policy": "Privacy Policy"
+    "privacy-policy": "Privacy Policy",
+    "debts": "Debts"
   },
   "search": {
     "label": "Search",
@@ -289,21 +290,51 @@
       "incomeTitle": "Income",
       "expenseTitle": "Expense",
       "items": {
-        "salary": { "name": "Salary" },
-        "freelance": { "name": "Freelance" },
-        "gifts_in": { "name": "Gifts" },
-        "investments": { "name": "Investments" },
-        "refunds": { "name": "Refunds" },
-        "food": { "name": "Food" },
-        "transport": { "name": "Transport" },
-        "housing": { "name": "Housing" },
-        "utilities": { "name": "Utilities" },
-        "entertainment": { "name": "Entertainment" },
-        "health": { "name": "Health" },
-        "subscriptions": { "name": "Subscriptions" },
-        "shopping": { "name": "Shopping" },
-        "education": { "name": "Education" },
-        "savings": { "name": "Savings" }
+        "salary": {
+          "name": "Salary"
+        },
+        "freelance": {
+          "name": "Freelance"
+        },
+        "gifts_in": {
+          "name": "Gifts"
+        },
+        "investments": {
+          "name": "Investments"
+        },
+        "refunds": {
+          "name": "Refunds"
+        },
+        "food": {
+          "name": "Food"
+        },
+        "transport": {
+          "name": "Transport"
+        },
+        "housing": {
+          "name": "Housing"
+        },
+        "utilities": {
+          "name": "Utilities"
+        },
+        "entertainment": {
+          "name": "Entertainment"
+        },
+        "health": {
+          "name": "Health"
+        },
+        "subscriptions": {
+          "name": "Subscriptions"
+        },
+        "shopping": {
+          "name": "Shopping"
+        },
+        "education": {
+          "name": "Education"
+        },
+        "savings": {
+          "name": "Savings"
+        }
       }
     },
     "subscriptions": {
@@ -396,7 +427,8 @@
       "currencies": "currencies",
       "transactions": "transactions",
       "transactionCategories": "transaction categories",
-      "subscriptions": "subscriptions"
+      "subscriptions": "subscriptions",
+      "debts": "debts"
     }
   },
   "sync": {
@@ -874,5 +906,37 @@
   "notFound": {
     "title": "Not Found",
     "body": "The resource you are looking for was not found"
+  },
+  "debts": {
+    "title": "Debts",
+    "empty": "You don't have debts yet. Create one to get started.",
+    "add": "Add a debt",
+    "labels": {
+      "noDueDate": "No due date"
+    },
+    "forms": {
+      "add": "New debt",
+      "edit": "Edit debt",
+      "editAria": "Click to edit debt"
+    },
+    "actions": {
+      "payment": {
+        "text": "Register payment",
+        "disabled": "You cannot register payments for paid or canceled debts",
+        "title": "Register payment",
+        "for": "Debt",
+        "successMessage": "Payment registered successfully"
+      },
+      "cancel": {
+        "text": "Cancel debt",
+        "disabled": "You cannot cancel paid or canceled debts",
+        "confirmTitle": "Cancel this debt?",
+        "successMessage": "Debt canceled successfully"
+      },
+      "deletePayment": {
+        "text": "Delete payment",
+        "successMessage": "Payment deleted successfully"
+      }
+    }
   }
 }

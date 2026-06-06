@@ -81,6 +81,16 @@ export const routeComponents = defineRouteComponents({
       }),
     ),
   ),
+  Debts: loadable(() =>
+    import("views/Debts/Debts").then((module) => ({
+      default: module.Debts,
+    })),
+  ),
+  DebtEditor: loadable(() =>
+    import("views/Debts/DebtEditor").then((module) => ({
+      default: module.DebtEditor,
+    })),
+  ),
   Transactions: loadable(() =>
     import("views/Transactions/Transactions").then((module) => ({
       default: module.Transactions,

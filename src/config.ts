@@ -28,6 +28,7 @@ const {
   VITE_FEATURE_ACCOUNTS_ENABLED_DEFAULT,
   VITE_FEATURE_TRANSACTIONS_ENABLED_DEFAULT,
   VITE_FEATURE_SUBSCRIPTIONS_ENABLED_DEFAULT,
+  VITE_FEATURE_DEBTS_ENABLED_DEFAULT,
 } = import.meta.env;
 
 const parseStrictBoolean = (
@@ -76,6 +77,10 @@ const featureFlagsDefaults: AppFeatures = {
   subscriptionsEnabled: parseStrictBoolean(
     VITE_FEATURE_SUBSCRIPTIONS_ENABLED_DEFAULT,
     "VITE_FEATURE_SUBSCRIPTIONS_ENABLED_DEFAULT",
+  ),
+  debtsEnabled: parseStrictBoolean(
+    VITE_FEATURE_DEBTS_ENABLED_DEFAULT,
+    "VITE_FEATURE_DEBTS_ENABLED_DEFAULT",
   ),
 };
 

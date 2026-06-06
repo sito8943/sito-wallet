@@ -18,6 +18,9 @@ export const AppRoutes: { [key: string]: string } = {
   subscriptionNew: "/subscriptions/new",
   subscriptionEdit: "/subscriptions/:subscriptionId/edit",
   subscriptionProviders: "/subscription-providers",
+  debts: "/debts",
+  debtNew: "/debts/new",
+  debtEdit: "/debts/:debtId/edit",
   accounts: "/accounts",
   currencies: "/currencies",
   profile: "/profile",
@@ -63,4 +66,8 @@ export const getSubscriptionEditRoute = (
     ":subscriptionId",
     String(subscriptionId),
   );
+};
+
+export const getDebtEditRoute = (debtId: number | string): string => {
+  return AppRoutes.debtEdit.replace(":debtId", String(debtId));
 };
