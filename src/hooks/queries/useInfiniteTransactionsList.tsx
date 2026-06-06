@@ -34,24 +34,21 @@ export function useInfiniteTransactionsList(props: {
   const { account } = useAuth();
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
-  const parsedFilters = useMemo(
-    () => {
-      const normalizedFilters = normalizeListFilters({
-        ...tableFilters,
-        ...filters,
-      }) as FilterTransactionDto;
+  const parsedFilters = useMemo(() => {
+    const normalizedFilters = normalizeListFilters({
+      ...tableFilters,
+      ...filters,
+    }) as FilterTransactionDto;
 
-      if (tableFilters.auto === undefined) {
-        normalizedFilters.auto = false;
-      }
+    if (tableFilters.auto === undefined) {
+      normalizedFilters.auto = false;
+    }
 
-      return applyHideDeletedEntitiesPreference(
-        normalizedFilters,
-        hideDeletedEntities,
-      ) as FilterTransactionDto;
-    },
-    [filters, tableFilters, hideDeletedEntities],
-  );
+    return applyHideDeletedEntitiesPreference(
+      normalizedFilters,
+      hideDeletedEntities,
+    ) as FilterTransactionDto;
+  }, [filters, tableFilters, hideDeletedEntities]);
 
   const parsedQueries = useMemo(
     () => ({

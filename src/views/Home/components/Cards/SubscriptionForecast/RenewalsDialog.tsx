@@ -2,7 +2,9 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { Dialog } from "@sito/dashboard-app";
+import { Dialog, IconButton } from "@sito/dashboard-app";
+
+import { faFileInvoice } from "@fortawesome/free-solid-svg-icons";
 
 // hooks
 import { useCurrenciesCommon } from "hooks/queries/useCurrenciesCommon";
@@ -16,7 +18,13 @@ import type { RenewalsDialogPropsType } from "./types";
 import "../styles.css";
 
 export const RenewalsDialog = (props: RenewalsDialogPropsType) => {
-  const { open, closeDialog, renewals } = props;
+  const {
+    open,
+    closeDialog,
+    renewals,
+    onRegisterPayment,
+    registeringSubscriptionId = null,
+  } = props;
   const { t, i18n } = useTranslation();
   const { data: currencies } = useCurrenciesCommon();
 
@@ -72,10 +80,18 @@ export const RenewalsDialog = (props: RenewalsDialogPropsType) => {
                   ) : null}
                   <p className="renewals-dialog-item-date">{dateLabel}</p>
                 </div>
-                <p className="renewals-dialog-item-amount poppins">
-                  {renewal.amount}{" "}
-                  <Currency name={currency.name} symbol={currency.symbol} />
-                </p>
+                <div className="renewals-dialog-item-side">
+                  <p className="renewals-dialog-item-amount poppins">
+                    {renewal.amount}{" "}
+                    <Currency name={currency.name} symbol={currency.symbol} />
+                  </p>
+                  <IconButton
+                    icon={faFileInvoice}
+                    onClick={() => onRegisterPayment(renewal.subscriptionId)}
+                    disabled={registeringSubscriptionId === renewal.subscriptionId}
+                    aria-label={t("_pages:subscriptions.actions.billingLog.text")}
+                  />
+                </div>
               </li>
             );
           })}

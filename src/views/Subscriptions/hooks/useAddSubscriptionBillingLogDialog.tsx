@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { usePostDialog } from "@sito/dashboard-app";
+import { useNotification, usePostDialog } from "@sito/dashboard-app";
 
 import { SubscriptionsQueryKeys } from "hooks";
 import { useManager } from "providers";
@@ -19,6 +19,7 @@ import { useAddSubscriptionBillingLogAction } from "./useAddSubscriptionBillingL
 export function useAddSubscriptionBillingLogDialog() {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
+  const { showErrorNotification } = useNotification();
 
   const manager = useManager();
   const subscriptionsClient =
@@ -26,6 +27,9 @@ export function useAddSubscriptionBillingLogDialog() {
 
   const [selectedSubscription, setSelectedSubscription] =
     useState<SubscriptionDto | null>(null);
+  const [resolvingSubscriptionId, setResolvingSubscriptionId] = useState<
+    number | null
+  >(null);
 
   const formDialog = usePostDialog<
     AddSubscriptionBillingLogDto,
@@ -57,7 +61,7 @@ export function useAddSubscriptionBillingLogDialog() {
     ...SubscriptionsQueryKeys.all(),
   });
 
-  const handleOpen = useCallback(
+  const openDialogForSubscription = useCallback(
     (record: SubscriptionDto) => {
       setSelectedSubscription(record);
       formDialog.openDialog();
@@ -65,13 +69,50 @@ export function useAddSubscriptionBillingLogDialog() {
     [formDialog],
   );
 
+  const openDialogBySubscriptionId = useCallback(
+    async (subscriptionId: number) => {
+      if (!subscriptionsClient) {
+        showErrorNotification({
+          message: t("_pages:featureFlags.moduleUnavailable"),
+        });
+        return;
+      }
+
+      setResolvingSubscriptionId(subscriptionId);
+
+      try {
+        const subscription = await subscriptionsClient.getById(subscriptionId);
+        openDialogForSubscription(subscription);
+      } catch (error) {
+        showErrorNotification({
+          message:
+            error instanceof Error
+              ? error.message
+              : t("_accessibility:errors.500"),
+        });
+      } finally {
+        setResolvingSubscriptionId(null);
+      }
+    },
+    [openDialogForSubscription, showErrorNotification, subscriptionsClient, t],
+  );
+
+  const handleClose = useCallback(() => {
+    setSelectedSubscription(null);
+    formDialog.handleClose();
+  }, [formDialog]);
+
   const { action } = useAddSubscriptionBillingLogAction({
-    onClick: handleOpen,
+    onClick: openDialogForSubscription,
   });
 
   return {
     ...formDialog,
     action,
+    handleClose,
+    openDialogBySubscriptionId,
+    openDialogForSubscription,
+    resolvingSubscriptionId,
     selectedSubscription,
   };
 }
