@@ -151,7 +151,7 @@ a.primary {
 
 .account-form-type-input,
 .transaction-category-form-type-input,
-.dashboard-card-select-input {
+.dashboard-card-icon-select-input {
   @apply !pl-7;
 }
 

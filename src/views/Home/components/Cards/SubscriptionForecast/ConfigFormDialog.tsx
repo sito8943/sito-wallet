@@ -35,7 +35,10 @@ export const ConfigFormDialog = (
   );
 
   return (
-    <FormDialog title={t("_accessibility:buttons.filters")} {...props}>
+    <FormDialog
+      title={t("_pages:home.dashboard.subscriptionForecast.configTitle")}
+      {...props}
+    >
       <Controller
         control={control}
         name="range"

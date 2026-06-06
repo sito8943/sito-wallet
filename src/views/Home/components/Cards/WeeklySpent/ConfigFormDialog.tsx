@@ -55,7 +55,10 @@ export const ConfigFormDialog = (
   }, [setValue, type]);
 
   return (
-    <FormDialog title={t("_accessibility:buttons.filters")} {...props}>
+    <FormDialog
+      title={t("_pages:home.dashboard.weeklySpent.configTitle")}
+      {...props}
+    >
       <Controller
         control={control}
         name="accounts"
@@ -85,7 +88,7 @@ export const ConfigFormDialog = (
             value={value}
             onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
             label={t("_entities:transactionCategory.type.label")}
-            inputClassName="dashboard-card-select-input"
+            inputClassName="dashboard-card-select-input dashboard-card-icon-select-input"
             {...rest}
           >
             <FontAwesomeIcon

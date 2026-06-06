@@ -35,6 +35,7 @@
     "dashboard": {
       "transactionTypeResume": {
         "title": "{{transactionType}} por rango",
+        "configTitle": "Configurar resumen de transacciones",
         "placeholder": "Escribe un título",
         "details": {
           "title": "Categorías del resumen",
@@ -42,11 +43,16 @@
         }
       },
       "currentBalance": {
+        "configTitle": "Configurar saldo actual",
         "placeholder": "Escribe un título",
         "refresh": "Actualizar saldo",
         "noAccount": "Selecciona una cuenta"
       },
+      "weeklySpent": {
+        "configTitle": "Configurar gasto semanal"
+      },
       "subscriptionForecast": {
+        "configTitle": "Configurar previsión de suscripciones",
         "placeholder": "Escribe un título",
         "count": "{{count}} renovación(es)",
         "details": {
