@@ -7,6 +7,7 @@ import type { TransactionType } from "lib";
 export interface FilterTransactionDto extends BaseFilterDto {
   accountId?: number;
   amount?: number;
+  auto?: boolean | string;
   category?: number[];
   userId?: number;
   date?: RangeValue<string>;

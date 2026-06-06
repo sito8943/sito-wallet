@@ -124,6 +124,9 @@
     }
   },
   "transaction": {
+    "auto": {
+      "label": "Generadas automáticamente"
+    },
     "amount": {
       "label": "Cantidad",
       "placeholder": "Ej: 100.00",

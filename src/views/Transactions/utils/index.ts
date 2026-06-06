@@ -1,5 +1,7 @@
+import type { TFunction } from "i18next";
+
 // @sito/dashboard-app
-import { formatForDatetimeLocal } from "@sito/dashboard-app";
+import { formatForDatetimeLocal, type Option } from "@sito/dashboard-app";
 
 import type {
   CommonAccountDto,
@@ -18,6 +20,7 @@ import type {
   AssignTransactionCategoryFormType,
   TransactionFormType,
 } from "../types";
+import { TransactionAutoFilterMode } from "../types";
 
 export const formToDto = ({
   account,
@@ -101,5 +104,36 @@ export const assignCategoryFormToDto = (
   ),
   transactionIds: form.transactionIds ?? [],
 });
+
+export const getTransactionAutoFilterMode = (
+  value: unknown,
+): TransactionAutoFilterMode => {
+  if (value === TransactionAutoFilterMode.All || value === "all")
+    return TransactionAutoFilterMode.All;
+  if (value === true || value === "true") return TransactionAutoFilterMode.Auto;
+  if (value === TransactionAutoFilterMode.Auto)
+    return TransactionAutoFilterMode.Auto;
+  if (value === false || value === "false")
+    return TransactionAutoFilterMode.Manual;
+  if (value === TransactionAutoFilterMode.Manual)
+    return TransactionAutoFilterMode.Manual;
+  return TransactionAutoFilterMode.Manual;
+};
+
+export const getTransactionAutoFilterOptions = (t: TFunction): Option[] =>
+  [
+    {
+      id: TransactionAutoFilterMode.All,
+      name: t("_pages:transactions.filters.auto.values.all"),
+    },
+    {
+      id: TransactionAutoFilterMode.Auto,
+      name: t("_pages:transactions.filters.auto.values.auto"),
+    },
+    {
+      id: TransactionAutoFilterMode.Manual,
+      name: t("_pages:transactions.filters.auto.values.manual"),
+    },
+  ] as Option[];
 
 export * from "./weeklyTransactions";
