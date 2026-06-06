@@ -7,6 +7,7 @@ import ProfileClient from "./ProfileClient";
 import FeatureFlagClient from "./FeatureFlagClient";
 import SubscriptionProviderClient from "./SubscriptionProviderClient";
 import SubscriptionClient from "./SubscriptionClient";
+import DebtClient from "./DebtClient";
 import NotificationClient from "./NotificationClient";
 import UserClient from "./UserClient";
 import UserEntityConfigClient from "./UserEntityConfigClient";
@@ -29,6 +30,7 @@ export class Manager extends IManager {
   subscriptionProviders: SubscriptionProviderClient =
     new SubscriptionProviderClient();
   subscriptions: SubscriptionClient = new SubscriptionClient();
+  debts: DebtClient = new DebtClient();
   notifications: NotificationClient = new NotificationClient();
   users: UserClient = new UserClient();
   userEntityConfigs: UserEntityConfigClient = new UserEntityConfigClient();
@@ -107,6 +109,10 @@ export class Manager extends IManager {
 
   get Subscriptions(): SubscriptionClient {
     return this.subscriptions;
+  }
+
+  get Debts(): DebtClient {
+    return this.debts;
   }
 
   get Notifications(): NotificationClient {

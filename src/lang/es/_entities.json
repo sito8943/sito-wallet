@@ -27,6 +27,10 @@
     "user": {
       "singular": "Usuario",
       "plural": "Usuarios"
+    },
+    "debt": {
+      "singular": "Deuda",
+      "plural": "Deudas"
     }
   },
   "base": {
@@ -344,6 +348,88 @@
         "NextYear": "Próximo año",
         "LastYear": "Año pasado"
       }
+    }
+  },
+  "debt": {
+    "title": {
+      "label": "Título",
+      "placeholder": "Ej: Préstamo de mayo",
+      "required": "El título es requerido"
+    },
+    "counterpartyName": {
+      "label": "Contraparte",
+      "placeholder": "Ej: Juan Pérez",
+      "required": "La contraparte es requerida"
+    },
+    "counterpartyContact": {
+      "label": "Contacto",
+      "placeholder": "Ej: juan@email.com"
+    },
+    "direction": {
+      "label": "Tipo",
+      "required": "El tipo es requerido",
+      "values": {
+        "RECEIVABLE": "Me deben",
+        "PAYABLE": "Yo debo"
+      }
+    },
+    "status": {
+      "label": "Estado",
+      "values": {
+        "OPEN": "Abierta",
+        "PARTIALLY_PAID": "Pagada parcialmente",
+        "PAID": "Pagada",
+        "CANCELLED": "Cancelada"
+      }
+    },
+    "originalAmount": {
+      "label": "Importe",
+      "placeholder": "Ej: 150.00",
+      "required": "El importe es requerido",
+      "greaterThanZero": "El importe debe ser mayor que cero"
+    },
+    "pendingAmount": {
+      "label": "Pendiente"
+    },
+    "currency": {
+      "label": "Moneda",
+      "placeholder": "Selecciona una moneda",
+      "required": "La moneda es requerida"
+    },
+    "issuedAt": {
+      "label": "Fecha de emisión",
+      "required": "La fecha de emisión es requerida"
+    },
+    "dueAt": {
+      "label": "Fecha de vencimiento"
+    }
+  },
+  "debtPayment": {
+    "amount": {
+      "label": "Importe del pago",
+      "placeholder": "Ej: 100.00",
+      "required": "El importe del pago es requerido",
+      "greaterThanZero": "El importe del pago debe ser mayor que cero"
+    },
+    "paidAt": {
+      "label": "Fecha de pago",
+      "required": "La fecha de pago es requerida"
+    },
+    "note": {
+      "label": "Nota",
+      "placeholder": "Ej: Pago parcial"
+    },
+    "autoCreateTransaction": {
+      "label": "Crear transacción automáticamente"
+    },
+    "account": {
+      "label": "Cuenta",
+      "placeholder": "Selecciona una cuenta",
+      "requiredWhenAuto": "La cuenta es requerida cuando se crea la transacción automáticamente"
+    },
+    "category": {
+      "label": "Categoría",
+      "placeholder": "Selecciona una categoría"
     }
   }
 }

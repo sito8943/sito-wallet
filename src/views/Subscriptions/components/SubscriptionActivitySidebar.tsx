@@ -1,6 +1,8 @@
 import { Loading } from "@sito/dashboard-app";
 import { useTranslation } from "react-i18next";
 
+import { formatDateTime } from "lib";
+
 import type { SubscriptionActivitySidebarPropsType } from "../types";
 
 export function SubscriptionActivitySidebar(
@@ -15,15 +17,6 @@ export function SubscriptionActivitySidebar(
     billingLogsLoading,
     billingLogsError,
   } = props;
-
-  const formatDateTime = (value?: string | null): string => {
-    if (!value) return "-";
-
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return value;
-
-    return date.toLocaleString();
-  };
 
   const startsAtLabel = formatDateTime(startsAt);
   const lastPaidAtLabel = formatDateTime(lastPaidAt);

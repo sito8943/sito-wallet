@@ -26,6 +26,8 @@ export const Routes = () => {
     Subscriptions,
     SubscriptionEditor,
     SubscriptionProviders,
+    Debts,
+    DebtEditor,
     Transactions,
     Accounts,
     Currencies,
@@ -118,6 +120,36 @@ export const Routes = () => {
               <SubscriptionProviders />
             ) : (
               <FeatureUnavailable module="subscriptions" />
+            )
+          }
+        />
+        <Route
+          path={AppRoutes.debts}
+          element={
+            isFeatureEnabled("debtsEnabled") ? (
+              <Debts />
+            ) : (
+              <FeatureUnavailable module="debts" />
+            )
+          }
+        />
+        <Route
+          path={AppRoutes.debtNew}
+          element={
+            isFeatureEnabled("debtsEnabled") ? (
+              <DebtEditor />
+            ) : (
+              <FeatureUnavailable module="debts" />
+            )
+          }
+        />
+        <Route
+          path={AppRoutes.debtEdit}
+          element={
+            isFeatureEnabled("debtsEnabled") ? (
+              <DebtEditor />
+            ) : (
+              <FeatureUnavailable module="debts" />
             )
           }
         />

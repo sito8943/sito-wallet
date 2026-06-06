@@ -25,6 +25,7 @@ import {
   faUsers,
   faRepeat,
   faBell,
+  faHandHoldingDollar,
 } from "@fortawesome/free-solid-svg-icons";
 
 // lib
@@ -37,6 +38,7 @@ export enum MenuKeys {
   Notifications = "notifications",
   TransactionCategories = "transactionCategories",
   Subscriptions = "subscriptions",
+  Debts = "debts",
   Accounts = "accounts",
   Currencies = "currencies",
   Products = "products",
@@ -84,6 +86,11 @@ const getMenuMap = (): MenuItemType<MenuKeys>[] => [
         path: AppRoutes.subscriptionProviders,
       },
     ],
+  },
+  {
+    page: MenuKeys.Debts,
+    path: AppRoutes.debts,
+    icon: <FontAwesomeIcon icon={faHandHoldingDollar} />,
   },
   {
     page: MenuKeys.Accounts,
@@ -149,6 +156,7 @@ const menuFeatureDependencies: Partial<Record<MenuKeys, FeatureFlagKey>> = {
   [MenuKeys.Transactions]: "transactionsEnabled",
   [MenuKeys.TransactionCategories]: "transactionCategoriesEnabled",
   [MenuKeys.Subscriptions]: "subscriptionsEnabled",
+  [MenuKeys.Debts]: "debtsEnabled",
   [MenuKeys.Accounts]: "accountsEnabled",
   [MenuKeys.Currencies]: "currenciesEnabled",
 };
