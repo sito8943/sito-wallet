@@ -80,6 +80,10 @@
   @apply flex w-full items-end justify-between gap-2;
 }
 
+.subscription-forecast-actions {
+  @apply flex items-center gap-2;
+}
+
 .subscription-forecast-totals {
   @apply flex flex-col gap-1;
 }
@@ -121,6 +125,50 @@
 }
 
 .renewals-dialog-item-amount {
+  @apply shrink-0 font-bold;
+}
+
+.renewals-dialog-item-side {
+  @apply flex shrink-0 items-center gap-2;
+}
+
+.select-subscription-dialog {
+  @apply w-5/6 md:w-1/2;
+}
+
+.select-subscription-dialog-loading {
+  @apply flex items-center justify-center py-6;
+}
+
+.select-subscription-dialog-empty-state {
+  @apply flex flex-col items-start gap-3 py-2;
+}
+
+.select-subscription-dialog-empty {
+  @apply py-2 text-text-muted;
+}
+
+.select-subscription-dialog-list {
+  @apply flex max-h-[60vh] flex-col gap-2 overflow-y-auto py-2;
+}
+
+.select-subscription-dialog-item {
+  @apply flex w-full items-center justify-between gap-3 rounded-2xl bg-base-light px-3 py-3 text-left transition hover:bg-base;
+}
+
+.select-subscription-dialog-item-copy {
+  @apply flex min-w-0 flex-col;
+}
+
+.select-subscription-dialog-item-title {
+  @apply truncate font-semibold;
+}
+
+.select-subscription-dialog-item-meta {
+  @apply truncate text-xs text-text-muted;
+}
+
+.select-subscription-dialog-item-amount {
   @apply shrink-0 font-bold;
 }
 

@@ -4,6 +4,7 @@ import type { FieldValues } from "react-hook-form";
 import type {
   DashboardDto,
   RenewalRangePreset,
+  SubscriptionDto,
   SubscriptionRenewalDto,
   UpdateDashboardCardConfigDto,
 } from "lib";
@@ -31,4 +32,16 @@ export type RenewalsDialogPropsType = {
   open: boolean;
   closeDialog: () => void;
   renewals: SubscriptionRenewalDto[];
+  onRegisterPayment: (subscriptionId: number) => void;
+  registeringSubscriptionId?: number | null;
+};
+
+export type SelectSubscriptionDialogPropsType = {
+  open: boolean;
+  handleClose: () => void;
+  subscriptions: SubscriptionDto[];
+  isLoading?: boolean;
+  errorMessage?: string | null;
+  onSelect: (subscription: SubscriptionDto) => void;
+  onAddSubscription: () => void;
 };
