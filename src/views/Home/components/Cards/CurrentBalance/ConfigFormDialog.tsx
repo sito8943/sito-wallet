@@ -27,7 +27,10 @@ export const ConfigFormDialog = (
   const { data: accounts } = useAccountsCommon();
 
   return (
-    <FormDialog title={t("_pages:home.dashboard.currentBalance.configTitle")} {...props}>
+    <FormDialog
+      title={t("_pages:home.dashboard.currentBalance.configTitle")}
+      {...props}
+    >
       <Controller
         control={control}
         name="account"
