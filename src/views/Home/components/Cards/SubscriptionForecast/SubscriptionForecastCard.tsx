@@ -136,7 +136,8 @@ export const SubscriptionForecastCard = (
   const selectableSubscriptions = useMemo<SubscriptionDto[]>(
     () =>
       (subscriptionsPickerQuery.data?.items ?? []).filter(
-        (subscription) => toSubscriptionStatus(subscription.status) !== "CANCELED",
+        (subscription) =>
+          toSubscriptionStatus(subscription.status) !== "CANCELED",
       ),
     [subscriptionsPickerQuery.data?.items],
   );
