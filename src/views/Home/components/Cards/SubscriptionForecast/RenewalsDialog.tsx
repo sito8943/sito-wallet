@@ -88,8 +88,12 @@ export const RenewalsDialog = (props: RenewalsDialogPropsType) => {
                   <IconButton
                     icon={faFileInvoice}
                     onClick={() => onRegisterPayment(renewal.subscriptionId)}
-                    disabled={registeringSubscriptionId === renewal.subscriptionId}
-                    aria-label={t("_pages:subscriptions.actions.billingLog.text")}
+                    disabled={
+                      registeringSubscriptionId === renewal.subscriptionId
+                    }
+                    aria-label={t(
+                      "_pages:subscriptions.actions.billingLog.text",
+                    )}
                   />
                 </div>
               </li>
