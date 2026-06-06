@@ -69,6 +69,18 @@ const parseRangeBoundary = (
   return normalized.length ? normalized : undefined;
 };
 
+const parseAutoFilterValue = (value: unknown): boolean | undefined => {
+  if (typeof value === "boolean") return value;
+  if (typeof value !== "string") return undefined;
+
+  const normalized = value.trim().toLowerCase();
+  if (!normalized || normalized === "all") return undefined;
+  if (normalized === "true") return true;
+  if (normalized === "false") return false;
+
+  return undefined;
+};
+
 const parseDeletedAtRange = (
   value: unknown,
 ): DateRangeFilterValue | undefined => {
@@ -112,12 +124,18 @@ const normalizeFiltersByMode = (
   const normalized = isRecord(filters) ? { ...filters } : {};
   const resolvedSoftDeleteScope = resolveSoftDeleteScope(normalized, mode);
   const deletedAtRange = parseDeletedAtRange(normalized.deletedAt);
+  const autoFilterValue = parseAutoFilterValue(normalized.auto);
 
   delete normalized.status;
   delete normalized.softDeleteScope;
   delete normalized.deletedAt;
+  delete normalized.auto;
 
   if (mode === "hardDelete") return normalized;
+
+  if (autoFilterValue !== undefined) {
+    normalized.auto = autoFilterValue;
+  }
 
   if (mode === "list" && resolvedSoftDeleteScope) {
     normalized.softDeleteScope = resolvedSoftDeleteScope;

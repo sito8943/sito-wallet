@@ -29,6 +29,22 @@ export const getTransactionTypeOptions = (t: TFunction): Option[] =>
     name: t(`_entities:transactionCategory:type.values.${item.key}`),
   })) as Option[];
 
+const getTransactionAutoTableFilterOptions = (t: TFunction): Option[] =>
+  [
+    {
+      id: "false",
+      name: t("_pages:transactions.filters.auto.values.manual"),
+    },
+    {
+      id: "all",
+      name: t("_pages:transactions.filters.auto.values.all"),
+    },
+    {
+      id: "true",
+      name: t("_pages:transactions.filters.auto.values.auto"),
+    },
+  ] as Option[];
+
 export const getTransactionColumns = (
   t: TFunction,
   categories: CommonTransactionCategoryDto[],
@@ -137,6 +153,18 @@ export const getTransactionColumns = (
               )}
         </span>
       ),
+    },
+    {
+      key: "auto",
+      label: t("_entities:transaction.auto.label"),
+      filterOptions: {
+        type: FilterTypes.select,
+        defaultValue: "false",
+        options: getTransactionAutoTableFilterOptions(t),
+        label: t("_entities:transaction.auto.label"),
+      },
+      display: "none",
+      renderBody: () => "",
     },
     {
       key: "date",
