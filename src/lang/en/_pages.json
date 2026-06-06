@@ -35,6 +35,7 @@
     "dashboard": {
       "transactionTypeResume": {
         "title": "{{transactionType}} per range",
+        "configTitle": "Configure transaction summary",
         "placeholder": "Type the title",
         "details": {
           "title": "Resume categories",
@@ -42,11 +43,16 @@
         }
       },
       "currentBalance": {
+        "configTitle": "Configure current balance",
         "placeholder": "Type the title",
         "refresh": "Refresh balance",
         "noAccount": "Select an account"
       },
+      "weeklySpent": {
+        "configTitle": "Configure weekly spending"
+      },
       "subscriptionForecast": {
+        "configTitle": "Configure subscription forecast",
         "placeholder": "Type the title",
         "count": "{{count}} renewal(s)",
         "details": {
