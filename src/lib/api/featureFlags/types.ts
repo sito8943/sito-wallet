@@ -4,6 +4,7 @@ export type AppFeatures = {
   accountsEnabled: boolean;
   transactionsEnabled: boolean;
   subscriptionsEnabled: boolean;
+  debtsEnabled: boolean;
 };
 
 export type AppFeaturesPayload = Partial<AppFeatures>;

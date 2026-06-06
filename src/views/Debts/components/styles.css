@@ -1,0 +1,53 @@
+@reference "../../../styles/variables.css";
+
+.debt-card-amount {
+  @apply text-sm font-semibold whitespace-nowrap;
+}
+
+.debt-card-content {
+  @apply gap-2;
+}
+
+.debt-card-description {
+  @apply text-start;
+}
+
+.debt-card-description--empty {
+  @apply text-text-muted;
+}
+
+.debt-card-meta {
+  @apply text-sm text-text-muted text-start;
+}
+
+.debt-card-status {
+  @apply inline-flex w-fit rounded-full px-2 py-0.5 text-xs;
+}
+
+.debt-card-title-row {
+  @apply flex w-full items-center justify-between gap-2;
+}
+
+.debt-form-grid {
+  @apply grid gap-5 md:grid-cols-2;
+}
+
+.debt-payment-grid {
+  @apply grid gap-5 md:grid-cols-2;
+}
+
+.debt-payment-toggle-input {
+  @apply h-4 w-4;
+}
+
+.debt-payment-toggle {
+  @apply mb-5;
+}
+
+.debt-payment-current {
+  @apply text-sm text-text-muted;
+}
+
+.debt-payment-current-name {
+  @apply ml-1 text-text;
+}

@@ -13,7 +13,8 @@
     "about": "Acerca de Sito Wallet",
     "terms-and-conditions": "Términos y Condiciones",
     "cookies-policy": "Política de Cookies",
-    "privacy-policy": "Política de Privacidad"
+    "privacy-policy": "Política de Privacidad",
+    "debts": "Deudas"
   },
   "search": {
     "label": "Buscar",
@@ -289,21 +290,51 @@
       "incomeTitle": "Ingresos",
       "expenseTitle": "Gastos",
       "items": {
-        "salary": { "name": "Salario" },
-        "freelance": { "name": "Freelance" },
-        "gifts_in": { "name": "Regalos" },
-        "investments": { "name": "Inversiones" },
-        "refunds": { "name": "Reembolsos" },
-        "food": { "name": "Comida" },
-        "transport": { "name": "Transporte" },
-        "housing": { "name": "Vivienda" },
-        "utilities": { "name": "Servicios" },
-        "entertainment": { "name": "Entretenimiento" },
-        "health": { "name": "Salud" },
-        "subscriptions": { "name": "Suscripciones" },
-        "shopping": { "name": "Compras" },
-        "education": { "name": "Educación" },
-        "savings": { "name": "Ahorros" }
+        "salary": {
+          "name": "Salario"
+        },
+        "freelance": {
+          "name": "Freelance"
+        },
+        "gifts_in": {
+          "name": "Regalos"
+        },
+        "investments": {
+          "name": "Inversiones"
+        },
+        "refunds": {
+          "name": "Reembolsos"
+        },
+        "food": {
+          "name": "Comida"
+        },
+        "transport": {
+          "name": "Transporte"
+        },
+        "housing": {
+          "name": "Vivienda"
+        },
+        "utilities": {
+          "name": "Servicios"
+        },
+        "entertainment": {
+          "name": "Entretenimiento"
+        },
+        "health": {
+          "name": "Salud"
+        },
+        "subscriptions": {
+          "name": "Suscripciones"
+        },
+        "shopping": {
+          "name": "Compras"
+        },
+        "education": {
+          "name": "Educación"
+        },
+        "savings": {
+          "name": "Ahorros"
+        }
       }
     },
     "subscriptions": {
@@ -396,7 +427,8 @@
       "currencies": "monedas",
       "transactions": "transacciones",
       "transactionCategories": "categorías de transacciones",
-      "subscriptions": "suscripciones"
+      "subscriptions": "suscripciones",
+      "debts": "deudas"
     }
   },
   "sync": {
@@ -874,5 +906,37 @@
   "notFound": {
     "title": "No encontrado",
     "body": "El recurso que estás buscando no se encuentra"
+  },
+  "debts": {
+    "title": "Deudas",
+    "empty": "No tienes deudas. Crea una para empezar.",
+    "add": "Agregar una deuda",
+    "labels": {
+      "noDueDate": "Sin fecha de vencimiento"
+    },
+    "forms": {
+      "add": "Nueva deuda",
+      "edit": "Editar deuda",
+      "editAria": "Haz clic para editar la deuda"
+    },
+    "actions": {
+      "payment": {
+        "text": "Registrar pago",
+        "disabled": "No puedes registrar pagos en deudas pagadas o canceladas",
+        "title": "Registrar pago",
+        "for": "Deuda",
+        "successMessage": "Pago registrado correctamente"
+      },
+      "cancel": {
+        "text": "Cancelar deuda",
+        "disabled": "No puedes cancelar deudas pagadas o canceladas",
+        "confirmTitle": "¿Cancelar esta deuda?",
+        "successMessage": "Deuda cancelada correctamente"
+      },
+      "deletePayment": {
+        "text": "Eliminar pago",
+        "successMessage": "Pago eliminado correctamente"
+      }
+    }
   }
 }
