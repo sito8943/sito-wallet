@@ -445,6 +445,16 @@
   "transactions": {
     "title": "Transactions",
     "empty": "No transactions to load",
+    "filters": {
+      "auto": {
+        "label": "Type",
+        "values": {
+          "all": "All",
+          "auto": "Automatic",
+          "manual": "Manual"
+        }
+      }
+    },
     "mobileFilters": {
       "sortBy": "Sort by",
       "sortOrder": "Sort order",

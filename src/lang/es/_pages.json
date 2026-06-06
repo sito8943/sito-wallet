@@ -445,6 +445,16 @@
   "transactions": {
     "title": "Transacciones",
     "empty": "No hay transacciones para mostrar",
+    "filters": {
+      "auto": {
+        "label": "Tipo",
+        "values": {
+          "all": "Todas",
+          "auto": "Automáticas",
+          "manual": "Manuales"
+        }
+      }
+    },
     "mobileFilters": {
       "sortBy": "Ordenar por",
       "sortOrder": "Orden",

@@ -19,6 +19,12 @@ import type {
   TransactionDto,
 } from "lib";
 
+export enum TransactionAutoFilterMode {
+  All = "all",
+  Auto = "auto",
+  Manual = "manual",
+}
+
 export interface TransactionCardPropsType extends TransactionDto {
   actions: ActionType<TransactionDto>[];
   onClick: (id: number) => void;
@@ -88,6 +94,7 @@ export type AssignTransactionCategoryDialogPropsType =
   TriggerFormDialogPropsType<AssignTransactionCategoryFormType>;
 
 export interface TransactionsMobileFiltersFormType extends FieldValues {
+  auto: TransactionAutoFilterMode;
   category: Option[];
   type: string;
   description: string;
@@ -102,6 +109,7 @@ export interface TransactionsMobileFiltersFormType extends FieldValues {
 }
 
 export interface TransactionsMobileFiltersDialogPropsType extends TriggerFormDialogPropsType<TransactionsMobileFiltersFormType> {
+  autoFilterOptions: Option[];
   categories: CommonTransactionCategoryDto[];
   hideDeletedEntities?: boolean;
   handleClear: () => void;

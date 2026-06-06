@@ -124,6 +124,9 @@
     }
   },
   "transaction": {
+    "auto": {
+      "label": "Automatically created"
+    },
     "amount": {
       "label": "Amount",
       "placeholder": "Ex: 100.00",

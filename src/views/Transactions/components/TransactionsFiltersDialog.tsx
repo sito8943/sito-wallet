@@ -29,6 +29,7 @@ export const TransactionsMobileFilters = (
   props: TransactionsMobileFiltersDialogPropsType,
 ) => {
   const {
+    autoFilterOptions,
     categories,
     control,
     handleClear,
@@ -160,6 +161,24 @@ export const TransactionsMobileFilters = (
             />
           )}
         />
+        <Controller
+          control={control}
+          name="auto"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <SelectInput
+              id="mobile-transaction-auto-filter"
+              label={t("_entities:transaction.auto.label")}
+              value={value ?? ""}
+              onChange={(event) =>
+                onChange((event.target as HTMLSelectElement).value)
+              }
+              options={autoFilterOptions}
+              {...rest}
+            />
+          )}
+        />
+      </div>
+      <div className="transactions-filter-grid">
         <Controller
           control={control}
           name="amount"

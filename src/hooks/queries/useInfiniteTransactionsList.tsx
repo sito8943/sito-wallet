@@ -35,14 +35,21 @@ export function useInfiniteTransactionsList(props: {
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   const parsedFilters = useMemo(
-    () =>
-      applyHideDeletedEntitiesPreference(
-        normalizeListFilters({
-          ...tableFilters,
-          ...filters,
-        }),
+    () => {
+      const normalizedFilters = normalizeListFilters({
+        ...tableFilters,
+        ...filters,
+      }) as FilterTransactionDto;
+
+      if (tableFilters.auto === undefined) {
+        normalizedFilters.auto = false;
+      }
+
+      return applyHideDeletedEntitiesPreference(
+        normalizedFilters,
         hideDeletedEntities,
-      ) as FilterTransactionDto,
+      ) as FilterTransactionDto;
+    },
     [filters, tableFilters, hideDeletedEntities],
   );
 

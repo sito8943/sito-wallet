@@ -3,23 +3,36 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
-import type { Option, SoftDeleteScope } from "@sito/dashboard-app";
+import type {
+  FiltersValue,
+  Option,
+  SoftDeleteScope,
+} from "@sito/dashboard-app";
 import { useFormDialog, useTableOptions } from "@sito/dashboard-app";
 
 // hooks
 import { TransactionsQueryKeys } from "hooks";
 
 // lib
-import type { CommonTransactionCategoryDto, TransactionType } from "lib";
+import type {
+  CommonTransactionCategoryDto,
+  FilterTransactionDto,
+  TransactionType,
+} from "lib";
 import { normalizeListFilters } from "lib";
 
 // types
 import { DEFAULT_SORTING_BY, DEFAULT_SORTING_ORDER } from "./constants";
 import { parseSortOrder } from "./utils";
-import type {
-  TransactionsMobileFiltersDialogPropsType,
-  TransactionsMobileFiltersFormType,
+import {
+  TransactionAutoFilterMode,
+  type TransactionsMobileFiltersDialogPropsType,
+  type TransactionsMobileFiltersFormType,
 } from "views/Transactions/types";
+import {
+  getTransactionAutoFilterMode,
+  getTransactionAutoFilterOptions,
+} from "views/Transactions/utils";
 
 export function useTransactionsMobileFiltersDialog(
   categories: CommonTransactionCategoryDto[],
@@ -38,9 +51,13 @@ export function useTransactionsMobileFiltersDialog(
     setSortingBy,
     setSortingOrder,
     setCurrentPage,
-  } = useTableOptions();
+  } = useTableOptions<keyof FilterTransactionDto & string>();
 
   const queryClient = useQueryClient();
+  const autoFilterOptions = useMemo(
+    () => getTransactionAutoFilterOptions(t),
+    [t],
+  );
 
   const categoryOptions = useMemo(
     () =>
@@ -86,6 +103,7 @@ export function useTransactionsMobileFiltersDialog(
       type: filters?.type != null ? String(filters.type) : "",
       description: filters?.description ? String(filters.description) : "",
       amount: filters?.amount != null ? String(filters.amount) : "",
+      auto: getTransactionAutoFilterMode(filters.auto),
       dateStart: parsedDate.start ?? "",
       dateEnd: parsedDate.end ?? "",
       softDeleteScope: parsedSoftDeleteScope,
@@ -95,18 +113,19 @@ export function useTransactionsMobileFiltersDialog(
       sortingOrder: parseSortOrder(sortingOrder),
     }),
     [
-      filters?.amount,
-      filters?.description,
-      filters?.type,
-      parsedDate.end,
-      parsedDate.start,
-      parsedDeletedAt.end,
-      parsedDeletedAt.start,
-      parsedSoftDeleteScope,
       selectedCategories,
+      filters.type,
+      filters.description,
+      filters.amount,
+      filters.auto,
+      parsedDate.start,
+      parsedDate.end,
+      parsedSoftDeleteScope,
+      hideDeletedEntities,
+      parsedDeletedAt.start,
+      parsedDeletedAt.end,
       sortingBy,
       sortingOrder,
-      hideDeletedEntities,
     ],
   );
 
@@ -119,7 +138,7 @@ export function useTransactionsMobileFiltersDialog(
     onSubmit: (values) => {
       clearFilters();
 
-      const nextFilters: Record<string, { value: unknown }> = {};
+      const nextFilters: FiltersValue<keyof FilterTransactionDto & string> = {};
       const selectedCategoryValues = Array.isArray(values.category)
         ? values.category
         : [];
@@ -141,6 +160,13 @@ export function useTransactionsMobileFiltersDialog(
       if (values.amount !== "" && !Number.isNaN(Number(values.amount))) {
         nextFilters.amount = { value: Number(values.amount) };
       }
+
+      nextFilters.auto = {
+        value:
+          values.auto === TransactionAutoFilterMode.All
+            ? TransactionAutoFilterMode.All
+            : values.auto === TransactionAutoFilterMode.Auto,
+      };
 
       if (values.dateStart || values.dateEnd) {
         nextFilters.date = {
@@ -188,6 +214,7 @@ export function useTransactionsMobileFiltersDialog(
 
   return {
     ...formDialog,
+    autoFilterOptions,
     categories,
     hideDeletedEntities,
     open,
