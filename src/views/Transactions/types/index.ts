@@ -113,8 +113,7 @@ export type TransactionTableRowType = TransactionDto & {
   type?: TransactionType;
 };
 
-export interface TransactionsMobileFiltersDialogPropsType
-  extends TriggerFormDialogPropsType<TransactionsMobileFiltersFormType> {
+export interface TransactionsMobileFiltersDialogPropsType extends TriggerFormDialogPropsType<TransactionsMobileFiltersFormType> {
   autoFilterOptions: Option[];
   categories: CommonTransactionCategoryDto[];
   hideDeletedEntities?: boolean;
