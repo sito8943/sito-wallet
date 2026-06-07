@@ -20,11 +20,11 @@ import { WalletTable } from "components";
 import { useTransactionsList } from "../../../../hooks/queries/useTransactionsList";
 
 // lib
-import type { TransactionDto } from "lib";
 import { EntityName, normalizeListFilters, useParseColumns } from "lib";
 
 // types
 import type { TransactionContainerPropsType } from "./types";
+import type { TransactionTableRowType } from "../../types";
 
 // utils
 import { getTransactionColumns } from "./transactionColumns";
@@ -51,6 +51,10 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
   const { data, isLoading, error } = useTransactionsList({
     filters: listFilters,
   });
+  const tableData = useMemo<TransactionTableRowType[]>(
+    () => data?.items ?? [],
+    [data?.items],
+  );
 
   // #region columns
 
@@ -84,7 +88,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
     return ignoredColumns;
   }, [softDeleteScope, hideDeletedEntities]);
 
-  const { columns } = useParseColumns<TransactionDto>(
+  const { columns } = useParseColumns<TransactionTableRowType>(
     columnDefs,
     EntityName.Transaction,
     toIgnore,
@@ -129,10 +133,10 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
   }
 
   return (
-    <WalletTable
+    <WalletTable<TransactionTableRowType>
       total={data?.totalElements ?? 0}
-      data={data?.items ?? []}
-      actions={getActions}
+      data={tableData}
+      actions={(row) => getActions(row)}
       isLoading={isLoading}
       entity={EntityName.Transaction}
       columns={columns}
