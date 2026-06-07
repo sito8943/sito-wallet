@@ -2,9 +2,7 @@ import type { SoftDeleteScope } from "@sito/dashboard-app";
 
 const ACTIVE_SOFT_DELETE_SCOPE: SoftDeleteScope = "ACTIVE";
 
-export const applyHideDeletedEntitiesPreference = <
-  TFilters extends object,
->(
+export const applyHideDeletedEntitiesPreference = <TFilters extends object>(
   filters: TFilters,
   hideDeletedEntities?: boolean,
 ): TFilters => {
