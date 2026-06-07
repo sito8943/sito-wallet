@@ -23,6 +23,10 @@ export const baseColumns = [
  */
 export const isBaseColumn = (column: string) => baseColumns.includes(column);
 
+const toColumnKey = <TDto extends BaseEntityDto>(
+  key: string,
+): Extract<keyof TDto, string> => key as Extract<keyof TDto, string>;
+
 const softDeleteScopeFilterOptions = () => [
   {
     id: "ACTIVE",
@@ -46,12 +50,12 @@ export const prefabBaseColumns = <
   TDto extends BaseEntityDto,
 >(): ColumnType<TDto>[] => [
   {
-    key: "id",
+    key: toColumnKey<TDto>("id"),
     filterOptions: { type: FilterTypes.number, defaultValue: "" },
     pos: 1,
   },
   {
-    key: "updatedAt",
+    key: toColumnKey<TDto>("updatedAt"),
     className: "w-56",
     filterOptions: { type: FilterTypes.date, defaultValue: "" },
     renderBody: (value: unknown) => {
@@ -63,7 +67,7 @@ export const prefabBaseColumns = <
     pos: -1,
   },
   {
-    key: "createdAt",
+    key: toColumnKey<TDto>("createdAt"),
     filterOptions: { type: FilterTypes.date, defaultValue: "" },
     renderBody: (value: unknown) => {
       const dateValue = value instanceof Date ? value : new Date(String(value));
@@ -74,7 +78,7 @@ export const prefabBaseColumns = <
     pos: -2,
   },
   {
-    key: "softDeleteScope",
+    key: toColumnKey<TDto>("softDeleteScope"),
     label: t("_entities:base.deleted.scope.label"),
     filterOptions: {
       defaultValue: "ACTIVE",
@@ -87,7 +91,7 @@ export const prefabBaseColumns = <
     pos: -3,
   },
   {
-    key: "deletedAt",
+    key: toColumnKey<TDto>("deletedAt"),
     filterOptions: {
       defaultValue: { start: "", end: "" },
       type: FilterTypes.date,
@@ -119,7 +123,7 @@ export const useParseColumns = <TDto extends BaseEntityDto>(
   const parsedColumns = useMemo(
     () =>
       [
-        ...prefabBaseColumns().filter(
+        ...prefabBaseColumns<TDto>().filter(
           (base) => toIgnore.indexOf(base.key) === -1,
         ),
         ...columns,

@@ -9,12 +9,13 @@ import {
 } from "@sito/dashboard-app";
 
 // lib
-import type { CommonTransactionCategoryDto, TransactionDto } from "lib";
+import type { CommonTransactionCategoryDto } from "lib";
 import {
   TransactionType,
   getPrimaryTransactionCategory,
   getTransactionCategories,
 } from "lib";
+import type { TransactionTableRowType } from "../../types";
 
 // views
 import { Currency } from "views/Currencies/components/Currency";
@@ -49,7 +50,7 @@ export const getTransactionColumns = (
   t: TFunction,
   categories: CommonTransactionCategoryDto[],
   onCategoryClick?: (id: number) => void,
-): ColumnType<TransactionDto>[] => {
+): ColumnType<TransactionTableRowType>[] => {
   const renderEmpty = (value: string | undefined | null) => {
     if (value && value.length) {
       return value;
@@ -67,7 +68,7 @@ export const getTransactionColumns = (
         options: categories,
         placeholder: t("_entities:transaction.category.placeholder"),
       },
-      renderBody: (_value: unknown, entity: TransactionDto) => {
+      renderBody: (_value: unknown, entity: TransactionTableRowType) => {
         const transactionCategories = getTransactionCategories(entity);
         if (!transactionCategories.length) return undefined;
 
@@ -100,7 +101,7 @@ export const getTransactionColumns = (
     {
       key: "amount",
       filterOptions: { type: FilterTypes.number },
-      renderBody: (value: unknown, entity: TransactionDto) => {
+      renderBody: (value: unknown, entity: TransactionTableRowType) => {
         const amount = typeof value === "number" ? value : Number(value) || 0;
         const primaryCategory = getPrimaryTransactionCategory(entity);
 
@@ -125,7 +126,7 @@ export const getTransactionColumns = (
         placeholder: t("_entities:transactionCategory.type.placeholder"),
         options: getTransactionTypeOptions(t),
       },
-      renderBody: (_: unknown, entity: TransactionDto) => (
+      renderBody: (_: unknown, entity: TransactionTableRowType) => (
         <div className="transaction-table-type-cell">
           <Type
             type={
@@ -142,7 +143,7 @@ export const getTransactionColumns = (
         type: FilterTypes.text,
         placeholder: t("_entities:base.description.placeholder"),
       },
-      renderBody: (value: unknown, entity: TransactionDto) => (
+      renderBody: (value: unknown, entity: TransactionTableRowType) => (
         <span className="transaction-table-description">
           {entity.auto
             ? t("_entities:transactionCategory.name.init")
