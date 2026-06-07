@@ -1,4 +1,4 @@
-import type { NotificationDto } from "lib";
+import type { NotificationDto } from "../../lib/entities/notification/NotificationDto";
 
 export const isNotificationUnread = (notification: NotificationDto): boolean =>
   !notification.readAt;

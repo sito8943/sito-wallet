@@ -3,8 +3,8 @@ import type { Message } from "@stomp/stompjs";
 import {
   getNotificationMessage,
   getNotificationTitle,
-  type NotificationDto,
-} from "lib";
+} from "../../lib/entities/notification/utils";
+import type { NotificationDto } from "../../lib/entities/notification/NotificationDto";
 
 import { config } from "../../config";
 
