@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import {
   getNotificationMessage,
   getNotificationTitle,
-  type NotificationDto,
-} from "lib";
+} from "../../lib/entities/notification/utils";
+import type { NotificationDto } from "../../lib/entities/notification/NotificationDto";
 
 import {
   getUnreadNotificationIds,
