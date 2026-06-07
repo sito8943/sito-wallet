@@ -3,7 +3,10 @@ import { Button, classNames, useTimeAge } from "@sito/dashboard-app";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faWarning } from "@fortawesome/free-solid-svg-icons";
 
-import { getNotificationMessage, getNotificationTitle } from "lib";
+import {
+  getNotificationMessage,
+  getNotificationTitle,
+} from "../../../lib/entities/notification/utils";
 
 import type { NotificationListItemPropsType } from "../types";
 import { isNotificationUnread } from "../utils";
