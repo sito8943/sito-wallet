@@ -14,7 +14,7 @@ import type { WalletOnboardingWizardPropsType } from "./types";
 import { ENTITY_STEP_ORDER } from "./constants";
 
 export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
-  const { initialEnabledEntityKeys } = props;
+  const { initialEnabledEntityKeys, showDebtsStep = false } = props;
   const { t } = useTranslation();
 
   const enabledEntityKeys = useMemo(
@@ -40,12 +40,20 @@ export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
         body: t("_pages:onboarding.welcome.body"),
       },
       ...entitySteps,
+      ...(showDebtsStep
+        ? [
+            {
+              title: t("_pages:onboarding.debts.title"),
+              body: t("_pages:onboarding.debts.body"),
+            },
+          ]
+        : []),
       {
         title: t("_pages:onboarding.get_started.title"),
         body: t("_pages:onboarding.get_started.body"),
       },
     ],
-    [entitySteps, t],
+    [entitySteps, showDebtsStep, t],
   );
 
   return (

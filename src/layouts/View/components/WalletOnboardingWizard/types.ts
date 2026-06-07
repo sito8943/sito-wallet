@@ -8,4 +8,5 @@ export type OnboardingSetupStepKey =
 
 export type WalletOnboardingWizardPropsType = {
   initialEnabledEntityKeys?: UserEntityConfigKey[];
+  showDebtsStep?: boolean;
 };

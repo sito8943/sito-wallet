@@ -17,6 +17,7 @@ const {
   mockUseAppPreload,
   mockApplyFeaturePayload,
   mockGetUserEntityConfigs,
+  mockIsFeatureEnabled,
 } = vi.hoisted(() => {
   const mockTranslate = vi.fn((key: string) => key);
   const mockUseAuth = vi.fn(() => ({
@@ -29,6 +30,7 @@ const {
   }));
   const mockApplyFeaturePayload = vi.fn();
   const mockGetUserEntityConfigs = vi.fn(() => Promise.resolve([]));
+  const mockIsFeatureEnabled = vi.fn(() => true);
   return {
     mockNavigate: vi.fn(),
     mockFromLocal: vi.fn(() => null),
@@ -38,6 +40,7 @@ const {
     mockUseAppPreload,
     mockApplyFeaturePayload,
     mockGetUserEntityConfigs,
+    mockIsFeatureEnabled,
   };
 });
 
@@ -218,7 +221,7 @@ vi.mock("lib", () => {
 vi.mock("providers", () => ({
   useFeatureFlags: () => ({
     applyFeaturePayload: mockApplyFeaturePayload,
-    isFeatureEnabled: () => true,
+    isFeatureEnabled: mockIsFeatureEnabled,
   }),
   useManager: () => ({
     UserEntityConfigs: {
@@ -319,6 +322,7 @@ describe("View layout", () => {
       completedTaskKeys: [],
       failedTaskKeys: [],
     });
+    mockIsFeatureEnabled.mockReset().mockReturnValue(true);
   });
 
   describe("onboarding", () => {
@@ -333,8 +337,19 @@ describe("View layout", () => {
       expect(screen.queryByTestId("onboarding")).toBeNull();
     });
 
-    it("redirects anonymous visitors to sign in when the onboarding flag is already set", () => {
+    it("does not redirect anonymous visitors to sign in on the home route when the onboarding flag is already set", () => {
       renderView({ email: null, onboardingDone: true });
+      expect(screen.queryByTestId("onboarding")).toBeNull();
+      expect(mockNavigate).not.toHaveBeenCalled();
+    });
+
+    it("redirects anonymous visitors to sign in on private routes when the onboarding flag is already set", () => {
+      renderView({
+        email: null,
+        onboardingDone: true,
+        initialPath: "/transactions",
+      });
+
       expect(screen.queryByTestId("onboarding")).toBeNull();
       expect(mockNavigate).toHaveBeenCalledWith("/auth/sign-in", {
         replace: true,
@@ -351,7 +366,7 @@ describe("View layout", () => {
       expect(mockToLocal).toHaveBeenCalledWith("test-onboarding", true);
     });
 
-    it("renders with all 5 onboarding steps", () => {
+    it("renders with the debts onboarding step when the feature is enabled", () => {
       renderView({ email: "user@example.com" });
 
       const steps =
@@ -360,9 +375,25 @@ describe("View layout", () => {
           .getAttribute("data-steps")
           ?.split(",")
           .map((step) => step.split("|")[0]) ?? [];
-      expect(steps).toHaveLength(6);
+      expect(steps).toHaveLength(7);
       expect(steps).toContain("_pages:onboarding.welcome.title");
+      expect(steps).toContain("_pages:onboarding.debts.title");
       expect(steps).toContain("_pages:onboarding.get_started.title");
+    });
+
+    it("does not render the debts onboarding step when the feature is disabled", () => {
+      mockIsFeatureEnabled.mockReturnValue(false);
+
+      renderView({ email: "user@example.com" });
+
+      const steps =
+        screen
+          .getByTestId("onboarding")
+          .getAttribute("data-steps")
+          ?.split(",")
+          .map((step) => step.split("|")[0]) ?? [];
+
+      expect(steps).not.toContain("_pages:onboarding.debts.title");
     });
 
     it("does not redirect anonymous visitors away from public informational routes", () => {
