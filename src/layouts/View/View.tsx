@@ -46,6 +46,7 @@ import {
 import { getFeatureFilteredMenuMap } from "views/menuMap";
 
 const PUBLIC_ANONYMOUS_ROUTES = new Set([
+  AppRoutes.home,
   AppRoutes.about,
   AppRoutes.cookiesPolicy,
   AppRoutes.privacyPolicy,
@@ -154,6 +155,7 @@ export function View() {
         {showOnboarding && (
           <WalletOnboardingWizard
             initialEnabledEntityKeys={initialEnabledEntityKeys}
+            showDebtsStep={isFeatureEnabled("debtsEnabled")}
           />
         )}
         <AppShell

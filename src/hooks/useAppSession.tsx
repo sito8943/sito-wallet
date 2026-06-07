@@ -25,13 +25,6 @@ export const useAppSession = (): boolean => {
   });
   const initialIsOnlineRef = useRef(isOnline);
 
-  bootstrapContextRef.current = {
-    logUser,
-    logoutUser,
-    manager,
-    clearFeatures,
-  };
-
   useEffect(() => {
     let isMounted = true;
 

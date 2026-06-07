@@ -238,6 +238,10 @@
       "title": "Ten tus suscripciones bajo control",
       "body": "Organiza pagos recurrentes, proveedores y renovaciones para que cada cargo sea previsible."
     },
+    "debts": {
+      "title": "Lleva el seguimiento de tus deudas",
+      "body": "Registra lo que debes o te deben, controla vencimientos y mantén claro cuánto queda pendiente."
+    },
     "get_started": {
       "title": "Listo para tomar el control",
       "body": "Añade tu primera cuenta ahora y comienza tu camino hacia unas finanzas más saludables hoy mismo."
