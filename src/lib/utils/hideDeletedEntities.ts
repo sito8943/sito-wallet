@@ -1,11 +1,9 @@
 import type { SoftDeleteScope } from "@sito/dashboard-app";
 
-type FiltersRecord = Record<string, unknown>;
-
 const ACTIVE_SOFT_DELETE_SCOPE: SoftDeleteScope = "ACTIVE";
 
 export const applyHideDeletedEntitiesPreference = <
-  TFilters extends FiltersRecord,
+  TFilters extends object,
 >(
   filters: TFilters,
   hideDeletedEntities?: boolean,
@@ -15,7 +13,10 @@ export const applyHideDeletedEntitiesPreference = <
   const nextFilters = {
     ...filters,
     softDeleteScope: ACTIVE_SOFT_DELETE_SCOPE,
-  } as FiltersRecord;
+  } as TFilters & {
+    deletedAt?: unknown;
+    softDeleteScope: SoftDeleteScope;
+  };
 
   delete nextFilters.deletedAt;
 

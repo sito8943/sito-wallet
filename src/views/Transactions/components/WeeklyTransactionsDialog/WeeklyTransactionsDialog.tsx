@@ -21,7 +21,7 @@ import {
 } from "./constants";
 import type { WeeklyTransactionsDialogPropsType } from "./types";
 import { EntityName, useParseColumns } from "lib";
-import type { TransactionDto } from "lib";
+import type { TransactionTableRowType } from "../../types";
 import { getWeeklyTransactionsTableColumns } from "./tableColumns";
 import { sortWeeklyTransactions } from "./sort";
 import { getWeeklyTransactionsRangeLabel } from "./utils";
@@ -51,7 +51,10 @@ export const WeeklyTransactionsDialog = (
     weekScope,
   });
 
-  const items = useMemo(() => data?.items ?? [], [data?.items]);
+  const items = useMemo<TransactionTableRowType[]>(
+    () => data?.items ?? [],
+    [data?.items],
+  );
   const [sortProperty, setSortProperty] = useState<string>(
     WEEKLY_TRANSACTIONS_TABLE_INITIAL_STATE.sortingBy,
   );
@@ -64,7 +67,7 @@ export const WeeklyTransactionsDialog = (
     [t],
   );
 
-  const { columns } = useParseColumns<TransactionDto>(
+  const { columns } = useParseColumns<TransactionTableRowType>(
     weeklyColumns,
     EntityName.Transaction,
     ["id", "createdAt", "updatedAt", "deletedAt", "softDeleteScope"],
@@ -99,7 +102,7 @@ export const WeeklyTransactionsDialog = (
               initialState={WEEKLY_TRANSACTIONS_TABLE_INITIAL_STATE}
             >
               <div className="weekly-transactions-table-wrapper weekly-transactions-table-wrapper--desktop">
-                <WalletTable
+                <WalletTable<TransactionTableRowType>
                   total={sortedItems.length}
                   data={sortedItems}
                   entity={EntityName.Transaction}
@@ -111,6 +114,7 @@ export const WeeklyTransactionsDialog = (
                       hide: true,
                     },
                   }}
+                  actions={(row) => getActions(row)}
                   onSort={(property, order) => {
                     setSortProperty(property);
                     setSortOrder(order);

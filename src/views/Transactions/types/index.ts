@@ -17,6 +17,7 @@ import type {
   CommonAccountDto,
   CommonTransactionCategoryDto,
   TransactionDto,
+  TransactionType,
 } from "lib";
 
 export enum TransactionAutoFilterMode {
@@ -108,7 +109,12 @@ export interface TransactionsMobileFiltersFormType extends FieldValues {
   sortingOrder: SortOrder;
 }
 
-export interface TransactionsMobileFiltersDialogPropsType extends TriggerFormDialogPropsType<TransactionsMobileFiltersFormType> {
+export type TransactionTableRowType = TransactionDto & {
+  type?: TransactionType;
+};
+
+export interface TransactionsMobileFiltersDialogPropsType
+  extends TriggerFormDialogPropsType<TransactionsMobileFiltersFormType> {
   autoFilterOptions: Option[];
   categories: CommonTransactionCategoryDto[];
   hideDeletedEntities?: boolean;
