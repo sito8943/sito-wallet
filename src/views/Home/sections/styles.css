@@ -7,3 +7,23 @@
 .dashboard.empty {
   @apply grid-cols-1;
 }
+
+.dashboard-item {
+  @apply list-none transition-all duration-200;
+}
+
+.dashboard-item--dragging {
+  @apply z-20;
+}
+
+.dashboard-item--dragging .base-card {
+  @apply shadow-2xl ring-2 ring-bg-primary/20;
+}
+
+.dashboard-item--drop-target .base-card {
+  @apply ring-2 ring-border;
+}
+
+.dashboard-item--add {
+  @apply h-full;
+}

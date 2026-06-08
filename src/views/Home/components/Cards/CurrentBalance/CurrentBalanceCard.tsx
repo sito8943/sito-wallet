@@ -47,7 +47,7 @@ const defaultConfig: CurrentBalanceFormType = {
 };
 
 export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
-  const { title, config, id, user, onDelete } = props;
+  const { title, config, id, user, onDelete, dragHandleProps } = props;
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const manager = useManager();
@@ -112,6 +112,7 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
         title={title}
         config={effectiveConfig}
         onDelete={onDelete}
+        dragHandleProps={dragHandleProps}
         isBusy={isLoading}
         loadingOverlay={isLoading}
         parseFormConfig={parseFormConfig}
@@ -135,6 +136,8 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
                 <IconButton
                   onClick={() => addTransaction.openDialog()}
                   icon={faAdd}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={t("_pages:transactions.add")}
                   aria-label={t("_pages:transactions.add")}
                 />
                 <IconButton
@@ -143,6 +146,10 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
                     void adjustBalance.action(account).onClick?.();
                   }}
                   icon={faScaleBalanced}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={t(
+                    "_pages:accounts.actions.adjustBalance.text",
+                  )}
                   aria-label={t("_pages:accounts.actions.adjustBalance.text")}
                 />
                 <IconButton
@@ -152,6 +159,11 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
                   }}
                   icon={isSyncing ? faCircleNotch : faArrowsRotate}
                   className={classNames(isSyncing && "rotate")}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={t(
+                    "_pages:home.dashboard.currentBalance.refresh",
+                  )}
+                  aria-label={t("_pages:home.dashboard.currentBalance.refresh")}
                 />
               </div>
             )}

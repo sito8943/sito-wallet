@@ -34,6 +34,8 @@ import {
   useManager,
   useRegisterBottomNavAction,
 } from "providers";
+import { useDashboardReorder } from "./useDashboardReorder";
+import { sortDashboardItems } from "./utils";
 
 export const Dashboard = () => {
   const { data, isLoading, error } = useDashboardsList({});
@@ -54,17 +56,39 @@ export const Dashboard = () => {
       addDashboardCard.setValue("position", data.items.length);
   }, [addDashboardCard, data]);
 
-  const cards = useMemo(() => {
+  const visibleItems = useMemo(() => {
     if (!data) return [];
-    return data.items.map((item) => {
+    return sortDashboardItems(data.items).filter((item) =>
+      item.type === DashboardCardType.SubscriptionForecast
+        ? subscriptionsEnabled
+        : true,
+    );
+  }, [data, subscriptionsEnabled]);
+
+  const canReorderCards = useMemo(
+    () => !data || visibleItems.length === data.items.length,
+    [data, visibleItems.length],
+  );
+
+  const dashboardReorder = useDashboardReorder({
+    items: visibleItems,
+    enabled: canReorderCards,
+  });
+
+  const cards = useMemo(() => {
+    return dashboardReorder.items.map((item) => {
+      const dragHandleProps = dashboardReorder.getHandleProps(item.id);
+      const listItemProps = dashboardReorder.getItemProps(item.id);
+
       switch (item.type) {
         case DashboardCardType.TypeResume:
           return (
-            <li key={item.id}>
+            <li key={item.id} {...listItemProps}>
               <TransactionTypeResume
                 onDelete={() => {
                   void deleteDashboardCard.onClick([item.id]);
                 }}
+                dragHandleProps={dragHandleProps}
                 key={item.id}
                 {...item}
               />
@@ -72,11 +96,12 @@ export const Dashboard = () => {
           );
         case DashboardCardType.WeeklySpent:
           return (
-            <li key={item.id}>
+            <li key={item.id} {...listItemProps}>
               <WeeklySpentCard
                 onDelete={() => {
                   void deleteDashboardCard.onClick([item.id]);
                 }}
+                dragHandleProps={dragHandleProps}
                 key={item.id}
                 {...item}
               />
@@ -84,24 +109,25 @@ export const Dashboard = () => {
           );
         case DashboardCardType.CurrentBalance:
           return (
-            <li key={item.id}>
+            <li key={item.id} {...listItemProps}>
               <CurrentBalanceCard
                 onDelete={() => {
                   void deleteDashboardCard.onClick([item.id]);
                 }}
+                dragHandleProps={dragHandleProps}
                 key={item.id}
                 {...item}
               />
             </li>
           );
         case DashboardCardType.SubscriptionForecast:
-          if (!subscriptionsEnabled) return null;
           return (
-            <li key={item.id}>
+            <li key={item.id} {...listItemProps}>
               <SubscriptionForecastCard
                 onDelete={() => {
                   void deleteDashboardCard.onClick([item.id]);
                 }}
+                dragHandleProps={dragHandleProps}
                 key={item.id}
                 {...item}
               />
@@ -109,7 +135,7 @@ export const Dashboard = () => {
           );
       }
     });
-  }, [data, deleteDashboardCard, subscriptionsEnabled]);
+  }, [dashboardReorder, deleteDashboardCard]);
 
   const openAddDashboardRef = useRef(addDashboardCard.openDialog);
   useEffect(() => {
@@ -125,9 +151,9 @@ export const Dashboard = () => {
     <section id="dashboard">
       <ul className={classNames("dashboard", !hasCards && "empty")}>
         {cards}
-        <li>
+        <li className="dashboard-item dashboard-item--add">
           <AddCard
-            disabled={isLoading}
+            disabled={isLoading || dashboardReorder.isReordering}
             onClick={() => addDashboardCard.openDialog()}
           />
         </li>
