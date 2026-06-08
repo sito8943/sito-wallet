@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
   faFilter,
+  faGripVertical,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -73,6 +74,7 @@ export const DashboardCard = <TForm extends FieldValues>(
     title,
     config,
     onDelete,
+    dragHandleProps,
     className = "",
     isBusy = false,
     loadingOverlay = false,
@@ -165,6 +167,10 @@ export const DashboardCard = <TForm extends FieldValues>(
   const [showFilters, setShowFilters] = useState(false);
 
   const headerDisabled = isBusy || updateTitle.isPending || formProps.isLoading;
+  const dragHandleDisabled =
+    Boolean(dragHandleProps?.disabled) || headerDisabled;
+  const { className: dragHandleClassName, ...restDragHandleProps } =
+    dragHandleProps ?? {};
 
   return (
     <BaseCard className={classNames("dashboard-card", className)}>
@@ -194,16 +200,48 @@ export const DashboardCard = <TForm extends FieldValues>(
             className="dashboard-card-title-success"
           />
         ) : null}
+        {dragHandleProps ? (
+          <IconButton
+            {...restDragHandleProps}
+            disabled={dragHandleDisabled}
+            className={classNames(
+              "dashboard-card-drag-handle",
+              dragHandleClassName,
+            )}
+            icon={faGripVertical}
+            data-tooltip-id={
+              restDragHandleProps["data-tooltip-id"] ?? "tooltip"
+            }
+            data-tooltip-content={
+              restDragHandleProps["data-tooltip-content"] ??
+              t("_pages:home.dashboard.reorder.handle")
+            }
+            aria-label={
+              restDragHandleProps["aria-label"] ??
+              t("_pages:home.dashboard.reorder.handle")
+            }
+            title={
+              restDragHandleProps.title ??
+              t("_pages:home.dashboard.reorder.handle")
+            }
+          />
+        ) : null}
         <IconButton
           disabled={headerDisabled}
           onClick={() => setShowFilters((v) => !v)}
           icon={faFilter}
+          data-tooltip-id="tooltip"
+          data-tooltip-content={t("_accessibility:buttons.filters")}
+          aria-label={t("_accessibility:buttons.filters")}
         />
         <IconButton
           disabled={headerDisabled}
           onClick={onDelete}
           className="error"
           icon={faTrash}
+          data-tooltip-id="tooltip"
+          data-tooltip-content={t("_pages:common.actions.delete.text")}
+          aria-label={t("_pages:common.actions.delete.text")}
         />
       </div>
 

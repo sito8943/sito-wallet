@@ -12,6 +12,7 @@ import type {
   FilterDashboardDto,
   UpdateDashboardCardTitleDto,
   UpdateDashboardCardConfigDto,
+  ReorderDashboardCardsDto,
   ImportPreviewDashboardDto,
 } from "lib";
 
@@ -43,6 +44,10 @@ export default class DashboardClient extends BaseClient<
 
   async updateCardConfig(data: UpdateDashboardCardConfigDto): Promise<number> {
     return await this.api.patch(`${this.table}/update-card-config`, data);
+  }
+
+  async reorderCards(data: ReorderDashboardCardsDto): Promise<number> {
+    return await this.api.patch(`${this.table}/reorder`, data);
   }
 
   async delete(ids: number[]): Promise<number> {
