@@ -1,0 +1,5 @@
+@reference "../../styles/variables.css";
+
+.onboarding-view {
+  @apply flex flex-1 flex-col items-center justify-center min-h-screen bg-base p-4;
+}

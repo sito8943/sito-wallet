@@ -1,0 +1,12 @@
+@reference "../../../../styles/variables.css";
+
+/*
+ * The library's Onboarding always renders a "start as guest" action on the
+ * final step and exposes no prop to remove it. The wallet has no guest mode,
+ * so we tag that action with a sentinel icon (faGhost) in the component and
+ * hide its button here. The action is also neutralized in JS (onStartAsGuest
+ * routes to sign-in), so this is purely visual.
+ */
+.wallet-onboarding-wizard button:has(svg[data-icon="ghost"]) {
+  @apply hidden;
+}
