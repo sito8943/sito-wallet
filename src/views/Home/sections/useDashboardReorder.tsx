@@ -160,7 +160,11 @@ export function useDashboardReorder(
         return;
       }
 
-      const nextItems = moveDashboardItem(currentItems, sourceIndex, targetIndex);
+      const nextItems = moveDashboardItem(
+        currentItems,
+        sourceIndex,
+        targetIndex,
+      );
       resetDragState();
       reorderMutation.mutate(toReorderDashboardCardsDto(nextItems));
     },
@@ -169,7 +173,9 @@ export function useDashboardReorder(
     },
   );
 
-  const getItemProps = useCallback<UseDashboardReorderReturnType["getItemProps"]>(
+  const getItemProps = useCallback<
+    UseDashboardReorderReturnType["getItemProps"]
+  >(
     (id) => {
       const isDragging = dragState.activeId === id;
       const isDropTarget = dragState.overId === id;
@@ -191,23 +197,28 @@ export function useDashboardReorder(
           : undefined,
       };
     },
-    [dragState.activeId, dragState.offsetX, dragState.offsetY, dragState.overId],
+    [
+      dragState.activeId,
+      dragState.offsetX,
+      dragState.offsetY,
+      dragState.overId,
+    ],
   );
 
-  const getHandleProps =
-    useCallback<UseDashboardReorderReturnType["getHandleProps"]>(
-      (id) => ({
-        ...bindHandleDrag(id),
-        type: "button",
-        disabled:
-          !enabled || reorderMutation.isPending || sourceItems.length < 2,
-        "data-tooltip-id": "tooltip",
-        "data-tooltip-content": t("_pages:home.dashboard.reorder.handle"),
-        "aria-label": t("_pages:home.dashboard.reorder.handle"),
-        title: t("_pages:home.dashboard.reorder.handle"),
-      }),
-      [bindHandleDrag, enabled, reorderMutation.isPending, sourceItems.length, t],
-    );
+  const getHandleProps = useCallback<
+    UseDashboardReorderReturnType["getHandleProps"]
+  >(
+    (id) => ({
+      ...bindHandleDrag(id),
+      type: "button",
+      disabled: !enabled || reorderMutation.isPending || sourceItems.length < 2,
+      "data-tooltip-id": "tooltip",
+      "data-tooltip-content": t("_pages:home.dashboard.reorder.handle"),
+      "aria-label": t("_pages:home.dashboard.reorder.handle"),
+      title: t("_pages:home.dashboard.reorder.handle"),
+    }),
+    [bindHandleDrag, enabled, reorderMutation.isPending, sourceItems.length, t],
+  );
 
   return {
     items: sourceItems,

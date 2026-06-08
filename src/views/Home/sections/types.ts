@@ -1,7 +1,4 @@
-import type {
-  CSSProperties,
-  HTMLAttributes,
-} from "react";
+import type { CSSProperties, HTMLAttributes } from "react";
 
 // @sito/dashboard-app
 import type { IconButtonPropsType, QueryResult } from "@sito/dashboard-app";
@@ -21,8 +18,7 @@ export interface UseDashboardReorderPropsType {
   enabled?: boolean;
 }
 
-export interface DashboardListItemPropsType
-  extends HTMLAttributes<HTMLLIElement> {
+export interface DashboardListItemPropsType extends HTMLAttributes<HTMLLIElement> {
   "data-dashboard-card-id": number;
   style?: CSSProperties;
 }
