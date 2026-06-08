@@ -11,10 +11,13 @@ import { AppRoutes, USER_ENTITY_CONFIG_KEYS } from "lib";
 import type { WalletOnboardingWizardPropsType } from "./types";
 
 // constants
-import { ENTITY_STEP_ORDER } from "./constants";
+import { ENTITY_STEP_ORDER, GUEST_ACTION_SENTINEL_ICON } from "./constants";
+
+// styles
+import "./styles.css";
 
 export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
-  const { initialEnabledEntityKeys, showDebtsStep = false } = props;
+  const { initialEnabledEntityKeys, showDebtsStep = false, onExit } = props;
   const { t } = useTranslation();
 
   const enabledEntityKeys = useMemo(
@@ -57,12 +60,18 @@ export function WalletOnboardingWizard(props: WalletOnboardingWizardPropsType) {
   );
 
   return (
-    <Onboarding
-      remountStepOnChange
-      steps={steps}
-      alwaysHideIcon
-      showLabelOnMobile
-      signInPath={AppRoutes.signIn}
-    />
+    <div className="wallet-onboarding-wizard">
+      <Onboarding
+        remountStepOnChange
+        steps={steps}
+        alwaysHideIcon
+        showLabelOnMobile
+        signInPath={AppRoutes.signIn}
+        icons={{ startAsGuest: GUEST_ACTION_SENTINEL_ICON }}
+        onSkip={onExit}
+        onSignIn={onExit}
+        onStartAsGuest={onExit}
+      />
+    </div>
   );
 }

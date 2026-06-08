@@ -47,6 +47,11 @@ export const routeComponents = defineRouteComponents({
       default: module.Home,
     })),
   ),
+  Onboarding: loadable(() =>
+    import("views/Onboarding/Onboarding").then((module) => ({
+      default: module.Onboarding,
+    })),
+  ),
   NotFound: loadable(() =>
     import("views/NotFound").then((module) => ({
       default: module.NotFound,
