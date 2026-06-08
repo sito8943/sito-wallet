@@ -2,18 +2,19 @@ import type { FieldValues } from "react-hook-form";
 
 // lib
 import type {
-  DashboardDto,
   RenewalRangePreset,
   SubscriptionDto,
   SubscriptionRenewalDto,
   UpdateDashboardCardConfigDto,
 } from "lib";
+import type { DashboardCardItemPropsType } from "../types";
 
-export type { ConfigFormDialogPropsType } from "../types";
+export type {
+  ConfigFormDialogPropsType,
+  DashboardCardDragHandlePropsType,
+} from "../types";
 
-export interface SubscriptionForecastPropsType extends DashboardDto {
-  onDelete: () => void;
-}
+export type SubscriptionForecastPropsType = DashboardCardItemPropsType;
 
 export interface SubscriptionForecastFormType
   extends

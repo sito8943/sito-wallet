@@ -61,6 +61,9 @@
           "empty": "Sin renovaciones en este rango"
         }
       },
+      "reorder": {
+        "handle": "Reordenar tarjeta"
+      },
       "addCard": {
         "title": "Seleccionar tipo de tarjeta"
       }

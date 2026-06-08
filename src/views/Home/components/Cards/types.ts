@@ -1,12 +1,20 @@
 import type { ReactNode } from "react";
 import type { FieldValues } from "react-hook-form";
-import type { FormDialogPropsType } from "@sito/dashboard-app";
-import type { UpdateDashboardCardConfigDto } from "lib";
+import type {
+  FormDialogPropsType,
+  IconButtonPropsType,
+} from "@sito/dashboard-app";
+import type { DashboardDto, UpdateDashboardCardConfigDto } from "lib";
 
 export type BaseCardPropsType = {
   className?: string;
   children: ReactNode;
 };
+
+export type DashboardCardDragHandlePropsType = Omit<
+  IconButtonPropsType,
+  "icon"
+>;
 
 export type ConfigFormDialogPropsType<TForm extends FieldValues> = Omit<
   FormDialogPropsType<TForm>,
@@ -19,9 +27,15 @@ type Common = {
   title: string | null;
   config?: string | null;
   onDelete: () => void;
+  dragHandleProps?: DashboardCardDragHandlePropsType;
   className?: string;
   isBusy?: boolean;
   loadingOverlay?: boolean;
+};
+
+export type DashboardCardItemPropsType = DashboardDto & {
+  onDelete: () => void;
+  dragHandleProps?: DashboardCardDragHandlePropsType;
 };
 
 type RenderFiltersArgs<TForm> = {

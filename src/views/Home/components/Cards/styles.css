@@ -13,7 +13,21 @@
 }
 
 .dashboard-card {
-  @apply items-stretch;
+  @apply items-stretch bg-base-light;
+}
+
+.dashboard-card-drag-handle {
+  @apply inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-text-muted transition hover:bg-hover-primary/10 hover:text-text;
+  cursor: grab !important;
+  touch-action: none;
+}
+
+.dashboard-card-drag-handle:active {
+  cursor: grabbing !important;
+}
+
+.dashboard-card-drag-handle:disabled {
+  @apply !cursor-not-allowed opacity-50;
 }
 
 .dashboard-card-loading {
@@ -21,7 +35,7 @@
 }
 
 .dashboard-card-header {
-  @apply flex items-center justify-between gap-5;
+  @apply flex items-center justify-between gap-1;
 }
 
 .dashboard-card-title {

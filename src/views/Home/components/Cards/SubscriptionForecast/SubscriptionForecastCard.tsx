@@ -62,7 +62,7 @@ const defaultConfig: SubscriptionForecastFormType = {
 export const SubscriptionForecastCard = (
   props: SubscriptionForecastPropsType,
 ) => {
-  const { title, config, id, user, onDelete } = props;
+  const { title, config, id, user, onDelete, dragHandleProps } = props;
   const { t } = useTranslation();
   const navigate = useNavigate();
   const manager = useManager();
@@ -185,6 +185,7 @@ export const SubscriptionForecastCard = (
         title={title}
         config={effectiveConfig}
         onDelete={onDelete}
+        dragHandleProps={dragHandleProps}
         isBusy={isLoading}
         loadingOverlay={isLoading}
         parseFormConfig={parseFormConfig}
@@ -237,18 +238,28 @@ export const SubscriptionForecastCard = (
                   disabled={!subscriptionsClient}
                   onClick={handleOpenAddSubscription}
                   icon={faPlus}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={t("_pages:subscriptions.add")}
                   aria-label={t("_pages:subscriptions.add")}
                 />
                 <IconButton
                   disabled={!subscriptionsClient}
                   onClick={selectSubscriptionDialog.handleOpen}
                   icon={faFileInvoice}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={t(
+                    "_pages:subscriptions.actions.billingLog.text",
+                  )}
                   aria-label={t("_pages:subscriptions.actions.billingLog.text")}
                 />
                 <IconButton
                   disabled={isLoading || renewals.length === 0}
                   onClick={renewalsDialog.openDialog}
                   icon={faList}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={t(
+                    "_pages:home.dashboard.subscriptionForecast.details.title",
+                  )}
                   aria-label={t(
                     "_pages:home.dashboard.subscriptionForecast.details.title",
                   )}

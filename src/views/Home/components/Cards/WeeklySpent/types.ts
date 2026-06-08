@@ -3,16 +3,17 @@ import type { FieldValues } from "react-hook-form";
 // lib
 import type {
   CommonAccountDto,
-  DashboardDto,
   TransactionType,
   UpdateDashboardCardConfigDto,
 } from "lib";
+import type { DashboardCardItemPropsType } from "../types";
 
-export type { ConfigFormDialogPropsType } from "../types";
+export type {
+  ConfigFormDialogPropsType,
+  DashboardCardDragHandlePropsType,
+} from "../types";
 
-export interface WeeklySpentPropsType extends DashboardDto {
-  onDelete: () => void;
-}
+export type WeeklySpentPropsType = DashboardCardItemPropsType;
 
 export interface WeeklySpentFormType
   extends

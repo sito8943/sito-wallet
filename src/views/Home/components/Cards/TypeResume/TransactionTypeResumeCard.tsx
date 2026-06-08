@@ -38,7 +38,7 @@ import type { CardConfigOverrideType } from "../types";
 import { Type } from "views/TransactionCategories/components/Type";
 
 export const TransactionTypeResume = (props: TransactionTypePropsType) => {
-  const { title, config, id, user, onDelete } = props;
+  const { title, config, id, user, onDelete, dragHandleProps } = props;
   const { t } = useTranslation();
   const typeResumeDialog = useTypeResumeDialog();
   const [configOverride, setConfigOverride] =
@@ -112,6 +112,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         title={title}
         config={effectiveConfig}
         onDelete={onDelete}
+        dragHandleProps={dragHandleProps}
         isBusy={isLoading}
         loadingOverlay={isLoading}
         parseFormConfig={parseFormConfig}
@@ -151,12 +152,18 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
                 <IconButton
                   onClick={() => addTransaction.openDialog()}
                   icon={faAdd}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={t("_pages:transactions.add")}
                   aria-label={t("_pages:transactions.add")}
                 />
                 <IconButton
                   disabled={isLoading || categories.length === 0}
                   onClick={() => typeResumeDialog.openDialog()}
                   icon={faList}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={t(
+                    "_pages:home.dashboard.transactionTypeResume.details.title",
+                  )}
                   aria-label={t(
                     "_pages:home.dashboard.transactionTypeResume.details.title",
                   )}

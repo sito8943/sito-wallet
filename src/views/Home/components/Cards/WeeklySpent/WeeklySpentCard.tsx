@@ -55,7 +55,7 @@ const getCurrentWeekRange = () => {
 };
 
 export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
-  const { title, config, id, user, onDelete } = props;
+  const { title, config, id, user, onDelete, dragHandleProps } = props;
   const [configOverride, setConfigOverride] =
     useState<CardConfigOverrideType | null>(null);
   const effectiveConfig = resolveCardConfig(config, configOverride);
@@ -96,6 +96,7 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
       title={title}
       config={effectiveConfig}
       onDelete={onDelete}
+      dragHandleProps={dragHandleProps}
       isBusy={isLoading}
       loadingOverlay={isLoading}
       parseFormConfig={parseFormConfig}

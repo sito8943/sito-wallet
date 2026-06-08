@@ -4,18 +4,19 @@ import type { FieldValues } from "react-hook-form";
 import type {
   CommonAccountDto,
   CommonTransactionDto,
-  DashboardDto,
   TransactionType,
   TransactionTypeResumeCategoryDto,
   TransactionTypeResumeTime,
   UpdateDashboardCardConfigDto,
 } from "lib";
+import type { DashboardCardItemPropsType } from "../types";
 
-export type { ConfigFormDialogPropsType } from "../types";
+export type {
+  ConfigFormDialogPropsType,
+  DashboardCardDragHandlePropsType,
+} from "../types";
 
-export interface TransactionTypePropsType extends DashboardDto {
-  onDelete: () => void;
-}
+export type TransactionTypePropsType = DashboardCardItemPropsType;
 
 export interface TypeResumeTypeFormType
   extends
