@@ -2,21 +2,13 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 
-type MockOnboardingStep = {
-  title: string;
-  body: string;
-};
-
 // ─── Hoisted mocks ─────────────────────────────────────────────────────────────
 const {
   mockNavigate,
   mockFromLocal,
-  mockToLocal,
   mockUseAuth,
   mockTranslate,
   mockUseAppPreload,
-  mockApplyFeaturePayload,
-  mockGetUserEntityConfigs,
   mockIsFeatureEnabled,
 } = vi.hoisted(() => {
   const mockTranslate = vi.fn((key: string) => key);
@@ -28,18 +20,13 @@ const {
     completedTaskKeys: [],
     failedTaskKeys: [],
   }));
-  const mockApplyFeaturePayload = vi.fn();
-  const mockGetUserEntityConfigs = vi.fn(() => Promise.resolve([]));
   const mockIsFeatureEnabled = vi.fn(() => true);
   return {
     mockNavigate: vi.fn(),
     mockFromLocal: vi.fn(() => null),
-    mockToLocal: vi.fn(),
     mockUseAuth,
     mockTranslate,
     mockUseAppPreload,
-    mockApplyFeaturePayload,
-    mockGetUserEntityConfigs,
     mockIsFeatureEnabled,
   };
 });
@@ -71,7 +58,6 @@ vi.mock("@sito/dashboard-app", () => ({
   },
   useAuth: () => mockUseAuth(),
   fromLocal: mockFromLocal,
-  toLocal: mockToLocal,
   ConfigProvider: ({ children }: { children: React.ReactNode }) => (
     <>{children}</>
   ),
@@ -122,12 +108,6 @@ vi.mock("@sito/dashboard-app", () => ({
   }),
   SplashScreen: () => <div data-testid="splash-screen" />,
   BaseLinkPropsType: class {},
-  Onboarding: ({ steps }: { steps: MockOnboardingStep[] }) => (
-    <div
-      data-testid="onboarding"
-      data-steps={steps.map((step) => `${step.title}|${step.body}`).join(",")}
-    />
-  ),
 }));
 
 vi.mock("react-i18next", () => ({
@@ -147,87 +127,27 @@ vi.mock("components", () => ({
   OfflineBanner: () => <div data-testid="offline-banner" />,
 }));
 
-vi.mock("lib", () => {
-  const UserEntityConfigKey = {
-    Currencies: "currencies",
-    Accounts: "accounts",
-    Transactions: "transactions",
-    Subscriptions: "subscriptions",
-  } as const;
-
-  const USER_ENTITY_CONFIG_KEYS = [
-    UserEntityConfigKey.Currencies,
-    UserEntityConfigKey.Accounts,
-    UserEntityConfigKey.Transactions,
-    UserEntityConfigKey.Subscriptions,
-  ];
-
-  return {
-    AppRoutes: {
-      signIn: "/auth/sign-in",
-      subscriptionNew: "/subscriptions/new",
-      subscriptionEdit: "/subscriptions/:subscriptionId/edit",
-      signUp: "/auth/sign-up",
-      signUpSuccess: "/auth/sign-up-success",
-      resetPassword: "/auth/reset-password",
-      updatePassword: "/auth/update-password",
-      recovery: "/auth/recovery",
-      confirmEmailSuccess: "/auth/confirm-email-success",
-      confirmEmailError: "/auth/confirm-email-error",
-      signOut: "/sign-out",
-      home: "/",
-      transactions: "/transactions",
-      transactionCategories: "/transaction-categories",
-      subscriptions: "/subscriptions",
-      subscriptionProviders: "/subscription-providers",
-      accounts: "/accounts",
-      currencies: "/currencies",
-      profile: "/profile",
-      users: "/users",
-      about: "/about-us",
-      cookiesPolicy: "/cookies-policy",
-      privacyPolicy: "/privacy-policy",
-      termsAndConditions: "/terms-and-conditions",
-      notFound: "*",
-    },
-    EntityName: {
-      Transaction: "transaction",
-      Subscription: "subscription",
-    },
-    UserEntityConfigKey,
-    USER_ENTITY_CONFIG_KEYS,
-    configsToEnabledEntityKeys: (
-      configs: Array<{ key: string; enabled?: boolean | null }>,
-    ) =>
-      configs
-        .filter((config) => config.enabled !== false)
-        .map((config) => config.key),
-    entityKeysToConfigs: (keys: string[]) =>
-      keys.map((key) => ({ key, enabled: true })),
-    resolveRequiredEntityKeys: (keys: string[]) => {
-      const required = [
-        UserEntityConfigKey.Currencies,
-        UserEntityConfigKey.Accounts,
-      ];
-
-      return Array.from(new Set([...required, ...keys]));
-    },
-    userEntityConfigsToFeaturePayload: (configs: unknown[]) => ({ configs }),
-    isAnonymousVisitorSession: (account?: { id?: number | null } | null) =>
-      !account?.id,
-  };
-});
+vi.mock("lib", () => ({
+  AppRoutes: {
+    signIn: "/auth/sign-in",
+    signOut: "/sign-out",
+    onboarding: "/onboarding",
+    home: "/",
+    transactions: "/transactions",
+    profile: "/profile",
+    about: "/about-us",
+    cookiesPolicy: "/cookies-policy",
+    privacyPolicy: "/privacy-policy",
+    termsAndConditions: "/terms-and-conditions",
+    notFound: "*",
+  },
+  isAnonymousVisitorSession: (account?: { id?: number | null } | null) =>
+    !account?.id,
+}));
 
 vi.mock("providers", () => ({
   useFeatureFlags: () => ({
-    applyFeaturePayload: mockApplyFeaturePayload,
     isFeatureEnabled: mockIsFeatureEnabled,
-  }),
-  useManager: () => ({
-    UserEntityConfigs: {
-      getAll: mockGetUserEntityConfigs,
-      putBatch: vi.fn(() => Promise.resolve([])),
-    },
   }),
 }));
 
@@ -267,10 +187,6 @@ vi.mock("../../views/bottomMap", () => ({
   ],
 }));
 
-vi.mock("../../layouts/View/components/OnboardingSetup", () => ({
-  OnboardingSetup: () => <div data-testid="onboarding-setup-content" />,
-}));
-
 import { View } from "../../layouts/View/View";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -282,7 +198,7 @@ function renderView({
   email = "user@example.com",
   onboardingDone = false,
   initialPath = "/",
-  accountId = 99,
+  accountId = 99 as number | undefined,
 }: {
   email?: string | null;
   onboardingDone?: boolean;
@@ -302,6 +218,8 @@ function renderView({
       <Routes>
         <Route element={<View />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/transactions" element={<div data-testid="tx" />} />
+          <Route path="/privacy-policy" element={<div data-testid="pp" />} />
         </Route>
         <Route path="/auth/sign-in" element={<SignInPage />} />
       </Routes>
@@ -315,7 +233,6 @@ describe("View layout", () => {
   beforeEach(() => {
     mockNavigate.mockReset();
     mockFromLocal.mockReset().mockReturnValue(null);
-    mockToLocal.mockReset();
     mockTranslate.mockReset().mockImplementation((key: string) => key);
     mockUseAppPreload.mockReset().mockReturnValue({
       loading: false,
@@ -325,75 +242,42 @@ describe("View layout", () => {
     mockIsFeatureEnabled.mockReset().mockReturnValue(true);
   });
 
-  describe("onboarding", () => {
-    it("shows Onboarding when localStorage key is not set (first visit)", () => {
+  describe("anonymous redirect guard", () => {
+    it("does not redirect authenticated users on home (first visit)", () => {
       renderView({ email: "user@example.com" });
-      expect(screen.getByTestId("onboarding")).toBeInTheDocument();
-    });
-
-    it("does NOT show Onboarding when localStorage key is set for authenticated users", () => {
-      mockFromLocal.mockReturnValue(true);
-      renderView({ email: "user@example.com", onboardingDone: true });
-      expect(screen.queryByTestId("onboarding")).toBeNull();
-    });
-
-    it("does not redirect anonymous visitors to sign in on the home route when the onboarding flag is already set", () => {
-      renderView({ email: null, onboardingDone: true });
-      expect(screen.queryByTestId("onboarding")).toBeNull();
       expect(mockNavigate).not.toHaveBeenCalled();
+      expect(screen.getByTestId("home-page")).toBeInTheDocument();
     });
 
-    it("redirects anonymous visitors to sign in on private routes when the onboarding flag is already set", () => {
-      renderView({
-        email: null,
-        onboardingDone: true,
-        initialPath: "/transactions",
-      });
+    it("does not redirect authenticated users when onboarding is already done", () => {
+      renderView({ email: "user@example.com", onboardingDone: true });
+      expect(mockNavigate).not.toHaveBeenCalled();
+      expect(screen.getByTestId("home-page")).toBeInTheDocument();
+    });
 
-      expect(screen.queryByTestId("onboarding")).toBeNull();
+    it("redirects anonymous visitors on home to sign in when onboarding was seen (e.g. expired session)", () => {
+      renderView({ email: null, onboardingDone: true });
       expect(mockNavigate).toHaveBeenCalledWith("/auth/sign-in", {
         replace: true,
       });
     });
 
-    it("saves onboarding flag to localStorage for authenticated first visits", () => {
-      renderView({ email: "user@example.com" });
-      expect(mockToLocal).toHaveBeenCalledWith("test-onboarding", true);
+    it("redirects first-time anonymous visitors on home to onboarding", () => {
+      renderView({ email: null, onboardingDone: false });
+      expect(mockNavigate).toHaveBeenCalledWith("/onboarding", {
+        replace: true,
+      });
     });
 
-    it("saves onboarding flag to localStorage for anonymous first visits", () => {
-      renderView({ email: null });
-      expect(mockToLocal).toHaveBeenCalledWith("test-onboarding", true);
-    });
-
-    it("renders with the debts onboarding step when the feature is enabled", () => {
-      renderView({ email: "user@example.com" });
-
-      const steps =
-        screen
-          .getByTestId("onboarding")
-          .getAttribute("data-steps")
-          ?.split(",")
-          .map((step) => step.split("|")[0]) ?? [];
-      expect(steps).toHaveLength(7);
-      expect(steps).toContain("_pages:onboarding.welcome.title");
-      expect(steps).toContain("_pages:onboarding.debts.title");
-      expect(steps).toContain("_pages:onboarding.get_started.title");
-    });
-
-    it("does not render the debts onboarding step when the feature is disabled", () => {
-      mockIsFeatureEnabled.mockReturnValue(false);
-
-      renderView({ email: "user@example.com" });
-
-      const steps =
-        screen
-          .getByTestId("onboarding")
-          .getAttribute("data-steps")
-          ?.split(",")
-          .map((step) => step.split("|")[0]) ?? [];
-
-      expect(steps).not.toContain("_pages:onboarding.debts.title");
+    it("redirects anonymous visitors on private routes to sign in when onboarding was seen", () => {
+      renderView({
+        email: null,
+        onboardingDone: true,
+        initialPath: "/transactions",
+      });
+      expect(mockNavigate).toHaveBeenCalledWith("/auth/sign-in", {
+        replace: true,
+      });
     });
 
     it("does not redirect anonymous visitors away from public informational routes", () => {
@@ -402,7 +286,6 @@ describe("View layout", () => {
         onboardingDone: true,
         initialPath: "/privacy-policy",
       });
-
       expect(mockNavigate).not.toHaveBeenCalled();
     });
   });

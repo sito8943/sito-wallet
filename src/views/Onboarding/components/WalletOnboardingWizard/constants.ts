@@ -1,5 +1,14 @@
+import { faGhost } from "@fortawesome/free-solid-svg-icons";
+
 import { UserEntityConfigKey } from "lib";
 import { type OnboardingSetupStepKey } from "./types";
+
+/**
+ * Sentinel icon assigned to the library's "start as guest" action so the button
+ * can be reliably targeted and hidden via CSS (`svg[data-icon="ghost"]`). The
+ * wallet onboarding intentionally exposes no guest mode — see styles.css.
+ */
+export const GUEST_ACTION_SENTINEL_ICON = faGhost;
 
 export const ENTITY_STEP_ORDER: Array<{
   entityKey: UserEntityConfigKey;

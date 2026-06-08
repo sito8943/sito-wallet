@@ -1,7 +1,7 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { ErrorBoundary } from "react-error-boundary";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
@@ -16,37 +16,27 @@ import {
   NavbarProvider,
   SplashScreen,
   TableOptionsProvider,
-  toLocal,
   useAuth,
 } from "@sito/dashboard-app";
 import type { BottomNavigationItemType } from "@sito/dashboard-app";
 
 // providers
-import { useFeatureFlags, useManager } from "providers";
-import { useAppPreload, useOnlineStatus } from "hooks";
+import { useFeatureFlags } from "providers";
+import { useAppPreload } from "hooks";
 
 // components
 import { OfflineBanner } from "components";
-import {
-  configsToEnabledEntityKeys,
-  entityKeysToConfigs,
-  resolveRequiredEntityKeys,
-} from "./components/OnboardingEntitySelection";
-import { WalletOnboardingWizard } from "./components/WalletOnboardingWizard";
 
 // config
 import { config } from "../../config";
 import { getFeatureFilteredBottomMap } from "../../views/bottomMap";
-import {
-  AppRoutes,
-  type UserEntityConfigKey,
-  isAnonymousVisitorSession,
-  userEntityConfigsToFeaturePayload,
-} from "lib";
+import { AppRoutes, isAnonymousVisitorSession } from "lib";
 import { getFeatureFilteredMenuMap } from "views/menuMap";
 
+// Routes an anonymous visitor may browse without being redirected. Home is
+// intentionally excluded: this app is for authenticated users, so an empty
+// session on "/" (e.g. an expired token) must be sent to sign-in.
 const PUBLIC_ANONYMOUS_ROUTES = new Set([
-  AppRoutes.home,
   AppRoutes.about,
   AppRoutes.cookiesPolicy,
   AppRoutes.privacyPolicy,
@@ -59,65 +49,25 @@ export function View() {
   const { account } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const manager = useManager();
-  const isOnline = useOnlineStatus();
-  const { applyFeaturePayload, isFeatureEnabled } = useFeatureFlags();
+  const { isFeatureEnabled } = useFeatureFlags();
   const onboardingStorageKey =
     typeof config.onboarding === "string" ? config.onboarding : "onboarding";
   const isAnonymousVisitor = isAnonymousVisitorSession(account);
-  const isLoggedSession = Boolean(account?.id);
   const hasSeenOnboarding = Boolean(fromLocal(onboardingStorageKey));
-  const [initialEnabledEntityKeys, setInitialEnabledEntityKeys] = useState<
-    UserEntityConfigKey[] | undefined
-  >(undefined);
 
-  const showOnboarding = !hasSeenOnboarding;
-  const shouldRedirectToSignIn =
-    isAnonymousVisitor &&
-    hasSeenOnboarding &&
-    !PUBLIC_ANONYMOUS_ROUTES.has(location.pathname);
-
-  useEffect(() => {
-    if (!showOnboarding) return;
-
-    toLocal(onboardingStorageKey, true);
-  }, [onboardingStorageKey, showOnboarding]);
+  const shouldRedirect =
+    isAnonymousVisitor && !PUBLIC_ANONYMOUS_ROUTES.has(location.pathname);
+  // First-time anonymous visitors go through onboarding; everyone else (e.g. an
+  // expired session) goes straight to sign-in.
+  const redirectTarget = hasSeenOnboarding
+    ? AppRoutes.signIn
+    : AppRoutes.onboarding;
 
   useEffect(() => {
-    if (!shouldRedirectToSignIn) return;
+    if (!shouldRedirect) return;
 
-    navigate(AppRoutes.signIn, { replace: true });
-  }, [navigate, shouldRedirectToSignIn]);
-
-  useEffect(() => {
-    if (!showOnboarding || !isLoggedSession || !isOnline) return;
-
-    let mounted = true;
-
-    manager.UserEntityConfigs.getAll()
-      .then((configs) => {
-        if (!mounted || configs.length === 0) return;
-
-        const enabledEntityKeys = configsToEnabledEntityKeys(configs);
-        if (enabledEntityKeys.length === 0) return;
-
-        const resolvedEntityKeys = resolveRequiredEntityKeys(enabledEntityKeys);
-        const resolvedConfigs = entityKeysToConfigs(resolvedEntityKeys);
-        setInitialEnabledEntityKeys(resolvedEntityKeys);
-        applyFeaturePayload(userEntityConfigsToFeaturePayload(resolvedConfigs));
-      })
-      .catch(() => {});
-
-    return () => {
-      mounted = false;
-    };
-  }, [
-    applyFeaturePayload,
-    isLoggedSession,
-    isOnline,
-    manager.UserEntityConfigs,
-    showOnboarding,
-  ]);
+    navigate(redirectTarget, { replace: true });
+  }, [navigate, redirectTarget, shouldRedirect]);
 
   const featureFilteredMenuMap = useMemo(
     () => getFeatureFilteredMenuMap(isFeatureEnabled, i18n.resolvedLanguage),
@@ -147,17 +97,11 @@ export function View() {
   ) => (item.to === "/" ? pathname === "/" : pathname.startsWith(item.to));
 
   if (preloadLoading) return <SplashScreen />;
-  if (shouldRedirectToSignIn) return <SplashScreen />;
+  if (shouldRedirect) return <SplashScreen />;
 
   return (
     <NavbarProvider>
       <BottomNavActionProvider>
-        {showOnboarding && (
-          <WalletOnboardingWizard
-            initialEnabledEntityKeys={initialEnabledEntityKeys}
-            showDebtsStep={isFeatureEnabled("debtsEnabled")}
-          />
-        )}
         <AppShell
           header={
             <>
