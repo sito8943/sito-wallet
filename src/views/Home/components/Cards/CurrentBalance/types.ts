@@ -1,10 +1,7 @@
 import type { FieldValues } from "react-hook-form";
 
 // lib
-import type {
-  CommonAccountDto,
-  UpdateDashboardCardConfigDto,
-} from "lib";
+import type { CommonAccountDto, UpdateDashboardCardConfigDto } from "lib";
 import type { DashboardCardItemPropsType } from "../types";
 
 export type {
