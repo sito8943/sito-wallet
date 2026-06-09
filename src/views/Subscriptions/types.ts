@@ -56,6 +56,7 @@ export interface AddSubscriptionBillingLogDialogPropsType extends TriggerFormDia
 export interface SubscriptionActivitySidebarPropsType {
   startsAt?: string | null;
   lastPaidAt?: string | null;
+  nextRenewalAt?: string | null;
   billingLogs: SubscriptionBillingLogDto[];
   billingLogsLoading?: boolean;
   billingLogsError?: unknown;

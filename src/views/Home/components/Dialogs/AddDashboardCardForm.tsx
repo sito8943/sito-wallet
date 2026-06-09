@@ -8,11 +8,10 @@ import { enumToKeyValueArray, useAuth, SelectInput } from "@sito/dashboard-app";
 // types
 import type { DashboardFormPropsType } from "../../types";
 
-// lib
-import { DashboardCardType } from "lib";
-
 // providers
 import { useFeatureFlags } from "providers";
+import { isDashboardCardEnabled } from "../../utils";
+import { DashboardCardType } from "lib";
 
 export function AddDashboardCardForm(props: DashboardFormPropsType) {
   const { control, setValue, isLoading, open } = props;
@@ -28,10 +27,10 @@ export function AddDashboardCardForm(props: DashboardFormPropsType) {
   const typeOptions = useMemo(
     () => [
       ...(enumToKeyValueArray(DashboardCardType)
-        ?.filter(({ value }) =>
-          value === DashboardCardType.SubscriptionForecast
-            ? subscriptionsEnabled
-            : true,
+        ?.filter(
+          ({ value }) =>
+            typeof value === "number" &&
+            isDashboardCardEnabled(value, subscriptionsEnabled),
         )
         .map(({ key, value }) => ({
           id: value as number,
