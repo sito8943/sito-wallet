@@ -31,3 +31,14 @@ export const emptyDashboard: DashboardFormType = {
   userId: 0,
   title: "",
 };
+
+export const isDashboardCardEnabled = (
+  type: DashboardCardType,
+  subscriptionsEnabled: boolean,
+): boolean => {
+  if (type === DashboardCardType.WeeklySpent) return false;
+  if (type === DashboardCardType.SubscriptionForecast)
+    return subscriptionsEnabled;
+
+  return true;
+};

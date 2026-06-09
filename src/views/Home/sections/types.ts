@@ -15,6 +15,7 @@ export interface DashboardDragStateType {
 
 export interface UseDashboardReorderPropsType {
   items: DashboardDto[];
+  allItems?: DashboardDto[];
   enabled?: boolean;
 }
 
