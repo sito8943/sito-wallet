@@ -270,6 +270,7 @@ export function SubscriptionEditor() {
             <SubscriptionActivitySidebar
               startsAt={subscriptionQuery.data?.startsAt}
               lastPaidAt={subscriptionQuery.data?.lastPaidAt}
+              nextRenewalAt={subscriptionQuery.data?.nextRenewalAt}
               billingLogs={subscriptionBillingLogsQuery.data?.items ?? []}
               billingLogsLoading={subscriptionBillingLogsQuery.isLoading}
               billingLogsError={subscriptionBillingLogsQuery.error}

@@ -12,7 +12,6 @@ import {
 import {
   AddCard,
   TransactionTypeResume,
-  WeeklySpentCard,
   CurrentBalanceCard,
   SubscriptionForecastCard,
 } from "../components/Cards";
@@ -34,6 +33,7 @@ import {
   useManager,
   useRegisterBottomNavAction,
 } from "providers";
+import { isDashboardCardEnabled } from "../utils";
 import { useDashboardReorder } from "./useDashboardReorder";
 import { sortDashboardItems } from "./utils";
 
@@ -59,20 +59,13 @@ export const Dashboard = () => {
   const visibleItems = useMemo(() => {
     if (!data) return [];
     return sortDashboardItems(data.items).filter((item) =>
-      item.type === DashboardCardType.SubscriptionForecast
-        ? subscriptionsEnabled
-        : true,
+      isDashboardCardEnabled(item.type, subscriptionsEnabled),
     );
   }, [data, subscriptionsEnabled]);
 
-  const canReorderCards = useMemo(
-    () => !data || visibleItems.length === data.items.length,
-    [data, visibleItems.length],
-  );
-
   const dashboardReorder = useDashboardReorder({
     items: visibleItems,
-    enabled: canReorderCards,
+    allItems: data?.items,
   });
 
   const cards = useMemo(() => {
@@ -95,18 +88,7 @@ export const Dashboard = () => {
             </li>
           );
         case DashboardCardType.WeeklySpent:
-          return (
-            <li key={item.id} {...listItemProps}>
-              <WeeklySpentCard
-                onDelete={() => {
-                  void deleteDashboardCard.onClick([item.id]);
-                }}
-                dragHandleProps={dragHandleProps}
-                key={item.id}
-                {...item}
-              />
-            </li>
-          );
+          return null;
         case DashboardCardType.CurrentBalance:
           return (
             <li key={item.id} {...listItemProps}>

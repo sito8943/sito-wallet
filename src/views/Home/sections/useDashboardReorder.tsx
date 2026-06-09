@@ -34,19 +34,28 @@ import {
 export function useDashboardReorder(
   props: UseDashboardReorderPropsType,
 ): UseDashboardReorderReturnType {
-  const { items, enabled = true } = props;
+  const { items, allItems = items, enabled = true } = props;
   const { t } = useTranslation();
   const manager = useManager();
   const queryClient = useQueryClient();
   const { showErrorNotification } = useNotification();
 
   const sourceItems = useMemo(() => sortDashboardItems(items), [items]);
+  const allSourceItems = useMemo(
+    () => sortDashboardItems(allItems),
+    [allItems],
+  );
   const sourceItemsRef = useRef(sourceItems);
+  const allSourceItemsRef = useRef(allSourceItems);
   const [dragState, setDragState] = useState(DASHBOARD_INITIAL_DRAG_STATE);
 
   useEffect(() => {
     sourceItemsRef.current = sourceItems;
   }, [sourceItems]);
+
+  useEffect(() => {
+    allSourceItemsRef.current = allSourceItems;
+  }, [allSourceItems]);
 
   const reorderMutation = useMutation<
     number,
@@ -166,7 +175,9 @@ export function useDashboardReorder(
         targetIndex,
       );
       resetDragState();
-      reorderMutation.mutate(toReorderDashboardCardsDto(nextItems));
+      reorderMutation.mutate(
+        toReorderDashboardCardsDto(nextItems, allSourceItemsRef.current),
+      );
     },
     {
       filterTaps: true,

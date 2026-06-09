@@ -55,9 +55,15 @@ export const resolveDashboardDropTargetId = (
 
 export const toReorderDashboardCardsDto = (
   items: DashboardDto[],
+  allItems: DashboardDto[] = items,
 ): ReorderDashboardCardsDto => ({
-  userId: items[0]?.user?.id ?? 0,
-  cards: items.map((item, index) => ({
+  userId: allItems[0]?.user?.id ?? items[0]?.user?.id ?? 0,
+  cards: [
+    ...items,
+    ...sortDashboardItems(allItems).filter(
+      (item) => !items.some((visibleItem) => visibleItem.id === item.id),
+    ),
+  ].map((item, index) => ({
     id: item.id,
     position: index,
   })),
