@@ -108,7 +108,9 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
       {mode !== FormMode.Add && (
         <Controller
           control={control}
-          render={({ field }) => <input {...field} type="hidden" />}
+          render={({ field }) => (
+            <input {...field} value={field.value ?? ""} type="hidden" />
+          )}
           name="nextRenewalAt"
         />
       )}
@@ -294,8 +296,8 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
               <TextInput
                 required
                 type="number"
-                min={1}
-                step={1}
+                min={0.01}
+                step={0.01}
                 value={value ?? ""}
                 label={t("_entities:subscription.amount.label")}
                 placeholder={t("_entities:subscription.amount.placeholder")}
