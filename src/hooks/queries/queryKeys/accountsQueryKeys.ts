@@ -31,11 +31,7 @@ export const AccountsQueryKeys = {
     queryKey: [...AccountsQueryKeys.all().queryKey, "common"],
   }),
   balanceHistory: (filters: FilterBalanceHistoryDto) => ({
-    queryKey: [
-      ...AccountsQueryKeys.all().queryKey,
-      "balance-history",
-      filters,
-    ],
+    queryKey: [...AccountsQueryKeys.all().queryKey, "balance-history", filters],
     enabled: !!filters.accountId && !!filters.from && !!filters.to,
   }),
 };
