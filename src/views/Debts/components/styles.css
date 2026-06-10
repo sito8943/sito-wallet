@@ -4,8 +4,16 @@
   @apply text-sm font-semibold whitespace-nowrap;
 }
 
+.debt-card-amount--paid {
+  @apply text-text-muted;
+}
+
 .debt-card-content {
   @apply gap-2;
+}
+
+.debt-card-content--paid {
+  @apply !border-0;
 }
 
 .debt-card-description {

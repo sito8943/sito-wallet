@@ -6,7 +6,7 @@ import { ItemCard, ItemCardTitle } from "components";
 
 import { Currency } from "views/Currencies/components/Currency";
 
-import { DEBT_DIRECTION_NAME, DEBT_STATUS_NAME } from "lib";
+import { DEBT_DIRECTION_NAME, DEBT_STATUS_NAME, DebtStatus } from "lib";
 
 import { DEBT_STATUS_BADGE_CLASSNAME } from "../constants";
 import type { DebtCardPropsType } from "../types";
@@ -56,7 +56,11 @@ export function DebtCard(props: DebtCardPropsType) {
         <div className="debt-card-title-row">
           <ItemCardTitle>{title}</ItemCardTitle>
           <span className="debt-card-amount">
-            {pendingAmount}{" "}
+            {status === DebtStatus.Paid ? (
+              <s className="debt-card-amount--paid">{originalAmount}</s>
+            ) : (
+              pendingAmount
+            )}{" "}
             <Currency name={currency?.name} symbol={currency?.symbol} />
           </span>
         </div>
@@ -73,6 +77,9 @@ export function DebtCard(props: DebtCardPropsType) {
       swipeDeleteOpen={swipeDeleteOpen}
       onSwipeDelete={onSwipeDelete}
       className="debt-card-content"
+      containerClassName={classNames(
+        status === DebtStatus.Paid && "debt-card-content--paid",
+      )}
     >
       <p
         className={classNames(
