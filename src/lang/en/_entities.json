@@ -330,7 +330,8 @@
         "TypeResume": "Type Resume",
         "CurrentBalance": "Current Balance",
         "WeeklySpent": "Weekly Spent",
-        "SubscriptionForecast": "Subscription Forecast"
+        "SubscriptionForecast": "Subscription Forecast",
+        "BalanceHistory": "Balance History"
       }
     }
   },

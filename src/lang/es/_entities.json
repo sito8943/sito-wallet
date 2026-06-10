@@ -330,7 +330,8 @@
         "TypeResume": "Resumen de tipo",
         "CurrentBalance": "Saldo actual",
         "WeeklySpent": "Gasto semanal",
-        "SubscriptionForecast": "Pronóstico de suscripciones"
+        "SubscriptionForecast": "Pronóstico de suscripciones",
+        "BalanceHistory": "Histórico de saldo"
       }
     }
   },

@@ -1,0 +1,17 @@
+@reference "../../../../../styles/variables.css";
+
+.balance-history-card {
+  @apply !h-auto min-h-58 overflow-hidden;
+}
+
+.balance-history-content {
+  @apply flex flex-col gap-2 w-full;
+}
+
+.balance-history-empty {
+  @apply text-text-muted text-sm text-center py-6;
+}
+
+.balance-history-adjustment {
+  @apply flex items-center gap-2 text-xs bg-bg-warning text-warning p-2 rounded-xl;
+}

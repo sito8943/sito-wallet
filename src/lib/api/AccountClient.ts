@@ -1,6 +1,9 @@
 import { BaseClient, Methods } from "@sito/dashboard-app";
 
 // enum
+import { BalanceHistoryGranularity } from "lib";
+
+// enum
 import { Tables } from "./types";
 
 // types
@@ -14,6 +17,8 @@ import type {
   AdjustBalanceDto,
   TransactionDto,
   ImportDto,
+  BalanceHistoryDto,
+  FilterBalanceHistoryDto,
 } from "lib";
 import { parseJSONFile } from "lib";
 
@@ -41,6 +46,31 @@ export default class AccountClient extends BaseClient<
 
   async sync(accountId: number): Promise<number> {
     return await this.api.patch(`${this.table}/${accountId}/sync`, undefined);
+  }
+
+  async balanceHistory(
+    filters: FilterBalanceHistoryDto,
+  ): Promise<BalanceHistoryDto> {
+    const searchParams = new URLSearchParams({
+      from: filters.from,
+      to: filters.to,
+      granularity: filters.granularity ?? BalanceHistoryGranularity.Day,
+    });
+
+    if (filters.userId) {
+      searchParams.set("userId", String(filters.userId));
+    }
+
+    const builtUrl = `${this.table}/${filters.accountId}/balance-history?${searchParams.toString()}`;
+
+    return await this.api.doQuery<BalanceHistoryDto>(
+      builtUrl,
+      Methods.GET,
+      undefined,
+      {
+        ...this.api.defaultTokenAcquirer(),
+      },
+    );
   }
 
   async processImport(

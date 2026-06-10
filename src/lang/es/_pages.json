@@ -52,6 +52,23 @@
       "weeklySpent": {
         "configTitle": "Configurar gasto semanal"
       },
+      "balanceHistory": {
+        "configTitle": "Configurar histórico de saldo",
+        "placeholder": "Escribe el título",
+        "presetLabel": "Rango",
+        "noAccount": "Selecciona una cuenta",
+        "empty": "No hay movimientos en este periodo",
+        "balance": "Saldo",
+        "net": "Neto",
+        "adjustmentWarning": "El saldo incluye ajustes manuales",
+        "presets": {
+          "7D": "7 días",
+          "30D": "30 días",
+          "3M": "3 meses",
+          "12M": "12 meses",
+          "YTD": "Año actual"
+        }
+      },
       "subscriptionForecast": {
         "configTitle": "Configurar previsión de suscripciones",
         "placeholder": "Escribe un título",

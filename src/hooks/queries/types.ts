@@ -10,6 +10,7 @@ import type {
 
 // lib
 import type {
+  BalanceHistoryGranularity,
   FilterTransactionGroupedByTypeDto,
   FilterTransactionTypeResumeDto,
   GetSubscriptionRenewalsQuery,
@@ -49,4 +50,11 @@ export type UseSubscriptionsRenewalsForecastProps =
 
 export type UseSubscriptionProvidersCommonProps = {
   onlyEnabled?: boolean;
+};
+
+export type UseBalanceHistoryPropsType = {
+  accountId?: number;
+  from?: string;
+  to?: string;
+  granularity?: BalanceHistoryGranularity;
 };
