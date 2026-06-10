@@ -28,7 +28,8 @@ export function useCancelDebtAction(props: UseDebtActionProps) {
 
       return {
         id: DebtAction.Cancel,
-        hidden: hidden || !!record.deletedAt || record.status === DebtStatus.Paid,
+        hidden:
+          hidden || !!record.deletedAt || record.status === DebtStatus.Paid,
         disabled: !!record.deletedAt || isClosed,
         icon: <FontAwesomeIcon icon={faBan} />,
         tooltip: isClosed
