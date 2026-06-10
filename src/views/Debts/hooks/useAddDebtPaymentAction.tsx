@@ -28,7 +28,7 @@ export function useAddDebtPaymentAction(props: UseDebtActionProps) {
 
       return {
         id: DebtAction.AddPayment,
-        hidden: hidden || !!record.deletedAt,
+        hidden: hidden || !!record.deletedAt || record.status === DebtStatus.Paid,
         disabled: !!record.deletedAt || isClosed,
         icon: <FontAwesomeIcon icon={faMoneyBillWave} />,
         tooltip: isClosed
