@@ -1,6 +1,10 @@
 import type { QueryParam } from "@sito/dashboard-app";
 
-import type { AccountDto, FilterAccountDto } from "lib";
+import type {
+  AccountDto,
+  FilterAccountDto,
+  FilterBalanceHistoryDto,
+} from "lib";
 
 export const AccountsQueryKeys = {
   all: () => ({
@@ -25,5 +29,13 @@ export const AccountsQueryKeys = {
   }),
   common: () => ({
     queryKey: [...AccountsQueryKeys.all().queryKey, "common"],
+  }),
+  balanceHistory: (filters: FilterBalanceHistoryDto) => ({
+    queryKey: [
+      ...AccountsQueryKeys.all().queryKey,
+      "balance-history",
+      filters,
+    ],
+    enabled: !!filters.accountId && !!filters.from && !!filters.to,
   }),
 };

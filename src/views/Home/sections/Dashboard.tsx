@@ -14,6 +14,7 @@ import {
   TransactionTypeResume,
   CurrentBalanceCard,
   SubscriptionForecastCard,
+  BalanceHistoryCard,
 } from "../components/Cards";
 import { AddDashboardCardDialog } from "../components";
 
@@ -106,6 +107,19 @@ export const Dashboard = () => {
           return (
             <li key={item.id} {...listItemProps}>
               <SubscriptionForecastCard
+                onDelete={() => {
+                  void deleteDashboardCard.onClick([item.id]);
+                }}
+                dragHandleProps={dragHandleProps}
+                key={item.id}
+                {...item}
+              />
+            </li>
+          );
+        case DashboardCardType.BalanceHistory:
+          return (
+            <li key={item.id} {...listItemProps}>
+              <BalanceHistoryCard
                 onDelete={() => {
                   void deleteDashboardCard.onClick([item.id]);
                 }}

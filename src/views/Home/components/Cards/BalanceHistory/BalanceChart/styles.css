@@ -1,0 +1,6 @@
+@reference "../../../../../../styles/variables.css";
+
+.balance-history-chart {
+  @apply relative w-full;
+  height: 160px;
+}

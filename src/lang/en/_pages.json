@@ -52,6 +52,23 @@
       "weeklySpent": {
         "configTitle": "Configure weekly spending"
       },
+      "balanceHistory": {
+        "configTitle": "Configure balance history",
+        "placeholder": "Type the title",
+        "presetLabel": "Range",
+        "noAccount": "Select an account",
+        "empty": "No movements in this period",
+        "balance": "Balance",
+        "net": "Net",
+        "adjustmentWarning": "The balance includes manual adjustments",
+        "presets": {
+          "7D": "7 days",
+          "30D": "30 days",
+          "3M": "3 months",
+          "12M": "12 months",
+          "YTD": "Year to date"
+        }
+      },
       "subscriptionForecast": {
         "configTitle": "Configure subscription forecast",
         "placeholder": "Type the title",
