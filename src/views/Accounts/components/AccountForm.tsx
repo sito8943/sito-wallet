@@ -20,7 +20,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { AccountFormPropsType } from "../types";
 
 // lib
-import { Tables, AccountType } from "lib";
+import { Tables, AccountType, ACCOUNT_BANK_OPTIONS } from "lib";
 
 // utils
 import { icons } from "./utils";
@@ -56,7 +56,16 @@ export function AccountForm(props: AccountFormPropsType) {
     [t],
   );
 
+  const bankOptions = useMemo(
+    () => [
+      { id: "", name: t("_entities:account.bank.placeholder") },
+      ...ACCOUNT_BANK_OPTIONS.map(({ label }) => ({ id: label, name: label })),
+    ],
+    [t],
+  );
+
   const { type, id } = useWatch({ control });
+  const isCard = Number(type) === AccountType.Card;
 
   return (
     <>
@@ -164,6 +173,23 @@ export function AccountForm(props: AccountFormPropsType) {
           )}
         />
       </div>
+      {isCard && (
+        <Controller
+          control={control}
+          name="bankName"
+          disabled={isLoading}
+          render={({ field: { value, onChange, ...rest } }) => (
+            <SelectInput
+              id="bankName"
+              options={bankOptions}
+              value={value ?? ""}
+              onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
+              label={t("_entities:account.bank.label")}
+              {...rest}
+            />
+          )}
+        />
+      )}
       <Controller
         control={control}
         name="description"
