@@ -75,8 +75,12 @@ export const getAccountCardTheme = (
     background: palette.background,
     text: palette.text,
     subtleText: palette.subtleText,
-    overlay: palette.isDark ? "rgba(255, 255, 255, 0.16)" : "rgba(0, 0, 0, 0.07)",
-    chipBg: palette.isDark ? "rgba(255, 255, 255, 0.18)" : "rgba(0, 0, 0, 0.07)",
+    overlay: palette.isDark
+      ? "rgba(255, 255, 255, 0.16)"
+      : "rgba(0, 0, 0, 0.07)",
+    chipBg: palette.isDark
+      ? "rgba(255, 255, 255, 0.18)"
+      : "rgba(0, 0, 0, 0.07)",
     chipText: palette.text,
   };
 };

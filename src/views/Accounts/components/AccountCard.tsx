@@ -107,10 +107,7 @@ export function AccountCard(props: AccountCardPropsType) {
       }
     >
       {theme && bankName && (
-        <span
-          className="account-card-bank"
-          style={{ color: theme.subtleText }}
-        >
+        <span className="account-card-bank" style={{ color: theme.subtleText }}>
           {bankName}
         </span>
       )}
