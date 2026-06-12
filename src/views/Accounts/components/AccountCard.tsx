@@ -97,7 +97,6 @@ export function AccountCard(props: AccountCardPropsType) {
           ? ({
               background: theme.background,
               color: theme.text,
-              borderColor: "transparent",
               "--account-on-brand": theme.text,
               "--account-overlay": theme.overlay,
               "--account-chip-bg": theme.chipBg,
