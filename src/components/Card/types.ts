@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 // @sito/dashboard-app
 import type { BaseEntityDto, ActionType } from "@sito/dashboard-app";
@@ -6,6 +6,8 @@ import type { BaseEntityDto, ActionType } from "@sito/dashboard-app";
 export type ItemCardPropsType<TEntity extends BaseEntityDto> = {
   children: ReactNode;
   containerClassName?: string;
+  // Inline style applied to the outer card shell (e.g. branded backgrounds).
+  containerStyle?: CSSProperties;
   actions: ActionType<TEntity>[];
   title: string | ReactNode;
   className?: string;

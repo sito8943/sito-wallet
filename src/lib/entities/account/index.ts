@@ -4,6 +4,7 @@ export * from "./FilterAccountDto";
 export * from "./CommonAccountDto";
 export * from "./AccountDto";
 export * from "./AccountType";
+export * from "./AccountBankName";
 export * from "./ImportPreviewAccountDto";
 export * from "./AdjustBalanceDto";
 export * from "./BalanceHistoryGranularity";

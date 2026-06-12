@@ -23,6 +23,7 @@ export function ItemCard<TRow extends BaseEntityDto>(
   const {
     children,
     containerClassName = "",
+    containerStyle,
     actions = [],
     title,
     className = "",
@@ -109,6 +110,7 @@ export function ItemCard<TRow extends BaseEntityDto>(
               : "item-card--idle base-border",
           containerClassName,
         )}
+        style={containerStyle}
       >
         <div
           className={classNames(
