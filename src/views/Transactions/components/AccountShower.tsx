@@ -34,6 +34,7 @@ import {
   AddAccountDialog,
   AdjustBalanceDialog,
   EditAccountDialog,
+  TypeResume,
 } from "views/Accounts";
 
 import "./styles.css";
@@ -155,7 +156,6 @@ const AccountShower = (props: AccountCarouselPropsType) => {
         </div>
         <AccountCard
           showLastTransactions={false}
-          showTypeResume
           showCurrency={false}
           actions={selectedAccount ? getActions(selectedAccount) : []}
           {...selectedAccount}
@@ -174,6 +174,12 @@ const AccountShower = (props: AccountCarouselPropsType) => {
             </div>
           }
         />
+        {selectedAccount?.id && selectedAccount?.currency && (
+          <TypeResume
+            accountId={selectedAccount.id}
+            currency={selectedAccount.currency}
+          />
+        )}
       </div>
       {/* Dialogs */}
       <AddAccountDialog {...addAccount} />

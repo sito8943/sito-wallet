@@ -120,7 +120,7 @@
 }
 
 .type-group {
-  @apply bg-base-light rounded-xl p-2 px-3 flex flex-col items-start justify-start;
+  @apply bg-base rounded-xl p-2 px-3 flex flex-row items-center justify-between gap-2;
 }
 
 .type-group-title {
