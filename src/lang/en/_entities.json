@@ -114,6 +114,10 @@
         "Card": "Digital"
       }
     },
+    "bank": {
+      "label": "Bank",
+      "placeholder": "No bank"
+    },
     "currency": {
       "label": "Currency",
       "placeholder": "Select a currency",
