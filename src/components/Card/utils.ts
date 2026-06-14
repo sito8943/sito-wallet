@@ -2,6 +2,7 @@ import type { ActionType, BaseEntityDto } from "@sito/dashboard-app";
 
 const MOBILE_CONTEXT_MENU_MEDIA_QUERY = "(pointer: coarse)";
 const MOBILE_VIEWPORT_MEDIA_QUERY = "(max-width: 640px)";
+const HOVER_MEDIA_QUERY = "(hover: hover)";
 
 export function getDeleteAction<TRow extends BaseEntityDto>(
   actions: ActionType<TRow>[],
@@ -46,4 +47,14 @@ export function isMobileViewport() {
   }
 
   return window.innerWidth <= 640;
+}
+
+export function supportsHoverTooltips() {
+  if (typeof window === "undefined") return true;
+
+  if (typeof window.matchMedia === "function") {
+    return window.matchMedia(HOVER_MEDIA_QUERY).matches;
+  }
+
+  return !isCoarsePointerDevice();
 }

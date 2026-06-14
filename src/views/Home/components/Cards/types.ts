@@ -14,7 +14,10 @@ export type BaseCardPropsType = {
 export type DashboardCardDragHandlePropsType = Omit<
   IconButtonPropsType,
   "icon"
->;
+> & {
+  "data-tooltip-id"?: string;
+  "data-tooltip-content"?: string;
+};
 
 export type ConfigFormDialogPropsType<TForm extends FieldValues> = Omit<
   FormDialogPropsType<TForm>,

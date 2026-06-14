@@ -469,6 +469,7 @@ export function Transactions() {
   return (
     <Page
       title={t("_pages:transactions.title")}
+      className="transactions-page"
       isLoading={isAccountLoading || categories.isLoading}
       actions={pageToolbar}
       addOptions={{
