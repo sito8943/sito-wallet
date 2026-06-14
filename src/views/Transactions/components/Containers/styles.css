@@ -9,7 +9,7 @@
 }
 
 .transaction-grid {
-  @apply max-sm:pb-6;
+  @apply max-sm:pb-6 max-sm:px-3;
 }
 
 .transaction-grid-item {

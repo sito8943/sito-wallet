@@ -112,7 +112,7 @@
 }
 
 .type-group-wrapper {
-  @apply w-full my-2;
+  @apply w-full my-2 max-sm:px-3;
 }
 
 .type-group-grid {
