@@ -171,7 +171,11 @@ vi.mock("hooks/queries/useCurrenciesCommon", () => ({
 
 vi.mock("lib", () => ({
   Tables: { Accounts: "accounts" },
-  AccountType: { Debit: 0, Credit: 1, Savings: 2 },
+  AccountType: { Physical: 0, Card: 1 },
+  ACCOUNT_BANK_OPTIONS: [
+    { id: 1, label: "Imagin" },
+    { id: 2, label: "Caixa" },
+  ],
   AppRoutes: {
     home: "/",
     profile: "/profile",
@@ -194,6 +198,7 @@ vi.mock("lib", () => ({
 
 vi.mock("../utils", () => ({
   icons: { 0: "wallet", 1: "credit-card", 2: "piggy-bank" },
+  getAccountCardTheme: () => undefined,
 }));
 
 import {

@@ -1,17 +1,13 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-// @sito/dashboard
-import {
-  IconButton,
-  Loading,
-  SelectInput,
-  classNames,
-  useEditAction,
-} from "@sito/dashboard-app";
+// @sito/dashboard-app
+import { Error, Loading } from "@sito/dashboard-app";
+import type { ActionType } from "@sito/dashboard-app";
 
 // icons
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // hooks
 import {
@@ -28,13 +24,13 @@ import type { AccountDto } from "lib";
 import type { AccountCarouselPropsType } from "./types";
 
 // components
-import { Error } from "@sito/dashboard-app";
 import {
-  AccountCard,
   AddAccountDialog,
   AdjustBalanceDialog,
   EditAccountDialog,
+  TypeResume,
 } from "views/Accounts";
+import { AccountSlider } from "./AccountSlider";
 
 import "./styles.css";
 
@@ -61,9 +57,17 @@ const AccountShower = (props: AccountCarouselPropsType) => {
 
   const editAccountDialog = useEditAccountDialog();
 
-  const editAccountAction = useEditAction<AccountDto>({
-    onClick: editAccountDialog.openDialog,
-  });
+  const editAccountAction = useCallback(
+    (record: AccountDto): ActionType<AccountDto> => ({
+      id: "edit",
+      hidden: !!record.deletedAt,
+      disabled: !!record.deletedAt,
+      tooltip: t("_pages:common.actions.edit.text"),
+      onClick: () => editAccountDialog.openDialog(record.id),
+      icon: <FontAwesomeIcon className="account-action-icon" icon={faPencil} />,
+    }),
+    [editAccountDialog, t],
+  );
 
   const syncAccount = useSyncAccountMutation();
 
@@ -75,60 +79,9 @@ const AccountShower = (props: AccountCarouselPropsType) => {
     (record: AccountDto) => [
       adjustBalance.action(record),
       syncAccount.action(record),
-      editAccountAction.action(record),
+      editAccountAction(record),
     ],
     [adjustBalance, editAccountAction, syncAccount],
-  );
-
-  const accountNameRef = useRef<HTMLDivElement>(null);
-  const [showFixedAccountSelector, setShowFixedAccountSelector] =
-    useState(false);
-  const stickyTopPx = 56;
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const accountNameElement = accountNameRef.current;
-      if (!accountNameElement) {
-        setShowFixedAccountSelector(false);
-        return;
-      }
-
-      const { top } = accountNameElement.getBoundingClientRect();
-      setShowFixedAccountSelector(top <= stickyTopPx);
-    };
-
-    handleScroll();
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
-  }, []);
-
-  const renderAccountSelector = (id: string, name: string) => (
-    <div className="transaction-account-shower">
-      <div className="transaction-account-shower-select">
-        <SelectInput
-          id={id}
-          name={name}
-          value={selectedAccount?.id}
-          onChange={(e) => {
-            onAccountChange(Number((e.target as HTMLSelectElement).value));
-          }}
-          options={accounts ?? []}
-        />
-      </div>
-      <IconButton
-        icon={faFilter}
-        onClick={() => onOpenFilters?.()}
-        name={t("_accessibility:buttons.filters")}
-        aria-label={t("_accessibility:ariaLabels.filters")}
-        className="transaction-account-shower-filter-button"
-      />
-    </div>
   );
 
   return (
@@ -143,37 +96,19 @@ const AccountShower = (props: AccountCarouselPropsType) => {
           </div>
         )}
         {error && <Error />}
-        <div
-          className={classNames(
-            "transaction-account-shower-panel",
-            showFixedAccountSelector
-              ? "transaction-account-shower-panel--visible"
-              : "transaction-account-shower-panel--hidden",
-          )}
-        >
-          {renderAccountSelector("account-id-fixed", "account-id-fixed")}
-        </div>
-        <AccountCard
-          showLastTransactions={false}
-          showTypeResume
-          showCurrency={false}
-          actions={selectedAccount ? getActions(selectedAccount) : []}
-          {...selectedAccount}
-          hideDescription
-          containerClassName="transaction-account-shower-card"
-          name={
-            <div
-              ref={accountNameRef}
-              className={classNames(
-                "transaction-account-shower-card-title",
-                showFixedAccountSelector &&
-                  "transaction-account-shower-card-title--hidden",
-              )}
-            >
-              {renderAccountSelector("account-id", "account-id")}
-            </div>
-          }
+        <AccountSlider
+          accounts={accounts ?? []}
+          selectedAccount={selectedAccount}
+          onAccountChange={onAccountChange}
+          getActions={getActions}
+          onOpenFilters={onOpenFilters}
         />
+        {selectedAccount?.id && selectedAccount?.currency && (
+          <TypeResume
+            accountId={selectedAccount.id}
+            currency={selectedAccount.currency}
+          />
+        )}
       </div>
       {/* Dialogs */}
       <AddAccountDialog {...addAccount} />

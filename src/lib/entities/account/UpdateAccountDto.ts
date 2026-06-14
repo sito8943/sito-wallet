@@ -5,6 +5,7 @@ export interface UpdateAccountDto extends DeleteDto {
   name: string;
   description: string;
   type: AccountType;
+  bankName?: string;
   currencyId: number;
   userId: number;
 }

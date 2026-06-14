@@ -5,7 +5,8 @@ import { useAuth } from "@sito/dashboard-app";
 
 import { useManager } from "providers";
 
-import type { FilterTransactionDto } from "lib";
+import type { FilterTransactionDto, TransactionDto } from "lib";
+import { getTransactionCategories } from "lib";
 
 import { TransactionsQueryKeys } from "hooks";
 import { TYPE_RESUME_TRANSACTIONS_LIST_QUERY } from "./constants";
@@ -21,9 +22,14 @@ export const useTypeResumeCategoryTransactions = (
     startDate = "",
     endDate = "",
     open,
+    excludedCategoryIds = [],
   } = props;
   const { account } = useAuth();
   const manager = useManager();
+  const normalizedExcludedCategoryIds = useMemo(
+    () => [...new Set(excludedCategoryIds)].sort((left, right) => left - right),
+    [excludedCategoryIds],
+  );
 
   const filters = useMemo<FilterTransactionDto>(
     () => ({
@@ -45,12 +51,28 @@ export const useTypeResumeCategoryTransactions = (
       "type-resume-category-transactions",
       TYPE_RESUME_TRANSACTIONS_LIST_QUERY,
       filters,
+      normalizedExcludedCategoryIds,
     ],
     enabled: open && !!account?.id && !!accountId && !!startDate && !!endDate,
-    queryFn: () =>
-      manager.Transactions.getCommon(
-        filters,
+    queryFn: async () => {
+      const response = await manager.Transactions.get(
         TYPE_RESUME_TRANSACTIONS_LIST_QUERY,
-      ),
+        filters,
+      );
+
+      if (!normalizedExcludedCategoryIds.length) {
+        return response.items;
+      }
+
+      const excludedCategoryIdSet = new Set(normalizedExcludedCategoryIds);
+
+      return response.items.filter((transaction: TransactionDto) => {
+        const categories = getTransactionCategories(transaction);
+
+        return !categories.some((category) =>
+          excludedCategoryIdSet.has(category.id),
+        );
+      });
+    },
   });
 };

@@ -12,7 +12,14 @@ import { TransactionType } from "lib";
 import "../styles.css";
 
 export const ActiveFilters = (props: ActiveFiltersPropsType) => {
-  const { type, account, clearAccount, time } = props;
+  const {
+    type,
+    account,
+    clearAccount,
+    time,
+    excludedCategories = [],
+    clearExcludedCategories,
+  } = props;
 
   const { t } = useTranslation();
   const accountItems = account ? [account] : [];
@@ -32,6 +39,14 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
           text={t("_entities:entities.account.plural")}
           items={accountItems}
           onClearFilter={() => clearAccount()}
+        />
+      )}
+      {!!excludedCategories.length && (
+        <ArrayChip
+          id="excludedCategories"
+          text={t("_entities:transaction.typeResume.excludedCategories.label")}
+          items={excludedCategories}
+          onClearFilter={() => clearExcludedCategories()}
         />
       )}
       <Chip

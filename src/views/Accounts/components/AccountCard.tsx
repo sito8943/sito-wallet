@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { classNames } from "@sito/dashboard-app";
@@ -20,7 +21,7 @@ import { AccountType } from "lib";
 import { Currency } from "views/Currencies/components/Currency";
 
 // utils
-import { icons } from "./utils";
+import { icons, getAccountCardTheme } from "./utils";
 
 import "./styles.css";
 
@@ -38,6 +39,7 @@ export function AccountCard(props: AccountCardPropsType) {
     name,
     description,
     type = AccountType.Card,
+    bankName,
     currency,
     deletedAt,
     balance,
@@ -50,6 +52,12 @@ export function AccountCard(props: AccountCardPropsType) {
     onSwipeDelete,
   } = props;
   const deleted = !!deletedAt;
+
+  // Branded card visual only for Card-type accounts that name a known bank.
+  const theme =
+    type === AccountType.Card && !deleted
+      ? getAccountCardTheme(bankName)
+      : undefined;
 
   return (
     <ItemCard
@@ -80,8 +88,28 @@ export function AccountCard(props: AccountCardPropsType) {
       actions={actions}
       swipeDeleteOpen={swipeDeleteOpen}
       onSwipeDelete={onSwipeDelete}
-      containerClassName={containerClassName ?? "account-card-container"}
+      containerClassName={classNames(
+        containerClassName ?? "account-card-container",
+        theme && "account-card--branded",
+      )}
+      containerStyle={
+        theme
+          ? ({
+              background: theme.background,
+              color: theme.text,
+              "--account-on-brand": theme.text,
+              "--account-overlay": theme.overlay,
+              "--account-chip-bg": theme.chipBg,
+              "--account-chip-text": theme.chipText,
+            } as CSSProperties)
+          : undefined
+      }
     >
+      {theme && bankName && (
+        <span className="account-card-bank" style={{ color: theme.subtleText }}>
+          {bankName}
+        </span>
+      )}
       {!hideDescription && (
         <p
           className={classNames(

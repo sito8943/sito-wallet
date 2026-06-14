@@ -5,6 +5,7 @@ export interface AddAccountDto {
   balance: number;
   description: string;
   type: AccountType;
+  bankName?: string;
   currencyId: number;
   userId: number;
 }

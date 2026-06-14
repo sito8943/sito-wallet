@@ -17,8 +17,10 @@ import {
 
 // hooks
 import { useAccountsCommon } from "../../../../../hooks/queries/useAccountsCommon";
+import { useTransactionCategoriesCommon } from "../../../../../hooks/queries/useTransactionCategoriesCommon";
 
 // lib
+import type { CommonTransactionCategoryDto } from "lib";
 import { Tables, TransactionType, TransactionTypeResumeTime } from "lib";
 
 // types
@@ -58,6 +60,21 @@ export const ConfigFormDialog = (
 
   const type = useWatch({ control, name: "type" });
   const time = useWatch({ control, name: "time" });
+  const excludedCategoryIds = useWatch({
+    control,
+    name: "excludedCategoryIds",
+  }) as number[] | undefined;
+  const excludedCategories = useWatch({
+    control,
+    name: "excludedCategories",
+  }) as CommonTransactionCategoryDto[] | undefined;
+
+  const haveSameIds = (
+    left: Array<number | string>,
+    right: Array<number | string>,
+  ) =>
+    left.length === right.length &&
+    left.every((value, index) => Number(value) === Number(right[index]));
 
   useEffect(() => {
     if (setValue && type === undefined) {
@@ -72,6 +89,67 @@ export const ConfigFormDialog = (
   }, [setValue, time]);
 
   const { data: accounts } = useAccountsCommon();
+  const transactionCategories = useTransactionCategoriesCommon();
+
+  const parsedCategories = useMemo(
+    () =>
+      (transactionCategories.data ?? [])
+        .filter((category) => Number(category.type) === Number(type ?? 0))
+        .map((category) => ({
+          ...category,
+          name: category.auto
+            ? t("_entities:transactionCategory.name.init")
+            : category.name,
+        })),
+    [t, transactionCategories.data, type],
+  );
+
+  useEffect(() => {
+    if (setValue && excludedCategoryIds === undefined) {
+      setValue("excludedCategoryIds", []);
+    }
+  }, [excludedCategoryIds, setValue]);
+
+  useEffect(() => {
+    if (
+      !setValue ||
+      transactionCategories.data === undefined ||
+      type === undefined
+    ) {
+      return;
+    }
+
+    const availableIds = new Set(
+      parsedCategories.map((category) => category.id),
+    );
+    const nextExcludedCategoryIds = (excludedCategoryIds ?? []).filter((id) =>
+      availableIds.has(id),
+    );
+
+    if (!haveSameIds(nextExcludedCategoryIds, excludedCategoryIds ?? [])) {
+      setValue("excludedCategoryIds", nextExcludedCategoryIds);
+    }
+
+    const nextExcludedCategories = parsedCategories.filter((category) =>
+      nextExcludedCategoryIds.includes(category.id),
+    );
+
+    if (
+      !haveSameIds(
+        nextExcludedCategories.map((category) => category.id),
+        (excludedCategories ?? []).map((category) => category.id),
+      )
+    ) {
+      setValue("excludedCategories", nextExcludedCategories);
+    }
+  }, [
+    excludedCategories,
+    excludedCategoryIds,
+    parsedCategories,
+    setValue,
+    transactionCategories.data,
+    type,
+  ]);
 
   return (
     <FormDialog
@@ -95,6 +173,37 @@ export const ConfigFormDialog = (
               },
               ...(accounts ?? []),
             ]}
+            containerClassName="dashboard-card-autocomplete-full"
+            {...rest}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="excludedCategories"
+        render={({ field: { value, onChange, ...rest } }) => (
+          <AutocompleteInput
+            value={value ?? []}
+            multiple
+            label={t(
+              "_entities:transaction.typeResume.excludedCategories.label",
+            )}
+            placeholder={t(
+              "_entities:transaction.typeResume.excludedCategories.placeholder",
+            )}
+            autoComplete={`${Tables.Transactions}-${t(
+              "_entities:transaction.typeResume.excludedCategories.label",
+            )}`}
+            onChange={(nextValue) => {
+              const nextCategories =
+                (nextValue as CommonTransactionCategoryDto[] | null) ?? [];
+              onChange(nextCategories);
+              setValue?.(
+                "excludedCategoryIds",
+                nextCategories.map((category) => category.id),
+              );
+            }}
+            options={parsedCategories}
             containerClassName="dashboard-card-autocomplete-full"
             {...rest}
           />

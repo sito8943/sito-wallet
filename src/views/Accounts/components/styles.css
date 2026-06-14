@@ -8,6 +8,77 @@
   @apply md:w-100 max-md:w-full;
 }
 
+/* Bank-branded account card: brand background comes from inline styles; here we
+   drop the default border/hover and force inner text to inherit the brand color. */
+.account-card--branded {
+  @apply md:w-100 max-md:w-full !border-0 shadow-md shadow-black/15 h-54;
+}
+
+.account-card--branded .item-card-title--active {
+  color: inherit !important;
+}
+
+.account-card-bank {
+  @apply text-xs font-medium uppercase tracking-wide mb-1;
+}
+
+/* Controls layered on the brand background pick up contrast tokens set inline
+   on the card. Default action icons take the brand foreground; semantic
+   variants (.error/.success/…) keep their hue via higher specificity. */
+.account-card--branded .icon-button,
+.account-card--branded .icon-action {
+  color: var(--account-on-brand);
+}
+
+/* The action icons carry their own color (.account-action-icon → text-bg-primary,
+   a dark navy) which would otherwise stay invisible on a dark brand surface.
+   Force the brand foreground so they read against the card. */
+.account-card--branded .account-action-icon {
+  color: var(--account-on-brand);
+}
+
+.account-card--branded .icon-button.text:enabled:hover {
+  background-color: var(--account-overlay);
+}
+
+/* Filled action buttons (.action / .text-action) default to a light base pill;
+   on the brand surface, blend them into the card with a translucent overlay and
+   the brand foreground. Semantic icon variants keep their hue (handled above via
+   the higher-specificity .icon-button.text.<variant> lib rules). */
+.account-card--branded .action,
+.account-card--branded .text-action {
+  background-color: var(--account-overlay);
+  color: var(--account-on-brand);
+}
+
+.account-card--branded .action:enabled:hover,
+.account-card--branded .text-action:enabled:hover {
+  background-color: var(--account-chip-bg);
+}
+
+/* Destructive action: the delete button is a plain .action whose glyph carries
+   its own color (.text-bg-error), so the button has no variant class to hook.
+   Detect it via :has() and give it a solid error circle with a near-white glyph
+   — keeps it semantically red but readable on the brand surface. */
+.account-card--branded .action:has(.text-bg-error),
+.account-card--branded .icon-button:has(.text-bg-error) {
+  background-color: var(--color-bg-error);
+}
+
+.account-card--branded .action:has(.text-bg-error):enabled:hover,
+.account-card--branded .icon-button:has(.text-bg-error):enabled:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+.account-card--branded .text-bg-error {
+  color: var(--color-error);
+}
+
+.account-card--branded .chip-main {
+  background-color: var(--account-chip-bg);
+  color: var(--account-chip-text);
+}
+
 .account-card-type-chip {
   @apply max-sm:!px-2;
 }
@@ -41,7 +112,7 @@
 }
 
 .type-group-wrapper {
-  @apply w-full my-2;
+  @apply w-full my-2 max-sm:px-3;
 }
 
 .type-group-grid {
@@ -49,7 +120,7 @@
 }
 
 .type-group {
-  @apply bg-base-light rounded-xl p-2 px-3 flex flex-col items-start justify-start;
+  @apply bg-base rounded-xl p-2 px-3 flex flex-row items-center justify-between gap-2;
 }
 
 .type-group-title {

@@ -114,6 +114,10 @@
         "Card": "Digital"
       }
     },
+    "bank": {
+      "label": "Bank",
+      "placeholder": "No bank"
+    },
     "currency": {
       "label": "Currency",
       "placeholder": "Select a currency",
@@ -162,6 +166,10 @@
           "CurrentMonth": "Current month",
           "CurrentYear": "Current year"
         }
+      },
+      "excludedCategories": {
+        "label": "Excluded categories",
+        "placeholder": "Select categories to exclude"
       }
     }
   },

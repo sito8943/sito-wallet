@@ -131,6 +131,7 @@ describe("TransactionClient", () => {
       type: 0,
       time: "currentMonth",
       accountId: 1,
+      excludedCategoryIds: [8, 7, 8],
     });
 
     expect(mockDoQuery).toHaveBeenCalledWith(
@@ -144,6 +145,8 @@ describe("TransactionClient", () => {
     expect(builtUrl).toContain("type=OUT");
     expect(builtUrl).toContain("time=currentMonth");
     expect(builtUrl).toContain("filters=account==1");
+    expect(builtUrl).toContain("excludedCategoryIds=8");
+    expect(builtUrl).toContain("excludedCategoryIds=7");
     expect(builtUrl).not.toContain("accountId=");
   });
 

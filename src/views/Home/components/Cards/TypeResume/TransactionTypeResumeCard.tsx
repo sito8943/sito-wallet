@@ -9,11 +9,11 @@ import { TransactionType } from "lib";
 
 // hooks
 import { useTransactionTypeResume } from "hooks";
+import { useTransactionCategoriesCommon } from "../../../../../hooks/queries/useTransactionCategoriesCommon";
 import { useAddTransaction } from "../../../../Transactions/hooks";
 
 // utils
-import { DEFAULT_TYPE_RESUME_CONFIG } from "./constants";
-import { formToDto } from "./utils";
+import { formToDto, parseFormConfig, toTypeResumeFilterConfig } from "./utils";
 
 // components
 import { Currency } from "../../../../Currencies";
@@ -31,7 +31,6 @@ import "./styles.css";
 import type {
   TransactionTypePropsType,
   FilterTypeResumeConfigType,
-  TypeResumeTypeFormType,
 } from "./types";
 import { useTypeResumeDialog } from "./useTypeResumeDialog";
 import type { CardConfigOverrideType } from "../types";
@@ -48,58 +47,44 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
     [config, configOverride],
   );
 
-  const parseFormConfig = (cfg?: string | null): TypeResumeTypeFormType => {
-    try {
-      const parsed = cfg ? (JSON.parse(cfg) as Record<string, unknown>) : {};
-      const legacyAccounts = Array.isArray(parsed.accounts)
-        ? (parsed.accounts as NonNullable<TypeResumeTypeFormType["account"]>[])
-        : [];
-
-      return {
-        account:
-          (parsed.account as TypeResumeTypeFormType["account"]) ??
-          legacyAccounts[0],
-        type: Number(
-          parsed.type ?? DEFAULT_TYPE_RESUME_CONFIG.type,
-        ) as TransactionType,
-        time:
-          (parsed.time as TypeResumeTypeFormType["time"]) ??
-          DEFAULT_TYPE_RESUME_CONFIG.time,
-      };
-    } catch (err) {
-      console.error(err);
-      return DEFAULT_TYPE_RESUME_CONFIG;
-    }
-  };
-
   const resolvedFormConfig = useMemo(
     () => parseFormConfig(effectiveConfig),
     [effectiveConfig],
   );
 
-  const filterConfig = useMemo(() => {
-    try {
-      const transformed: FilterTypeResumeConfigType = {
-        type: resolvedFormConfig.type,
-        time: resolvedFormConfig.time,
-      };
-      transformed.accountId = resolvedFormConfig.account?.id;
-      return transformed;
-    } catch (err) {
-      console.error(err);
-      return {
-        type: DEFAULT_TYPE_RESUME_CONFIG.type,
-        time: DEFAULT_TYPE_RESUME_CONFIG.time,
-      } as FilterTypeResumeConfigType;
-    }
-  }, [resolvedFormConfig]);
+  const filterConfig = useMemo<FilterTypeResumeConfigType>(
+    () => toTypeResumeFilterConfig(resolvedFormConfig),
+    [resolvedFormConfig],
+  );
 
   const { data, isLoading } = useTransactionTypeResume({ ...filterConfig });
+  const transactionCategories = useTransactionCategoriesCommon();
 
   const categories = data?.categories ?? [];
   const selectedAccount = data?.account ?? resolvedFormConfig.account ?? null;
   const currencyName = selectedAccount?.currency?.name;
   const currencySymbol = selectedAccount?.currency?.symbol;
+  const excludedCategories = useMemo(() => {
+    const excludedIds = new Set(resolvedFormConfig.excludedCategoryIds);
+
+    return (transactionCategories.data ?? [])
+      .filter(
+        (category) =>
+          excludedIds.has(category.id) &&
+          Number(category.type) === Number(resolvedFormConfig.type),
+      )
+      .map((category) => ({
+        ...category,
+        name: category.auto
+          ? t("_entities:transactionCategory.name.init")
+          : category.name,
+      }));
+  }, [
+    resolvedFormConfig.excludedCategoryIds,
+    resolvedFormConfig.type,
+    t,
+    transactionCategories.data,
+  ]);
   const addTransaction = useAddTransaction({
     account: selectedAccount,
   });
@@ -123,8 +108,18 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         ConfigFormDialog={ConfigFormDialog}
         renderActiveFilters={({ formConfig, onSubmit }) => (
           <ActiveFilters
-            {...formConfig}
+            account={formConfig.account}
+            type={formConfig.type}
+            time={formConfig.time}
+            excludedCategories={excludedCategories}
             clearAccount={() => onSubmit({ ...formConfig, account: undefined })}
+            clearExcludedCategories={() =>
+              onSubmit({
+                ...formConfig,
+                excludedCategories: [],
+                excludedCategoryIds: [],
+              })
+            }
           />
         )}
       >
@@ -183,6 +178,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         startDate={data?.startDate}
         endDate={data?.endDate}
         transactionType={data?.transactionType ?? resolvedFormConfig.type}
+        excludedCategoryIds={resolvedFormConfig.excludedCategoryIds}
       />
       <AddTransactionDialog {...addTransaction} />
     </>

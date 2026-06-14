@@ -10,6 +10,13 @@
   z-index: 21;
 }
 
+/* `@sito/dashboard` table sticky actions currently mount a legacy inline
+   tooltip wrapper and also attach `react-tooltip` data attributes to the same
+   button. Hide the legacy layer so only the app-level `react-tooltip` shows. */
+.tooltip-container > .tooltip-text {
+  display: none !important;
+}
+
 input[type="file"] {
   visibility: hidden;
 }
