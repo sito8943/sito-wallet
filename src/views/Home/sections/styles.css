@@ -1,15 +1,15 @@
 @reference "../../../styles/variables.css";
 
 .dashboard {
-  @apply gap-5 p-5 m-auto grid grid-cols-3 max-sm:pb-5 max-xl:grid-cols-2 max-md:grid-cols-1;
+  @apply gap-5 p-5 m-auto columns-3 max-sm:pb-5 max-xl:columns-2 max-md:columns-1;
 }
 
 .dashboard.empty {
-  @apply grid-cols-1;
+  @apply columns-1;
 }
 
 .dashboard-item {
-  @apply list-none transition-all duration-200;
+  @apply list-none transition-all duration-200 mb-5 break-inside-avoid;
 }
 
 .dashboard-item--dragging {
@@ -25,5 +25,5 @@
 }
 
 .dashboard-item--add {
-  @apply h-full;
+  @apply min-h-58;
 }
