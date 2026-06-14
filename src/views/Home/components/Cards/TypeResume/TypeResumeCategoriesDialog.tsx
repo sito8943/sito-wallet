@@ -25,6 +25,7 @@ export const TypeResumeCategoriesDialog = (
     startDate,
     endDate,
     transactionType,
+    excludedCategoryIds,
   } = props;
   const { t } = useTranslation();
   const [expandedCategoryId, setExpandedCategoryId] = useState<number | null>(
@@ -67,6 +68,7 @@ export const TypeResumeCategoriesDialog = (
               startDate={startDate}
               endDate={endDate}
               transactionType={transactionType}
+              excludedCategoryIds={excludedCategoryIds}
             />
           ))}
         </ul>

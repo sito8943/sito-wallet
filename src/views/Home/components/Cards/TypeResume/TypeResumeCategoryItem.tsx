@@ -30,6 +30,7 @@ export const TypeResumeCategoryItem = (
     startDate,
     endDate,
     transactionType,
+    excludedCategoryIds,
   } = props;
   const { t } = useTranslation();
 
@@ -40,6 +41,7 @@ export const TypeResumeCategoryItem = (
     startDate,
     endDate,
     open,
+    excludedCategoryIds,
   });
 
   const transactions = useMemo(() => data ?? [], [data]);

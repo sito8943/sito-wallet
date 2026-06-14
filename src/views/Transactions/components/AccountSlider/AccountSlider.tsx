@@ -22,8 +22,14 @@ import type { AccountSliderPropsType } from "./types";
 import "./styles.css";
 
 export function AccountSlider(props: AccountSliderPropsType) {
-  const { className, accounts, selectedAccount, onAccountChange, getActions, onOpenFilters } =
-    props;
+  const {
+    className,
+    accounts,
+    selectedAccount,
+    onAccountChange,
+    getActions,
+    onOpenFilters,
+  } = props;
   const { t } = useTranslation();
 
   const activeIndex = useMemo(() => {
@@ -43,12 +49,19 @@ export function AccountSlider(props: AccountSliderPropsType) {
     [accounts, onAccountChange, selectedAccount],
   );
 
-  const { viewportRef, bind, slideWidth, translateX, dragging, showSticky, consumeMoved } =
-    useAccountSlider({
-      count: accounts.length,
-      activeIndex,
-      onIndexChange: goTo,
-    });
+  const {
+    viewportRef,
+    bind,
+    slideWidth,
+    translateX,
+    dragging,
+    showSticky,
+    consumeMoved,
+  } = useAccountSlider({
+    count: accounts.length,
+    activeIndex,
+    onIndexChange: goTo,
+  });
 
   const renderDots = () =>
     accounts.length > 1 && (
@@ -78,7 +91,10 @@ export function AccountSlider(props: AccountSliderPropsType) {
             "account-slider-track",
             dragging && "account-slider-track--dragging",
           )}
-          style={{ transform: `translate3d(${translateX}px, 0, 0)`, gap: SLIDE_GAP }}
+          style={{
+            transform: `translate3d(${translateX}px, 0, 0)`,
+            gap: SLIDE_GAP,
+          }}
         >
           {accounts.map((account, index) => (
             <div

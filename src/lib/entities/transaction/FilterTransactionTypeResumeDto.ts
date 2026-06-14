@@ -5,4 +5,5 @@ export interface FilterTransactionTypeResumeDto {
   accountId?: number;
   type?: TransactionType;
   time?: TransactionTypeResumeTime;
+  excludedCategoryIds?: number[];
 }

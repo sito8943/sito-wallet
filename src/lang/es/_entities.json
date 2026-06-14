@@ -166,6 +166,10 @@
           "CurrentMonth": "Mes actual",
           "CurrentYear": "Año actual"
         }
+      },
+      "excludedCategories": {
+        "label": "Categorías excluidas",
+        "placeholder": "Selecciona categorías a excluir"
       }
     }
   },
