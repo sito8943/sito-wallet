@@ -47,8 +47,9 @@ export const useAdjustBalanceMutation = () => {
     mutationFn: (data) =>
       manager.Accounts.adjustBalance(selectedAccount?.id ?? 0, data),
     onSuccessMessage: t("_pages:accounts.actions.adjustBalance.successMessage"),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ ...TransactionsQueryKeys.all() });
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ ...AccountsQueryKeys.all() });
+      void queryClient.invalidateQueries({ ...TransactionsQueryKeys.all() });
       setSelectedAccount(null);
     },
     onError: (error) => {
@@ -65,7 +66,6 @@ export const useAdjustBalanceMutation = () => {
       title: t("_pages:accounts.actions.adjustBalance.dialog.confirmTitle"),
       message: t("_pages:accounts.actions.adjustBalance.dialog.confirmMessage"),
     },
-    ...AccountsQueryKeys.all(),
   });
 
   const handleOpen = useCallback(
