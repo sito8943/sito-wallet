@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
 // @use-gesture/react
 import { useDrag } from "@use-gesture/react";
@@ -71,7 +77,14 @@ export function useAccountSlider({
   const translateX = inset - activeIndex * step + drag;
 
   const bind = useDrag(
-    ({ first, active, last, movement: [mx], velocity: [vx], direction: [dx] }) => {
+    ({
+      first,
+      active,
+      last,
+      movement: [mx],
+      velocity: [vx],
+      direction: [dx],
+    }) => {
       if (first) movedRef.current = false;
       if (Math.abs(mx) > TAP_SLOP) movedRef.current = true;
 
@@ -87,7 +100,10 @@ export function useAccountSlider({
         const passedVelocity = vx > SWIPE_VELOCITY_THRESHOLD;
         let next = activeIndex;
         if ((passedDistance || passedVelocity) && dx !== 0) {
-          next = Math.max(0, Math.min(count - 1, activeIndex + (dx < 0 ? 1 : -1)));
+          next = Math.max(
+            0,
+            Math.min(count - 1, activeIndex + (dx < 0 ? 1 : -1)),
+          );
         }
         setDrag(0);
         setDragging(false);

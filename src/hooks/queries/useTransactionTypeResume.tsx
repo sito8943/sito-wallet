@@ -29,8 +29,15 @@ export function useTransactionTypeResume(
         accountId: props.accountId ?? 0,
         time: props.time ?? TransactionTypeResumeTime.CurrentMonth,
         type: props.type ?? TransactionType.In,
+        ...(props.excludedCategoryIds?.length
+          ? {
+              excludedCategoryIds: [...new Set(props.excludedCategoryIds)].sort(
+                (left, right) => left - right,
+              ),
+            }
+          : {}),
       }) as FilterTransactionTypeResumeDto,
-    [props.accountId, props.time, props.type],
+    [props.accountId, props.excludedCategoryIds, props.time, props.type],
   );
 
   const manager = useManager();

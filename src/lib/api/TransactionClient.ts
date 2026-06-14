@@ -180,6 +180,12 @@ export default class TransactionClient extends BaseClient<
       searchParams.set("time", filters.time);
     }
 
+    [...new Set(filters.excludedCategoryIds ?? [])]
+      .sort((left, right) => left - right)
+      .forEach((categoryId) => {
+        searchParams.append("excludedCategoryIds", String(categoryId));
+      });
+
     const builtUrl = `${Tables.Transactions}/type-resume?${searchParams.toString()}`;
 
     return await this.api.doQuery<TransactionTypeResumeDto>(

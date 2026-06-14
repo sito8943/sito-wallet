@@ -3,6 +3,7 @@ import type { FieldValues } from "react-hook-form";
 // lib
 import type {
   CommonAccountDto,
+  CommonTransactionCategoryDto,
   CommonTransactionDto,
   TransactionType,
   TransactionTypeResumeCategoryDto,
@@ -25,12 +26,15 @@ export interface TypeResumeTypeFormType
   account?: CommonAccountDto;
   type: TransactionType;
   time: TransactionTypeResumeTime;
+  excludedCategories: CommonTransactionCategoryDto[];
+  excludedCategoryIds: number[];
 }
 
 export type FilterTypeResumeConfigType = {
   accountId?: number;
   type: TransactionType;
   time: TransactionTypeResumeTime;
+  excludedCategoryIds?: number[];
 };
 
 export type ActiveFiltersPropsType = {
@@ -38,6 +42,8 @@ export type ActiveFiltersPropsType = {
   clearAccount: () => void;
   type: TransactionType;
   time: TransactionTypeResumeTime;
+  excludedCategories?: CommonTransactionCategoryDto[];
+  clearExcludedCategories: () => void;
 };
 
 export type TypeResumeCategoriesDialogPropsType = {
@@ -51,6 +57,7 @@ export type TypeResumeCategoriesDialogPropsType = {
   startDate?: string;
   endDate?: string;
   transactionType: TransactionType;
+  excludedCategoryIds?: number[];
 };
 
 export type TypeResumeCategoryItemPropsType = {
@@ -64,6 +71,7 @@ export type TypeResumeCategoryItemPropsType = {
   startDate?: string;
   endDate?: string;
   transactionType: TransactionType;
+  excludedCategoryIds?: number[];
 };
 
 export type UseTypeResumeCategoryTransactionsPropsType = {
@@ -73,6 +81,7 @@ export type UseTypeResumeCategoryTransactionsPropsType = {
   startDate?: string;
   endDate?: string;
   open: boolean;
+  excludedCategoryIds?: number[];
 };
 
 export type TypeResumeCategoryTransactionsResultType = CommonTransactionDto[];

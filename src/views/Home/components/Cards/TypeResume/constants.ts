@@ -9,6 +9,8 @@ import type { TypeResumeTypeFormType } from "./types";
 export const DEFAULT_TYPE_RESUME_CONFIG: TypeResumeTypeFormType = {
   type: TransactionType.In,
   time: TransactionTypeResumeTime.CurrentMonth,
+  excludedCategories: [],
+  excludedCategoryIds: [],
 };
 
 export const TYPE_RESUME_TRANSACTIONS_LIST_QUERY: QueryParam<CommonTransactionDto> =
