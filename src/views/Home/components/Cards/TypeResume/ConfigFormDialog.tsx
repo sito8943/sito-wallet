@@ -119,7 +119,9 @@ export const ConfigFormDialog = (
       return;
     }
 
-    const availableIds = new Set(parsedCategories.map((category) => category.id));
+    const availableIds = new Set(
+      parsedCategories.map((category) => category.id),
+    );
     const nextExcludedCategoryIds = (excludedCategoryIds ?? []).filter((id) =>
       availableIds.has(id),
     );
@@ -183,7 +185,9 @@ export const ConfigFormDialog = (
           <AutocompleteInput
             value={value ?? []}
             multiple
-            label={t("_entities:transaction.typeResume.excludedCategories.label")}
+            label={t(
+              "_entities:transaction.typeResume.excludedCategories.label",
+            )}
             placeholder={t(
               "_entities:transaction.typeResume.excludedCategories.placeholder",
             )}
