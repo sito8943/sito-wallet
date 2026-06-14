@@ -20,8 +20,19 @@ vi.mock("react-i18next", () => ({
 vi.mock("@sito/dashboard-app", () => ({
   classNames: (...classes: Array<string | false | null | undefined>) =>
     classes.filter(Boolean).join(" "),
-  Actions: ({ actions }: { actions: unknown[] }) => (
-    <div data-testid="actions-count">{actions.length}</div>
+  Actions: ({
+    actions,
+    showTooltips,
+  }: {
+    actions: unknown[];
+    showTooltips?: boolean;
+  }) => (
+    <div
+      data-testid="actions-count"
+      data-show-tooltips={String(showTooltips ?? true)}
+    >
+      {actions.length}
+    </div>
   ),
 }));
 
@@ -39,6 +50,10 @@ afterEach(() => {
   Object.defineProperty(window.navigator, "maxTouchPoints", {
     configurable: true,
     value: 0,
+  });
+  Object.defineProperty(window, "matchMedia", {
+    configurable: true,
+    value: undefined,
   });
 });
 
@@ -145,5 +160,31 @@ describe("ItemCard", () => {
     fireEvent(content, contextMenuEvent);
 
     expect(contextMenuEvent.defaultPrevented).toBe(true);
+  });
+
+  it("disables action tooltips on devices without hover support", () => {
+    Object.defineProperty(window, "matchMedia", {
+      configurable: true,
+      value: vi.fn().mockImplementation((query: string) => ({
+        matches:
+          query === "(hover: hover)" ? false : query === "(pointer: coarse)",
+      })),
+    });
+
+    render(
+      <ItemCard
+        title="Title"
+        name="Edit item"
+        deleted={false}
+        actions={[defaultAction]}
+      >
+        <span>Content</span>
+      </ItemCard>,
+    );
+
+    expect(screen.getByTestId("actions-count")).toHaveAttribute(
+      "data-show-tooltips",
+      "false",
+    );
   });
 });

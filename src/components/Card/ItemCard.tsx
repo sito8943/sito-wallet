@@ -11,7 +11,11 @@ import { Actions, classNames } from "@sito/dashboard-app";
 import { ItemCardTitle } from "./ItemCardTitle";
 import { SwipeToDelete } from "./SwipeToDelete";
 import type { ItemCardPropsType } from "./types.ts";
-import { getDeleteAction, shouldPreventMobileContextMenu } from "./utils";
+import {
+  getDeleteAction,
+  shouldPreventMobileContextMenu,
+  supportsHoverTooltips,
+} from "./utils";
 
 import "./styles.css";
 
@@ -42,6 +46,7 @@ export function ItemCard<TRow extends BaseEntityDto>(
   const touchTimeoutRef = useRef<number | null>(null);
   const longPressTriggeredRef = useRef(false);
   const deleteAction = getDeleteAction(actions);
+  const showActionTooltips = supportsHoverTooltips();
 
   const clearTouchTimeout = useCallback(() => {
     if (touchTimeoutRef.current === null) return;
@@ -151,7 +156,10 @@ export function ItemCard<TRow extends BaseEntityDto>(
           )}
           {children}
         </div>
-        <Actions actions={selectionMode ? [] : actions} />
+        <Actions
+          actions={selectionMode ? [] : actions}
+          showTooltips={showActionTooltips}
+        />
       </div>
     </SwipeToDelete>
   );

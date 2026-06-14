@@ -226,3 +226,9 @@ main,
 .page-main {
   min-height: calc(100vh - 88px);
 }
+
+@media not all and (min-width: 28rem) {
+  .transactions-page .page-main-content {
+    @apply px-0;
+  }
+}

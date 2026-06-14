@@ -1,0 +1,58 @@
+@reference "../../../../styles/variables.css";
+
+.account-slider {
+  @apply w-full flex flex-col gap-2;
+}
+
+/* Horizontal pan is owned by the gesture; vertical scroll still passes through. */
+.account-slider-viewport {
+  @apply w-full overflow-hidden touch-pan-y select-none;
+}
+
+.account-slider-track {
+  @apply flex items-stretch will-change-transform;
+}
+
+.account-slider-track:not(.account-slider-track--dragging) {
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.account-slider-track--dragging {
+  @apply cursor-grabbing;
+}
+
+.account-slider-slide {
+  @apply shrink-0 transition-opacity duration-200;
+}
+
+.account-slider-slide:not(.account-slider-slide--active) {
+  @apply opacity-55;
+}
+
+.account-slider-card {
+  @apply w-full h-44;
+}
+
+.account-slider-toolbar {
+  @apply flex items-center justify-between gap-2 px-1;
+}
+
+.account-slider-dots {
+  @apply flex flex-1 flex-wrap items-center justify-center gap-1.5 pl-10;
+}
+
+.account-slider-dot {
+  @apply h-2 w-2 rounded-full bg-border transition-all duration-200 cursor-pointer;
+}
+
+.account-slider-dot--active {
+  @apply w-4 bg-bg-primary;
+}
+
+.account-slider-filter {
+  @apply !w-10 !h-10 !min-w-10;
+}
+
+.account-slider-sticky {
+  @apply fixed left-0 top-12 z-30 w-full bg-base-light px-4 py-2 flex justify-center;
+}
