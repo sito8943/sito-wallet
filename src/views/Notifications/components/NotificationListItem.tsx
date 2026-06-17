@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { Button, classNames, useTimeAge } from "@sito/dashboard-app";
+import { Button, classNames } from "@sito/dashboard-app";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faWarning } from "@fortawesome/free-solid-svg-icons";
+import { useCalendarTimeAge } from "hooks";
 
 import {
   getNotificationMessage,
@@ -14,7 +15,7 @@ import { isNotificationUnread } from "../utils";
 export function NotificationListItem(props: NotificationListItemPropsType) {
   const { notification, isMarkingRead, onMarkAsRead } = props;
   const { t, i18n } = useTranslation();
-  const { timeAge } = useTimeAge();
+  const { timeAge } = useCalendarTimeAge();
 
   const unread = isNotificationUnread(notification);
   const createdAt = new Date(notification.createdAt);

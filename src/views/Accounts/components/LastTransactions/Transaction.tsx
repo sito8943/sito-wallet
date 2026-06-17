@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
-import { useTimeAge } from "@sito/dashboard-app";
+import { useCalendarTimeAge } from "hooks";
 
 // lib
 import {
@@ -25,7 +25,7 @@ export const Transaction = (props: TransactionPropsType) => {
 
   const { description, auto, date, amount, currency } = props;
 
-  const { timeAge } = useTimeAge();
+  const { timeAge } = useCalendarTimeAge();
 
   const parsedDescription = useMemo(() => {
     if (!description?.length) return t("_entities:base.description.empty");
@@ -60,6 +60,18 @@ export const Transaction = (props: TransactionPropsType) => {
     [transactionCategories],
   );
 
+  const dateLabel = useMemo(() => {
+    if (!date) return "";
+
+    const parsedDate = new Date(date);
+
+    if (Number.isNaN(parsedDate.getTime())) {
+      return date;
+    }
+
+    return timeAge(parsedDate);
+  }, [date, timeAge]);
+
   const isIn = useMemo(
     () => primaryCategory?.type === TransactionType.In,
     [primaryCategory],
@@ -80,9 +92,7 @@ export const Transaction = (props: TransactionPropsType) => {
           ) : (
             <p>{parsedCategoryName}</p>
           )}
-          <p className="lowercase">
-            {date ? `- ${timeAge(new Date(date))}` : ""}
-          </p>
+          <p className="lowercase">{dateLabel ? `- ${dateLabel}` : ""}</p>
         </div>
         <p className="account-last-transaction-description">
           {parsedDescription}

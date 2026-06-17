@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useTimeAge } from "@sito/dashboard-app";
+import { useCalendarTimeAge } from "hooks";
 
 import { Currency } from "../../../../Currencies";
 
@@ -12,7 +12,7 @@ export const TypeResumeTransactionItem = (
 ) => {
   const { transaction, currencyName, currencySymbol } = props;
   const { t } = useTranslation();
-  const { timeAge } = useTimeAge();
+  const { timeAge } = useCalendarTimeAge();
 
   const parsedDescription = useMemo(() => {
     if (!transaction.description?.length) {
