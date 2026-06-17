@@ -106,7 +106,7 @@
 }
 
 .weekly-card {
-  @apply !h-auto !py-2;
+  @apply !h-auto !min-h-0 !min-w-0 !py-2;
 }
 
 .weekly-card-button {

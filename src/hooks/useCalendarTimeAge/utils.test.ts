@@ -43,4 +43,3 @@ describe("formatCalendarTimeAge", () => {
     ).toBe("Hace 2 horas");
   });
 });
-

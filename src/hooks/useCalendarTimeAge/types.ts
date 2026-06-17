@@ -13,4 +13,3 @@ export interface FormatCalendarTimeAgeOptionsType {
   labels: CalendarTimeAgeLabelsType;
   now?: Date;
 }
-

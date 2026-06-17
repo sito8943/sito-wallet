@@ -86,4 +86,3 @@ export const formatCalendarTimeAge = (
 
   return formatAbsoluteDate(date, language);
 };
-
