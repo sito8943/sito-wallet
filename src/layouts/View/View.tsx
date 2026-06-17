@@ -119,6 +119,7 @@ export function View() {
             <BottomNavigation
               items={bottomNavigationItems}
               isItemActive={isBottomNavItemActive}
+              className="!bottom-0"
             />
           }
           extras={<Tooltip id="tooltip" />}

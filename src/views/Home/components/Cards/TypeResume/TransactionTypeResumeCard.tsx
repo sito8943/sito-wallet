@@ -123,9 +123,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
     transactionCategories.data,
   ]);
   const oppositeExcludedCategories = useMemo(() => {
-    const excludedIds = new Set(
-      resolvedFormConfig.oppositeExcludedCategoryIds,
-    );
+    const excludedIds = new Set(resolvedFormConfig.oppositeExcludedCategoryIds);
 
     return (transactionCategories.data ?? [])
       .filter(

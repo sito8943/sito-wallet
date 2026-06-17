@@ -19,9 +19,7 @@ import {
 import { AddDashboardCardDialog } from "../components";
 import { resolveCardConfig } from "../components/Cards/utils";
 import type { CardConfigOverrideType } from "../components/Cards/types";
-import type {
-  TypeResumeBatchCardResultType,
-} from "../components/Cards/TypeResume/types";
+import type { TypeResumeBatchCardResultType } from "../components/Cards/TypeResume/types";
 import {
   parseFormConfig,
   toTypeResumeBatchRequestItem,
