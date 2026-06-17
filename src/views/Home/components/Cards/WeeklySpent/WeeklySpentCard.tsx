@@ -14,10 +14,7 @@ import { resolveCardConfig } from "../utils";
 import "../styles.css";
 
 // types
-import type {
-  WeeklySpentPropsType,
-  FilterWeeklyConfigType,
-} from "./types";
+import type { WeeklySpentPropsType, FilterWeeklyConfigType } from "./types";
 import type { CardConfigOverrideType } from "../types";
 
 // utils

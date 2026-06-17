@@ -2,11 +2,7 @@ import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import {
-  AutocompleteInput,
-  CheckInput,
-  FormDialog,
-} from "@sito/dashboard-app";
+import { AutocompleteInput, CheckInput, FormDialog } from "@sito/dashboard-app";
 
 // hooks
 import { useAccountsCommon } from "../../../../../hooks/queries/useAccountsCommon";

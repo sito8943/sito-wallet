@@ -24,9 +24,7 @@ export const formToDto = (
   };
 };
 
-export const parseFormConfig = (
-  cfg?: string | null,
-): WeeklySpentFormType => {
+export const parseFormConfig = (cfg?: string | null): WeeklySpentFormType => {
   try {
     return {
       ...defaultConfig,

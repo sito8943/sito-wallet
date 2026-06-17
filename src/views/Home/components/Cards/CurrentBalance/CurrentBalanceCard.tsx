@@ -37,11 +37,7 @@ import type { CurrentBalancePropsType } from "./types";
 import type { CardConfigOverrideType } from "../types";
 
 // utils
-import {
-  formToDto,
-  getActiveFiltersCount,
-  parseFormConfig,
-} from "./utils";
+import { formToDto, getActiveFiltersCount, parseFormConfig } from "./utils";
 
 // providers
 import { useManager } from "providers";

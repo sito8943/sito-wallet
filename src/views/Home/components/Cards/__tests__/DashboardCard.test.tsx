@@ -57,13 +57,7 @@ vi.mock("@sito/dashboard-app", () => ({
   Loading: ({ className }: { className?: string }) => (
     <div data-testid="loading" className={className} />
   ),
-  Badge: ({
-    count,
-    className,
-  }: {
-    count: number;
-    className?: string;
-  }) => (
+  Badge: ({ count, className }: { count: number; className?: string }) => (
     <div data-testid="badge" data-count={count} className={className}>
       {count}
     </div>

@@ -199,7 +199,10 @@ export const SubscriptionForecastCard = (
                   </p>
                 ) : (
                   totals.map((total, index) => {
-                    const currency = resolveCurrency(currencies, total.currency);
+                    const currency = resolveCurrency(
+                      currencies,
+                      total.currency,
+                    );
                     return (
                       <p
                         key={`${total.currency ?? "none"}-${index}`}
