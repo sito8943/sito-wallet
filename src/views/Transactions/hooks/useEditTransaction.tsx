@@ -58,6 +58,12 @@ export function useEditTransaction(): UseActionDialog<
         queryClient.invalidateQueries({
           queryKey: [...TransactionsQueryKeys.all().queryKey, "typeResume"],
         }),
+        queryClient.invalidateQueries({
+          queryKey: [
+            ...TransactionsQueryKeys.all().queryKey,
+            "typeResumeBatch",
+          ],
+        }),
       ]);
     },
     title: t("_pages:transactions.forms.edit"),

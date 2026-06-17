@@ -18,7 +18,10 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
     clearAccount,
     time,
     excludedCategories = [],
+    oppositeExcludedCategories = [],
+    showOppositeType,
     clearExcludedCategories,
+    clearOppositeExcludedCategories,
   } = props;
 
   const { t } = useTranslation();
@@ -47,6 +50,16 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
           text={t("_entities:transaction.typeResume.excludedCategories.label")}
           items={excludedCategories}
           onClearFilter={() => clearExcludedCategories()}
+        />
+      )}
+      {showOppositeType && !!oppositeExcludedCategories.length && (
+        <ArrayChip
+          id="oppositeExcludedCategories"
+          text={t(
+            "_entities:transaction.typeResume.oppositeExcludedCategories.label",
+          )}
+          items={oppositeExcludedCategories}
+          onClearFilter={() => clearOppositeExcludedCategories()}
         />
       )}
       <Chip

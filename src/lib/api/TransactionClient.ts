@@ -16,6 +16,8 @@ import type {
   FilterTransactionDto,
   AddTransactionDto,
   TransactionTypeResumeDto,
+  TransactionTypeResumeBatchDto,
+  TransactionTypeResumeBatchRequestDto,
   FilterTransactionTypeResumeDto,
   TransactionTypeGroupedDto,
   FilterTransactionGroupedByTypeDto,
@@ -34,6 +36,17 @@ import { config } from "../../config";
 type UnknownRangeValue = {
   start?: unknown;
   end?: unknown;
+};
+
+type TransactionTypeResumeBatchTransportItem = Omit<
+  TransactionTypeResumeBatchRequestDto["items"][number],
+  "type"
+> & {
+  type: "IN" | "OUT";
+};
+
+type TransactionTypeResumeBatchTransportRequest = {
+  items: TransactionTypeResumeBatchTransportItem[];
 };
 
 const TRASH_FILTER_KEYS = new Set(["softdeletescope", "status", "deletedat"]);
@@ -192,6 +205,26 @@ export default class TransactionClient extends BaseClient<
       builtUrl,
       Methods.GET,
       undefined,
+      {
+        ...this.api.defaultTokenAcquirer(),
+      },
+    );
+  }
+
+  async getTypeResumeBatch(
+    request: TransactionTypeResumeBatchRequestDto,
+  ): Promise<TransactionTypeResumeBatchDto> {
+    const body: TransactionTypeResumeBatchTransportRequest = {
+      items: request.items.map((item) => ({
+        ...item,
+        type: this.parseTransactionTypeResumeType(item.type),
+      })),
+    };
+
+    return await this.api.doQuery<TransactionTypeResumeBatchDto>(
+      `${Tables.Transactions}/type-resume/batch`,
+      Methods.POST,
+      body,
       {
         ...this.api.defaultTokenAcquirer(),
       },

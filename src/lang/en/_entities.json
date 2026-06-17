@@ -170,6 +170,10 @@
       "excludedCategories": {
         "label": "Excluded categories",
         "placeholder": "Select categories to exclude"
+      },
+      "oppositeExcludedCategories": {
+        "label": "Opposite type excluded categories",
+        "placeholder": "Select opposite type categories to exclude"
       }
     }
   },

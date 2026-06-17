@@ -8,6 +8,8 @@ import type {
   TransactionType,
   TransactionTypeResumeCategoryDto,
   TransactionTypeResumeTime,
+  TransactionTypeResumeDto,
+  TransactionTypeResumeBatchRequestItemDto,
   UpdateDashboardCardConfigDto,
 } from "lib";
 import type { DashboardCardItemPropsType } from "../types";
@@ -17,7 +19,20 @@ export type {
   DashboardCardDragHandlePropsType,
 } from "../types";
 
-export type TransactionTypePropsType = DashboardCardItemPropsType;
+export type TypeResumeBatchCardResultType = {
+  primary?: TransactionTypeResumeDto;
+  opposite?: TransactionTypeResumeDto;
+  isLoading: boolean;
+};
+
+export interface TransactionTypePropsType extends DashboardCardItemPropsType {
+  batchResult?: TypeResumeBatchCardResultType;
+  onTypeResumeConfigSaved?: (
+    cardId: number,
+    baseConfig: string | null | undefined,
+    savedConfig: string,
+  ) => void;
+}
 
 export interface TypeResumeTypeFormType
   extends
@@ -28,6 +43,8 @@ export interface TypeResumeTypeFormType
   time: TransactionTypeResumeTime;
   excludedCategories: CommonTransactionCategoryDto[];
   excludedCategoryIds: number[];
+  oppositeExcludedCategories: CommonTransactionCategoryDto[];
+  oppositeExcludedCategoryIds: number[];
   showFiltersAsBadge: boolean;
   showOppositeType: boolean;
 }
@@ -45,7 +62,10 @@ export type ActiveFiltersPropsType = {
   type: TransactionType;
   time: TransactionTypeResumeTime;
   excludedCategories?: CommonTransactionCategoryDto[];
+  oppositeExcludedCategories?: CommonTransactionCategoryDto[];
+  showOppositeType: boolean;
   clearExcludedCategories: () => void;
+  clearOppositeExcludedCategories: () => void;
 };
 
 export type TypeResumeCategoriesDialogPropsType = {
@@ -102,3 +122,8 @@ export type TypeResumeRowPropsType = {
   currencySymbol?: string;
   compact?: boolean;
 };
+
+export type ToTypeResumeBatchRequestItemType = (
+  cardId: number,
+  data: TypeResumeTypeFormType,
+) => TransactionTypeResumeBatchRequestItemDto;

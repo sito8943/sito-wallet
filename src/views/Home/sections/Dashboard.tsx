@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 // @sito/dashboard-app
 import {
@@ -17,12 +17,25 @@ import {
   BalanceHistoryCard,
 } from "../components/Cards";
 import { AddDashboardCardDialog } from "../components";
+import { resolveCardConfig } from "../components/Cards/utils";
+import type { CardConfigOverrideType } from "../components/Cards/types";
+import type {
+  TypeResumeBatchCardResultType,
+} from "../components/Cards/TypeResume/types";
+import {
+  parseFormConfig,
+  toTypeResumeBatchRequestItem,
+} from "../components/Cards/TypeResume/utils";
 
 // styles
 import "./styles.css";
 
 // hooks
-import { DashboardsQueryKeys, useDashboardsList } from "hooks";
+import {
+  DashboardsQueryKeys,
+  useDashboardsList,
+  useTransactionTypeResumeBatch,
+} from "hooks";
 import { useAddDashboardCard } from "../hooks";
 
 // lib
@@ -63,6 +76,64 @@ export const Dashboard = () => {
       isDashboardCardEnabled(item.type, subscriptionsEnabled),
     );
   }, [data, subscriptionsEnabled]);
+  const [typeResumeConfigOverrides, setTypeResumeConfigOverrides] = useState<
+    Record<number, CardConfigOverrideType>
+  >({});
+  const handleTypeResumeConfigSaved = useCallback(
+    (
+      cardId: number,
+      baseConfig: string | null | undefined,
+      savedConfig: string,
+    ) => {
+      setTypeResumeConfigOverrides((currentValue) => ({
+        ...currentValue,
+        [cardId]: { baseConfig, savedConfig },
+      }));
+    },
+    [],
+  );
+  const typeResumeBatchItems = useMemo(
+    () =>
+      visibleItems
+        .filter((item) => item.type === DashboardCardType.TypeResume)
+        .map((item) => {
+          const effectiveConfig = resolveCardConfig(
+            item.config,
+            typeResumeConfigOverrides[item.id] ?? null,
+          );
+          const formConfig = parseFormConfig(effectiveConfig);
+
+          return toTypeResumeBatchRequestItem(item.id, formConfig);
+        }),
+    [typeResumeConfigOverrides, visibleItems],
+  );
+  const typeResumeBatch = useTransactionTypeResumeBatch(typeResumeBatchItems);
+  const typeResumeBatchItemsByCardId = useMemo(
+    () =>
+      new Map(
+        (typeResumeBatch.data?.items ?? []).map((item) => [item.cardId, item]),
+      ),
+    [typeResumeBatch.data?.items],
+  );
+  const typeResumeBatchResultsByCardId = useMemo(() => {
+    const batchResults = new Map<number, TypeResumeBatchCardResultType>();
+
+    typeResumeBatchItems.forEach((item) => {
+      const responseItem = typeResumeBatchItemsByCardId.get(item.cardId);
+
+      batchResults.set(item.cardId, {
+        primary: responseItem?.primary,
+        opposite: responseItem?.opposite,
+        isLoading: typeResumeBatch.isLoading,
+      });
+    });
+
+    return batchResults;
+  }, [
+    typeResumeBatch.isLoading,
+    typeResumeBatchItems,
+    typeResumeBatchItemsByCardId,
+  ]);
 
   const dashboardReorder = useDashboardReorder({
     items: visibleItems,
@@ -83,6 +154,8 @@ export const Dashboard = () => {
                   void deleteDashboardCard.onClick([item.id]);
                 }}
                 dragHandleProps={dragHandleProps}
+                batchResult={typeResumeBatchResultsByCardId.get(item.id)}
+                onTypeResumeConfigSaved={handleTypeResumeConfigSaved}
                 key={item.id}
                 {...item}
               />
@@ -131,7 +204,12 @@ export const Dashboard = () => {
           );
       }
     });
-  }, [dashboardReorder, deleteDashboardCard]);
+  }, [
+    dashboardReorder,
+    deleteDashboardCard,
+    handleTypeResumeConfigSaved,
+    typeResumeBatchResultsByCardId,
+  ]);
 
   const openAddDashboardRef = useRef(addDashboardCard.openDialog);
   useEffect(() => {
@@ -144,7 +222,7 @@ export const Dashboard = () => {
   const hasCards = (cards?.length ?? 0) > 0;
 
   return !error ? (
-    <section id="dashboard">
+    <section id="dashboard" className="dashboard-section">
       <ul className={classNames("dashboard", !hasCards && "empty")}>
         {cards}
         <li className="dashboard-item dashboard-item--add">

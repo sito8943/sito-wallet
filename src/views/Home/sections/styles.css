@@ -1,7 +1,11 @@
 @reference "../../../styles/variables.css";
 
+.dashboard-section {
+  @apply w-full;
+}
+
 .dashboard {
-  @apply gap-5 p-5 m-auto columns-3 max-sm:pb-5 max-xl:columns-2 max-md:columns-1;
+  @apply w-full box-border gap-5 p-5 m-auto columns-3 max-sm:pb-5 max-xl:columns-2 max-md:columns-1;
 }
 
 .dashboard.empty {

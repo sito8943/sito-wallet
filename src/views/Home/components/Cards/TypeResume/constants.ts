@@ -11,6 +11,8 @@ export const DEFAULT_TYPE_RESUME_CONFIG: TypeResumeTypeFormType = {
   time: TransactionTypeResumeTime.CurrentMonth,
   excludedCategories: [],
   excludedCategoryIds: [],
+  oppositeExcludedCategories: [],
+  oppositeExcludedCategoryIds: [],
   showFiltersAsBadge: false,
   showOppositeType: false,
 };

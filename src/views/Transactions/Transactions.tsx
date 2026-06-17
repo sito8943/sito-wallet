@@ -200,6 +200,12 @@ export function Transactions() {
         queryClient.invalidateQueries({
           queryKey: [...TransactionsQueryKeys.all().queryKey, "typeResume"],
         }),
+        queryClient.invalidateQueries({
+          queryKey: [
+            ...TransactionsQueryKeys.all().queryKey,
+            "typeResumeBatch",
+          ],
+        }),
       ]);
     },
     ...TransactionsQueryKeys.all(),
@@ -222,6 +228,12 @@ export function Transactions() {
         }),
         queryClient.invalidateQueries({
           queryKey: [...TransactionsQueryKeys.all().queryKey, "typeResume"],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [
+            ...TransactionsQueryKeys.all().queryKey,
+            "typeResumeBatch",
+          ],
         }),
       ]);
     },

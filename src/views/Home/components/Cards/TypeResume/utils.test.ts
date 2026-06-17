@@ -7,6 +7,7 @@ import {
   getOppositeTransactionType,
   normalizeExcludedCategoryIds,
   parseFormConfig,
+  toTypeResumeBatchRequestItem,
   toTypeResumeFilterConfig,
 } from "./utils";
 
@@ -32,6 +33,8 @@ describe("TypeResume utils", () => {
       time: TransactionTypeResumeTime.CurrentWeek,
       excludedCategoryIds: [],
       excludedCategories: [],
+      oppositeExcludedCategoryIds: [],
+      oppositeExcludedCategories: [],
       showOppositeType: false,
     });
   });
@@ -53,6 +56,8 @@ describe("TypeResume utils", () => {
         time: TransactionTypeResumeTime.CurrentMonth,
         excludedCategories: [],
         excludedCategoryIds: [9, 3, 9],
+        oppositeExcludedCategories: [],
+        oppositeExcludedCategoryIds: [],
         showFiltersAsBadge: false,
         showOppositeType: false,
       }),
@@ -82,6 +87,8 @@ describe("TypeResume utils", () => {
           },
         ],
         excludedCategoryIds: [8, 8, 3],
+        oppositeExcludedCategories: [],
+        oppositeExcludedCategoryIds: [10, 10, 12],
         showFiltersAsBadge: false,
         showOppositeType: true,
       }),
@@ -92,9 +99,35 @@ describe("TypeResume utils", () => {
         account: { id: 4, name: "Wallet", currency: null },
         type: TransactionType.In,
         time: TransactionTypeResumeTime.CurrentMonth,
+        showFiltersAsBadge: false,
         showOppositeType: true,
         excludedCategoryIds: [3, 8],
+        oppositeExcludedCategoryIds: [10, 12],
       }),
+    });
+  });
+
+  it("builds a batch request item with opposite exclusions", () => {
+    expect(
+      toTypeResumeBatchRequestItem(44, {
+        account: { id: 4, name: "Wallet", currency: null },
+        type: TransactionType.In,
+        time: TransactionTypeResumeTime.CurrentMonth,
+        excludedCategories: [],
+        excludedCategoryIds: [9, 3, 9],
+        oppositeExcludedCategories: [],
+        oppositeExcludedCategoryIds: [12, 10, 10],
+        showFiltersAsBadge: false,
+        showOppositeType: true,
+      }),
+    ).toEqual({
+      cardId: 44,
+      accountId: 4,
+      type: TransactionType.In,
+      time: TransactionTypeResumeTime.CurrentMonth,
+      excludedCategoryIds: [3, 9],
+      includeOpposite: true,
+      oppositeExcludedCategoryIds: [10, 12],
     });
   });
 });

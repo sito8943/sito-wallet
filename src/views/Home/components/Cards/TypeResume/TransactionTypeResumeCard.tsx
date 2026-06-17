@@ -14,6 +14,7 @@ import {
   formToDto,
   getActiveFiltersCount,
   getOppositeTransactionType,
+  normalizeExcludedCategoryIds,
   parseFormConfig,
   toTypeResumeFilterConfig,
 } from "./utils";
@@ -39,7 +40,16 @@ import { useTypeResumeDialog } from "./useTypeResumeDialog";
 import type { CardConfigOverrideType } from "../types";
 
 export const TransactionTypeResume = (props: TransactionTypePropsType) => {
-  const { title, config, id, user, onDelete, dragHandleProps } = props;
+  const {
+    title,
+    config,
+    id,
+    user,
+    onDelete,
+    dragHandleProps,
+    batchResult,
+    onTypeResumeConfigSaved,
+  } = props;
   const { t } = useTranslation();
   const typeResumeDialog = useTypeResumeDialog();
   const [configOverride, setConfigOverride] =
@@ -62,15 +72,31 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
     () => getOppositeTransactionType(resolvedFormConfig.type),
     [resolvedFormConfig.type],
   );
+  const oppositeExcludedCategoryIds = useMemo(
+    () =>
+      normalizeExcludedCategoryIds(
+        resolvedFormConfig.oppositeExcludedCategoryIds,
+      ),
+    [resolvedFormConfig.oppositeExcludedCategoryIds],
+  );
 
-  const { data, isLoading } = useTransactionTypeResume({ ...filterConfig });
+  const isBatchResultEnabled = !!batchResult;
+  const typeResume = useTransactionTypeResume({
+    ...filterConfig,
+    enabled: !isBatchResultEnabled,
+  });
   const oppositeTypeResume = useTransactionTypeResume({
     ...filterConfig,
     type: oppositeType,
-    enabled: resolvedFormConfig.showOppositeType,
+    ...(oppositeExcludedCategoryIds.length
+      ? { excludedCategoryIds: oppositeExcludedCategoryIds }
+      : {}),
+    enabled: !isBatchResultEnabled && resolvedFormConfig.showOppositeType,
   });
   const transactionCategories = useTransactionCategoriesCommon();
 
+  const data = batchResult?.primary ?? typeResume.data;
+  const isLoading = batchResult?.isLoading ?? typeResume.isLoading;
   const categories = data?.categories ?? [];
   const selectedAccount = data?.account ?? resolvedFormConfig.account ?? null;
   const currencyName = selectedAccount?.currency?.name;
@@ -96,12 +122,37 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
     t,
     transactionCategories.data,
   ]);
+  const oppositeExcludedCategories = useMemo(() => {
+    const excludedIds = new Set(
+      resolvedFormConfig.oppositeExcludedCategoryIds,
+    );
+
+    return (transactionCategories.data ?? [])
+      .filter(
+        (category) =>
+          excludedIds.has(category.id) &&
+          Number(category.type) === Number(oppositeType),
+      )
+      .map((category) => ({
+        ...category,
+        name: category.auto
+          ? t("_entities:transactionCategory.name.init")
+          : category.name,
+      }));
+  }, [
+    oppositeType,
+    resolvedFormConfig.oppositeExcludedCategoryIds,
+    t,
+    transactionCategories.data,
+  ]);
   const addTransaction = useAddTransaction({
     account: selectedAccount,
   });
-  const oppositeTotal = oppositeTypeResume.data?.total ?? 0;
+  const oppositeTotal =
+    batchResult?.opposite?.total ?? oppositeTypeResume.data?.total ?? 0;
   const isOppositeLoading =
-    resolvedFormConfig.showOppositeType && oppositeTypeResume.isLoading;
+    resolvedFormConfig.showOppositeType &&
+    (batchResult?.isLoading ?? oppositeTypeResume.isLoading);
 
   return (
     <>
@@ -116,9 +167,10 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         loadingOverlay={isLoading}
         parseFormConfig={parseFormConfig}
         formToDto={(data) => formToDto(data)}
-        onConfigSaved={(savedConfig) =>
-          setConfigOverride({ baseConfig: config, savedConfig })
-        }
+        onConfigSaved={(savedConfig) => {
+          setConfigOverride({ baseConfig: config, savedConfig });
+          onTypeResumeConfigSaved?.(id, config, savedConfig);
+        }}
         ConfigFormDialog={ConfigFormDialog}
         shouldShowActiveFiltersBadge={(formConfig) =>
           !!formConfig.showFiltersAsBadge
@@ -130,12 +182,21 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
             type={formConfig.type}
             time={formConfig.time}
             excludedCategories={excludedCategories}
+            oppositeExcludedCategories={oppositeExcludedCategories}
+            showOppositeType={!!formConfig.showOppositeType}
             clearAccount={() => onSubmit({ ...formConfig, account: undefined })}
             clearExcludedCategories={() =>
               onSubmit({
                 ...formConfig,
                 excludedCategories: [],
                 excludedCategoryIds: [],
+              })
+            }
+            clearOppositeExcludedCategories={() =>
+              onSubmit({
+                ...formConfig,
+                oppositeExcludedCategories: [],
+                oppositeExcludedCategoryIds: [],
               })
             }
           />

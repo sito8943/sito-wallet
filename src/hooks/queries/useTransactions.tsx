@@ -4,6 +4,7 @@ export { TransactionsQueryKeys } from "./queryKeys/transactionsQueryKeys";
 export { useTransactionsList } from "./useTransactionsList";
 export { useInfiniteTransactionsList } from "./useInfiniteTransactionsList";
 export { useTransactionTypeResume } from "./useTransactionTypeResume";
+export { useTransactionTypeResumeBatch } from "./useTransactionTypeResumeBatch";
 export { useWeekly } from "./useWeekly";
 export { useTransactionsGroupedByType } from "./useTransactionsGroupedByType";
 export { useTransactionsCommon } from "./useTransactionsCommon";

@@ -8,6 +8,7 @@ const mockDefaultTokenAcquirer = vi.fn(() => ({
 vi.mock("@sito/dashboard-app", () => ({
   Methods: {
     GET: "GET",
+    POST: "POST",
   },
   parseQueries: vi.fn(
     (
@@ -148,6 +149,60 @@ describe("TransactionClient", () => {
     expect(builtUrl).toContain("excludedCategoryIds=8");
     expect(builtUrl).toContain("excludedCategoryIds=7");
     expect(builtUrl).not.toContain("accountId=");
+  });
+
+  it("calls getTypeResumeBatch with request body on POST", async () => {
+    mockDoQuery.mockResolvedValue({
+      items: [
+        {
+          cardId: 1,
+          primary: {
+            total: 10,
+            transactionType: 1,
+            account: null,
+            categorizedTotal: 10,
+            duplicatedAmount: 0,
+            categories: [],
+          },
+        },
+      ],
+    });
+
+    const client = new TransactionClient();
+    const request = {
+      items: [
+        {
+          cardId: 1,
+          type: 1,
+          time: "currentMonth",
+          accountId: 4,
+          excludedCategoryIds: [3, 9],
+          includeOpposite: true,
+          oppositeExcludedCategoryIds: [10],
+        },
+      ],
+    };
+
+    await client.getTypeResumeBatch(request);
+
+    expect(mockDoQuery).toHaveBeenCalledWith(
+      "transactions/type-resume/batch",
+      "POST",
+      {
+        items: [
+          {
+            cardId: 1,
+            accountId: 4,
+            type: "IN",
+            time: "currentMonth",
+            excludedCategoryIds: [3, 9],
+            includeOpposite: true,
+            oppositeExcludedCategoryIds: [10],
+          },
+        ],
+      },
+      { Authorization: "Bearer token" },
+    );
   });
 
   it("calls getCommon without request body on GET and includes sorting", async () => {

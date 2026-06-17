@@ -32,6 +32,7 @@ import type {
 
 // utils
 import { icons } from "../../../../Transactions/components/utils";
+import { getOppositeTransactionType } from "./utils";
 
 import "../styles.css";
 
@@ -61,6 +62,10 @@ export const ConfigFormDialog = (
 
   const type = useWatch({ control, name: "type" });
   const time = useWatch({ control, name: "time" });
+  const showOppositeType = useWatch({
+    control,
+    name: "showOppositeType",
+  }) as boolean | undefined;
   const excludedCategoryIds = useWatch({
     control,
     name: "excludedCategoryIds",
@@ -68,6 +73,14 @@ export const ConfigFormDialog = (
   const excludedCategories = useWatch({
     control,
     name: "excludedCategories",
+  }) as CommonTransactionCategoryDto[] | undefined;
+  const oppositeExcludedCategoryIds = useWatch({
+    control,
+    name: "oppositeExcludedCategoryIds",
+  }) as number[] | undefined;
+  const oppositeExcludedCategories = useWatch({
+    control,
+    name: "oppositeExcludedCategories",
   }) as CommonTransactionCategoryDto[] | undefined;
 
   const haveSameIds = (
@@ -91,6 +104,13 @@ export const ConfigFormDialog = (
 
   const { data: accounts } = useAccountsCommon();
   const transactionCategories = useTransactionCategoriesCommon();
+  const oppositeType = useMemo(
+    () =>
+      type === undefined
+        ? undefined
+        : getOppositeTransactionType(Number(type) as TransactionType),
+    [type],
+  );
 
   const parsedCategories = useMemo(
     () =>
@@ -105,11 +125,34 @@ export const ConfigFormDialog = (
     [t, transactionCategories.data, type],
   );
 
+  const parsedOppositeCategories = useMemo(
+    () =>
+      (transactionCategories.data ?? [])
+        .filter(
+          (category) =>
+            oppositeType !== undefined &&
+            Number(category.type) === Number(oppositeType),
+        )
+        .map((category) => ({
+          ...category,
+          name: category.auto
+            ? t("_entities:transactionCategory.name.init")
+            : category.name,
+        })),
+    [oppositeType, t, transactionCategories.data],
+  );
+
   useEffect(() => {
     if (setValue && excludedCategoryIds === undefined) {
       setValue("excludedCategoryIds", []);
     }
   }, [excludedCategoryIds, setValue]);
+
+  useEffect(() => {
+    if (setValue && oppositeExcludedCategoryIds === undefined) {
+      setValue("oppositeExcludedCategoryIds", []);
+    }
+  }, [oppositeExcludedCategoryIds, setValue]);
 
   useEffect(() => {
     if (
@@ -150,6 +193,60 @@ export const ConfigFormDialog = (
     setValue,
     transactionCategories.data,
     type,
+  ]);
+
+  useEffect(() => {
+    if (
+      !setValue ||
+      transactionCategories.data === undefined ||
+      oppositeType === undefined
+    ) {
+      return;
+    }
+
+    if (!showOppositeType) {
+      if ((oppositeExcludedCategoryIds ?? []).length > 0) {
+        setValue("oppositeExcludedCategoryIds", []);
+      }
+      if ((oppositeExcludedCategories ?? []).length > 0) {
+        setValue("oppositeExcludedCategories", []);
+      }
+      return;
+    }
+
+    const availableIds = new Set(
+      parsedOppositeCategories.map((category) => category.id),
+    );
+    const nextExcludedCategoryIds = (oppositeExcludedCategoryIds ?? []).filter(
+      (id) => availableIds.has(id),
+    );
+
+    if (
+      !haveSameIds(nextExcludedCategoryIds, oppositeExcludedCategoryIds ?? [])
+    ) {
+      setValue("oppositeExcludedCategoryIds", nextExcludedCategoryIds);
+    }
+
+    const nextExcludedCategories = parsedOppositeCategories.filter((category) =>
+      nextExcludedCategoryIds.includes(category.id),
+    );
+
+    if (
+      !haveSameIds(
+        nextExcludedCategories.map((category) => category.id),
+        (oppositeExcludedCategories ?? []).map((category) => category.id),
+      )
+    ) {
+      setValue("oppositeExcludedCategories", nextExcludedCategories);
+    }
+  }, [
+    oppositeExcludedCategories,
+    oppositeExcludedCategoryIds,
+    oppositeType,
+    parsedOppositeCategories,
+    setValue,
+    showOppositeType,
+    transactionCategories.data,
   ]);
 
   return (
@@ -210,6 +307,39 @@ export const ConfigFormDialog = (
           />
         )}
       />
+      {showOppositeType ? (
+        <Controller
+          control={control}
+          name="oppositeExcludedCategories"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <AutocompleteInput
+              value={value ?? []}
+              multiple
+              label={t(
+                "_entities:transaction.typeResume.oppositeExcludedCategories.label",
+              )}
+              placeholder={t(
+                "_entities:transaction.typeResume.oppositeExcludedCategories.placeholder",
+              )}
+              autoComplete={`${Tables.Transactions}-${t(
+                "_entities:transaction.typeResume.oppositeExcludedCategories.label",
+              )}`}
+              onChange={(nextValue) => {
+                const nextCategories =
+                  (nextValue as CommonTransactionCategoryDto[] | null) ?? [];
+                onChange(nextCategories);
+                setValue?.(
+                  "oppositeExcludedCategoryIds",
+                  nextCategories.map((category) => category.id),
+                );
+              }}
+              options={parsedOppositeCategories}
+              containerClassName="dashboard-card-autocomplete-full"
+              {...rest}
+            />
+          )}
+        />
+      ) : null}
       <div className="dashboard-card-select-container">
         <Controller
           control={control}

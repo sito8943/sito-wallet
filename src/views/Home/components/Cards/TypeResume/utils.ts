@@ -2,6 +2,7 @@ import type { UpdateDashboardCardConfigDto } from "lib";
 import { TransactionType, TransactionTypeResumeTime } from "lib";
 import type {
   FilterTypeResumeConfigType,
+  ToTypeResumeBatchRequestItemType,
   TypeResumeTypeFormType,
 } from "./types";
 import { DEFAULT_TYPE_RESUME_CONFIG } from "./constants";
@@ -40,6 +41,10 @@ export const parseFormConfig = (
       excludedCategoryIds: normalizeExcludedCategoryIds(
         parsed.excludedCategoryIds,
       ),
+      oppositeExcludedCategories: [],
+      oppositeExcludedCategoryIds: normalizeExcludedCategoryIds(
+        parsed.oppositeExcludedCategoryIds,
+      ),
       showFiltersAsBadge:
         (parsed.showFiltersAsBadge as boolean | undefined) ??
         DEFAULT_TYPE_RESUME_CONFIG.showFiltersAsBadge,
@@ -55,10 +60,20 @@ export const parseFormConfig = (
 
 export const getActiveFiltersCount = (
   formConfig: TypeResumeTypeFormType,
-): number =>
-  2 +
-  (formConfig.account ? 1 : 0) +
-  ((formConfig.excludedCategoryIds?.length ?? 0) > 0 ? 1 : 0);
+): number => {
+  const hasExcludedCategories =
+    (formConfig.excludedCategoryIds?.length ?? 0) > 0;
+  const hasOppositeExcludedCategories =
+    formConfig.showOppositeType &&
+    (formConfig.oppositeExcludedCategoryIds?.length ?? 0) > 0;
+
+  return (
+    2 +
+    (formConfig.account ? 1 : 0) +
+    (hasExcludedCategories ? 1 : 0) +
+    (hasOppositeExcludedCategories ? 1 : 0)
+  );
+};
 
 export const getOppositeTransactionType = (
   type: TransactionType,
@@ -80,11 +95,33 @@ export const toTypeResumeFilterConfig = (
   };
 };
 
+export const toTypeResumeBatchRequestItem: ToTypeResumeBatchRequestItemType = (
+  cardId,
+  data,
+) => {
+  const filterConfig = toTypeResumeFilterConfig(data);
+  const oppositeExcludedCategoryIds = normalizeExcludedCategoryIds(
+    data.oppositeExcludedCategoryIds,
+  );
+
+  return {
+    cardId,
+    ...filterConfig,
+    includeOpposite: !!data.showOppositeType,
+    ...(data.showOppositeType && oppositeExcludedCategoryIds.length
+      ? { oppositeExcludedCategoryIds }
+      : {}),
+  };
+};
+
 export const formToDto = (
   data: TypeResumeTypeFormType,
 ): UpdateDashboardCardConfigDto => {
   const excludedCategoryIds = normalizeExcludedCategoryIds(
     data.excludedCategoryIds,
+  );
+  const oppositeExcludedCategoryIds = normalizeExcludedCategoryIds(
+    data.oppositeExcludedCategoryIds,
   );
   const stringified = JSON.stringify({
     account: data.account,
@@ -93,6 +130,9 @@ export const formToDto = (
     showFiltersAsBadge: !!data.showFiltersAsBadge,
     showOppositeType: !!data.showOppositeType,
     ...(excludedCategoryIds.length ? { excludedCategoryIds } : {}),
+    ...(data.showOppositeType && oppositeExcludedCategoryIds.length
+      ? { oppositeExcludedCategoryIds }
+      : {}),
   });
   return {
     userId: data.userId,

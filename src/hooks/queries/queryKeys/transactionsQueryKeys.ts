@@ -3,6 +3,7 @@ import type { QueryParam } from "@sito/dashboard-app";
 import type {
   FilterTransactionGroupedByTypeDto,
   FilterTransactionDto,
+  TransactionTypeResumeBatchRequestItemDto,
   FilterTransactionTypeResumeDto,
   FilterWeeklyTransactionDto,
   TransactionDto,
@@ -32,6 +33,14 @@ export const TransactionsQueryKeys = {
   typeResume: (filters: FilterTransactionTypeResumeDto) => ({
     queryKey: [...TransactionsQueryKeys.all().queryKey, "typeResume", filters],
     enabled: !!filters.accountId && filters.type !== undefined,
+  }),
+  typeResumeBatch: (items: TransactionTypeResumeBatchRequestItemDto[]) => ({
+    queryKey: [
+      ...TransactionsQueryKeys.all().queryKey,
+      "typeResumeBatch",
+      items,
+    ],
+    enabled: items.length > 0,
   }),
   weekly: (filters: FilterWeeklyTransactionDto) => ({
     queryKey: [...TransactionsQueryKeys.all().queryKey, "weekly", filters],
