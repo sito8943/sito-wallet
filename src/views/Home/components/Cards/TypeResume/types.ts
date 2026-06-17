@@ -29,6 +29,7 @@ export interface TypeResumeTypeFormType
   excludedCategories: CommonTransactionCategoryDto[];
   excludedCategoryIds: number[];
   showFiltersAsBadge: boolean;
+  showOppositeType: boolean;
 }
 
 export type FilterTypeResumeConfigType = {
@@ -91,4 +92,13 @@ export type TypeResumeTransactionItemPropsType = {
   transaction: CommonTransactionDto;
   currencyName?: string;
   currencySymbol?: string;
+};
+
+export type TypeResumeRowPropsType = {
+  type: TransactionType;
+  amount: number;
+  isLoading: boolean;
+  currencyName?: string;
+  currencySymbol?: string;
+  compact?: boolean;
 };

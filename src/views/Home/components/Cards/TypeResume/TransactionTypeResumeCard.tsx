@@ -2,10 +2,7 @@ import { useMemo, useState } from "react";
 import { faAdd, faList } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 
-import { classNames, IconButton } from "@sito/dashboard-app";
-
-// lib
-import { TransactionType } from "lib";
+import { IconButton } from "@sito/dashboard-app";
 
 // hooks
 import { useTransactionTypeResume } from "hooks";
@@ -16,16 +13,17 @@ import { useAddTransaction } from "../../../../Transactions/hooks";
 import {
   formToDto,
   getActiveFiltersCount,
+  getOppositeTransactionType,
   parseFormConfig,
   toTypeResumeFilterConfig,
 } from "./utils";
 
 // components
-import { Currency } from "../../../../Currencies";
 import { ActiveFilters } from "./ActiveFilters";
 import { AddTransactionDialog } from "../../../../Transactions/components";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { DashboardCard } from "../DashboardCard";
+import { TypeResumeRow } from "./TypeResumeRow";
 import { TypeResumeCategoriesDialog } from "./TypeResumeCategoriesDialog";
 import { resolveCardConfig } from "../utils";
 
@@ -39,7 +37,6 @@ import type {
 } from "./types";
 import { useTypeResumeDialog } from "./useTypeResumeDialog";
 import type { CardConfigOverrideType } from "../types";
-import { Type } from "views/TransactionCategories/components/Type";
 
 export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const { title, config, id, user, onDelete, dragHandleProps } = props;
@@ -61,8 +58,17 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
     () => toTypeResumeFilterConfig(resolvedFormConfig),
     [resolvedFormConfig],
   );
+  const oppositeType = useMemo(
+    () => getOppositeTransactionType(resolvedFormConfig.type),
+    [resolvedFormConfig.type],
+  );
 
   const { data, isLoading } = useTransactionTypeResume({ ...filterConfig });
+  const oppositeTypeResume = useTransactionTypeResume({
+    ...filterConfig,
+    type: oppositeType,
+    enabled: resolvedFormConfig.showOppositeType,
+  });
   const transactionCategories = useTransactionCategoriesCommon();
 
   const categories = data?.categories ?? [];
@@ -93,6 +99,9 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const addTransaction = useAddTransaction({
     account: selectedAccount,
   });
+  const oppositeTotal = oppositeTypeResume.data?.total ?? 0;
+  const isOppositeLoading =
+    resolvedFormConfig.showOppositeType && oppositeTypeResume.isLoading;
 
   return (
     <>
@@ -134,24 +143,34 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
       >
         {({ formConfig }) => (
           <div className="type-resume-content">
-            <Type type={formConfig.type} filled={false} noText />
             <div className="type-resume-summary">
-              <p
-                className={classNames(
-                  "type-resume-amount poppins",
-                  formConfig.type === TransactionType.In
-                    ? "type-resume-amount--income"
-                    : "type-resume-amount--expense",
+              <div className="type-resume-totals">
+                {formConfig.showOppositeType && (
+                  <TypeResumeRow
+                    type={oppositeType}
+                    amount={oppositeTotal}
+                    isLoading={isOppositeLoading}
+                    currencyName={
+                      currencyName ?? formConfig.account?.currency?.name
+                    }
+                    currencySymbol={
+                      currencySymbol ?? formConfig.account?.currency?.symbol
+                    }
+                    compact
+                  />
                 )}
-              >
-                {isLoading ? "…" : (data?.total ?? 0)}{" "}
-                <Currency
-                  name={currencyName ?? formConfig.account?.currency?.name}
-                  symbol={
+                <TypeResumeRow
+                  type={formConfig.type}
+                  amount={data?.total ?? 0}
+                  isLoading={isLoading}
+                  currencyName={
+                    currencyName ?? formConfig.account?.currency?.name
+                  }
+                  currencySymbol={
                     currencySymbol ?? formConfig.account?.currency?.symbol
                   }
                 />
-              </p>
+              </div>
               <div className="type-resume-actions">
                 <IconButton
                   onClick={() => addTransaction.openDialog()}

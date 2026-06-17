@@ -4,6 +4,7 @@ import { TransactionType, TransactionTypeResumeTime } from "lib";
 
 import {
   formToDto,
+  getOppositeTransactionType,
   normalizeExcludedCategoryIds,
   parseFormConfig,
   toTypeResumeFilterConfig,
@@ -31,7 +32,17 @@ describe("TypeResume utils", () => {
       time: TransactionTypeResumeTime.CurrentWeek,
       excludedCategoryIds: [],
       excludedCategories: [],
+      showOppositeType: false,
     });
+  });
+
+  it("resolves the opposite transaction type", () => {
+    expect(getOppositeTransactionType(TransactionType.In)).toBe(
+      TransactionType.Out,
+    );
+    expect(getOppositeTransactionType(TransactionType.Out)).toBe(
+      TransactionType.In,
+    );
   });
 
   it("builds filter config with normalized excluded ids", () => {
@@ -42,6 +53,8 @@ describe("TypeResume utils", () => {
         time: TransactionTypeResumeTime.CurrentMonth,
         excludedCategories: [],
         excludedCategoryIds: [9, 3, 9],
+        showFiltersAsBadge: false,
+        showOppositeType: false,
       }),
     ).toEqual({
       accountId: 4,
@@ -69,6 +82,8 @@ describe("TypeResume utils", () => {
           },
         ],
         excludedCategoryIds: [8, 8, 3],
+        showFiltersAsBadge: false,
+        showOppositeType: true,
       }),
     ).toEqual({
       id: 11,
@@ -77,6 +92,7 @@ describe("TypeResume utils", () => {
         account: { id: 4, name: "Wallet", currency: null },
         type: TransactionType.In,
         time: TransactionTypeResumeTime.CurrentMonth,
+        showOppositeType: true,
         excludedCategoryIds: [3, 8],
       }),
     });

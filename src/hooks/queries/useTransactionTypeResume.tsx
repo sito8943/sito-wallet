@@ -23,6 +23,7 @@ import { TransactionsQueryKeys } from "./queryKeys/transactionsQueryKeys";
 export function useTransactionTypeResume(
   props: UseTransactionTypeResumePropsType,
 ): UseQueryResult<TransactionTypeResumeDto> {
+  const enabled = props.enabled ?? true;
   const filters = useMemo(
     () =>
       ({
@@ -47,7 +48,7 @@ export function useTransactionTypeResume(
     ...TransactionsQueryKeys.typeResume({
       ...filters,
     }),
-    enabled: !!account?.id,
+    enabled: !!account?.id && enabled,
     queryFn: () => {
       return manager.Transactions.getTypeResume(filters);
     },

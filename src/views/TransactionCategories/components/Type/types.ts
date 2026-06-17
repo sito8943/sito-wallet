@@ -5,4 +5,7 @@ export type TypePropsType = {
   filled?: boolean;
   noText?: boolean;
   className?: string;
+  contentClassName?: string;
+  iconClassName?: string;
+  textClassName?: string;
 };

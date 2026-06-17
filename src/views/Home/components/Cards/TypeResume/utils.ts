@@ -43,6 +43,9 @@ export const parseFormConfig = (
       showFiltersAsBadge:
         (parsed.showFiltersAsBadge as boolean | undefined) ??
         DEFAULT_TYPE_RESUME_CONFIG.showFiltersAsBadge,
+      showOppositeType:
+        (parsed.showOppositeType as boolean | undefined) ??
+        DEFAULT_TYPE_RESUME_CONFIG.showOppositeType,
     };
   } catch (err) {
     console.error(err);
@@ -56,6 +59,11 @@ export const getActiveFiltersCount = (
   2 +
   (formConfig.account ? 1 : 0) +
   ((formConfig.excludedCategoryIds?.length ?? 0) > 0 ? 1 : 0);
+
+export const getOppositeTransactionType = (
+  type: TransactionType,
+): TransactionType =>
+  type === TransactionType.In ? TransactionType.Out : TransactionType.In;
 
 export const toTypeResumeFilterConfig = (
   data: TypeResumeTypeFormType,
@@ -83,6 +91,7 @@ export const formToDto = (
     type: data.type,
     time: data.time,
     showFiltersAsBadge: !!data.showFiltersAsBadge,
+    showOppositeType: !!data.showOppositeType,
     ...(excludedCategoryIds.length ? { excludedCategoryIds } : {}),
   });
   return {

@@ -38,6 +38,7 @@
         "title": "{{transactionType}} per range",
         "configTitle": "Configure transaction summary",
         "placeholder": "Type the title",
+        "showOppositeTypeToggle": "Show the opposite type too",
         "details": {
           "title": "Resume categories",
           "empty": "No categories in this range"

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { Chip } from "@sito/dashboard-app";
+import { Chip, classNames } from "@sito/dashboard-app";
 
 // lib
 import { TransactionType } from "lib";
@@ -17,7 +17,15 @@ import type { TypePropsType } from "./types";
 import "./styles.css";
 
 export const Type = (props: TypePropsType) => {
-  const { type, noText = false, filled = true, className = "" } = props;
+  const {
+    type,
+    noText = false,
+    filled = true,
+    className = "",
+    contentClassName = "",
+    iconClassName = "",
+    textClassName = "",
+  } = props;
 
   const { t } = useTranslation();
 
@@ -32,16 +40,25 @@ export const Type = (props: TypePropsType) => {
     <Chip
       className={chipClassName}
       text={
-        <div className="transaction-category-type-text">
+        <div
+          className={classNames(
+            "transaction-category-type-text",
+            contentClassName,
+          )}
+        >
           <FontAwesomeIcon
-            className={className}
+            className={classNames(className, iconClassName)}
             icon={icons[(type ?? 0) as keyof typeof icons]}
           />
           {!noText &&
-            t(
-              `_entities:transactionCategory:type.values.${String(
-                TransactionType[type ?? 0],
-              )}`,
+            (
+              <span className={textClassName}>
+                {t(
+                  `_entities:transactionCategory:type.values.${String(
+                    TransactionType[type ?? 0],
+                  )}`,
+                )}
+              </span>
             )}
         </div>
       }

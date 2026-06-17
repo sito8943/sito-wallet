@@ -1,7 +1,55 @@
 @reference "../../../../../styles/variables.css";
 
 .type-resume-amount {
-  @apply self-end text-4xl font-bold;
+  @apply text-4xl max-md:text-3xl font-bold whitespace-nowrap;
+}
+
+.type-resume-totals {
+  @apply flex flex-col items-start gap-2;
+}
+
+.type-resume-row {
+  @apply flex w-full items-center gap-3;
+}
+
+.type-resume-row--opposite {
+  @apply gap-2;
+}
+
+.type-resume-type {
+  @apply whitespace-nowrap;
+}
+
+.type-resume-type--primary {
+  @apply text-base;
+}
+
+.type-resume-type--compact {
+  @apply text-sm;
+}
+
+.type-resume-type-icon {
+  @apply shrink-0;
+}
+
+.type-resume-type-icon--primary {
+  @apply text-base;
+}
+
+.type-resume-type-icon--compact {
+  @apply text-sm;
+}
+
+.type-resume-opposite-amount {
+  @apply text-sm font-semibold whitespace-nowrap;
+}
+
+.type-resume-opposite-amount--income {
+  @apply text-bg-success;
+}
+
+.type-resume-opposite-amount--expense {
+  @apply text-bg-error;
 }
 
 .type-resume-amount--income {
@@ -14,4 +62,12 @@
 
 .type-resume-actions {
   @apply flex items-center gap-1;
+}
+
+.dashboard-card-select-container {
+  @apply flex gap-3;
+}
+
+.dashboard-card-toggle-container {
+  @apply flex flex-col mb-4;
 }

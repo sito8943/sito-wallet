@@ -210,61 +210,82 @@ export const ConfigFormDialog = (
           />
         )}
       />
-      <Controller
-        control={control}
-        name="type"
-        disabled={isLoading}
-        render={({ field: { value, onChange, ...rest } }) => (
-          <SelectInput
-            options={parsedTypes}
-            value={value}
-            onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
-            label={t("_entities:transactionCategory.type.label")}
-            inputClassName="dashboard-card-select-input dashboard-card-icon-select-input"
-            {...rest}
-          >
-            <FontAwesomeIcon
-              icon={icons[(type ?? 0) as keyof typeof icons]}
-              className={classNames(
-                "dashboard-card-select-icon vertical-center",
-                Number(type) === TransactionType.In
-                  ? "dashboard-card-select-icon--income inverted-success"
-                  : "dashboard-card-select-icon--expense inverted-error",
-              )}
+      <div className="dashboard-card-select-container">
+        <Controller
+          control={control}
+          name="type"
+          disabled={isLoading}
+          render={({ field: { value, onChange, ...rest } }) => (
+            <SelectInput
+              options={parsedTypes}
+              value={value}
+              onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
+              label={t("_entities:transactionCategory.type.label")}
+              inputClassName="dashboard-card-select-input dashboard-card-icon-select-input"
+              {...rest}
+            >
+              <FontAwesomeIcon
+                icon={icons[(type ?? 0) as keyof typeof icons]}
+                className={classNames(
+                  "dashboard-card-select-icon vertical-center",
+                  Number(type) === TransactionType.In
+                    ? "dashboard-card-select-icon--income inverted-success"
+                    : "dashboard-card-select-icon--expense inverted-error",
+                )}
+              />
+            </SelectInput>
+          )}
+        />
+        <Controller
+          control={control}
+          name="time"
+          disabled={isLoading}
+          render={({ field: { value, onChange, ...rest } }) => (
+            <SelectInput
+              options={parsedTimes}
+              value={value}
+              onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
+              label={t("_entities:transaction.typeResume.time.label")}
+              inputClassName="dashboard-card-select-input"
+              {...rest}
             />
-          </SelectInput>
-        )}
-      />
-      <Controller
-        control={control}
-        name="time"
-        disabled={isLoading}
-        render={({ field: { value, onChange, ...rest } }) => (
-          <SelectInput
-            options={parsedTimes}
-            value={value}
-            onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
-            label={t("_entities:transaction.typeResume.time.label")}
-            inputClassName="dashboard-card-select-input"
-            {...rest}
-          />
-        )}
-      />
-      <Controller
-        control={control}
-        name="showFiltersAsBadge"
-        render={({ field: { value, onChange, ...rest } }) => (
-          <CheckInput
-            {...rest}
-            id="type-resume-show-filters-as-badge"
-            checked={!!value}
-            label={t("_pages:home.dashboard.filterDisplay.badgeToggle")}
-            inputClassName="dashboard-card-toggle-input"
-            containerClassName="dashboard-card-toggle"
-            onChange={(event) => onChange(event.currentTarget.checked)}
-          />
-        )}
-      />
+          )}
+        />
+      </div>
+      <div className="dashboard-card-toggle-container">
+        <Controller
+          control={control}
+          name="showFiltersAsBadge"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <CheckInput
+              {...rest}
+              id="type-resume-show-filters-as-badge"
+              checked={!!value}
+              label={t("_pages:home.dashboard.filterDisplay.badgeToggle")}
+              inputClassName="dashboard-card-toggle-input"
+              containerClassName="dashboard-card-toggle"
+              onChange={(event) => onChange(event.currentTarget.checked)}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="showOppositeType"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <CheckInput
+              {...rest}
+              id="type-resume-show-opposite-type"
+              checked={!!value}
+              label={t(
+                "_pages:home.dashboard.transactionTypeResume.showOppositeTypeToggle",
+              )}
+              inputClassName="dashboard-card-toggle-input"
+              containerClassName="dashboard-card-toggle"
+              onChange={(event) => onChange(event.currentTarget.checked)}
+            />
+          )}
+        />
+      </div>
     </FormDialog>
   );
 };

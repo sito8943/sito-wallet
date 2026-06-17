@@ -12,6 +12,7 @@ export const DEFAULT_TYPE_RESUME_CONFIG: TypeResumeTypeFormType = {
   excludedCategories: [],
   excludedCategoryIds: [],
   showFiltersAsBadge: false,
+  showOppositeType: false,
 };
 
 export const TYPE_RESUME_TRANSACTIONS_LIST_QUERY: QueryParam<CommonTransactionDto> =

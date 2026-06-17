@@ -38,6 +38,7 @@
         "title": "{{transactionType}} por rango",
         "configTitle": "Configurar resumen de transacciones",
         "placeholder": "Escribe un título",
+        "showOppositeTypeToggle": "Mostrar también el tipo contrario",
         "details": {
           "title": "Categorías del resumen",
           "empty": "Sin categorías en este rango"
