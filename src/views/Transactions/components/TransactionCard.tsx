@@ -22,7 +22,7 @@ import {
   getPrimaryTransactionCategory,
   getTransactionCategories,
 } from "lib";
-import { useCalendarTimeAge } from "hooks";
+import { useCalendarTimeAge } from "hooks/useCalendarTimeAge";
 
 // components
 import { SwipeToDelete } from "components";
