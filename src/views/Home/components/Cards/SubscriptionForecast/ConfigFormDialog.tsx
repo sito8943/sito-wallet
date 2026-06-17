@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 // @sito/dashboard-app
 import type { Option } from "@sito/dashboard-app";
 import {
+  CheckInput,
   enumToKeyValueArray,
   FormDialog,
   SelectInput,
@@ -51,6 +52,21 @@ export const ConfigFormDialog = (
             onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
             label={t("_entities:subscriptionRenewal.range.label")}
             {...rest}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="showFiltersAsBadge"
+        render={({ field: { value, onChange, ...rest } }) => (
+          <CheckInput
+            {...rest}
+            id="subscription-forecast-show-filters-as-badge"
+            checked={!!value}
+            label={t("_pages:home.dashboard.filterDisplay.badgeToggle")}
+            inputClassName="dashboard-card-toggle-input"
+            containerClassName="dashboard-card-toggle"
+            onChange={(event) => onChange(event.currentTarget.checked)}
           />
         )}
       />

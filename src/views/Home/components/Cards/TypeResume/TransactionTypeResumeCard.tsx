@@ -13,7 +13,12 @@ import { useTransactionCategoriesCommon } from "../../../../../hooks/queries/use
 import { useAddTransaction } from "../../../../Transactions/hooks";
 
 // utils
-import { formToDto, parseFormConfig, toTypeResumeFilterConfig } from "./utils";
+import {
+  formToDto,
+  getActiveFiltersCount,
+  parseFormConfig,
+  toTypeResumeFilterConfig,
+} from "./utils";
 
 // components
 import { Currency } from "../../../../Currencies";
@@ -106,6 +111,10 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
           setConfigOverride({ baseConfig: config, savedConfig })
         }
         ConfigFormDialog={ConfigFormDialog}
+        shouldShowActiveFiltersBadge={(formConfig) =>
+          !!formConfig.showFiltersAsBadge
+        }
+        getActiveFiltersCount={getActiveFiltersCount}
         renderActiveFilters={({ formConfig, onSubmit }) => (
           <ActiveFilters
             account={formConfig.account}

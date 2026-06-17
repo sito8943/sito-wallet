@@ -33,18 +33,18 @@ import { resolveCardConfig } from "../utils";
 import "../styles.css";
 
 // types
-import type { CurrentBalanceFormType, CurrentBalancePropsType } from "./types";
+import type { CurrentBalancePropsType } from "./types";
 import type { CardConfigOverrideType } from "../types";
 
 // utils
-import { formToDto } from "./utils";
+import {
+  formToDto,
+  getActiveFiltersCount,
+  parseFormConfig,
+} from "./utils";
 
 // providers
 import { useManager } from "providers";
-
-const defaultConfig: CurrentBalanceFormType = {
-  account: null,
-};
 
 export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
   const { title, config, id, user, onDelete, dragHandleProps } = props;
@@ -54,15 +54,6 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
   const [configOverride, setConfigOverride] =
     useState<CardConfigOverrideType | null>(null);
   const effectiveConfig = resolveCardConfig(config, configOverride);
-
-  const parseFormConfig = (cfg?: string | null): CurrentBalanceFormType => {
-    try {
-      return (cfg ? JSON.parse(cfg) : {}) as CurrentBalanceFormType;
-    } catch (err) {
-      console.error(err);
-      return defaultConfig;
-    }
-  };
 
   const accountId = useMemo(() => {
     try {
@@ -121,6 +112,10 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
           setConfigOverride({ baseConfig: config, savedConfig })
         }
         ConfigFormDialog={ConfigFormDialog}
+        shouldShowActiveFiltersBadge={(formConfig) =>
+          !!formConfig.showFiltersAsBadge
+        }
+        getActiveFiltersCount={getActiveFiltersCount}
         renderActiveFilters={({ formConfig }) => (
           <ActiveFilters account={formConfig.account} />
         )}

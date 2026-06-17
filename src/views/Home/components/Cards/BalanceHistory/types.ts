@@ -29,6 +29,7 @@ export interface BalanceHistoryFormType
     FieldValues {
   account: CommonAccountDto | null;
   preset: BalanceHistoryPreset;
+  showFiltersAsBadge: boolean;
 }
 
 export type ActiveFiltersPropsType = {

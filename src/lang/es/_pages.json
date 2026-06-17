@@ -78,6 +78,9 @@
           "empty": "Sin renovaciones en este rango"
         }
       },
+      "filterDisplay": {
+        "badgeToggle": "Mostrar contador de filtros en el botón"
+      },
       "reorder": {
         "handle": "Reordenar tarjeta"
       },

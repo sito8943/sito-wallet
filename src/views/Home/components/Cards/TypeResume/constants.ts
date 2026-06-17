@@ -11,6 +11,7 @@ export const DEFAULT_TYPE_RESUME_CONFIG: TypeResumeTypeFormType = {
   time: TransactionTypeResumeTime.CurrentMonth,
   excludedCategories: [],
   excludedCategoryIds: [],
+  showFiltersAsBadge: false,
 };
 
 export const TYPE_RESUME_TRANSACTIONS_LIST_QUERY: QueryParam<CommonTransactionDto> =

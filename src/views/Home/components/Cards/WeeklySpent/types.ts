@@ -21,6 +21,7 @@ export interface WeeklySpentFormType
     FieldValues {
   accounts: CommonAccountDto[];
   type: TransactionType;
+  showFiltersAsBadge: boolean;
 }
 
 export type FilterWeeklyConfigType = {

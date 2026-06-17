@@ -1,17 +1,53 @@
-import type { UpdateDashboardCardConfigDto } from "lib";
+import type { CommonCurrencyDto, UpdateDashboardCardConfigDto } from "lib";
+import { RenewalRangePreset } from "lib";
 import type { SubscriptionForecastFormType } from "./types";
+
+export const defaultConfig: SubscriptionForecastFormType = {
+  range: RenewalRangePreset.CurrentMonth,
+  showFiltersAsBadge: false,
+};
 
 export const formToDto = (
   data: SubscriptionForecastFormType,
 ): UpdateDashboardCardConfigDto => {
   const stringified = JSON.stringify({
     range: data.range,
+    showFiltersAsBadge: !!data.showFiltersAsBadge,
   });
   return {
     userId: data.userId,
     id: data.id,
     config: stringified,
   };
+};
+
+export const parseFormConfig = (
+  cfg?: string | null,
+): SubscriptionForecastFormType => {
+  try {
+    const parsed = (
+      cfg ? JSON.parse(cfg) : {}
+    ) as Partial<SubscriptionForecastFormType>;
+    return {
+      range: parsed.range ?? defaultConfig.range,
+      showFiltersAsBadge:
+        parsed.showFiltersAsBadge ?? defaultConfig.showFiltersAsBadge,
+    };
+  } catch (err) {
+    console.error(err);
+    return defaultConfig;
+  }
+};
+
+export const getActiveFiltersCount = (): number => 1;
+
+export const resolveCurrency = (
+  currencies: CommonCurrencyDto[] | undefined,
+  currencyName: string | null,
+): { name: string; symbol: string } => {
+  if (!currencyName) return { name: "", symbol: "" };
+  const match = currencies?.find((currency) => currency.name === currencyName);
+  return { name: currencyName, symbol: match?.symbol ?? "" };
 };
 
 export const resolveTimezone = (): string => {

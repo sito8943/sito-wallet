@@ -20,17 +20,18 @@ import "../styles.css";
 import "./styles.css";
 
 // types
-import type { BalanceHistoryFormType, BalanceHistoryPropsType } from "./types";
+import type { BalanceHistoryPropsType } from "./types";
 import type { CardConfigOverrideType } from "../types";
 
 // utils
 import {
   formToDto,
+  getActiveFiltersCount,
+  parseFormConfig,
   presetGranularity,
   presetToRange,
   resolvePreset,
 } from "./utils";
-import { defaultConfig } from "./constants";
 
 export const BalanceHistoryCard = (props: BalanceHistoryPropsType) => {
   const { title, config, id, user, onDelete, dragHandleProps } = props;
@@ -38,16 +39,6 @@ export const BalanceHistoryCard = (props: BalanceHistoryPropsType) => {
   const [configOverride, setConfigOverride] =
     useState<CardConfigOverrideType | null>(null);
   const effectiveConfig = resolveCardConfig(config, configOverride);
-
-  const parseFormConfig = (cfg?: string | null): BalanceHistoryFormType => {
-    try {
-      const parsed = (cfg ? JSON.parse(cfg) : {}) as BalanceHistoryFormType;
-      return { ...defaultConfig, ...parsed };
-    } catch (err) {
-      console.error(err);
-      return defaultConfig;
-    }
-  };
 
   const { accountId, preset } = useMemo(() => {
     const parsed = parseFormConfig(effectiveConfig);
@@ -94,6 +85,10 @@ export const BalanceHistoryCard = (props: BalanceHistoryPropsType) => {
         setConfigOverride({ baseConfig: config, savedConfig })
       }
       ConfigFormDialog={ConfigFormDialog}
+      shouldShowActiveFiltersBadge={(formConfig) =>
+        !!formConfig.showFiltersAsBadge
+      }
+      getActiveFiltersCount={getActiveFiltersCount}
       renderActiveFilters={({ formConfig }) => (
         <ActiveFilters
           account={formConfig.account}

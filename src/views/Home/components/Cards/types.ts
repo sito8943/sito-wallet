@@ -60,5 +60,7 @@ export type DashboardCardProps<TForm extends FieldValues> = Common & {
   onConfigSaved?: (savedConfig: string) => void;
   ConfigFormDialog: (props: ConfigFormDialogPropsType<TForm>) => JSX.Element;
   renderActiveFilters?: (args: RenderFiltersArgs<TForm>) => JSX.Element | null;
+  shouldShowActiveFiltersBadge?: (formConfig: TForm) => boolean;
+  getActiveFiltersCount?: (formConfig: TForm) => number;
   children?: (args: ChildrenArgs<TForm>) => JSX.Element | null;
 };

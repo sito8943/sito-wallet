@@ -40,12 +40,22 @@ export const parseFormConfig = (
       excludedCategoryIds: normalizeExcludedCategoryIds(
         parsed.excludedCategoryIds,
       ),
+      showFiltersAsBadge:
+        (parsed.showFiltersAsBadge as boolean | undefined) ??
+        DEFAULT_TYPE_RESUME_CONFIG.showFiltersAsBadge,
     };
   } catch (err) {
     console.error(err);
     return DEFAULT_TYPE_RESUME_CONFIG;
   }
 };
+
+export const getActiveFiltersCount = (
+  formConfig: TypeResumeTypeFormType,
+): number =>
+  2 +
+  (formConfig.account ? 1 : 0) +
+  ((formConfig.excludedCategoryIds?.length ?? 0) > 0 ? 1 : 0);
 
 export const toTypeResumeFilterConfig = (
   data: TypeResumeTypeFormType,
@@ -72,6 +82,7 @@ export const formToDto = (
     account: data.account,
     type: data.type,
     time: data.time,
+    showFiltersAsBadge: !!data.showFiltersAsBadge,
     ...(excludedCategoryIds.length ? { excludedCategoryIds } : {}),
   });
   return {

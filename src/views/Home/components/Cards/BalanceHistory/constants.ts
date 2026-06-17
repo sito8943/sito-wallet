@@ -30,4 +30,5 @@ export const DEFAULT_BALANCE_HISTORY_PRESET = BalanceHistoryPreset.Month;
 export const defaultConfig: BalanceHistoryFormType = {
   account: null,
   preset: DEFAULT_BALANCE_HISTORY_PRESET,
+  showFiltersAsBadge: false,
 };

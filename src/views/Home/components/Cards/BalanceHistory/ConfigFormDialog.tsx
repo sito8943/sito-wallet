@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import type { Option } from "@sito/dashboard-app";
 import {
   AutocompleteInput,
+  CheckInput,
   FormDialog,
   SelectInput,
 } from "@sito/dashboard-app";
@@ -87,6 +88,21 @@ export const ConfigFormDialog = (
             label={t("_pages:home.dashboard.balanceHistory.presetLabel")}
             inputClassName="dashboard-card-select-input"
             {...rest}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="showFiltersAsBadge"
+        render={({ field: { value, onChange, ...rest } }) => (
+          <CheckInput
+            {...rest}
+            id="balance-history-show-filters-as-badge"
+            checked={!!value}
+            label={t("_pages:home.dashboard.filterDisplay.badgeToggle")}
+            inputClassName="dashboard-card-toggle-input"
+            containerClassName="dashboard-card-toggle"
+            onChange={(event) => onChange(event.currentTarget.checked)}
           />
         )}
       />

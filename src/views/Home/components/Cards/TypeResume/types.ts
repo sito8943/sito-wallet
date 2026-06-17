@@ -28,6 +28,7 @@ export interface TypeResumeTypeFormType
   time: TransactionTypeResumeTime;
   excludedCategories: CommonTransactionCategoryDto[];
   excludedCategoryIds: number[];
+  showFiltersAsBadge: boolean;
 }
 
 export type FilterTypeResumeConfigType = {

@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Option } from "@sito/dashboard-app";
 import {
   AutocompleteInput,
+  CheckInput,
   classNames,
   enumToKeyValueArray,
   FormDialog,
@@ -101,6 +102,21 @@ export const ConfigFormDialog = (
               )}
             />
           </SelectInput>
+        )}
+      />
+      <Controller
+        control={control}
+        name="showFiltersAsBadge"
+        render={({ field: { value, onChange, ...rest } }) => (
+          <CheckInput
+            {...rest}
+            id="weekly-spent-show-filters-as-badge"
+            checked={!!value}
+            label={t("_pages:home.dashboard.filterDisplay.badgeToggle")}
+            inputClassName="dashboard-card-toggle-input"
+            containerClassName="dashboard-card-toggle"
+            onChange={(event) => onChange(event.currentTarget.checked)}
+          />
         )}
       />
     </FormDialog>

@@ -23,7 +23,6 @@ import { useRenewalsDialog } from "./useRenewalsDialog";
 import type { FilterSubscriptionDto, SubscriptionDto } from "lib";
 import {
   AppRoutes,
-  RenewalRangePreset,
   defaultSubscriptionsListFilters,
   normalizeListFilters,
 } from "lib";
@@ -45,19 +44,20 @@ import "../styles.css";
 
 // types
 import type {
-  SubscriptionForecastFormType,
   SubscriptionForecastPropsType,
   SelectSubscriptionDialogPropsType,
 } from "./types";
 import type { CardConfigOverrideType } from "../types";
 
 // utils
-import { formToDto, resolveTimezone } from "./utils";
+import {
+  formToDto,
+  getActiveFiltersCount,
+  parseFormConfig,
+  resolveCurrency,
+  resolveTimezone,
+} from "./utils";
 import { useManager } from "providers";
-
-const defaultConfig: SubscriptionForecastFormType = {
-  range: RenewalRangePreset.CurrentMonth,
-};
 
 export const SubscriptionForecastCard = (
   props: SubscriptionForecastPropsType,
@@ -71,22 +71,6 @@ export const SubscriptionForecastCard = (
   const [configOverride, setConfigOverride] =
     useState<CardConfigOverrideType | null>(null);
   const effectiveConfig = resolveCardConfig(config, configOverride);
-
-  const parseFormConfig = (
-    cfg?: string | null,
-  ): SubscriptionForecastFormType => {
-    try {
-      const parsed = (
-        cfg ? JSON.parse(cfg) : {}
-      ) as Partial<SubscriptionForecastFormType>;
-      return {
-        range: parsed.range ?? defaultConfig.range,
-      };
-    } catch (err) {
-      console.error(err);
-      return defaultConfig;
-    }
-  };
 
   const formConfig = useMemo(
     () => parseFormConfig(effectiveConfig),
@@ -149,12 +133,6 @@ export const SubscriptionForecastCard = (
       : t("_accessibility:errors.500");
   }, [subscriptionsPickerQuery.error, t]);
 
-  const resolveCurrency = (currencyName: string | null) => {
-    if (!currencyName) return { name: "", symbol: "" };
-    const match = currencies?.find((c) => c.name === currencyName);
-    return { name: currencyName, symbol: match?.symbol ?? "" };
-  };
-
   const handleOpenAddSubscription = useCallback(() => {
     selectSubscriptionDialog.handleClose();
     navigate(AppRoutes.subscriptionNew);
@@ -194,6 +172,10 @@ export const SubscriptionForecastCard = (
           setConfigOverride({ baseConfig: config, savedConfig })
         }
         ConfigFormDialog={ConfigFormDialog}
+        shouldShowActiveFiltersBadge={(formConfig) =>
+          !!formConfig.showFiltersAsBadge
+        }
+        getActiveFiltersCount={getActiveFiltersCount}
         renderActiveFilters={({ formConfig }) => (
           <ActiveFilters
             range={formConfig.range}
@@ -217,7 +199,7 @@ export const SubscriptionForecastCard = (
                   </p>
                 ) : (
                   totals.map((total, index) => {
-                    const currency = resolveCurrency(total.currency);
+                    const currency = resolveCurrency(currencies, total.currency);
                     return (
                       <p
                         key={`${total.currency ?? "none"}-${index}`}

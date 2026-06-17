@@ -19,6 +19,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 // @sito/dashboard-app
 import {
+  Badge,
   IconButton,
   Loading,
   classNames,
@@ -83,6 +84,8 @@ export const DashboardCard = <TForm extends FieldValues>(
     onConfigSaved,
     ConfigFormDialog,
     renderActiveFilters,
+    shouldShowActiveFiltersBadge,
+    getActiveFiltersCount,
     children,
   } = props;
 
@@ -126,6 +129,14 @@ export const DashboardCard = <TForm extends FieldValues>(
   const formConfig = useMemo(
     () => parseFormConfig(config),
     [config, parseFormConfig],
+  );
+  const showActiveFiltersBadge = useMemo(
+    () => shouldShowActiveFiltersBadge?.(formConfig) ?? false,
+    [formConfig, shouldShowActiveFiltersBadge],
+  );
+  const activeFiltersCount = useMemo(
+    () => getActiveFiltersCount?.(formConfig) ?? 0,
+    [formConfig, getActiveFiltersCount],
   );
 
   const formProps = useMutationForm<
@@ -226,14 +237,22 @@ export const DashboardCard = <TForm extends FieldValues>(
             }
           />
         ) : null}
-        <IconButton
-          disabled={headerDisabled}
-          onClick={() => setShowFilters((v) => !v)}
-          icon={faFilter}
-          data-tooltip-id="tooltip"
-          data-tooltip-content={t("_accessibility:buttons.filters")}
-          aria-label={t("_accessibility:buttons.filters")}
-        />
+        <div className="dashboard-card-filter-button">
+          <IconButton
+            disabled={headerDisabled}
+            onClick={() => setShowFilters((v) => !v)}
+            icon={faFilter}
+            data-tooltip-id="tooltip"
+            data-tooltip-content={t("_accessibility:buttons.filters")}
+            aria-label={t("_accessibility:buttons.filters")}
+          />
+          {showActiveFiltersBadge && activeFiltersCount > 0 ? (
+            <Badge
+              count={activeFiltersCount}
+              className="dashboard-card-filter-badge"
+            />
+          ) : null}
+        </div>
         <IconButton
           disabled={headerDisabled}
           onClick={onDelete}
@@ -247,7 +266,7 @@ export const DashboardCard = <TForm extends FieldValues>(
 
       {/* submittedConfigStore is only read/written inside the submit handler
           and the mutation onSuccess callback, never during render. */}
-      {renderActiveFilters
+      {renderActiveFilters && !showActiveFiltersBadge
         ? // eslint-disable-next-line react-hooks/refs
           renderActiveFilters({
             formConfig,

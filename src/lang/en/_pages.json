@@ -78,6 +78,9 @@
           "empty": "No renewals in this range"
         }
       },
+      "filterDisplay": {
+        "badgeToggle": "Show filter count in button"
+      },
       "reorder": {
         "handle": "Reorder card"
       },

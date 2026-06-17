@@ -12,6 +12,7 @@ import {
   enumToKeyValueArray,
   FormDialog,
   AutocompleteInput,
+  CheckInput,
   SelectInput,
 } from "@sito/dashboard-app";
 
@@ -246,6 +247,21 @@ export const ConfigFormDialog = (
             label={t("_entities:transaction.typeResume.time.label")}
             inputClassName="dashboard-card-select-input"
             {...rest}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="showFiltersAsBadge"
+        render={({ field: { value, onChange, ...rest } }) => (
+          <CheckInput
+            {...rest}
+            id="type-resume-show-filters-as-badge"
+            checked={!!value}
+            label={t("_pages:home.dashboard.filterDisplay.badgeToggle")}
+            inputClassName="dashboard-card-toggle-input"
+            containerClassName="dashboard-card-toggle"
+            onChange={(event) => onChange(event.currentTarget.checked)}
           />
         )}
       />

@@ -11,6 +11,7 @@ import {
   BALANCE_HISTORY_PRESETS,
   DEFAULT_BALANCE_HISTORY_PRESET,
 } from "./constants";
+import { defaultConfig } from "./constants";
 
 export const formToDto = (
   data: BalanceHistoryFormType,
@@ -18,6 +19,7 @@ export const formToDto = (
   const stringified = JSON.stringify({
     account: data.account,
     preset: data.preset,
+    showFiltersAsBadge: !!data.showFiltersAsBadge,
   });
   return {
     userId: data.userId,
@@ -25,6 +27,22 @@ export const formToDto = (
     config: stringified,
   };
 };
+
+export const parseFormConfig = (
+  cfg?: string | null,
+): BalanceHistoryFormType => {
+  try {
+    const parsed = (cfg ? JSON.parse(cfg) : {}) as BalanceHistoryFormType;
+    return { ...defaultConfig, ...parsed };
+  } catch (err) {
+    console.error(err);
+    return defaultConfig;
+  }
+};
+
+export const getActiveFiltersCount = (
+  formConfig: BalanceHistoryFormType,
+): number => 1 + (formConfig.account ? 1 : 0);
 
 const toYMD = (d: Date) => d.toISOString().slice(0, 10);
 

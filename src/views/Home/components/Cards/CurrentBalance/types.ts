@@ -16,6 +16,7 @@ export interface CurrentBalanceFormType
     Omit<UpdateDashboardCardConfigDto, "config" | "userId" | "id">,
     FieldValues {
   account: CommonAccountDto | null;
+  showFiltersAsBadge: boolean;
 }
 
 export type ActiveFiltersPropsType = {

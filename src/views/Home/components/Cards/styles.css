@@ -58,6 +58,22 @@
   @apply flex flex-wrap items-center justify-start gap-2;
 }
 
+.dashboard-card-filter-button {
+  @apply relative inline-flex;
+}
+
+.dashboard-card-filter-badge {
+  @apply pointer-events-none absolute -top-1 -right-1;
+}
+
+.dashboard-card-toggle {
+  @apply mt-1;
+}
+
+.dashboard-card-toggle-input {
+  @apply accent-bg-primary;
+}
+
 .dashboard-card-autocomplete-full {
   @apply !w-full;
 }

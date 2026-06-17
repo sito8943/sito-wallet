@@ -1,11 +1,5 @@
 import { useMemo, useState } from "react";
 
-// @sito/dashboard-app
-// @sito/dashboard-app
-
-// lib
-import { TransactionType } from "lib";
-
 // hooks
 import { useWeekly } from "../../../../../hooks/queries/useWeekly";
 
@@ -21,53 +15,25 @@ import "../styles.css";
 
 // types
 import type {
-  WeeklySpentFormType,
   WeeklySpentPropsType,
   FilterWeeklyConfigType,
 } from "./types";
 import type { CardConfigOverrideType } from "../types";
 
 // utils
-import { formToDto } from "./utils";
-
-// providers
-// providers
-// (none)
-
-const defaultConfig: WeeklySpentFormType = {
-  type: TransactionType.In,
-  accounts: [],
-};
-
-const getCurrentWeekRange = () => {
-  const today = new Date();
-  const day = today.getDay(); // 0 = Sunday
-  const start = new Date(today);
-  start.setDate(today.getDate() - day);
-  start.setHours(0, 0, 0, 0);
-
-  const end = new Date(start);
-  end.setDate(start.getDate() + 6);
-  end.setHours(23, 59, 59, 999);
-
-  const toYMD = (d: Date) => d.toISOString().slice(0, 10);
-  return { start: toYMD(start), end: toYMD(end) };
-};
+import {
+  defaultConfig,
+  formToDto,
+  getActiveFiltersCount,
+  getCurrentWeekRange,
+  parseFormConfig,
+} from "./utils";
 
 export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
   const { title, config, id, user, onDelete, dragHandleProps } = props;
   const [configOverride, setConfigOverride] =
     useState<CardConfigOverrideType | null>(null);
   const effectiveConfig = resolveCardConfig(config, configOverride);
-
-  const parseFormConfig = (cfg?: string | null): WeeklySpentFormType => {
-    try {
-      return (cfg ? JSON.parse(cfg) : {}) as WeeklySpentFormType;
-    } catch (err) {
-      console.error(err);
-      return defaultConfig;
-    }
-  };
 
   const filterConfig = useMemo(() => {
     try {
@@ -105,6 +71,10 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
         setConfigOverride({ baseConfig: config, savedConfig })
       }
       ConfigFormDialog={ConfigFormDialog}
+      shouldShowActiveFiltersBadge={(formConfig) =>
+        !!formConfig.showFiltersAsBadge
+      }
+      getActiveFiltersCount={getActiveFiltersCount}
       renderActiveFilters={({ formConfig, onSubmit }) => (
         <ActiveFilters
           {...formConfig}

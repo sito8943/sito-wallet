@@ -21,6 +21,7 @@ export interface SubscriptionForecastFormType
     Omit<UpdateDashboardCardConfigDto, "config" | "userId" | "id">,
     FieldValues {
   range: RenewalRangePreset;
+  showFiltersAsBadge: boolean;
 }
 
 export type ActiveFiltersPropsType = {

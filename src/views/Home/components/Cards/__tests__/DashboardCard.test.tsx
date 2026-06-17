@@ -57,6 +57,17 @@ vi.mock("@sito/dashboard-app", () => ({
   Loading: ({ className }: { className?: string }) => (
     <div data-testid="loading" className={className} />
   ),
+  Badge: ({
+    count,
+    className,
+  }: {
+    count: number;
+    className?: string;
+  }) => (
+    <div data-testid="badge" data-count={count} className={className}>
+      {count}
+    </div>
+  ),
   IconButton: ({
     onClick,
     disabled,
@@ -393,6 +404,19 @@ describe("DashboardCard", () => {
         }),
       );
       expect(screen.getByTestId("active-filters")).toBeInTheDocument();
+    });
+
+    it("shows a badge and hides chips when badge mode is enabled", () => {
+      renderCard({
+        renderActiveFilters: () => (
+          <div data-testid="active-filters">period: month</div>
+        ),
+        shouldShowActiveFiltersBadge: () => true,
+        getActiveFiltersCount: () => 3,
+      });
+
+      expect(screen.queryByTestId("active-filters")).toBeNull();
+      expect(screen.getByTestId("badge")).toHaveAttribute("data-count", "3");
     });
   });
 });
