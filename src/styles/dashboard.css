@@ -10,11 +10,6 @@
 
 .chip-main {
   @apply py-1;
-  /* Lib's base background lives in an unlayered rule that the prod CSS
-     minifier dedups away (kept only in dev). Redefine it here so chips
-     keep their gray pill in production builds. */
-  background-color: var(--color-base-dark);
-  color: var(--color-text);
 }
 
 .text-input,

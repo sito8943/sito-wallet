@@ -1,4 +1,7 @@
 @import "./styles/variables.css";
+/* Color layer for @sito/dashboard's headless components (processed by our
+   Tailwind build, so it survives). See @sito/dashboard-app/theme.css. */
+@import "@sito/dashboard-app/theme.css";
 @import "./styles/dashboard.css";
 @import "./styles/components.css";
 
