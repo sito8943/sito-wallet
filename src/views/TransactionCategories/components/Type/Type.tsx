@@ -50,16 +50,15 @@ export const Type = (props: TypePropsType) => {
             className={classNames(className, iconClassName)}
             icon={icons[(type ?? 0) as keyof typeof icons]}
           />
-          {!noText &&
-            (
-              <span className={textClassName}>
-                {t(
-                  `_entities:transactionCategory:type.values.${String(
-                    TransactionType[type ?? 0],
-                  )}`,
-                )}
-              </span>
-            )}
+          {!noText && (
+            <span className={textClassName}>
+              {t(
+                `_entities:transactionCategory:type.values.${String(
+                  TransactionType[type ?? 0],
+                )}`,
+              )}
+            </span>
+          )}
         </div>
       }
     />

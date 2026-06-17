@@ -36,9 +36,10 @@ export interface ApiQueryResult<
   setTotal: (total: number) => void;
 }
 
-export type UseTransactionTypeResumePropsType = FilterTransactionTypeResumeDto & {
-  enabled?: boolean;
-};
+export type UseTransactionTypeResumePropsType =
+  FilterTransactionTypeResumeDto & {
+    enabled?: boolean;
+  };
 export type UseTransactionsGroupedByTypePropsType =
   FilterTransactionGroupedByTypeDto;
 
