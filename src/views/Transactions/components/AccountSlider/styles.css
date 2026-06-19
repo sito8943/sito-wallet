@@ -81,6 +81,10 @@
   @apply shrink-0 text-right text-lg font-bold text-text;
 }
 
+.account-slider-sticky-controls {
+  @apply flex w-full items-center justify-between gap-2;
+}
+
 .account-slider-sticky .account-slider-dots {
   @apply flex-none justify-center pl-0;
 }
