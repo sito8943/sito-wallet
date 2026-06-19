@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
-import { faAdd, faList } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faClock, faList } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 
-import { IconButton } from "@sito/dashboard-app";
+import { IconButton, useDialog } from "@sito/dashboard-app";
 
 // hooks
 import { useTransactionTypeResume } from "hooks";
@@ -24,6 +24,7 @@ import { ActiveFilters } from "./ActiveFilters";
 import { AddTransactionDialog } from "../../../../Transactions/components";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { DashboardCard } from "../DashboardCard";
+import { RecentTransactionsDialog } from "../RecentTransactionsDialog";
 import { TypeResumeRow } from "./TypeResumeRow";
 import { TypeResumeCategoriesDialog } from "./TypeResumeCategoriesDialog";
 import { resolveCardConfig } from "../utils";
@@ -38,6 +39,7 @@ import type {
 } from "./types";
 import { useTypeResumeDialog } from "./useTypeResumeDialog";
 import type { CardConfigOverrideType } from "../types";
+import type { FilterTransactionDto } from "lib";
 
 export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const {
@@ -52,6 +54,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   } = props;
   const { t } = useTranslation();
   const typeResumeDialog = useTypeResumeDialog();
+  const recentTransactionsDialog = useDialog();
   const [configOverride, setConfigOverride] =
     useState<CardConfigOverrideType | null>(null);
   const effectiveConfig = useMemo(
@@ -98,6 +101,25 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const data = batchResult?.primary ?? typeResume.data;
   const isLoading = batchResult?.isLoading ?? typeResume.isLoading;
   const categories = data?.categories ?? [];
+  const startDate = data?.startDate;
+  const endDate = data?.endDate;
+  const hasRecentTransactionsRange = !!startDate && !!endDate;
+  const recentTransactionsFilters = useMemo<FilterTransactionDto>(
+    () => ({
+      ...(filterConfig.accountId ? { accountId: filterConfig.accountId } : {}),
+      type: filterConfig.type,
+      ...(startDate && endDate
+        ? {
+            date: {
+              start: startDate,
+              end: endDate,
+            },
+          }
+        : {}),
+      softDeleteScope: "ACTIVE",
+    }),
+    [endDate, filterConfig.accountId, filterConfig.type, startDate],
+  );
   const selectedAccount = data?.account ?? resolvedFormConfig.account ?? null;
   const currencyName = selectedAccount?.currency?.name;
   const currencySymbol = selectedAccount?.currency?.symbol;
@@ -239,6 +261,18 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
                   aria-label={t("_pages:transactions.add")}
                 />
                 <IconButton
+                  disabled={isLoading || !hasRecentTransactionsRange}
+                  onClick={recentTransactionsDialog.handleOpen}
+                  icon={faClock}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={t(
+                    "_pages:home.dashboard.recentTransactions.action",
+                  )}
+                  aria-label={t(
+                    "_pages:home.dashboard.recentTransactions.action",
+                  )}
+                />
+                <IconButton
                   disabled={isLoading || categories.length === 0}
                   onClick={() => typeResumeDialog.openDialog()}
                   icon={faList}
@@ -266,6 +300,14 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         endDate={data?.endDate}
         transactionType={data?.transactionType ?? resolvedFormConfig.type}
         excludedCategoryIds={resolvedFormConfig.excludedCategoryIds}
+      />
+      <RecentTransactionsDialog
+        open={recentTransactionsDialog.open}
+        onClose={recentTransactionsDialog.handleClose}
+        title={t("_pages:home.dashboard.recentTransactions.title")}
+        filters={recentTransactionsFilters}
+        excludedCategoryIds={resolvedFormConfig.excludedCategoryIds}
+        enabled={hasRecentTransactionsRange}
       />
       <AddTransactionDialog {...addTransaction} />
     </>

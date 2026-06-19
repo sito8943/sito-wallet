@@ -50,6 +50,11 @@
         "refresh": "Actualizar saldo",
         "noAccount": "Selecciona una cuenta"
       },
+      "recentTransactions": {
+        "title": "Transacciones recientes",
+        "action": "Ver transacciones recientes",
+        "empty": "No hay transacciones para estos filtros"
+      },
       "weeklySpent": {
         "configTitle": "Configurar gasto semanal"
       },

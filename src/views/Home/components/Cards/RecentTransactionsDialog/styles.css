@@ -1,0 +1,49 @@
+@reference "../../../../../styles/variables.css";
+
+.recent-transactions-dialog-content {
+  @apply mt-2;
+}
+
+.recent-transactions-dialog-loading {
+  @apply py-10;
+}
+
+.recent-transactions-list {
+  @apply flex max-h-[60vh] flex-col gap-2 overflow-auto pb-1;
+}
+
+.recent-transaction-item {
+  @apply flex items-center justify-between gap-3 rounded-lg bg-base-light px-3 py-3;
+}
+
+.recent-transaction-type {
+  @apply shrink-0;
+}
+
+.recent-transaction-body {
+  @apply flex min-w-0 flex-1 flex-col gap-1;
+}
+
+.recent-transaction-meta {
+  @apply flex min-w-0 items-center gap-1 text-xs text-text-muted;
+}
+
+.recent-transaction-meta > p {
+  @apply truncate;
+}
+
+.recent-transaction-description {
+  @apply truncate text-sm;
+}
+
+.recent-transaction-amount {
+  @apply flex shrink-0 items-center gap-1 font-bold;
+}
+
+.recent-transaction-amount-value--income {
+  @apply text-bg-success;
+}
+
+.recent-transaction-amount-value--expense {
+  @apply text-bg-error;
+}

@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import {
   faAdd,
   faArrowsRotate,
+  faClock,
   faCircleNotch,
   faScaleBalanced,
 } from "@fortawesome/free-solid-svg-icons";
@@ -12,7 +13,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
-import { IconButton, classNames } from "@sito/dashboard-app";
+import { IconButton, classNames, useDialog } from "@sito/dashboard-app";
 
 // hooks
 import { AccountsQueryKeys } from "../../../../../hooks/queries/queryKeys/accountsQueryKeys";
@@ -27,6 +28,7 @@ import { AddTransactionDialog } from "../../../../Transactions/components";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { ActiveFilters } from "./ActiveFilters";
 import { DashboardCard } from "../DashboardCard";
+import { RecentTransactionsDialog } from "../RecentTransactionsDialog";
 import { resolveCardConfig } from "../utils";
 
 // styles
@@ -35,6 +37,7 @@ import "../styles.css";
 // types
 import type { CurrentBalancePropsType } from "./types";
 import type { CardConfigOverrideType } from "../types";
+import type { FilterTransactionDto } from "lib";
 
 // utils
 import { formToDto, getActiveFiltersCount, parseFormConfig } from "./utils";
@@ -72,11 +75,20 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
   const currencyName = account?.currency?.name ?? "";
 
   const [isSyncing, setIsSyncing] = useState(false);
+  const recentTransactionsDialog = useDialog();
 
   const adjustBalance = useAdjustBalanceMutation();
   const addTransaction = useAddTransaction({
     account,
   });
+
+  const recentTransactionsFilters = useMemo<FilterTransactionDto>(
+    () => ({
+      ...(accountId ? { accountId } : {}),
+      softDeleteScope: "ACTIVE",
+    }),
+    [accountId],
+  );
 
   const handleRefresh = async () => {
     if (!account) return;
@@ -132,6 +144,17 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
                   aria-label={t("_pages:transactions.add")}
                 />
                 <IconButton
+                  onClick={recentTransactionsDialog.handleOpen}
+                  icon={faClock}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={t(
+                    "_pages:home.dashboard.recentTransactions.action",
+                  )}
+                  aria-label={t(
+                    "_pages:home.dashboard.recentTransactions.action",
+                  )}
+                />
+                <IconButton
                   disabled={adjustBalance.isLoading}
                   onClick={() => {
                     void adjustBalance.action(account).onClick?.();
@@ -163,6 +186,13 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
       </DashboardCard>
       <AdjustBalanceDialog {...adjustBalance} />
       <AddTransactionDialog {...addTransaction} />
+      <RecentTransactionsDialog
+        open={recentTransactionsDialog.open}
+        onClose={recentTransactionsDialog.handleClose}
+        title={t("_pages:home.dashboard.recentTransactions.title")}
+        filters={recentTransactionsFilters}
+        enabled={!!account?.id}
+      />
     </>
   );
 };
