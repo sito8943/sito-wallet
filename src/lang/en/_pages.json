@@ -50,6 +50,11 @@
         "refresh": "Refresh balance",
         "noAccount": "Select an account"
       },
+      "recentTransactions": {
+        "title": "Recent transactions",
+        "action": "View recent transactions",
+        "empty": "No transactions for these filters"
+      },
       "weeklySpent": {
         "configTitle": "Configure weekly spending"
       },
