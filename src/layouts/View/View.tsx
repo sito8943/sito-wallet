@@ -62,6 +62,7 @@ export function View() {
   const redirectTarget = hasSeenOnboarding
     ? AppRoutes.signIn
     : AppRoutes.onboarding;
+  const showNavbarSearch = location.pathname !== AppRoutes.home;
 
   useEffect(() => {
     if (!shouldRedirect) return;
@@ -106,7 +107,10 @@ export function View() {
           header={
             <>
               <OfflineBanner />
-              <DashboardHeader menuMap={featureFilteredMenuMap} />
+              <DashboardHeader
+                menuMap={featureFilteredMenuMap}
+                navbarProps={{ showSearch: showNavbarSearch }}
+              />
             </>
           }
           footer={

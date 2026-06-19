@@ -25,14 +25,15 @@ import type { UseAccountSliderParams } from "./types";
 // Drag/snap engine for the account slider. Position is derived from the
 // parent-controlled `activeIndex` plus a local drag offset that resets on
 // release; on release we snap to the neighbouring index (distance or velocity)
-// and report it back via `onIndexChange`. Also tracks whether the viewport has
-// scrolled past the sticky threshold so the caller can pin a dots bar.
+// and report it back via `onIndexChange`. A separate sentinel controls the
+// sticky summary so it appears after the card area has scrolled away.
 export function useAccountSlider({
   count,
   activeIndex,
   onIndexChange,
 }: UseAccountSliderParams) {
   const viewportRef = useRef<HTMLDivElement>(null);
+  const stickyTriggerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [drag, setDrag] = useState(0);
   const [dragging, setDragging] = useState(false);
@@ -55,12 +56,14 @@ export function useAccountSlider({
 
   useEffect(() => {
     const handleScroll = () => {
-      const el = viewportRef.current;
+      const el = stickyTriggerRef.current;
       if (!el) {
         setShowSticky(false);
         return;
       }
-      setShowSticky(el.getBoundingClientRect().top <= STICKY_TOP_PX);
+      setShowSticky(
+        count > 0 && el.getBoundingClientRect().top <= STICKY_TOP_PX,
+      );
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -69,7 +72,7 @@ export function useAccountSlider({
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
     };
-  }, []);
+  }, [count]);
 
   const slideWidth = width ? width * SLIDE_PEEK_RATIO : 0;
   const step = slideWidth + SLIDE_GAP;
@@ -123,6 +126,7 @@ export function useAccountSlider({
 
   return {
     viewportRef,
+    stickyTriggerRef,
     bind,
     slideWidth,
     translateX,

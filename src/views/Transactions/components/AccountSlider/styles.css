@@ -50,9 +50,37 @@
 }
 
 .account-slider-filter {
-  @apply !w-10 !h-10 !min-w-10;
+  @apply !w-10 !h-10 !min-w-10 ml-auto;
+}
+
+.account-slider-sticky-trigger {
+  @apply h-px w-full pointer-events-none;
 }
 
 .account-slider-sticky {
-  @apply fixed left-0 top-12 z-30 w-full bg-base-light px-4 py-2 flex justify-center;
+  @apply fixed left-0 top-12 z-30 w-full bg-base-light px-4 py-2 shadow-md shadow-border/40 flex flex-col gap-1 touch-pan-y select-none;
+}
+
+.account-slider-sticky--dragging {
+  @apply cursor-grabbing;
+}
+
+.account-slider-sticky-summary {
+  @apply flex w-full items-center justify-between gap-3;
+}
+
+.account-slider-sticky-meta {
+  @apply flex min-w-0 items-center gap-1 text-sm font-semibold text-text;
+}
+
+.account-slider-sticky-name {
+  @apply truncate;
+}
+
+.account-slider-sticky-balance {
+  @apply shrink-0 text-right text-lg font-bold text-text;
+}
+
+.account-slider-sticky .account-slider-dots {
+  @apply flex-none justify-center pl-0;
 }

@@ -1,11 +1,11 @@
 @reference "../../../../styles/variables.css";
 
 .base-card {
-  @apply relative items-center justify-start flex flex-col gap-3 p-5 min-h-58 min-w-60;
+  @apply relative items-center justify-start flex flex-col gap-3 p-5 min-w-60;
 }
 
 .base-card--add {
-  @apply !p-0 transition hover:bg-hover-primary/5;
+  @apply min-h-58 !p-0 transition hover:bg-hover-primary/5;
 }
 
 .base-card-button {

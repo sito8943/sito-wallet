@@ -448,7 +448,7 @@ export function Transactions() {
           pathname: location.pathname,
           search: `?${nextSearch.toString()}`,
         },
-        { replace: true },
+        { replace: true, preventScrollReset: true },
       );
     },
     [location.pathname, location.search, navigate, resetTransactionSwipe],

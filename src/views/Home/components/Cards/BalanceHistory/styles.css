@@ -1,7 +1,7 @@
 @reference "../../../../../styles/variables.css";
 
 .balance-history-card {
-  @apply !h-auto min-h-58 overflow-hidden;
+  @apply !h-auto overflow-hidden;
 }
 
 .balance-history-content {
