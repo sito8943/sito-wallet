@@ -232,3 +232,7 @@ main,
     @apply px-0;
   }
 }
+
+.select-input-label.input-label-normal {
+  @apply whitespace-nowrap
+}

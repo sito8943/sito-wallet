@@ -9,6 +9,7 @@ import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import { AccountCard } from "views/Accounts";
+import { Currency } from "views/Currencies/components/Currency";
 
 // constants
 import { SLIDE_GAP } from "./constants";
@@ -38,6 +39,7 @@ export function AccountSlider(props: AccountSliderPropsType) {
     );
     return index < 0 ? 0 : index;
   }, [accounts, selectedAccount]);
+  const activeAccount = selectedAccount ?? accounts[activeIndex] ?? null;
 
   const goTo = useCallback(
     (index: number) => {
@@ -51,6 +53,7 @@ export function AccountSlider(props: AccountSliderPropsType) {
 
   const {
     viewportRef,
+    stickyTriggerRef,
     bind,
     slideWidth,
     translateX,
@@ -120,9 +123,14 @@ export function AccountSlider(props: AccountSliderPropsType) {
           ))}
         </div>
       </div>
+      <div
+        ref={stickyTriggerRef}
+        className="account-slider-sticky-trigger"
+        aria-hidden="true"
+      />
 
       <div className="account-slider-toolbar">
-        {renderDots()}
+        {!showSticky && renderDots()}
         {onOpenFilters && (
           <IconButton
             icon={faFilter}
@@ -134,8 +142,41 @@ export function AccountSlider(props: AccountSliderPropsType) {
         )}
       </div>
 
-      {showSticky && (
-        <div className="account-slider-sticky">{renderDots()}</div>
+      {showSticky && activeAccount && (
+        <div
+          className={classNames(
+            "account-slider-sticky",
+            dragging && "account-slider-sticky--dragging",
+          )}
+          {...bind()}
+        >
+          <div className="account-slider-sticky-summary">
+            <p className="account-slider-sticky-meta">
+              <span className="account-slider-sticky-name">
+                {activeAccount.name}
+              </span>
+              {activeAccount.currency && (
+                <>
+                  <span aria-hidden="true">-</span>
+                  <span>{activeAccount.currency.name}</span>
+                  <span aria-hidden="true">-</span>
+                  <Currency
+                    name={activeAccount.currency.name}
+                    symbol={activeAccount.currency.symbol}
+                  />
+                </>
+              )}
+            </p>
+            <p className="account-slider-sticky-balance">
+              {activeAccount.balance}{" "}
+              <Currency
+                name={activeAccount.currency?.name}
+                symbol={activeAccount.currency?.symbol}
+              />
+            </p>
+          </div>
+          {renderDots()}
+        </div>
       )}
     </div>
   );
