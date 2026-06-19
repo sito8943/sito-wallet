@@ -18,12 +18,7 @@ import {
 export const useRecentTransactions = (
   props: UseRecentTransactionsPropsType,
 ) => {
-  const {
-    open,
-    filters,
-    excludedCategoryIds,
-    enabled = true,
-  } = props;
+  const { open, filters, excludedCategoryIds, enabled = true } = props;
   const manager = useManager();
   const { account } = useAuth();
 

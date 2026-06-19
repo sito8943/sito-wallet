@@ -24,10 +24,7 @@ export const RecentTransactionsDialog = (
   const { t } = useTranslation();
 
   const { data, isLoading, error } = useRecentTransactions(props);
-  const transactions = useMemo<TransactionDto[]>(
-    () => data ?? [],
-    [data],
-  );
+  const transactions = useMemo<TransactionDto[]>(() => data ?? [], [data]);
 
   return (
     <Dialog
