@@ -85,6 +85,16 @@ export function AccountSlider(props: AccountSliderPropsType) {
         ))}
       </div>
     );
+  const renderFilterButton = () =>
+    onOpenFilters ? (
+      <IconButton
+        icon={faFilter}
+        onClick={onOpenFilters}
+        name={t("_accessibility:buttons.filters")}
+        aria-label={t("_accessibility:ariaLabels.filters")}
+        className="account-slider-filter"
+      />
+    ) : null;
 
   return (
     <div className={classNames("account-slider", className)}>
@@ -131,15 +141,7 @@ export function AccountSlider(props: AccountSliderPropsType) {
 
       <div className="account-slider-toolbar">
         {!showSticky && renderDots()}
-        {onOpenFilters && (
-          <IconButton
-            icon={faFilter}
-            onClick={onOpenFilters}
-            name={t("_accessibility:buttons.filters")}
-            aria-label={t("_accessibility:ariaLabels.filters")}
-            className="account-slider-filter"
-          />
-        )}
+        {!showSticky && renderFilterButton()}
       </div>
 
       {showSticky && activeAccount && (
@@ -175,7 +177,10 @@ export function AccountSlider(props: AccountSliderPropsType) {
               />
             </p>
           </div>
-          {renderDots()}
+          <div className="account-slider-sticky-controls">
+            {renderDots()}
+            {renderFilterButton()}
+          </div>
         </div>
       )}
     </div>
