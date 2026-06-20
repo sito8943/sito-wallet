@@ -20,7 +20,12 @@ const PageResult = (props: PageResultPropsType) => {
   const { t } = useTranslation();
 
   return (
-    <Link className="search-page-result group" to={path} onClick={onClick}>
+    <Link
+      className="search-page-result group"
+      to={path}
+      onClick={onClick}
+      data-search-focusable="true"
+    >
       <FontAwesomeIcon className="search-page-result-icon" icon={faLink} />
       <p className="search-page-result-label">
         {name}{" "}

@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent as ReactKeyboardEvent,
+} from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { useNavigate } from "react-router-dom";
 import { stringSimilarity } from "string-similarity-js";
@@ -23,14 +30,17 @@ import { flattenSitemap, getFeatureFilteredSitemap } from "../../views/sitemap";
 // types
 import type { SearchResultType, SearchWrapperPropsType } from "./types";
 
+import { SEARCH_FOCUSABLE_SELECTOR } from "./constants";
+
 // config
 import { config } from "../../config";
 
 import "./styles.css";
 
 export const SearchWrapper = (props: SearchWrapperPropsType) => {
-  const { isModal = false } = props;
+  const { isModal = false, onNavigate } = props;
 
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
@@ -95,6 +105,7 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
 
             setRecent(history);
             toLocal(config.recentSearches, history);
+            onNavigate?.();
             navigate(route.path);
 
             setSearching("");
@@ -131,8 +142,47 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
     };
   }, [isModal, openOnKeyCombination]);
 
+  const moveFocus = useCallback((direction: -1 | 1) => {
+    const wrapper = wrapperRef.current;
+    const input = inputRef.current;
+    if (!wrapper || !input) return;
+
+    const options = Array.from(
+      wrapper.querySelectorAll<HTMLElement>(SEARCH_FOCUSABLE_SELECTOR),
+    );
+    const focusableElements = [input, ...options];
+    const currentIndex = focusableElements.indexOf(
+      document.activeElement as HTMLElement,
+    );
+    let nextIndex = direction === 1 ? 0 : focusableElements.length - 1;
+
+    if (currentIndex >= 0) {
+      nextIndex =
+        (currentIndex + direction + focusableElements.length) %
+        focusableElements.length;
+    }
+
+    focusableElements[nextIndex]?.focus();
+  }, []);
+
+  const handleKeyboardNavigation = useCallback(
+    (event: ReactKeyboardEvent<HTMLDivElement>) => {
+      if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+
+      event.preventDefault();
+      if (!showResults && !isModal) setShowResults(true);
+      moveFocus(event.key === "ArrowDown" ? 1 : -1);
+    },
+    [isModal, moveFocus, showResults],
+  );
+
   return (
-    <div role="search" className="search-wrapper">
+    <div
+      ref={wrapperRef}
+      role="search"
+      className="search-wrapper"
+      onKeyDown={handleKeyboardNavigation}
+    >
       <SearchInput
         ref={inputRef}
         onClick={() => {
@@ -169,6 +219,7 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
 
           setRecent(history);
           toLocal(config.recentSearches, history);
+          onNavigate?.();
         }}
         onClose={() => setShowResults(false)}
       />

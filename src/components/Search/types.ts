@@ -1,5 +1,6 @@
 export type SearchWrapperPropsType = {
   isModal?: boolean;
+  onNavigate?: () => void;
 };
 
 export type SearchInputPropsType = {

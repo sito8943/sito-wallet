@@ -26,10 +26,12 @@ export enum PageId {
   Transactions = "transactions",
   TransactionCategories = "transactionCategories",
   Subscriptions = "subscriptions",
+  SubscriptionNew = "subscriptionNew",
   SubscriptionProviders = "subscriptionProviders",
+  Debts = "debts",
+  DebtNew = "debtNew",
   Accounts = "accounts",
   Currencies = "currencies",
-  NotFound = "not-found",
   About = "about",
   CookiesPolicy = "cookies-policy",
   TermsAndConditions = "terms-and-conditions",
@@ -68,8 +70,20 @@ export const sitemap: ViewPageType<PageId>[] = [
     path: AppRoutes.subscriptions,
   },
   {
+    key: PageId.SubscriptionNew,
+    path: AppRoutes.subscriptionNew,
+  },
+  {
     key: PageId.SubscriptionProviders,
     path: AppRoutes.subscriptionProviders,
+  },
+  {
+    key: PageId.Debts,
+    path: AppRoutes.debts,
+  },
+  {
+    key: PageId.DebtNew,
+    path: AppRoutes.debtNew,
   },
   {
     key: PageId.Accounts,
@@ -78,10 +92,6 @@ export const sitemap: ViewPageType<PageId>[] = [
   {
     key: PageId.Currencies,
     path: AppRoutes.currencies,
-  },
-  {
-    key: PageId.NotFound,
-    path: AppRoutes.notFound,
   },
   {
     key: PageId.About,
@@ -96,7 +106,10 @@ const pageFeatureDependencies: Partial<Record<PageId, FeatureFlagKey>> = {
   [PageId.Transactions]: "transactionsEnabled",
   [PageId.TransactionCategories]: "transactionCategoriesEnabled",
   [PageId.Subscriptions]: "subscriptionsEnabled",
+  [PageId.SubscriptionNew]: "subscriptionsEnabled",
   [PageId.SubscriptionProviders]: "subscriptionsEnabled",
+  [PageId.Debts]: "debtsEnabled",
+  [PageId.DebtNew]: "debtsEnabled",
   [PageId.Accounts]: "accountsEnabled",
   [PageId.Currencies]: "currenciesEnabled",
 };

@@ -7,14 +7,16 @@
     "transactions": "Transacciones",
     "transactionCategories": "Categorías",
     "subscriptions": "Suscripciones",
+    "subscriptionNew": "Nueva suscripción",
     "subscriptionProviders": "Proveedores de suscripción",
+    "debts": "Deudas",
+    "debtNew": "Nueva deuda",
     "currencies": "Monedas",
     "users": "Usuarios",
     "about": "Acerca de Sito Wallet",
     "terms-and-conditions": "Términos y Condiciones",
     "cookies-policy": "Política de Cookies",
-    "privacy-policy": "Política de Privacidad",
-    "debts": "Deudas"
+    "privacy-policy": "Política de Privacidad"
   },
   "search": {
     "label": "Buscar",
@@ -171,7 +173,7 @@
       "newPasswordRequired": "La nueva contraseña es obligatoria",
       "confirmPasswordRequired": "La confirmación de contraseña es obligatoria",
       "fileType": "Solo se permiten archivos JPG, PNG o WEBP",
-      "fileSize": "La imagen debe pesar 5 MB o menos"
+      "fileSize": "La imagen debe pesar 2 MB o menos"
     },
     "photo": {
       "upload": "Subir foto",

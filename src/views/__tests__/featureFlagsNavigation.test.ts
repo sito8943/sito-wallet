@@ -49,7 +49,10 @@ vi.mock("lib", () => ({
     transactions: "/transactions",
     transactionCategories: "/transaction-categories",
     subscriptions: "/subscriptions",
+    subscriptionNew: "/subscriptions/new",
     subscriptionProviders: "/subscription-providers",
+    debts: "/debts",
+    debtNew: "/debts/new",
     accounts: "/accounts",
     currencies: "/currencies",
     notFound: "*",
@@ -97,6 +100,7 @@ describe("feature flags navigation guards", () => {
       checker({
         transactionsEnabled: false,
         subscriptionsEnabled: false,
+        debtsEnabled: false,
         accountsEnabled: false,
         currenciesEnabled: true,
         transactionCategoriesEnabled: false,
@@ -108,7 +112,10 @@ describe("feature flags navigation guards", () => {
     expect(pageKeys).not.toContain(PageId.Transactions);
     expect(pageKeys).not.toContain(PageId.TransactionCategories);
     expect(pageKeys).not.toContain(PageId.Subscriptions);
+    expect(pageKeys).not.toContain(PageId.SubscriptionNew);
     expect(pageKeys).not.toContain(PageId.SubscriptionProviders);
+    expect(pageKeys).not.toContain(PageId.Debts);
+    expect(pageKeys).not.toContain(PageId.DebtNew);
     expect(pageKeys).not.toContain(PageId.Accounts);
     expect(pageKeys).toContain(PageId.Currencies);
   });

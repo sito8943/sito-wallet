@@ -7,14 +7,16 @@
     "transactions": "Transactions",
     "transactionCategories": "Categories",
     "subscriptions": "Subscriptions",
+    "subscriptionNew": "New subscription",
     "subscriptionProviders": "Subscription providers",
+    "debts": "Debts",
+    "debtNew": "New debt",
     "currencies": "Currencies",
     "users": "Users",
     "about": "About Sito Wallet",
     "terms-and-conditions": "Terms and Conditions",
     "cookies-policy": "Cookies Policy",
-    "privacy-policy": "Privacy Policy",
-    "debts": "Debts"
+    "privacy-policy": "Privacy Policy"
   },
   "search": {
     "label": "Search",

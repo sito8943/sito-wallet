@@ -11,6 +11,17 @@ export const getErrorMessage = (error: unknown, fallback: string): string => {
   return fallback;
 };
 
+export const isUploadSizeExceededError = (error: unknown): boolean => {
+  if (typeof error === "object" && error !== null) {
+    const maybeError = error as { status?: number };
+    if (maybeError.status === 413) return true;
+  }
+
+  return getErrorMessage(error, "")
+    .toLowerCase()
+    .includes("maximum upload size exceeded");
+};
+
 export const toRenderableError = (error: unknown, fallback: string): Error => {
   if (error instanceof Error) return error;
   return new Error(getErrorMessage(error, fallback));

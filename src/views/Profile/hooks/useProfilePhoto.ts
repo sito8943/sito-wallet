@@ -10,6 +10,9 @@ import { useManager } from "providers";
 // lib
 import type { ProfileDto } from "lib";
 
+import { PROFILE_PHOTO_MAX_SIZE_BYTES } from "../constants";
+import { isUploadSizeExceededError } from "../utils";
+
 export function useProfilePhoto(
   profileId: number,
   onSuccess: (updated?: ProfileDto) => void,
@@ -23,6 +26,14 @@ export function useProfilePhoto(
   const uploadPhoto = useCallback(
     async (file: File) => {
       if (!profileId) return;
+
+      if (file.size > PROFILE_PHOTO_MAX_SIZE_BYTES) {
+        showErrorNotification({
+          message: t("_pages:profile.errors.fileSize"),
+        });
+        return;
+      }
+
       setIsUploading(true);
       try {
         const updated = await manager.Profiles.updatePhoto(profileId, file);
@@ -30,9 +41,11 @@ export function useProfilePhoto(
         showSuccessNotification({
           message: t("_pages:profile.photo.uploadSuccess"),
         });
-      } catch {
+      } catch (error) {
         showErrorNotification({
-          message: t("_pages:profile.photo.uploadError"),
+          message: isUploadSizeExceededError(error)
+            ? t("_pages:profile.errors.fileSize")
+            : t("_pages:profile.photo.uploadError"),
         });
       } finally {
         setIsUploading(false);

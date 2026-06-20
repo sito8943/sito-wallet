@@ -61,6 +61,7 @@ vi.mock("../SearchResult", () => ({
           <button
             key={item.path}
             data-testid={`result-item-${item.path}`}
+            data-search-focusable="true"
             onClick={item.onClick}
           >
             {item.name}
@@ -70,6 +71,7 @@ vi.mock("../SearchResult", () => ({
           <button
             key={r.path}
             data-testid={`recent-item-${r.path}`}
+            data-search-focusable="true"
             onClick={() => onRecentClick(r)}
           >
             {r.name}
@@ -81,25 +83,32 @@ vi.mock("../SearchResult", () => ({
     ) : null,
 }));
 
-vi.mock("../SearchInput", () => ({
-  SearchInput: ({
-    searching,
-    setSearching,
-    onClick,
-  }: {
+vi.mock("../SearchInput", async () => {
+  const { forwardRef } = await vi.importActual<typeof import("react")>(
+    "react",
+  );
+  type MockSearchInputProps = {
     searching: string;
     setSearching: (v: string) => void;
     onClick: () => void;
-  }) => (
-    <input
-      data-testid="search-input"
-      value={searching}
-      onClick={onClick}
-      onChange={(e) => setSearching(e.target.value)}
-      readOnly={false}
-    />
-  ),
-}));
+  };
+
+  const SearchInput = forwardRef<HTMLInputElement, MockSearchInputProps>(
+    ({ searching, setSearching, onClick }, ref) => (
+      <input
+        ref={ref}
+        data-testid="search-input"
+        value={searching}
+        onClick={onClick}
+        onChange={(e) => setSearching(e.target.value)}
+        readOnly={false}
+      />
+    ),
+  );
+  SearchInput.displayName = "MockSearchInput";
+
+  return { SearchInput };
+});
 
 vi.mock("../../../views/sitemap", () => ({
   getFeatureFilteredSitemap: () => [],
@@ -274,6 +283,23 @@ describe("SearchWrapper", () => {
       expect(mockNavigate).toHaveBeenCalledWith("/");
     });
 
+    it("closes the modal when a result is clicked", async () => {
+      const onNavigate = vi.fn();
+      renderSearchWrapper({ isModal: true, onNavigate });
+
+      fireEvent.change(screen.getByTestId("search-input"), {
+        target: { value: "home" },
+      });
+
+      await act(async () => {
+        vi.advanceTimersByTime(300);
+      });
+
+      fireEvent.click(screen.getByTestId("result-item-/"));
+
+      expect(onNavigate).toHaveBeenCalledOnce();
+    });
+
     it("caps recent list at 4 entries", async () => {
       const existing = Array.from({ length: 4 }, (_, i) => ({
         path: `/page-${i}`,
@@ -337,6 +363,21 @@ describe("SearchWrapper", () => {
 
       expect(mockToLocal).toHaveBeenCalledWith("test-recent-searches", "");
     });
+
+    it("closes the modal when a recent search is clicked", () => {
+      const onNavigate = vi.fn();
+      mockFromLocal.mockReturnValueOnce(
+        JSON.stringify([
+          { path: "/accounts", name: "Accounts", type: "page" },
+        ]),
+      );
+
+      renderSearchWrapper({ isModal: true, onNavigate });
+      fireEvent.click(screen.getByTestId("search-input"));
+      fireEvent.click(screen.getByTestId("recent-item-/accounts"));
+
+      expect(onNavigate).toHaveBeenCalledOnce();
+    });
   });
 
   describe("keyboard shortcut", () => {
@@ -351,6 +392,32 @@ describe("SearchWrapper", () => {
       });
 
       expect(mockIsMac).toHaveBeenCalled();
+    });
+  });
+
+  describe("keyboard navigation", () => {
+    it("moves focus between the input and results with arrow keys", async () => {
+      renderSearchWrapper();
+      const input = screen.getByTestId("search-input");
+
+      fireEvent.click(input);
+      fireEvent.change(input, { target: { value: "home" } });
+
+      await act(async () => {
+        vi.advanceTimersByTime(300);
+      });
+
+      const result = screen.getByTestId("result-item-/");
+
+      input.focus();
+      fireEvent.keyDown(input, { key: "ArrowDown" });
+      expect(result).toHaveFocus();
+
+      fireEvent.keyDown(result, { key: "ArrowDown" });
+      expect(input).toHaveFocus();
+
+      fireEvent.keyDown(input, { key: "ArrowUp" });
+      expect(result).toHaveFocus();
     });
   });
 });
