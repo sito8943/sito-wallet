@@ -78,7 +78,8 @@ export function DebtCard(props: DebtCardPropsType) {
       onSwipeDelete={onSwipeDelete}
       className="debt-card-content"
       containerClassName={classNames(
-        status === DebtStatus.Paid && "debt-card-content--paid",
+        (status === DebtStatus.Paid || status === DebtStatus.Cancelled) &&
+          "debt-card-content--paid",
       )}
     >
       <p
