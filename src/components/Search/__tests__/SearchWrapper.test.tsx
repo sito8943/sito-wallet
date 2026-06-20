@@ -84,9 +84,7 @@ vi.mock("../SearchResult", () => ({
 }));
 
 vi.mock("../SearchInput", async () => {
-  const { forwardRef } = await vi.importActual<typeof import("react")>(
-    "react",
-  );
+  const { forwardRef } = await vi.importActual<typeof import("react")>("react");
   type MockSearchInputProps = {
     searching: string;
     setSearching: (v: string) => void;
@@ -367,9 +365,7 @@ describe("SearchWrapper", () => {
     it("closes the modal when a recent search is clicked", () => {
       const onNavigate = vi.fn();
       mockFromLocal.mockReturnValueOnce(
-        JSON.stringify([
-          { path: "/accounts", name: "Accounts", type: "page" },
-        ]),
+        JSON.stringify([{ path: "/accounts", name: "Accounts", type: "page" }]),
       );
 
       renderSearchWrapper({ isModal: true, onNavigate });
