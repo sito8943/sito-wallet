@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useAuth } from "@sito/dashboard-app";
 
@@ -17,6 +17,7 @@ export function useNotificationsList(
   const { account } = useAuth();
 
   return useQuery({
+    placeholderData: keepPreviousData,
     ...NotificationsQueryKeys.list(params),
     enabled: !!account?.id && !!notificationsClient,
     queryFn: async () => {

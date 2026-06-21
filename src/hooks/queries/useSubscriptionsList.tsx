@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import type { QueryResult } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
@@ -38,6 +38,7 @@ export function useSubscriptionsList(
   );
 
   return useQuery({
+    placeholderData: keepPreviousData,
     ...SubscriptionsQueryKeys.list(normalizedFilters),
     enabled: !!account?.id && !!subscriptionsClient,
     queryFn: () => {

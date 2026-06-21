@@ -162,7 +162,8 @@ export function SubscriptionProviders() {
   const getActions = useCallback(
     (record: SubscriptionProviderDto) => [
       deleteSubscriptionProvider.action(record),
-      restoreSubscriptionProvider.action(record),
+      // restore defaults to multiple:false in the lib; enable batch restore
+      { ...restoreSubscriptionProvider.action(record), multiple: true },
     ],
     [deleteSubscriptionProvider, restoreSubscriptionProvider],
   );

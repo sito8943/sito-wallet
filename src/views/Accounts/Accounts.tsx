@@ -139,7 +139,8 @@ export function Accounts() {
       adjustBalance.action(record),
       syncAccount.action(record),
       deleteAccount.action(record),
-      restoreAccount.action(record),
+      // restore defaults to multiple:false in the lib; enable batch restore
+      { ...restoreAccount.action(record), multiple: true },
     ],
     [
       adjustBalance,

@@ -137,7 +137,8 @@ export function Currencies() {
   const getActions = useCallback(
     (record: CurrencyDto) => [
       deleteCurrency.action(record),
-      restoreCurrency.action(record),
+      // restore defaults to multiple:false in the lib; enable batch restore
+      { ...restoreCurrency.action(record), multiple: true },
     ],
     [deleteCurrency, restoreCurrency],
   );

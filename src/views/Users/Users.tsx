@@ -98,7 +98,8 @@ export function Users() {
     (record: UserDto) => [
       resetUser.action(record),
       deleteUser.action(record),
-      restoreUser.action(record),
+      // restore defaults to multiple:false in the lib; enable batch restore
+      { ...restoreUser.action(record), multiple: true },
     ],
     [deleteUser, restoreUser, resetUser],
   );

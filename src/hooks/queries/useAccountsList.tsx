@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 // providers
 import { useManager } from "providers";
@@ -52,6 +52,7 @@ export function useAccountsList(
   const { account } = useAuth();
 
   return useQuery({
+    placeholderData: keepPreviousData,
     ...AccountsQueryKeys.list(parsedQuery, normalizedFilters),
     enabled: !!account?.id,
     queryFn: () => manager.Accounts.get(parsedQuery, { ...normalizedFilters }),

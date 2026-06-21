@@ -118,7 +118,8 @@ export function Debts() {
       addPayment.action(record),
       cancelDebt.action(record),
       deleteDebt.action(record),
-      restoreDebt.action(record),
+      // restore defaults to multiple:false in the lib; enable batch restore
+      { ...restoreDebt.action(record), multiple: true },
     ],
     [addPayment, cancelDebt, deleteDebt, restoreDebt],
   );

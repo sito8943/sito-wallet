@@ -321,7 +321,8 @@ export function Transactions() {
       assignTransactionAccount.action(record),
       editTransaction.action(record),
       deleteTransaction.action(record),
-      restoreTransaction.action(record),
+      // restore defaults to multiple:false in the lib; enable batch restore
+      { ...restoreTransaction.action(record), multiple: true },
     ],
     [
       assignTransactionCategory,
@@ -337,7 +338,8 @@ export function Transactions() {
       assignTransactionCategory.action(record),
       assignTransactionAccount.action(record),
       deleteTransaction.action(record),
-      restoreTransaction.action(record),
+      // restore defaults to multiple:false in the lib; enable batch restore
+      { ...restoreTransaction.action(record), multiple: true },
     ],
     [
       assignTransactionAccount,

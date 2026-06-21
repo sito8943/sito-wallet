@@ -122,18 +122,16 @@ export function TransactionCard(props: TransactionCardPropsType) {
   }, [clearTouchTimeout]);
 
   const handleTouchStart = useCallback(() => {
-    if (deleted || selectionMode || !onLongPress) return;
+    if (selectionMode || !onLongPress) return;
 
     clearTouchTimeout();
     touchTimeoutRef.current = window.setTimeout(() => {
       longPressTriggeredRef.current = true;
       onLongPress(id);
     }, 450);
-  }, [clearTouchTimeout, deleted, id, onLongPress, selectionMode]);
+  }, [clearTouchTimeout, id, onLongPress, selectionMode]);
 
   const handleClick = useCallback(() => {
-    if (deleted) return;
-
     if (longPressTriggeredRef.current) {
       longPressTriggeredRef.current = false;
       return;
@@ -143,6 +141,8 @@ export function TransactionCard(props: TransactionCardPropsType) {
       onSelect?.(id);
       return;
     }
+
+    if (deleted) return;
 
     onClick(id);
   }, [deleted, id, onClick, onSelect, selectionMode]);
@@ -186,7 +186,9 @@ export function TransactionCard(props: TransactionCardPropsType) {
           "transition",
           "transaction-card",
           deleted
-            ? "transaction-card--deleted"
+            ? selectionMode && selected
+              ? "transaction-card--deleted transaction-card--selected"
+              : "transaction-card--deleted"
             : selectionMode
               ? selected
                 ? "transaction-card--selected"
@@ -224,7 +226,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
             symbol={account?.currency?.symbol}
           />
         </p>
-        {selectionMode && !deleted ? (
+        {selectionMode ? (
           <span
             className={classNames(
               selected

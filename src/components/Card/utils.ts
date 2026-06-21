@@ -34,9 +34,11 @@ export function isCoarsePointerDevice() {
 }
 
 export function shouldPreventMobileContextMenu(hasLongPressSelection: boolean) {
-  if (!hasLongPressSelection) return false;
-
-  return isCoarsePointerDevice();
+  // Always suppress the native context menu / long-press callout when a card
+  // supports long-press selection. Cards have no custom right-click menu, and
+  // coarse-pointer detection is unreliable (e.g. Chrome device emulation),
+  // so gate on the long-press capability alone.
+  return hasLongPressSelection;
 }
 
 export function isMobileViewport() {

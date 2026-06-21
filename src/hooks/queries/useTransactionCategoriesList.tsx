@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 // providers
 import { useManager } from "providers";
@@ -43,6 +43,7 @@ export function useTransactionCategoriesList(
   const { account } = useAuth();
 
   return useQuery({
+    placeholderData: keepPreviousData,
     ...TransactionCategoriesQueryKeys.list(normalizedFilters),
     enabled: !!account?.id,
     queryFn: () =>

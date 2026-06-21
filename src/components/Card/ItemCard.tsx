@@ -59,18 +59,16 @@ export function ItemCard<TRow extends BaseEntityDto>(
   }, [clearTouchTimeout]);
 
   const handleTouchStart = useCallback(() => {
-    if (deleted || selectionMode || !onLongPressSelection) return;
+    if (selectionMode || !onLongPressSelection) return;
 
     clearTouchTimeout();
     touchTimeoutRef.current = window.setTimeout(() => {
       longPressTriggeredRef.current = true;
       onLongPressSelection();
     }, 450);
-  }, [clearTouchTimeout, deleted, onLongPressSelection, selectionMode]);
+  }, [clearTouchTimeout, onLongPressSelection, selectionMode]);
 
   const handleClick = useCallback(() => {
-    if (deleted) return;
-
     if (longPressTriggeredRef.current) {
       longPressTriggeredRef.current = false;
       return;
@@ -80,6 +78,8 @@ export function ItemCard<TRow extends BaseEntityDto>(
       onToggleSelection?.();
       return;
     }
+
+    if (deleted) return;
 
     onClick?.();
   }, [deleted, onClick, onToggleSelection, selectionMode]);
@@ -107,7 +107,9 @@ export function ItemCard<TRow extends BaseEntityDto>(
         className={classNames(
           "item-card group animated",
           deleted
-            ? "item-card--deleted"
+            ? selectionMode && selected
+              ? "item-card--deleted item-card--selected base-border"
+              : "item-card--deleted"
             : selectionMode
               ? selected
                 ? "item-card--selected base-border"
@@ -120,7 +122,9 @@ export function ItemCard<TRow extends BaseEntityDto>(
         <div
           className={classNames(
             "item-card-content",
-            !deleted && hasInteractions && "item-card-content--clickable",
+            (selectionMode || !deleted) &&
+              hasInteractions &&
+              "item-card-content--clickable",
             className,
           )}
           onClick={handleClick}
@@ -137,7 +141,7 @@ export function ItemCard<TRow extends BaseEntityDto>(
           }
           aria-pressed={selectionMode ? selected : undefined}
         >
-          {selectionMode && !deleted ? (
+          {selectionMode ? (
             <span
               className={classNames(
                 "item-card-selection-indicator",

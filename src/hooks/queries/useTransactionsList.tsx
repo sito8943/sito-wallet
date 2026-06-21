@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 // @sito/dashboard-app
 import type { QueryParam, QueryResult } from "@sito/dashboard-app";
@@ -69,6 +69,9 @@ export function useTransactionsList(props: {
   );
 
   return useQuery({
+    // keep prior page data while fetching so `total` stays stable and the
+    // table does not reset to the first page mid-pagination
+    placeholderData: keepPreviousData,
     ...TransactionsQueryKeys.list(parsedQueries, {
       ...parsedFilters,
     }),

@@ -139,7 +139,9 @@ export function TransactionCategories() {
   const getActions = useCallback(
     (record: TransactionCategoryDto) => [
       deleteTransactionCategory.action(record),
-      restoreTransactionCategory.action(record),
+      // restore defaults to multiple:false in the lib; enable batch restore
+      // so deleted rows can be multi-selected and restored together
+      { ...restoreTransactionCategory.action(record), multiple: true },
     ],
     [deleteTransactionCategory, restoreTransactionCategory],
   );

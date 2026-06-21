@@ -153,7 +153,8 @@ export function Subscriptions() {
     (record: SubscriptionDto) => [
       addBillingLog.action(record),
       deleteSubscription.action(record),
-      restoreSubscription.action(record),
+      // restore defaults to multiple:false in the lib; enable batch restore
+      { ...restoreSubscription.action(record), multiple: true },
     ],
     [addBillingLog, deleteSubscription, restoreSubscription],
   );

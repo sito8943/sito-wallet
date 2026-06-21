@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 // providers
 import { useManager } from "providers";
@@ -40,6 +40,7 @@ export function useCurrenciesList(
   const { account } = useAuth();
 
   return useQuery({
+    placeholderData: keepPreviousData,
     ...CurrenciesQueryKeys.list(normalizedFilters),
     enabled: !!account?.id,
     queryFn: () => manager.Currencies.get(undefined, { ...normalizedFilters }),
