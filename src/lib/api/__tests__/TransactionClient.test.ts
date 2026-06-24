@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockDoQuery = vi.fn();
+const mockPost = vi.fn();
 const mockDefaultTokenAcquirer = vi.fn(() => ({
   Authorization: "Bearer token",
 }));
@@ -57,6 +58,7 @@ vi.mock("@sito/dashboard-app", () => ({
   BaseClient: class {
     api = {
       doQuery: mockDoQuery,
+      post: mockPost,
       defaultTokenAcquirer: mockDefaultTokenAcquirer,
     };
 
@@ -93,10 +95,31 @@ import TransactionClient from "../TransactionClient";
 describe("TransactionClient", () => {
   beforeEach(() => {
     mockDoQuery.mockReset();
+    mockPost.mockReset();
     mockDefaultTokenAcquirer.mockReset();
     mockDefaultTokenAcquirer.mockReturnValue({
       Authorization: "Bearer token",
     });
+  });
+
+  it("posts account transfers to the dedicated endpoint", async () => {
+    mockPost.mockResolvedValue({
+      outgoingTransactionId: 31,
+      incomingTransactionId: 32,
+    });
+
+    const client = new TransactionClient();
+    const payload = {
+      sourceAccountId: 3,
+      destinationAccountId: 4,
+      amount: 25.5,
+      date: "2026-06-22T12:08",
+      description: "Savings",
+    };
+
+    await client.transfer(payload);
+
+    expect(mockPost).toHaveBeenCalledWith("transactions/transfer", payload);
   });
 
   it("calls weekly without request body on GET", async () => {

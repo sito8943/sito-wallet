@@ -1,6 +1,14 @@
-import type { AccountDto, AddAccountDto, UpdateAccountDto } from "lib";
+import { formatForDatetimeLocal } from "@sito/dashboard-app";
+
+import type {
+  AccountDto,
+  AddAccountDto,
+  CommonAccountDto,
+  TransferTransactionDto,
+  UpdateAccountDto,
+} from "lib";
 import { AccountType } from "lib";
-import type { AccountFormType } from "./types";
+import type { AccountFormType, TransferFormType } from "./types";
 
 // bankName only applies to Card accounts; strip it otherwise and drop empty
 // selections so we never persist a blank brand.
@@ -66,3 +74,36 @@ export const emptyAccount: AccountFormType = {
   currency: null,
   userId: 0,
 };
+
+export const getTransferDefaultValues = (): TransferFormType => ({
+  destinationAccount: null,
+  amount: "",
+  date: formatForDatetimeLocal(),
+  description: "",
+});
+
+export const getEligibleTransferAccounts = (
+  accounts: CommonAccountDto[],
+  sourceAccount: AccountDto | null,
+): CommonAccountDto[] => {
+  if (!sourceAccount?.currency?.id) return [];
+
+  return accounts.filter(
+    (account) =>
+      account.id !== sourceAccount.id &&
+      account.currency?.id === sourceAccount.currency?.id,
+  );
+};
+
+export const transferFormToDto = (
+  form: TransferFormType,
+  sourceAccount: AccountDto | null,
+): TransferTransactionDto => ({
+  sourceAccountId: sourceAccount?.id ?? 0,
+  destinationAccountId: form.destinationAccount?.id ?? 0,
+  amount: Number(form.amount),
+  date: form.date,
+  ...(form.description.trim()
+    ? { description: form.description.trim() }
+    : {}),
+});

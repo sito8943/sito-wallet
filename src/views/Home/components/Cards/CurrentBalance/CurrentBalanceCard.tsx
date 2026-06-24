@@ -7,6 +7,7 @@ import {
   faArrowsRotate,
   faClock,
   faCircleNotch,
+  faMoneyBillTransfer,
   faScaleBalanced,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,12 +19,16 @@ import { IconButton, classNames, useDialog } from "@sito/dashboard-app";
 // hooks
 import { AccountsQueryKeys } from "../../../../../hooks/queries/queryKeys/accountsQueryKeys";
 import { useAccountsList } from "../../../../../hooks/queries/useAccountsList";
-import { useAdjustBalanceMutation } from "../../../../Accounts/hooks";
+import {
+  useAdjustBalanceMutation,
+  useTransferDialog,
+} from "../../../../Accounts/hooks";
 import { useAddTransaction } from "../../../../Transactions/hooks";
 
 // components
 import { Currency } from "../../../../Currencies";
 import { AdjustBalanceDialog } from "../../../../Accounts/components/AdjustBalanceDialog";
+import { TransferDialog } from "../../../../Accounts/components/TransferDialog";
 import { AddTransactionDialog } from "../../../../Transactions/components";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { ActiveFilters } from "./ActiveFilters";
@@ -81,6 +86,8 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
   const addTransaction = useAddTransaction({
     account,
   });
+  const transfer = useTransferDialog();
+  const canTransfer = account ? transfer.canTransfer(account) : false;
 
   const recentTransactionsFilters = useMemo<FilterTransactionDto>(
     () => ({
@@ -144,6 +151,18 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
                   aria-label={t("_pages:transactions.add")}
                 />
                 <IconButton
+                  disabled={!canTransfer}
+                  onClick={() => transfer.openTransferDialog(account)}
+                  icon={faMoneyBillTransfer}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={t(
+                    canTransfer
+                      ? "_pages:accounts.actions.transfer.text"
+                      : "_pages:accounts.actions.transfer.unavailable",
+                  )}
+                  aria-label={t("_pages:accounts.actions.transfer.text")}
+                />
+                <IconButton
                   onClick={recentTransactionsDialog.handleOpen}
                   icon={faClock}
                   data-tooltip-id="tooltip"
@@ -186,6 +205,7 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
       </DashboardCard>
       <AdjustBalanceDialog {...adjustBalance} />
       <AddTransactionDialog {...addTransaction} />
+      <TransferDialog {...transfer} />
       <RecentTransactionsDialog
         open={recentTransactionsDialog.open}
         onClose={recentTransactionsDialog.handleClose}

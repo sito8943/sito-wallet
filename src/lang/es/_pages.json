@@ -495,6 +495,27 @@
         "text": "Añadir transacción",
         "successMessage": "Guardado correctamente"
       },
+      "transfer": {
+        "text": "Transferir",
+        "unavailable": "Necesitas otra cuenta con la misma moneda para transferir",
+        "successMessage": "Transferencia realizada correctamente",
+        "dialog": {
+          "title": "Transferir entre cuentas",
+          "sourceAccount": "Cuenta origen",
+          "destinationAccount": "Cuenta destino",
+          "destinationPlaceholder": "Selecciona una cuenta destino",
+          "defaultDescription": "Transferencia entre cuentas"
+        },
+        "errors": {
+          "accountsRequired": "Selecciona las cuentas de origen y destino",
+          "accountsDifferent": "La cuenta destino debe ser diferente a la cuenta origen",
+          "amountRequired": "La cantidad es obligatoria",
+          "amountPositive": "La cantidad debe ser mayor que cero",
+          "accountNotFound": "No se encontró una de las cuentas",
+          "currencyMismatch": "Las cuentas deben utilizar la misma moneda",
+          "userNotAuthenticated": "Debes iniciar sesión para transferir"
+        }
+      },
       "adjustBalance": {
         "text": "Ajustar saldo",
         "successMessage": "Saldo ajustado correctamente",

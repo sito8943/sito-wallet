@@ -1,0 +1,15 @@
+@reference "../../../../styles/variables.css";
+
+.transfer-dialog-source {
+  @apply flex flex-col gap-1 rounded-xl bg-base p-3;
+}
+
+.transfer-dialog-source-label,
+.transfer-dialog-source-balance,
+.transfer-dialog-empty {
+  @apply text-sm text-text-muted;
+}
+
+.transfer-dialog-empty {
+  @apply py-4 text-center;
+}

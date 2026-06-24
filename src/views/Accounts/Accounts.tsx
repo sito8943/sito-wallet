@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faWallet } from "@fortawesome/free-solid-svg-icons";
@@ -20,7 +20,11 @@ import {
 } from "@sito/dashboard-app";
 
 // providers
-import { useManager, useRegisterBottomNavAction } from "providers";
+import {
+  useFeatureFlags,
+  useManager,
+  useRegisterBottomNavAction,
+} from "providers";
 
 // components
 import {
@@ -28,7 +32,9 @@ import {
   AccountCard,
   EditAccountDialog,
   AdjustBalanceDialog,
+  TransferDialog,
 } from "./components";
+import { AddTransactionDialog } from "../Transactions/components/AddTransactionDialog";
 import { MobileSelectionBar } from "components";
 
 // hooks
@@ -45,7 +51,9 @@ import {
   useSyncAccountMutation,
   useViewTransactionsAction,
   useAdjustBalanceMutation,
+  useTransferDialog,
 } from "./hooks";
+import { useAddTransaction } from "../Transactions/hooks/useAddTransaction";
 
 // types
 import type {
@@ -53,6 +61,7 @@ import type {
   FilterAccountDto,
   ImportPreviewAccountDto,
 } from "lib";
+import { AccountActions } from "./types";
 import { getDeleteAction } from "../../components/Card/utils";
 import {
   Tables,
@@ -69,6 +78,11 @@ export function Accounts() {
   const { showErrorNotification } = useNotification();
 
   const manager = useManager();
+  const { isFeatureEnabled } = useFeatureFlags();
+  const transactionsEnabled = isFeatureEnabled("transactionsEnabled");
+
+  const [selectedTransactionAccount, setSelectedTransactionAccount] =
+    useState<AccountDto | null>(null);
 
   const {
     data,
@@ -95,6 +109,12 @@ export function Accounts() {
   // #region actions
 
   const viewTransactions = useViewTransactionsAction({});
+
+  const addTransaction = useAddTransaction({
+    account: selectedTransactionAccount,
+  });
+
+  const transfer = useTransferDialog();
 
   const deleteAccount = useDeleteDialog({
     mutationFn: (data) => manager.Accounts.softDelete(data),
@@ -135,6 +155,20 @@ export function Accounts() {
 
   const getActions = useCallback(
     (record: AccountDto) => [
+      {
+        id: AccountActions.AddTransaction,
+        hidden: !!record.deletedAt || !transactionsEnabled,
+        disabled: !!record.deletedAt || !transactionsEnabled,
+        icon: (
+          <FontAwesomeIcon className="account-action-icon" icon={faAdd} />
+        ),
+        tooltip: t("_pages:accounts.actions.addTransaction.text"),
+        onClick: () => {
+          setSelectedTransactionAccount(record);
+          addTransaction.openDialog();
+        },
+      },
+      transfer.action(record),
       viewTransactions.action(record),
       adjustBalance.action(record),
       syncAccount.action(record),
@@ -143,10 +177,14 @@ export function Accounts() {
       { ...restoreAccount.action(record), multiple: true },
     ],
     [
+      addTransaction,
       adjustBalance,
       deleteAccount,
       restoreAccount,
       syncAccount,
+      t,
+      transfer,
+      transactionsEnabled,
       viewTransactions,
     ],
   );
@@ -251,6 +289,8 @@ export function Accounts() {
           />
           {/* Dialogs */}
           <AddAccountDialog {...addAccount} />
+          <AddTransactionDialog {...addTransaction} />
+          <TransferDialog {...transfer} />
           <EditAccountDialog {...editAccount} />
           <ConfirmationDialog
             {...deleteAccount}

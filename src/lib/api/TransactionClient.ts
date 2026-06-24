@@ -27,6 +27,8 @@ import type {
   ImportDto,
   AssignTransactionAccountDto,
   AssignTransactionCategoryDto,
+  TransferTransactionDto,
+  TransferTransactionResponseDto,
 } from "lib";
 import { parseJSONFile, TransactionType } from "lib";
 
@@ -159,6 +161,12 @@ export default class TransactionClient extends BaseClient<
       refreshTokenKey: config.auth.refreshTokenKey,
       accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
     });
+  }
+
+  async transfer(
+    data: TransferTransactionDto,
+  ): Promise<TransferTransactionResponseDto> {
+    return await this.api.post(`${Tables.Transactions}/transfer`, data);
   }
 
   async getCommon(

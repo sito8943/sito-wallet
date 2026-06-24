@@ -12,6 +12,7 @@ export * from "./FilterTransactionTypeResumeDto";
 export * from "./TransactionTypeGroupedDto";
 export * from "./FilterTransactionGroupedByTypeDto";
 export * from "./TransactionWeeklySpentDto";
+export * from "./TransferTransactionDto";
 export * from "./FilterWeeklyTransactionDto";
 export * from "./ImportPreviewTransactionDto";
 export * from "./ImportTransactionDto";

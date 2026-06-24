@@ -10,7 +10,7 @@ import type {
 } from "@sito/dashboard-app";
 
 // lib
-import type { AccountDto } from "lib";
+import type { AccountDto, CommonAccountDto } from "lib";
 
 export interface AccountCardPropsType extends Omit<
   Partial<AccountDto>,
@@ -55,9 +55,22 @@ export interface AdjustBalanceDialogPropsType extends TriggerFormDialogPropsType
   selectedAccount: AccountDto | null;
 }
 
+export interface TransferFormType extends FieldValues {
+  destinationAccount: CommonAccountDto | null;
+  amount: string;
+  date: string;
+  description: string;
+}
+
+export interface TransferDialogPropsType extends FormDialogPropsType<TransferFormType> {
+  sourceAccount: AccountDto | null;
+  accounts: CommonAccountDto[];
+}
+
 export enum AccountActions {
   ViewTransactions = "viewTransactions",
   AddTransaction = "addTransaction",
   SyncAccount = "syncAccount",
   AdjustBalance = "adjustBalance",
+  Transfer = "transfer",
 }

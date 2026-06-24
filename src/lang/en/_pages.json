@@ -495,6 +495,27 @@
         "text": "Add transaction",
         "successMessage": "Saved successful"
       },
+      "transfer": {
+        "text": "Transfer",
+        "unavailable": "You need another account with the same currency to transfer",
+        "successMessage": "Transfer completed successfully",
+        "dialog": {
+          "title": "Transfer between accounts",
+          "sourceAccount": "Source account",
+          "destinationAccount": "Destination account",
+          "destinationPlaceholder": "Select a destination account",
+          "defaultDescription": "Transfer between accounts"
+        },
+        "errors": {
+          "accountsRequired": "Select the source and destination accounts",
+          "accountsDifferent": "The destination account must be different from the source account",
+          "amountRequired": "Amount is required",
+          "amountPositive": "Amount must be greater than zero",
+          "accountNotFound": "One of the accounts was not found",
+          "currencyMismatch": "Both accounts must use the same currency",
+          "userNotAuthenticated": "You must sign in to transfer"
+        }
+      },
       "adjustBalance": {
         "text": "Adjust balance",
         "successMessage": "Balance adjusted successfully",
