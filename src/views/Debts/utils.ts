@@ -5,46 +5,16 @@ import type {
   DebtDto,
   UpdateDebtDto,
 } from "lib";
-import { DEBT_DIRECTIONS } from "lib";
+import {
+  DEBT_DIRECTIONS,
+  nowDateTimeLocal,
+  parseFiniteNumber,
+  parseOptionalDateTimeLocal,
+  toDateTimeLocal,
+} from "lib";
 
 import { DEFAULT_DEBT_DIRECTION } from "./constants";
 import type { DebtFormType, DebtPaymentFormType } from "./types";
-
-const parseFiniteNumber = (value: unknown, fallback = 0): number => {
-  if (typeof value === "string" && value.trim().length === 0) return fallback;
-
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : fallback;
-};
-
-const parseOptionalDateTimeLocal = (value: unknown): string | null => {
-  if (value === null || value === undefined) return null;
-  if (typeof value !== "string") return null;
-
-  const normalized = value.trim();
-  return normalized.length > 0 ? normalized : null;
-};
-
-const toDateTimeLocal = (value?: string | null): string => {
-  if (!value) return "";
-
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) {
-    return typeof value === "string" ? value.slice(0, 16) : "";
-  }
-
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-
-  return `${year}-${month}-${day}T${hours}:${minutes}`;
-};
-
-const nowDateTimeLocal = (): string => {
-  return toDateTimeLocal(new Date().toISOString());
-};
 
 export const toDebtDirection = (value: unknown): DebtDirection => {
   const parsed = Number(value);

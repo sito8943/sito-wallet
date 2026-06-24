@@ -1,7 +1,6 @@
 import type { WalletSessionAccountDto } from "../types";
 
-const isBoolean = (value: unknown): value is boolean =>
-  typeof value === "boolean";
+import { isBoolean } from "./guards";
 
 export const hasAuthenticatedSession = (
   account?: WalletSessionAccountDto | null,

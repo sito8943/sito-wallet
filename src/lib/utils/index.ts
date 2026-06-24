@@ -9,6 +9,8 @@ export * from "./persistedTableOptions";
 export * from "./locale";
 export * from "./date";
 export * from "./parseErrorMessage";
+export * from "./number";
+export * from "./guards";
 
 export const randomBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);

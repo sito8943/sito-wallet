@@ -3,6 +3,8 @@ import { fromLocal, removeFromLocal, toLocal } from "@sito/dashboard-app";
 import { config } from "../../config";
 import type { WalletSessionDto } from "../types";
 
+import { isBoolean } from "./guards";
+
 type PublicSessionAccount = Pick<
   WalletSessionDto,
   "id" | "username" | "email"
@@ -10,9 +12,6 @@ type PublicSessionAccount = Pick<
 
 const isNonEmptyString = (value: unknown): value is string =>
   typeof value === "string" && value.length > 0;
-
-const isBoolean = (value: unknown): value is boolean =>
-  typeof value === "boolean";
 
 const isPublicSessionAccount = (
   value: unknown,

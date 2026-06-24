@@ -6,6 +6,8 @@ import type {
   FeatureFlagKey,
 } from "../api/featureFlags/types";
 
+import { isBoolean, isObject } from "./guards";
+
 const APP_FEATURE_KEYS: Array<keyof AppFeatures> = [
   "balanceGreaterThanZero",
   "currenciesEnabled",
@@ -14,14 +16,6 @@ const APP_FEATURE_KEYS: Array<keyof AppFeatures> = [
   "subscriptionsEnabled",
   "debtsEnabled",
 ];
-
-const isObject = (value: unknown): value is Record<string, unknown> => {
-  return typeof value === "object" && value !== null;
-};
-
-const isBoolean = (value: unknown): value is boolean => {
-  return typeof value === "boolean";
-};
 
 export const sanitizeFeaturePayload = (
   payload: unknown,

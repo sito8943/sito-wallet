@@ -1,14 +1,11 @@
 import type { UpdateDashboardCardConfigDto } from "lib";
-import { TransactionType, TransactionTypeResumeTime } from "lib";
+import { isFiniteNumber, TransactionType, TransactionTypeResumeTime } from "lib";
 import type {
   FilterTypeResumeConfigType,
   ToTypeResumeBatchRequestItemType,
   TypeResumeTypeFormType,
 } from "./types";
 import { DEFAULT_TYPE_RESUME_CONFIG } from "./constants";
-
-const isFiniteNumber = (value: unknown): value is number =>
-  typeof value === "number" && Number.isFinite(value);
 
 export const normalizeExcludedCategoryIds = (value: unknown): number[] => {
   if (!Array.isArray(value)) return [];

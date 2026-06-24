@@ -1,6 +1,6 @@
 import type { QueryParam } from "@sito/dashboard-app";
 
-import { getTransactionCategories } from "lib";
+import { getTransactionCategories, isFiniteNumber } from "lib";
 import type { TransactionDto } from "lib";
 
 import {
@@ -8,9 +8,6 @@ import {
   RECENT_TRANSACTIONS_PREFILTER_QUERY,
   RECENT_TRANSACTIONS_QUERY,
 } from "./constants";
-
-const isFiniteNumber = (value: unknown): value is number =>
-  typeof value === "number" && Number.isFinite(value);
 
 export const normalizeRecentExcludedCategoryIds = (
   value: number[] | undefined,

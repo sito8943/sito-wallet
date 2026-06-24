@@ -5,6 +5,7 @@ import type {
   UserEntityConfigResponse,
 } from "./types";
 import { UserEntityConfigKey } from "./types";
+import { isObject } from "../../utils/guards";
 
 export const USER_ENTITY_CONFIG_KEYS: UserEntityConfigKey[] = [
   UserEntityConfigKey.Currencies,
@@ -21,10 +22,6 @@ const featureKeyByEntityKey: Record<
   [UserEntityConfigKey.Accounts]: "accountsEnabled",
   [UserEntityConfigKey.Transactions]: "transactionsEnabled",
   [UserEntityConfigKey.Subscriptions]: "subscriptionsEnabled",
-};
-
-const isObject = (value: unknown): value is Record<string, unknown> => {
-  return typeof value === "object" && value !== null;
 };
 
 const isUserEntityConfigKey = (
