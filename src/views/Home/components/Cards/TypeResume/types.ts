@@ -47,6 +47,7 @@ export interface TypeResumeTypeFormType
   oppositeExcludedCategoryIds: number[];
   showFiltersAsBadge: boolean;
   showOppositeType: boolean;
+  compare: boolean;
 }
 
 export type FilterTypeResumeConfigType = {
@@ -121,6 +122,8 @@ export type TypeResumeRowPropsType = {
   currencyName?: string;
   currencySymbol?: string;
   compact?: boolean;
+  compare?: boolean;
+  previousAmount?: number;
 };
 
 export type ToTypeResumeBatchRequestItemType = (

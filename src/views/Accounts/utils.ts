@@ -103,7 +103,5 @@ export const transferFormToDto = (
   destinationAccountId: form.destinationAccount?.id ?? 0,
   amount: Number(form.amount),
   date: form.date,
-  ...(form.description.trim()
-    ? { description: form.description.trim() }
-    : {}),
+  ...(form.description.trim() ? { description: form.description.trim() } : {}),
 });

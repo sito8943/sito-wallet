@@ -10,8 +10,13 @@ import {
 
 import type { TransactionDto } from "lib";
 
+import {
+  EditTransactionDialog,
+  TransactionCard,
+  useEditTransaction,
+} from "views/Transactions";
+
 import { RECENT_TRANSACTIONS_DIALOG_CLASS_NAME } from "./constants";
-import { RecentTransactionItem } from "./RecentTransactionItem";
 import type { RecentTransactionsDialogPropsType } from "./types";
 import { useRecentTransactions } from "./useRecentTransactions";
 
@@ -22,6 +27,8 @@ export const RecentTransactionsDialog = (
 ) => {
   const { open, onClose, title } = props;
   const { t } = useTranslation();
+
+  const editTransaction = useEditTransaction();
 
   const { data, isLoading, error } = useRecentTransactions(props);
   const transactions = useMemo<TransactionDto[]>(() => data ?? [], [data]);
@@ -46,14 +53,18 @@ export const RecentTransactionsDialog = (
         ) : (
           <ul className="recent-transactions-list">
             {transactions.map((transaction) => (
-              <RecentTransactionItem
+              <TransactionCard
                 key={transaction.id}
-                transaction={transaction}
+                {...transaction}
+                actions={[]}
+                onClick={editTransaction.openDialog}
               />
             ))}
           </ul>
         )}
       </div>
+
+      <EditTransactionDialog {...editTransaction} containerClassName="!z-60" />
     </Dialog>
   );
 };

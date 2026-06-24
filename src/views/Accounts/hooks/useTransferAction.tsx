@@ -25,8 +25,7 @@ export function useTransferAction(props: UseTransferActionProps) {
       return {
         id: AccountActions.Transfer,
         hidden: hidden || !!record.deletedAt || !transactionsEnabled,
-        disabled:
-          !!record.deletedAt || !transactionsEnabled || !hasDestination,
+        disabled: !!record.deletedAt || !transactionsEnabled || !hasDestination,
         icon: (
           <FontAwesomeIcon
             className="account-action-icon"

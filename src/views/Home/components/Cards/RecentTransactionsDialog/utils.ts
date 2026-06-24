@@ -1,10 +1,6 @@
 import type { QueryParam } from "@sito/dashboard-app";
 
-import {
-  TransactionType,
-  getPrimaryTransactionCategory,
-  getTransactionCategories,
-} from "lib";
+import { getTransactionCategories } from "lib";
 import type { TransactionDto } from "lib";
 
 import {
@@ -53,13 +49,3 @@ export const filterRecentTransactions = (
     })
     .slice(0, RECENT_TRANSACTIONS_LIMIT);
 };
-
-export const isRecentTransactionIncome = (
-  transaction: TransactionDto,
-): boolean =>
-  (getPrimaryTransactionCategory(transaction)?.type ?? TransactionType.In) ===
-  TransactionType.In;
-
-export const getRecentTransactionAmountPrefix = (
-  transaction: TransactionDto,
-): string => (isRecentTransactionIncome(transaction) ? "+ " : "- ");

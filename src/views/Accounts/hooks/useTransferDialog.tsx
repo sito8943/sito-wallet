@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -35,7 +35,7 @@ export function useTransferDialog() {
   const queryClient = useQueryClient();
   const { showErrorNotification } = useNotification();
   const { data: accountsData } = useAccountsCommon();
-  const accounts = accountsData ?? [];
+  const accounts = useMemo(() => accountsData ?? [], [accountsData]);
   const [sourceAccount, setSourceAccount] = useState<AccountDto | null>(null);
 
   const formDialog = usePostDialog<

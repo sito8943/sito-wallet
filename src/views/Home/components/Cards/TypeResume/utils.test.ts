@@ -101,6 +101,7 @@ describe("TypeResume utils", () => {
         time: TransactionTypeResumeTime.CurrentMonth,
         showFiltersAsBadge: false,
         showOppositeType: true,
+        compare: false,
         excludedCategoryIds: [3, 8],
         oppositeExcludedCategoryIds: [10, 12],
       }),

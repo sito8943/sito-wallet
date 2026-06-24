@@ -10,6 +10,7 @@ export type TransactionTypeResumeBatchRequestItemDto = {
   excludedCategoryIds?: number[];
   includeOpposite?: boolean;
   oppositeExcludedCategoryIds?: number[];
+  compare?: boolean;
 };
 
 export type TransactionTypeResumeBatchRequestDto = {

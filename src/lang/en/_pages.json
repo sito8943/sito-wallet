@@ -44,6 +44,17 @@
         "details": {
           "title": "Resume categories",
           "empty": "No categories in this range"
+        },
+        "compareToggle": "Compare with {{previousTime}}",
+        "previousTime": {
+          "CurrentDay": "yesterday",
+          "CurrentWeek": "last week",
+          "CurrentMonth": "last month",
+          "CurrentYear": "last year"
+        },
+        "compareColumns": {
+          "previous": "Previous",
+          "current": "Current"
         }
       },
       "currentBalance": {

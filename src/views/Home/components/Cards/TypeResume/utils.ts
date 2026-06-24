@@ -51,6 +51,9 @@ export const parseFormConfig = (
       showOppositeType:
         (parsed.showOppositeType as boolean | undefined) ??
         DEFAULT_TYPE_RESUME_CONFIG.showOppositeType,
+      compare:
+        (parsed.compare as boolean | undefined) ??
+        DEFAULT_TYPE_RESUME_CONFIG.compare,
     };
   } catch (err) {
     console.error(err);
@@ -73,6 +76,23 @@ export const getActiveFiltersCount = (
     (hasExcludedCategories ? 1 : 0) +
     (hasOppositeExcludedCategories ? 1 : 0)
   );
+};
+
+export const getPreviousTimeKey = (
+  time?: TransactionTypeResumeTime,
+): "CurrentDay" | "CurrentWeek" | "CurrentMonth" | "CurrentYear" => {
+  switch (time) {
+    case TransactionTypeResumeTime.CurrentDay:
+      return "CurrentDay";
+    case TransactionTypeResumeTime.CurrentWeek:
+      return "CurrentWeek";
+    case TransactionTypeResumeTime.CurrentYear:
+      return "CurrentYear";
+    case TransactionTypeResumeTime.CurrentMonth:
+    case undefined:
+    default:
+      return "CurrentMonth";
+  }
 };
 
 export const getOppositeTransactionType = (
@@ -111,6 +131,7 @@ export const toTypeResumeBatchRequestItem: ToTypeResumeBatchRequestItemType = (
     ...(data.showOppositeType && oppositeExcludedCategoryIds.length
       ? { oppositeExcludedCategoryIds }
       : {}),
+    ...(data.compare ? { compare: true } : {}),
   };
 };
 
@@ -129,6 +150,7 @@ export const formToDto = (
     time: data.time,
     showFiltersAsBadge: !!data.showFiltersAsBadge,
     showOppositeType: !!data.showOppositeType,
+    compare: !!data.compare,
     ...(excludedCategoryIds.length ? { excludedCategoryIds } : {}),
     ...(data.showOppositeType && oppositeExcludedCategoryIds.length
       ? { oppositeExcludedCategoryIds }

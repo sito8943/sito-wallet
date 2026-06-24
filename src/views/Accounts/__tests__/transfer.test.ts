@@ -2,10 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import type { AccountDto, CommonAccountDto } from "lib";
 
-import {
-  getEligibleTransferAccounts,
-  transferFormToDto,
-} from "../utils";
+import { getEligibleTransferAccounts, transferFormToDto } from "../utils";
 
 const sourceAccount = {
   id: 1,

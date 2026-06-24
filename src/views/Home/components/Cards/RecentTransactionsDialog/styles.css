@@ -1,7 +1,11 @@
 @reference "../../../../../styles/variables.css";
 
+/* The dialog (.dialog) is a flex column with a fixed height (100vh in
+   mobile-full-screen). Take the remaining space after the header and let the
+   list be the scroll container — `min-h-0` is required so the flex child can
+   shrink below its content height and actually scroll. */
 .recent-transactions-dialog-content {
-  @apply mt-2;
+  @apply mt-2 flex min-h-0 flex-1 flex-col;
 }
 
 .recent-transactions-dialog-loading {
@@ -9,41 +13,17 @@
 }
 
 .recent-transactions-list {
-  @apply flex max-h-[60vh] flex-col gap-2 overflow-auto pb-1;
+  @apply flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pb-4;
 }
 
-.recent-transaction-item {
-  @apply flex items-center justify-between gap-3 rounded-lg bg-base-light px-3 py-3;
-}
-
-.recent-transaction-type {
+/* Keep cards at their natural height so the list overflows and scrolls,
+   instead of flex-shrinking them (which made the cards look cut off). */
+.recent-transactions-list > * {
   @apply shrink-0;
 }
 
-.recent-transaction-body {
-  @apply flex min-w-0 flex-1 flex-col gap-1;
-}
-
-.recent-transaction-meta {
-  @apply flex min-w-0 items-center gap-1 text-xs text-text-muted;
-}
-
-.recent-transaction-meta > p {
-  @apply truncate;
-}
-
-.recent-transaction-description {
-  @apply truncate text-sm;
-}
-
-.recent-transaction-amount {
-  @apply flex shrink-0 items-center gap-1 font-bold;
-}
-
-.recent-transaction-amount-value--income {
-  @apply text-bg-success;
-}
-
-.recent-transaction-amount-value--expense {
-  @apply text-bg-error;
+/* Give the cards a distinct surface against the dialog background
+   (same approach as the weekly-transactions list). */
+.recent-transactions-list .transaction-card {
+  @apply bg-base-light;
 }

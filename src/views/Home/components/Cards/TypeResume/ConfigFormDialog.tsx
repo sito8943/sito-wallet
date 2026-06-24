@@ -32,7 +32,7 @@ import type {
 
 // utils
 import { icons } from "../../../../Transactions/components/utils";
-import { getOppositeTransactionType } from "./utils";
+import { getOppositeTransactionType, getPreviousTimeKey } from "./utils";
 
 import "../styles.css";
 
@@ -104,6 +104,18 @@ export const ConfigFormDialog = (
 
   const { data: accounts } = useAccountsCommon();
   const transactionCategories = useTransactionCategoriesCommon();
+  const compareLabel = useMemo(
+    () =>
+      t("_pages:home.dashboard.transactionTypeResume.compareToggle", {
+        previousTime: t(
+          `_pages:home.dashboard.transactionTypeResume.previousTime.${getPreviousTimeKey(
+            time,
+          )}`,
+        ),
+      }),
+    [t, time],
+  );
+
   const oppositeType = useMemo(
     () =>
       type === undefined
@@ -409,6 +421,21 @@ export const ConfigFormDialog = (
               label={t(
                 "_pages:home.dashboard.transactionTypeResume.showOppositeTypeToggle",
               )}
+              inputClassName="dashboard-card-toggle-input"
+              containerClassName="dashboard-card-toggle"
+              onChange={(event) => onChange(event.currentTarget.checked)}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="compare"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <CheckInput
+              {...rest}
+              id="type-resume-compare"
+              checked={!!value}
+              label={compareLabel}
               inputClassName="dashboard-card-toggle-input"
               containerClassName="dashboard-card-toggle"
               onChange={(event) => onChange(event.currentTarget.checked)}

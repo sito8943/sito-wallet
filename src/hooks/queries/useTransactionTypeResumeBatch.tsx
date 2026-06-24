@@ -34,6 +34,7 @@ const normalizeBatchItem = (
     ...(item.includeOpposite && oppositeExcludedCategoryIds.length
       ? { oppositeExcludedCategoryIds }
       : {}),
+    ...(item.compare ? { compare: true } : {}),
   };
 };
 

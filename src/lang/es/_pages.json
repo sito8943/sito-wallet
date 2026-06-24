@@ -44,6 +44,17 @@
         "details": {
           "title": "Categorías del resumen",
           "empty": "Sin categorías en este rango"
+        },
+        "compareToggle": "Comparar con {{previousTime}}",
+        "previousTime": {
+          "CurrentDay": "ayer",
+          "CurrentWeek": "la semana pasada",
+          "CurrentMonth": "el mes pasado",
+          "CurrentYear": "el año pasado"
+        },
+        "compareColumns": {
+          "previous": "Anterior",
+          "current": "Actual"
         }
       },
       "currentBalance": {

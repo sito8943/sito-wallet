@@ -1,4 +1,4 @@
-import type { FilterTransactionDto, TransactionDto } from "lib";
+import type { FilterTransactionDto } from "lib";
 
 export type RecentTransactionsDialogPropsType = {
   open: boolean;
@@ -13,7 +13,3 @@ export type UseRecentTransactionsPropsType = Pick<
   RecentTransactionsDialogPropsType,
   "open" | "filters" | "excludedCategoryIds" | "enabled"
 >;
-
-export type RecentTransactionItemPropsType = {
-  transaction: TransactionDto;
-};

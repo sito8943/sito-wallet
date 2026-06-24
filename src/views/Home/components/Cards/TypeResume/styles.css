@@ -1,7 +1,7 @@
 @reference "../../../../../styles/variables.css";
 
 .type-resume-amount {
-  @apply text-4xl max-md:text-3xl font-bold whitespace-nowrap;
+  @apply text-xl max-md:text-lg font-bold whitespace-nowrap;
 }
 
 .type-resume-totals {
@@ -58,6 +58,27 @@
 
 .type-resume-amount--expense {
   @apply text-bg-error;
+}
+
+.type-resume-compare {
+  @apply grid w-full items-center gap-x-3 gap-y-2;
+  grid-template-columns: 1fr 1fr auto;
+}
+
+.type-resume-compare-row {
+  @apply contents;
+}
+
+.type-resume-compare-header {
+  @apply text-xs uppercase tracking-wide text-text-muted text-right whitespace-nowrap;
+}
+
+.type-resume-compare-amount {
+  @apply text-xl max-md:text-lg font-bold whitespace-nowrap text-right;
+}
+
+.type-resume-compare-amount--previous {
+  @apply font-semibold opacity-70;
 }
 
 .type-resume-actions {

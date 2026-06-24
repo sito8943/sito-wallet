@@ -15,7 +15,45 @@ export const TypeResumeRow = (props: TypeResumeRowPropsType) => {
     currencyName,
     currencySymbol,
     compact = false,
+    compare = false,
+    previousAmount = 0,
   } = props;
+
+  const amountColorClass =
+    type === TransactionType.In
+      ? "type-resume-amount--income"
+      : "type-resume-amount--expense";
+
+  if (compare) {
+    return (
+      <div className="type-resume-compare-row">
+        <p
+          className={classNames(
+            "type-resume-compare-amount type-resume-compare-amount--previous poppins",
+            amountColorClass,
+          )}
+        >
+          {isLoading ? "…" : previousAmount}{" "}
+          <Currency name={currencyName} symbol={currencySymbol} />
+        </p>
+        <p
+          className={classNames(
+            "type-resume-compare-amount poppins",
+            amountColorClass,
+          )}
+        >
+          {isLoading ? "…" : amount}{" "}
+          <Currency name={currencyName} symbol={currencySymbol} />
+        </p>
+        <Type
+          type={type}
+          filled={false}
+          noText
+          iconClassName="type-resume-amount"
+        />
+      </div>
+    );
+  }
 
   return (
     <div

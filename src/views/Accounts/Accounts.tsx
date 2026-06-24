@@ -159,9 +159,7 @@ export function Accounts() {
         id: AccountActions.AddTransaction,
         hidden: !!record.deletedAt || !transactionsEnabled,
         disabled: !!record.deletedAt || !transactionsEnabled,
-        icon: (
-          <FontAwesomeIcon className="account-action-icon" icon={faAdd} />
-        ),
+        icon: <FontAwesomeIcon className="account-action-icon" icon={faAdd} />,
         tooltip: t("_pages:accounts.actions.addTransaction.text"),
         onClick: () => {
           setSelectedTransactionAccount(record);

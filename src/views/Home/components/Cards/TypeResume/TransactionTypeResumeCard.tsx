@@ -170,6 +170,10 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   });
   const oppositeTotal =
     batchResult?.opposite?.total ?? oppositeTypeResume.data?.total ?? 0;
+  const primaryPreviousTotal =
+    (batchResult?.primary ?? typeResume.data)?.comparison?.total ?? 0;
+  const oppositePreviousTotal =
+    (batchResult?.opposite ?? oppositeTypeResume.data)?.comparison?.total ?? 0;
   const isOppositeLoading =
     resolvedFormConfig.showOppositeType &&
     (batchResult?.isLoading ?? oppositeTypeResume.isLoading);
@@ -225,33 +229,77 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         {({ formConfig }) => (
           <div className="type-resume-content">
             <div className="type-resume-summary">
-              <div className="type-resume-totals">
-                {formConfig.showOppositeType && (
+              {formConfig.compare ? (
+                <div className="type-resume-compare">
+                  <span className="type-resume-compare-header">
+                    {t(
+                      "_pages:home.dashboard.transactionTypeResume.compareColumns.previous",
+                    )}
+                  </span>
+                  <span className="type-resume-compare-header">
+                    {t(
+                      "_pages:home.dashboard.transactionTypeResume.compareColumns.current",
+                    )}
+                  </span>
+                  <span aria-hidden="true" />
+                  {formConfig.showOppositeType && (
+                    <TypeResumeRow
+                      type={oppositeType}
+                      amount={oppositeTotal}
+                      previousAmount={oppositePreviousTotal}
+                      isLoading={isOppositeLoading}
+                      currencyName={
+                        currencyName ?? formConfig.account?.currency?.name
+                      }
+                      currencySymbol={
+                        currencySymbol ?? formConfig.account?.currency?.symbol
+                      }
+                      compare
+                    />
+                  )}
                   <TypeResumeRow
-                    type={oppositeType}
-                    amount={oppositeTotal}
-                    isLoading={isOppositeLoading}
+                    type={formConfig.type}
+                    amount={data?.total ?? 0}
+                    previousAmount={primaryPreviousTotal}
+                    isLoading={isLoading}
                     currencyName={
                       currencyName ?? formConfig.account?.currency?.name
                     }
                     currencySymbol={
                       currencySymbol ?? formConfig.account?.currency?.symbol
                     }
-                    compact
+                    compare
                   />
-                )}
-                <TypeResumeRow
-                  type={formConfig.type}
-                  amount={data?.total ?? 0}
-                  isLoading={isLoading}
-                  currencyName={
-                    currencyName ?? formConfig.account?.currency?.name
-                  }
-                  currencySymbol={
-                    currencySymbol ?? formConfig.account?.currency?.symbol
-                  }
-                />
-              </div>
+                </div>
+              ) : (
+                <div className="type-resume-totals">
+                  {formConfig.showOppositeType && (
+                    <TypeResumeRow
+                      type={oppositeType}
+                      amount={oppositeTotal}
+                      isLoading={isOppositeLoading}
+                      currencyName={
+                        currencyName ?? formConfig.account?.currency?.name
+                      }
+                      currencySymbol={
+                        currencySymbol ?? formConfig.account?.currency?.symbol
+                      }
+                      compact
+                    />
+                  )}
+                  <TypeResumeRow
+                    type={formConfig.type}
+                    amount={data?.total ?? 0}
+                    isLoading={isLoading}
+                    currencyName={
+                      currencyName ?? formConfig.account?.currency?.name
+                    }
+                    currencySymbol={
+                      currencySymbol ?? formConfig.account?.currency?.symbol
+                    }
+                  />
+                </div>
+              )}
               <div className="type-resume-actions">
                 <IconButton
                   onClick={() => addTransaction.openDialog()}
