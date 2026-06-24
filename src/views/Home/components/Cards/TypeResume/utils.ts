@@ -1,5 +1,9 @@
 import type { UpdateDashboardCardConfigDto } from "lib";
-import { isFiniteNumber, TransactionType, TransactionTypeResumeTime } from "lib";
+import {
+  isFiniteNumber,
+  TransactionType,
+  TransactionTypeResumeTime,
+} from "lib";
 import type {
   FilterTypeResumeConfigType,
   ToTypeResumeBatchRequestItemType,
