@@ -8,6 +8,7 @@ import { config } from "../../config";
 
 // types
 import type { AddProfileDto, ProfileDto, UpdateProfileDto } from "lib";
+import { parseErrorMessage } from "lib";
 
 type APIErrorShape = {
   status: number;
@@ -54,17 +55,6 @@ const toApiError = (error: unknown): APIErrorShape => {
     status: 500,
     message: "Unknown error",
   };
-};
-
-const parseErrorMessage = (payload: unknown, fallback: string): string => {
-  if (typeof payload === "string") return payload || fallback;
-
-  if (typeof payload === "object" && payload !== null) {
-    const maybePayload = payload as { message?: string; error?: string };
-    return maybePayload.message ?? maybePayload.error ?? fallback;
-  }
-
-  return fallback;
 };
 
 export default class ProfileClient {

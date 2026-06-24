@@ -13,7 +13,7 @@ import type {
   SubscriptionProviderDto,
   UpdateSubscriptionProviderDto,
 } from "lib";
-import { parseJSONFile } from "lib";
+import { parseErrorMessage, parseJSONFile } from "lib";
 
 import { config } from "../../config";
 
@@ -39,17 +39,6 @@ const isRequestOptions = (
     !(value instanceof Headers) &&
     ("headers" in value || "credentials" in value),
   );
-
-const parseErrorMessage = (payload: unknown, fallback: string): string => {
-  if (typeof payload === "string") return payload || fallback;
-
-  if (typeof payload === "object" && payload !== null) {
-    const maybePayload = payload as { message?: string; error?: string };
-    return maybePayload.message ?? maybePayload.error ?? fallback;
-  }
-
-  return fallback;
-};
 
 export default class SubscriptionProviderClient extends BaseClient<
   Tables,
