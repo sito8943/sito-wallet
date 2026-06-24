@@ -2,17 +2,13 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import {
-  isHttpError,
-  usePostDialog,
-  useNotification,
-} from "@sito/dashboard-app";
+import { usePostDialog } from "@sito/dashboard-app";
 
 // providers
 import { useManager } from "providers";
 
 // hooks
-import { CurrenciesQueryKeys } from "hooks";
+import { CurrenciesQueryKeys, useMutationErrorHandler } from "hooks";
 
 // utils
 import { addEmptyCurrency, formToDto } from "../utils";
@@ -25,7 +21,7 @@ import type { CurrencyFormType } from "../types";
 
 export function useAddCurrency() {
   const { t } = useTranslation();
-  const { showErrorNotification } = useNotification();
+  const handleMutationError = useMutationErrorHandler();
   const manager = useManager();
 
   const queryKey = useMemo(() => CurrenciesQueryKeys.all().queryKey, []);
@@ -40,17 +36,10 @@ export function useAddCurrency() {
     mutationFn: (data) => manager.Currencies.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:currencies.forms.add"),
-    onError: (error) => {
-      if (isHttpError(error) && error.status === 409) {
-        return showErrorNotification({
-          message: t("_entities:currency.name.unique"),
-        });
-      }
-
-      return showErrorNotification({
-        message: t("_accessibility:errors.500"),
-      });
-    },
+    onError: (error) =>
+      handleMutationError(error, {
+        uniqueKey: "_entities:currency.name.unique",
+      }),
     queryKey,
   });
 

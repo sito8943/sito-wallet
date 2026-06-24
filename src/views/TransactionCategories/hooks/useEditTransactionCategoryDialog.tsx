@@ -7,7 +7,10 @@ import { usePutDialog } from "@sito/dashboard-app";
 import { useManager } from "providers";
 
 // hooks
-import { TransactionCategoriesQueryKeys } from "hooks";
+import {
+  TransactionCategoriesQueryKeys,
+  useMutationErrorHandler,
+} from "hooks";
 
 // utils
 import { dtoToForm, emptyTransactionCategory, formToDto } from "../utils";
@@ -20,6 +23,7 @@ import type { UpdateTransactionCategoryDto, TransactionCategoryDto } from "lib";
 
 export function useEditTransactionCategoryDialog() {
   const { t } = useTranslation();
+  const handleMutationError = useMutationErrorHandler();
 
   const manager = useManager();
 
@@ -36,6 +40,10 @@ export function useEditTransactionCategoryDialog() {
     mutationFn: (data) => manager.TransactionCategories.update(data),
     onSuccessMessage: t("_pages:common.actions.edit.successMessage"),
     title: t("_pages:transactionCategories.forms.edit"),
+    onError: (error) =>
+      handleMutationError(error, {
+        uniqueKey: "_entities:transactionCategory.name.unique",
+      }),
     ...TransactionCategoriesQueryKeys.all(),
   });
 }

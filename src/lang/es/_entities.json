@@ -210,7 +210,8 @@
   },
   "subscription": {
     "name": {
-      "placeholder": "Ej: Netflix Premium"
+      "placeholder": "Ej: Netflix Premium",
+      "unique": "Ya existe una suscripción con ese nombre"
     },
     "provider": {
       "label": "Proveedor",

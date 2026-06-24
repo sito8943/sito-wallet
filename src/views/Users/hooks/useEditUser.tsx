@@ -1,12 +1,8 @@
 import { useTranslation } from "react-i18next";
 
-import {
-  isHttpError,
-  useNotification,
-  usePutDialog,
-} from "@sito/dashboard-app";
+import { usePutDialog } from "@sito/dashboard-app";
 
-import { UsersQueryKeys } from "hooks";
+import { UsersQueryKeys, useMutationErrorHandler } from "hooks";
 import { useManager } from "providers";
 
 import type { UpdateUserDto, UserDto } from "lib";
@@ -16,7 +12,7 @@ import type { UserFormType } from "../types";
 
 export function useEditUser() {
   const { t } = useTranslation();
-  const { showErrorNotification } = useNotification();
+  const handleMutationError = useMutationErrorHandler();
 
   const manager = useManager();
   const usersClient = "Users" in manager ? manager.Users : null;
@@ -35,17 +31,10 @@ export function useEditUser() {
     },
     onSuccessMessage: t("_pages:common.actions.edit.successMessage"),
     title: t("_pages:users.forms.edit"),
-    onError: (error) => {
-      if (isHttpError(error) && error.status === 409) {
-        return showErrorNotification({
-          message: t("_entities:user.email.unique"),
-        });
-      }
-
-      return showErrorNotification({
-        message: t("_accessibility:errors.500"),
-      });
-    },
+    onError: (error) =>
+      handleMutationError(error, {
+        uniqueKey: "_entities:user.email.unique",
+      }),
     ...UsersQueryKeys.all(),
   });
 }

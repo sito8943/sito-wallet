@@ -1,13 +1,9 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import {
-  isHttpError,
-  useNotification,
-  usePostDialog,
-} from "@sito/dashboard-app";
+import { usePostDialog } from "@sito/dashboard-app";
 
-import { UsersQueryKeys } from "hooks";
+import { UsersQueryKeys, useMutationErrorHandler } from "hooks";
 import { useManager } from "providers";
 
 import type { AddUserDto } from "lib";
@@ -17,7 +13,7 @@ import type { UserFormType } from "../types";
 
 export function useAddUser() {
   const { t } = useTranslation();
-  const { showErrorNotification } = useNotification();
+  const handleMutationError = useMutationErrorHandler();
 
   const manager = useManager();
   const usersClient = "Users" in manager ? manager.Users : null;
@@ -37,17 +33,10 @@ export function useAddUser() {
     },
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:users.forms.add"),
-    onError: (error) => {
-      if (isHttpError(error) && error.status === 409) {
-        return showErrorNotification({
-          message: t("_entities:user.email.unique"),
-        });
-      }
-
-      return showErrorNotification({
-        message: t("_accessibility:errors.500"),
-      });
-    },
+    onError: (error) =>
+      handleMutationError(error, {
+        uniqueKey: "_entities:user.email.unique",
+      }),
     queryKey,
   });
 

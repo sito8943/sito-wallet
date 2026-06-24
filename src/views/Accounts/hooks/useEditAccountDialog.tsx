@@ -7,7 +7,7 @@ import { usePutDialog } from "@sito/dashboard-app";
 import { useManager } from "providers";
 
 // hooks
-import { AccountsQueryKeys } from "hooks";
+import { AccountsQueryKeys, useMutationErrorHandler } from "hooks";
 
 // utils
 import { dtoToForm, emptyAccount, formToUpdateDto } from "../utils";
@@ -20,6 +20,7 @@ import type { UpdateAccountDto, AccountDto } from "lib";
 
 export function useEditAccountDialog() {
   const { t } = useTranslation();
+  const handleMutationError = useMutationErrorHandler();
 
   const manager = useManager();
 
@@ -36,6 +37,10 @@ export function useEditAccountDialog() {
     mutationFn: (data) => manager.Accounts.update(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:accounts.forms.edit"),
+    onError: (error) =>
+      handleMutationError(error, {
+        uniqueKey: "_entities:account.name.unique",
+      }),
     ...AccountsQueryKeys.all(),
   });
 }

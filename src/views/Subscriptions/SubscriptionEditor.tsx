@@ -7,13 +7,16 @@ import {
   Button,
   Error as ErrorView,
   FormContainer,
-  isHttpError,
   Page,
   useMutationForm,
   useNotification,
 } from "@sito/dashboard-app";
 
-import { SubscriptionsQueryKeys, useMobileNavbar } from "hooks";
+import {
+  SubscriptionsQueryKeys,
+  useMobileNavbar,
+  useMutationErrorHandler,
+} from "hooks";
 import { useManager } from "providers";
 
 import type { SubscriptionDto } from "lib";
@@ -43,23 +46,11 @@ const parseSubscriptionId = (value?: string): number | null => {
   return parsed;
 };
 
-const parseErrorMessage = (error: unknown, fallback: string): string => {
-  if (error instanceof Error) return error.message;
-
-  if (typeof error === "object" && error !== null) {
-    const maybeError = error as { message?: string };
-    if (typeof maybeError.message === "string") {
-      return maybeError.message;
-    }
-  }
-
-  return fallback;
-};
-
 export function SubscriptionEditor() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { showErrorNotification, showSuccessNotification } = useNotification();
+  const { showSuccessNotification } = useNotification();
+  const handleMutationError = useMutationErrorHandler();
 
   const manager = useManager();
   const subscriptionsClient =
@@ -122,20 +113,11 @@ export function SubscriptionEditor() {
 
       navigate(AppRoutes.subscriptions);
     },
-    onError: (error) => {
-      if (isHttpError(error) && error.status === 400) {
-        showErrorNotification({
-          message: String(
-            error.message ?? t("_pages:featureFlags.moduleUnavailable"),
-          ),
-        });
-        return;
-      }
-
-      showErrorNotification({
-        message: parseErrorMessage(error, t("_accessibility:errors.500")),
-      });
-    },
+    onError: (error) =>
+      handleMutationError(error, {
+        uniqueKey: "_entities:subscription.name.unique",
+        badRequest: { fallbackKey: "_pages:featureFlags.moduleUnavailable" },
+      }),
   });
 
   const subscriptionQuery = useQuery({

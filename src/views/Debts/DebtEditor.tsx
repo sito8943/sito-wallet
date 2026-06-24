@@ -7,13 +7,16 @@ import {
   Button,
   Error as ErrorView,
   FormContainer,
-  isHttpError,
   Page,
   useMutationForm,
   useNotification,
 } from "@sito/dashboard-app";
 
-import { DebtsQueryKeys, useMobileNavbar } from "hooks";
+import {
+  DebtsQueryKeys,
+  useMobileNavbar,
+  useMutationErrorHandler,
+} from "hooks";
 import { useManager } from "providers";
 
 import type { DebtDto, DebtPaymentDto } from "lib";
@@ -61,6 +64,7 @@ export function DebtEditor() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { showErrorNotification, showSuccessNotification } = useNotification();
+  const handleMutationError = useMutationErrorHandler();
 
   const manager = useManager();
   const debtsClient = "Debts" in manager ? manager.Debts : null;
@@ -111,20 +115,10 @@ export function DebtEditor() {
 
       navigate(AppRoutes.debts);
     },
-    onError: (error) => {
-      if (isHttpError(error) && error.status === 400) {
-        showErrorNotification({
-          message: String(
-            error.message ?? t("_pages:featureFlags.moduleUnavailable"),
-          ),
-        });
-        return;
-      }
-
-      showErrorNotification({
-        message: parseErrorMessage(error, t("_accessibility:errors.500")),
-      });
-    },
+    onError: (error) =>
+      handleMutationError(error, {
+        badRequest: { fallbackKey: "_pages:featureFlags.moduleUnavailable" },
+      }),
   });
 
   const debtQuery = useQuery({

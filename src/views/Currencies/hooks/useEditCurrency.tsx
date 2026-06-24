@@ -1,17 +1,13 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import {
-  isHttpError,
-  usePutDialog,
-  useNotification,
-} from "@sito/dashboard-app";
+import { usePutDialog } from "@sito/dashboard-app";
 
 // providers
 import { useManager } from "providers";
 
 // hooks
-import { CurrenciesQueryKeys } from "hooks";
+import { CurrenciesQueryKeys, useMutationErrorHandler } from "hooks";
 
 // utils
 import { dtoToForm, emptyCurrency, formToDto } from "../utils";
@@ -26,7 +22,7 @@ export function useEditCurrency() {
   const { t } = useTranslation();
 
   const manager = useManager();
-  const { showErrorNotification } = useNotification();
+  const handleMutationError = useMutationErrorHandler();
 
   return usePutDialog<
     CurrencyDto,
@@ -40,17 +36,10 @@ export function useEditCurrency() {
     getFunction: (id) => manager.Currencies.getById(id),
     mutationFn: (data) => manager.Currencies.update(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
-    onError: (error) => {
-      if (isHttpError(error) && error.status === 409) {
-        return showErrorNotification({
-          message: t("_entities:currency.name.unique"),
-        });
-      }
-
-      return showErrorNotification({
-        message: t("_accessibility:errors.500"),
-      });
-    },
+    onError: (error) =>
+      handleMutationError(error, {
+        uniqueKey: "_entities:currency.name.unique",
+      }),
     title: t("_pages:currencies.forms.edit"),
     ...CurrenciesQueryKeys.all(),
   });
