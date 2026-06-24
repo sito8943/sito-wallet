@@ -7,10 +7,7 @@ import { usePutDialog } from "@sito/dashboard-app";
 import { useManager } from "providers";
 
 // hooks
-import {
-  TransactionCategoriesQueryKeys,
-  useMutationErrorHandler,
-} from "hooks";
+import { TransactionCategoriesQueryKeys, useMutationErrorHandler } from "hooks";
 
 // utils
 import { dtoToForm, emptyTransactionCategory, formToDto } from "../utils";

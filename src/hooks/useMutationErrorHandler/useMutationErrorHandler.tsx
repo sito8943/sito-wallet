@@ -27,9 +27,7 @@ export function useMutationErrorHandler(): MutationErrorHandler {
 
         if (error.status === 400 && config.badRequest) {
           showErrorNotification({
-            message: String(
-              error.message ?? t(config.badRequest.fallbackKey),
-            ),
+            message: String(error.message ?? t(config.badRequest.fallbackKey)),
           });
           return;
         }

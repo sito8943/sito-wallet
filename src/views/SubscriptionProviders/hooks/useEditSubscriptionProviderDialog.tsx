@@ -2,10 +2,7 @@ import { useTranslation } from "react-i18next";
 
 import { usePutDialog } from "@sito/dashboard-app";
 
-import {
-  SubscriptionProvidersQueryKeys,
-  useMutationErrorHandler,
-} from "hooks";
+import { SubscriptionProvidersQueryKeys, useMutationErrorHandler } from "hooks";
 import { useManager } from "providers";
 
 import type { SubscriptionProviderDto } from "lib";
