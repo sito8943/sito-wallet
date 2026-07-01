@@ -43,3 +43,11 @@
 .subscription-billing-log-current-name {
   @apply ml-1 text-text;
 }
+
+.subscription-billing-log-toggle-input {
+  @apply h-4 w-4;
+}
+
+.subscription-billing-log-toggle {
+  @apply mb-5;
+}

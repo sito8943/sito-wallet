@@ -47,6 +47,7 @@ export interface SubscriptionBillingLogFormType extends FieldValues {
   paidAt: string;
   currency: CommonCurrencyDto | null;
   note: string;
+  autoCreateTransaction: boolean;
 }
 
 export interface AddSubscriptionBillingLogDialogPropsType extends TriggerFormDialogPropsType<SubscriptionBillingLogFormType> {

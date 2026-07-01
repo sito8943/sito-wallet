@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import type { Option } from "@sito/dashboard-app";
 import {
   AutocompleteInput,
+  CheckInput,
   ParagraphInput,
   TextInput,
 } from "@sito/dashboard-app";
@@ -37,6 +38,10 @@ export function SubscriptionBillingLogForm(
     setValue("paidAt", new Date().toISOString().slice(0, 16));
     setValue("currency", selectedSubscription.currency ?? null);
     setValue("note", "");
+    setValue(
+      "autoCreateTransaction",
+      !!selectedSubscription.autoCreateTransaction,
+    );
   }, [open, selectedSubscription, setValue]);
 
   const formDisabled = isLoading || currenciesQuery.isLoading;
@@ -145,6 +150,25 @@ export function SubscriptionBillingLogForm(
             placeholder={t("_entities:subscriptionBillingLog.note.placeholder")}
             autoComplete={`${Tables.Subscriptions}-${t("_entities:subscriptionBillingLog.note.label")}`}
             {...rest}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="autoCreateTransaction"
+        disabled={formDisabled}
+        render={({ field: { value, onChange, ...rest } }) => (
+          <CheckInput
+            {...rest}
+            id="subscription-billing-log-auto-create-transaction"
+            checked={!!value}
+            label={t(
+              "_entities:subscriptionBillingLog.autoCreateTransaction.label",
+            )}
+            inputClassName="subscription-billing-log-toggle-input"
+            containerClassName="subscription-billing-log-toggle"
+            onChange={(event) => onChange(event.currentTarget.checked)}
           />
         )}
       />

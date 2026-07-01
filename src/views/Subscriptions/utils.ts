@@ -207,6 +207,7 @@ export const emptySubscriptionBillingLogForm: SubscriptionBillingLogFormType = {
   paidAt: nowDateTimeLocal(),
   currency: null,
   note: "",
+  autoCreateTransaction: false,
 };
 
 export const subscriptionBillingLogFormToDto = (
@@ -218,6 +219,7 @@ export const subscriptionBillingLogFormToDto = (
 
   return {
     paidAt: form.paidAt,
+    autoCreateTransaction: !!form.autoCreateTransaction,
     ...(amount !== null ? { amount } : {}),
     ...(currencyId !== null ? { currencyId } : {}),
     ...(note !== null ? { note } : {}),

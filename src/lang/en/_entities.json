@@ -333,6 +333,9 @@
     "note": {
       "label": "Note",
       "placeholder": "Ex: Paid with card"
+    },
+    "autoCreateTransaction": {
+      "label": "Create transaction for this payment"
     }
   },
   "userDashboardCard": {

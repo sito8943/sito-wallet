@@ -3,4 +3,5 @@ export interface AddSubscriptionBillingLogDto {
   paidAt: string;
   currencyId?: number | null;
   note?: string | null;
+  autoCreateTransaction?: boolean;
 }
