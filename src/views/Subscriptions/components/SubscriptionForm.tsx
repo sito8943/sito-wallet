@@ -283,50 +283,55 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
         )}
       />
 
+      <div className="subscription-form-grid">
+        <Controller
+          control={control}
+          rules={{
+            required: t("_entities:subscription.amount.required"),
+          }}
+          name="amount"
+          disabled={formDisabled}
+          render={({ field: { value, ...rest } }) => (
+            <TextInput
+              required
+              type="number"
+              min={0.01}
+              step={0.01}
+              value={value ?? ""}
+              label={t("_entities:subscription.amount.label")}
+              placeholder={t("_entities:subscription.amount.placeholder")}
+              autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.amount.label")}`}
+              {...rest}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          rules={
+            autoCreateTransaction
+              ? { required: t("_entities:subscription.currency.required") }
+              : undefined
+          }
+          name="currency"
+          disabled={formDisabled}
+          render={({ field: { value, onChange, ...rest } }) => (
+            <AutocompleteInput
+              required={!!autoCreateTransaction}
+              options={currencyOptions}
+              value={value}
+              onChange={(nextValue) => onChange(nextValue)}
+              label={t("_entities:subscription.currency.label")}
+              placeholder={t("_entities:subscription.currency.placeholder")}
+              autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.currency.label")}`}
+              multiple={false}
+              {...rest}
+            />
+          )}
+        />
+      </div>
+
       {autoCreateTransaction && (
         <div className="subscription-form-grid">
-          <Controller
-            control={control}
-            rules={{
-              required: t("_entities:subscription.amount.required"),
-            }}
-            name="amount"
-            disabled={formDisabled}
-            render={({ field: { value, ...rest } }) => (
-              <TextInput
-                required
-                type="number"
-                min={0.01}
-                step={0.01}
-                value={value ?? ""}
-                label={t("_entities:subscription.amount.label")}
-                placeholder={t("_entities:subscription.amount.placeholder")}
-                autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.amount.label")}`}
-                {...rest}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            rules={{
-              required: t("_entities:subscription.currency.required"),
-            }}
-            name="currency"
-            disabled={formDisabled}
-            render={({ field: { value, onChange, ...rest } }) => (
-              <AutocompleteInput
-                required
-                options={currencyOptions}
-                value={value}
-                onChange={(nextValue) => onChange(nextValue)}
-                label={t("_entities:subscription.currency.label")}
-                placeholder={t("_entities:subscription.currency.placeholder")}
-                autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.currency.label")}`}
-                multiple={false}
-                {...rest}
-              />
-            )}
-          />
           <Controller
             control={control}
             name="account"

@@ -183,12 +183,7 @@ export function SubscriptionProviders() {
       onClick: () => addSubscriptionProvider.openDialog(),
       tooltip: t("_pages:subscriptionProviders.add"),
     }),
-    [
-      addSubscriptionProvider,
-      isLoading,
-      subscriptionProvidersClient,
-      t,
-    ],
+    [addSubscriptionProvider, isLoading, subscriptionProvidersClient, t],
   );
 
   const prefabSubscriptionProvidersAction = useMemo(
@@ -199,12 +194,7 @@ export function SubscriptionProviders() {
       onClick: () => prefabSubscriptionProviders.openDialog(),
       tooltip: t("_pages:prefabs.trySuggestions"),
     }),
-    [
-      isLoading,
-      prefabSubscriptionProviders,
-      subscriptionProvidersClient,
-      t,
-    ],
+    [isLoading, prefabSubscriptionProviders, subscriptionProvidersClient, t],
   );
 
   const pageToolbar = useMemo(
