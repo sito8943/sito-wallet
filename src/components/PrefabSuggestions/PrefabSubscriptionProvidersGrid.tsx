@@ -39,13 +39,6 @@ export function PrefabSubscriptionProvidersGrid(
             aria-pressed={isSelected}
             onClick={() => onChange(toggleInArray(value, provider.key))}
           >
-            {provider.image && (
-              <img
-                src={provider.image}
-                alt={provider.name}
-                className="prefab-suggestions-provider-logo"
-              />
-            )}
             <span className="prefab-suggestions-card-copy">
               <span className="prefab-suggestions-card-title">
                 {provider.name}

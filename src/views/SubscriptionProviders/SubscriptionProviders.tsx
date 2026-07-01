@@ -18,6 +18,7 @@ import {
   PrettyGrid,
   useDeleteDialog,
   useExportActionMutate,
+  IconButton,
   useImportDialog,
   useNotification,
   useRestoreDialog,
@@ -174,7 +175,56 @@ export function SubscriptionProviders() {
     onInteraction: subscriptionProviderSwipeDelete.resetSwipe,
   });
 
+  const addSubscriptionProviderAction = useMemo(
+    () => ({
+      icon: <FontAwesomeIcon icon={faAdd} />,
+      id: GlobalActions.Add,
+      disabled: isLoading || !subscriptionProvidersClient,
+      onClick: () => addSubscriptionProvider.openDialog(),
+      tooltip: t("_pages:subscriptionProviders.add"),
+    }),
+    [
+      addSubscriptionProvider,
+      isLoading,
+      subscriptionProvidersClient,
+      t,
+    ],
+  );
+
+  const prefabSubscriptionProvidersAction = useMemo(
+    () => ({
+      icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
+      id: "prefab-suggestions",
+      disabled: isLoading || !subscriptionProvidersClient,
+      onClick: () => prefabSubscriptionProviders.openDialog(),
+      tooltip: t("_pages:prefabs.trySuggestions"),
+    }),
+    [
+      isLoading,
+      prefabSubscriptionProviders,
+      subscriptionProvidersClient,
+      t,
+    ],
+  );
+
   const pageToolbar = useMemo(
+    () =>
+      subscriptionProvidersClient
+        ? [
+            prefabSubscriptionProvidersAction,
+            exportSubscriptionProviders.action(),
+            importSubscriptionProviders.action(),
+          ]
+        : [],
+    [
+      exportSubscriptionProviders,
+      importSubscriptionProviders,
+      prefabSubscriptionProvidersAction,
+      subscriptionProvidersClient,
+    ],
+  );
+
+  const mobilePageToolbar = useMemo(
     () =>
       subscriptionProvidersClient
         ? [
@@ -189,7 +239,7 @@ export function SubscriptionProviders() {
     ],
   );
 
-  useMobileNavbar(t("_pages:subscriptionProviders.title"), pageToolbar);
+  useMobileNavbar(t("_pages:subscriptionProviders.title"), mobilePageToolbar);
 
   const openAddSubscriptionProviderRef = useRef(
     addSubscriptionProvider.openDialog,
@@ -243,20 +293,8 @@ export function SubscriptionProviders() {
                   className: "subscription-providers-empty-icon",
                 }}
                 action={[
-                  {
-                    icon: <FontAwesomeIcon icon={faAdd} />,
-                    id: GlobalActions.Add,
-                    disabled: isLoading || !subscriptionProvidersClient,
-                    onClick: () => addSubscriptionProvider.openDialog(),
-                    tooltip: t("_pages:subscriptionProviders.add"),
-                  },
-                  {
-                    icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
-                    id: "prefab-suggestions",
-                    disabled: isLoading || !subscriptionProvidersClient,
-                    onClick: () => prefabSubscriptionProviders.openDialog(),
-                    tooltip: t("_pages:prefabs.trySuggestions"),
-                  },
+                  addSubscriptionProviderAction,
+                  prefabSubscriptionProvidersAction,
                 ]}
               />
             }
@@ -293,6 +331,18 @@ export function SubscriptionProviders() {
                 />
               );
             }}
+          />
+          <IconButton
+            type="button"
+            icon={faWandMagicSparkles}
+            variant="submit"
+            color="primary"
+            disabled={isLoading || !subscriptionProvidersClient}
+            onClick={() => prefabSubscriptionProviders.openDialog()}
+            data-tooltip-id="tooltip"
+            data-tooltip-content={t("_pages:prefabs.trySuggestions")}
+            aria-label={t("_pages:prefabs.trySuggestions")}
+            className="fixed right-4 bottom-20 z-30 !h-12 !w-12 !min-w-0 !rounded-full !p-0 shadow-lg sm:hidden"
           />
 
           <AddSubscriptionProviderDialog {...addSubscriptionProvider} />

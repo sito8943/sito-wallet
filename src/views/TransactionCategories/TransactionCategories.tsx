@@ -21,6 +21,7 @@ import {
   useImportDialog,
   PrettyGrid,
   useNotification,
+  IconButton,
 } from "@sito/dashboard-app";
 
 // providers
@@ -152,14 +153,48 @@ export function TransactionCategories() {
     onInteraction: transactionCategorySwipeDelete.resetSwipe,
   });
 
+  const addTransactionCategoryAction = useMemo(
+    () => ({
+      icon: <FontAwesomeIcon icon={faAdd} />,
+      id: GlobalActions.Add,
+      disabled: isLoading,
+      onClick: () => addTransactionCategory.openDialog(),
+      tooltip: t("_pages:transactionCategories.add"),
+    }),
+    [addTransactionCategory, isLoading, t],
+  );
+
+  const prefabCategoriesAction = useMemo(
+    () => ({
+      icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
+      id: "prefab-suggestions",
+      disabled: isLoading,
+      onClick: () => prefabCategories.openDialog(),
+      tooltip: t("_pages:prefabs.trySuggestions"),
+    }),
+    [isLoading, prefabCategories, t],
+  );
+
   const pageToolbar = useMemo(() => {
+    return [
+      prefabCategoriesAction,
+      exportTransactionCategory.action(),
+      importTransactionCategories.action(),
+    ];
+  }, [
+    exportTransactionCategory,
+    importTransactionCategories,
+    prefabCategoriesAction,
+  ]);
+
+  const mobilePageToolbar = useMemo(() => {
     return [
       exportTransactionCategory.action(),
       importTransactionCategories.action(),
     ];
   }, [exportTransactionCategory, importTransactionCategories]);
 
-  useMobileNavbar(t("_pages:transactionCategories.title"), pageToolbar);
+  useMobileNavbar(t("_pages:transactionCategories.title"), mobilePageToolbar);
 
   const openAddCategoryRef = useRef(addTransactionCategory.openDialog);
   useEffect(() => {
@@ -206,22 +241,7 @@ export function TransactionCategories() {
                   icon: faTags,
                   className: "transaction-categories-empty-icon",
                 }}
-                action={[
-                  {
-                    icon: <FontAwesomeIcon icon={faAdd} />,
-                    id: GlobalActions.Add,
-                    disabled: isLoading,
-                    onClick: () => addTransactionCategory.openDialog(),
-                    tooltip: t("_pages:transactionCategories.add"),
-                  },
-                  {
-                    icon: <FontAwesomeIcon icon={faWandMagicSparkles} />,
-                    id: "prefab-suggestions",
-                    disabled: isLoading,
-                    onClick: () => prefabCategories.openDialog(),
-                    tooltip: t("_pages:prefabs.trySuggestions"),
-                  },
-                ]}
+                action={[addTransactionCategoryAction, prefabCategoriesAction]}
               />
             }
             renderComponent={(transactionCategory) => {
@@ -257,6 +277,18 @@ export function TransactionCategories() {
                 />
               );
             }}
+          />
+          <IconButton
+            type="button"
+            icon={faWandMagicSparkles}
+            variant="submit"
+            color="primary"
+            disabled={isLoading}
+            onClick={() => prefabCategories.openDialog()}
+            data-tooltip-id="tooltip"
+            data-tooltip-content={t("_pages:prefabs.trySuggestions")}
+            aria-label={t("_pages:prefabs.trySuggestions")}
+            className="fixed right-4 bottom-20 z-30 !h-12 !w-12 !min-w-0 !rounded-full !p-0 shadow-lg sm:hidden"
           />
           {/* Dialogs */}
           <AddTransactionCategoryDialog {...addTransactionCategory} />

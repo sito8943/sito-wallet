@@ -50,10 +50,6 @@
   @apply text-xs leading-snug text-text-muted;
 }
 
-.prefab-suggestions-provider-logo {
-  @apply h-10 w-10 shrink-0 rounded-full object-contain bg-base;
-}
-
 .prefab-suggestions-empty {
   @apply flex items-center justify-center min-h-32 text-text-muted;
 }
