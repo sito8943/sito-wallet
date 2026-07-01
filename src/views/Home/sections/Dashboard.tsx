@@ -15,6 +15,7 @@ import {
   CurrentBalanceCard,
   SubscriptionForecastCard,
   BalanceHistoryCard,
+  LastTransactionsCard,
 } from "../components/Cards";
 import { AddDashboardCardDialog } from "../components";
 import { resolveCardConfig } from "../components/Cards/utils";
@@ -191,6 +192,19 @@ export const Dashboard = () => {
           return (
             <li key={item.id} {...listItemProps}>
               <BalanceHistoryCard
+                onDelete={() => {
+                  void deleteDashboardCard.onClick([item.id]);
+                }}
+                dragHandleProps={dragHandleProps}
+                key={item.id}
+                {...item}
+              />
+            </li>
+          );
+        case DashboardCardType.LastTransactions:
+          return (
+            <li key={item.id} {...listItemProps}>
+              <LastTransactionsCard
                 onDelete={() => {
                   void deleteDashboardCard.onClick([item.id]);
                 }}

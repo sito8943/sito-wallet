@@ -105,6 +105,14 @@
       },
       "addCard": {
         "title": "Seleccionar tipo de tarjeta"
+      },
+      "lastTransactions": {
+        "configTitle": "Configurar últimas transacciones",
+        "limitLabel": "Cuántas",
+        "limitChip": "Últimas {{limit}}",
+        "categoriesLabel": "Categorías",
+        "categoriesPlaceholder": "Todas las categorías",
+        "empty": "No hay transacciones para estos filtros"
       }
     }
   },

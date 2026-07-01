@@ -4,3 +4,4 @@ export * from "./WeeklySpent/WeeklySpentCard";
 export * from "./CurrentBalance/CurrentBalanceCard";
 export * from "./SubscriptionForecast/SubscriptionForecastCard";
 export * from "./BalanceHistory/BalanceHistoryCard";
+export * from "./LastTransactions/LastTransactionsCard";

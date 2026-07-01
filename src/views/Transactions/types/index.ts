@@ -76,6 +76,7 @@ export type UseAddTransactionActionDialog<TDto extends BaseEntityDto> =
 
 export type UseAddTransactionDialogActionPropsType = {
   account: CommonAccountDto | null;
+  categories?: CommonTransactionCategoryDto[];
 };
 
 export interface AssignTransactionAccountFormType extends FieldValues {

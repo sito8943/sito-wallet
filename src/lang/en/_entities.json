@@ -344,7 +344,8 @@
         "CurrentBalance": "Current Balance",
         "WeeklySpent": "Weekly Spent",
         "SubscriptionForecast": "Subscription Forecast",
-        "BalanceHistory": "Balance History"
+        "BalanceHistory": "Balance History",
+        "LastTransactions": "Last Transactions"
       }
     }
   },

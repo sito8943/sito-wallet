@@ -105,6 +105,14 @@
       },
       "addCard": {
         "title": "Select Card Type"
+      },
+      "lastTransactions": {
+        "configTitle": "Configure last transactions",
+        "limitLabel": "How many",
+        "limitChip": "Last {{limit}}",
+        "categoriesLabel": "Categories",
+        "categoriesPlaceholder": "All categories",
+        "empty": "No transactions for these filters"
       }
     }
   },

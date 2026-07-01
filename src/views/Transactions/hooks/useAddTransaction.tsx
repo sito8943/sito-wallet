@@ -26,7 +26,7 @@ import type { AddTransactionDto, TransactionDto } from "lib";
 export function useAddTransaction(
   props: UseAddTransactionDialogActionPropsType,
 ): AddTransactionDialogPropsType {
-  const { account } = props;
+  const { account, categories } = props;
 
   const { t } = useTranslation();
 
@@ -41,7 +41,7 @@ export function useAddTransaction(
     TransactionFormType
   >({
     formToDto,
-    defaultValues: addEmptyTransaction(account),
+    defaultValues: addEmptyTransaction(account, categories),
     mutationFn: (data) => manager.Transactions.insert(data),
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     onSuccess: async () => {

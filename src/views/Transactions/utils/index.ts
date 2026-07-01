@@ -5,6 +5,7 @@ import { formatForDatetimeLocal, type Option } from "@sito/dashboard-app";
 
 import type {
   CommonAccountDto,
+  CommonTransactionCategoryDto,
   TransactionDto,
   UpdateTransactionDto,
   AssignTransactionAccountDto,
@@ -57,11 +58,12 @@ export const dtoToForm = (dto: TransactionDto): TransactionFormType => {
 
 export const addEmptyTransaction = (
   account: CommonAccountDto | null = null,
+  categories: CommonTransactionCategoryDto[] = [],
 ): Omit<TransactionFormType, "id"> => ({
   auto: false,
   description: "",
   account,
-  categories: [],
+  categories,
   amount: 0,
   date: formatForDatetimeLocal(),
 });

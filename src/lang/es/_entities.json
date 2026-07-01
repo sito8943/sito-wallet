@@ -344,7 +344,8 @@
         "CurrentBalance": "Saldo actual",
         "WeeklySpent": "Gasto semanal",
         "SubscriptionForecast": "Pronóstico de suscripciones",
-        "BalanceHistory": "Histórico de saldo"
+        "BalanceHistory": "Histórico de saldo",
+        "LastTransactions": "Últimas transacciones"
       }
     }
   },
