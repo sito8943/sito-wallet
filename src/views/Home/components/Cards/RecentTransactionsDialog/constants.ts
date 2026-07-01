@@ -7,7 +7,7 @@ export const RECENT_TRANSACTIONS_LIMIT = 10;
 export const RECENT_TRANSACTIONS_PREFILTER_LIMIT = 100;
 
 export const RECENT_TRANSACTIONS_DIALOG_CLASS_NAME =
-  "w-11/12 md:w-4/5 max-w-[1100px]";
+  "recent-transactions-dialog w-11/12 md:w-4/5 max-w-[1100px]";
 
 export const RECENT_TRANSACTIONS_QUERY: QueryParam<TransactionDto> = {
   currentPage: 0,

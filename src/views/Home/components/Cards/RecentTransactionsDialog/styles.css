@@ -1,9 +1,11 @@
 @reference "../../../../../styles/variables.css";
 
-/* The dialog (.dialog) is a flex column with a fixed height (100vh in
-   mobile-full-screen). Take the remaining space after the header and let the
-   list be the scroll container — `min-h-0` is required so the flex child can
-   shrink below its content height and actually scroll. */
+.recent-transactions-dialog {
+  @apply sm:max-h-[calc(100vh-4rem)] sm:overflow-hidden;
+}
+
+/* Take the remaining dialog space after the header and let the list be the
+   scroll container. `min-h-0` lets the flex child shrink below content height. */
 .recent-transactions-dialog-content {
   @apply mt-2 flex min-h-0 flex-1 flex-col;
 }
@@ -13,7 +15,7 @@
 }
 
 .recent-transactions-list {
-  @apply flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pb-4;
+  @apply flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pb-4 sm:max-h-[60vh];
 }
 
 /* Keep cards at their natural height so the list overflows and scrolls,
