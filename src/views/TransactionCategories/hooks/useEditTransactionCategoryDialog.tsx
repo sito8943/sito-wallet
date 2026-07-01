@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
 import { usePutDialog } from "@sito/dashboard-app";
@@ -7,7 +8,11 @@ import { usePutDialog } from "@sito/dashboard-app";
 import { useManager } from "providers";
 
 // hooks
-import { TransactionCategoriesQueryKeys, useMutationErrorHandler } from "hooks";
+import {
+  TransactionCategoriesQueryKeys,
+  TransactionsQueryKeys,
+  useMutationErrorHandler,
+} from "hooks";
 
 // utils
 import { dtoToForm, emptyTransactionCategory, formToDto } from "../utils";
@@ -21,6 +26,7 @@ import type { UpdateTransactionCategoryDto, TransactionCategoryDto } from "lib";
 export function useEditTransactionCategoryDialog() {
   const { t } = useTranslation();
   const handleMutationError = useMutationErrorHandler();
+  const queryClient = useQueryClient();
 
   const manager = useManager();
 
@@ -41,6 +47,9 @@ export function useEditTransactionCategoryDialog() {
       handleMutationError(error, {
         uniqueKey: "_entities:transactionCategory.name.unique",
       }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ ...TransactionsQueryKeys.all() });
+    },
     ...TransactionCategoriesQueryKeys.all(),
   });
 }
