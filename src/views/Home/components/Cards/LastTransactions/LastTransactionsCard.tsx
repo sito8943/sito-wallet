@@ -122,6 +122,26 @@ export const LastTransactionsCard = (props: LastTransactionsPropsType) => {
         className="last-transactions-card"
         onDelete={onDelete}
         dragHandleProps={dragHandleProps}
+        headerActions={
+          <>
+            <IconButton
+              onClick={() => addTransaction.openDialog()}
+              icon={faAdd}
+              data-tooltip-id="tooltip"
+              data-tooltip-content={t("_pages:transactions.add")}
+              aria-label={t("_pages:transactions.add")}
+            />
+            <IconButton
+              onClick={recentTransactionsDialog.handleOpen}
+              icon={faClock}
+              data-tooltip-id="tooltip"
+              data-tooltip-content={t(
+                "_pages:home.dashboard.recentTransactions.action",
+              )}
+              aria-label={t("_pages:home.dashboard.recentTransactions.action")}
+            />
+          </>
+        }
         isBusy={isLoading}
         loadingOverlay={isLoading}
         parseFormConfig={parseFormConfig}
@@ -144,26 +164,6 @@ export const LastTransactionsCard = (props: LastTransactionsPropsType) => {
       >
         {() => (
           <div className="last-transactions-content">
-            <div className="last-transactions-actions">
-              <IconButton
-                onClick={() => addTransaction.openDialog()}
-                icon={faAdd}
-                data-tooltip-id="tooltip"
-                data-tooltip-content={t("_pages:transactions.add")}
-                aria-label={t("_pages:transactions.add")}
-              />
-              <IconButton
-                onClick={recentTransactionsDialog.handleOpen}
-                icon={faClock}
-                data-tooltip-id="tooltip"
-                data-tooltip-content={t(
-                  "_pages:home.dashboard.recentTransactions.action",
-                )}
-                aria-label={t(
-                  "_pages:home.dashboard.recentTransactions.action",
-                )}
-              />
-            </div>
             {!isLoading && transactions.length === 0 ? (
               <Empty
                 message={t("_pages:home.dashboard.lastTransactions.empty")}

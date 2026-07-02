@@ -86,6 +86,7 @@ export const DashboardCard = <TForm extends FieldValues>(
     renderActiveFilters,
     shouldShowActiveFiltersBadge,
     getActiveFiltersCount,
+    headerActions,
     children,
   } = props;
 
@@ -211,6 +212,7 @@ export const DashboardCard = <TForm extends FieldValues>(
             className="dashboard-card-title-success"
           />
         ) : null}
+        {headerActions}
         {dragHandleProps ? (
           <IconButton
             {...restDragHandleProps}

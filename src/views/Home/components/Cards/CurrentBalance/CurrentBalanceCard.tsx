@@ -4,20 +4,15 @@ import { useTranslation } from "react-i18next";
 // icons
 import {
   faAdd,
-  faArrowsRotate,
   faClock,
-  faCircleNotch,
   faMoneyBillTransfer,
   faScaleBalanced,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { useQueryClient } from "@tanstack/react-query";
-
 // @sito/dashboard-app
-import { IconButton, classNames, useDialog } from "@sito/dashboard-app";
+import { IconButton, useDialog } from "@sito/dashboard-app";
 
 // hooks
-import { AccountsQueryKeys } from "../../../../../hooks/queries/queryKeys/accountsQueryKeys";
 import { useAccountsList } from "../../../../../hooks/queries/useAccountsList";
 import {
   useAdjustBalanceMutation,
@@ -47,14 +42,9 @@ import type { FilterTransactionDto } from "lib";
 // utils
 import { formToDto, getActiveFiltersCount, parseFormConfig } from "./utils";
 
-// providers
-import { useManager } from "providers";
-
 export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
   const { title, config, id, user, onDelete, dragHandleProps } = props;
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
-  const manager = useManager();
   const [configOverride, setConfigOverride] =
     useState<CardConfigOverrideType | null>(null);
   const effectiveConfig = resolveCardConfig(config, configOverride);
@@ -79,7 +69,6 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
   const symbol = account?.currency?.symbol ?? "";
   const currencyName = account?.currency?.name ?? "";
 
-  const [isSyncing, setIsSyncing] = useState(false);
   const recentTransactionsDialog = useDialog();
 
   const adjustBalance = useAdjustBalanceMutation();
@@ -96,19 +85,6 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
     }),
     [accountId],
   );
-
-  const handleRefresh = async () => {
-    if (!account) return;
-    setIsSyncing(true);
-    try {
-      await manager.Accounts.sync(account.id);
-      await queryClient.invalidateQueries({ ...AccountsQueryKeys.all() });
-    } catch {
-      // sync error is non-blocking
-    } finally {
-      setIsSyncing(false);
-    }
-  };
 
   return (
     <>
@@ -184,19 +160,6 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
                     "_pages:accounts.actions.adjustBalance.text",
                   )}
                   aria-label={t("_pages:accounts.actions.adjustBalance.text")}
-                />
-                <IconButton
-                  disabled={isSyncing}
-                  onClick={() => {
-                    void handleRefresh();
-                  }}
-                  icon={isSyncing ? faCircleNotch : faArrowsRotate}
-                  className={classNames(isSyncing && "rotate")}
-                  data-tooltip-id="tooltip"
-                  data-tooltip-content={t(
-                    "_pages:home.dashboard.currentBalance.refresh",
-                  )}
-                  aria-label={t("_pages:home.dashboard.currentBalance.refresh")}
                 />
               </div>
             )}

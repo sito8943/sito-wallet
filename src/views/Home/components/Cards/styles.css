@@ -207,7 +207,7 @@
 }
 
 .type-resume-summary {
-  @apply flex w-full items-end justify-between gap-2;
+  @apply flex w-full flex-col items-start gap-2;
 }
 
 .type-resume-dialog {

@@ -82,7 +82,7 @@
 }
 
 .type-resume-actions {
-  @apply flex items-center gap-1;
+  @apply flex items-center gap-1 justify-end w-full;
 }
 
 .dashboard-card-select-container {

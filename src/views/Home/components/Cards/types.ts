@@ -31,6 +31,7 @@ type Common = {
   className?: string;
   isBusy?: boolean;
   loadingOverlay?: boolean;
+  headerActions?: ReactNode;
 };
 
 export type DashboardCardItemPropsType = DashboardDto & {
