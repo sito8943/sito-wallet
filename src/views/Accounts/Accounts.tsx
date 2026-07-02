@@ -48,7 +48,6 @@ import {
 import {
   useAddAccountDialog,
   useEditAccountDialog,
-  useSyncAccountMutation,
   useViewTransactionsAction,
   useAdjustBalanceMutation,
   useTransferDialog,
@@ -147,8 +146,6 @@ export function Accounts() {
     ...AccountsQueryKeys.all(),
   });
 
-  const syncAccount = useSyncAccountMutation();
-
   const adjustBalance = useAdjustBalanceMutation();
 
   // #endregion
@@ -169,7 +166,6 @@ export function Accounts() {
       transfer.action(record),
       viewTransactions.action(record),
       adjustBalance.action(record),
-      syncAccount.action(record),
       deleteAccount.action(record),
       // restore defaults to multiple:false in the lib; enable batch restore
       { ...restoreAccount.action(record), multiple: true },
@@ -179,7 +175,6 @@ export function Accounts() {
       adjustBalance,
       deleteAccount,
       restoreAccount,
-      syncAccount,
       t,
       transfer,
       transactionsEnabled,
