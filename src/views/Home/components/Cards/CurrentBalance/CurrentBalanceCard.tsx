@@ -140,8 +140,8 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
                   {t("_pages:home.dashboard.currentBalance.realBalance")}:{" "}
                   {realBalance} <Currency name={currencyName} symbol={symbol} />{" "}
                   <span className="current-balance-debt">
-                    · {t("_pages:home.dashboard.currentBalance.pendingDebts")}{" "}
-                    −{pendingDebt}{" "}
+                    · {t("_pages:home.dashboard.currentBalance.pendingDebts")} −
+                    {pendingDebt}{" "}
                     <Currency name={currencyName} symbol={symbol} />
                   </span>
                 </p>
