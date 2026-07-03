@@ -61,7 +61,10 @@
         "configTitle": "Configure current balance",
         "placeholder": "Type the title",
         "refresh": "Refresh balance",
-        "noAccount": "Select an account"
+        "noAccount": "Select an account",
+        "realBalance": "Real",
+        "pendingDebts": "debts",
+        "showDebtsToggle": "Show pending debts"
       },
       "recentTransactions": {
         "title": "Recent transactions",

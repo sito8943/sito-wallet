@@ -13,4 +13,5 @@ export interface AccountDto extends BaseEntityDto {
   bankName?: string;
   user: CommonUserDto | null;
   balance: number;
+  pendingDebts?: number | null;
 }

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
 import {
@@ -22,6 +23,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // hooks
 import {
+  AccountsQueryKeys,
   DebtsQueryKeys,
   useInfiniteDebtsList,
   useMobileMultiSelection,
@@ -55,6 +57,7 @@ import "./styles.css";
 export function Debts() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { showErrorNotification } = useNotification();
 
   const manager = useManager();
@@ -87,6 +90,9 @@ export function Debts() {
       if (!debtsClient) throw new Error("debts.featureDisabled");
       return await debtsClient.softDelete(ids);
     },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ ...AccountsQueryKeys.all() });
+    },
     ...DebtsQueryKeys.all(),
   });
   const debtSwipeDelete = useSwipeDeleteState(deleteDebt.handleClose);
@@ -95,6 +101,9 @@ export function Debts() {
     mutationFn: async (ids) => {
       if (!debtsClient) throw new Error("debts.featureDisabled");
       return await debtsClient.restore(ids);
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ ...AccountsQueryKeys.all() });
     },
     ...DebtsQueryKeys.all(),
   });

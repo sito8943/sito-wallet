@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 import { useNotification, usePostDialog } from "@sito/dashboard-app";
 
-import { DebtsQueryKeys } from "hooks";
+import { AccountsQueryKeys, DebtsQueryKeys } from "hooks";
 import { useManager } from "providers";
 
 import type { AddDebtPaymentDto, DebtDto, DebtPaymentDto } from "lib";
@@ -42,6 +42,9 @@ export function useAddDebtPaymentDialog() {
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         ...DebtsQueryKeys.all(),
+      });
+      await queryClient.invalidateQueries({
+        ...AccountsQueryKeys.all(),
       });
       setSelectedDebt(null);
     },

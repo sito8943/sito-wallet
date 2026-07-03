@@ -13,6 +13,7 @@ import {
 } from "@sito/dashboard-app";
 
 import {
+  AccountsQueryKeys,
   DebtsQueryKeys,
   useMobileNavbar,
   useMutationErrorHandler,
@@ -100,6 +101,8 @@ export function DebtEditor() {
           : t("_pages:common.actions.add.successMessage"),
       });
 
+      await queryClient.invalidateQueries({ ...AccountsQueryKeys.all() });
+
       navigate(AppRoutes.debts);
     },
     onError: (error) =>
@@ -160,6 +163,7 @@ export function DebtEditor() {
           message: t("_pages:debts.actions.deletePayment.successMessage"),
         });
         await queryClient.invalidateQueries({ ...DebtsQueryKeys.all() });
+        await queryClient.invalidateQueries({ ...AccountsQueryKeys.all() });
       } catch (error) {
         showErrorNotification({
           message: parseErrorMessage(error, t("_accessibility:errors.500")),

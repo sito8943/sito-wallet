@@ -61,7 +61,10 @@
         "configTitle": "Configurar saldo actual",
         "placeholder": "Escribe un título",
         "refresh": "Actualizar saldo",
-        "noAccount": "Selecciona una cuenta"
+        "noAccount": "Selecciona una cuenta",
+        "realBalance": "Real",
+        "pendingDebts": "deudas",
+        "showDebtsToggle": "Mostrar deudas pendientes"
       },
       "recentTransactions": {
         "title": "Transacciones recientes",

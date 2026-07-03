@@ -1,8 +1,9 @@
 import { useCallback } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { useDeleteDialog } from "@sito/dashboard-app";
 
-import { DebtsQueryKeys } from "hooks";
+import { AccountsQueryKeys, DebtsQueryKeys } from "hooks";
 import { useManager } from "providers";
 
 import type { DebtDto } from "lib";
@@ -12,6 +13,7 @@ import { useCancelDebtAction } from "./useCancelDebtAction";
 export function useCancelDebtDialog() {
   const manager = useManager();
   const debtsClient = "Debts" in manager ? manager.Debts : null;
+  const queryClient = useQueryClient();
 
   const cancelDialog = useDeleteDialog({
     mutationFn: async (ids) => {
@@ -21,6 +23,9 @@ export function useCancelDebtDialog() {
       await Promise.all(targetIds.map((id) => debtsClient.cancel(id)));
 
       return targetIds.length;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ ...AccountsQueryKeys.all() });
     },
     ...DebtsQueryKeys.all(),
   });

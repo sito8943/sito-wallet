@@ -48,21 +48,38 @@ export const ConfigFormDialog = (
           />
         )}
       />
-      <Controller
-        control={control}
-        name="showFiltersAsBadge"
-        render={({ field: { value, onChange, ...rest } }) => (
-          <CheckInput
-            {...rest}
-            id="current-balance-show-filters-as-badge"
-            checked={!!value}
-            label={t("_pages:home.dashboard.filterDisplay.badgeToggle")}
-            inputClassName="dashboard-card-toggle-input"
-            containerClassName="dashboard-card-toggle"
-            onChange={(event) => onChange(event.currentTarget.checked)}
-          />
-        )}
-      />
+      <div>
+        <Controller
+          control={control}
+          name="showDebts"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <CheckInput
+              {...rest}
+              id="current-balance-show-debts"
+              checked={!!value}
+              label={t("_pages:home.dashboard.currentBalance.showDebtsToggle")}
+              inputClassName="dashboard-card-toggle-input"
+              containerClassName="dashboard-card-toggle"
+              onChange={(event) => onChange(event.currentTarget.checked)}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="showFiltersAsBadge"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <CheckInput
+              {...rest}
+              id="current-balance-show-filters-as-badge"
+              checked={!!value}
+              label={t("_pages:home.dashboard.filterDisplay.badgeToggle")}
+              inputClassName="dashboard-card-toggle-input"
+              containerClassName="dashboard-card-toggle"
+              onChange={(event) => onChange(event.currentTarget.checked)}
+            />
+          )}
+        />
+      </div>
     </FormDialog>
   );
 };

@@ -17,6 +17,7 @@ export interface CurrentBalanceFormType
     FieldValues {
   account: CommonAccountDto | null;
   showFiltersAsBadge: boolean;
+  showDebts: boolean;
 }
 
 export type ActiveFiltersPropsType = {

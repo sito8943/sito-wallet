@@ -4,4 +4,5 @@ export interface FilterAccountDto extends BaseFilterDto {
   name?: string;
   currencyId?: number;
   userId?: number;
+  includePendingDebts?: boolean;
 }

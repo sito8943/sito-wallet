@@ -90,8 +90,20 @@
   @apply mt-auto flex w-full items-center justify-between;
 }
 
+.current-balance-amounts {
+  @apply flex flex-col;
+}
+
 .current-balance-amount {
   @apply text-4xl font-bold;
+}
+
+.current-balance-real {
+  @apply text-sm text-text-muted;
+}
+
+.current-balance-debt {
+  @apply text-bg-error;
 }
 
 .current-balance-actions {

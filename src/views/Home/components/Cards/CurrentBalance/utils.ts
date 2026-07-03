@@ -4,6 +4,7 @@ import type { CurrentBalanceFormType } from "./types";
 export const defaultConfig: CurrentBalanceFormType = {
   account: null,
   showFiltersAsBadge: false,
+  showDebts: false,
 };
 
 export const formToDto = (
@@ -12,6 +13,7 @@ export const formToDto = (
   const stringified = JSON.stringify({
     account: data.account,
     showFiltersAsBadge: !!data.showFiltersAsBadge,
+    showDebts: !!data.showDebts,
   });
   return {
     userId: data.userId,
@@ -33,6 +35,9 @@ export const parseFormConfig = (
     return defaultConfig;
   }
 };
+
+export const roundCurrency = (value: number): number =>
+  Math.round(value * 100) / 100;
 
 export const getActiveFiltersCount = (
   formConfig: CurrentBalanceFormType,

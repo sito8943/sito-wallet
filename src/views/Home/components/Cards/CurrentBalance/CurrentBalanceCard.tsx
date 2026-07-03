@@ -37,10 +37,16 @@ import "../styles.css";
 // types
 import type { CurrentBalancePropsType } from "./types";
 import type { CardConfigOverrideType } from "../types";
-import type { FilterTransactionDto } from "lib";
+import type { FilterAccountDto, FilterTransactionDto } from "lib";
+import { defaultAccountsListFilters } from "lib";
 
 // utils
-import { formToDto, getActiveFiltersCount, parseFormConfig } from "./utils";
+import {
+  formToDto,
+  getActiveFiltersCount,
+  parseFormConfig,
+  roundCurrency,
+} from "./utils";
 
 export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
   const { title, config, id, user, onDelete, dragHandleProps } = props;
@@ -49,16 +55,24 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
     useState<CardConfigOverrideType | null>(null);
   const effectiveConfig = resolveCardConfig(config, configOverride);
 
-  const accountId = useMemo(() => {
+  const { accountId, showDebts } = useMemo(() => {
     try {
       const parsed = parseFormConfig(effectiveConfig);
-      return parsed.account?.id;
+      return { accountId: parsed.account?.id, showDebts: !!parsed.showDebts };
     } catch {
-      return undefined;
+      return { accountId: undefined, showDebts: false };
     }
   }, [effectiveConfig]);
 
-  const { data, isLoading } = useAccountsList({});
+  const accountsFilters = useMemo<FilterAccountDto>(
+    () =>
+      showDebts
+        ? { ...defaultAccountsListFilters, includePendingDebts: true }
+        : defaultAccountsListFilters,
+    [showDebts],
+  );
+
+  const { data, isLoading } = useAccountsList({ filters: accountsFilters });
 
   const account = useMemo(() => {
     if (!accountId || !data?.items) return null;
@@ -68,6 +82,9 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
   const balance = account?.balance ?? 0;
   const symbol = account?.currency?.symbol ?? "";
   const currencyName = account?.currency?.name ?? "";
+
+  const pendingDebt = roundCurrency(account?.pendingDebts ?? 0);
+  const realBalance = roundCurrency(balance - pendingDebt);
 
   const recentTransactionsDialog = useDialog();
 
@@ -113,10 +130,23 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
       >
         {() => (
           <div className="current-balance-content">
-            <p className="current-balance-amount poppins">
-              {isLoading ? "…" : balance}{" "}
-              <Currency name={currencyName} symbol={symbol} />
-            </p>
+            <div className="current-balance-amounts">
+              <p className="current-balance-amount poppins">
+                {isLoading ? "…" : balance}{" "}
+                <Currency name={currencyName} symbol={symbol} />
+              </p>
+              {account && showDebts && pendingDebt > 0 && (
+                <p className="current-balance-real">
+                  {t("_pages:home.dashboard.currentBalance.realBalance")}:{" "}
+                  {realBalance} <Currency name={currencyName} symbol={symbol} />{" "}
+                  <span className="current-balance-debt">
+                    · {t("_pages:home.dashboard.currentBalance.pendingDebts")}{" "}
+                    −{pendingDebt}{" "}
+                    <Currency name={currencyName} symbol={symbol} />
+                  </span>
+                </p>
+              )}
+            </div>
             {account && (
               <div className="current-balance-actions">
                 <IconButton
