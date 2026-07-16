@@ -4,21 +4,27 @@ Personal finance web app built with React, TypeScript, Vite and Tailwind CSS v4.
 
 ## Requirements
 
-- Node.js 18+ (20+ recommended)
-- npm 9+ or compatible
+- Node.js 22.18.0 (`.nvmrc`; engine range `^22.13.0`)
+- pnpm 10.34.4
 
 ## Quick Start
 
-- Install dependencies: `npm install`
+- Enable pnpm: `corepack enable`
+- Activate the project version: `corepack prepare pnpm@10.34.4 --activate`
+- Install dependencies: `pnpm install`
 - Copy env vars: `cp _env.example .env`
-- Development: `npm run dev` (opens `http://localhost:5173`)
+- Development: `pnpm run dev` (opens `http://localhost:5173`)
 
 ## Scripts
 
-- `npm run dev`: Vite dev server
-- `npm run build`: build TypeScript and production bundle
-- `npm run preview`: serve the production build locally
-- `npm run lint`: run ESLint
+- `pnpm run dev`: Vite dev server
+- `pnpm run build`: build TypeScript and production bundle
+- `pnpm run preview`: serve the production build locally
+- `pnpm run format`: format with Prettier
+- `pnpm run format:check`: verify formatting without writes
+- `pnpm run lint`: run type-aware Oxlint
+- `pnpm run lint:fix`: apply supported Oxlint fixes
+- `pnpm run test`: run the Vitest suite once
 
 ## Environment Variables
 
@@ -40,7 +46,7 @@ sito-wallet/
 ├─ package.json
 ├─ vite.config.ts
 ├─ tsconfig.json
-├─ eslint.config.js
+├─ .oxlintrc.json
 ├─ index.html
 ├─ _env.example
 ├─ src/
@@ -97,8 +103,8 @@ See `STYLE_GUIDE.md` for detailed CSS conventions and examples.
 
 ## Development
 
-- TypeScript + ES modules.
-- ESLint configuration in `eslint.config.js`. Run `npm run lint` before PRs.
+- TypeScript 7 + ES modules.
+- Type-aware Oxlint configuration in `.oxlintrc.json`. Run `pnpm run lint` before PRs.
 - Prefer atomic, descriptive commits. Follow the existing code style.
 
 ## License

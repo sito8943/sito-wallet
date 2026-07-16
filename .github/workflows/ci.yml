@@ -15,22 +15,30 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.34.4
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
-          cache: npm
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
+
+      - name: Format check
+        run: pnpm run format:check
 
       - name: Lint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Unit & Integration Tests
-        run: npm run test
+        run: pnpm run test
         env:
           VITE_APP_VERSION: test
           VITE_INDEXED_DB_NAME: sito_wallet_indexed_db
@@ -52,22 +60,27 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.34.4
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
-          cache: npm
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: Build app
-        run: npm run build
+        run: pnpm run build
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
           VITE_THIS_URL: ${{ secrets.VITE_THIS_URL }}
@@ -98,10 +111,8 @@ jobs:
           VITE_FEATURE_DEBTS_ENABLED_DEFAULT: "true"
 
       - name: Serve and run E2E smoke tests
-        run: |
-          npx vite preview --port 5173 &
-          npx wait-on http://localhost:5173 --timeout 30000
-          E2E_BASE_URL=http://localhost:5173 \
-          E2E_EMAIL=${{ secrets.E2E_EMAIL }} \
-          E2E_PASSWORD=${{ secrets.E2E_PASSWORD }} \
-          npm run test:e2e
+        run: pnpm run test:e2e
+        env:
+          E2E_BASE_URL: http://localhost:5173
+          E2E_EMAIL: ${{ secrets.E2E_EMAIL }}
+          E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}

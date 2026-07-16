@@ -1,0 +1,55 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "ignorePatterns": [
+    "node_modules",
+    "dist",
+    "dist-ssr",
+    "coverage",
+    "playwright-report",
+    "test-results",
+    "*.local",
+    ".DS_Store"
+  ],
+  "options": {
+    "typeAware": true,
+    "maxWarnings": 0
+  },
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error"
+  },
+  "rules": {
+    "typescript/no-explicit-any": "error",
+    "typescript/consistent-return": "off",
+    "typescript/no-unsafe-type-assertion": "off",
+    "typescript/no-unnecessary-type-parameters": "off",
+    "typescript/no-useless-default-assignment": "off",
+    "unicorn/no-array-sort": "off",
+    "no-underscore-dangle": [
+      "error",
+      {
+        "allow": ["__dirname"]
+      }
+    ],
+    "no-console": [
+      "error",
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
+    "prefer-const": "error"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx", "src/test/**", "e2e/**"],
+      "rules": {
+        "typescript/no-explicit-any": "off",
+        "typescript/await-thenable": "off",
+        "typescript/no-unnecessary-type-assertion": "off",
+        "unicorn/consistent-function-scoping": "off",
+        "unicorn/no-thenable": "off",
+        "unicorn/prefer-add-event-listener": "off"
+      }
+    }
+  ]
+}

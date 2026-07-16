@@ -28,9 +28,9 @@ Eliminar forks locales una vez que la versión nueva de `@sito/dashboard-app` ya
 
 ## Validación obligatoria
 
-1. `npm run lint`
-2. `npm run build`
-3. `npm run test`
+1. `pnpm run lint`
+2. `pnpm run build`
+3. `pnpm run test`
 4. Verificación manual en `Transactions`, `Accounts`, `Currencies`, `TransactionCategories`.
 
 ## Resultado esperado

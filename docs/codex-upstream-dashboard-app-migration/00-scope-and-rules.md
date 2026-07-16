@@ -21,12 +21,12 @@ Actualizar `@sito/dashboard-app` para absorber mejoras ya implementadas localmen
 
 ## Validación mínima en `@sito/dashboard-app`
 
-1. `npm run lint`
-2. `npm run build`
-3. `npm run test`
+1. `pnpm run lint`
+2. `pnpm run build`
+3. `pnpm run test`
 
 ## Validación mínima en `sito-wallet/web` tras subir versión
 
-1. `npm run lint`
-2. `npm run build`
-3. `npm run test`
+1. `pnpm run lint`
+2. `pnpm run build`
+3. `pnpm run test`
