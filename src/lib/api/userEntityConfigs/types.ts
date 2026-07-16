@@ -22,8 +22,7 @@ export type UserEntityConfigToggleBatchDto = {
 };
 
 export type UserEntityConfigBatchDto =
-  | UserEntityConfigExplicitBatchDto
-  | UserEntityConfigToggleBatchDto;
+  UserEntityConfigExplicitBatchDto | UserEntityConfigToggleBatchDto;
 
 export type UserEntityConfigResponse =
   | UserEntityConfigDto[]

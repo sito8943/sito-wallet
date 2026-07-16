@@ -35,7 +35,6 @@ import { MobileSelectionBar } from "components";
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 import type {
-  FilterSubscriptionProviderDto,
   ImportPreviewSubscriptionProviderDto,
   SubscriptionProviderDto,
 } from "lib";
@@ -128,9 +127,7 @@ export function SubscriptionProviders() {
       }
 
       return await subscriptionProvidersClient.export(
-        normalizeListFilters(
-          defaultSubscriptionProvidersListFilters,
-        ) as FilterSubscriptionProviderDto,
+        normalizeListFilters(defaultSubscriptionProvidersListFilters),
       );
     },
   });
@@ -150,12 +147,12 @@ export function SubscriptionProviders() {
         options?.override,
       );
     },
-    mutationFn: async (data) => {
+    mutationFn: async (dto) => {
       if (!subscriptionProvidersClient) {
         throw new Error("subscriptions.featureDisabled");
       }
 
-      return await subscriptionProvidersClient.import(data);
+      return await subscriptionProvidersClient.import(dto);
     },
     ...SubscriptionProvidersQueryKeys.all(),
   });

@@ -98,7 +98,7 @@ export function TransactionCategories() {
   // #region actions
 
   const deleteTransactionCategory = useDeleteDialog({
-    mutationFn: (data) => manager.TransactionCategories.softDelete(data),
+    mutationFn: (dto) => manager.TransactionCategories.softDelete(dto),
     ...TransactionCategoriesQueryKeys.all(),
   });
   const transactionCategorySwipeDelete = useSwipeDeleteState(
@@ -106,7 +106,7 @@ export function TransactionCategories() {
   );
 
   const restoreTransactionCategory = useRestoreDialog({
-    mutationFn: (data) => manager.TransactionCategories.restore(data),
+    mutationFn: (dto) => manager.TransactionCategories.restore(dto),
     ...TransactionCategoriesQueryKeys.all(),
   });
 
@@ -131,7 +131,7 @@ export function TransactionCategories() {
     entity: TablesCamelCase.TransactionCategories,
     fileProcessor: (file, options) =>
       manager.TransactionCategories.processImport(file, options?.override),
-    mutationFn: (data) => manager.TransactionCategories.import(data),
+    mutationFn: (dto) => manager.TransactionCategories.import(dto),
     ...TransactionCategoriesQueryKeys.all(),
   });
 

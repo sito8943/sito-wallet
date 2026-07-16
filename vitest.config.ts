@@ -52,7 +52,7 @@ const linkedPackageAliases = useLinkedDashboardApp
   : [];
 
 export default defineConfig({
-  plugins: [react() as ReturnType<typeof react>],
+  plugins: [react()],
   test: {
     globals: true,
     environment: "jsdom",

@@ -43,11 +43,7 @@ import {
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 // lib
-import type {
-  FilterSubscriptionDto,
-  ImportPreviewSubscriptionDto,
-  SubscriptionDto,
-} from "lib";
+import type { ImportPreviewSubscriptionDto, SubscriptionDto } from "lib";
 import { getDeleteAction } from "../../components/Card/utils";
 import {
   AppRoutes,
@@ -122,9 +118,7 @@ export function Subscriptions() {
         throw new Error("subscriptions.featureDisabled");
 
       return await subscriptionsClient.export(
-        normalizeListFilters(
-          defaultSubscriptionsListFilters,
-        ) as FilterSubscriptionDto,
+        normalizeListFilters(defaultSubscriptionsListFilters),
       );
     },
   });
@@ -140,11 +134,11 @@ export function Subscriptions() {
 
       return await subscriptionsClient.processImport(file, options?.override);
     },
-    mutationFn: async (data) => {
+    mutationFn: async (dto) => {
       if (!subscriptionsClient)
         throw new Error("subscriptions.featureDisabled");
 
-      return await subscriptionsClient.import(data);
+      return await subscriptionsClient.import(dto);
     },
     ...SubscriptionsQueryKeys.all(),
   });

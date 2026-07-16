@@ -12,10 +12,7 @@ import { useManager } from "providers";
 import type { UseTransactionTypeResumePropsType } from "./types.ts";
 
 // lib
-import type {
-  FilterTransactionTypeResumeDto,
-  TransactionTypeResumeDto,
-} from "lib";
+import type { TransactionTypeResumeDto } from "lib";
 import { TransactionType, TransactionTypeResumeTime } from "lib";
 
 import { TransactionsQueryKeys } from "./queryKeys/transactionsQueryKeys";
@@ -25,19 +22,18 @@ export function useTransactionTypeResume(
 ): UseQueryResult<TransactionTypeResumeDto> {
   const enabled = props.enabled ?? true;
   const filters = useMemo(
-    () =>
-      ({
-        accountId: props.accountId ?? 0,
-        time: props.time ?? TransactionTypeResumeTime.CurrentMonth,
-        type: props.type ?? TransactionType.In,
-        ...(props.excludedCategoryIds?.length
-          ? {
-              excludedCategoryIds: [...new Set(props.excludedCategoryIds)].sort(
-                (left, right) => left - right,
-              ),
-            }
-          : {}),
-      }) as FilterTransactionTypeResumeDto,
+    () => ({
+      accountId: props.accountId ?? 0,
+      time: props.time ?? TransactionTypeResumeTime.CurrentMonth,
+      type: props.type ?? TransactionType.In,
+      ...(props.excludedCategoryIds?.length
+        ? {
+            excludedCategoryIds: [...new Set(props.excludedCategoryIds)].sort(
+              (left, right) => left - right,
+            ),
+          }
+        : {}),
+    }),
     [props.accountId, props.excludedCategoryIds, props.time, props.type],
   );
 

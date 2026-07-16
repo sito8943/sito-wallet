@@ -8,5 +8,4 @@ export interface SubscriptionRenewalReminderNotificationPayload {
 }
 
 export type NotificationPayload =
-  | SubscriptionRenewalReminderNotificationPayload
-  | Record<string, unknown>;
+  SubscriptionRenewalReminderNotificationPayload | Record<string, unknown>;

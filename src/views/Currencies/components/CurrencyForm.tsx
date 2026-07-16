@@ -38,7 +38,7 @@ export function CurrencyForm(props: CurrencyFormPropsType) {
       <Controller
         control={control}
         rules={{
-          required: `${t("_entities:base.name.required")}`,
+          required: t("_entities:base.name.required"),
         }}
         name="name"
         disabled={isLoading}
@@ -59,7 +59,7 @@ export function CurrencyForm(props: CurrencyFormPropsType) {
       <Controller
         control={control}
         rules={{
-          required: `${t("_entities:currency.symbol.required")}`,
+          required: t("_entities:currency.symbol.required"),
         }}
         name="symbol"
         disabled={isLoading}

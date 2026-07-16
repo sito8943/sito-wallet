@@ -51,6 +51,6 @@ export default class DashboardClient extends BaseClient<
   }
 
   async delete(ids: number[]): Promise<number> {
-    return await this.api.delete(`${this.table}`, ids);
+    return await this.api.delete(this.table, ids);
   }
 }

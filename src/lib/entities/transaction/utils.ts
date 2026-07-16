@@ -18,9 +18,7 @@ const parseCategoryArray = (
 
 export const getTransactionCategories = (
   transaction:
-    | Pick<TransactionDto, "categories" | "category">
-    | null
-    | undefined,
+    Pick<TransactionDto, "categories" | "category"> | null | undefined,
 ): CommonTransactionCategoryDto[] => {
   if (!transaction) return [];
 
@@ -32,9 +30,7 @@ export const getTransactionCategories = (
 
 export const getPrimaryTransactionCategory = (
   transaction:
-    | Pick<TransactionDto, "categories" | "category">
-    | null
-    | undefined,
+    Pick<TransactionDto, "categories" | "category"> | null | undefined,
 ): CommonTransactionCategoryDto | null =>
   getTransactionCategories(transaction)[0] ?? null;
 

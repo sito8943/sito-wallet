@@ -32,10 +32,7 @@ export function useTransactionsList(props: {
     filters: tableFilters,
   } = useTableOptions();
 
-  const {
-    filters = defaultTransactionsListFilters,
-    query = {} as QueryParam<TransactionDto>,
-  } = props;
+  const { filters = defaultTransactionsListFilters, query = {} } = props;
 
   const manager = useManager();
   const { account } = useAuth();
@@ -54,7 +51,7 @@ export function useTransactionsList(props: {
     return applyHideDeletedEntitiesPreference(
       normalizedFilters,
       hideDeletedEntities,
-    ) as FilterTransactionDto;
+    );
   }, [filters, tableFilters, hideDeletedEntities]);
 
   const parsedQueries = useMemo(

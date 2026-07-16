@@ -87,9 +87,7 @@ export default class ProfileClient {
       `${this.table}/me`,
       Methods.GET,
       undefined,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 
@@ -120,9 +118,7 @@ export default class ProfileClient {
       `${this.table}/${id}`,
       Methods.GET,
       undefined,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 
@@ -155,7 +151,7 @@ export default class ProfileClient {
       throw {
         status: response.status,
         message: parseErrorMessage(payload, response.statusText),
-      } as APIErrorShape;
+      };
     }
 
     if (response.ok && isText) {
@@ -166,7 +162,7 @@ export default class ProfileClient {
       throw {
         status: response.status,
         message: "Unknown error",
-      } as APIErrorShape;
+      };
     }
 
     return payload as ProfileDto;
@@ -177,9 +173,7 @@ export default class ProfileClient {
       `${this.table}/${id}/photo`,
       Methods.DELETE,
       undefined,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 }

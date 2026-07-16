@@ -115,7 +115,7 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
         isBusy={isLoading}
         loadingOverlay={isLoading}
         parseFormConfig={parseFormConfig}
-        formToDto={(data) => formToDto(data)}
+        formToDto={formToDto}
         onConfigSaved={(savedConfig) =>
           setConfigOverride({ baseConfig: config, savedConfig })
         }
@@ -182,7 +182,7 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
                 <IconButton
                   disabled={adjustBalance.isLoading}
                   onClick={() => {
-                    void adjustBalance.action(account).onClick?.();
+                    adjustBalance.action(account).onClick?.();
                   }}
                   icon={faScaleBalanced}
                   data-tooltip-id="tooltip"

@@ -40,6 +40,8 @@ export const getActiveFiltersCount = (
   formConfig: WeeklySpentFormType,
 ): number => 2 + (formConfig.accounts?.length ? 1 : 0);
 
+const toYMD = (d: Date) => d.toISOString().slice(0, 10);
+
 export const getCurrentWeekRange = (): {
   start: string;
   end: string;
@@ -54,6 +56,5 @@ export const getCurrentWeekRange = (): {
   end.setDate(start.getDate() + 6);
   end.setHours(23, 59, 59, 999);
 
-  const toYMD = (d: Date) => d.toISOString().slice(0, 10);
   return { start: toYMD(start), end: toYMD(end) };
 };

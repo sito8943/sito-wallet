@@ -11,23 +11,23 @@ const {
   mockUseAppPreload,
   mockIsFeatureEnabled,
 } = vi.hoisted(() => {
-  const mockTranslate = vi.fn((key: string) => key);
-  const mockUseAuth = vi.fn(() => ({
+  const translate = vi.fn((key: string) => key);
+  const useAuth = vi.fn(() => ({
     account: { email: "" },
   }));
-  const mockUseAppPreload = vi.fn(() => ({
+  const useAppPreload = vi.fn(() => ({
     loading: false,
     completedTaskKeys: [],
     failedTaskKeys: [],
   }));
-  const mockIsFeatureEnabled = vi.fn(() => true);
+  const isFeatureEnabled = vi.fn(() => true);
   return {
     mockNavigate: vi.fn(),
     mockFromLocal: vi.fn(() => null),
-    mockUseAuth,
-    mockTranslate,
-    mockUseAppPreload,
-    mockIsFeatureEnabled,
+    mockUseAuth: useAuth,
+    mockTranslate: translate,
+    mockUseAppPreload: useAppPreload,
+    mockIsFeatureEnabled: isFeatureEnabled,
   };
 });
 

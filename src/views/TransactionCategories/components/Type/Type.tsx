@@ -48,7 +48,7 @@ export const Type = (props: TypePropsType) => {
         >
           <FontAwesomeIcon
             className={classNames(className, iconClassName)}
-            icon={icons[(type ?? 0) as keyof typeof icons]}
+            icon={icons[type ?? 0]}
           />
           {!noText && (
             <span className={textClassName}>

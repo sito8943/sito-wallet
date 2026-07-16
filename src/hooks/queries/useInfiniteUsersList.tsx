@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import type { QueryParam } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
 import { useManager } from "providers";
@@ -20,10 +19,7 @@ import { UsersQueryKeys } from "./queryKeys/usersQueryKeys";
 export function useInfiniteUsersList(
   props: UseFetchPropsType<UserDto, FilterUserDto>,
 ) {
-  const {
-    filters = defaultUsersListFilters,
-    query = {} as Omit<QueryParam<UserDto>, "currentPage">,
-  } = props;
+  const { filters = defaultUsersListFilters, query = {} } = props;
 
   const manager = useManager();
   const usersClient = "Users" in manager ? manager.Users : null;

@@ -28,9 +28,7 @@ export default class UserEntityConfigClient {
       this.endpoint,
       Methods.GET,
       undefined,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
 
     return normalizeUserEntityConfigResponse(response);
@@ -43,9 +41,7 @@ export default class UserEntityConfigClient {
       `${this.endpoint}/batch`,
       Methods.PUT,
       payload,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
 
     return normalizeUserEntityConfigResponse(response);
@@ -58,9 +54,7 @@ export default class UserEntityConfigClient {
       `${this.endpoint}/batch`,
       Methods.PATCH,
       payload,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
 
     return normalizeUserEntityConfigResponse(response);

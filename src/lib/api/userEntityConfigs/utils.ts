@@ -87,9 +87,7 @@ export const configsToEnabledEntityKeys = (
   configs: UserEntityConfigDto[],
 ): UserEntityConfigKey[] => {
   return USER_ENTITY_CONFIG_KEYS.filter((entityKey) =>
-    configs.some(
-      (config) => config.entityKey === entityKey && config.enabled === true,
-    ),
+    configs.some((config) => config.entityKey === entityKey && config.enabled),
   );
 };
 

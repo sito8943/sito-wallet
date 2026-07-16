@@ -20,7 +20,7 @@ import { useCurrenciesCommon } from "hooks/queries/useCurrenciesCommon";
 import { useRenewalsDialog } from "./useRenewalsDialog";
 
 // lib
-import type { FilterSubscriptionDto, SubscriptionDto } from "lib";
+import type { SubscriptionDto } from "lib";
 import {
   AppRoutes,
   defaultSubscriptionsListFilters,
@@ -110,9 +110,7 @@ export const SubscriptionForecastCard = (
           sortingBy: "name",
           sortingOrder: SortOrder.ASC,
         },
-        normalizeListFilters(
-          defaultSubscriptionsListFilters,
-        ) as FilterSubscriptionDto,
+        normalizeListFilters(defaultSubscriptionsListFilters),
       );
     },
   });
@@ -167,18 +165,18 @@ export const SubscriptionForecastCard = (
         isBusy={isLoading}
         loadingOverlay={isLoading}
         parseFormConfig={parseFormConfig}
-        formToDto={(data) => formToDto(data)}
+        formToDto={formToDto}
         onConfigSaved={(savedConfig) =>
           setConfigOverride({ baseConfig: config, savedConfig })
         }
         ConfigFormDialog={ConfigFormDialog}
-        shouldShowActiveFiltersBadge={(formConfig) =>
-          !!formConfig.showFiltersAsBadge
+        shouldShowActiveFiltersBadge={(cardConfig) =>
+          !!cardConfig.showFiltersAsBadge
         }
         getActiveFiltersCount={getActiveFiltersCount}
-        renderActiveFilters={({ formConfig }) => (
+        renderActiveFilters={({ formConfig: cardConfig }) => (
           <ActiveFilters
-            range={formConfig.range}
+            range={cardConfig.range}
             from={data?.from}
             to={data?.to}
           />

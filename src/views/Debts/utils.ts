@@ -19,7 +19,7 @@ import type { DebtFormType, DebtPaymentFormType } from "./types";
 export const toDebtDirection = (value: unknown): DebtDirection => {
   const parsed = Number(value);
   if (Number.isInteger(parsed) && DEBT_DIRECTIONS.includes(parsed)) {
-    return parsed as DebtDirection;
+    return parsed;
   }
 
   return DEFAULT_DEBT_DIRECTION;

@@ -370,7 +370,7 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
             render={({ field: { value, onChange, ...rest } }) => (
               <AutocompleteInput
                 required={!!autoCreateTransaction}
-                options={categoryOptions as Option[]}
+                options={categoryOptions}
                 value={Array.isArray(value) ? value : []}
                 onChange={(nextValue) =>
                   onChange(

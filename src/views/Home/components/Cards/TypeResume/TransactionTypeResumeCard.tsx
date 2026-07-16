@@ -190,7 +190,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         isBusy={isLoading}
         loadingOverlay={isLoading}
         parseFormConfig={parseFormConfig}
-        formToDto={(data) => formToDto(data)}
+        formToDto={formToDto}
         onConfigSaved={(savedConfig) => {
           setConfigOverride({ baseConfig: config, savedConfig });
           onTypeResumeConfigSaved?.(id, config, savedConfig);

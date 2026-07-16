@@ -153,8 +153,7 @@ describe("App auth bootstrap", () => {
 
     let isOnline = true;
     let rejectSessionRestore:
-      | ((error: { status: number; message: string }) => void)
-      | undefined;
+      ((error: { status: number; message: string }) => void) | undefined;
 
     mockUseOnlineStatus.mockImplementation(() => isOnline);
     mockReadStoredSessionFromSnapshot.mockReturnValue(null);

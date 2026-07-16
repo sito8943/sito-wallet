@@ -60,9 +60,7 @@ export default class DebtClient extends BaseClient<
       builtUrl,
       Methods.GET,
       undefined,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 
@@ -71,9 +69,7 @@ export default class DebtClient extends BaseClient<
       `${this.table}/${debtId}/payments/${paymentId}`,
       Methods.DELETE,
       undefined,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 }

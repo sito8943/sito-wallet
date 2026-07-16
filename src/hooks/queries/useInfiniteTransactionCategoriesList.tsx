@@ -3,7 +3,6 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 // providers
 import { useManager } from "providers";
-import type { QueryParam } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
 // types
@@ -26,10 +25,8 @@ export function useInfiniteTransactionCategoriesList(
     FilterTransactionCategoryDto
   >,
 ) {
-  const {
-    filters = defaultTransactionCategoriesListFilters,
-    query = {} as Omit<QueryParam<TransactionCategoryDto>, "currentPage">,
-  } = props;
+  const { filters = defaultTransactionCategoriesListFilters, query = {} } =
+    props;
 
   const manager = useManager();
   const { account } = useAuth();

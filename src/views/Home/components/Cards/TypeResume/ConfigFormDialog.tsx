@@ -32,7 +32,11 @@ import type {
 
 // utils
 import { icons } from "../../../../Transactions/components/utils";
-import { getOppositeTransactionType, getPreviousTimeKey } from "./utils";
+import {
+  getOppositeTransactionType,
+  getPreviousTimeKey,
+  haveSameIds,
+} from "./utils";
 
 import "../styles.css";
 
@@ -83,13 +87,6 @@ export const ConfigFormDialog = (
     name: "oppositeExcludedCategories",
   }) as CommonTransactionCategoryDto[] | undefined;
 
-  const haveSameIds = (
-    left: Array<number | string>,
-    right: Array<number | string>,
-  ) =>
-    left.length === right.length &&
-    left.every((value, index) => Number(value) === Number(right[index]));
-
   useEffect(() => {
     if (setValue && type === undefined) {
       setValue("type", TransactionType.In);
@@ -117,17 +114,14 @@ export const ConfigFormDialog = (
   );
 
   const oppositeType = useMemo(
-    () =>
-      type === undefined
-        ? undefined
-        : getOppositeTransactionType(Number(type) as TransactionType),
+    () => (type === undefined ? undefined : getOppositeTransactionType(type)),
     [type],
   );
 
   const parsedCategories = useMemo(
     () =>
       (transactionCategories.data ?? [])
-        .filter((category) => Number(category.type) === Number(type ?? 0))
+        .filter((category) => category.type === (type ?? TransactionType.Out))
         .map((category) => ({
           ...category,
           name: category.auto
@@ -142,8 +136,7 @@ export const ConfigFormDialog = (
       (transactionCategories.data ?? [])
         .filter(
           (category) =>
-            oppositeType !== undefined &&
-            Number(category.type) === Number(oppositeType),
+            oppositeType !== undefined && category.type === oppositeType,
         )
         .map((category) => ({
           ...category,
@@ -367,10 +360,10 @@ export const ConfigFormDialog = (
               {...rest}
             >
               <FontAwesomeIcon
-                icon={icons[(type ?? 0) as keyof typeof icons]}
+                icon={icons[type ?? 0]}
                 className={classNames(
                   "dashboard-card-select-icon vertical-center",
-                  Number(type) === TransactionType.In
+                  type === TransactionType.In
                     ? "dashboard-card-select-icon--income inverted-success"
                     : "dashboard-card-select-icon--expense inverted-error",
                 )}

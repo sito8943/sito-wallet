@@ -29,13 +29,12 @@ export function useSubscriptionProvidersCommon(
   const { account } = useAuth();
 
   const commonFilters = useMemo(
-    () =>
-      ({
-        ...(normalizeCommonFilters(
-          defaultSubscriptionProvidersListFilters,
-        ) as FilterSubscriptionProviderDto),
-        ...(onlyEnabled ? { filters: "enabled==true" } : {}),
-      }) as FilterSubscriptionProviderDto,
+    () => ({
+      ...(normalizeCommonFilters(
+        defaultSubscriptionProvidersListFilters,
+      ) as FilterSubscriptionProviderDto),
+      ...(onlyEnabled ? { filters: "enabled==true" } : {}),
+    }),
     [onlyEnabled],
   );
 

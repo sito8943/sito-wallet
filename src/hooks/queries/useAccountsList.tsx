@@ -4,7 +4,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 // providers
 import { useManager } from "providers";
-import type { QueryParam, QueryResult } from "@sito/dashboard-app";
+import type { QueryResult } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
 // types
@@ -24,10 +24,7 @@ import { AccountsQueryKeys } from "./queryKeys/accountsQueryKeys";
 export function useAccountsList(
   props: UseFetchPropsType<AccountDto, FilterAccountDto>,
 ): UseQueryResult<QueryResult<AccountDto>> {
-  const {
-    filters = defaultAccountsListFilters,
-    query = {} as QueryParam<AccountDto>,
-  } = props;
+  const { filters = defaultAccountsListFilters, query = {} } = props;
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   const normalizedFilters = useMemo(

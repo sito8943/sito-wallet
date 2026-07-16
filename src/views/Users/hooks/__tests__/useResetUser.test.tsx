@@ -10,21 +10,21 @@ const {
   mockLogoutUser,
   mockUseAuth,
 } = vi.hoisted(() => {
-  const mockResetUser = vi.fn();
-  const mockShowErrorNotification = vi.fn();
-  const mockShowSuccessNotification = vi.fn();
-  const mockLogoutUser = vi.fn();
-  const mockUseAuth = vi.fn(() => ({
+  const resetUser = vi.fn();
+  const showErrorNotification = vi.fn();
+  const showSuccessNotification = vi.fn();
+  const logoutUser = vi.fn();
+  const useAuth = vi.fn(() => ({
     account: { id: 1, email: "admin@example.com" },
-    logoutUser: mockLogoutUser,
+    logoutUser,
   }));
 
   return {
-    mockResetUser,
-    mockShowErrorNotification,
-    mockShowSuccessNotification,
-    mockLogoutUser,
-    mockUseAuth,
+    mockResetUser: resetUser,
+    mockShowErrorNotification: showErrorNotification,
+    mockShowSuccessNotification: showSuccessNotification,
+    mockLogoutUser: logoutUser,
+    mockUseAuth: useAuth,
   };
 });
 

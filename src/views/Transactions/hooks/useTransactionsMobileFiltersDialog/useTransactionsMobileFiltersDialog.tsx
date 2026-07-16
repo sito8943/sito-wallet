@@ -14,16 +14,12 @@ import { useFormDialog, useTableOptions } from "@sito/dashboard-app";
 import { TransactionsQueryKeys } from "hooks";
 
 // lib
-import type {
-  CommonTransactionCategoryDto,
-  FilterTransactionDto,
-  TransactionType,
-} from "lib";
+import type { CommonTransactionCategoryDto, FilterTransactionDto } from "lib";
 import { normalizeListFilters } from "lib";
 
 // types
 import { DEFAULT_SORTING_BY, DEFAULT_SORTING_ORDER } from "./constants";
-import { parseSortOrder } from "./utils";
+import { parseSortOrder, stringifyFilterValue } from "./utils";
 import {
   TransactionAutoFilterMode,
   type TransactionsMobileFiltersDialogPropsType,
@@ -51,7 +47,7 @@ export function useTransactionsMobileFiltersDialog(
     setSortingBy,
     setSortingOrder,
     setCurrentPage,
-  } = useTableOptions<keyof FilterTransactionDto & string>();
+  } = useTableOptions<keyof FilterTransactionDto>();
 
   const queryClient = useQueryClient();
   const autoFilterOptions = useMemo(
@@ -100,9 +96,12 @@ export function useTransactionsMobileFiltersDialog(
   const defaultValues = useMemo<TransactionsMobileFiltersFormType>(
     () => ({
       category: selectedCategories,
-      type: filters?.type != null ? String(filters.type) : "",
-      description: filters?.description ? String(filters.description) : "",
-      amount: filters?.amount != null ? String(filters.amount) : "",
+      type: filters?.type != null ? stringifyFilterValue(filters.type) : "",
+      description: filters?.description
+        ? stringifyFilterValue(filters.description)
+        : "",
+      amount:
+        filters?.amount != null ? stringifyFilterValue(filters.amount) : "",
       auto: getTransactionAutoFilterMode(filters.auto),
       dateStart: parsedDate.start ?? "",
       dateEnd: parsedDate.end ?? "",
@@ -138,7 +137,7 @@ export function useTransactionsMobileFiltersDialog(
     onSubmit: (values) => {
       clearFilters();
 
-      const nextFilters: FiltersValue<keyof FilterTransactionDto & string> = {};
+      const nextFilters: FiltersValue<keyof FilterTransactionDto> = {};
       const selectedCategoryValues = Array.isArray(values.category)
         ? values.category
         : [];
@@ -150,7 +149,7 @@ export function useTransactionsMobileFiltersDialog(
       }
 
       if (values.type !== "") {
-        nextFilters.type = { value: Number(values.type) as TransactionType };
+        nextFilters.type = { value: Number(values.type) };
       }
 
       if (values.description.trim().length > 0) {

@@ -3,7 +3,6 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 // providers
 import { useManager } from "providers";
-import type { QueryParam } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
 // types
@@ -23,10 +22,7 @@ import { CurrenciesQueryKeys } from "./queryKeys/currenciesQueryKeys";
 export function useInfiniteCurrenciesList(
   props: UseFetchPropsType<CurrencyDto, FilterCurrencyDto>,
 ) {
-  const {
-    filters = defaultCurrenciesListFilters,
-    query = {} as Omit<QueryParam<CurrencyDto>, "currentPage">,
-  } = props;
+  const { filters = defaultCurrenciesListFilters, query = {} } = props;
 
   const manager = useManager();
   const { account } = useAuth();

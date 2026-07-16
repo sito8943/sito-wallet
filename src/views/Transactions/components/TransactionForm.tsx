@@ -116,7 +116,7 @@ export function TransactionForm(props: TransactionFormPropsType) {
         render={({ field: { value, onChange, ...rest } }) => (
           <AutocompleteInput
             required
-            options={categoryOptionsByType as Option[]}
+            options={categoryOptionsByType}
             value={Array.isArray(value) ? value : []}
             onChange={(nextValue) =>
               onChange(
@@ -159,7 +159,7 @@ export function TransactionForm(props: TransactionFormPropsType) {
       <Controller
         control={control}
         rules={{
-          required: `${t("_entities:transaction.amount.required")}`,
+          required: t("_entities:transaction.amount.required"),
         }}
         name="amount"
         disabled={isLoading}
@@ -182,7 +182,7 @@ export function TransactionForm(props: TransactionFormPropsType) {
       <Controller
         control={control}
         rules={{
-          required: `${t("_entities:transaction.date.required")}`,
+          required: t("_entities:transaction.date.required"),
         }}
         name="date"
         disabled={isLoading}

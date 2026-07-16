@@ -97,13 +97,13 @@ export function Currencies() {
   // #region actions
 
   const deleteCurrency = useDeleteDialog({
-    mutationFn: (data) => manager.Currencies.softDelete(data),
+    mutationFn: (dto) => manager.Currencies.softDelete(dto),
     ...CurrenciesQueryKeys.all(),
   });
   const currencySwipeDelete = useSwipeDeleteState(deleteCurrency.handleClose);
 
   const restoreCurrency = useRestoreDialog({
-    mutationFn: (data) => manager.Currencies.restore(data),
+    mutationFn: (dto) => manager.Currencies.restore(dto),
     ...CurrenciesQueryKeys.all(),
   });
 
@@ -126,7 +126,7 @@ export function Currencies() {
     entity: Tables.Currencies,
     fileProcessor: (file, options) =>
       manager.Currencies.processImport(file, options?.override),
-    mutationFn: (data) => manager.Currencies.import(data),
+    mutationFn: (dto) => manager.Currencies.import(dto),
     /*  renderCustomPreview: (
       items: ImportPreviewCurrencyDto[] | null | undefined,
     ) => <CurrencyTable items={items} />, */

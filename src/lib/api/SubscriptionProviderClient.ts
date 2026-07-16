@@ -17,11 +17,6 @@ import { parseErrorMessage, parseJSONFile } from "lib";
 
 import { config } from "../../config";
 
-type APIErrorShape = {
-  status: number;
-  message: string;
-};
-
 type RequestConfig = HeadersInit | RequestOptions;
 
 type RequestOptions = {
@@ -87,7 +82,7 @@ export default class SubscriptionProviderClient extends BaseClient<
       throw {
         status: response.status,
         message: parseErrorMessage(payload, response.statusText),
-      } as APIErrorShape;
+      };
     }
 
     if (response.ok && isText) {
@@ -98,7 +93,7 @@ export default class SubscriptionProviderClient extends BaseClient<
       throw {
         status: response.status,
         message: "Unknown error",
-      } as APIErrorShape;
+      };
     }
 
     return payload as SubscriptionProviderDto;
@@ -109,9 +104,7 @@ export default class SubscriptionProviderClient extends BaseClient<
       `${this.table}/${id}/photo`,
       Methods.DELETE,
       undefined,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 
@@ -125,9 +118,7 @@ export default class SubscriptionProviderClient extends BaseClient<
       `${this.table}/import/process?override=${parsedOverride}`,
       Methods.POST,
       items,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 

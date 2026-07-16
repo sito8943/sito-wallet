@@ -29,6 +29,7 @@ import { OfflineBanner } from "components";
 
 // config
 import { config } from "../../config";
+import { isBottomNavItemActive } from "./utils";
 import { getFeatureFilteredBottomMap } from "../../views/bottomMap";
 import { AppRoutes, isAnonymousVisitorSession } from "lib";
 import { getFeatureFilteredMenuMap } from "views/menuMap";
@@ -91,11 +92,6 @@ export function View() {
       }),
     [isFeatureEnabled, t],
   );
-
-  const isBottomNavItemActive = (
-    pathname: string,
-    item: BottomNavigationItemType,
-  ) => (item.to === "/" ? pathname === "/" : pathname.startsWith(item.to));
 
   if (preloadLoading) return <SplashScreen />;
   if (shouldRedirect) return <SplashScreen />;

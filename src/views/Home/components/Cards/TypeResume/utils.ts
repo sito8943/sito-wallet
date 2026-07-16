@@ -32,9 +32,7 @@ export const parseFormConfig = (
       account:
         (parsed.account as TypeResumeTypeFormType["account"]) ??
         legacyAccounts[0],
-      type: Number(
-        parsed.type ?? DEFAULT_TYPE_RESUME_CONFIG.type,
-      ) as TransactionType,
+      type: Number(parsed.type ?? DEFAULT_TYPE_RESUME_CONFIG.type),
       time:
         (parsed.time as TypeResumeTypeFormType["time"]) ??
         DEFAULT_TYPE_RESUME_CONFIG.time,
@@ -95,6 +93,13 @@ export const getPreviousTimeKey = (
       return "CurrentMonth";
   }
 };
+
+export const haveSameIds = (
+  left: Array<number | string>,
+  right: Array<number | string>,
+) =>
+  left.length === right.length &&
+  left.every((value, index) => Number(value) === Number(right[index]));
 
 export const getOppositeTransactionType = (
   type: TransactionType,

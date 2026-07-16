@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { useQueryClient } from "@tanstack/react-query";
 
 // @sito-dashboard-app
-import type { TabsType } from "@sito/dashboard-app";
 import {
   Page,
   useDeleteDialog,
@@ -61,7 +60,6 @@ import { EditTransactionCategoryDialog } from "../TransactionCategories/componen
 
 // lib
 import type {
-  FilterTransactionDto,
   TransactionDto,
   ImportPreviewTransactionDto,
   CommonAccountDto,
@@ -266,7 +264,7 @@ export function Transactions() {
         applyHideDeletedEntitiesPreference(
           normalizeListFilters(baseFilters as Record<string, unknown>),
           hideDeletedEntities,
-        ) as FilterTransactionDto,
+        ),
       );
     },
     onSuccess: (data) => {
@@ -355,24 +353,26 @@ export function Transactions() {
   );
 
   const accountDesktopTabs = useMemo(() => {
-    return (accounts?.items?.map((item) => ({
-      id: item.id,
-      label: item.name,
-      to: getTransactionsRouteWithAccountId(item.id),
-      content: (
-        <TransactionTable
-          accountId={item.id}
-          categories={parsedCategories ?? []}
-          getActions={getTableActions}
-          editAction={editTransaction}
-          hideDeletedEntities={hideDeletedEntities}
-          showFilters={showFilters}
-          setShowFilters={setShowFilters}
-          onCategoryClick={editTransactionCategory.openDialog}
-          onAddTransaction={openAddTransaction}
-        />
-      ),
-    })) ?? []) as TabsType[];
+    return (
+      accounts?.items?.map((item) => ({
+        id: item.id,
+        label: item.name,
+        to: getTransactionsRouteWithAccountId(item.id),
+        content: (
+          <TransactionTable
+            accountId={item.id}
+            categories={parsedCategories ?? []}
+            getActions={getTableActions}
+            editAction={editTransaction}
+            hideDeletedEntities={hideDeletedEntities}
+            showFilters={showFilters}
+            setShowFilters={setShowFilters}
+            onCategoryClick={editTransactionCategory.openDialog}
+            onAddTransaction={openAddTransaction}
+          />
+        ),
+      })) ?? []
+    );
   }, [
     accounts?.items,
     editTransaction,
@@ -385,25 +385,27 @@ export function Transactions() {
   ]);
 
   const accountMobileTabs = useMemo(() => {
-    return (accounts?.items?.map((item) => ({
-      id: item.id,
-      label: item.name,
-      content: (
-        <TransactionGrid
-          accountId={item.id}
-          categories={parsedCategories ?? []}
-          getActions={getGridActions}
-          editAction={editTransaction}
-          swipedTransactionId={transactionSwipeDelete.swipedId}
-          hideDeletedEntities={hideDeletedEntities}
-          showFilters={showFilters}
-          setShowFilters={setShowFilters}
-          onAddTransaction={openAddTransaction}
-          onSwipeDeleteTrigger={transactionSwipeDelete.openSwipe}
-          onSwipeDeleteReset={resetTransactionSwipe}
-        />
-      ),
-    })) ?? []) as TabsType[];
+    return (
+      accounts?.items?.map((item) => ({
+        id: item.id,
+        label: item.name,
+        content: (
+          <TransactionGrid
+            accountId={item.id}
+            categories={parsedCategories ?? []}
+            getActions={getGridActions}
+            editAction={editTransaction}
+            swipedTransactionId={transactionSwipeDelete.swipedId}
+            hideDeletedEntities={hideDeletedEntities}
+            showFilters={showFilters}
+            setShowFilters={setShowFilters}
+            onAddTransaction={openAddTransaction}
+            onSwipeDeleteTrigger={transactionSwipeDelete.openSwipe}
+            onSwipeDeleteReset={resetTransactionSwipe}
+          />
+        ),
+      })) ?? []
+    );
   }, [
     accounts?.items,
     editTransaction,

@@ -65,7 +65,7 @@ export function AccountForm(props: AccountFormPropsType) {
   );
 
   const { type, id } = useWatch({ control });
-  const isCard = Number(type) === AccountType.Card;
+  const isCard = type === AccountType.Card;
 
   return (
     <>
@@ -82,7 +82,7 @@ export function AccountForm(props: AccountFormPropsType) {
       <Controller
         control={control}
         rules={{
-          required: `${t("_entities:base.name.required")}`,
+          required: t("_entities:base.name.required"),
         }}
         name="name"
         disabled={isLoading}
@@ -105,7 +105,7 @@ export function AccountForm(props: AccountFormPropsType) {
         <Controller
           control={control}
           rules={{
-            required: `${t("_entities:account.balance.required")}`,
+            required: t("_entities:account.balance.required"),
           }}
           name="balance"
           disabled={isLoading}
@@ -143,7 +143,7 @@ export function AccountForm(props: AccountFormPropsType) {
               {...rest}
             >
               <FontAwesomeIcon
-                icon={icons[(type ?? 0) as keyof typeof icons]}
+                icon={icons[type ?? 0]}
                 className="account-form-type-icon vertical-center"
               />
             </SelectInput>
@@ -153,7 +153,7 @@ export function AccountForm(props: AccountFormPropsType) {
           control={control}
           name="currency"
           rules={{
-            required: `${t("_entities:account.currency.required")}`,
+            required: t("_entities:account.currency.required"),
           }}
           disabled={isLoading}
           render={({ field: { value, onChange, ...rest } }) => (

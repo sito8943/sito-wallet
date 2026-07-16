@@ -3,7 +3,6 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 // providers
 import { useManager } from "providers";
-import type { QueryParam } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
 // types
@@ -23,10 +22,7 @@ import { AccountsQueryKeys } from "./queryKeys/accountsQueryKeys";
 export function useInfiniteAccountsList(
   props: UseFetchPropsType<AccountDto, FilterAccountDto>,
 ) {
-  const {
-    filters = defaultAccountsListFilters,
-    query = {} as Omit<QueryParam<AccountDto>, "currentPage">,
-  } = props;
+  const { filters = defaultAccountsListFilters, query = {} } = props;
 
   const manager = useManager();
   const { account } = useAuth();

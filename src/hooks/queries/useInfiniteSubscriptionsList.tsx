@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import type { QueryParam } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
 import { useManager } from "providers";
@@ -20,10 +19,7 @@ import { SubscriptionsQueryKeys } from "./queryKeys/subscriptionsQueryKeys";
 export function useInfiniteSubscriptionsList(
   props: UseFetchPropsType<SubscriptionDto, FilterSubscriptionDto>,
 ) {
-  const {
-    filters = defaultSubscriptionsListFilters,
-    query = {} as Omit<QueryParam<SubscriptionDto>, "currentPage">,
-  } = props;
+  const { filters = defaultSubscriptionsListFilters, query = {} } = props;
 
   const manager = useManager();
   const subscriptionsClient =

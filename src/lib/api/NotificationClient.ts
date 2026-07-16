@@ -52,9 +52,7 @@ export default class NotificationClient extends BaseClient<
       appendUnreadQueryParam(builtUrl, params?.unread),
       Methods.GET,
       undefined,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 

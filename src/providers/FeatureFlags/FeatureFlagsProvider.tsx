@@ -78,7 +78,7 @@ export const FeatureFlagsProvider = (props: BasicProviderPropTypes) => {
         persisted,
         payload: {
           ...payload,
-          ...(entityPayload ?? {}),
+          ...entityPayload,
         },
       });
 

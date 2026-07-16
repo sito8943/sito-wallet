@@ -50,7 +50,7 @@ export function AssignAccountDialog(
         control={control}
         name="account"
         rules={{
-          required: `${t("_entities:transaction.account.required")}`,
+          required: t("_entities:transaction.account.required"),
         }}
         render={({ field: { value, onChange, ...rest } }) => (
           <AutocompleteInput

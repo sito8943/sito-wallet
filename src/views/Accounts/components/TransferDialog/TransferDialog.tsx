@@ -2,7 +2,6 @@ import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Controller } from "react-hook-form";
 
-import type { Option } from "@sito/dashboard-app";
 import {
   AutocompleteInput,
   FormDialog,
@@ -90,7 +89,7 @@ export function TransferDialog(props: TransferDialogPropsType) {
                 {...field}
                 required
                 multiple={false}
-                options={eligibleAccounts as Option[]}
+                options={eligibleAccounts}
                 value={value}
                 onChange={(account) => onChange(account)}
                 label={t(

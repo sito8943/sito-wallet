@@ -67,9 +67,7 @@ export default class AccountClient extends BaseClient<
       builtUrl,
       Methods.GET,
       undefined,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 
@@ -82,9 +80,7 @@ export default class AccountClient extends BaseClient<
       `${this.table}/import/process${override ? `?override=true` : ""}`,
       Methods.POST,
       items,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 

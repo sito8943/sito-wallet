@@ -19,5 +19,5 @@ export const applyHideDeletedEntitiesPreference = <TFilters extends object>(
 
   delete nextFilters.deletedAt;
 
-  return nextFilters as TFilters;
+  return nextFilters;
 };

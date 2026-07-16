@@ -25,10 +25,7 @@ export function useInfiniteTransactionsList(props: {
 }) {
   const { sortingBy, sortingOrder, filters: tableFilters } = useTableOptions();
 
-  const {
-    filters = defaultTransactionsListFilters,
-    query = {} as Omit<QueryParam<TransactionDto>, "currentPage">,
-  } = props;
+  const { filters = defaultTransactionsListFilters, query = {} } = props;
 
   const manager = useManager();
   const { account } = useAuth();
@@ -47,7 +44,7 @@ export function useInfiniteTransactionsList(props: {
     return applyHideDeletedEntitiesPreference(
       normalizedFilters,
       hideDeletedEntities,
-    ) as FilterTransactionDto;
+    );
   }, [filters, tableFilters, hideDeletedEntities]);
 
   const parsedQueries = useMemo(

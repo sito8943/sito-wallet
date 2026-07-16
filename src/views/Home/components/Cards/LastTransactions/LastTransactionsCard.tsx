@@ -65,22 +65,29 @@ export const LastTransactionsCard = (props: LastTransactionsPropsType) => {
   // memos off `account?.id` trips preserve-manual-memoization.
   const { account, categories, limit, filters, query } = useMemo(() => {
     const parsed = parseFormConfig(effectiveConfig);
-    const account = parsed.account;
+    const parsedAccount = parsed.account;
     const categoryIds = parsed.categoryIds ?? [];
-    const categories = parsed.categories ?? [];
-    const limit = parsed.limit;
-    const filters: FilterTransactionDto = {
-      ...(account?.id ? { accountId: account.id } : {}),
+    const parsedCategories = parsed.categories ?? [];
+    const parsedLimit = parsed.limit;
+    const parsedFilters: FilterTransactionDto = {
+      ...(parsedAccount?.id ? { accountId: parsedAccount.id } : {}),
       ...(categoryIds.length ? { category: categoryIds } : {}),
       softDeleteScope: "ACTIVE",
     };
-    const query: QueryParam<TransactionDto> = {
+    const parsedQuery: QueryParam<TransactionDto> = {
       currentPage: 0,
-      pageSize: limit,
+      pageSize: parsedLimit,
       sortingBy: "date",
       sortingOrder: SortOrder.DESC,
     };
-    return { account, categoryIds, categories, limit, filters, query };
+    return {
+      account: parsedAccount,
+      categoryIds,
+      categories: parsedCategories,
+      limit: parsedLimit,
+      filters: parsedFilters,
+      query: parsedQuery,
+    };
   }, [effectiveConfig]);
 
   const normalizedFilters = useMemo(
@@ -145,7 +152,7 @@ export const LastTransactionsCard = (props: LastTransactionsPropsType) => {
         isBusy={isLoading}
         loadingOverlay={isLoading}
         parseFormConfig={parseFormConfig}
-        formToDto={(data) => formToDto(data)}
+        formToDto={formToDto}
         onConfigSaved={(savedConfig) =>
           setConfigOverride({ baseConfig: config, savedConfig })
         }

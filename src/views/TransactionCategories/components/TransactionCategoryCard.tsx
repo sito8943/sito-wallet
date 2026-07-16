@@ -92,9 +92,7 @@ export function TransactionCategoryCard(
             textClassName="transaction-category-card-mobile-type-text"
             text={
               <>
-                <FontAwesomeIcon
-                  icon={icons[typeValue as keyof typeof icons]}
-                />
+                <FontAwesomeIcon icon={icons[typeValue]} />
                 <span className="transaction-category-card-mobile-type-label">
                   {typeTranslation}
                 </span>
@@ -131,7 +129,7 @@ export function TransactionCategoryCard(
           className={typeValue === TransactionType.In ? "success" : "error"}
           text={
             <div className="transaction-category-card-desktop-type-text">
-              <FontAwesomeIcon icon={icons[typeValue as keyof typeof icons]} />
+              <FontAwesomeIcon icon={icons[typeValue]} />
               {typeTranslation}
             </div>
           }

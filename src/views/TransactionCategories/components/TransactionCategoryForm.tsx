@@ -77,7 +77,7 @@ export function TransactionCategoryForm(
       <Controller
         control={control}
         rules={{
-          required: `${t("_entities:base.name.required")}`,
+          required: t("_entities:base.name.required"),
         }}
         name="name"
         disabled={isLoading}
@@ -130,10 +130,10 @@ export function TransactionCategoryForm(
               {...rest}
             >
               <FontAwesomeIcon
-                icon={icons[(type ?? 0) as keyof typeof icons]}
+                icon={icons[type ?? 0]}
                 className={classNames(
                   "transaction-category-form-type-icon vertical-center",
-                  Number(type) === TransactionType.In
+                  Number(type) === Number(TransactionType.In)
                     ? "transaction-category-form-type-icon--income inverted-success"
                     : "transaction-category-form-type-icon--expense inverted-error",
                 )}

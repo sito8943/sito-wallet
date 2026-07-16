@@ -94,18 +94,19 @@ import { faWarning } from "@fortawesome/free-solid-svg-icons";
 ```
 
 Common icon/situation mapping:
-| Situation | Icon |
-|-----------|------|
-| Warning / offline | `faWarning` |
-| Success / check | `faCheckCircle` |
-| Error | `faCircleExclamation` |
-| Delete | `faTrash` |
-| Edit | `faPencil` |
-| Sync / restore | `faRotateLeft` |
-| Download / export | `faCloudArrowDown` |
-| Upload / import | `faCloudUpload` |
-| Filter | `faFilter` |
-| Search | `faMagnifyingGlass` |
+
+| Situation         | Icon                  |
+| ----------------- | --------------------- |
+| Warning / offline | `faWarning`           |
+| Success / check   | `faCheckCircle`       |
+| Error             | `faCircleExclamation` |
+| Delete            | `faTrash`             |
+| Edit              | `faPencil`            |
+| Sync / restore    | `faRotateLeft`        |
+| Download / export | `faCloudArrowDown`    |
+| Upload / import   | `faCloudUpload`       |
+| Filter            | `faFilter`            |
+| Search            | `faMagnifyingGlass`   |
 
 For `IconButton` specifically, use `@sito/dashboard-app`'s `IconButton` which expects `icon: IconDefinition`.
 

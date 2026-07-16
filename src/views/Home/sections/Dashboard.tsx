@@ -60,7 +60,7 @@ export const Dashboard = () => {
   const addDashboardCard = useAddDashboardCard();
 
   const deleteDashboardCard = useDeleteDialog({
-    mutationFn: (data) => manager.Dashboard.delete(data),
+    mutationFn: (dto) => manager.Dashboard.delete(dto),
     ...DashboardsQueryKeys.all(),
   });
 

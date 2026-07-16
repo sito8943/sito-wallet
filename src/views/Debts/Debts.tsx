@@ -40,7 +40,7 @@ import { AddDebtPaymentDialog, DebtCard } from "./components";
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 // lib
-import type { DebtDto, FilterDebtDto } from "lib";
+import type { DebtDto } from "lib";
 import { getDeleteAction } from "../../components/Card/utils";
 import {
   AppRoutes,
@@ -117,7 +117,7 @@ export function Debts() {
       if (!debtsClient) throw new Error("debts.featureDisabled");
 
       return await debtsClient.export(
-        normalizeListFilters(defaultDebtsListFilters) as FilterDebtDto,
+        normalizeListFilters(defaultDebtsListFilters),
       );
     },
   });

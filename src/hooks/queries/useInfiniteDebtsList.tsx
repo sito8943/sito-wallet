@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import type { QueryParam } from "@sito/dashboard-app";
 import { useAuth } from "@sito/dashboard-app";
 
 import { useManager } from "providers";
@@ -20,10 +19,7 @@ import { DebtsQueryKeys } from "./queryKeys/debtsQueryKeys";
 export function useInfiniteDebtsList(
   props: UseFetchPropsType<DebtDto, FilterDebtDto>,
 ) {
-  const {
-    filters = defaultDebtsListFilters,
-    query = {} as Omit<QueryParam<DebtDto>, "currentPage">,
-  } = props;
+  const { filters = defaultDebtsListFilters, query = {} } = props;
 
   const manager = useManager();
   const debtsClient = "Debts" in manager ? manager.Debts : null;

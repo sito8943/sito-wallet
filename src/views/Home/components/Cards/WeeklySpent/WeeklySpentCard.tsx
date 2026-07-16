@@ -40,7 +40,7 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
       return transformed;
     } catch (err) {
       console.error(err);
-      return { type: defaultConfig.type } as FilterWeeklyConfigType;
+      return { type: defaultConfig.type };
     }
   }, [effectiveConfig]);
 
@@ -63,7 +63,7 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
       isBusy={isLoading}
       loadingOverlay={isLoading}
       parseFormConfig={parseFormConfig}
-      formToDto={(data) => formToDto(data)}
+      formToDto={formToDto}
       onConfigSaved={(savedConfig) =>
         setConfigOverride({ baseConfig: config, savedConfig })
       }

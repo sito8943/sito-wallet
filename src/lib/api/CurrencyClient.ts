@@ -46,9 +46,7 @@ export default class CurrencyClient extends BaseClient<
       `${this.table}/import/process${override ? `?override=true` : ""}`,
       Methods.POST,
       items,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 

@@ -65,7 +65,7 @@ export default class TransactionClient extends BaseClient<
   private parseTransactionTypeResumeType(
     type: FilterTransactionTypeResumeDto["type"],
   ): "IN" | "OUT" {
-    return Number(type) === TransactionType.Out ? "OUT" : "IN";
+    return Number(type) === Number(TransactionType.Out) ? "OUT" : "IN";
   }
 
   private stripTrashKeysFromFilter(filters?: string): string | undefined {
@@ -183,9 +183,7 @@ export default class TransactionClient extends BaseClient<
       builtUrl,
       Methods.GET,
       undefined,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 
@@ -213,9 +211,7 @@ export default class TransactionClient extends BaseClient<
       builtUrl,
       Methods.GET,
       undefined,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 
@@ -233,9 +229,7 @@ export default class TransactionClient extends BaseClient<
       `${Tables.Transactions}/type-resume/batch`,
       Methods.POST,
       body,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 
@@ -258,9 +252,7 @@ export default class TransactionClient extends BaseClient<
       builtUrl,
       Methods.GET,
       undefined,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 
@@ -276,9 +268,7 @@ export default class TransactionClient extends BaseClient<
       builtUrl,
       Methods.GET,
       undefined,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 
@@ -291,9 +281,7 @@ export default class TransactionClient extends BaseClient<
       `${this.table}/import/process${override ? `?override=true` : ""}`,
       Methods.POST,
       items,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
   }
 

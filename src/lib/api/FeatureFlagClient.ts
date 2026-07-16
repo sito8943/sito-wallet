@@ -30,9 +30,7 @@ export default class FeatureFlagClient {
       "app/features",
       Methods.GET,
       undefined,
-      {
-        ...this.api.defaultTokenAcquirer(),
-      },
+      this.api.defaultTokenAcquirer(),
     );
 
     return sanitizeFeaturePayload(response.features);

@@ -27,8 +27,9 @@ without changing either runtime dependency in the toolchain checkpoint.
 
 ## Checkpoint 2: React 19 prerequisites
 
-- [ ] Review diagnostics produced by TypeScript 7 and Oxlint.
-- [ ] Repair only confirmed source incompatibilities.
+- [x] Review the first diagnostics produced by TypeScript 7 and Oxlint.
+- [x] Tune migration-noise rules and repair confirmed unsafe conversions.
+- [ ] Review any remaining diagnostics after the developer reruns lint.
 - [ ] Confirm all direct React ecosystem dependencies accept React 19.
 
 ## Checkpoint 3: runtime migration

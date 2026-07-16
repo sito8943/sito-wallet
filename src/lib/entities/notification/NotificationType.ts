@@ -3,5 +3,4 @@ export const NotificationType = {
 } as const;
 
 export type NotificationType =
-  | (typeof NotificationType)[keyof typeof NotificationType]
-  | string;
+  (typeof NotificationType)[keyof typeof NotificationType] | (string & {});

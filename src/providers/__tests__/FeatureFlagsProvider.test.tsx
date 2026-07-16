@@ -11,25 +11,25 @@ const {
   mockUseManager,
   mockUseAuth,
 } = vi.hoisted(() => {
-  const mockGetFeatures = vi.fn();
-  const mockGetUserEntityConfigs = vi.fn(() => Promise.resolve([]));
-  const mockUseManager = vi.fn(() => ({
+  const getFeatures = vi.fn();
+  const getUserEntityConfigs = vi.fn(() => Promise.resolve([]));
+  const useManager = vi.fn(() => ({
     FeatureFlags: {
-      getFeatures: mockGetFeatures,
+      getFeatures,
     },
     UserEntityConfigs: {
-      getAll: mockGetUserEntityConfigs,
+      getAll: getUserEntityConfigs,
     },
   }));
-  const mockUseAuth = vi.fn(() => ({
+  const useAuth = vi.fn(() => ({
     account: { id: 1 },
   }));
 
   return {
-    mockGetFeatures,
-    mockGetUserEntityConfigs,
-    mockUseManager,
-    mockUseAuth,
+    mockGetFeatures: getFeatures,
+    mockGetUserEntityConfigs: getUserEntityConfigs,
+    mockUseManager: useManager,
+    mockUseAuth: useAuth,
   };
 });
 
@@ -105,18 +105,18 @@ vi.mock("lib", () => {
     ) => {
       const payload: Partial<AppFeatures> = {};
 
-      for (const config of configs) {
-        if (config.entityKey === "CURRENCIES") {
-          payload.currenciesEnabled = config.enabled;
+      for (const entityConfig of configs) {
+        if (entityConfig.entityKey === "CURRENCIES") {
+          payload.currenciesEnabled = entityConfig.enabled;
         }
-        if (config.entityKey === "ACCOUNTS") {
-          payload.accountsEnabled = config.enabled;
+        if (entityConfig.entityKey === "ACCOUNTS") {
+          payload.accountsEnabled = entityConfig.enabled;
         }
-        if (config.entityKey === "TRANSACTIONS") {
-          payload.transactionsEnabled = config.enabled;
+        if (entityConfig.entityKey === "TRANSACTIONS") {
+          payload.transactionsEnabled = entityConfig.enabled;
         }
-        if (config.entityKey === "SUBSCRIPTIONS") {
-          payload.subscriptionsEnabled = config.enabled;
+        if (entityConfig.entityKey === "SUBSCRIPTIONS") {
+          payload.subscriptionsEnabled = entityConfig.enabled;
         }
       }
 

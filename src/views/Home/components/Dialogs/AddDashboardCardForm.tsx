@@ -55,7 +55,7 @@ export function AddDashboardCardForm(props: DashboardFormPropsType) {
       <Controller
         control={control}
         rules={{
-          required: `${t("_entities:userDashboardCard.type.required")}`,
+          required: t("_entities:userDashboardCard.type.required"),
         }}
         name="type"
         disabled={isLoading}

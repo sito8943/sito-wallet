@@ -63,15 +63,13 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
     [categories, onCategoryClick, t],
   );
 
-  const softDeleteScope = useMemo(
-    () =>
-      hideDeletedEntities
-        ? "ACTIVE"
-        : String(
-            normalizeListFilters(tableFilters).softDeleteScope ?? "ACTIVE",
-          ),
-    [tableFilters, hideDeletedEntities],
-  );
+  const softDeleteScope = useMemo(() => {
+    if (hideDeletedEntities) return "ACTIVE";
+
+    const normalizedScope = normalizeListFilters(tableFilters).softDeleteScope;
+
+    return typeof normalizedScope === "string" ? normalizedScope : "ACTIVE";
+  }, [tableFilters, hideDeletedEntities]);
 
   const toIgnore = useMemo(() => {
     const ignoredColumns = ["id", "createdAt", "updatedAt"];

@@ -18,7 +18,7 @@ export const Auth = () => {
 
   useEffect(() => {
     if (!account.email) return;
-    if (publicAuthRoutes.has(location.pathname as string)) return;
+    if (publicAuthRoutes.has(location.pathname)) return;
 
     navigate(AppRoutes.home);
   }, [account.email, location.pathname, navigate]);

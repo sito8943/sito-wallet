@@ -192,7 +192,7 @@ export function DebtPaymentForm(props: AddDebtPaymentDialogPropsType) {
             disabled={formDisabled || categoriesQuery.isLoading}
             render={({ field: { value, onChange, ...rest } }) => (
               <AutocompleteInput
-                options={categoryOptions as Option[]}
+                options={categoryOptions}
                 value={value}
                 onChange={(nextValue) => onChange(nextValue)}
                 label={t("_entities:debtPayment.category.label")}

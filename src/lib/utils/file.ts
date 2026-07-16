@@ -2,7 +2,7 @@ export function parseJSONFile<T>(file: File): Promise<T[]> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
-    reader.onload = () => {
+    reader.addEventListener("load", () => {
       try {
         const result = reader.result as string;
         const data: T[] = JSON.parse(result);
@@ -10,11 +10,11 @@ export function parseJSONFile<T>(file: File): Promise<T[]> {
       } catch (error) {
         reject(error);
       }
-    };
+    });
 
-    reader.onerror = () => {
+    reader.addEventListener("error", () => {
       reject(new Error("Failed to read file"));
-    };
+    });
 
     reader.readAsText(file);
   });

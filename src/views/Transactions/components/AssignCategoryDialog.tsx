@@ -3,7 +3,6 @@ import { Controller, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import type { Option } from "@sito/dashboard-app";
 import { FormDialog, AutocompleteInput } from "@sito/dashboard-app";
 
 // hooks
@@ -95,7 +94,7 @@ export function AssignCategoryDialog(
         render={({ field: { value, onChange, ...rest } }) => (
           <AutocompleteInput
             required
-            options={categoryOptionsByType as Option[]}
+            options={categoryOptionsByType}
             value={Array.isArray(value) ? value : []}
             onChange={(nextValue) =>
               onChange(

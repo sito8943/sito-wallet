@@ -80,7 +80,7 @@ export const BalanceHistoryCard = (props: BalanceHistoryPropsType) => {
       isBusy={isLoading}
       loadingOverlay={isLoading}
       parseFormConfig={parseFormConfig}
-      formToDto={(data) => formToDto(data)}
+      formToDto={formToDto}
       onConfigSaved={(savedConfig) =>
         setConfigOverride({ baseConfig: config, savedConfig })
       }

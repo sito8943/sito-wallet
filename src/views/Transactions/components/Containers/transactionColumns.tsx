@@ -28,7 +28,7 @@ export const getTransactionTypeOptions = (t: TFunction): Option[] =>
   enumToKeyValueArray(TransactionType)?.map((item) => ({
     id: item.value,
     name: t(`_entities:transactionCategory:type.values.${item.key}`),
-  })) as Option[];
+  }));
 
 const getTransactionAutoTableFilterOptions = (t: TFunction): Option[] =>
   [
@@ -143,15 +143,11 @@ export const getTransactionColumns = (
         type: FilterTypes.text,
         placeholder: t("_entities:base.description.placeholder"),
       },
-      renderBody: (value: unknown, entity: TransactionTableRowType) => (
+      renderBody: (_value: unknown, entity: TransactionTableRowType) => (
         <span className="transaction-table-description">
           {entity.auto
             ? t("_entities:transactionCategory.name.init")
-            : renderEmpty(
-                typeof value === "string" || value == null
-                  ? value
-                  : String(value),
-              )}
+            : renderEmpty(entity.description)}
         </span>
       ),
     },
@@ -170,8 +166,8 @@ export const getTransactionColumns = (
     {
       key: "date",
       filterOptions: { type: FilterTypes.date },
-      renderBody: (value: unknown) => (
-        <p>{getFormattedDateTime(String(value ?? ""))}</p>
+      renderBody: (_value: unknown, entity: TransactionTableRowType) => (
+        <p>{getFormattedDateTime(entity.date ?? undefined)}</p>
       ),
     },
   ];

@@ -116,13 +116,13 @@ export function Accounts() {
   const transfer = useTransferDialog();
 
   const deleteAccount = useDeleteDialog({
-    mutationFn: (data) => manager.Accounts.softDelete(data),
+    mutationFn: (dto) => manager.Accounts.softDelete(dto),
     ...AccountsQueryKeys.all(),
   });
   const accountSwipeDelete = useSwipeDeleteState(deleteAccount.handleClose);
 
   const restoreAccount = useRestoreDialog({
-    mutationFn: (data) => manager.Accounts.restore(data),
+    mutationFn: (dto) => manager.Accounts.restore(dto),
     ...AccountsQueryKeys.all(),
   });
 
@@ -142,7 +142,7 @@ export function Accounts() {
     entity: Tables.Accounts,
     fileProcessor: (file, options) =>
       manager.Accounts.processImport(file, options?.override),
-    mutationFn: (data) => manager.Accounts.import(data),
+    mutationFn: (dto) => manager.Accounts.import(dto),
     ...AccountsQueryKeys.all(),
   });
 
