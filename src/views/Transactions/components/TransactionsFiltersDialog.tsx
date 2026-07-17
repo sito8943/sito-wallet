@@ -148,7 +148,7 @@ export const TransactionsMobileFilters = (
               label={t("_entities:transactionCategory.type.label")}
               value={value ?? ""}
               onChange={(event) =>
-                onChange((event.target as HTMLSelectElement).value)
+                onChange((event.target).value)
               }
               options={[
                 {
@@ -170,7 +170,7 @@ export const TransactionsMobileFilters = (
               label={t("_entities:transaction.auto.label")}
               value={value ?? ""}
               onChange={(event) =>
-                onChange((event.target as HTMLSelectElement).value)
+                onChange((event.target).value)
               }
               options={autoFilterOptions}
               {...rest}
@@ -190,7 +190,7 @@ export const TransactionsMobileFilters = (
               placeholder={t("_entities:transaction.amount.placeholder")}
               value={value ?? ""}
               onChange={(event) =>
-                onChange((event.target as HTMLInputElement).value)
+                onChange((event.target).value)
               }
               {...rest}
             />
@@ -207,7 +207,7 @@ export const TransactionsMobileFilters = (
             placeholder={t("_entities:base.description.placeholder")}
             value={value ?? ""}
             onChange={(event) =>
-              onChange((event.target as HTMLInputElement).value)
+              onChange((event.target).value)
             }
             {...rest}
           />
@@ -225,7 +225,7 @@ export const TransactionsMobileFilters = (
               label={t("_accessibility:components.table.filters.range.start")}
               value={value ?? ""}
               onChange={(event) =>
-                onChange((event.target as HTMLInputElement).value)
+                onChange((event.target).value)
               }
               {...rest}
             />
@@ -241,7 +241,7 @@ export const TransactionsMobileFilters = (
               label={t("_accessibility:components.table.filters.range.end")}
               value={value ?? ""}
               onChange={(event) =>
-                onChange((event.target as HTMLInputElement).value)
+                onChange((event.target).value)
               }
               {...rest}
             />
@@ -258,7 +258,7 @@ export const TransactionsMobileFilters = (
               label={t("_entities:base.deleted.scope.label")}
               value={value ?? "ACTIVE"}
               onChange={(event) =>
-                onChange((event.target as HTMLSelectElement).value)
+                onChange((event.target).value)
               }
               options={softDeleteScopeOptions}
               {...rest}
@@ -278,7 +278,7 @@ export const TransactionsMobileFilters = (
                 label={t("_accessibility:components.table.filters.range.start")}
                 value={value ?? ""}
                 onChange={(event) =>
-                  onChange((event.target as HTMLInputElement).value)
+                  onChange((event.target).value)
                 }
                 {...rest}
               />
@@ -294,7 +294,7 @@ export const TransactionsMobileFilters = (
                 label={t("_accessibility:components.table.filters.range.end")}
                 value={value ?? ""}
                 onChange={(event) =>
-                  onChange((event.target as HTMLInputElement).value)
+                  onChange((event.target).value)
                 }
                 {...rest}
               />
@@ -312,7 +312,7 @@ export const TransactionsMobileFilters = (
               label={t("_pages:transactions.mobileFilters.sortBy")}
               value={value ?? DEFAULT_SORTING_BY}
               onChange={(event) =>
-                onChange((event.target as HTMLSelectElement).value)
+                onChange((event.target).value)
               }
               options={sortingByOptions}
               {...rest}
@@ -329,7 +329,7 @@ export const TransactionsMobileFilters = (
               value={value ?? DEFAULT_SORTING_ORDER}
               onChange={(event) =>
                 onChange(
-                  parseSortOrder((event.target as HTMLSelectElement).value),
+                  parseSortOrder((event.target).value),
                 )
               }
               options={sortingOrderOptions}

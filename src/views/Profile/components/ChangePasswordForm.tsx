@@ -138,7 +138,7 @@ export function ChangePasswordForm() {
                   disabled={formDisabled}
                   onBlur={field.onBlur}
                   onChange={(event) =>
-                    field.onChange((event.target as HTMLInputElement).value)
+                    field.onChange((event.target).value)
                   }
                 />
               )}
@@ -167,7 +167,7 @@ export function ChangePasswordForm() {
                   disabled={formDisabled}
                   onBlur={field.onBlur}
                   onChange={(event) =>
-                    field.onChange((event.target as HTMLInputElement).value)
+                    field.onChange((event.target).value)
                   }
                 />
               )}
@@ -196,7 +196,7 @@ export function ChangePasswordForm() {
                   disabled={formDisabled}
                   onBlur={field.onBlur}
                   onChange={(event) =>
-                    field.onChange((event.target as HTMLInputElement).value)
+                    field.onChange((event.target).value)
                   }
                 />
               )}

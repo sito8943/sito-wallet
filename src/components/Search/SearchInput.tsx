@@ -27,7 +27,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputPropsType>(
         }}
         value={searching}
         placeholder={t("_pages:search.placeholder")}
-        onChange={(e) => setSearching((e.target as HTMLInputElement).value)}
+        onChange={(e) => setSearching((e.target).value)}
         inputClassName="search-input-control"
       >
         <FontAwesomeIcon icon={faSearch} className="search-input-icon" />

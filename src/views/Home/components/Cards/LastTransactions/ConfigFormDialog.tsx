@@ -90,7 +90,7 @@ export const ConfigFormDialog = (
             options={limitOptions}
             value={value ?? DEFAULT_LAST_TRANSACTIONS_LIMIT}
             onChange={(e) =>
-              onChange(Number((e.target as HTMLSelectElement).value))
+              onChange(Number((e.target).value))
             }
             label={t("_pages:home.dashboard.lastTransactions.limitLabel")}
             inputClassName="dashboard-card-select-input"

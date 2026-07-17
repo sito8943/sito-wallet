@@ -127,9 +127,7 @@ export function TransactionCategoryCard(
       <div className="chip-container transaction-category-card-desktop-type">
         <Chip
           className={
-            typeValue === TransactionType.In
-              ? "status-success"
-              : "status-error"
+            typeValue === TransactionType.In ? "status-success" : "status-error"
           }
           text={
             <div className="transaction-category-card-desktop-type-text">

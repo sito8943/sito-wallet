@@ -208,7 +208,7 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
                   disabled={formDisabled}
                   onBlur={field.onBlur}
                   onChange={(event) =>
-                    field.onChange((event.target as HTMLInputElement).value)
+                    field.onChange((event.target).value)
                   }
                 />
               )}
@@ -231,7 +231,7 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
                   onChange={(event) =>
                     field.onChange(
                       normalizeProfileLanguage(
-                        (event.target as HTMLSelectElement).value,
+                        (event.target).value,
                       ),
                     )
                   }

@@ -86,7 +86,7 @@ export function DebtForm(props: DebtFormPropsType) {
               value={value}
               onChange={(event) =>
                 onChange(
-                  toDebtDirection((event.target as HTMLSelectElement).value),
+                  toDebtDirection((event.target).value),
                 )
               }
               label={t("_entities:debt.direction.label")}
