@@ -4,10 +4,7 @@ import { useTranslation } from "react-i18next";
 // @sito/dashboard-app
 import { Dialog } from "@sito/dashboard-app";
 
-import {
-  EditTransactionDialog,
-  useEditTransaction,
-} from "views/Transactions";
+import { EditTransactionDialog, useEditTransaction } from "views/Transactions";
 
 import { TypeResumeCategoryItem } from "./TypeResumeCategoryItem";
 
