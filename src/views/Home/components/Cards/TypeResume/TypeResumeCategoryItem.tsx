@@ -31,6 +31,7 @@ export const TypeResumeCategoryItem = (
     endDate,
     transactionType,
     excludedCategoryIds,
+    onTransactionClick,
   } = props;
   const { t } = useTranslation();
 
@@ -107,6 +108,7 @@ export const TypeResumeCategoryItem = (
                 transaction={transaction}
                 currencyName={currencyName}
                 currencySymbol={currencySymbol}
+                onClick={onTransactionClick}
               />
             ))}
           </ul>

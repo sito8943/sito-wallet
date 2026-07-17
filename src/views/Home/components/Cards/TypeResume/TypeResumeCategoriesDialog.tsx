@@ -4,6 +4,11 @@ import { useTranslation } from "react-i18next";
 // @sito/dashboard-app
 import { Dialog } from "@sito/dashboard-app";
 
+import {
+  EditTransactionDialog,
+  useEditTransaction,
+} from "views/Transactions";
+
 import { TypeResumeCategoryItem } from "./TypeResumeCategoryItem";
 
 // types
@@ -31,6 +36,7 @@ export const TypeResumeCategoriesDialog = (
   const [expandedCategoryId, setExpandedCategoryId] = useState<number | null>(
     null,
   );
+  const editTransaction = useEditTransaction();
 
   const handleClose = useCallback(() => {
     setExpandedCategoryId(null);
@@ -69,10 +75,12 @@ export const TypeResumeCategoriesDialog = (
               endDate={endDate}
               transactionType={transactionType}
               excludedCategoryIds={excludedCategoryIds}
+              onTransactionClick={editTransaction.openDialog}
             />
           ))}
         </ul>
       )}
+      <EditTransactionDialog {...editTransaction} containerClassName="!z-60" />
     </Dialog>
   );
 };

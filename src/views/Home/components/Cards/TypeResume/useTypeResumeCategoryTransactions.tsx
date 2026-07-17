@@ -53,7 +53,7 @@ export const useTypeResumeCategoryTransactions = (
       filters,
       normalizedExcludedCategoryIds,
     ],
-    enabled: open && !!account?.id && !!accountId && !!startDate && !!endDate,
+    enabled: open && !!account?.id && !!startDate && !!endDate,
     queryFn: async () => {
       const response = await manager.Transactions.get(
         TYPE_RESUME_TRANSACTIONS_LIST_QUERY,

@@ -223,7 +223,7 @@
 }
 
 .type-resume-dialog {
-  @apply sm:w-5/6;
+  @apply sm:!w-11/12 sm:!max-w-[1100px];
 }
 
 .type-resume-dialog-empty {
@@ -291,7 +291,7 @@
 }
 
 .type-resume-transaction-item {
-  @apply flex items-center justify-between gap-3 rounded-2xl bg-base-light px-3 py-2;
+  @apply flex w-full cursor-pointer items-center justify-between gap-3 rounded-2xl bg-base-light px-3 py-2 text-left transition hover:bg-base;
 }
 
 .type-resume-transaction-copy {

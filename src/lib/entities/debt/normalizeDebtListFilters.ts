@@ -12,9 +12,7 @@ const parseDebtStatus = (value: unknown): DebtStatus | undefined => {
 
   if (!Number.isInteger(parsed)) return undefined;
 
-  return DEBT_STATUSES.includes(parsed)
-    ? (parsed)
-    : undefined;
+  return DEBT_STATUSES.includes(parsed) ? parsed : undefined;
 };
 
 const parseDebtStatusFilter = (value: unknown): DebtStatus[] | undefined => {

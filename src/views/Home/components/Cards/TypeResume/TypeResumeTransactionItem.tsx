@@ -10,7 +10,7 @@ import type { TypeResumeTransactionItemPropsType } from "./types";
 export const TypeResumeTransactionItem = (
   props: TypeResumeTransactionItemPropsType,
 ) => {
-  const { transaction, currencyName, currencySymbol } = props;
+  const { transaction, currencyName, currencySymbol, onClick } = props;
   const { t } = useTranslation();
   const { timeAge } = useCalendarTimeAge();
 
@@ -32,19 +32,27 @@ export const TypeResumeTransactionItem = (
   }, [timeAge, transaction.date]);
 
   return (
-    <li className="type-resume-transaction-item base-border">
-      <div className="type-resume-transaction-copy">
-        <p className="type-resume-transaction-description">
-          {parsedDescription}
+    <li>
+      <button
+        type="button"
+        className="type-resume-transaction-item base-border"
+        onClick={() => onClick(transaction.id)}
+      >
+        <div className="type-resume-transaction-copy">
+          <p className="type-resume-transaction-description">
+            {parsedDescription}
+          </p>
+          {dateLabel ? (
+            <p className="type-resume-transaction-date lowercase">
+              {dateLabel}
+            </p>
+          ) : null}
+        </div>
+        <p className="type-resume-transaction-amount poppins">
+          {transaction.amount}{" "}
+          <Currency name={currencyName} symbol={currencySymbol} />
         </p>
-        {dateLabel ? (
-          <p className="type-resume-transaction-date lowercase">{dateLabel}</p>
-        ) : null}
-      </div>
-      <p className="type-resume-transaction-amount poppins">
-        {transaction.amount}{" "}
-        <Currency name={currencyName} symbol={currencySymbol} />
-      </p>
+      </button>
     </li>
   );
 };

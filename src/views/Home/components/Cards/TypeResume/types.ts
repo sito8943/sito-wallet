@@ -95,6 +95,7 @@ export type TypeResumeCategoryItemPropsType = {
   endDate?: string;
   transactionType: TransactionType;
   excludedCategoryIds?: number[];
+  onTransactionClick: (id: number) => void;
 };
 
 export type UseTypeResumeCategoryTransactionsPropsType = {
@@ -113,6 +114,7 @@ export type TypeResumeTransactionItemPropsType = {
   transaction: CommonTransactionDto;
   currencyName?: string;
   currencySymbol?: string;
+  onClick: (id: number) => void;
 };
 
 export type TypeResumeRowPropsType = {
