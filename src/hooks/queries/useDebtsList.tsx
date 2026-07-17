@@ -32,7 +32,7 @@ export function useDebtsList(
       applyHideDeletedEntitiesPreference(
         normalizeDebtListFilters(filters),
         hideDeletedEntities,
-      ) as FilterDebtDto,
+      ),
     [filters, hideDeletedEntities],
   );
 

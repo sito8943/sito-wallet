@@ -12,8 +12,8 @@ const parseDebtStatus = (value: unknown): DebtStatus | undefined => {
 
   if (!Number.isInteger(parsed)) return undefined;
 
-  return DEBT_STATUSES.includes(parsed as DebtStatus)
-    ? (parsed as DebtStatus)
+  return DEBT_STATUSES.includes(parsed)
+    ? (parsed)
     : undefined;
 };
 
@@ -26,15 +26,13 @@ const parseDebtStatusFilter = (value: unknown): DebtStatus[] | undefined => {
   return statuses.length > 0 ? [...new Set(statuses)] : undefined;
 };
 
-export const normalizeDebtListFilters = (
-  filters?: unknown,
-): FilterDebtDto => {
+export const normalizeDebtListFilters = (filters?: unknown): FilterDebtDto => {
   if (
     typeof filters !== "object" ||
     filters === null ||
     Array.isArray(filters)
   ) {
-    return normalizeListFilters(filters) as FilterDebtDto;
+    return normalizeListFilters(filters);
   }
 
   const filtersRecord = { ...(filters as Record<string, unknown>) };

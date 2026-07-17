@@ -25,10 +25,7 @@ import type {
   DebtsFiltersDialogPropsType,
   DebtsFiltersFormType,
 } from "../types";
-import {
-  parseDebtFilterSortOrder,
-  stringifyDebtFilterValue,
-} from "../utils";
+import { parseDebtFilterSortOrder, stringifyDebtFilterValue } from "../utils";
 
 export function useDebtsFiltersDialog(): DebtsFiltersDialogPropsType {
   const { t } = useTranslation();
@@ -60,8 +57,7 @@ export function useDebtsFiltersDialog(): DebtsFiltersDialogPropsType {
   );
 
   const normalizedFilters = useMemo(
-    () =>
-      normalizeDebtListFilters({ ...defaultDebtsListFilters, ...filters }),
+    () => normalizeDebtListFilters({ ...defaultDebtsListFilters, ...filters }),
     [filters],
   );
 
@@ -113,10 +109,7 @@ export function useDebtsFiltersDialog(): DebtsFiltersDialogPropsType {
     ],
   );
 
-  const formDialog = useFormDialog<
-    DebtsFiltersFormType,
-    DebtsFiltersFormType
-  >({
+  const formDialog = useFormDialog<DebtsFiltersFormType, DebtsFiltersFormType>({
     mode: "state",
     defaultValues,
     reinitializeOnOpen: true,

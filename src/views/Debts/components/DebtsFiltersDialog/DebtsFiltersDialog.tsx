@@ -162,9 +162,7 @@ export function DebtsFiltersDialog(props: DebtsFiltersDialogPropsType) {
               <TextInput
                 id="debt-issued-at-start-filter"
                 type="date"
-                label={t(
-                  "_accessibility:components.table.filters.range.start",
-                )}
+                label={t("_accessibility:components.table.filters.range.start")}
                 value={value ?? ""}
                 onChange={(event) => onChange(event.target.value)}
                 {...rest}
@@ -178,9 +176,7 @@ export function DebtsFiltersDialog(props: DebtsFiltersDialogPropsType) {
               <TextInput
                 id="debt-issued-at-end-filter"
                 type="date"
-                label={t(
-                  "_accessibility:components.table.filters.range.end",
-                )}
+                label={t("_accessibility:components.table.filters.range.end")}
                 value={value ?? ""}
                 onChange={(event) => onChange(event.target.value)}
                 {...rest}
@@ -202,9 +198,7 @@ export function DebtsFiltersDialog(props: DebtsFiltersDialogPropsType) {
               <TextInput
                 id="debt-due-at-start-filter"
                 type="date"
-                label={t(
-                  "_accessibility:components.table.filters.range.start",
-                )}
+                label={t("_accessibility:components.table.filters.range.start")}
                 value={value ?? ""}
                 onChange={(event) => onChange(event.target.value)}
                 {...rest}
@@ -218,9 +212,7 @@ export function DebtsFiltersDialog(props: DebtsFiltersDialogPropsType) {
               <TextInput
                 id="debt-due-at-end-filter"
                 type="date"
-                label={t(
-                  "_accessibility:components.table.filters.range.end",
-                )}
+                label={t("_accessibility:components.table.filters.range.end")}
                 value={value ?? ""}
                 onChange={(event) => onChange(event.target.value)}
                 {...rest}
