@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { useAuth } from "@sito/dashboard-app";
+import { useAuth, useTableOptions } from "@sito/dashboard-app";
 
 import { useManager } from "providers";
 
@@ -9,7 +9,7 @@ import type { DebtDto, FilterDebtDto } from "lib";
 import {
   applyHideDeletedEntitiesPreference,
   defaultDebtsListFilters,
-  normalizeListFilters,
+  normalizeDebtListFilters,
 } from "lib";
 
 import { useHideDeletedEntitiesPreference } from "./useHideDeletedEntitiesPreference";
@@ -19,6 +19,7 @@ import { DebtsQueryKeys } from "./queryKeys/debtsQueryKeys";
 export function useInfiniteDebtsList(
   props: UseFetchPropsType<DebtDto, FilterDebtDto>,
 ) {
+  const { sortingBy, sortingOrder, filters: tableFilters } = useTableOptions();
   const { filters = defaultDebtsListFilters, query = {} } = props;
 
   const manager = useManager();
@@ -29,19 +30,25 @@ export function useInfiniteDebtsList(
   const parsedFilters = useMemo(
     () =>
       applyHideDeletedEntitiesPreference(
-        normalizeListFilters(filters),
+        normalizeDebtListFilters({ ...filters, ...tableFilters }),
         hideDeletedEntities,
       ) as FilterDebtDto,
-    [filters, hideDeletedEntities],
+    [filters, hideDeletedEntities, tableFilters],
   );
 
   const parsedQueries = useMemo(
     () => ({
-      sortingBy: query.sortingBy as keyof DebtDto,
-      sortingOrder: query.sortingOrder,
+      sortingBy: (sortingBy as keyof DebtDto) || query.sortingBy,
+      sortingOrder: sortingOrder || query.sortingOrder,
       pageSize: query.pageSize ?? 20,
     }),
-    [query.pageSize, query.sortingBy, query.sortingOrder],
+    [
+      query.pageSize,
+      query.sortingBy,
+      query.sortingOrder,
+      sortingBy,
+      sortingOrder,
+    ],
   );
 
   return useInfiniteQuery({

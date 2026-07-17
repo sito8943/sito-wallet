@@ -14,6 +14,7 @@ import {
   useExportActionMutate,
   useNotification,
   useRestoreDialog,
+  useTableOptions,
   useTranslation,
 } from "@sito/dashboard-app";
 
@@ -26,29 +27,40 @@ import {
   AccountsQueryKeys,
   DebtsQueryKeys,
   useInfiniteDebtsList,
+  useHideDeletedEntitiesPreference,
   useMobileMultiSelection,
   useMobileNavbar,
+  usePersistedTableOptions,
   useSwipeDeleteState,
 } from "hooks";
-import { useAddDebtPaymentDialog, useCancelDebtDialog } from "./hooks";
+import {
+  useAddDebtPaymentDialog,
+  useCancelDebtDialog,
+  useDebtsFiltersDialog,
+} from "./hooks";
 
 // components
 import { MobileSelectionBar } from "components";
-import { AddDebtPaymentDialog, DebtCard } from "./components";
+import {
+  AddDebtPaymentDialog,
+  DebtCard,
+  DebtsFiltersDialog,
+} from "./components";
 
 // providers
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 // lib
-import type { DebtDto } from "lib";
+import type { DebtDto, FilterDebtDto } from "lib";
 import { getDeleteAction } from "../../components/Card/utils";
 import {
   AppRoutes,
   Tables,
+  applyHideDeletedEntitiesPreference,
   defaultDebtsListFilters,
   getDebtEditRoute,
   isFeatureDisabledBusinessError,
-  normalizeListFilters,
+  normalizeDebtListFilters,
 } from "lib";
 
 // styles
@@ -62,6 +74,10 @@ export function Debts() {
 
   const manager = useManager();
   const debtsClient = "Debts" in manager ? manager.Debts : null;
+  usePersistedTableOptions("debts", "list");
+  const hideDeletedEntities = useHideDeletedEntitiesPreference();
+  const { filters } = useTableOptions<keyof FilterDebtDto>();
+  const debtsFilters = useDebtsFiltersDialog();
 
   const {
     data,
@@ -117,7 +133,10 @@ export function Debts() {
       if (!debtsClient) throw new Error("debts.featureDisabled");
 
       return await debtsClient.export(
-        normalizeListFilters(defaultDebtsListFilters),
+        applyHideDeletedEntitiesPreference(
+          normalizeDebtListFilters({ ...defaultDebtsListFilters, ...filters }),
+          hideDeletedEntities,
+        ),
       );
     },
   });
@@ -168,6 +187,11 @@ export function Debts() {
         disabled: isLoading || !debtsClient,
         tooltip: t("_pages:debts.add"),
       }}
+      filterOptions={{
+        onClick: () => debtsFilters.openDialog(),
+        disabled: isLoading || !debtsClient,
+        tooltip: t("_accessibility:buttons.filters"),
+      }}
       queryKey={DebtsQueryKeys.all().queryKey}
     >
       {!error ? (
@@ -179,6 +203,7 @@ export function Debts() {
             onActionClick={mobileSelection.onMultiActionClick}
             onCancel={mobileSelection.clearSelection}
           />
+          <DebtsFiltersDialog {...debtsFilters} />
           <PrettyGrid
             data={items}
             className="full-grid debts-grid"

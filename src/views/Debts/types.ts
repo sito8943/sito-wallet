@@ -2,6 +2,8 @@ import type { Control, FieldValues, UseFormSetValue } from "react-hook-form";
 
 import type {
   ActionType,
+  Option,
+  SortOrder,
   TriggerFormDialogPropsType,
 } from "@sito/dashboard-app";
 
@@ -44,6 +46,25 @@ export interface DebtFormPropsType {
   isLoading?: boolean;
   setValue?: UseFormSetValue<DebtFormType>;
   mode?: FormMode;
+}
+
+export interface DebtsFiltersFormType extends FieldValues {
+  currency: CommonCurrencyDto | null;
+  direction: string;
+  status: Option[];
+  counterpartyName: string;
+  dueAtStart: string;
+  dueAtEnd: string;
+  issuedAtStart: string;
+  issuedAtEnd: string;
+  sortingBy: string;
+  sortingOrder: SortOrder;
+}
+
+export interface DebtsFiltersDialogPropsType extends TriggerFormDialogPropsType<DebtsFiltersFormType> {
+  currencies: CommonCurrencyDto[];
+  statusOptions: Option[];
+  handleClear: () => void;
 }
 
 export interface DebtPaymentFormType extends FieldValues {

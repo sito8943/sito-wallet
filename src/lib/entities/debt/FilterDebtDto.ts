@@ -6,7 +6,7 @@ import type { DebtStatus } from "./DebtStatus";
 export interface FilterDebtDto extends BaseFilterDto {
   currencyId?: number;
   direction?: DebtDirection;
-  status?: DebtStatus;
+  status?: DebtStatus[];
   counterpartyName?: string;
   dueAt?: RangeValue<string>;
   issuedAt?: RangeValue<string>;

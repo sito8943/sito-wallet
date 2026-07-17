@@ -989,6 +989,15 @@
     "title": "Debts",
     "empty": "You don't have debts yet. Create one to get started.",
     "add": "Add a debt",
+    "filters": {
+      "any": "Any",
+      "sortBy": "Sort by",
+      "sortOrder": "Sort order",
+      "order": {
+        "asc": "Ascending",
+        "desc": "Descending"
+      }
+    },
     "labels": {
       "noDueDate": "No due date"
     },

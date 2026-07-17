@@ -1,3 +1,5 @@
+import { SortOrder } from "@sito/dashboard-app";
+
 import type {
   AddDebtDto,
   AddDebtPaymentDto,
@@ -23,6 +25,19 @@ export const toDebtDirection = (value: unknown): DebtDirection => {
   }
 
   return DEFAULT_DEBT_DIRECTION;
+};
+
+export const stringifyDebtFilterValue = (value: unknown): string => {
+  if (typeof value === "string" || typeof value === "number") {
+    return String(value);
+  }
+
+  return "";
+};
+
+export const parseDebtFilterSortOrder = (value: unknown): SortOrder => {
+  const parsed = typeof value === "string" ? value.toUpperCase() : "";
+  return parsed === String(SortOrder.ASC) ? SortOrder.ASC : SortOrder.DESC;
 };
 
 export const debtDtoToForm = (dto: DebtDto): DebtFormType => {

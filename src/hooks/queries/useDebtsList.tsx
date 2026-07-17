@@ -11,7 +11,7 @@ import type { DebtDto, FilterDebtDto } from "lib";
 import {
   applyHideDeletedEntitiesPreference,
   defaultDebtsListFilters,
-  normalizeListFilters,
+  normalizeDebtListFilters,
 } from "lib";
 
 import { useHideDeletedEntitiesPreference } from "./useHideDeletedEntitiesPreference";
@@ -30,7 +30,7 @@ export function useDebtsList(
   const normalizedFilters = useMemo(
     () =>
       applyHideDeletedEntitiesPreference(
-        normalizeListFilters(filters),
+        normalizeDebtListFilters(filters),
         hideDeletedEntities,
       ) as FilterDebtDto,
     [filters, hideDeletedEntities],

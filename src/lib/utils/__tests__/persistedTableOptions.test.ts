@@ -21,6 +21,7 @@ vi.mock("../../../config", () => ({
 import { loadTableOptions, saveTableOptions } from "../persistedTableOptions";
 
 const key = "sito-wallet:table-options:transactions:1";
+const debtsKey = "sito-wallet:table-options:debts:list";
 
 describe("persistedTableOptions utils", () => {
   beforeEach(() => {
@@ -66,6 +67,20 @@ describe("persistedTableOptions utils", () => {
       sortingBy: "id",
       sortingOrder: "DESC",
       filters: {},
+    });
+  });
+
+  it("preserves debt status arrays", () => {
+    saveTableOptions("debts", "list", {
+      sortingBy: "id",
+      sortingOrder: "DESC",
+      filters: { status: [0, 1] },
+    });
+
+    expect(storage.get(debtsKey)).toEqual({
+      sortingBy: "id",
+      sortingOrder: "DESC",
+      filters: { status: [0, 1] },
     });
   });
 });

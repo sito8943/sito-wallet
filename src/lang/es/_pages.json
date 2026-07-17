@@ -989,6 +989,15 @@
     "title": "Deudas",
     "empty": "No tienes deudas. Crea una para empezar.",
     "add": "Agregar una deuda",
+    "filters": {
+      "any": "Cualquiera",
+      "sortBy": "Ordenar por",
+      "sortOrder": "Orden",
+      "order": {
+        "asc": "Ascendente",
+        "desc": "Descendente"
+      }
+    },
     "labels": {
       "noDueDate": "Sin fecha de vencimiento"
     },

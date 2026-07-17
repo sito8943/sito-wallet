@@ -1,6 +1,7 @@
 import { fromLocal, removeFromLocal, toLocal } from "@sito/dashboard-app";
 
 import { config } from "../../config";
+import { normalizeDebtListFilters } from "../entities/debt";
 import { normalizeListFilters } from "./filterNormalization";
 
 export type PersistedTableState = {
@@ -13,9 +14,13 @@ const buildKey = (view: string, tabId: string | number): string =>
   `${config.tableOptions}:${view}:${tabId}`;
 
 const normalizePersistedFilters = (
+  view: string,
   filters: unknown,
 ): Record<string, unknown> => {
-  const normalized = normalizeListFilters(filters);
+  const normalized =
+    view === "debts"
+      ? normalizeDebtListFilters(filters)
+      : normalizeListFilters(filters);
 
   // ACTIVE is the implicit default for list queries. Persisting it creates
   // noisy/restored UI chips even when users did not set the trash filter.
@@ -33,7 +38,7 @@ export const saveTableOptions = (
 ): void => {
   toLocal(buildKey(view, tabId), {
     ...state,
-    filters: normalizePersistedFilters(state.filters),
+    filters: normalizePersistedFilters(view, state.filters),
   });
 };
 
@@ -48,7 +53,7 @@ export const loadTableOptions = (
 
   return {
     ...parsed,
-    filters: normalizePersistedFilters(parsed.filters),
+    filters: normalizePersistedFilters(view, parsed.filters),
   };
 };
 

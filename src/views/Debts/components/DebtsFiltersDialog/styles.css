@@ -1,0 +1,13 @@
+@reference "../../../../styles/variables.css";
+
+.debt-filters-grid {
+  @apply grid gap-4 sm:grid-cols-2;
+}
+
+.debt-filters-section {
+  @apply flex flex-col gap-2;
+}
+
+.debt-filters-section-title {
+  @apply text-text font-semibold;
+}
