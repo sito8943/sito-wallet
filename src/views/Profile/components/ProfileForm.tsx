@@ -207,9 +207,7 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
                   state={fieldState.error ? State.error : State.default}
                   disabled={formDisabled}
                   onBlur={field.onBlur}
-                  onChange={(event) =>
-                    field.onChange((event.target).value)
-                  }
+                  onChange={(event) => field.onChange(event.target.value)}
                 />
               )}
             />
@@ -229,11 +227,7 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
                   helperText={t("_pages:profile.helper.language")}
                   onBlur={field.onBlur}
                   onChange={(event) =>
-                    field.onChange(
-                      normalizeProfileLanguage(
-                        (event.target).value,
-                      ),
-                    )
+                    field.onChange(normalizeProfileLanguage(event.target.value))
                   }
                 />
               )}

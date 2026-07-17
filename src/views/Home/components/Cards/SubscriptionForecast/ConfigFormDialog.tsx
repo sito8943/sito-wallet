@@ -49,7 +49,7 @@ export const ConfigFormDialog = (
             required
             options={rangeOptions}
             value={value}
-            onChange={(e) => onChange((e.target).value)}
+            onChange={(e) => onChange(e.target.value)}
             label={t("_entities:subscriptionRenewal.range.label")}
             {...rest}
           />

@@ -354,7 +354,7 @@ export const ConfigFormDialog = (
             <SelectInput
               options={parsedTypes}
               value={value}
-              onChange={(e) => onChange((e.target).value)}
+              onChange={(e) => onChange(e.target.value)}
               label={t("_entities:transactionCategory.type.label")}
               inputClassName="dashboard-card-select-input dashboard-card-icon-select-input"
               {...rest}
@@ -379,7 +379,7 @@ export const ConfigFormDialog = (
             <SelectInput
               options={parsedTimes}
               value={value}
-              onChange={(e) => onChange((e.target).value)}
+              onChange={(e) => onChange(e.target.value)}
               label={t("_entities:transaction.typeResume.time.label")}
               inputClassName="dashboard-card-select-input"
               {...rest}

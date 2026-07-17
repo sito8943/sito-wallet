@@ -137,7 +137,7 @@ export function AccountForm(props: AccountFormPropsType) {
               required
               options={typeOptions}
               value={value}
-              onChange={(e) => onChange((e.target).value)}
+              onChange={(e) => onChange(e.target.value)}
               label={t("_entities:account.type.label")}
               inputClassName="account-form-type-input"
               {...rest}
@@ -183,7 +183,7 @@ export function AccountForm(props: AccountFormPropsType) {
               id="bankName"
               options={bankOptions}
               value={value ?? ""}
-              onChange={(e) => onChange((e.target).value)}
+              onChange={(e) => onChange(e.target.value)}
               label={t("_entities:account.bank.label")}
               {...rest}
             />

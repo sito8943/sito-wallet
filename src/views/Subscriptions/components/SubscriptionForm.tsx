@@ -198,9 +198,7 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
                 required
                 options={billingUnitOptions}
                 value={value}
-                onChange={(event) =>
-                  onChange((event.target).value)
-                }
+                onChange={(event) => onChange(event.target.value)}
                 label={t("_entities:subscription.billingUnit.label")}
                 {...rest}
               />
@@ -239,9 +237,7 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
                 required
                 options={statusOptions}
                 value={value}
-                onChange={(event) =>
-                  onChange((event.target).value)
-                }
+                onChange={(event) => onChange(event.target.value)}
                 label={t("_entities:subscription.status.label")}
                 {...rest}
               />

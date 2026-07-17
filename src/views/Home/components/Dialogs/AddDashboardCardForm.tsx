@@ -64,7 +64,7 @@ export function AddDashboardCardForm(props: DashboardFormPropsType) {
             required
             options={typeOptions}
             value={value}
-            onChange={(e) => onChange((e.target).value)}
+            onChange={(e) => onChange(e.target.value)}
             label={t("_entities:transactionCategory.type.label")}
             {...rest}
           />

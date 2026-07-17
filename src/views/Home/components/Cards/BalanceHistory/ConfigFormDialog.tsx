@@ -84,7 +84,7 @@ export const ConfigFormDialog = (
             required
             options={presetOptions}
             value={value}
-            onChange={(e) => onChange((e.target).value)}
+            onChange={(e) => onChange(e.target.value)}
             label={t("_pages:home.dashboard.balanceHistory.presetLabel")}
             inputClassName="dashboard-card-select-input"
             {...rest}
