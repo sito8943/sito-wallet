@@ -9,7 +9,7 @@
 }
 
 .subscription-editor-actions {
-  @apply flex gap-2 max-sm:flex-col-reverse;
+  @apply flex gap-2 max-sm:flex-col;
 }
 
 .subscription-editor-action-button {

@@ -126,7 +126,11 @@ export function TransactionCategoryCard(
       </p>
       <div className="chip-container transaction-category-card-desktop-type">
         <Chip
-          className={typeValue === TransactionType.In ? "success" : "error"}
+          className={
+            typeValue === TransactionType.In
+              ? "status-success"
+              : "status-error"
+          }
           text={
             <div className="transaction-category-card-desktop-type-text">
               <FontAwesomeIcon icon={icons[typeValue]} />

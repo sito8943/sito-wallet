@@ -258,7 +258,7 @@ export const DashboardCard = <TForm extends FieldValues>(
         <IconButton
           disabled={headerDisabled}
           onClick={onDelete}
-          className="error"
+          color="error"
           icon={faTrash}
           data-tooltip-id="tooltip"
           data-tooltip-content={t("_pages:common.actions.delete.text")}

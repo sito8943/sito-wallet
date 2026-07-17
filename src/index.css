@@ -95,11 +95,11 @@ main {
   box-shadow: 0 3px 8px 0 #0000004f;
 }
 
-.success {
+.status-success {
   @apply bg-bg-success text-success;
 }
 
-.error {
+.status-error {
   @apply bg-bg-error text-error;
 }
 

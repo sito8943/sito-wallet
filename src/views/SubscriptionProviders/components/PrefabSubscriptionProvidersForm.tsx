@@ -51,7 +51,7 @@ export function PrefabSubscriptionProvidersForm(
   if (!hasManager || isError) {
     return (
       <div className="prefab-suggestions-empty">
-        <p className="prefab-suggestions-error error">
+        <p className="prefab-suggestions-error status-error">
           {t("_pages:prefabs.subscriptions.loadError")}
         </p>
       </div>

@@ -9,7 +9,7 @@
 }
 
 .debt-editor-actions {
-  @apply flex gap-2 max-sm:flex-col-reverse;
+  @apply flex gap-2 max-sm:flex-col;
 }
 
 .debt-editor-action-button {

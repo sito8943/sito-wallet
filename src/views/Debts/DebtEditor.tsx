@@ -230,20 +230,20 @@ export function DebtEditor() {
               }) => (
                 <div className="debt-editor-actions">
                   <Button
-                    {...buttonProps.cancel}
-                    variant="outlined"
-                    onClick={onCancel}
-                    className="debt-editor-action-button"
-                  >
-                    {cancelLabel}
-                  </Button>
-                  <Button
                     {...buttonProps.submit}
                     variant="submit"
                     color="primary"
                     className="debt-editor-action-button"
                   >
                     {submitLabel}
+                  </Button>
+                  <Button
+                    {...buttonProps.cancel}
+                    variant="outlined"
+                    onClick={onCancel}
+                    className="debt-editor-action-button"
+                  >
+                    {cancelLabel}
                   </Button>
                 </div>
               )}

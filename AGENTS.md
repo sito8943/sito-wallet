@@ -41,10 +41,14 @@ Always use the semantic token classes, **not** raw Tailwind palette utilities.
 
 Available status classes (from `src/index.css`):
 
-- `.success` → `bg-bg-success text-success`
-- `.error` → `bg-bg-error text-error`
+- `.status-success` → `bg-bg-success text-success`
+- `.status-error` → `bg-bg-error text-error`
 - `.inverted-success` → `text-bg-success`
 - `.inverted-error` → `text-bg-error`
+
+Use the `status-*` prefix for filled semantic states. Generic classes such as
+`.success` and `.error` are reserved by shared UI packages and must not be
+defined globally in the consumer app.
 
 There is **no `.warning` semantic class** yet — use `bg-bg-warning text-warning` inline or add it to `src/styles/components.css`.
 

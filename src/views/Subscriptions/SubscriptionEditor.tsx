@@ -220,20 +220,20 @@ export function SubscriptionEditor() {
               }) => (
                 <div className="subscription-editor-actions">
                   <Button
-                    {...buttonProps.cancel}
-                    variant="outlined"
-                    onClick={onCancel}
-                    className="subscription-editor-action-button"
-                  >
-                    {cancelLabel}
-                  </Button>
-                  <Button
                     {...buttonProps.submit}
                     variant="submit"
                     color="primary"
                     className="subscription-editor-action-button"
                   >
                     {submitLabel}
+                  </Button>
+                  <Button
+                    {...buttonProps.cancel}
+                    variant="outlined"
+                    onClick={onCancel}
+                    className="subscription-editor-action-button"
+                  >
+                    {cancelLabel}
                   </Button>
                 </div>
               )}
