@@ -8,24 +8,24 @@ No validation scripts were executed while preparing this plan.
 
 ## Reviewed stack
 
-| Layer | Wallet now | Shared stack baseline | Status |
-| --- | --- | --- | --- |
-| Node.js | 22.18.0 (`^22.13.0`) | 22.18.0 (`^22.13.0`) | Aligned |
-| Package manager | pnpm 10.34.4 | pnpm 10.34.4 | Aligned |
-| TypeScript | 7.0.2 | 7.0.2 | Aligned |
-| Lint | Oxlint 1.73.0 + tsgolint 0.24.0 | Same | Aligned |
-| Vite | 8.1.4 | 8.1.4 | Aligned |
-| React Vite plugin | 6.0.3 | 6.0.3 | Aligned |
-| Vitest / jsdom | 4.1.10 / 29.1.1 | 4.1.10 / 29.1.1 | Aligned |
-| Prettier | 3.9.5 | 3.9.5 | Aligned |
-| Tailwind CSS | 4.3.2 | 4.3.2 in `@sito/dashboard-app` | Aligned |
-| React / React DOM | 19.2.7 | 19.2.7 | Aligned |
-| React type packages | 19.2.17 / 19.2.3 | 19.2.17 / 19.2.3 | Aligned |
-| FontAwesome React binding | 3.4.0 | 3.4.0 | Aligned |
-| FontAwesome core/icons | 7.0.0 | 7.0.0 | Aligned |
-| `@sito/dashboard-app` | 0.2.0 | 0.2.0 | Aligned |
-| `@sito/dashboard` | Transitive 0.3.0 | 0.3.0 | Aligned |
-| `@sito/ui` | Transitive 0.3.3 | 0.3.3 | Aligned |
+| Layer                     | Wallet now                      | Shared stack baseline          | Status  |
+| ------------------------- | ------------------------------- | ------------------------------ | ------- |
+| Node.js                   | 22.18.0 (`^22.13.0`)            | 22.18.0 (`^22.13.0`)           | Aligned |
+| Package manager           | pnpm 10.34.4                    | pnpm 10.34.4                   | Aligned |
+| TypeScript                | 7.0.2                           | 7.0.2                          | Aligned |
+| Lint                      | Oxlint 1.73.0 + tsgolint 0.24.0 | Same                           | Aligned |
+| Vite                      | 8.1.4                           | 8.1.4                          | Aligned |
+| React Vite plugin         | 6.0.3                           | 6.0.3                          | Aligned |
+| Vitest / jsdom            | 4.1.10 / 29.1.1                 | 4.1.10 / 29.1.1                | Aligned |
+| Prettier                  | 3.9.5                           | 3.9.5                          | Aligned |
+| Tailwind CSS              | 4.3.2                           | 4.3.2 in `@sito/dashboard-app` | Aligned |
+| React / React DOM         | 19.2.7                          | 19.2.7                         | Aligned |
+| React type packages       | 19.2.17 / 19.2.3                | 19.2.17 / 19.2.3               | Aligned |
+| FontAwesome React binding | 3.4.0                           | 3.4.0                          | Aligned |
+| FontAwesome core/icons    | 7.0.0                           | 7.0.0                          | Aligned |
+| `@sito/dashboard-app`     | 0.2.0                           | 0.2.0                          | Aligned |
+| `@sito/dashboard`         | Transitive 0.3.0                | 0.3.0                          | Aligned |
+| `@sito/ui`                | Transitive 0.3.3                | 0.3.3                          | Aligned |
 
 ## Static findings
 
@@ -68,28 +68,28 @@ No validation scripts were executed while preparing this plan.
 - [x] Upgrade `@fortawesome/react-fontawesome` to `3.4.0`.
 - [x] Keep the FontAwesome core and icon packages at `7.0.0`.
 - [x] Remove the stale `@sito/dashboard-app: link:../../lib/-sito-dashboard-app`
-  pnpm override.
+      pnpm override.
 - [x] Do not add direct `@sito/dashboard`, `@sito/ui`,
-  `@typescript/typescript6`, or additional migration libraries.
+      `@typescript/typescript6`, or additional migration libraries.
 - [x] Avoid unrelated dependency upgrades in this checkpoint.
 - [x] Expose `workbox-window` 7.4.1 as the direct runtime required by
-  `virtual:pwa-register/react` under pnpm's strict dependency layout.
+      `virtual:pwa-register/react` under pnpm's strict dependency layout.
 
 ## Checkpoint 2: apply only confirmed React 19 source changes
 
 - [x] Replace the three global `JSX.Element` return types in the Home card
-  contracts with appropriate React-scoped element types.
+      contracts with appropriate React-scoped element types.
 - [x] Review the first compiler diagnostics produced after the dependency
-  install and make only evidence-backed React 19 type fixes.
+      install and make only evidence-backed React 19 type fixes.
 - [x] Replace the Home dashboard card test's ambiguous shared IconButton
-  test ids with accessible role-and-name queries for filter and delete actions.
+      test ids with accessible role-and-name queries for filter and delete actions.
 - [ ] Review any remaining diagnostics after the developer reruns validation.
 - [x] Keep provider composition, routing, shared component imports and public
-  `@sito/dashboard-app` contracts unchanged unless a diagnostic proves a
-  required adaptation.
+      `@sito/dashboard-app` contracts unchanged unless a diagnostic proves a
+      required adaptation.
 - [x] Do not rewrite existing FontAwesome JSX pre-emptively; current usages are
-  conventional and should be changed only if version 3 types expose a real
-  incompatibility.
+      conventional and should be changed only if version 3 types expose a real
+      incompatibility.
 
 ## Checkpoint 3: regenerate and audit the dependency graph
 
@@ -98,14 +98,14 @@ The developer performs this checkpoint.
 - [ ] Activate Node 22.18.0 and pnpm 10.34.4.
 - [x] Run `pnpm install` to regenerate `pnpm-lock.yaml`.
 - [x] Confirm the lockfile resolves the dashboard stack against React 19.2.7
-  and `@fortawesome/react-fontawesome` 3.4.0.
+      and `@fortawesome/react-fontawesome` 3.4.0.
 - [x] Confirm no direct React 18, React DOM 18, React 18 type package, or
-  `react-fontawesome` 0.2.3 resolution remains in the application graph.
+      `react-fontawesome` 0.2.3 resolution remains in the application graph.
 - [x] Confirm only one React and React DOM runtime is selected for wallet and
-  the three dashboard packages.
+      the three dashboard packages.
 - [ ] Treat the optional TypeScript 5 peer metadata from i18n packages as a
-  compatibility signal to verify, not as authorization to downgrade
-  TypeScript 7.
+      compatibility signal to verify, not as authorization to downgrade
+      TypeScript 7.
 
 ## Checkpoint 4: validation sequence
 
@@ -141,15 +141,15 @@ or application type incompatibility.
 ## Checkpoint 5: runtime smoke checks
 
 - [ ] App bootstrap renders without duplicate-React or invalid-hook-call
-  errors.
+      errors.
 - [ ] Authentication restore, sign-in and logout still work.
 - [ ] Dialogs, form submission, notifications and portal-based dropdowns open
-  and close correctly.
+      and close correctly.
 - [ ] Tables, filters, pagination and row actions remain functional.
 - [ ] FontAwesome icons render in cards, menus, actions and empty states.
 - [ ] Charts render without React lifecycle warnings.
 - [ ] Offline manager, service worker update prompt and sync providers do not
-  duplicate subscriptions or listeners under React 19 development behavior.
+      duplicate subscriptions or listeners under React 19 development behavior.
 - [ ] Production build and PWA startup complete without missing chunks or CSS.
 
 ## Completion criteria
