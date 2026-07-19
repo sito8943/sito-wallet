@@ -17,5 +17,10 @@ export const WalletTable = <TRow extends BaseEntityDto>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.total]);
 
-  return <Table {...props} />;
+  return (
+    <Table
+      {...props}
+      showSortPreviewOnHover={props.showSortPreviewOnHover ?? true}
+    />
+  );
 };

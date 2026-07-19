@@ -1,4 +1,4 @@
-import { existsSync, lstatSync } from "node:fs";
+import { existsSync, lstatSync, realpathSync } from "node:fs";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
@@ -158,6 +158,9 @@ function rawFsDenyGuard(externalAllowedRoots: string[] = []) {
 
 // https://vite.dev/config/
 export default defineConfig(({ command, mode }) => {
+  const linkedDashboardRealRoot = pathExists(linkedDashboardRoot)
+    ? realpathSync(linkedDashboardRoot)
+    : linkedDashboardRoot;
   const useLinkedDashboardApp =
     command === "serve" &&
     mode === "development" &&
@@ -165,7 +168,11 @@ export default defineConfig(({ command, mode }) => {
     pathExists(linkedDashboardAppEntry) &&
     pathExists(linkedDashboardEntry);
   const externalAllowedRoots = useLinkedDashboardApp
-    ? [linkedDashboardAppRoot, linkedDashboardRoot]
+    ? [
+        linkedDashboardAppRoot,
+        linkedDashboardRoot,
+        linkedDashboardRealRoot,
+      ]
     : [];
   const fsAllowRoots = [projectRoot, ...externalAllowedRoots];
   const linkedPackageAliases = useLinkedDashboardApp

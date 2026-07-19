@@ -106,6 +106,10 @@ select > option {
   @apply bg-base;
 }
 
+.table-headers-cell.table-headers-sort-preview-trigger:enabled:hover {
+  @apply bg-border/40;
+}
+
 .button.outlined {
   @apply bg-base border-border text-text border-2;
 }

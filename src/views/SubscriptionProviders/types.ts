@@ -4,9 +4,16 @@ import type { ActionType, FormDialogPropsType } from "@sito/dashboard-app";
 
 import type {
   AddSubscriptionProviderDto,
+  CommonSubscriptionProviderDto,
   SubscriptionProviderDto,
   UpdateSubscriptionProviderDto,
 } from "lib";
+
+export interface UseAddSubscriptionProviderDialogOptions {
+  onCreated?: (
+    provider: CommonSubscriptionProviderDto,
+  ) => void | Promise<void>;
+}
 
 export interface SubscriptionProviderCardPropsType extends SubscriptionProviderDto {
   actions: ActionType<SubscriptionProviderDto>[];

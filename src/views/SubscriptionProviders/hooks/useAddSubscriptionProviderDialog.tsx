@@ -6,7 +6,7 @@ import { usePostDialog } from "@sito/dashboard-app";
 import { SubscriptionProvidersQueryKeys, useMutationErrorHandler } from "hooks";
 import { useManager } from "providers";
 
-import type { SubscriptionProviderDto } from "lib";
+import type { CommonSubscriptionProviderDto } from "lib";
 
 import {
   emptyAddSubscriptionProviderForm,
@@ -16,9 +16,12 @@ import {
 import type {
   CreateSubscriptionProviderMutationDto,
   SubscriptionProviderFormType,
+  UseAddSubscriptionProviderDialogOptions,
 } from "../types";
 
-export function useAddSubscriptionProviderDialog() {
+export function useAddSubscriptionProviderDialog(
+  options: UseAddSubscriptionProviderDialogOptions = {},
+) {
   const { t } = useTranslation();
   const handleMutationError = useMutationErrorHandler();
 
@@ -33,7 +36,7 @@ export function useAddSubscriptionProviderDialog() {
 
   const { handleSubmit, ...rest } = usePostDialog<
     CreateSubscriptionProviderMutationDto,
-    SubscriptionProviderDto,
+    CommonSubscriptionProviderDto,
     SubscriptionProviderFormType
   >({
     formToDto: subscriptionProviderFormToCreateDto,
@@ -44,15 +47,25 @@ export function useAddSubscriptionProviderDialog() {
       }
 
       const created = await subscriptionProvidersClient.insert(payload);
-      if (!file) return created;
-
       const providerId = getProviderId(created);
       if (!providerId) {
         throw new Error("subscriptionProvider.idNotReturned");
       }
 
-      return await subscriptionProvidersClient.updatePhoto(providerId, file);
+      if (file) {
+        await subscriptionProvidersClient.updatePhoto(providerId, file);
+      }
+
+      const createdProvider =
+        await subscriptionProvidersClient.getById(providerId);
+      return {
+        id: createdProvider.id,
+        name: createdProvider.name,
+        photo: createdProvider.photo ?? null,
+        updatedAt: createdProvider.updatedAt,
+      };
     },
+    onSuccess: options.onCreated,
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:subscriptionProviders.forms.add"),
     onError: (error) =>

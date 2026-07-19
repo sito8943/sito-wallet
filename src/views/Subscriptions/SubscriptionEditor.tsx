@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -19,8 +19,19 @@ import {
 } from "hooks";
 import { useManager } from "providers";
 
-import type { SubscriptionDto } from "lib";
+import type {
+  CommonCurrencyDto,
+  CommonSubscriptionProviderDto,
+  SubscriptionDto,
+} from "lib";
 import { AppRoutes, FormMode, parseErrorMessage } from "lib";
+
+import { AddCurrencyDialog } from "../Currencies/components";
+import { useAddCurrency } from "../Currencies/hooks";
+import { addEmptyCurrency } from "../Currencies/utils";
+import { AddSubscriptionProviderDialog } from "../SubscriptionProviders/components";
+import { useAddSubscriptionProviderDialog } from "../SubscriptionProviders/hooks";
+import { emptyAddSubscriptionProviderForm } from "../SubscriptionProviders/utils";
 
 import {
   AddSubscriptionBillingLogDialog,
@@ -160,6 +171,58 @@ export function SubscriptionEditor() {
     },
   });
 
+  const handleCurrencyCreated = useCallback(
+    (currency: CommonCurrencyDto) => {
+      setValue("currency", currency, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+    },
+    [setValue],
+  );
+
+  const handleSubscriptionProviderCreated = useCallback(
+    (provider: CommonSubscriptionProviderDto) => {
+      setValue("provider", provider, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+    },
+    [setValue],
+  );
+
+  const addCurrency = useAddCurrency({ onCreated: handleCurrencyCreated });
+  const addSubscriptionProvider = useAddSubscriptionProviderDialog({
+    onCreated: handleSubscriptionProviderCreated,
+  });
+  const openAddCurrencyDialog = addCurrency.openDialog;
+  const openAddSubscriptionProviderDialog =
+    addSubscriptionProvider.openDialog;
+
+  const handleCreateCurrency = useCallback(
+    (inputValue: string) => {
+      openAddCurrencyDialog({
+        values: {
+          ...addEmptyCurrency,
+          name: inputValue,
+        },
+      });
+    },
+    [openAddCurrencyDialog],
+  );
+
+  const handleCreateSubscriptionProvider = useCallback(
+    (inputValue: string) => {
+      openAddSubscriptionProviderDialog({
+        values: {
+          ...emptyAddSubscriptionProviderForm,
+          name: inputValue,
+        },
+      });
+    },
+    [openAddSubscriptionProviderDialog],
+  );
+
   useEffect(() => {
     if (!subscriptionQuery.data) return;
     reset?.(subscriptionDtoToForm(subscriptionQuery.data));
@@ -244,6 +307,8 @@ export function SubscriptionEditor() {
                   isLoading={isLoading}
                   setValue={setValue}
                   mode={isEditMode ? FormMode.Edit : FormMode.Add}
+                  onCreateCurrency={handleCreateCurrency}
+                  onCreateProvider={handleCreateSubscriptionProvider}
                 />
               </div>
             </FormContainer>
@@ -259,6 +324,8 @@ export function SubscriptionEditor() {
             />
           ) : null}
           <AddSubscriptionBillingLogDialog {...addBillingLog} />
+          <AddCurrencyDialog {...addCurrency} />
+          <AddSubscriptionProviderDialog {...addSubscriptionProvider} />
         </div>
       )}
     </Page>

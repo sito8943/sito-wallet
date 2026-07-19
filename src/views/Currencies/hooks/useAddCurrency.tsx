@@ -11,15 +11,15 @@ import { useManager } from "providers";
 import { CurrenciesQueryKeys, useMutationErrorHandler } from "hooks";
 
 // utils
-import { addEmptyCurrency, formToDto } from "../utils";
+import { addEmptyCurrency, formToDto, getCurrencyId } from "../utils";
 
 // lib
-import type { AddCurrencyDto, CurrencyDto } from "lib";
+import type { AddCurrencyDto, CommonCurrencyDto } from "lib";
 
 // types
-import type { CurrencyFormType } from "../types";
+import type { CurrencyFormType, UseAddCurrencyOptions } from "../types";
 
-export function useAddCurrency() {
+export function useAddCurrency(options: UseAddCurrencyOptions = {}) {
   const { t } = useTranslation();
   const handleMutationError = useMutationErrorHandler();
   const manager = useManager();
@@ -28,12 +28,25 @@ export function useAddCurrency() {
 
   const { handleSubmit, ...rest } = usePostDialog<
     AddCurrencyDto,
-    CurrencyDto,
+    CommonCurrencyDto,
     CurrencyFormType
   >({
     formToDto,
     defaultValues: addEmptyCurrency,
-    mutationFn: (data) => manager.Currencies.insert(data),
+    mutationFn: async (data) => {
+      const created = await manager.Currencies.insert(data);
+      const currencyId = getCurrencyId(created);
+      if (!currencyId) throw new Error("currency.idNotReturned");
+
+      const createdCurrency = await manager.Currencies.getById(currencyId);
+      return {
+        id: createdCurrency.id,
+        name: createdCurrency.name,
+        symbol: createdCurrency.symbol,
+        updatedAt: createdCurrency.updatedAt,
+      };
+    },
+    onSuccess: options.onCreated,
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:currencies.forms.add"),
     onError: (error) =>

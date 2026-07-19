@@ -34,7 +34,13 @@ import type { SubscriptionFormPropsType } from "../types";
 import "./styles.css";
 
 export function SubscriptionForm(props: SubscriptionFormPropsType) {
-  const { control, isLoading, mode = FormMode.Add } = props;
+  const {
+    control,
+    isLoading,
+    mode = FormMode.Add,
+    onCreateCurrency,
+    onCreateProvider,
+  } = props;
   const { t } = useTranslation();
 
   const providersQuery = useSubscriptionProvidersCommon({ onlyEnabled: true });
@@ -153,6 +159,15 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
               placeholder={t("_entities:subscription.provider.placeholder")}
               autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.provider.label")}`}
               multiple={false}
+              createOption={
+                onCreateProvider
+                  ? {
+                      onCreate: onCreateProvider,
+                      renderLabel: (inputValue) =>
+                        `${t("_accessibility:create")} "${inputValue}"`,
+                    }
+                  : undefined
+              }
               {...rest}
             />
           )}
@@ -320,6 +335,15 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
               placeholder={t("_entities:subscription.currency.placeholder")}
               autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.currency.label")}`}
               multiple={false}
+              createOption={
+                onCreateCurrency
+                  ? {
+                      onCreate: onCreateCurrency,
+                      renderLabel: (inputValue) =>
+                        `${t("_accessibility:create")} "${inputValue}"`,
+                    }
+                  : undefined
+              }
               {...rest}
             />
           )}
