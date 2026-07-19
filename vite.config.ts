@@ -168,11 +168,7 @@ export default defineConfig(({ command, mode }) => {
     pathExists(linkedDashboardAppEntry) &&
     pathExists(linkedDashboardEntry);
   const externalAllowedRoots = useLinkedDashboardApp
-    ? [
-        linkedDashboardAppRoot,
-        linkedDashboardRoot,
-        linkedDashboardRealRoot,
-      ]
+    ? [linkedDashboardAppRoot, linkedDashboardRoot, linkedDashboardRealRoot]
     : [];
   const fsAllowRoots = [projectRoot, ...externalAllowedRoots];
   const linkedPackageAliases = useLinkedDashboardApp

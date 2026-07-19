@@ -10,9 +10,7 @@ import type {
 } from "lib";
 
 export interface UseAddSubscriptionProviderDialogOptions {
-  onCreated?: (
-    provider: CommonSubscriptionProviderDto,
-  ) => void | Promise<void>;
+  onCreated?: (provider: CommonSubscriptionProviderDto) => void | Promise<void>;
 }
 
 export interface SubscriptionProviderCardPropsType extends SubscriptionProviderDto {

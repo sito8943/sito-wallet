@@ -196,8 +196,7 @@ export function SubscriptionEditor() {
     onCreated: handleSubscriptionProviderCreated,
   });
   const openAddCurrencyDialog = addCurrency.openDialog;
-  const openAddSubscriptionProviderDialog =
-    addSubscriptionProvider.openDialog;
+  const openAddSubscriptionProviderDialog = addSubscriptionProvider.openDialog;
 
   const handleCreateCurrency = useCallback(
     (inputValue: string) => {
