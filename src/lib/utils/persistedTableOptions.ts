@@ -17,10 +17,11 @@ const normalizePersistedFilters = (
   view: string,
   filters: unknown,
 ): Record<string, unknown> => {
-  const normalized =
-    view === "debts"
+  const normalized: Record<string, unknown> = {
+    ...(view === "debts"
       ? normalizeDebtListFilters(filters)
-      : normalizeListFilters(filters);
+      : normalizeListFilters(filters)),
+  };
 
   // ACTIVE is the implicit default for list queries. Persisting it creates
   // noisy/restored UI chips even when users did not set the trash filter.

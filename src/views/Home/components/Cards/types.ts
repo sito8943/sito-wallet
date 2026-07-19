@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import type { FieldValues } from "react-hook-form";
 import type {
   FormDialogPropsType,
@@ -59,9 +59,9 @@ export type DashboardCardProps<TForm extends FieldValues> = Common & {
     data: TForm & { userId: number; id: number },
   ) => UpdateDashboardCardConfigDto;
   onConfigSaved?: (savedConfig: string) => void;
-  ConfigFormDialog: (props: ConfigFormDialogPropsType<TForm>) => JSX.Element;
-  renderActiveFilters?: (args: RenderFiltersArgs<TForm>) => JSX.Element | null;
+  ConfigFormDialog: (props: ConfigFormDialogPropsType<TForm>) => ReactElement;
+  renderActiveFilters?: (args: RenderFiltersArgs<TForm>) => ReactElement | null;
   shouldShowActiveFiltersBadge?: (formConfig: TForm) => boolean;
   getActiveFiltersCount?: (formConfig: TForm) => number;
-  children?: (args: ChildrenArgs<TForm>) => JSX.Element | null;
+  children?: (args: ChildrenArgs<TForm>) => ReactElement | null;
 };

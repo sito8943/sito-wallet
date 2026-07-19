@@ -74,7 +74,6 @@ export function DebtsFiltersDialog(props: DebtsFiltersDialogPropsType) {
   return (
     <FormDialog
       {...props}
-      submitLabel={t("_accessibility:buttons.applyFilters")}
       extraActions={[
         {
           id: "clear",

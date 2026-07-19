@@ -173,6 +173,8 @@ export function SubscriptionEditor() {
 
   const handleCurrencyCreated = useCallback(
     (currency: CommonCurrencyDto) => {
+      if (!setValue) return;
+
       setValue("currency", currency, {
         shouldDirty: true,
         shouldValidate: true,
@@ -183,6 +185,8 @@ export function SubscriptionEditor() {
 
   const handleSubscriptionProviderCreated = useCallback(
     (provider: CommonSubscriptionProviderDto) => {
+      if (!setValue) return;
+
       setValue("provider", provider, {
         shouldDirty: true,
         shouldValidate: true,

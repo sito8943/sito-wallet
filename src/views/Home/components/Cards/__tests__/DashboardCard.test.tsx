@@ -66,14 +66,18 @@ vi.mock("@sito/dashboard-app", () => ({
     onClick,
     disabled,
     className,
+    "aria-label": ariaLabel,
   }: {
     onClick?: () => void;
     disabled?: boolean;
     className?: string;
     icon?: unknown;
+    "aria-label"?: string;
   }) => (
     <button
-      data-testid={`icon-btn-${className?.includes("error") ? "delete" : "filter"}`}
+      type="button"
+      aria-label={ariaLabel}
+      className={className}
       onClick={onClick}
       disabled={disabled}
     />
@@ -306,15 +310,27 @@ describe("DashboardCard", () => {
 
     it("opens ConfigFormDialog when filter icon button is clicked", () => {
       renderCard();
-      fireEvent.click(screen.getByTestId("icon-btn-filter"));
+      fireEvent.click(
+        screen.getByRole("button", {
+          name: "_accessibility:buttons.filters",
+        }),
+      );
       expect(screen.getByTestId("config-dialog")).toBeInTheDocument();
     });
 
     it("closes ConfigFormDialog when filter icon button is clicked again", () => {
       renderCard();
-      fireEvent.click(screen.getByTestId("icon-btn-filter"));
+      fireEvent.click(
+        screen.getByRole("button", {
+          name: "_accessibility:buttons.filters",
+        }),
+      );
       expect(screen.getByTestId("config-dialog")).toBeInTheDocument();
-      fireEvent.click(screen.getByTestId("icon-btn-filter"));
+      fireEvent.click(
+        screen.getByRole("button", {
+          name: "_accessibility:buttons.filters",
+        }),
+      );
       expect(screen.queryByTestId("config-dialog")).toBeNull();
     });
   });
@@ -323,7 +339,11 @@ describe("DashboardCard", () => {
     it("calls onDelete when delete button is clicked", () => {
       const onDelete = vi.fn();
       renderCard({ onDelete });
-      fireEvent.click(screen.getByTestId("icon-btn-delete"));
+      fireEvent.click(
+        screen.getByRole("button", {
+          name: "_pages:common.actions.delete.text",
+        }),
+      );
       expect(onDelete).toHaveBeenCalledTimes(1);
     });
   });
@@ -332,7 +352,11 @@ describe("DashboardCard", () => {
     it("calls updateCardConfig on config form submit", async () => {
       renderCard();
 
-      fireEvent.click(screen.getByTestId("icon-btn-filter"));
+      fireEvent.click(
+        screen.getByRole("button", {
+          name: "_accessibility:buttons.filters",
+        }),
+      );
       fireEvent.click(screen.getByTestId("submit-config"));
 
       await waitFor(() => expect(mockUpdateCardConfig).toHaveBeenCalled(), {
@@ -343,7 +367,11 @@ describe("DashboardCard", () => {
     it("closes config dialog after successful config submit", async () => {
       renderCard();
 
-      fireEvent.click(screen.getByTestId("icon-btn-filter"));
+      fireEvent.click(
+        screen.getByRole("button", {
+          name: "_accessibility:buttons.filters",
+        }),
+      );
       expect(screen.getByTestId("config-dialog")).toBeInTheDocument();
 
       fireEvent.click(screen.getByTestId("submit-config"));
@@ -358,7 +386,11 @@ describe("DashboardCard", () => {
       const onConfigSaved = vi.fn();
       renderCard({ onConfigSaved });
 
-      fireEvent.click(screen.getByTestId("icon-btn-filter"));
+      fireEvent.click(
+        screen.getByRole("button", {
+          name: "_accessibility:buttons.filters",
+        }),
+      );
       fireEvent.click(screen.getByTestId("submit-config"));
 
       await waitFor(

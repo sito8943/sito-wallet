@@ -1,11 +1,10 @@
-import { type ComponentType, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { Link, useLocation, useNavigate, type To } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { QueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
 import { AppProviders, TranslationProvider } from "@sito/dashboard-app";
-import type { BaseLinkPropsType } from "@sito/dashboard-app";
 
 // components
 import { SearchModal } from "components";
@@ -54,7 +53,7 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
       config={{
         location,
         navigate: navigateFn,
-        linkComponent: Link as unknown as ComponentType<BaseLinkPropsType>,
+        linkComponent: Link,
         searchComponent: SearchModal,
       }}
       manager={{ manager, queryClient }}
