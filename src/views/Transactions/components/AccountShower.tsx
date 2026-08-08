@@ -15,6 +15,7 @@ import {
   useEditAccountDialog,
   useSyncAccountMutation,
   useAdjustBalanceMutation,
+  useTransferDialog,
 } from "views/Accounts/hooks";
 
 // lib
@@ -28,6 +29,7 @@ import {
   AddAccountDialog,
   AdjustBalanceDialog,
   EditAccountDialog,
+  TransferDialog,
   TypeResume,
 } from "views/Accounts";
 import { AccountSlider } from "./AccountSlider";
@@ -73,15 +75,18 @@ const AccountShower = (props: AccountCarouselPropsType) => {
 
   const adjustBalance = useAdjustBalanceMutation();
 
+  const transfer = useTransferDialog();
+
   // #endregion
 
   const getActions = useCallback(
     (record: AccountDto) => [
+      transfer.action(record),
       adjustBalance.action(record),
       syncAccount.action(record),
       editAccountAction(record),
     ],
-    [adjustBalance, editAccountAction, syncAccount],
+    [adjustBalance, editAccountAction, syncAccount, transfer],
   );
 
   return (
@@ -114,6 +119,7 @@ const AccountShower = (props: AccountCarouselPropsType) => {
       <AddAccountDialog {...addAccount} />
       <EditAccountDialog {...editAccountDialog} />
       <AdjustBalanceDialog {...adjustBalance} />
+      <TransferDialog {...transfer} />
     </>
   );
 };
