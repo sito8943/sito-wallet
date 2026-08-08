@@ -28,8 +28,8 @@ export const AccountsQueryKeys = {
       filters,
     ],
   }),
-  common: () => ({
-    queryKey: [...AccountsQueryKeys.all().queryKey, "common"],
+  common: (filters: FilterAccountDto) => ({
+    queryKey: [...AccountsQueryKeys.all().queryKey, "common", filters],
   }),
   byId: (id: number | undefined, query: GetAccountByIdQueryDto) => ({
     queryKey: [...AccountsQueryKeys.all().queryKey, "by-id", id, query],

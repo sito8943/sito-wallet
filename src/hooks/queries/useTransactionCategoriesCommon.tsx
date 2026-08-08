@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
@@ -24,17 +25,18 @@ export function useTransactionCategoriesCommon(): UseQueryResult<
   const manager = useManager();
   const { account } = useAuth();
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
-
-  return useQuery({
-    ...TransactionCategoriesQueryKeys.common(),
-    enabled: !!account?.id,
-    queryFn: () => {
-      const commonFilters = applyHideDeletedEntitiesPreference(
+  const commonFilters = useMemo(
+    () =>
+      applyHideDeletedEntitiesPreference(
         normalizeCommonFilters(),
         hideDeletedEntities,
-      ) as FilterTransactionCategoryDto;
+      ) as FilterTransactionCategoryDto,
+    [hideDeletedEntities],
+  );
 
-      return manager.TransactionCategories.commonGet(commonFilters);
-    },
+  return useQuery({
+    ...TransactionCategoriesQueryKeys.common(commonFilters),
+    enabled: !!account?.id,
+    queryFn: () => manager.TransactionCategories.commonGet(commonFilters),
   });
 }

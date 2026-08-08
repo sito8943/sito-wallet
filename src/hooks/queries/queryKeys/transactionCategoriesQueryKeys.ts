@@ -24,7 +24,11 @@ export const TransactionCategoriesQueryKeys = {
       filters,
     ],
   }),
-  common: () => ({
-    queryKey: [...TransactionCategoriesQueryKeys.all().queryKey, "common"],
+  common: (filters: FilterTransactionCategoryDto) => ({
+    queryKey: [
+      ...TransactionCategoriesQueryKeys.all().queryKey,
+      "common",
+      filters,
+    ],
   }),
 };

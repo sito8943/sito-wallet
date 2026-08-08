@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
@@ -19,17 +20,18 @@ export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
   const manager = useManager();
   const { account } = useAuth();
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
-
-  return useQuery({
-    ...CurrenciesQueryKeys.common(),
-    enabled: !!account?.id,
-    queryFn: () => {
-      const commonFilters = applyHideDeletedEntitiesPreference(
+  const commonFilters = useMemo(
+    () =>
+      applyHideDeletedEntitiesPreference(
         normalizeCommonFilters(),
         hideDeletedEntities,
-      ) as FilterCurrencyDto;
+      ) as FilterCurrencyDto,
+    [hideDeletedEntities],
+  );
 
-      return manager.Currencies.commonGet(commonFilters);
-    },
+  return useQuery({
+    ...CurrenciesQueryKeys.common(commonFilters),
+    enabled: !!account?.id,
+    queryFn: () => manager.Currencies.commonGet(commonFilters),
   });
 }

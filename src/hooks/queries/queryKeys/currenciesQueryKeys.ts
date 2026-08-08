@@ -20,7 +20,7 @@ export const CurrenciesQueryKeys = {
       filters,
     ],
   }),
-  common: () => ({
-    queryKey: [...CurrenciesQueryKeys.all().queryKey, "common"],
+  common: (filters: FilterCurrencyDto) => ({
+    queryKey: [...CurrenciesQueryKeys.all().queryKey, "common", filters],
   }),
 };

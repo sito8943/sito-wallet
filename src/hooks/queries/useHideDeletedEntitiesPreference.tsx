@@ -21,5 +21,5 @@ export const useHideDeletedEntitiesPreference = (): boolean => {
     },
   });
 
-  return !!preferenceQuery.data;
+  return preferenceQuery.data ?? true;
 };
