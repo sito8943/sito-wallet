@@ -79,7 +79,10 @@ export interface DebtPaymentFormType extends FieldValues {
 
 export interface AddDebtPaymentDialogPropsType extends TriggerFormDialogPropsType<DebtPaymentFormType> {
   selectedDebt: DebtDto | null;
+  editingPayment?: boolean;
 }
+
+export type EditDebtPaymentDialogPropsType = AddDebtPaymentDialogPropsType;
 
 export interface DebtActivitySidebarPropsType {
   issuedAt?: string | null;
@@ -90,6 +93,7 @@ export interface DebtActivitySidebarPropsType {
   payments: DebtPaymentDto[];
   paymentsLoading?: boolean;
   paymentsError?: unknown;
+  onEditPayment?: (payment: DebtPaymentDto) => void;
   onDeletePayment?: (payment: DebtPaymentDto) => void;
 }
 

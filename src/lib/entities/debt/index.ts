@@ -8,5 +8,6 @@ export * from "./FilterDebtDto";
 export * from "./ImportPreviewDebtDto";
 export * from "./DebtPaymentDto";
 export * from "./AddDebtPaymentDto";
+export * from "./UpdateDebtPaymentDto";
 export * from "./FilterDebtPaymentDto";
 export * from "./normalizeDebtListFilters";

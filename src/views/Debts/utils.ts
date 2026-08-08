@@ -5,6 +5,8 @@ import type {
   AddDebtPaymentDto,
   DebtDirection,
   DebtDto,
+  DebtPaymentDto,
+  UpdateDebtPaymentDto,
   UpdateDebtDto,
 } from "lib";
 import {
@@ -129,3 +131,26 @@ export const debtPaymentFormToDto = (
       : {}),
   };
 };
+
+export const debtPaymentDtoToForm = (
+  dto: DebtPaymentDto,
+): DebtPaymentFormType => ({
+  debtId: dto.debtId,
+  amount: String(dto.amount),
+  paidAt: toDateTimeLocal(dto.paidAt),
+  note: dto.note ?? "",
+  autoCreateTransaction: false,
+  account: null,
+  category: null,
+});
+
+export const debtPaymentFormToUpdateDto = (
+  form: DebtPaymentFormType,
+  dto?: DebtPaymentDto,
+): UpdateDebtPaymentDto => ({
+  id: dto?.id ?? 0,
+  debtId: dto?.debtId ?? form.debtId,
+  amount: parseFiniteNumber(form.amount),
+  paidAt: form.paidAt,
+  note: form.note?.trim() || null,
+});

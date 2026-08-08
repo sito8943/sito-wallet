@@ -21,14 +21,18 @@ import {
 import { useManager } from "providers";
 
 import type { DebtDto, DebtPaymentDto } from "lib";
-import { AppRoutes, FormMode, parseErrorMessage } from "lib";
+import { AppRoutes, DebtStatus, FormMode, parseErrorMessage } from "lib";
 
 import {
   AddDebtPaymentDialog,
   DebtActivitySidebar,
   DebtForm,
+  EditDebtPaymentDialog,
 } from "./components";
-import { useAddDebtPaymentDialog } from "./hooks";
+import {
+  useAddDebtPaymentDialog,
+  useEditDebtPaymentDialog,
+} from "./hooks";
 import type { DebtFormType } from "./types";
 import {
   debtDtoToForm,
@@ -122,6 +126,8 @@ export function DebtEditor() {
       return await debtsClient.getById(debtId);
     },
   });
+
+  const editPayment = useEditDebtPaymentDialog(debtQuery.data ?? null);
 
   const debtPaymentsQuery = useQuery({
     ...DebtsQueryKeys.payments(debtId),
@@ -268,12 +274,18 @@ export function DebtEditor() {
               payments={debtPaymentsQuery.data?.items ?? []}
               paymentsLoading={debtPaymentsQuery.isLoading}
               paymentsError={debtPaymentsQuery.error}
+              onEditPayment={
+                debtQuery.data?.status === DebtStatus.Cancelled
+                  ? undefined
+                  : (payment) => editPayment.openDialog(payment.id)
+              }
               onDeletePayment={(payment) => {
                 void handleDeletePayment(payment);
               }}
             />
           ) : null}
           <AddDebtPaymentDialog {...addPayment} />
+          <EditDebtPaymentDialog {...editPayment} />
         </div>
       )}
     </Page>

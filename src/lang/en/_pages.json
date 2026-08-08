@@ -1024,6 +1024,11 @@
       "deletePayment": {
         "text": "Delete payment",
         "successMessage": "Payment deleted successfully"
+      },
+      "editPayment": {
+        "text": "Edit payment",
+        "title": "Edit payment",
+        "successMessage": "Payment updated successfully"
       }
     }
   }

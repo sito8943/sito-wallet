@@ -21,7 +21,14 @@ import type { AddDebtPaymentDialogPropsType } from "../types";
 import "./styles.css";
 
 export function DebtPaymentForm(props: AddDebtPaymentDialogPropsType) {
-  const { control, isLoading, open, setValue, selectedDebt } = props;
+  const {
+    control,
+    editingPayment = false,
+    isLoading,
+    open,
+    setValue,
+    selectedDebt,
+  } = props;
   const { t } = useTranslation();
 
   const accountsQuery = useAccountsCommon();
@@ -57,7 +64,7 @@ export function DebtPaymentForm(props: AddDebtPaymentDialogPropsType) {
   );
 
   useEffect(() => {
-    if (!open || !selectedDebt || !setValue) return;
+    if (!open || !selectedDebt || !setValue || editingPayment) return;
 
     setValue("debtId", selectedDebt.id);
     setValue("amount", String(selectedDebt.pendingAmount ?? ""));
@@ -66,7 +73,7 @@ export function DebtPaymentForm(props: AddDebtPaymentDialogPropsType) {
     setValue("autoCreateTransaction", false);
     setValue("account", null);
     setValue("category", null);
-  }, [open, selectedDebt, setValue]);
+  }, [editingPayment, open, selectedDebt, setValue]);
 
   const formDisabled = isLoading;
 
@@ -145,65 +152,75 @@ export function DebtPaymentForm(props: AddDebtPaymentDialogPropsType) {
         )}
       />
 
-      <Controller
-        control={control}
-        name="autoCreateTransaction"
-        disabled={formDisabled}
-        render={({ field: { value, onChange, ...rest } }) => (
-          <CheckInput
-            {...rest}
-            id="debt-payment-auto-create-transaction"
-            checked={!!value}
-            label={t("_entities:debtPayment.autoCreateTransaction.label")}
-            inputClassName="debt-payment-toggle-input"
-            containerClassName="debt-payment-toggle"
-            onChange={(event) => onChange(event.currentTarget.checked)}
-          />
-        )}
-      />
-
-      {autoCreateTransaction ? (
-        <div className="debt-payment-grid">
+      {!editingPayment ? (
+        <>
           <Controller
             control={control}
-            name="account"
-            disabled={formDisabled || accountsQuery.isLoading}
-            rules={{
-              required: t("_entities:debtPayment.account.requiredWhenAuto"),
-            }}
+            name="autoCreateTransaction"
+            disabled={formDisabled}
             render={({ field: { value, onChange, ...rest } }) => (
-              <AutocompleteInput
-                required
-                options={accountOptions}
-                value={value}
-                onChange={(nextValue) => onChange(nextValue)}
-                label={t("_entities:debtPayment.account.label")}
-                placeholder={t("_entities:debtPayment.account.placeholder")}
-                autoComplete={`${Tables.Debts}-${t("_entities:debtPayment.account.label")}`}
-                multiple={false}
+              <CheckInput
                 {...rest}
+                id="debt-payment-auto-create-transaction"
+                checked={!!value}
+                label={t("_entities:debtPayment.autoCreateTransaction.label")}
+                inputClassName="debt-payment-toggle-input"
+                containerClassName="debt-payment-toggle"
+                onChange={(event) => onChange(event.currentTarget.checked)}
               />
             )}
           />
 
-          <Controller
-            control={control}
-            name="category"
-            disabled={formDisabled || categoriesQuery.isLoading}
-            render={({ field: { value, onChange, ...rest } }) => (
-              <AutocompleteInput
-                options={categoryOptions}
-                value={value}
-                onChange={(nextValue) => onChange(nextValue)}
-                label={t("_entities:debtPayment.category.label")}
-                placeholder={t("_entities:debtPayment.category.placeholder")}
-                autoComplete={`${Tables.Debts}-${t("_entities:debtPayment.category.label")}`}
-                multiple={false}
-                {...rest}
+          {autoCreateTransaction ? (
+            <div className="debt-payment-grid">
+              <Controller
+                control={control}
+                name="account"
+                disabled={formDisabled || accountsQuery.isLoading}
+                rules={{
+                  required: t(
+                    "_entities:debtPayment.account.requiredWhenAuto",
+                  ),
+                }}
+                render={({ field: { value, onChange, ...rest } }) => (
+                  <AutocompleteInput
+                    required
+                    options={accountOptions}
+                    value={value}
+                    onChange={(nextValue) => onChange(nextValue)}
+                    label={t("_entities:debtPayment.account.label")}
+                    placeholder={t(
+                      "_entities:debtPayment.account.placeholder",
+                    )}
+                    autoComplete={`${Tables.Debts}-${t("_entities:debtPayment.account.label")}`}
+                    multiple={false}
+                    {...rest}
+                  />
+                )}
               />
-            )}
-          />
-        </div>
+
+              <Controller
+                control={control}
+                name="category"
+                disabled={formDisabled || categoriesQuery.isLoading}
+                render={({ field: { value, onChange, ...rest } }) => (
+                  <AutocompleteInput
+                    options={categoryOptions}
+                    value={value}
+                    onChange={(nextValue) => onChange(nextValue)}
+                    label={t("_entities:debtPayment.category.label")}
+                    placeholder={t(
+                      "_entities:debtPayment.category.placeholder",
+                    )}
+                    autoComplete={`${Tables.Debts}-${t("_entities:debtPayment.category.label")}`}
+                    multiple={false}
+                    {...rest}
+                  />
+                )}
+              />
+            </div>
+          ) : null}
+        </>
       ) : null}
     </>
   );

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import { IconButton, Loading } from "@sito/dashboard-app";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import { Currency } from "views/Currencies/components/Currency";
 
@@ -21,6 +21,7 @@ export function DebtActivitySidebar(props: DebtActivitySidebarPropsType) {
     payments,
     paymentsLoading,
     paymentsError,
+    onEditPayment,
     onDeletePayment,
   } = props;
 
@@ -84,15 +85,28 @@ export function DebtActivitySidebar(props: DebtActivitySidebarPropsType) {
                         symbol={currency?.symbol}
                       />
                     </p>
-                    {onDeletePayment ? (
-                      <IconButton
-                        icon={faTrash}
-                        onClick={() => onDeletePayment(payment)}
-                        aria-label={t(
-                          "_pages:debts.actions.deletePayment.text",
-                        )}
-                      />
-                    ) : null}
+                    <div className="flex items-center gap-1">
+                      {onEditPayment ? (
+                        <IconButton
+                          icon={faPencil}
+                          color="primary"
+                          onClick={() => onEditPayment(payment)}
+                          aria-label={t(
+                            "_pages:debts.actions.editPayment.text",
+                          )}
+                        />
+                      ) : null}
+                      {onDeletePayment ? (
+                        <IconButton
+                          icon={faTrash}
+                          color="error"
+                          onClick={() => onDeletePayment(payment)}
+                          aria-label={t(
+                            "_pages:debts.actions.deletePayment.text",
+                          )}
+                        />
+                      ) : null}
+                    </div>
                   </div>
                   <p className="debt-activity-meta">
                     {t("_entities:debtPayment.paidAt.label")}: {paidAt}

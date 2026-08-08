@@ -13,6 +13,7 @@ import type {
   FilterDebtPaymentDto,
   ImportPreviewDebtDto,
   UpdateDebtDto,
+  UpdateDebtPaymentDto,
 } from "lib";
 
 import { config } from "../../config";
@@ -60,6 +61,29 @@ export default class DebtClient extends BaseClient<
       builtUrl,
       Methods.GET,
       undefined,
+      this.api.defaultTokenAcquirer(),
+    );
+  }
+
+  async getPaymentById(
+    debtId: number,
+    paymentId: number,
+  ): Promise<DebtPaymentDto> {
+    return await this.api.doQuery<DebtPaymentDto>(
+      `${this.table}/${debtId}/payments/${paymentId}`,
+      Methods.GET,
+      undefined,
+      this.api.defaultTokenAcquirer(),
+    );
+  }
+
+  async updatePayment(data: UpdateDebtPaymentDto): Promise<DebtPaymentDto> {
+    const { debtId, id, ...payload } = data;
+
+    return await this.api.doQuery<DebtPaymentDto>(
+      `${this.table}/${debtId}/payments/${id}`,
+      Methods.PATCH,
+      payload,
       this.api.defaultTokenAcquirer(),
     );
   }
