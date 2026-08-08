@@ -4,6 +4,7 @@ import type { FieldValues } from "react-hook-form";
 import type {
   CommonAccountDto,
   CommonTransactionCategoryDto,
+  TransactionDto,
   UpdateDashboardCardConfigDto,
 } from "lib";
 import type { DashboardCardItemPropsType } from "../types";
@@ -30,4 +31,10 @@ export type ActiveFiltersPropsType = {
   account: CommonAccountDto | null;
   categories: CommonTransactionCategoryDto[];
   limit: number;
+};
+
+export type LastTransactionsListPropsType = {
+  transactions: TransactionDto[];
+  isLoading: boolean;
+  onClick: () => void;
 };

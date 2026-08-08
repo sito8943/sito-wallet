@@ -5,6 +5,7 @@ export const defaultConfig: CurrentBalanceFormType = {
   account: null,
   showFiltersAsBadge: false,
   showDebts: false,
+  showLastTransactions: false,
 };
 
 export const formToDto = (
@@ -14,6 +15,7 @@ export const formToDto = (
     account: data.account,
     showFiltersAsBadge: !!data.showFiltersAsBadge,
     showDebts: !!data.showDebts,
+    showLastTransactions: !!data.showLastTransactions,
   });
   return {
     userId: data.userId,

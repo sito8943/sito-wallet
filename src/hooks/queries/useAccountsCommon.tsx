@@ -14,15 +14,19 @@ import {
 import { useHideDeletedEntitiesPreference } from "./useHideDeletedEntitiesPreference";
 
 import { AccountsQueryKeys } from "./queryKeys/accountsQueryKeys";
+import type { UseAccountsCommonPropsType } from "./types";
 
-export function useAccountsCommon(): UseQueryResult<CommonAccountDto[]> {
+export function useAccountsCommon(
+  props: UseAccountsCommonPropsType = {},
+): UseQueryResult<CommonAccountDto[]> {
+  const { enabled = true } = props;
   const manager = useManager();
   const { account } = useAuth();
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
 
   return useQuery({
     ...AccountsQueryKeys.common(),
-    enabled: !!account?.id,
+    enabled: !!account?.id && enabled,
     queryFn: () => {
       const commonFilters = applyHideDeletedEntitiesPreference(
         normalizeCommonFilters(),

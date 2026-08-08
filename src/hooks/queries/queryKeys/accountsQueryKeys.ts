@@ -4,6 +4,7 @@ import type {
   AccountDto,
   FilterAccountDto,
   FilterBalanceHistoryDto,
+  GetAccountByIdQueryDto,
 } from "lib";
 
 export const AccountsQueryKeys = {
@@ -29,6 +30,9 @@ export const AccountsQueryKeys = {
   }),
   common: () => ({
     queryKey: [...AccountsQueryKeys.all().queryKey, "common"],
+  }),
+  byId: (id: number | undefined, query: GetAccountByIdQueryDto) => ({
+    queryKey: [...AccountsQueryKeys.all().queryKey, "by-id", id, query],
   }),
   balanceHistory: (filters: FilterBalanceHistoryDto) => ({
     queryKey: [...AccountsQueryKeys.all().queryKey, "balance-history", filters],

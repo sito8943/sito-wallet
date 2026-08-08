@@ -4,3 +4,4 @@ export { AccountsQueryKeys } from "./queryKeys/accountsQueryKeys";
 export { useAccountsList } from "./useAccountsList";
 export { useInfiniteAccountsList } from "./useInfiniteAccountsList";
 export { useAccountsCommon } from "./useAccountsCommon";
+export { useAccountById } from "./useAccountById";

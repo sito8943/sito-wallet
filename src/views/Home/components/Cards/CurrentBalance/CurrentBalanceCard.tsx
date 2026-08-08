@@ -13,7 +13,7 @@ import {
 import { IconButton, useDialog } from "@sito/dashboard-app";
 
 // hooks
-import { useAccountsList } from "../../../../../hooks/queries/useAccountsList";
+import { useAccountById } from "hooks";
 import {
   useAdjustBalanceMutation,
   useTransferDialog,
@@ -29,6 +29,7 @@ import { ConfigFormDialog } from "./ConfigFormDialog";
 import { ActiveFilters } from "./ActiveFilters";
 import { DashboardCard } from "../DashboardCard";
 import { RecentTransactionsDialog } from "../RecentTransactionsDialog";
+import { LastTransactionsList } from "../LastTransactions";
 import { resolveCardConfig } from "../utils";
 
 // styles
@@ -37,8 +38,7 @@ import "../styles.css";
 // types
 import type { CurrentBalancePropsType } from "./types";
 import type { CardConfigOverrideType } from "../types";
-import type { FilterAccountDto, FilterTransactionDto } from "lib";
-import { defaultAccountsListFilters } from "lib";
+import type { FilterTransactionDto } from "lib";
 
 // utils
 import {
@@ -55,29 +55,29 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
     useState<CardConfigOverrideType | null>(null);
   const effectiveConfig = resolveCardConfig(config, configOverride);
 
-  const { accountId, showDebts } = useMemo(() => {
+  const { accountId, showDebts, showLastTransactions } = useMemo(() => {
     try {
       const parsed = parseFormConfig(effectiveConfig);
-      return { accountId: parsed.account?.id, showDebts: !!parsed.showDebts };
+      return {
+        accountId: parsed.account?.id,
+        showDebts: !!parsed.showDebts,
+        showLastTransactions: !!parsed.showLastTransactions,
+      };
     } catch {
-      return { accountId: undefined, showDebts: false };
+      return {
+        accountId: undefined,
+        showDebts: false,
+        showLastTransactions: false,
+      };
     }
   }, [effectiveConfig]);
 
-  const accountsFilters = useMemo<FilterAccountDto>(
-    () =>
-      showDebts
-        ? { ...defaultAccountsListFilters, includePendingDebts: true }
-        : defaultAccountsListFilters,
-    [showDebts],
-  );
-
-  const { data, isLoading } = useAccountsList({ filters: accountsFilters });
-
-  const account = useMemo(() => {
-    if (!accountId || !data?.items) return null;
-    return data.items.find((a) => a.id === accountId) ?? null;
-  }, [accountId, data]);
+  const { data: accountData, isLoading } = useAccountById({
+    id: accountId,
+    includePendingDebts: showDebts,
+    includeLastTransactions: showLastTransactions,
+  });
+  const account = accountData ?? null;
 
   const balance = account?.balance ?? 0;
   const symbol = account?.currency?.symbol ?? "";
@@ -102,6 +102,8 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
     }),
     [accountId],
   );
+
+  const lastTransactions = account?.lastTransactions ?? [];
 
   return (
     <>
@@ -130,69 +132,81 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
       >
         {() => (
           <div className="current-balance-content">
-            <div className="current-balance-amounts">
-              <p className="current-balance-amount poppins">
-                {isLoading ? "…" : balance}{" "}
-                <Currency name={currencyName} symbol={symbol} />
-              </p>
-              {account && showDebts && pendingDebt > 0 && (
-                <p className="current-balance-real">
-                  {t("_pages:home.dashboard.currentBalance.realBalance")}:{" "}
-                  {realBalance} <Currency name={currencyName} symbol={symbol} />{" "}
-                  <span className="current-balance-debt">
-                    · {t("_pages:home.dashboard.currentBalance.pendingDebts")} −
-                    {pendingDebt}{" "}
-                    <Currency name={currencyName} symbol={symbol} />
-                  </span>
+            <div className="current-balance-summary">
+              <div className="current-balance-amounts">
+                <p className="current-balance-amount poppins">
+                  {isLoading ? "…" : balance}{" "}
+                  <Currency name={currencyName} symbol={symbol} />
                 </p>
+                {account && showDebts && pendingDebt > 0 && (
+                  <p className="current-balance-real">
+                    {t("_pages:home.dashboard.currentBalance.realBalance")}:{" "}
+                    {realBalance}{" "}
+                    <Currency name={currencyName} symbol={symbol} />{" "}
+                    <span className="current-balance-debt">
+                      · {t("_pages:home.dashboard.currentBalance.pendingDebts")} −
+                      {pendingDebt}{" "}
+                      <Currency name={currencyName} symbol={symbol} />
+                    </span>
+                  </p>
+                )}
+              </div>
+              {account && (
+                <div className="current-balance-actions">
+                  <IconButton
+                    onClick={() => addTransaction.openDialog()}
+                    icon={faAdd}
+                    data-tooltip-id="tooltip"
+                    data-tooltip-content={t("_pages:transactions.add")}
+                    aria-label={t("_pages:transactions.add")}
+                  />
+                  <IconButton
+                    disabled={!canTransfer}
+                    onClick={() => transfer.openTransferDialog(account)}
+                    icon={faMoneyBillTransfer}
+                    data-tooltip-id="tooltip"
+                    data-tooltip-content={t(
+                      canTransfer
+                        ? "_pages:accounts.actions.transfer.text"
+                        : "_pages:accounts.actions.transfer.unavailable",
+                    )}
+                    aria-label={t("_pages:accounts.actions.transfer.text")}
+                  />
+                  <IconButton
+                    onClick={recentTransactionsDialog.handleOpen}
+                    icon={faClock}
+                    data-tooltip-id="tooltip"
+                    data-tooltip-content={t(
+                      "_pages:home.dashboard.recentTransactions.action",
+                    )}
+                    aria-label={t(
+                      "_pages:home.dashboard.recentTransactions.action",
+                    )}
+                  />
+                  <IconButton
+                    disabled={adjustBalance.isLoading}
+                    onClick={() => {
+                      adjustBalance.action(account).onClick?.();
+                    }}
+                    icon={faScaleBalanced}
+                    data-tooltip-id="tooltip"
+                    data-tooltip-content={t(
+                      "_pages:accounts.actions.adjustBalance.text",
+                    )}
+                    aria-label={t(
+                      "_pages:accounts.actions.adjustBalance.text",
+                    )}
+                  />
+                </div>
               )}
             </div>
-            {account && (
-              <div className="current-balance-actions">
-                <IconButton
-                  onClick={() => addTransaction.openDialog()}
-                  icon={faAdd}
-                  data-tooltip-id="tooltip"
-                  data-tooltip-content={t("_pages:transactions.add")}
-                  aria-label={t("_pages:transactions.add")}
-                />
-                <IconButton
-                  disabled={!canTransfer}
-                  onClick={() => transfer.openTransferDialog(account)}
-                  icon={faMoneyBillTransfer}
-                  data-tooltip-id="tooltip"
-                  data-tooltip-content={t(
-                    canTransfer
-                      ? "_pages:accounts.actions.transfer.text"
-                      : "_pages:accounts.actions.transfer.unavailable",
-                  )}
-                  aria-label={t("_pages:accounts.actions.transfer.text")}
-                />
-                <IconButton
-                  onClick={recentTransactionsDialog.handleOpen}
-                  icon={faClock}
-                  data-tooltip-id="tooltip"
-                  data-tooltip-content={t(
-                    "_pages:home.dashboard.recentTransactions.action",
-                  )}
-                  aria-label={t(
-                    "_pages:home.dashboard.recentTransactions.action",
-                  )}
-                />
-                <IconButton
-                  disabled={adjustBalance.isLoading}
-                  onClick={() => {
-                    adjustBalance.action(account).onClick?.();
-                  }}
-                  icon={faScaleBalanced}
-                  data-tooltip-id="tooltip"
-                  data-tooltip-content={t(
-                    "_pages:accounts.actions.adjustBalance.text",
-                  )}
-                  aria-label={t("_pages:accounts.actions.adjustBalance.text")}
-                />
-              </div>
-            )}
+            {account && showLastTransactions ? (
+              <LastTransactionsList
+                transactions={lastTransactions}
+                isLoading={isLoading}
+                onClick={recentTransactionsDialog.handleOpen}
+              />
+            ) : null}
           </div>
         )}
       </DashboardCard>

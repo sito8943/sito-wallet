@@ -9,14 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 
 // @sito/dashboard-app
 import type { QueryParam } from "@sito/dashboard-app";
-import {
-  Empty,
-  IconButton,
-  SortOrder,
-  classNames,
-  useAuth,
-  useDialog,
-} from "@sito/dashboard-app";
+import { IconButton, SortOrder, useAuth, useDialog } from "@sito/dashboard-app";
 
 // lib
 import type { FilterTransactionDto, TransactionDto } from "lib";
@@ -29,7 +22,6 @@ import { TransactionsQueryKeys } from "hooks";
 import { useManager } from "providers";
 
 // views
-import { TransactionCard } from "views/Transactions";
 import { AddTransactionDialog } from "../../../../Transactions/components";
 import { useAddTransaction } from "../../../../Transactions/hooks";
 
@@ -39,10 +31,10 @@ import { ActiveFilters } from "./ActiveFilters";
 import { DashboardCard } from "../DashboardCard";
 import { RecentTransactionsDialog } from "../RecentTransactionsDialog";
 import { resolveCardConfig } from "../utils";
+import { LastTransactionsList } from "./LastTransactionsList";
 
 // styles
 import "../styles.css";
-import "./styles.css";
 
 // types
 import type { LastTransactionsPropsType } from "./types";
@@ -170,32 +162,11 @@ export const LastTransactionsCard = (props: LastTransactionsPropsType) => {
         )}
       >
         {() => (
-          <div className="last-transactions-content">
-            {!isLoading && transactions.length === 0 ? (
-              <Empty
-                message={t("_pages:home.dashboard.lastTransactions.empty")}
-              />
-            ) : (
-              <ul className="last-transactions-list">
-                {transactions.map((transaction, index) => (
-                  <li
-                    key={transaction.id}
-                    className={classNames(
-                      "last-transactions-row",
-                      index === transactions.length - 1 &&
-                        "last-transactions-row--faded",
-                    )}
-                  >
-                    <TransactionCard
-                      {...transaction}
-                      actions={[]}
-                      onClick={() => recentTransactionsDialog.handleOpen()}
-                    />
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          <LastTransactionsList
+            transactions={transactions}
+            isLoading={isLoading}
+            onClick={recentTransactionsDialog.handleOpen}
+          />
         )}
       </DashboardCard>
       <AddTransactionDialog {...addTransaction} />

@@ -19,6 +19,7 @@ import type {
   ImportDto,
   BalanceHistoryDto,
   FilterBalanceHistoryDto,
+  GetAccountByIdQueryDto,
 } from "lib";
 import { parseJSONFile } from "lib";
 
@@ -42,6 +43,30 @@ export default class AccountClient extends BaseClient<
       refreshTokenKey: config.auth.refreshTokenKey,
       accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
     });
+  }
+
+  async getById(
+    id: number,
+    query: GetAccountByIdQueryDto = {},
+  ): Promise<AccountDto> {
+    const searchParams = new URLSearchParams();
+
+    if (query.includePendingDebts) {
+      searchParams.set("includePendingDebts", "true");
+    }
+    if (query.includeLastTransactions) {
+      searchParams.set("includeLastTransactions", "true");
+    }
+
+    const queryString = searchParams.toString();
+    const builtUrl = `${this.table}/${id}${queryString ? `?${queryString}` : ""}`;
+
+    return await this.api.doQuery<AccountDto>(
+      builtUrl,
+      Methods.GET,
+      undefined,
+      this.api.defaultTokenAcquirer(),
+    );
   }
 
   async sync(accountId: number): Promise<number> {

@@ -24,7 +24,7 @@ export const ConfigFormDialog = (
   const { control } = props;
   const { t } = useTranslation();
 
-  const { data: accounts } = useAccountsCommon();
+  const { data: accounts } = useAccountsCommon({ enabled: props.open });
 
   return (
     <FormDialog
@@ -58,6 +58,23 @@ export const ConfigFormDialog = (
               id="current-balance-show-debts"
               checked={!!value}
               label={t("_pages:home.dashboard.currentBalance.showDebtsToggle")}
+              inputClassName="dashboard-card-toggle-input"
+              containerClassName="dashboard-card-toggle"
+              onChange={(event) => onChange(event.currentTarget.checked)}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="showLastTransactions"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <CheckInput
+              {...rest}
+              id="current-balance-show-last-transactions"
+              checked={!!value}
+              label={t(
+                "_pages:home.dashboard.currentBalance.showLastTransactionsToggle",
+              )}
               inputClassName="dashboard-card-toggle-input"
               containerClassName="dashboard-card-toggle"
               onChange={(event) => onChange(event.currentTarget.checked)}

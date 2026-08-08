@@ -14,6 +14,7 @@ import type {
   FilterTransactionGroupedByTypeDto,
   FilterTransactionTypeResumeDto,
   GetSubscriptionRenewalsQuery,
+  GetAccountByIdQueryDto,
 } from "lib";
 
 export type UseFetchPropsType<TRow, TFilterDto = BaseFilterDto> = {
@@ -23,6 +24,14 @@ export type UseFetchPropsType<TRow, TFilterDto = BaseFilterDto> = {
 
 export type UseFetchByIdPropsType = {
   id: number;
+};
+
+export interface UseAccountByIdPropsType extends GetAccountByIdQueryDto {
+  id?: number;
+}
+
+export type UseAccountsCommonPropsType = {
+  enabled?: boolean;
 };
 
 export type UseMyProfileProps = {

@@ -64,7 +64,8 @@
         "noAccount": "Selecciona una cuenta",
         "realBalance": "Real",
         "pendingDebts": "deudas",
-        "showDebtsToggle": "Mostrar deudas pendientes"
+        "showDebtsToggle": "Mostrar deudas pendientes",
+        "showLastTransactionsToggle": "Mostrar las 3 últimas transacciones"
       },
       "recentTransactions": {
         "title": "Transacciones recientes",

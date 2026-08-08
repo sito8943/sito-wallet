@@ -87,7 +87,11 @@
 }
 
 .current-balance-content {
-  @apply mt-auto flex w-full items-center justify-between;
+  @apply mt-auto flex w-full flex-col gap-3;
+}
+
+.current-balance-summary {
+  @apply flex w-full items-center justify-between;
 }
 
 .current-balance-amounts {
