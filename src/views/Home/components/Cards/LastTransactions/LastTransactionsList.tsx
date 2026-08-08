@@ -11,9 +11,7 @@ import type { LastTransactionsListPropsType } from "./types";
 
 import "./styles.css";
 
-export const LastTransactionsList = (
-  props: LastTransactionsListPropsType,
-) => {
+export const LastTransactionsList = (props: LastTransactionsListPropsType) => {
   const { transactions, isLoading, onClick } = props;
   const { t } = useTranslation();
 

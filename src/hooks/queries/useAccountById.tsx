@@ -15,8 +15,11 @@ import type { UseAccountByIdPropsType } from "./types";
 import { AccountsQueryKeys } from "./queryKeys/accountsQueryKeys";
 
 export function useAccountById(props: UseAccountByIdPropsType) {
-  const { id, includePendingDebts = false, includeLastTransactions = false } =
-    props;
+  const {
+    id,
+    includePendingDebts = false,
+    includeLastTransactions = false,
+  } = props;
   const manager = useManager();
   const { account } = useAuth();
   const query = useMemo(

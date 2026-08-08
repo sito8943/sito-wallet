@@ -144,8 +144,8 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
                     {realBalance}{" "}
                     <Currency name={currencyName} symbol={symbol} />{" "}
                     <span className="current-balance-debt">
-                      · {t("_pages:home.dashboard.currentBalance.pendingDebts")} −
-                      {pendingDebt}{" "}
+                      · {t("_pages:home.dashboard.currentBalance.pendingDebts")}{" "}
+                      −{pendingDebt}{" "}
                       <Currency name={currencyName} symbol={symbol} />
                     </span>
                   </p>
@@ -193,9 +193,7 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
                     data-tooltip-content={t(
                       "_pages:accounts.actions.adjustBalance.text",
                     )}
-                    aria-label={t(
-                      "_pages:accounts.actions.adjustBalance.text",
-                    )}
+                    aria-label={t("_pages:accounts.actions.adjustBalance.text")}
                   />
                 </div>
               )}
