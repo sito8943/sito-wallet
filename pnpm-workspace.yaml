@@ -1,2 +1,16 @@
+# Config de pnpm para v11 (v11 ya no lee el campo "pnpm" de package.json).
+# El campo en package.json se mantiene a proposito: pnpm 10 le da precedencia,
+# asi que hoy nada cambia. Al pasar a pnpm 11 este archivo toma el relevo.
+# Los valores DEBEN quedar identicos en ambos lados.
+
 packages:
   - "."
+
+# reemplaza onlyBuiltDependencies (eliminado en v11)
+allowBuilds:
+  "@tailwindcss/oxide": true
+  esbuild: true
+
+overrides:
+  tar: 7.5.8
+  minimatch: 10.2.3
