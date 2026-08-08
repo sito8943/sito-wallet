@@ -29,10 +29,7 @@ import {
   DebtForm,
   EditDebtPaymentDialog,
 } from "./components";
-import {
-  useAddDebtPaymentDialog,
-  useEditDebtPaymentDialog,
-} from "./hooks";
+import { useAddDebtPaymentDialog, useEditDebtPaymentDialog } from "./hooks";
 import type { DebtFormType } from "./types";
 import {
   debtDtoToForm,

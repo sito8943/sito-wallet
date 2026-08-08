@@ -427,7 +427,8 @@
       "label": "Importe del pago",
       "placeholder": "Ej: 100.00",
       "required": "El importe del pago es requerido",
-      "greaterThanZero": "El importe del pago debe ser mayor que cero"
+      "greaterThanZero": "El importe del pago debe ser mayor que cero",
+      "exceedsPendingAmount": "El importe del pago no puede superar el importe pendiente"
     },
     "paidAt": {
       "label": "Fecha de pago",

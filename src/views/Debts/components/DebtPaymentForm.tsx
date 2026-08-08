@@ -98,9 +98,23 @@ export function DebtPaymentForm(props: AddDebtPaymentDialogPropsType) {
         control={control}
         rules={{
           required: t("_entities:debtPayment.amount.required"),
-          validate: (value) =>
-            Number(value) > 0 ||
-            t("_entities:debtPayment.amount.greaterThanZero"),
+          validate: (value) => {
+            const amount = Number(value);
+
+            if (!(amount > 0)) {
+              return t("_entities:debtPayment.amount.greaterThanZero");
+            }
+
+            if (
+              !editingPayment &&
+              selectedDebt &&
+              amount > selectedDebt.pendingAmount
+            ) {
+              return t("_entities:debtPayment.amount.exceedsPendingAmount");
+            }
+
+            return true;
+          },
         }}
         name="amount"
         disabled={formDisabled}
@@ -109,6 +123,7 @@ export function DebtPaymentForm(props: AddDebtPaymentDialogPropsType) {
             required
             type="number"
             min={0.01}
+            max={!editingPayment ? selectedDebt?.pendingAmount : undefined}
             step="0.01"
             value={value ?? ""}
             label={t("_entities:debtPayment.amount.label")}
@@ -178,9 +193,7 @@ export function DebtPaymentForm(props: AddDebtPaymentDialogPropsType) {
                 name="account"
                 disabled={formDisabled || accountsQuery.isLoading}
                 rules={{
-                  required: t(
-                    "_entities:debtPayment.account.requiredWhenAuto",
-                  ),
+                  required: t("_entities:debtPayment.account.requiredWhenAuto"),
                 }}
                 render={({ field: { value, onChange, ...rest } }) => (
                   <AutocompleteInput
@@ -189,9 +202,7 @@ export function DebtPaymentForm(props: AddDebtPaymentDialogPropsType) {
                     value={value}
                     onChange={(nextValue) => onChange(nextValue)}
                     label={t("_entities:debtPayment.account.label")}
-                    placeholder={t(
-                      "_entities:debtPayment.account.placeholder",
-                    )}
+                    placeholder={t("_entities:debtPayment.account.placeholder")}
                     autoComplete={`${Tables.Debts}-${t("_entities:debtPayment.account.label")}`}
                     multiple={false}
                     {...rest}

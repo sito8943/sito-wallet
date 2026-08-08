@@ -2,10 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import type { DebtPaymentDto } from "lib";
 
-import {
-  debtPaymentDtoToForm,
-  debtPaymentFormToUpdateDto,
-} from "../utils";
+import { debtPaymentDtoToForm, debtPaymentFormToUpdateDto } from "../utils";
 
 const payment = {
   id: 12,

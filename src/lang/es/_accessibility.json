@@ -110,6 +110,7 @@
     "unknownError": "Ha ocurrido un error",
     "differentPasswords": "Las contraseñas no coinciden",
     "invalidCredentials": "Usuario o contraseña incorrectos",
+    "400": "La solicitud contiene datos no válidos.",
     "409": "No se pudo completar la operación porque entra en conflicto con el estado actual. Actualiza e inténtalo de nuevo.",
     "429": "Demasiados intentos. Espera un momento antes de volver a intentarlo.",
     "503": "Sin conexión. Revisa tu red e inténtalo de nuevo.",

@@ -6,11 +6,7 @@ import { useNotification, usePutDialog } from "@sito/dashboard-app";
 import { AccountsQueryKeys, DebtsQueryKeys } from "hooks";
 import { useManager } from "providers";
 
-import type {
-  DebtDto,
-  DebtPaymentDto,
-  UpdateDebtPaymentDto,
-} from "lib";
+import type { DebtDto, DebtPaymentDto, UpdateDebtPaymentDto } from "lib";
 import { parseErrorMessage } from "lib";
 
 import type { DebtPaymentFormType } from "../types";

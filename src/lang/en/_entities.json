@@ -427,7 +427,8 @@
       "label": "Payment amount",
       "placeholder": "Ex: 100.00",
       "required": "Payment amount is required",
-      "greaterThanZero": "Payment amount must be greater than zero"
+      "greaterThanZero": "Payment amount must be greater than zero",
+      "exceedsPendingAmount": "Payment amount cannot exceed the pending amount"
     },
     "paidAt": {
       "label": "Paid at",

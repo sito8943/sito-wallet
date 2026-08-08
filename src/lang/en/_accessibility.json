@@ -86,6 +86,7 @@
     "unknownError": "An error has occurred",
     "differentPasswords": "Passwords do not match",
     "invalidCredentials": "Wrong user or password",
+    "400": "The request contains invalid data.",
     "409": "The operation could not be completed because it conflicts with the current state. Please refresh and try again.",
     "429": "Too many attempts. Please wait a moment before trying again.",
     "503": "No connection. Please check your network and try again.",
