@@ -139,7 +139,7 @@
 }
 
 .renewals-dialog {
-  @apply w-5/6 md:w-1/2;
+  @apply sm:!w-5/6 md:!w-1/2;
 }
 
 .renewals-dialog-empty {
@@ -147,7 +147,7 @@
 }
 
 .renewals-dialog-list {
-  @apply flex max-h-[60vh] flex-col gap-2 overflow-y-auto py-2;
+  @apply flex sm:max-h-[60vh] flex-col gap-2 overflow-y-auto py-2;
 }
 
 .renewals-dialog-item {

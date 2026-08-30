@@ -48,6 +48,7 @@ export const RenewalsDialog = (props: RenewalsDialogPropsType) => {
     <Dialog
       open={open}
       handleClose={closeDialog}
+      mobileFullScreen
       title={t("_pages:home.dashboard.subscriptionForecast.details.title")}
       className="renewals-dialog"
     >
