@@ -231,3 +231,11 @@ main {
 .vertical-center {
   @apply top-1/2 -translate-y-1/2;
 }
+
+/* Tooltips are hover-only UI; on touch devices they trigger on tap and
+   linger, so hide the global react-tooltip instance entirely. */
+@media (hover: none) {
+  #tooltip {
+    display: none !important;
+  }
+}
