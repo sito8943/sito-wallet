@@ -227,7 +227,7 @@
 }
 
 .type-resume-dialog {
-  @apply sm:!w-11/12 sm:!max-w-[1100px];
+  @apply max-sm:!w-screen max-sm:!max-w-none sm:!w-11/12 sm:!max-w-[1100px];
 }
 
 .type-resume-dialog-empty {
