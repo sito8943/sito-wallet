@@ -240,3 +240,12 @@ main,
 .select-input-label.input-label-normal {
   @apply whitespace-nowrap;
 }
+
+/* Package bug: an unconditional `width: auto` rule ships after the
+   mobile full-screen rule and cancels its `width: 100vw`, so full-screen
+   dialogs collapse to content width on mobile (visible while loading). */
+@media not all and (min-width: 40rem) {
+  .dialog.sito-ui-dialog.dialog-mobile-full-screen {
+    width: 100vw;
+  }
+}
