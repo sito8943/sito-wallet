@@ -267,7 +267,7 @@ export const SubscriptionForecastCard = (
         onSelect={handleSelectSubscription}
         onAddSubscription={handleOpenAddSubscription}
       />
-      <AddSubscriptionBillingLogDialog {...addBillingLog} />
+      <AddSubscriptionBillingLogDialog {...addBillingLog} mobileFullScreen />
     </>
   );
 };
