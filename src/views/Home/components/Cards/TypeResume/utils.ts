@@ -9,7 +9,11 @@ import type {
   ToTypeResumeBatchRequestItemType,
   TypeResumeTypeFormType,
 } from "./types";
-import { DEFAULT_TYPE_RESUME_CONFIG } from "./constants";
+import {
+  DEFAULT_TYPE_RESUME_CONFIG,
+  PREVIOUS_TIMES,
+  TIME_KEY_BY_VALUE,
+} from "./constants";
 
 export const normalizeExcludedCategoryIds = (value: unknown): number[] => {
   if (!Array.isArray(value)) return [];
@@ -76,6 +80,15 @@ export const getActiveFiltersCount = (
     (hasOppositeExcludedCategories ? 1 : 0)
   );
 };
+
+export const getTimeKey = (
+  time?: TransactionTypeResumeTime,
+): (typeof TIME_KEY_BY_VALUE)[TransactionTypeResumeTime] =>
+  TIME_KEY_BY_VALUE[time ?? TransactionTypeResumeTime.CurrentMonth] ??
+  "CurrentMonth";
+
+export const isPreviousTime = (time?: TransactionTypeResumeTime): boolean =>
+  time !== undefined && PREVIOUS_TIMES.includes(time);
 
 export const getPreviousTimeKey = (
   time?: TransactionTypeResumeTime,

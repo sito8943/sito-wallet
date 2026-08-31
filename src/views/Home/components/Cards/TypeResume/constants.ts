@@ -25,3 +25,21 @@ export const TYPE_RESUME_TRANSACTIONS_LIST_QUERY: QueryParam<CommonTransactionDt
     sortingBy: "amount",
     sortingOrder: SortOrder.DESC,
   };
+
+export const TIME_KEY_BY_VALUE = {
+  [TransactionTypeResumeTime.CurrentDay]: "CurrentDay",
+  [TransactionTypeResumeTime.CurrentWeek]: "CurrentWeek",
+  [TransactionTypeResumeTime.CurrentMonth]: "CurrentMonth",
+  [TransactionTypeResumeTime.CurrentYear]: "CurrentYear",
+  [TransactionTypeResumeTime.PreviousDay]: "PreviousDay",
+  [TransactionTypeResumeTime.PreviousWeek]: "PreviousWeek",
+  [TransactionTypeResumeTime.PreviousMonth]: "PreviousMonth",
+  [TransactionTypeResumeTime.PreviousYear]: "PreviousYear",
+} as const;
+
+export const PREVIOUS_TIMES: readonly TransactionTypeResumeTime[] = [
+  TransactionTypeResumeTime.PreviousDay,
+  TransactionTypeResumeTime.PreviousWeek,
+  TransactionTypeResumeTime.PreviousMonth,
+  TransactionTypeResumeTime.PreviousYear,
+];

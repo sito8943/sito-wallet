@@ -58,7 +58,13 @@
         },
         "compareColumns": {
           "previous": "Previous",
-          "current": "Current"
+          "current": "Current",
+          "beforePrevious": {
+            "PreviousDay": "2 days ago",
+            "PreviousWeek": "2 weeks ago",
+            "PreviousMonth": "2 months ago",
+            "PreviousYear": "2 years ago"
+          }
         }
       },
       "currentBalance": {

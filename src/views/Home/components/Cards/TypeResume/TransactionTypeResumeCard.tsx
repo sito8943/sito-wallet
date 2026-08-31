@@ -14,6 +14,8 @@ import {
   formToDto,
   getActiveFiltersCount,
   getOppositeTransactionType,
+  getTimeKey,
+  isPreviousTime,
   normalizeExcludedCategoryIds,
   parseFormConfig,
   toTypeResumeFilterConfig,
@@ -232,14 +234,26 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
               {formConfig.compare ? (
                 <div className="type-resume-compare">
                   <span className="type-resume-compare-header">
-                    {t(
-                      "_pages:home.dashboard.transactionTypeResume.compareColumns.previous",
-                    )}
+                    {isPreviousTime(formConfig.time)
+                      ? t(
+                          `_pages:home.dashboard.transactionTypeResume.compareColumns.beforePrevious.${getTimeKey(
+                            formConfig.time,
+                          )}`,
+                        )
+                      : t(
+                          "_pages:home.dashboard.transactionTypeResume.compareColumns.previous",
+                        )}
                   </span>
                   <span className="type-resume-compare-header">
-                    {t(
-                      "_pages:home.dashboard.transactionTypeResume.compareColumns.current",
-                    )}
+                    {isPreviousTime(formConfig.time)
+                      ? t(
+                          `_entities:transaction.typeResume.time.values.${getTimeKey(
+                            formConfig.time,
+                          )}`,
+                        )
+                      : t(
+                          "_pages:home.dashboard.transactionTypeResume.compareColumns.current",
+                        )}
                   </span>
                   <span aria-hidden="true" />
                   {formConfig.showOppositeType && (

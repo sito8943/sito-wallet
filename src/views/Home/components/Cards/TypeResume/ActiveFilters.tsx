@@ -9,6 +9,9 @@ import type { ActiveFiltersPropsType } from "./types";
 // lib
 import { TransactionType } from "lib";
 
+// utils
+import { getTimeKey } from "./utils";
+
 import "../styles.css";
 
 export const ActiveFilters = (props: ActiveFiltersPropsType) => {
@@ -26,17 +29,6 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
 
   const { t } = useTranslation();
   const accountItems = account ? [account] : [];
-
-  const timeKeyByValue = {
-    currentDay: "CurrentDay",
-    currentWeek: "CurrentWeek",
-    currentMonth: "CurrentMonth",
-    currentYear: "CurrentYear",
-    previousDay: "PreviousDay",
-    previousWeek: "PreviousWeek",
-    previousMonth: "PreviousMonth",
-    previousYear: "PreviousYear",
-  } as const;
 
   return (
     <div className="dashboard-card-active-filters">
@@ -81,7 +73,7 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
         text={
           <p>
             {t(
-              `_entities:transaction.typeResume.time.values.${timeKeyByValue[time]}`,
+              `_entities:transaction.typeResume.time.values.${getTimeKey(time)}`,
             )}
           </p>
         }
