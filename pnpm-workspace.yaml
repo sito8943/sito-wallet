@@ -14,3 +14,9 @@ allowBuilds:
 overrides:
   tar: 7.5.8
   minimatch: 10.2.3
+
+# TS 7 es valido; i18next/react-i18next aun declaran peer typescript@^5
+peerDependencyRules:
+  allowedVersions:
+    "i18next>typescript": "7"
+    "react-i18next>typescript": "7"
