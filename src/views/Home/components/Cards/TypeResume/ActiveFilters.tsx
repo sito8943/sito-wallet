@@ -32,6 +32,10 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
     currentWeek: "CurrentWeek",
     currentMonth: "CurrentMonth",
     currentYear: "CurrentYear",
+    previousDay: "PreviousDay",
+    previousWeek: "PreviousWeek",
+    previousMonth: "PreviousMonth",
+    previousYear: "PreviousYear",
   } as const;
 
   return (

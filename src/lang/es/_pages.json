@@ -50,7 +50,11 @@
           "CurrentDay": "ayer",
           "CurrentWeek": "la semana pasada",
           "CurrentMonth": "el mes pasado",
-          "CurrentYear": "el año pasado"
+          "CurrentYear": "el año pasado",
+          "PreviousDay": "el día previo a ese",
+          "PreviousWeek": "la semana previa a esa",
+          "PreviousMonth": "el mes previo a ese",
+          "PreviousYear": "el año previo a ese"
         },
         "compareColumns": {
           "previous": "Anterior",

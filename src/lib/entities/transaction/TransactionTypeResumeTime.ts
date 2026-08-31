@@ -3,4 +3,8 @@ export enum TransactionTypeResumeTime {
   CurrentWeek = "currentWeek",
   CurrentMonth = "currentMonth",
   CurrentYear = "currentYear",
+  PreviousDay = "previousDay",
+  PreviousWeek = "previousWeek",
+  PreviousMonth = "previousMonth",
+  PreviousYear = "previousYear",
 }

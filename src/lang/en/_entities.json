@@ -164,7 +164,11 @@
           "CurrentDay": "Current day",
           "CurrentWeek": "Current week",
           "CurrentMonth": "Current month",
-          "CurrentYear": "Current year"
+          "CurrentYear": "Current year",
+          "PreviousDay": "Previous day",
+          "PreviousWeek": "Previous week",
+          "PreviousMonth": "Previous month",
+          "PreviousYear": "Previous year"
         }
       },
       "excludedCategories": {

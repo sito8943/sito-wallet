@@ -79,7 +79,15 @@ export const getActiveFiltersCount = (
 
 export const getPreviousTimeKey = (
   time?: TransactionTypeResumeTime,
-): "CurrentDay" | "CurrentWeek" | "CurrentMonth" | "CurrentYear" => {
+):
+  | "CurrentDay"
+  | "CurrentWeek"
+  | "CurrentMonth"
+  | "CurrentYear"
+  | "PreviousDay"
+  | "PreviousWeek"
+  | "PreviousMonth"
+  | "PreviousYear" => {
   switch (time) {
     case TransactionTypeResumeTime.CurrentDay:
       return "CurrentDay";
@@ -87,6 +95,14 @@ export const getPreviousTimeKey = (
       return "CurrentWeek";
     case TransactionTypeResumeTime.CurrentYear:
       return "CurrentYear";
+    case TransactionTypeResumeTime.PreviousDay:
+      return "PreviousDay";
+    case TransactionTypeResumeTime.PreviousWeek:
+      return "PreviousWeek";
+    case TransactionTypeResumeTime.PreviousMonth:
+      return "PreviousMonth";
+    case TransactionTypeResumeTime.PreviousYear:
+      return "PreviousYear";
     case TransactionTypeResumeTime.CurrentMonth:
     case undefined:
     default:
