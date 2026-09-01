@@ -1,5 +1,3 @@
-import { useTranslation } from "react-i18next";
-
 // lib
 import { TransactionType } from "lib";
 
@@ -18,7 +16,6 @@ import "./styles.css";
 
 const TypeResume = (props: TypeResumePropsType) => {
   const { accountId, currency } = props;
-  const { t } = useTranslation();
   const { data, isLoading } = useTransactionsGroupedByType({
     accountId,
   });
@@ -30,27 +27,21 @@ const TypeResume = (props: TypeResumePropsType) => {
     <div className="type-group-wrapper">
       <div className="type-group-grid">
         <div className="type-group">
-          <h4 className="type-group-title">
-            {t("_entities:transactionCategory:type.values.In")}
-          </h4>
           <div className="type-group-value-row">
+            <Type type={TransactionType.In} noText filled={false} />
             <p className="type-group-value--income">
               {isLoading ? "..." : incomeTotal}{" "}
               <Currency name={currency?.name} symbol={currency?.symbol} />
             </p>
-            <Type type={TransactionType.In} noText filled={false} />
           </div>
         </div>
         <div className="type-group">
-          <h4 className="type-group-title">
-            {t("_entities:transactionCategory:type.values.Out")}
-          </h4>
           <div className="type-group-value-row">
+            <Type type={TransactionType.Out} noText filled={false} />
             <p className="type-group-value--expense">
               {isLoading ? "..." : expenseTotal}{" "}
               <Currency name={currency?.name} symbol={currency?.symbol} />
             </p>
-            <Type type={TransactionType.Out} noText filled={false} />
           </div>
         </div>
       </div>
