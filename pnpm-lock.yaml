@@ -5,6 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  '@sito/dashboard': 0.3.1
   nanoid: 3.3.17
   postcss: 8.5.24
   undici: 7.29.0
@@ -1355,8 +1356,8 @@ packages:
       '@supabase/supabase-js':
         optional: true
 
-  '@sito/dashboard@0.3.0':
-    resolution: {integrity: sha512-gaIFxuLtLQft4d7tPEHdIlH+7YLH1cvtnLK12pdWur5hOUORJI+p09N+dVOF/S/7WDVnVmaSGwbzZ0DkjtjITw==}
+  '@sito/dashboard@0.3.1':
+    resolution: {integrity: sha512-TsbipZQfbafXp0Vi67u2hrIZtGcB4pKc2azFrnYSwspklnZv2RL229RI1NsDNqY8eawdEylS9gWizDTj+INisg==}
     engines: {node: ^22.13.0}
     peerDependencies:
       '@sito/ui': '>=0.3.2 <0.4.0'
@@ -4495,7 +4496,7 @@ snapshots:
       '@fortawesome/free-regular-svg-icons': 7.0.0
       '@fortawesome/free-solid-svg-icons': 7.0.0
       '@fortawesome/react-fontawesome': 3.4.0(@fortawesome/fontawesome-svg-core@7.0.0)(react@19.2.7)
-      '@sito/dashboard': 0.3.0(@sito/ui@0.3.3(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@sito/dashboard': 0.3.1(@sito/ui@0.3.3(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@sito/ui': 0.3.3(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@tanstack/react-query': 5.83.0(react@19.2.7)
       '@use-gesture/react': 10.3.1(react@19.2.7)
@@ -4506,7 +4507,7 @@ snapshots:
     optionalDependencies:
       '@supabase/supabase-js': 2.110.6
 
-  '@sito/dashboard@0.3.0(@sito/ui@0.3.3(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@sito/dashboard@0.3.1(@sito/ui@0.3.3(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       '@sito/ui': 0.3.3(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react: 19.2.7
