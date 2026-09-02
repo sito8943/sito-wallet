@@ -17,7 +17,7 @@
 }
 
 .dashboard-item--dragging {
-  @apply z-20;
+  @apply relative z-20;
 }
 
 .dashboard-item--dragging .base-card {
