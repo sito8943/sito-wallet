@@ -7,4 +7,5 @@ export const DASHBOARD_INITIAL_DRAG_STATE: DashboardDragStateType = {
   offsetX: 0,
   offsetY: 0,
   overId: null,
+  dropSide: null,
 };

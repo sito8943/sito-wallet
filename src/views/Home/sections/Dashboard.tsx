@@ -249,7 +249,13 @@ export const Dashboard = () => {
 
   return !error ? (
     <section id="dashboard" className="dashboard-section">
-      <ul className={classNames("dashboard", !hasCards && "empty")}>
+      <ul
+        className={classNames(
+          "dashboard",
+          !hasCards && "empty",
+          dashboardReorder.isDragging && "dashboard--reordering",
+        )}
+      >
         {cards}
         <li className="dashboard-item dashboard-item--add">
           <AddCard

@@ -6,11 +6,14 @@ import type { IconButtonPropsType, QueryResult } from "@sito/dashboard-app";
 // lib
 import type { DashboardDto } from "lib";
 
+export type DashboardDropSideType = "before" | "after";
+
 export interface DashboardDragStateType {
   activeId: number | null;
   offsetX: number;
   offsetY: number;
   overId: number | null;
+  dropSide: DashboardDropSideType | null;
 }
 
 export interface UseDashboardReorderPropsType {
@@ -21,6 +24,7 @@ export interface UseDashboardReorderPropsType {
 
 export interface DashboardListItemPropsType extends HTMLAttributes<HTMLLIElement> {
   "data-dashboard-card-id": number;
+  "data-drop-side"?: DashboardDropSideType;
   style?: CSSProperties;
 }
 
@@ -29,6 +33,7 @@ export type DashboardHandlePropsType = Omit<IconButtonPropsType, "icon">;
 export interface UseDashboardReorderReturnType {
   items: DashboardDto[];
   isReordering: boolean;
+  isDragging: boolean;
   getItemProps: (id: number) => DashboardListItemPropsType;
   getHandleProps: (id: number) => DashboardHandlePropsType;
 }

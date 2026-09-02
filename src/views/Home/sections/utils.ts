@@ -3,6 +3,7 @@ import type { DashboardDto, ReorderDashboardCardsDto } from "lib";
 
 // local
 import { DASHBOARD_DRAG_MIN_DISTANCE } from "./constants";
+import type { DashboardDropSideType } from "./types";
 
 export const sortDashboardItems = (items: DashboardDto[]): DashboardDto[] =>
   [...items].sort((left, right) => {
@@ -51,6 +52,28 @@ export const resolveDashboardDropTargetId = (
   if (!Number.isFinite(nextId) || nextId === activeId) return null;
 
   return nextId;
+};
+
+/**
+ * Side of the drop target where the dragged card will land.
+ * Mirrors `moveDashboardItem`: removing the source first shifts every later
+ * item back one slot, so a forward drag lands after the target and a backward
+ * drag lands before it.
+ */
+export const resolveDashboardDropSide = (
+  items: DashboardDto[],
+  activeId: number,
+  overId: number | null,
+): DashboardDropSideType | null => {
+  if (overId === null) return null;
+
+  const sourceIndex = items.findIndex((item) => item.id === activeId);
+  const targetIndex = items.findIndex((item) => item.id === overId);
+
+  if (sourceIndex === -1 || targetIndex === -1 || sourceIndex === targetIndex)
+    return null;
+
+  return sourceIndex < targetIndex ? "after" : "before";
 };
 
 export const toReorderDashboardCardsDto = (

@@ -26,6 +26,7 @@ import {
   applyDashboardReorder,
   hasDashboardDragDistance,
   moveDashboardItem,
+  resolveDashboardDropSide,
   resolveDashboardDropTargetId,
   sortDashboardItems,
   toReorderDashboardCardsDto,
@@ -131,6 +132,7 @@ export function useDashboardReorder(
           offsetX: 0,
           offsetY: 0,
           overId: null,
+          dropSide: null,
         });
       }
 
@@ -142,6 +144,7 @@ export function useDashboardReorder(
           offsetX,
           offsetY,
           overId,
+          dropSide: resolveDashboardDropSide(currentItems, itemId, overId),
         });
 
         return;
@@ -193,6 +196,9 @@ export function useDashboardReorder(
 
       return {
         "data-dashboard-card-id": id,
+        ...(isDropTarget && dragState.dropSide
+          ? { "data-drop-side": dragState.dropSide }
+          : {}),
         className: classNames(
           "dashboard-item",
           isDragging && "dashboard-item--dragging",
@@ -210,6 +216,7 @@ export function useDashboardReorder(
     },
     [
       dragState.activeId,
+      dragState.dropSide,
       dragState.offsetX,
       dragState.offsetY,
       dragState.overId,
@@ -234,6 +241,7 @@ export function useDashboardReorder(
   return {
     items: sourceItems,
     isReordering: reorderMutation.isPending,
+    isDragging: dragState.activeId !== null,
     getItemProps,
     getHandleProps,
   };

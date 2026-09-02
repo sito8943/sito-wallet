@@ -16,16 +16,46 @@
   @apply list-none transition-all duration-200 mb-5 break-inside-avoid;
 }
 
+/* while a card is held, mute everything that is not part of the drop */
+.dashboard--reordering {
+  @apply select-none;
+}
+
+.dashboard--reordering
+  .dashboard-item:not(.dashboard-item--dragging):not(
+    .dashboard-item--drop-target
+  ) {
+  @apply opacity-50;
+}
+
 .dashboard-item--dragging {
   @apply relative z-20;
 }
 
 .dashboard-item--dragging .base-card {
-  @apply shadow-2xl ring-2 ring-bg-primary/20;
+  @apply shadow-2xl ring-2 ring-bg-primary/20 rotate-1;
+}
+
+/* drop target: highlighted card + insertion bar on the landing side */
+.dashboard-item--drop-target {
+  @apply relative z-10;
 }
 
 .dashboard-item--drop-target .base-card {
-  @apply ring-2 ring-border;
+  @apply ring-2 ring-bg-primary;
+}
+
+.dashboard-item--drop-target[data-drop-side]::after {
+  @apply absolute right-1 left-1 h-1 rounded-full bg-bg-primary;
+  content: "";
+}
+
+.dashboard-item--drop-target[data-drop-side="before"]::after {
+  top: -0.625rem;
+}
+
+.dashboard-item--drop-target[data-drop-side="after"]::after {
+  bottom: -0.625rem;
 }
 
 .dashboard-item--add {
