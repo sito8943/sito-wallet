@@ -127,6 +127,27 @@
         "categoriesLabel": "Categories",
         "categoriesPlaceholder": "All categories",
         "empty": "No transactions for these filters"
+      },
+      "categoryAverage": {
+        "configTitle": "Configure category average",
+        "presetLabel": "Range",
+        "categoriesLabel": "Categories",
+        "categoriesPlaceholder": "All categories",
+        "empty": "No transactions for these filters",
+        "total": "Total {{total}} {{symbol}}",
+        "periods": "{{count}} periods",
+        "perTransaction": "{{amount}} {{symbol}} per transaction ({{count}})",
+        "period": {
+          "week": "week",
+          "month": "month"
+        },
+        "presets": {
+          "8W": "8 weeks",
+          "3M": "3 months",
+          "6M": "6 months",
+          "12M": "12 months",
+          "YTD": "Year to date"
+        }
       }
     }
   },

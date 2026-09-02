@@ -123,6 +123,22 @@ export const getPreviousTimeKey = (
   }
 };
 
+export const getCurrentPeriodLabelKey = (
+  time?: TransactionTypeResumeTime,
+): string =>
+  isPreviousTime(time)
+    ? `_entities:transaction.typeResume.time.values.${getTimeKey(time)}`
+    : "_pages:home.dashboard.transactionTypeResume.compareColumns.current";
+
+export const getPreviousPeriodLabelKey = (
+  time?: TransactionTypeResumeTime,
+): string =>
+  isPreviousTime(time)
+    ? `_pages:home.dashboard.transactionTypeResume.compareColumns.beforePrevious.${getTimeKey(
+        time,
+      )}`
+    : "_pages:home.dashboard.transactionTypeResume.compareColumns.previous";
+
 export const haveSameIds = (
   left: Array<number | string>,
   right: Array<number | string>,

@@ -16,6 +16,7 @@ import {
   SubscriptionForecastCard,
   BalanceHistoryCard,
   LastTransactionsCard,
+  CategoryAverageCard,
 } from "../components/Cards";
 import { AddDashboardCardDialog } from "../components";
 import { resolveCardConfig } from "../components/Cards/utils";
@@ -192,6 +193,19 @@ export const Dashboard = () => {
           return (
             <li key={item.id} {...listItemProps}>
               <BalanceHistoryCard
+                onDelete={() => {
+                  void deleteDashboardCard.onClick([item.id]);
+                }}
+                dragHandleProps={dragHandleProps}
+                key={item.id}
+                {...item}
+              />
+            </li>
+          );
+        case DashboardCardType.CategoryAverage:
+          return (
+            <li key={item.id} {...listItemProps}>
+              <CategoryAverageCard
                 onDelete={() => {
                   void deleteDashboardCard.onClick([item.id]);
                 }}

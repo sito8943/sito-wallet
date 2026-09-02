@@ -4,6 +4,7 @@ import type {
   FilterTransactionGroupedByTypeDto,
   FilterTransactionDto,
   TransactionTypeResumeBatchRequestItemDto,
+  FilterTransactionCategoryAverageDto,
   FilterTransactionTypeResumeDto,
   FilterWeeklyTransactionDto,
   TransactionDto,
@@ -33,6 +34,14 @@ export const TransactionsQueryKeys = {
   typeResume: (filters: FilterTransactionTypeResumeDto) => ({
     queryKey: [...TransactionsQueryKeys.all().queryKey, "typeResume", filters],
     enabled: !!filters.accountId && filters.type !== undefined,
+  }),
+  categoryAverage: (filters: FilterTransactionCategoryAverageDto) => ({
+    queryKey: [
+      ...TransactionsQueryKeys.all().queryKey,
+      "categoryAverage",
+      filters,
+    ],
+    enabled: !!filters.from && !!filters.to,
   }),
   typeResumeBatch: (items: TransactionTypeResumeBatchRequestItemDto[]) => ({
     queryKey: [

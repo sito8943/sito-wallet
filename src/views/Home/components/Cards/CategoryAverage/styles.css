@@ -1,0 +1,49 @@
+@reference "../../../../../styles/variables.css";
+
+.category-average-card {
+  @apply !h-auto overflow-hidden;
+}
+
+.category-average-content {
+  @apply flex flex-col gap-3 w-full;
+}
+
+.category-average-amount {
+  @apply text-3xl font-semibold leading-none flex items-baseline gap-1 flex-wrap;
+}
+
+.category-average-period {
+  @apply text-sm text-text-muted font-normal;
+}
+
+.category-average-stats {
+  @apply flex flex-wrap gap-x-4 gap-y-1 text-xs text-text-muted;
+}
+
+.category-average-empty {
+  @apply text-text-muted text-sm text-center py-6;
+}
+
+.category-average-breakdown {
+  @apply flex flex-col gap-1 w-full;
+}
+
+.category-average-breakdown-item {
+  @apply flex items-center justify-between gap-2 text-sm;
+}
+
+.category-average-breakdown-name {
+  @apply flex items-center gap-2 truncate;
+}
+
+.category-average-breakdown-dot {
+  @apply inline-block w-2 h-2 rounded-full shrink-0;
+}
+
+.category-average-breakdown-value {
+  @apply flex items-baseline gap-1 shrink-0;
+}
+
+.category-average-breakdown-period {
+  @apply text-text-muted;
+}

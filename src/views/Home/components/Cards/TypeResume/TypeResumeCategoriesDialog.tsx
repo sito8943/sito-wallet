@@ -2,11 +2,14 @@ import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { Dialog } from "@sito/dashboard-app";
+import { Dialog, TabsLayout } from "@sito/dashboard-app";
 
 import { EditTransactionDialog, useEditTransaction } from "views/Transactions";
 
-import { TypeResumeCategoryItem } from "./TypeResumeCategoryItem";
+import { TypeResumeCategoriesList } from "./TypeResumeCategoriesList";
+
+// utils
+import { getCurrentPeriodLabelKey, getPreviousPeriodLabelKey } from "./utils";
 
 // types
 import type { TypeResumeCategoriesDialogPropsType } from "./types";
@@ -28,17 +31,71 @@ export const TypeResumeCategoriesDialog = (
     endDate,
     transactionType,
     excludedCategoryIds,
+    time,
+    previous,
   } = props;
   const { t } = useTranslation();
   const [expandedCategoryId, setExpandedCategoryId] = useState<number | null>(
     null,
   );
+  const [currentTab, setCurrentTab] = useState(0);
   const editTransaction = useEditTransaction();
 
   const handleClose = useCallback(() => {
     setExpandedCategoryId(null);
+    setCurrentTab(0);
     closeDialog();
   }, [closeDialog]);
+
+  const handleToggle = useCallback(
+    (categoryId: number) =>
+      setExpandedCategoryId((currentValue) =>
+        currentValue === categoryId ? null : categoryId,
+      ),
+    [],
+  );
+
+  const sharedListProps = {
+    accountId,
+    currencyName,
+    currencySymbol,
+    transactionType,
+    excludedCategoryIds,
+    expandedCategoryId,
+    onToggle: handleToggle,
+    onTransactionClick: editTransaction.openDialog,
+  };
+
+  const tabs = previous
+    ? [
+        {
+          id: 0,
+          label: t(getCurrentPeriodLabelKey(time)),
+          content: (
+            <TypeResumeCategoriesList
+              {...sharedListProps}
+              categories={categories}
+              total={total}
+              startDate={startDate}
+              endDate={endDate}
+            />
+          ),
+        },
+        {
+          id: 1,
+          label: t(getPreviousPeriodLabelKey(time)),
+          content: (
+            <TypeResumeCategoriesList
+              {...sharedListProps}
+              categories={previous.categories}
+              total={previous.total}
+              startDate={previous.startDate}
+              endDate={previous.endDate}
+            />
+          ),
+        },
+      ]
+    : [];
 
   return (
     <Dialog
@@ -48,34 +105,25 @@ export const TypeResumeCategoriesDialog = (
       title={t("_pages:home.dashboard.transactionTypeResume.details.title")}
       className="type-resume-dialog"
     >
-      {categories.length === 0 ? (
-        <p className="type-resume-dialog-empty poppins">
-          {t("_pages:home.dashboard.transactionTypeResume.details.empty")}
-        </p>
+      {previous ? (
+        <TabsLayout
+          tabs={tabs}
+          currentTab={currentTab}
+          useLinks={false}
+          onTabChange={(id) => {
+            setCurrentTab(Number(id));
+            setExpandedCategoryId(null);
+          }}
+          tabsContainerClassName="type-resume-dialog-tabs"
+        />
       ) : (
-        <ul className="type-resume-dialog-list">
-          {categories.map((category) => (
-            <TypeResumeCategoryItem
-              key={category.id}
-              category={category}
-              open={expandedCategoryId === category.id}
-              onToggle={() =>
-                setExpandedCategoryId((currentValue) =>
-                  currentValue === category.id ? null : category.id,
-                )
-              }
-              total={total}
-              accountId={accountId}
-              currencyName={currencyName}
-              currencySymbol={currencySymbol}
-              startDate={startDate}
-              endDate={endDate}
-              transactionType={transactionType}
-              excludedCategoryIds={excludedCategoryIds}
-              onTransactionClick={editTransaction.openDialog}
-            />
-          ))}
-        </ul>
+        <TypeResumeCategoriesList
+          {...sharedListProps}
+          categories={categories}
+          total={total}
+          startDate={startDate}
+          endDate={endDate}
+        />
       )}
       <EditTransactionDialog {...editTransaction} containerClassName="!z-60" />
     </Dialog>

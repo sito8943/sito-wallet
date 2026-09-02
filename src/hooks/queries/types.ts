@@ -11,6 +11,7 @@ import type {
 // lib
 import type {
   BalanceHistoryGranularity,
+  FilterTransactionCategoryAverageDto,
   FilterTransactionGroupedByTypeDto,
   FilterTransactionTypeResumeDto,
   GetSubscriptionRenewalsQuery,
@@ -49,6 +50,11 @@ export type UseTransactionTypeResumePropsType =
   FilterTransactionTypeResumeDto & {
     enabled?: boolean;
   };
+export type UseTransactionCategoryAveragePropsType =
+  Partial<FilterTransactionCategoryAverageDto> & {
+    enabled?: boolean;
+  };
+
 export type UseTransactionsGroupedByTypePropsType =
   FilterTransactionGroupedByTypeDto;
 

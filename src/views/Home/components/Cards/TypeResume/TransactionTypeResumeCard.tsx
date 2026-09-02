@@ -13,9 +13,9 @@ import { useAddTransaction } from "../../../../Transactions/hooks";
 import {
   formToDto,
   getActiveFiltersCount,
+  getCurrentPeriodLabelKey,
   getOppositeTransactionType,
-  getTimeKey,
-  isPreviousTime,
+  getPreviousPeriodLabelKey,
   normalizeExcludedCategoryIds,
   parseFormConfig,
   toTypeResumeFilterConfig,
@@ -103,6 +103,19 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const data = batchResult?.primary ?? typeResume.data;
   const isLoading = batchResult?.isLoading ?? typeResume.isLoading;
   const categories = data?.categories ?? [];
+  const comparison = resolvedFormConfig.compare ? data?.comparison : undefined;
+  const previousPeriod = useMemo(
+    () =>
+      comparison
+        ? {
+            categories: comparison.categories ?? [],
+            total: comparison.total,
+            startDate: comparison.startDate,
+            endDate: comparison.endDate,
+          }
+        : undefined,
+    [comparison],
+  );
   const startDate = data?.startDate;
   const endDate = data?.endDate;
   const hasRecentTransactionsRange = !!startDate && !!endDate;
@@ -234,26 +247,10 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
               {formConfig.compare ? (
                 <div className="type-resume-compare">
                   <span className="type-resume-compare-header">
-                    {isPreviousTime(formConfig.time)
-                      ? t(
-                          `_pages:home.dashboard.transactionTypeResume.compareColumns.beforePrevious.${getTimeKey(
-                            formConfig.time,
-                          )}`,
-                        )
-                      : t(
-                          "_pages:home.dashboard.transactionTypeResume.compareColumns.previous",
-                        )}
+                    {t(getPreviousPeriodLabelKey(formConfig.time))}
                   </span>
                   <span className="type-resume-compare-header">
-                    {isPreviousTime(formConfig.time)
-                      ? t(
-                          `_entities:transaction.typeResume.time.values.${getTimeKey(
-                            formConfig.time,
-                          )}`,
-                        )
-                      : t(
-                          "_pages:home.dashboard.transactionTypeResume.compareColumns.current",
-                        )}
+                    {t(getCurrentPeriodLabelKey(formConfig.time))}
                   </span>
                   <span aria-hidden="true" />
                   {formConfig.showOppositeType && (
@@ -335,7 +332,11 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
                   )}
                 />
                 <IconButton
-                  disabled={isLoading || categories.length === 0}
+                  disabled={
+                    isLoading ||
+                    (categories.length === 0 &&
+                      (previousPeriod?.categories.length ?? 0) === 0)
+                  }
                   onClick={() => typeResumeDialog.openDialog()}
                   icon={faList}
                   data-tooltip-id="tooltip"
@@ -362,6 +363,8 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         endDate={data?.endDate}
         transactionType={data?.transactionType ?? resolvedFormConfig.type}
         excludedCategoryIds={resolvedFormConfig.excludedCategoryIds}
+        time={resolvedFormConfig.time}
+        previous={previousPeriod}
       />
       <RecentTransactionsDialog
         open={recentTransactionsDialog.open}

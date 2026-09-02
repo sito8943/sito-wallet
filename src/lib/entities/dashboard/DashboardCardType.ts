@@ -5,4 +5,5 @@ export enum DashboardCardType {
   SubscriptionForecast = 3,
   BalanceHistory = 4,
   LastTransactions = 5,
+  CategoryAverage = 6,
 }

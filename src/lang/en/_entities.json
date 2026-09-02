@@ -352,7 +352,8 @@
         "WeeklySpent": "Weekly Spent",
         "SubscriptionForecast": "Subscription Forecast",
         "BalanceHistory": "Balance History",
-        "LastTransactions": "Last Transactions"
+        "LastTransactions": "Last Transactions",
+        "CategoryAverage": "Category Average"
       }
     }
   },

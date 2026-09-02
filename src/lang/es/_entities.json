@@ -352,7 +352,8 @@
         "WeeklySpent": "Gasto semanal",
         "SubscriptionForecast": "Pronóstico de suscripciones",
         "BalanceHistory": "Histórico de saldo",
-        "LastTransactions": "Últimas transacciones"
+        "LastTransactions": "Últimas transacciones",
+        "CategoryAverage": "Promedio por categoría"
       }
     }
   },

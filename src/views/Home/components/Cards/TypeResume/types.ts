@@ -69,6 +69,13 @@ export type ActiveFiltersPropsType = {
   clearOppositeExcludedCategories: () => void;
 };
 
+export type TypeResumePeriodType = {
+  categories: TransactionTypeResumeCategoryDto[];
+  total?: number;
+  startDate?: string;
+  endDate?: string;
+};
+
 export type TypeResumeCategoriesDialogPropsType = {
   open: boolean;
   closeDialog: () => void;
@@ -81,6 +88,23 @@ export type TypeResumeCategoriesDialogPropsType = {
   endDate?: string;
   transactionType: TransactionType;
   excludedCategoryIds?: number[];
+  time?: TransactionTypeResumeTime;
+  previous?: TypeResumePeriodType;
+};
+
+export type TypeResumeCategoriesListPropsType = {
+  categories: TransactionTypeResumeCategoryDto[];
+  total?: number;
+  accountId?: number;
+  currencyName?: string;
+  currencySymbol?: string;
+  startDate?: string;
+  endDate?: string;
+  transactionType: TransactionType;
+  excludedCategoryIds?: number[];
+  expandedCategoryId: number | null;
+  onToggle: (categoryId: number) => void;
+  onTransactionClick: (id: number) => void;
 };
 
 export type TypeResumeCategoryItemPropsType = {

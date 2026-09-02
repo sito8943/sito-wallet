@@ -16,6 +16,8 @@ import type {
   FilterTransactionDto,
   AddTransactionDto,
   TransactionTypeResumeDto,
+  TransactionCategoryAverageDto,
+  FilterTransactionCategoryAverageDto,
   TransactionTypeResumeBatchDto,
   TransactionTypeResumeBatchRequestDto,
   FilterTransactionTypeResumeDto,
@@ -208,6 +210,42 @@ export default class TransactionClient extends BaseClient<
     const builtUrl = `${Tables.Transactions}/type-resume?${searchParams.toString()}`;
 
     return await this.api.doQuery<TransactionTypeResumeDto>(
+      builtUrl,
+      Methods.GET,
+      undefined,
+      this.api.defaultTokenAcquirer(),
+    );
+  }
+
+  async getCategoryAverage(
+    filters: FilterTransactionCategoryAverageDto,
+  ): Promise<TransactionCategoryAverageDto> {
+    const searchParams = new URLSearchParams({
+      from: filters.from,
+      to: filters.to,
+      granularity: filters.granularity,
+    });
+
+    if (filters.accountId) {
+      searchParams.set("accountId", String(filters.accountId));
+    }
+
+    if (filters.type !== undefined) {
+      searchParams.set(
+        "type",
+        this.parseTransactionTypeResumeType(filters.type),
+      );
+    }
+
+    [...new Set(filters.categoryIds ?? [])]
+      .sort((left, right) => left - right)
+      .forEach((categoryId) => {
+        searchParams.append("categoryIds", String(categoryId));
+      });
+
+    const builtUrl = `${Tables.Transactions}/category-average?${searchParams.toString()}`;
+
+    return await this.api.doQuery<TransactionCategoryAverageDto>(
       builtUrl,
       Methods.GET,
       undefined,
