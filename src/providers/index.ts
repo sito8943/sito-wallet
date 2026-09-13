@@ -2,6 +2,7 @@ export * from "./SWManagerProvider";
 export * from "./SitoWalletProvider";
 export * from "./AuthAccountPersistenceProvider";
 export * from "./ProfileLanguageSyncProvider";
+export * from "./OnlineStatusSyncProvider";
 export * from "./FeatureFlags/";
 export {
   BottomNavActionProvider,

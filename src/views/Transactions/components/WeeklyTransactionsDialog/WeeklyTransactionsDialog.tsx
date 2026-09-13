@@ -5,12 +5,11 @@ import type { SortOrder } from "@sito/dashboard-app";
 import {
   Dialog,
   Empty,
-  Error,
   Loading,
   TableOptionsProvider,
 } from "@sito/dashboard-app";
 
-import { WalletTable } from "components";
+import { QueryError, WalletTable } from "components";
 
 import { useWeeklyTransactionsList } from "../../hooks";
 import { TransactionCard } from "../TransactionCard";
@@ -93,7 +92,7 @@ export const WeeklyTransactionsDialog = (
         {isLoading ? (
           <Loading className="weekly-transactions-dialog-loading" />
         ) : error ? (
-          <Error error={error} />
+          <QueryError error={error} />
         ) : !items.length ? (
           <Empty message={t("_pages:transactions.empty")} />
         ) : (

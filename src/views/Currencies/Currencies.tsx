@@ -13,7 +13,6 @@ import {
   useRestoreDialog,
   useExportActionMutate,
   Page,
-  Error,
   Empty,
   GlobalActions,
   ConfirmationDialog,
@@ -34,7 +33,7 @@ import {
   CurrencyCard,
   EditCurrencyDialog,
 } from "./components";
-import { MobileSelectionBar } from "components";
+import { MobileSelectionBar, QueryError } from "components";
 
 // hooks
 import {
@@ -287,7 +286,7 @@ export function Currencies() {
           <AddPrefabCurrenciesDialog {...prefabCurrencies} />
         </>
       ) : (
-        <Error error={error} />
+        <QueryError error={error} />
       )}
     </Page>
   );

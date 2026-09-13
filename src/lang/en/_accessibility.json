@@ -84,6 +84,7 @@
   },
   "errors": {
     "unknownError": "An error has occurred",
+    "offline": "No connection. Check your network and try again.",
     "differentPasswords": "Passwords do not match",
     "invalidCredentials": "Wrong user or password",
     "400": "The request contains invalid data.",

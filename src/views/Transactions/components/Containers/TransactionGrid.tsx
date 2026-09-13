@@ -5,13 +5,15 @@ import { useTranslation } from "react-i18next";
 import type { ActionType } from "@sito/dashboard-app";
 import {
   Empty,
-  Error,
   GlobalActions,
   SortOrder,
   Loading,
   PrettyGrid,
   TableSelectionBar,
 } from "@sito/dashboard-app";
+
+// components
+import { QueryError } from "components";
 
 // icons
 import { faAdd, faReceipt, faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -194,7 +196,7 @@ export const TransactionGrid = (props: TransactionContainerPropsType) => {
   );
 
   return error ? (
-    <Error error={error} />
+    <QueryError error={error} />
   ) : (
     <>
       <TransactionsMobileFilters

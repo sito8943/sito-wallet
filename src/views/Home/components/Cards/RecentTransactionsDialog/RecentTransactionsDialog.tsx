@@ -1,12 +1,9 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import {
-  Dialog,
-  Empty,
-  Error as ErrorComponent,
-  Loading,
-} from "@sito/dashboard-app";
+import { Dialog, Empty, Loading } from "@sito/dashboard-app";
+
+import { QueryError } from "components";
 
 import type { TransactionDto } from "lib";
 
@@ -45,7 +42,7 @@ export const RecentTransactionsDialog = (
         {isLoading ? (
           <Loading className="recent-transactions-dialog-loading" />
         ) : error ? (
-          <ErrorComponent error={error} />
+          <QueryError error={error} />
         ) : !transactions.length ? (
           <Empty
             message={t("_pages:home.dashboard.recentTransactions.empty")}

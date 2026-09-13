@@ -2,19 +2,14 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard
-import {
-  Empty,
-  Error,
-  GlobalActions,
-  useTableOptions,
-} from "@sito/dashboard-app";
+import { Empty, GlobalActions, useTableOptions } from "@sito/dashboard-app";
 
 // icons
 import { faAdd, faReceipt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
-import { WalletTable } from "components";
+import { QueryError, WalletTable } from "components";
 
 // hooks
 import { useTransactionsList } from "../../../../hooks/queries/useTransactionsList";
@@ -104,7 +99,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
 
   // #endregion
 
-  if (error) return <Error error={error} />;
+  if (error) return <QueryError error={error} />;
 
   const hasNoTransactions = !isLoading && (data?.items?.length ?? 0) === 0;
 

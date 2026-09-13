@@ -3,12 +3,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 // @sito/dashboard-app
 import {
   useDeleteDialog,
-  Error,
   ConfirmationDialog,
   classNames,
 } from "@sito/dashboard-app";
 
 // components
+import { QueryError } from "components";
 import {
   AddCard,
   TransactionTypeResume,
@@ -270,6 +270,6 @@ export const Dashboard = () => {
       <ConfirmationDialog {...deleteDashboardCard} />
     </section>
   ) : (
-    <Error error={error} />
+    <QueryError error={error} />
   );
 };

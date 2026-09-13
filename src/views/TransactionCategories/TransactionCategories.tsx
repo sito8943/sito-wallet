@@ -10,7 +10,6 @@ import {
 // @sito-dashboard
 import {
   Page,
-  Error,
   Empty,
   GlobalActions,
   useDeleteDialog,
@@ -34,7 +33,7 @@ import {
   TransactionCategoryCard,
   EditTransactionCategoryDialog,
 } from "./components";
-import { MobileSelectionBar } from "components";
+import { MobileSelectionBar, QueryError } from "components";
 
 // hooks
 import {
@@ -302,7 +301,7 @@ export function TransactionCategories() {
           <AddPrefabCategoriesDialog {...prefabCategories} />
         </>
       ) : (
-        <Error error={error} />
+        <QueryError error={error} />
       )}
     </Page>
   );

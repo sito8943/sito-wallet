@@ -9,7 +9,6 @@ import {
   useRestoreDialog,
   useExportActionMutate,
   Page,
-  Error,
   Empty,
   GlobalActions,
   ConfirmationDialog,
@@ -35,7 +34,7 @@ import {
   TransferDialog,
 } from "./components";
 import { AddTransactionDialog } from "../Transactions/components/AddTransactionDialog";
-import { MobileSelectionBar } from "components";
+import { MobileSelectionBar, QueryError } from "components";
 
 // hooks
 import {
@@ -294,7 +293,7 @@ export function Accounts() {
           <AdjustBalanceDialog {...adjustBalance} />
         </>
       ) : (
-        <Error error={error} />
+        <QueryError error={error} />
       )}
     </Page>
   );
