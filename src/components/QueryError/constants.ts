@@ -7,3 +7,15 @@ export const NETWORK_ERROR_FRAGMENTS = [
   "network request failed",
   "connection",
 ];
+
+// A route/section is code-split, so navigating to one while the chunk is
+// missing throws from the dynamic import. Each engine words it differently.
+export const CHUNK_LOAD_ERROR_FRAGMENTS = [
+  "dynamically imported module",
+  "importing a module script failed",
+  "failed to load module script",
+  "chunkloaderror",
+];
+
+export const OFFLINE_ERROR_KEY = "_accessibility:errors.offline";
+export const CHUNK_LOAD_ERROR_KEY = "_accessibility:errors.chunkLoad";

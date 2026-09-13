@@ -93,8 +93,15 @@ export function View() {
     [isFeatureEnabled, t],
   );
 
-  if (preloadLoading) return <SplashScreen />;
-  if (shouldRedirect) return <SplashScreen />;
+  // The banner has to ride along with the splash screen too: an offline cold
+  // start sits here first, and without it that wait carries no explanation.
+  if (preloadLoading || shouldRedirect)
+    return (
+      <>
+        <OfflineBanner className="offline-banner--splash" />
+        <SplashScreen />
+      </>
+    );
 
   return (
     <NavbarProvider>

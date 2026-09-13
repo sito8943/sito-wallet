@@ -303,6 +303,17 @@ describe("View layout", () => {
       expect(screen.queryByTestId("home-page")).toBeNull();
     });
 
+    it("keeps the offline banner visible while preload is running", () => {
+      mockUseAppPreload.mockReturnValue({
+        loading: true,
+        completedTaskKeys: [],
+        failedTaskKeys: [],
+      });
+
+      renderView({ email: "user@example.com" });
+      expect(screen.getByTestId("offline-banner")).toBeInTheDocument();
+    });
+
     it("renders the Outlet (child routes)", () => {
       renderView({ email: "user@example.com" });
       expect(screen.getByTestId("home-page")).toBeInTheDocument();

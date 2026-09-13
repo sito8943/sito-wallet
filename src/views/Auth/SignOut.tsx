@@ -1,11 +1,14 @@
 import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
+// react-query
+import { useQueryClient } from "@tanstack/react-query";
+
 // @sito/dashboard-app
 import { useAuth, SplashScreen } from "@sito/dashboard-app";
 
 // providers
-import { useFeatureFlags } from "providers";
+import { clearPersistedQueryCache, useFeatureFlags } from "providers";
 
 // lib
 import {
@@ -21,6 +24,7 @@ import {
 export function SignOut() {
   const { logoutUser } = useAuth();
   const { clearFeatures } = useFeatureFlags();
+  const queryClient = useQueryClient();
 
   const navigate = useNavigate();
 
@@ -29,6 +33,9 @@ export function SignOut() {
       clearPersistedPublicSessionAccount();
       clearAllTableOptions();
       clearFeatures();
+      // The persisted cache holds this account's data, so it leaves with it.
+      queryClient.clear();
+      clearPersistedQueryCache();
       await logoutUser();
     } catch (error) {
       console.error("Error during sign out:", error);
@@ -37,7 +44,7 @@ export function SignOut() {
     setTimeout(() => {
       navigate(AppRoutes.signIn);
     }, 1000);
-  }, [clearFeatures, logoutUser, navigate]);
+  }, [clearFeatures, logoutUser, navigate, queryClient]);
 
   useEffect(() => {
     void logic();

@@ -14,6 +14,8 @@ vi.mock("hooks", () => ({
 }));
 
 vi.mock("@sito/dashboard-app", () => ({
+  classNames: (...values: (string | undefined)[]) =>
+    values.filter(Boolean).join(" "),
   OfflineBanner: ({
     isOnline,
     message,
@@ -58,5 +60,16 @@ describe("OfflineBanner", () => {
     render(<OfflineBanner forceVisible />);
 
     expect(screen.getByRole("status")).toBeInTheDocument();
+  });
+
+  it("merges an extra class onto the root class", () => {
+    mockUseOnlineStatus.mockReturnValue(false);
+
+    render(<OfflineBanner className="offline-banner--splash" />);
+
+    expect(screen.getByRole("status")).toHaveClass(
+      "offline-banner",
+      "offline-banner--splash",
+    );
   });
 });

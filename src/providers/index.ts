@@ -3,6 +3,7 @@ export * from "./SitoWalletProvider";
 export * from "./AuthAccountPersistenceProvider";
 export * from "./ProfileLanguageSyncProvider";
 export * from "./OnlineStatusSyncProvider";
+export * from "./QueryPersistence";
 export * from "./FeatureFlags/";
 export {
   BottomNavActionProvider,

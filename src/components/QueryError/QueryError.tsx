@@ -10,22 +10,30 @@ import { useOnlineStatus } from "hooks";
 import type { QueryErrorPropsType } from "./types";
 
 // utils
-import { isNetworkError } from "./utils";
+import { getErrorMessageKey, toError } from "./utils";
 
 /**
- * Error panel for failed queries. Replaces the raw engine-specific network
- * failure message ("Failed to fetch", "Load failed", ...) with the translated
- * offline copy so a dropped connection reads as one.
+ * Error panel for failed queries and for the route error boundaries. Replaces
+ * the raw engine-specific message ("Failed to fetch", "Failed to fetch
+ * dynamically imported module: ...") with copy that says what actually went
+ * wrong, so a dropped connection reads as one.
  */
 export const QueryError = (props: QueryErrorPropsType) => {
-  const { error, ...rest } = props;
+  const { error, resetErrorBoundary, ...rest } = props;
   const { t } = useTranslation();
   const isOnline = useOnlineStatus();
 
-  const message =
-    !isOnline || isNetworkError(error)
-      ? t("_accessibility:errors.offline")
-      : undefined;
+  const normalizedError = toError(error);
+  const messageKey = getErrorMessageKey(normalizedError, isOnline);
 
-  return <Error {...rest} error={error} message={message} />;
+  return (
+    <Error
+      {...rest}
+      error={normalizedError}
+      message={messageKey ? t(messageKey) : undefined}
+      resetErrorBoundary={
+        resetErrorBoundary ? () => resetErrorBoundary() : undefined
+      }
+    />
+  );
 };

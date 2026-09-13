@@ -3,3 +3,9 @@
 .offline-banner {
   @apply sticky top-0 z-10;
 }
+
+/* On the splash screen the banner is the only chrome on the page, so it has to
+   sit above the full-viewport loader instead of scrolling with it. */
+.offline-banner--splash {
+  @apply fixed top-0 left-0 w-full z-50;
+}

@@ -5,6 +5,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const mockLogoutUser = vi.fn(() => Promise.resolve());
 const mockClearFeatures = vi.fn();
 const mockClearPersistedPublicSessionAccount = vi.fn();
+const mockClearPersistedQueryCache = vi.fn();
+const mockQueryClientClear = vi.fn();
 const mockNavigate = vi.fn();
 
 vi.mock("@sito/dashboard-app", () => ({
@@ -18,6 +20,11 @@ vi.mock("providers", () => ({
   useFeatureFlags: () => ({
     clearFeatures: mockClearFeatures,
   }),
+  clearPersistedQueryCache: () => mockClearPersistedQueryCache(),
+}));
+
+vi.mock("@tanstack/react-query", () => ({
+  useQueryClient: () => ({ clear: mockQueryClientClear }),
 }));
 
 const mockClearAllTableOptions = vi.fn();
@@ -43,6 +50,8 @@ describe("SignOut", () => {
     mockLogoutUser.mockReset();
     mockClearFeatures.mockReset();
     mockClearPersistedPublicSessionAccount.mockReset();
+    mockClearPersistedQueryCache.mockReset();
+    mockQueryClientClear.mockReset();
     mockClearAllTableOptions.mockReset();
     mockNavigate.mockReset();
   });
@@ -58,6 +67,8 @@ describe("SignOut", () => {
     expect(mockClearPersistedPublicSessionAccount).toHaveBeenCalled();
     expect(mockClearAllTableOptions).toHaveBeenCalled();
     expect(mockClearFeatures).toHaveBeenCalled();
+    expect(mockQueryClientClear).toHaveBeenCalled();
+    expect(mockClearPersistedQueryCache).toHaveBeenCalled();
     expect(mockLogoutUser).toHaveBeenCalled();
 
     await act(async () => {
