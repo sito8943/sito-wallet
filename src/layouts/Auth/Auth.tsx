@@ -3,7 +3,10 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 // @sito/dashboard-app
-import { AuthShell, Error, useAuth } from "@sito/dashboard-app";
+import { AuthShell, useAuth } from "@sito/dashboard-app";
+
+// components
+import { QueryError } from "components";
 
 // lib
 import { AppRoutes } from "lib";
@@ -25,7 +28,7 @@ export const Auth = () => {
 
   return (
     <AuthShell>
-      <ErrorBoundary FallbackComponent={Error}>
+      <ErrorBoundary FallbackComponent={QueryError}>
         <Outlet />
       </ErrorBoundary>
     </AuthShell>

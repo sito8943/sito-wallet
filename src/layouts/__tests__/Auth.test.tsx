@@ -31,6 +31,12 @@ vi.mock("@sito/dashboard-app", () => ({
   ),
 }));
 
+vi.mock("components", () => ({
+  QueryError: ({ error }: { error?: Error }) => (
+    <div data-testid="error-ui">{error?.message}</div>
+  ),
+}));
+
 vi.mock("lib", () => ({
   AppRoutes: {
     home: "/",

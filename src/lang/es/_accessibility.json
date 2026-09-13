@@ -109,6 +109,7 @@
   "errors": {
     "unknownError": "Ha ocurrido un error",
     "offline": "Sin conexión. Revisa tu red e inténtalo de nuevo.",
+    "chunkLoad": "No se pudo cargar una parte de la app. Revisa tu conexión e inténtalo de nuevo.",
     "differentPasswords": "Las contraseñas no coinciden",
     "invalidCredentials": "Usuario o contraseña incorrectos",
     "400": "La solicitud contiene datos no válidos.",

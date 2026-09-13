@@ -11,7 +11,6 @@ import {
   BottomNavigation,
   DashboardFooter,
   DashboardHeader,
-  Error,
   fromLocal,
   NavbarProvider,
   SplashScreen,
@@ -25,7 +24,7 @@ import { useFeatureFlags } from "providers";
 import { useAppPreload } from "hooks";
 
 // components
-import { OfflineBanner } from "components";
+import { OfflineBanner, QueryError } from "components";
 
 // config
 import { config } from "../../config";
@@ -131,7 +130,7 @@ export function View() {
           }
           extras={<Tooltip id="tooltip" />}
         >
-          <ErrorBoundary FallbackComponent={Error}>
+          <ErrorBoundary FallbackComponent={QueryError}>
             <TableOptionsProvider>
               <Outlet />
             </TableOptionsProvider>

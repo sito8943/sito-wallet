@@ -125,6 +125,9 @@ vi.mock("hooks", () => ({
 vi.mock("components", () => ({
   SearchModal: () => <div data-testid="search-modal" />,
   OfflineBanner: () => <div data-testid="offline-banner" />,
+  QueryError: ({ error }: { error?: Error }) => (
+    <div data-testid="error-ui">{error?.message}</div>
+  ),
 }));
 
 vi.mock("lib", () => ({
