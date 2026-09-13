@@ -15,8 +15,10 @@ export type UseWeeklyTransactionsListPropsType = {
   open: boolean;
 };
 
-export type UseWeeklyTransactionsListResultType = UseQueryResult<
-  QueryResult<TransactionDto>
+export type UseWeeklyTransactionsListResultType = Omit<
+  UseQueryResult<QueryResult<TransactionDto>>,
+  "isLoading"
 > & {
+  isLoading: boolean;
   dateRange: WeeklyTransactionsDateRangeType;
 };

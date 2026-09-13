@@ -29,7 +29,7 @@
     "@fortawesome/free-solid-svg-icons": "7.0.0",
     "@fortawesome/react-fontawesome": "3.4.0",
     "@loadable/component": "5.16.7",
-    "@sito/dashboard-app": "0.2.0",
+    "@sito/dashboard-app": "0.2.1",
     "@stomp/stompjs": "^7.3.0",
     "@supabase/supabase-js": "^2.100.0",
     "@tailwindcss/vite": "4.3.2",
@@ -84,7 +84,6 @@
       "esbuild"
     ],
     "overrides": {
-      "@sito/dashboard": "0.3.1",
       "nanoid": "3.3.18",
       "postcss": "8.5.24",
       "undici": "7.29.0",
@@ -99,7 +98,6 @@
     }
   },
   "overrides": {
-    "@sito/dashboard": "0.3.1",
     "nanoid": "3.3.18",
     "postcss": "8.5.24",
     "undici": "7.29.0",

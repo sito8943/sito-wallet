@@ -37,7 +37,7 @@ export const useRecentTransactions = (
     [filters],
   );
 
-  return useQuery<TransactionDto[]>({
+  const result = useQuery<TransactionDto[]>({
     queryKey: [
       ...TransactionsQueryKeys.all().queryKey,
       "recent",
@@ -55,4 +55,13 @@ export const useRecentTransactions = (
       );
     },
   });
+
+  // `isLoading` is false while the query is still disabled, which happens on
+  // every open until the auth account is hydrated (noticeably longer on
+  // mobile). The dialog then rendered its empty state instead of a loader.
+  // Anything pending while the dialog is meant to fetch counts as loading.
+  return {
+    ...result,
+    isLoading: result.isPending && open && enabled,
+  };
 };

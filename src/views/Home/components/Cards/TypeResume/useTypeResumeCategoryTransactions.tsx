@@ -45,7 +45,7 @@ export const useTypeResumeCategoryTransactions = (
     [accountId, categoryId, endDate, startDate, type],
   );
 
-  return useQuery({
+  const result = useQuery({
     queryKey: [
       ...TransactionsQueryKeys.all().queryKey,
       "type-resume-category-transactions",
@@ -75,4 +75,12 @@ export const useTypeResumeCategoryTransactions = (
       });
     },
   });
+
+  // `isLoading` is false while the query is disabled, which is the case right
+  // after expanding until the auth account hydrates. The accordion would then
+  // render its empty state instead of a loader.
+  return {
+    ...result,
+    isLoading: result.isPending && open && !!startDate && !!endDate,
+  };
 };

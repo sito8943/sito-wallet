@@ -57,6 +57,10 @@ export function useWeeklyTransactionsList(
 
   return {
     ...query,
+    // `isLoading` is false while the query is disabled, which is the case on
+    // every open until the auth account hydrates. The dialog would render its
+    // empty state instead of a loader during that window.
+    isLoading: query.isPending && open && !!accountId,
     dateRange,
   };
 }

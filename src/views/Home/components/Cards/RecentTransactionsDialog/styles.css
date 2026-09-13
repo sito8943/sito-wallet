@@ -10,8 +10,11 @@
   @apply mt-2 flex min-h-0 flex-1 flex-col;
 }
 
+/* The dashboard `Loading` is `height: 100%`, so it collapses inside an
+   auto-height flex column. Give it its own box so the spinner is visible
+   both in the framed dialog and in the mobile full-screen one. */
 .recent-transactions-dialog-loading {
-  @apply py-10;
+  @apply flex min-h-40 flex-1 items-center justify-center py-10;
 }
 
 .recent-transactions-list {
