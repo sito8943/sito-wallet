@@ -8,7 +8,6 @@ import {
 } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { useNavigate } from "react-router-dom";
-import { stringSimilarity } from "string-similarity-js";
 
 // "@sito/dashboard-app
 import {
@@ -31,6 +30,7 @@ import { flattenSitemap, getFeatureFilteredSitemap } from "../../views/sitemap";
 import type { SearchResultType, SearchWrapperPropsType } from "./types";
 
 import { SEARCH_FOCUSABLE_SELECTOR } from "./constants";
+import { matchesSearch } from "./utils";
 
 // config
 import { config } from "../../config";
@@ -72,11 +72,9 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
 
   const searchOnRoutes = useCallback(
     (searchInput: string) => {
-      const routes = searchableSitemap.filter((route) => {
-        const result = stringSimilarity(searchInput, route.name);
-        if (result >= 0.3) return true;
-      });
-      return routes;
+      return searchableSitemap.filter((route) =>
+        matchesSearch(searchInput, route.name),
+      );
     },
     [searchableSitemap],
   );
