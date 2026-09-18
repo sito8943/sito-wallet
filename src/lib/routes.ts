@@ -35,6 +35,7 @@ export const AppRoutes: { [key: string]: string } = {
 
 export const RouteQueryParam = {
   accountId: "accountId",
+  transactionId: "transactionId",
 } as const;
 
 export const AuthRouteQueryParam = {
@@ -57,6 +58,18 @@ export const getTransactionsRouteWithAccountId = (
 ): string => {
   const search = new URLSearchParams();
   search.set(RouteQueryParam.accountId, String(accountId));
+  return `${AppRoutes.transactions}?${search.toString()}`;
+};
+
+export const getTransactionSearchRoute = (
+  transactionId: number,
+  accountId?: number,
+): string => {
+  const search = new URLSearchParams();
+  search.set(RouteQueryParam.transactionId, String(transactionId));
+  if (accountId !== undefined) {
+    search.set(RouteQueryParam.accountId, String(accountId));
+  }
   return `${AppRoutes.transactions}?${search.toString()}`;
 };
 

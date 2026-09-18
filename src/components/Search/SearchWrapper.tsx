@@ -8,6 +8,9 @@ import {
 } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { getTransactionSearchRoute } from "../../lib/routes";
+import { useTransactionSearch } from "./useTransactionSearch";
 
 // "@sito/dashboard-app
 import {
@@ -45,6 +48,12 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
   const [loading, setLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [searching, setSearching] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const { i18n } = useTranslation();
+  const transactionSearch = useTransactionSearch(
+    debouncedSearch,
+    searching.trim() === debouncedSearch && (isModal || showResults),
+  );
   const [recent, setRecent] = useState<SearchResultType[]>(() => {
     const stored = fromLocal(config.recentSearches);
     try {
@@ -82,6 +91,7 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
   const debounced = useDebouncedCallback(
     // function
     (value) => {
+      setDebouncedSearch(value.trim());
       const results = searchOnRoutes(value);
 
       setSearchResults(
@@ -119,7 +129,49 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
 
   useEffect(() => {
     debounced(searching);
+    return () => debounced.cancel();
   }, [searching, debounced]);
+
+  const transactionResults: SearchResultType[] = transactionSearch.items.map(
+    (transaction) => {
+      const path = getTransactionSearchRoute(
+        transaction.id,
+        transaction.account?.id,
+      );
+      const date = transaction.date ? new Date(transaction.date) : null;
+      const detail = [
+        new Intl.NumberFormat(i18n.language).format(transaction.amount),
+        transaction.account?.currency?.symbol,
+        date && !Number.isNaN(date.getTime())
+          ? date.toLocaleDateString(i18n.language)
+          : null,
+        transaction.account?.name,
+      ]
+        .filter(Boolean)
+        .join(" · ");
+      const item: SearchResultType = {
+        type: "entity",
+        path,
+        name: transaction.description ?? "",
+        detail,
+      };
+      return {
+        ...item,
+        onClick: () => {
+          const history = [
+            { ...item, time: timeAge(new Date()) },
+            ...recent.filter((entry) => entry.path !== path),
+          ].slice(0, 4);
+          setRecent(history);
+          toLocal(config.recentSearches, history);
+          onNavigate?.();
+          navigate(path);
+          setSearching("");
+          setShowResults(false);
+        },
+      };
+    },
+  );
 
   const openOnKeyCombination = useCallback(
     (e: KeyboardEvent) => {
@@ -189,14 +241,16 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
         searching={searching}
         setSearching={(value) => {
           setLoading(true);
+          setSearchResults([]);
           setSearching(value);
         }}
       />
       <SearchResult
         isModal={isModal}
-        isLoading={loading}
+        isLoading={loading || transactionSearch.isLoading}
+        isError={transactionSearch.isError}
         searching={searching}
-        items={searchResults}
+        items={[...searchResults, ...transactionResults]}
         recent={recent}
         show={showResults}
         onClearRecent={() => {
@@ -209,7 +263,7 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
           const history = [
             {
               ...item,
-              type: "page" as const,
+              type: item.type,
               time: timeAge(new Date()),
             },
             ...filtered,

@@ -243,6 +243,23 @@ export function Transactions() {
   });
 
   const editTransaction = useEditTransaction();
+  const openSearchedTransaction = useRef(editTransaction.openDialog);
+  openSearchedTransaction.current = editTransaction.openDialog;
+
+  useEffect(() => {
+    const search = new URLSearchParams(location.search);
+    const value = search.get(RouteQueryParam.transactionId);
+    if (!value) return;
+    const id = Number(value);
+    search.delete(RouteQueryParam.transactionId);
+    navigate(
+      { pathname: location.pathname, search: search.toString() },
+      { replace: true },
+    );
+    if (Number.isSafeInteger(id) && id > 0) {
+      openSearchedTransaction.current(id);
+    }
+  }, [location.pathname, location.search, navigate]);
 
   const assignTransactionAccount = useAssignTransactionAccountAction();
   const assignTransactionCategory = useAssignTransactionCategoryAction();

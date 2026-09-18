@@ -10,6 +10,7 @@ const {
   mockToLocal,
   mockIsMac,
   mockUseAuth,
+  mockTransactionSearch,
 } = vi.hoisted(() => ({
   mockNavigate: vi.fn(),
   mockTimeAge: vi.fn(() => "just now"),
@@ -17,9 +18,18 @@ const {
   mockToLocal: vi.fn(),
   mockIsMac: vi.fn(() => false),
   mockUseAuth: vi.fn(() => ({ account: { email: "user@example.com" } })),
+  mockTransactionSearch: vi.fn(),
 }));
 
 // ─── Module mocks ──────────────────────────────────────────────────────────────
+
+vi.mock("../useTransactionSearch", () => ({
+  useTransactionSearch: mockTransactionSearch,
+}));
+
+vi.mock("react-i18next", () => ({
+  useTranslation: () => ({ i18n: { language: "es" } }),
+}));
 
 vi.mock("react-router-dom", async () => {
   const actual =
@@ -158,6 +168,11 @@ function renderSearchWrapper(props = {}) {
 
 describe("SearchWrapper", () => {
   beforeEach(() => {
+    mockTransactionSearch.mockReturnValue({
+      items: [],
+      isLoading: false,
+      isError: false,
+    });
     vi.useFakeTimers();
     mockFromLocal.mockReturnValue(null);
     mockNavigate.mockReset();
@@ -173,6 +188,41 @@ describe("SearchWrapper", () => {
   });
 
   describe("debounce", () => {
+    it("opens a matching transaction and keeps its entity type in recent searches", async () => {
+      mockTransactionSearch.mockReturnValue({
+        items: [
+          {
+            id: 42,
+            description: "Compra Consum",
+            amount: 12,
+            date: "2026-09-18",
+            account: { id: 3, name: "Cuenta", currency: { symbol: "€" } },
+          },
+        ],
+        isLoading: false,
+        isError: false,
+      });
+      const onNavigate = vi.fn();
+      renderSearchWrapper({ isModal: true, onNavigate });
+      fireEvent.change(screen.getByTestId("search-input"), {
+        target: { value: "Consum" },
+      });
+      await act(async () => {
+        vi.advanceTimersByTime(300);
+      });
+      fireEvent.click(screen.getByText("Compra Consum"));
+      expect(mockNavigate).toHaveBeenCalledWith(
+        "/transactions?transactionId=42&accountId=3",
+      );
+      expect(onNavigate).toHaveBeenCalled();
+      expect(mockToLocal).toHaveBeenCalledWith(
+        "test-recent-searches",
+        expect.arrayContaining([
+          expect.objectContaining({ type: "entity", name: "Compra Consum" }),
+        ]),
+      );
+    });
+
     it("does not show results immediately when typing", () => {
       renderSearchWrapper();
       fireEvent.change(screen.getByTestId("search-input"), {

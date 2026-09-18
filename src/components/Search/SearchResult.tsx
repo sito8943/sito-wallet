@@ -21,6 +21,7 @@ export const SearchResult = (props: SearchResultPropsType) => {
     recent,
     show,
     isLoading,
+    isError = false,
     searching,
     onClose,
     onClearRecent,
@@ -79,7 +80,12 @@ export const SearchResult = (props: SearchResultPropsType) => {
         show || isModal ? "search-results--open" : "search-results--closed",
       )}
     >
-      {!items.length && !!searching.length && !isLoading && (
+      {isError && !!searching.length && (
+        <p role="alert" className="search-results-empty">
+          {t("_pages:search.error")}
+        </p>
+      )}
+      {!items.length && !!searching.length && !isLoading && !isError && (
         <p className="search-results-empty">{t("_pages:search.noResult")}</p>
       )}
       {isLoading && (
@@ -94,8 +100,10 @@ export const SearchResult = (props: SearchResultPropsType) => {
         <ul className="search-results-list">
           {items.map((item) => (
             <li key={item.path ?? `${item.name}-${item.time}`}>
-              {item.type === "page" && (
+              {(item.type === "page" || item.type === "entity") && (
                 <PageResult
+                  type={item.type}
+                  detail={item.detail}
                   onClick={item.onClick}
                   path={item.path}
                   name={item.name}
@@ -125,8 +133,10 @@ export const SearchResult = (props: SearchResultPropsType) => {
           <ul className="search-results-list">
             {recent.map((item, index) => (
               <li key={item.path ?? `${item.name}-${item.time ?? index}`}>
-                {item.type === "page" && (
+                {(item.type === "page" || item.type === "entity") && (
                   <PageResult
+                    type={item.type}
+                    detail={item.detail}
                     path={item.path}
                     name={item.name}
                     time={item.time}

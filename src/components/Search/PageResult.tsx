@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLink } from "@fortawesome/free-solid-svg-icons";
+import { faLink, faMoneyBillTransfer } from "@fortawesome/free-solid-svg-icons";
 
 // types
 import type { PageResultPropsType } from "./types";
@@ -16,7 +16,7 @@ import "./styles.css";
  * @returns PageResult
  */
 const PageResult = (props: PageResultPropsType) => {
-  const { onClick, path, name, time } = props;
+  const { onClick, path, name, time, type = "page", detail } = props;
   const { t } = useTranslation();
 
   return (
@@ -26,12 +26,22 @@ const PageResult = (props: PageResultPropsType) => {
       onClick={onClick}
       data-search-focusable="true"
     >
-      <FontAwesomeIcon className="search-page-result-icon" icon={faLink} />
+      <FontAwesomeIcon
+        className="search-page-result-icon"
+        icon={type === "entity" ? faMoneyBillTransfer : faLink}
+      />
       <p className="search-page-result-label">
         {name}{" "}
         <span className="search-page-result-type">
-          ({t("_pages:search.types.page")})
+          (
+          {t(
+            type === "entity"
+              ? "_entities:entities.transaction.singular"
+              : "_pages:search.types.page",
+          )}
+          )
         </span>
+        {detail && <span className="block text-xs opacity-70">{detail}</span>}
       </p>
       <span className="search-page-result-time">{time}</span>
     </Link>

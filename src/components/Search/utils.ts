@@ -8,11 +8,7 @@ import { SEARCH_SIMILARITY_THRESHOLD } from "./constants";
  * @returns normalized text
  */
 export const normalizeSearchText = (value: string): string =>
-  value
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase()
-    .trim();
+  value.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
 
 /**
  * matches a route name against the search input

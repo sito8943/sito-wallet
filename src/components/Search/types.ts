@@ -14,6 +14,8 @@ export type PageResultPropsType = {
   path: string;
   name: string;
   time?: string;
+  type?: "page" | "entity";
+  detail?: string;
 };
 
 export type SearchResultType = {
@@ -29,6 +31,7 @@ export type SearchResultPropsType = {
   onRecentClick?: (item: SearchResultType) => void;
   onClose: () => void;
   isLoading: boolean;
+  isError?: boolean;
   isModal?: boolean;
 };
 
