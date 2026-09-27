@@ -422,6 +422,24 @@ export const ConfigFormDialog = (
         />
         <Controller
           control={control}
+          name="showDifference"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <CheckInput
+              {...rest}
+              id="type-resume-show-difference"
+              disabled={isLoading || !showOppositeType}
+              checked={!!showOppositeType && !!value}
+              label={t(
+                "_pages:home.dashboard.transactionTypeResume.showDifferenceToggle",
+              )}
+              inputClassName="dashboard-card-toggle-input"
+              containerClassName="dashboard-card-toggle"
+              onChange={(event) => onChange(event.currentTarget.checked)}
+            />
+          )}
+        />
+        <Controller
+          control={control}
           name="compare"
           render={({ field: { value, onChange, ...rest } }) => (
             <CheckInput

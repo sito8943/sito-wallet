@@ -16,6 +16,7 @@ import {
   getCurrentPeriodLabelKey,
   getOppositeTransactionType,
   getPreviousPeriodLabelKey,
+  getTypeResumeDifference,
   normalizeExcludedCategoryIds,
   parseFormConfig,
   toTypeResumeFilterConfig,
@@ -281,6 +282,30 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
                     }
                     compare
                   />
+                  {formConfig.showOppositeType && formConfig.showDifference && (
+                    <TypeResumeRow
+                      type={formConfig.type}
+                      amount={getTypeResumeDifference(
+                        formConfig.type,
+                        data?.total ?? 0,
+                        oppositeTotal,
+                      )}
+                      previousAmount={getTypeResumeDifference(
+                        formConfig.type,
+                        primaryPreviousTotal,
+                        oppositePreviousTotal,
+                      )}
+                      isLoading={isLoading || isOppositeLoading}
+                      currencyName={
+                        currencyName ?? formConfig.account?.currency?.name
+                      }
+                      currencySymbol={
+                        currencySymbol ?? formConfig.account?.currency?.symbol
+                      }
+                      compare
+                      difference
+                    />
+                  )}
                 </div>
               ) : (
                 <div className="type-resume-totals">
@@ -309,6 +334,24 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
                       currencySymbol ?? formConfig.account?.currency?.symbol
                     }
                   />
+                  {formConfig.showOppositeType && formConfig.showDifference && (
+                    <TypeResumeRow
+                      type={formConfig.type}
+                      amount={getTypeResumeDifference(
+                        formConfig.type,
+                        data?.total ?? 0,
+                        oppositeTotal,
+                      )}
+                      isLoading={isLoading || isOppositeLoading}
+                      currencyName={
+                        currencyName ?? formConfig.account?.currency?.name
+                      }
+                      currencySymbol={
+                        currencySymbol ?? formConfig.account?.currency?.symbol
+                      }
+                      difference
+                    />
+                  )}
                 </div>
               )}
               <div className="type-resume-actions">

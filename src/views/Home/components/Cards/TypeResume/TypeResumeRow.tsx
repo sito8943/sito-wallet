@@ -1,4 +1,5 @@
 import { classNames } from "@sito/dashboard-app";
+import { useTranslation } from "react-i18next";
 
 import { TransactionType } from "lib";
 
@@ -17,20 +18,46 @@ export const TypeResumeRow = (props: TypeResumeRowPropsType) => {
     compact = false,
     compare = false,
     previousAmount = 0,
+    difference = false,
   } = props;
+  const { t } = useTranslation();
 
   const amountColorClass =
-    type === TransactionType.In
+    (difference ? amount >= 0 : type === TransactionType.In)
       ? "type-resume-amount--income"
       : "type-resume-amount--expense";
+  const previousAmountColorClass = difference
+    ? previousAmount >= 0
+      ? "type-resume-amount--income"
+      : "type-resume-amount--expense"
+    : amountColorClass;
+  const indicator = difference ? (
+    <span title={t("_pages:home.dashboard.transactionTypeResume.difference")}>
+      <span className="sr-only">
+        {t("_pages:home.dashboard.transactionTypeResume.difference")}
+      </span>
+    </span>
+  ) : (
+    <Type
+      type={type}
+      filled={false}
+      noText
+      iconClassName={
+        compact ? "type-resume-opposite-amount" : "type-resume-amount"
+      }
+    />
+  );
 
   if (compare) {
     return (
       <div className="type-resume-compare-row">
+        {difference && (
+          <div className="type-resume-difference-line" aria-hidden="true" />
+        )}
         <p
           className={classNames(
             "type-resume-compare-amount type-resume-compare-amount--previous poppins",
-            amountColorClass,
+            previousAmountColorClass,
           )}
         >
           {isLoading ? "…" : previousAmount}{" "}
@@ -45,12 +72,7 @@ export const TypeResumeRow = (props: TypeResumeRowPropsType) => {
           {isLoading ? "…" : amount}{" "}
           <Currency name={currencyName} symbol={currencySymbol} />
         </p>
-        <Type
-          type={type}
-          filled={false}
-          noText
-          iconClassName="type-resume-amount"
-        />
+        {indicator}
       </div>
     );
   }
@@ -60,28 +82,16 @@ export const TypeResumeRow = (props: TypeResumeRowPropsType) => {
       className={classNames(
         "type-resume-row",
         compact && "type-resume-row--opposite",
+        difference && "type-resume-row--difference",
       )}
     >
-      <Type
-        type={type}
-        filled={false}
-        noText
-        iconClassName={classNames(
-          compact ? "type-resume-opposite-amount" : "type-resume-amount",
-        )}
-      />
+      {indicator}
       <p
         className={classNames(
           compact
             ? "type-resume-opposite-amount poppins"
             : "type-resume-amount poppins",
-          type === TransactionType.In
-            ? compact
-              ? "type-resume-opposite-amount--income"
-              : "type-resume-amount--income"
-            : compact
-              ? "type-resume-opposite-amount--expense"
-              : "type-resume-amount--expense",
+          amountColorClass,
         )}
       >
         {isLoading ? "…" : amount}{" "}

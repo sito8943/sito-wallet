@@ -41,6 +41,8 @@
         "configTitle": "Configurar resumen de transacciones",
         "placeholder": "Escribe un título",
         "showOppositeTypeToggle": "Mostrar también el tipo contrario",
+        "showDifferenceToggle": "Mostrar diferencia (ingresos menos gastos)",
+        "difference": "Diferencia (ingresos menos gastos)",
         "details": {
           "title": "Categorías del resumen",
           "empty": "Sin categorías en este rango"

@@ -15,6 +15,7 @@ export const DEFAULT_TYPE_RESUME_CONFIG: TypeResumeTypeFormType = {
   oppositeExcludedCategoryIds: [],
   showFiltersAsBadge: false,
   showOppositeType: false,
+  showDifference: false,
   compare: false,
 };
 

@@ -41,6 +41,8 @@
         "configTitle": "Configure transaction summary",
         "placeholder": "Type the title",
         "showOppositeTypeToggle": "Show the opposite type too",
+        "showDifferenceToggle": "Show difference (income minus expenses)",
+        "difference": "Difference (income minus expenses)",
         "details": {
           "title": "Resume categories",
           "empty": "No categories in this range"

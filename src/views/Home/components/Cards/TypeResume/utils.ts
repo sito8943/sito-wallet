@@ -1,4 +1,5 @@
 import type { UpdateDashboardCardConfigDto } from "lib";
+import { roundCurrency } from "../CurrentBalance/utils";
 import {
   isFiniteNumber,
   TransactionType,
@@ -54,6 +55,8 @@ export const parseFormConfig = (
       showOppositeType:
         (parsed.showOppositeType as boolean | undefined) ??
         DEFAULT_TYPE_RESUME_CONFIG.showOppositeType,
+      showDifference:
+        parsed.showOppositeType === true && parsed.showDifference === true,
       compare:
         (parsed.compare as boolean | undefined) ??
         DEFAULT_TYPE_RESUME_CONFIG.compare,
@@ -151,6 +154,17 @@ export const getOppositeTransactionType = (
 ): TransactionType =>
   type === TransactionType.In ? TransactionType.Out : TransactionType.In;
 
+export const getTypeResumeDifference = (
+  type: TransactionType,
+  primaryTotal: number,
+  oppositeTotal: number,
+): number =>
+  roundCurrency(
+    type === TransactionType.In
+      ? primaryTotal - oppositeTotal
+      : oppositeTotal - primaryTotal,
+  );
+
 export const toTypeResumeFilterConfig = (
   data: TypeResumeTypeFormType,
 ): FilterTypeResumeConfigType => {
@@ -201,6 +215,7 @@ export const formToDto = (
     time: data.time,
     showFiltersAsBadge: !!data.showFiltersAsBadge,
     showOppositeType: !!data.showOppositeType,
+    showDifference: !!data.showOppositeType && !!data.showDifference,
     compare: !!data.compare,
     ...(excludedCategoryIds.length ? { excludedCategoryIds } : {}),
     ...(data.showOppositeType && oppositeExcludedCategoryIds.length

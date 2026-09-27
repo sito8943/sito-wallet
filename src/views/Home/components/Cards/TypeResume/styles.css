@@ -16,6 +16,14 @@
   @apply gap-2;
 }
 
+.type-resume-row--difference {
+  @apply border-t border-text-muted pt-2;
+}
+
+.type-resume-difference-line {
+  @apply col-span-3 border-t border-text-muted/30;
+}
+
 .type-resume-type {
   @apply whitespace-nowrap;
 }

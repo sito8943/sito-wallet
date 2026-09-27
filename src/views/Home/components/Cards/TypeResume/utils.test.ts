@@ -60,6 +60,7 @@ describe("TypeResume utils", () => {
         oppositeExcludedCategoryIds: [],
         showFiltersAsBadge: false,
         showOppositeType: false,
+        showDifference: false,
       }),
     ).toEqual({
       accountId: 4,
@@ -91,6 +92,7 @@ describe("TypeResume utils", () => {
         oppositeExcludedCategoryIds: [10, 10, 12],
         showFiltersAsBadge: false,
         showOppositeType: true,
+        showDifference: false,
       }),
     ).toEqual({
       id: 11,
@@ -101,6 +103,7 @@ describe("TypeResume utils", () => {
         time: TransactionTypeResumeTime.CurrentMonth,
         showFiltersAsBadge: false,
         showOppositeType: true,
+        showDifference: false,
         compare: false,
         excludedCategoryIds: [3, 8],
         oppositeExcludedCategoryIds: [10, 12],
@@ -120,6 +123,7 @@ describe("TypeResume utils", () => {
         oppositeExcludedCategoryIds: [12, 10, 10],
         showFiltersAsBadge: false,
         showOppositeType: true,
+        showDifference: false,
       }),
     ).toEqual({
       cardId: 44,

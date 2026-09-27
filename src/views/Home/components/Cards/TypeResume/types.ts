@@ -47,6 +47,7 @@ export interface TypeResumeTypeFormType
   oppositeExcludedCategoryIds: number[];
   showFiltersAsBadge: boolean;
   showOppositeType: boolean;
+  showDifference: boolean;
   compare: boolean;
 }
 
@@ -150,6 +151,7 @@ export type TypeResumeRowPropsType = {
   compact?: boolean;
   compare?: boolean;
   previousAmount?: number;
+  difference?: boolean;
 };
 
 export type ToTypeResumeBatchRequestItemType = (
