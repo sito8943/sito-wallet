@@ -22,10 +22,11 @@ export const TypeResumeRow = (props: TypeResumeRowPropsType) => {
   } = props;
   const { t } = useTranslation();
 
-  const amountColorClass =
-    (difference ? amount >= 0 : type === TransactionType.In)
-      ? "type-resume-amount--income"
-      : "type-resume-amount--expense";
+  const amountColorClass = (
+    difference ? amount >= 0 : type === TransactionType.In
+  )
+    ? "type-resume-amount--income"
+    : "type-resume-amount--expense";
   const previousAmountColorClass = difference
     ? previousAmount >= 0
       ? "type-resume-amount--income"
