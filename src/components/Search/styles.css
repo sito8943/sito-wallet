@@ -16,6 +16,35 @@
   @apply md:w-1/2! w-5/6!;
 }
 
+.search-modal-backdrop.dialog-backdrop.sito-ui-dialog-backdrop {
+  height: 100dvh;
+}
+
+.search-modal.dialog.sito-ui-dialog {
+  max-height: calc(100dvh - 2rem);
+  @apply overflow-hidden;
+}
+
+.search-modal .dialog-header {
+  @apply shrink-0;
+}
+
+.search-modal .search-wrapper {
+  @apply flex min-h-0 flex-col overflow-hidden;
+}
+
+.search-modal .search-wrapper > :not(.search-results) {
+  @apply shrink-0;
+}
+
+.search-modal .search-results {
+  @apply min-h-0 overflow-y-auto overscroll-contain;
+}
+
+.search-modal .search-results > * {
+  @apply shrink-0;
+}
+
 .search-page-result {
   @apply flex gap-2 items-center p-2 text-text hover:text-base hover:bg-bg-primary rounded;
 }

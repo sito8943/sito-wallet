@@ -31,6 +31,7 @@ export const SearchModal = (props: SearchModalPropsType) => {
   return (
     <Dialog
       open={open}
+      containerClassName="search-modal-backdrop"
       className="search-modal"
       title={t("_pages:search.label")}
       handleClose={onClose}
