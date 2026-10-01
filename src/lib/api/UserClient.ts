@@ -1,4 +1,4 @@
-import { BaseClient } from "@sito/dashboard-app";
+import { BaseClient, Methods } from "@sito/dashboard-app";
 
 import { Tables } from "./types";
 
@@ -33,7 +33,7 @@ export default class UserClient extends BaseClient<
   }
 
   async reset(id: number, hard: boolean): Promise<void> {
-    await this.api.post<void, { hard: boolean }>(`${this.table}/${id}/reset`, {
+    await this.api.doQuery<void>(`${this.table}/${id}/reset`, Methods.POST, {
       hard,
     });
   }
