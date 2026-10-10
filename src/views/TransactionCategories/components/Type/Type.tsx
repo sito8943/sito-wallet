@@ -30,7 +30,8 @@ export const Type = (props: TypePropsType) => {
   const { t } = useTranslation();
 
   const chipClassName = useMemo(() => {
-    if (filled) return type === TransactionType.In ? "success" : "error";
+    if (filled)
+      return type === TransactionType.In ? "chip-success" : "chip-danger";
     return `${
       type === TransactionType.In ? "!text-bg-success" : "!text-bg-error"
     } !p-0 !bg-transparent`;
