@@ -51,7 +51,19 @@ export function SignIn() {
         logUser(session, values.rememberMe);
         navigate(AppRoutes.home);
       }}
-      onError={(error) => {
+      onError={(error, { setError }) => {
+        if (
+          isHttpError(error) &&
+          (error.status === 401 || error.status === 404)
+        ) {
+          const field = error.status === 404 ? "email" : "password";
+          setError(field, {
+            type: "server",
+            message: getAuthErrorMessage(t, error.status, "signIn"),
+          });
+          return;
+        }
+
         const message = isHttpError(error)
           ? getAuthErrorMessage(t, error.status, "signIn")
           : getAuthErrorMessage(t);

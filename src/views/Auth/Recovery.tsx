@@ -75,7 +75,15 @@ export function Recovery() {
       secondaryActionAriaLabel={t("_pages:auth.recovery.resendConfirm")}
       onSubmit={onForgotPassword}
       onSecondaryAction={onResendConfirmEmail}
-      onError={(error, { action }) => {
+      onError={(error, { action, setError }) => {
+        if (isHttpError(error) && error.status === 400) {
+          setError("email", {
+            type: "server",
+            message: getAuthErrorMessage(t, error.status, "recovery"),
+          });
+          return;
+        }
+
         const message = isHttpError(error)
           ? getAuthErrorMessage(
               t,

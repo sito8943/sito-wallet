@@ -79,12 +79,18 @@ export function SignUp() {
 
         navigate(AppRoutes.signUpSuccess);
       }}
-      onPasswordMismatch={() =>
-        showErrorNotification({
-          message: t("_accessibility:errors.differentPasswords"),
-        })
-      }
-      onError={(error) => {
+      onError={(error, { setError }) => {
+        if (
+          isHttpError(error) &&
+          (error.status === 409 || error.status === 422)
+        ) {
+          setError("email", {
+            type: "server",
+            message: getAuthErrorMessage(t, error.status, "signUp"),
+          });
+          return;
+        }
+
         const message = isHttpError(error)
           ? getAuthErrorMessage(t, error.status, "signUp")
           : getAuthErrorMessage(t);

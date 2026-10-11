@@ -48,11 +48,6 @@ export function UpdatePassword() {
           message: t("_pages:auth.updatePassword.invalidToken"),
         })
       }
-      onPasswordMismatch={() =>
-        showErrorNotification({
-          message: t("_accessibility:errors.differentPasswords"),
-        })
-      }
       onError={(error) => {
         const message = isHttpError(error)
           ? getAuthErrorMessage(t, error.status, "updatePassword")
