@@ -5,6 +5,11 @@ import { TransactionType, TransactionTypeResumeTime } from "lib";
 import {
   formToDto,
   getOppositeTransactionType,
+  getPeriodProgress,
+  getPredictionStatus,
+  getTypeResumePrediction,
+  parseMinBalance,
+  predictPeriodTotal,
   normalizeExcludedCategoryIds,
   parseFormConfig,
   toTypeResumeBatchRequestItem,
@@ -133,6 +138,127 @@ describe("TypeResume utils", () => {
       excludedCategoryIds: [3, 9],
       includeOpposite: true,
       oppositeExcludedCategoryIds: [10, 12],
+      compare: true,
     });
+  });
+
+  it("does not request comparison for closed periods without compare", () => {
+    expect(
+      toTypeResumeBatchRequestItem(45, {
+        type: TransactionType.Out,
+        time: TransactionTypeResumeTime.PreviousMonth,
+        excludedCategories: [],
+        excludedCategoryIds: [],
+        oppositeExcludedCategories: [],
+        oppositeExcludedCategoryIds: [],
+        showFiltersAsBadge: false,
+        showOppositeType: false,
+        showDifference: false,
+        compare: false,
+      }),
+    ).not.toHaveProperty("compare");
+  });
+});
+
+describe("TypeResume prediction", () => {
+  const today = new Date(2026, 9, 11); // Oct 11 → 11 of 31 days
+
+  it("computes period progress including today", () => {
+    expect(getPeriodProgress("2026-10-01", "2026-10-31", today)).toEqual({
+      elapsedDays: 11,
+      totalDays: 31,
+      ratio: 11 / 31,
+    });
+  });
+
+  it("adds what the previous period accumulated on the remaining days", () => {
+    expect(predictPeriodTotal(1266.3, 0)).toBe(1266.3);
+    expect(predictPeriodTotal(804.82, 120.5)).toBe(925.32);
+  });
+
+  it.each([
+    [{ current: 50, previous: 1000, predicted: 700 }, "success"],
+    [{ current: 50, previous: 1000, predicted: 850 }, "warning"],
+    [{ current: 50, previous: 1000, predicted: 950 }, "danger"],
+    [{ current: 50, previous: 1000, predicted: 1100 }, "danger"],
+    [{ current: 1001, previous: 1000, predicted: 1500 }, "exceeded"],
+    [{ current: 50, previous: 0, predicted: 50 }, "unknown"],
+  ] as const)("maps %o to %s", (expense, status) => {
+    expect(getPredictionStatus({ expense })).toBe(status);
+  });
+
+  it.each([
+    [
+      { current: 1266.3, previous: 1240.98, predicted: 1266.3 },
+      600,
+      0,
+      "success",
+    ],
+    [
+      { current: 1266.3, previous: 1240.98, predicted: 1266.3 },
+      820,
+      0,
+      "warning",
+    ],
+    [
+      { current: 1266.3, previous: 1240.98, predicted: 1266.3 },
+      900,
+      0,
+      "danger",
+    ],
+    [
+      { current: 100, previous: 1240.98, predicted: 1266.3 },
+      600,
+      0,
+      "exceeded",
+    ],
+  ] as const)(
+    "uses the minimum balance when set (income %o, expense %d)",
+    (income, expensePredicted, _unused, status) => {
+      const expense = {
+        current: 500,
+        previous: 899.63,
+        predicted: expensePredicted,
+      };
+      const balance = {
+        current: income.current - expense.current,
+        previous: income.previous - expense.previous,
+        predicted: income.predicted - expense.predicted,
+      };
+
+      expect(
+        getPredictionStatus({ expense, income, balance, minBalance: 300 }),
+      ).toBe(status);
+    },
+  );
+
+  it("parses an empty minimum balance as unset", () => {
+    expect(parseMinBalance("")).toBeUndefined();
+    expect(parseMinBalance("300")).toBe(300);
+    expect(parseMinBalance(null)).toBeUndefined();
+  });
+
+  it("uses the opposite totals as expenses for income cards", () => {
+    const prediction = getTypeResumePrediction({
+      type: TransactionType.In,
+      progress: { elapsedDays: 17, totalDays: 31, ratio: 17 / 31 },
+      primary: { current: 1266.3, previous: 1240.98, previousRemaining: 0 },
+      opposite: { current: 804.82, previous: 899.63, previousRemaining: 60 },
+    });
+
+    expect(prediction?.income?.predicted).toBe(1266.3);
+    expect(prediction?.expense.predicted).toBe(864.82);
+    expect(prediction?.balance?.predicted).toBe(401.48);
+    expect(prediction?.status).toBe("danger");
+  });
+
+  it("returns null when an income card has no expense data", () => {
+    expect(
+      getTypeResumePrediction({
+        type: TransactionType.In,
+        progress: { elapsedDays: 11, totalDays: 31, ratio: 11 / 31 },
+        primary: { current: 10, previous: 20, previousRemaining: 5 },
+      }),
+    ).toBeNull();
   });
 });

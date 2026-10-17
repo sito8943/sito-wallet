@@ -14,6 +14,7 @@ import {
   AutocompleteInput,
   CheckInput,
   SelectInput,
+  TextInput,
 } from "@sito/dashboard-app";
 
 // hooks
@@ -340,6 +341,30 @@ export const ConfigFormDialog = (
               }}
               options={parsedOppositeCategories}
               containerClassName="dashboard-card-autocomplete-full"
+              {...rest}
+            />
+          )}
+        />
+      ) : null}
+      {showOppositeType ? (
+        <Controller
+          control={control}
+          name="minBalance"
+          disabled={isLoading}
+          render={({ field: { value, ...rest } }) => (
+            <TextInput
+              type="number"
+              step="0.01"
+              value={value ?? ""}
+              label={t(
+                "_pages:home.dashboard.transactionTypeResume.minBalance.label",
+              )}
+              placeholder={t(
+                "_pages:home.dashboard.transactionTypeResume.minBalance.placeholder",
+              )}
+              helperText={t(
+                "_pages:home.dashboard.transactionTypeResume.minBalance.helper",
+              )}
               {...rest}
             />
           )}

@@ -17,8 +17,12 @@ import {
   getOppositeTransactionType,
   getPreviousPeriodLabelKey,
   getTypeResumeDifference,
+  getPeriodProgress,
+  getTypeResumePrediction,
+  isPredictableTime,
   normalizeExcludedCategoryIds,
   parseFormConfig,
+  parseMinBalance,
   toTypeResumeFilterConfig,
 } from "./utils";
 
@@ -30,6 +34,10 @@ import { DashboardCard } from "../DashboardCard";
 import { RecentTransactionsDialog } from "../RecentTransactionsDialog";
 import { TypeResumeRow } from "./TypeResumeRow";
 import { TypeResumeCategoriesDialog } from "./TypeResumeCategoriesDialog";
+import { TypeResumePredictionDialog } from "./TypeResumePredictionDialog";
+
+// constants
+import { PREDICTION_STATUS_COLOR, PREDICTION_STATUS_ICON } from "./constants";
 import { resolveCardConfig } from "../utils";
 
 // styles
@@ -57,6 +65,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   } = props;
   const { t } = useTranslation();
   const typeResumeDialog = useTypeResumeDialog();
+  const predictionDialog = useTypeResumeDialog();
   const recentTransactionsDialog = useDialog();
   const [configOverride, setConfigOverride] =
     useState<CardConfigOverrideType | null>(null);
@@ -193,6 +202,56 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const isOppositeLoading =
     resolvedFormConfig.showOppositeType &&
     (batchResult?.isLoading ?? oppositeTypeResume.isLoading);
+  const primaryComparison = (batchResult?.primary ?? typeResume.data)
+    ?.comparison;
+  const oppositeResume = resolvedFormConfig.showOppositeType
+    ? (batchResult?.opposite ?? oppositeTypeResume.data)
+    : undefined;
+  const progress = useMemo(
+    () =>
+      isPredictableTime(resolvedFormConfig.time) &&
+      primaryComparison &&
+      startDate &&
+      endDate
+        ? getPeriodProgress(startDate, endDate)
+        : null,
+    [endDate, primaryComparison, resolvedFormConfig.time, startDate],
+  );
+  const primaryRemaining = primaryComparison?.remainingTotal;
+  const oppositeComparison = oppositeResume?.comparison;
+  const prediction = useMemo(
+    () =>
+      progress && primaryComparison && primaryRemaining !== undefined
+        ? getTypeResumePrediction({
+            type: resolvedFormConfig.type,
+            progress,
+            primary: {
+              current: data?.total ?? 0,
+              previous: primaryComparison.total,
+              previousRemaining: primaryRemaining,
+            },
+            opposite:
+              oppositeResume && oppositeComparison?.remainingTotal !== undefined
+                ? {
+                    current: oppositeResume.total,
+                    previous: oppositeComparison.total,
+                    previousRemaining: oppositeComparison.remainingTotal,
+                  }
+                : undefined,
+            minBalance: parseMinBalance(resolvedFormConfig.minBalance),
+          })
+        : null,
+    [
+      data?.total,
+      oppositeComparison,
+      oppositeResume,
+      primaryComparison,
+      primaryRemaining,
+      progress,
+      resolvedFormConfig.minBalance,
+      resolvedFormConfig.type,
+    ],
+  );
 
   return (
     <>
@@ -355,6 +414,21 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
                 </div>
               )}
               <div className="type-resume-actions">
+                {prediction && (
+                  <IconButton
+                    disabled={isLoading || isOppositeLoading}
+                    onClick={predictionDialog.openDialog}
+                    icon={PREDICTION_STATUS_ICON[prediction.status]}
+                    color={PREDICTION_STATUS_COLOR[prediction.status]}
+                    data-tooltip-id="tooltip"
+                    data-tooltip-content={t(
+                      `_pages:home.dashboard.transactionTypeResume.prediction.status.${prediction.status}.title`,
+                    )}
+                    aria-label={t(
+                      "_pages:home.dashboard.transactionTypeResume.prediction.title",
+                    )}
+                  />
+                )}
                 <IconButton
                   onClick={() => addTransaction.openDialog()}
                   icon={faAdd}
@@ -409,6 +483,18 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         time={resolvedFormConfig.time}
         previous={previousPeriod}
       />
+      {prediction && (
+        <TypeResumePredictionDialog
+          {...predictionDialog}
+          prediction={prediction}
+          currencyName={
+            currencyName ?? resolvedFormConfig.account?.currency?.name
+          }
+          currencySymbol={
+            currencySymbol ?? resolvedFormConfig.account?.currency?.symbol
+          }
+        />
+      )}
       <RecentTransactionsDialog
         open={recentTransactionsDialog.open}
         onClose={recentTransactionsDialog.handleClose}

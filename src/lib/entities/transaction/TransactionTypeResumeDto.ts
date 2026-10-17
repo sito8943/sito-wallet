@@ -11,4 +11,6 @@ export type TransactionTypeResumeDto = {
   duplicatedAmount: number;
   categories: TransactionTypeResumeCategoryDto[];
   comparison?: TransactionTypeResumeDto;
+  /** Comparison of an ongoing period only: total on the days still left */
+  remainingTotal?: number;
 };

@@ -1,3 +1,5 @@
+import { classNames } from "@sito/dashboard-app";
+
 import type { UpdateDashboardCardConfigDto } from "lib";
 import { roundCurrency } from "../CurrentBalance/utils";
 import {
@@ -7,14 +9,32 @@ import {
 } from "lib";
 import type {
   FilterTypeResumeConfigType,
+  GetTypeResumePredictionParamsType,
   ToTypeResumeBatchRequestItemType,
+  GetPredictionStatusParamsType,
+  TypeResumePeriodProgressType,
+  TypeResumePredictionStatusType,
+  TypeResumePredictionTotalsType,
+  TypeResumePredictionType,
+  TypeResumePredictionValuesType,
   TypeResumeTypeFormType,
 } from "./types";
 import {
+  DAY_IN_MS,
   DEFAULT_TYPE_RESUME_CONFIG,
+  PREDICTABLE_TIMES,
+  PREDICTION_DANGER_MARGIN,
+  PREDICTION_WARNING_MARGIN,
   PREVIOUS_TIMES,
   TIME_KEY_BY_VALUE,
 } from "./constants";
+
+/** Empty input means "no minimum balance" */
+export const parseMinBalance = (value: unknown): number | undefined => {
+  if (value === null || value === undefined || value === "") return undefined;
+  const parsed = Number(value);
+  return isFiniteNumber(parsed) ? roundCurrency(parsed) : undefined;
+};
 
 export const normalizeExcludedCategoryIds = (value: unknown): number[] => {
   if (!Array.isArray(value)) return [];
@@ -60,6 +80,7 @@ export const parseFormConfig = (
       compare:
         (parsed.compare as boolean | undefined) ??
         DEFAULT_TYPE_RESUME_CONFIG.compare,
+      minBalance: parseMinBalance(parsed.minBalance),
     };
   } catch (err) {
     console.error(err);
@@ -196,7 +217,8 @@ export const toTypeResumeBatchRequestItem: ToTypeResumeBatchRequestItemType = (
     ...(data.showOppositeType && oppositeExcludedCategoryIds.length
       ? { oppositeExcludedCategoryIds }
       : {}),
-    ...(data.compare ? { compare: true } : {}),
+    // Prediction needs the previous period even when the compare columns are hidden
+    ...(data.compare || isPredictableTime(data.time) ? { compare: true } : {}),
   };
 };
 
@@ -209,6 +231,7 @@ export const formToDto = (
   const oppositeExcludedCategoryIds = normalizeExcludedCategoryIds(
     data.oppositeExcludedCategoryIds,
   );
+  const minBalance = parseMinBalance(data.minBalance);
   const stringified = JSON.stringify({
     account: data.account,
     type: data.type,
@@ -217,6 +240,9 @@ export const formToDto = (
     showOppositeType: !!data.showOppositeType,
     showDifference: !!data.showOppositeType && !!data.showDifference,
     compare: !!data.compare,
+    ...(data.showOppositeType && minBalance !== undefined
+      ? { minBalance }
+      : {}),
     ...(excludedCategoryIds.length ? { excludedCategoryIds } : {}),
     ...(data.showOppositeType && oppositeExcludedCategoryIds.length
       ? { oppositeExcludedCategoryIds }
@@ -228,3 +254,147 @@ export const formToDto = (
     config: stringified,
   };
 };
+
+export const isPredictableTime = (time?: TransactionTypeResumeTime): boolean =>
+  time !== undefined && PREDICTABLE_TIMES.includes(time);
+
+const parseLocalDate = (value: string): Date | null => {
+  const [year, month, day] = value.slice(0, 10).split("-").map(Number);
+  if (!year || !month || !day) return null;
+  return new Date(year, month - 1, day);
+};
+
+const startOfDay = (value: Date): Date =>
+  new Date(value.getFullYear(), value.getMonth(), value.getDate());
+
+export const getPeriodProgress = (
+  startDate: string,
+  endDate: string,
+  today: Date = new Date(),
+): TypeResumePeriodProgressType | null => {
+  const start = parseLocalDate(startDate);
+  const end = parseLocalDate(endDate);
+  if (!start || !end || end < start) return null;
+
+  const totalDays =
+    Math.round((end.getTime() - start.getTime()) / DAY_IN_MS) + 1;
+  const elapsed =
+    Math.floor((startOfDay(today).getTime() - start.getTime()) / DAY_IN_MS) + 1;
+  const elapsedDays = Math.min(Math.max(elapsed, 0), totalDays);
+
+  return { elapsedDays, totalDays, ratio: elapsedDays / totalDays };
+};
+
+/**
+ * Assumes the rest of the period behaves like the same days of the previous
+ * period, so lump sums already received/paid (salary, rent) are not counted
+ * twice.
+ */
+export const predictPeriodTotal = (
+  current: number,
+  previousRemaining: number,
+): number => roundCurrency(current + previousRemaining);
+
+/**
+ * Share of the reference still unspent at the forecast close. Reference is the
+ * expense budget left by the minimum balance when one is set, otherwise the
+ * previous period expenses.
+ */
+export const getPredictionMargin = (
+  params: GetPredictionStatusParamsType,
+): number | null => {
+  const { expense, income, minBalance } = params;
+
+  if (minBalance !== undefined && income) {
+    const allowedExpense = income.predicted - minBalance;
+    return allowedExpense > 0
+      ? (allowedExpense - expense.predicted) / allowedExpense
+      : -1;
+  }
+
+  return expense.previous > 0
+    ? (expense.previous - expense.predicted) / expense.previous
+    : null;
+};
+
+export const getPredictionStatus = (
+  params: GetPredictionStatusParamsType,
+): TypeResumePredictionStatusType => {
+  const { expense, income, balance, minBalance } = params;
+  const usesMinBalance = minBalance !== undefined && !!income && !!balance;
+
+  if (usesMinBalance && balance.current < minBalance) return "exceeded";
+  if (!usesMinBalance) {
+    if (expense.previous <= 0) return "unknown";
+    if (expense.current > expense.previous) return "exceeded";
+  }
+
+  const margin = getPredictionMargin(params) ?? 0;
+  if (margin >= PREDICTION_WARNING_MARGIN) return "success";
+  if (margin >= PREDICTION_DANGER_MARGIN) return "warning";
+  return "danger";
+};
+
+const toPredictionValues = (
+  totals: TypeResumePredictionTotalsType,
+): TypeResumePredictionValuesType => ({
+  current: roundCurrency(totals.current),
+  previous: roundCurrency(totals.previous),
+  predicted: predictPeriodTotal(totals.current, totals.previousRemaining),
+});
+
+export const getTypeResumePrediction = (
+  params: GetTypeResumePredictionParamsType,
+): TypeResumePredictionType | null => {
+  const { type, progress, primary, opposite, minBalance } = params;
+
+  const expenseTotals = type === TransactionType.Out ? primary : opposite;
+  const incomeTotals = type === TransactionType.In ? primary : opposite;
+  if (!expenseTotals) return null;
+
+  const expense = toPredictionValues(expenseTotals);
+  const income = incomeTotals ? toPredictionValues(incomeTotals) : undefined;
+  const balance = income
+    ? {
+        current: roundCurrency(income.current - expense.current),
+        previous: roundCurrency(income.previous - expense.previous),
+        predicted: roundCurrency(income.predicted - expense.predicted),
+      }
+    : undefined;
+
+  const statusParams = {
+    expense,
+    income,
+    balance,
+    minBalance: balance ? minBalance : undefined,
+  };
+
+  return {
+    progress,
+    status: getPredictionStatus(statusParams),
+    margin: getPredictionMargin(statusParams),
+    expense,
+    income,
+    balance,
+    minBalance: statusParams.minBalance,
+  };
+};
+
+export const getPredictionAmountClassName = (
+  amount: number,
+  total: boolean,
+): string =>
+  classNames(
+    "type-resume-prediction-amount poppins",
+    total &&
+      (amount >= 0
+        ? "type-resume-amount--income"
+        : "type-resume-amount--expense"),
+  );
+
+export const getPredictionDescriptionKey = (
+  prediction: TypeResumePredictionType,
+): string =>
+  `_pages:home.dashboard.transactionTypeResume.prediction.${
+    prediction.minBalance === undefined ? "status" : "minBalanceStatus"
+  }.${prediction.status}.description`;
