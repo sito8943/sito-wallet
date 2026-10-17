@@ -67,6 +67,62 @@
             "PreviousMonth": "2 months ago",
             "PreviousYear": "2 years ago"
           }
+        },
+        "prediction": {
+          "title": "Period forecast",
+          "progress": "Day {{elapsed}} of {{total}} in this period",
+          "hint": "Forecast values are approximate: what you have so far + what came in and went out on the same remaining days of the previous period.",
+          "columns": {
+            "predicted": "Forecast (approx.)"
+          },
+          "rows": {
+            "income": "Income",
+            "expense": "Expenses",
+            "balance": "Balance"
+          },
+          "status": {
+            "success": {
+              "title": "On track",
+              "description": "Forecast expenses: ≈ {{predicted}} of {{previous}} from the previous period ({{margin}}% margin)."
+            },
+            "warning": {
+              "title": "Getting close",
+              "description": "Forecast expenses: ≈ {{predicted}} of {{previous}} from the previous period (only {{margin}}% margin)."
+            },
+            "danger": {
+              "title": "Very close to the limit",
+              "description": "Forecast expenses: ≈ {{predicted}} vs {{previous}} from the previous period. Cut back to stay under."
+            },
+            "exceeded": {
+              "title": "Already over",
+              "description": "You have spent {{current}} and the previous period closed at {{previous}}. Forecast at close: ≈ {{predicted}}."
+            },
+            "unknown": {
+              "title": "No reference",
+              "description": "No expenses in the previous period to compare with. Forecast at close: ≈ {{predicted}}."
+            }
+          },
+          "minBalance": "Minimum balance: {{value}}",
+          "minBalanceStatus": {
+            "success": {
+              "description": "Forecast balance: ≈ {{predictedBalance}}, above the {{minBalance}} minimum ({{margin}}% expense margin)."
+            },
+            "warning": {
+              "description": "Forecast balance: ≈ {{predictedBalance}} vs a {{minBalance}} minimum (only {{margin}}% expense margin)."
+            },
+            "danger": {
+              "description": "Forecast balance: ≈ {{predictedBalance}} vs a {{minBalance}} minimum. Cut back to stay above it."
+            },
+            "exceeded": {
+              "description": "Your current balance ({{currentBalance}}) is already below the {{minBalance}} minimum. Forecast at close: ≈ {{predictedBalance}}."
+            }
+          },
+          "estimate": "Approximate estimate, not an actual value"
+        },
+        "minBalance": {
+          "label": "Minimum balance",
+          "placeholder": "E.g. 300",
+          "helper": "Leave empty to compare with the previous period."
         }
       },
       "currentBalance": {

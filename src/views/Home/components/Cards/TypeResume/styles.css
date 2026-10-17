@@ -100,3 +100,77 @@
 .dashboard-card-toggle-container {
   @apply flex flex-col mb-4;
 }
+
+.type-resume-prediction {
+  @apply flex flex-col gap-4;
+}
+
+.type-resume-prediction-status {
+  @apply flex items-start gap-3 rounded-2xl p-3 text-xl;
+}
+
+.type-resume-prediction-status--success {
+  @apply bg-bg-success text-success;
+}
+
+.type-resume-prediction-status--warning {
+  @apply bg-bg-warning text-warning;
+}
+
+.type-resume-prediction-status--danger,
+.type-resume-prediction-status--exceeded {
+  @apply bg-bg-error text-error;
+}
+
+.type-resume-prediction-status--unknown {
+  @apply bg-base-light;
+}
+
+.type-resume-prediction-status-copy {
+  @apply flex flex-col gap-1;
+}
+
+.type-resume-prediction-status-title {
+  @apply text-base font-bold;
+}
+
+.type-resume-prediction-status-description {
+  @apply text-sm;
+}
+
+.type-resume-prediction-progress {
+  @apply text-sm text-text-muted;
+}
+
+.type-resume-prediction-table {
+  @apply grid w-full items-center gap-x-3 gap-y-2;
+  grid-template-columns: auto 1fr 1fr 1fr;
+}
+
+.type-resume-prediction-row {
+  @apply contents;
+}
+
+.type-resume-prediction-divider {
+  @apply col-span-4 border-t border-text-muted/20;
+}
+
+.type-resume-prediction-divider--total {
+  @apply border-text-muted/60;
+}
+
+.type-resume-prediction-label {
+  @apply text-sm font-semibold whitespace-nowrap;
+}
+
+.type-resume-prediction-amount {
+  @apply text-right font-bold whitespace-nowrap;
+}
+
+.type-resume-prediction-amount--estimate {
+  @apply italic opacity-80;
+}
+
+.type-resume-prediction-hint {
+  @apply text-xs text-text-muted;
+}

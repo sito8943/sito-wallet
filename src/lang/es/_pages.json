@@ -67,6 +67,62 @@
             "PreviousMonth": "Hace 2 meses",
             "PreviousYear": "Hace 2 años"
           }
+        },
+        "prediction": {
+          "title": "Predicción del período",
+          "progress": "Día {{elapsed}} de {{total}} del período",
+          "hint": "Los valores previstos son aproximados: lo que llevas + lo que entró y salió en los mismos días restantes del período anterior.",
+          "columns": {
+            "predicted": "Previsto (aprox.)"
+          },
+          "rows": {
+            "income": "Ingresos",
+            "expense": "Gastos",
+            "balance": "Balance"
+          },
+          "status": {
+            "success": {
+              "title": "Vas bien",
+              "description": "Gastos previstos: ≈ {{predicted}} de {{previous}} del período anterior ({{margin}}% de margen)."
+            },
+            "warning": {
+              "title": "Te estás acercando",
+              "description": "Gastos previstos: ≈ {{predicted}} de {{previous}} del período anterior (solo {{margin}}% de margen)."
+            },
+            "danger": {
+              "title": "Muy cerca del límite",
+              "description": "Gastos previstos: ≈ {{predicted}} frente a {{previous}} del período anterior. Reduce gastos para no pasarte."
+            },
+            "exceeded": {
+              "title": "Ya te pasaste",
+              "description": "Llevas {{current}} en gastos y el período anterior cerró en {{previous}}. Previsto al cierre: ≈ {{predicted}}."
+            },
+            "unknown": {
+              "title": "Sin referencia",
+              "description": "No hay gastos en el período anterior para comparar. Previsto al cierre: ≈ {{predicted}}."
+            }
+          },
+          "minBalance": "Balance mínimo: {{value}}",
+          "minBalanceStatus": {
+            "success": {
+              "description": "Balance previsto: ≈ {{predictedBalance}}, por encima del mínimo de {{minBalance}} ({{margin}}% de margen en gastos)."
+            },
+            "warning": {
+              "description": "Balance previsto: ≈ {{predictedBalance}} frente a un mínimo de {{minBalance}} (solo {{margin}}% de margen en gastos)."
+            },
+            "danger": {
+              "description": "Balance previsto: ≈ {{predictedBalance}} frente a un mínimo de {{minBalance}}. Reduce gastos para no bajar del mínimo."
+            },
+            "exceeded": {
+              "description": "Tu balance actual ({{currentBalance}}) ya está por debajo del mínimo de {{minBalance}}. Previsto al cierre: ≈ {{predictedBalance}}."
+            }
+          },
+          "estimate": "Estimación aproximada, no un valor real"
+        },
+        "minBalance": {
+          "label": "Balance mínimo",
+          "placeholder": "Ej: 300",
+          "helper": "Deja vacío para comparar con el período anterior."
         }
       },
       "currentBalance": {

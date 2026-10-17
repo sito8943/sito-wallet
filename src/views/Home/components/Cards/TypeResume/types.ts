@@ -49,6 +49,8 @@ export interface TypeResumeTypeFormType
   showOppositeType: boolean;
   showDifference: boolean;
   compare: boolean;
+  /** Balance (income - expenses) to keep at the end of the period */
+  minBalance?: number | string | null;
 }
 
 export type FilterTypeResumeConfigType = {
@@ -158,3 +160,68 @@ export type ToTypeResumeBatchRequestItemType = (
   cardId: number,
   data: TypeResumeTypeFormType,
 ) => TransactionTypeResumeBatchRequestItemDto;
+
+export type TypeResumePredictionStatusType =
+  "success" | "warning" | "danger" | "exceeded" | "unknown";
+
+export type TypeResumePeriodProgressType = {
+  elapsedDays: number;
+  totalDays: number;
+  ratio: number;
+};
+
+export type TypeResumePredictionValuesType = {
+  current: number;
+  previous: number;
+  predicted: number;
+};
+
+export type TypeResumePredictionType = {
+  progress: TypeResumePeriodProgressType;
+  status: TypeResumePredictionStatusType;
+  margin: number | null;
+  expense: TypeResumePredictionValuesType;
+  income?: TypeResumePredictionValuesType;
+  balance?: TypeResumePredictionValuesType;
+  /** Set when the status is measured against a minimum balance */
+  minBalance?: number;
+};
+
+export type TypeResumePredictionTotalsType = {
+  current: number;
+  previous: number;
+  /** What the previous period accumulated after the current elapsed day */
+  previousRemaining: number;
+};
+
+export type GetTypeResumePredictionParamsType = {
+  type: TransactionType;
+  progress: TypeResumePeriodProgressType;
+  primary: TypeResumePredictionTotalsType;
+  opposite?: TypeResumePredictionTotalsType;
+  minBalance?: number;
+};
+
+export type GetPredictionStatusParamsType = {
+  expense: TypeResumePredictionValuesType;
+  income?: TypeResumePredictionValuesType;
+  balance?: TypeResumePredictionValuesType;
+  minBalance?: number;
+};
+
+export type TypeResumePredictionDialogPropsType = {
+  open: boolean;
+  closeDialog: () => void;
+  prediction: TypeResumePredictionType;
+  currencyName?: string;
+  currencySymbol?: string;
+};
+
+export type TypeResumePredictionRowPropsType = {
+  label: string;
+  values: TypeResumePredictionValuesType;
+  currencyName?: string;
+  currencySymbol?: string;
+  /** Summary row: stronger divider and signed colors */
+  total?: boolean;
+};
