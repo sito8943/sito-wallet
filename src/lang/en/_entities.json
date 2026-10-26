@@ -203,7 +203,7 @@
     },
     "products": {
       "label": "Products",
-      "add": "Add product",
+      "add": "Add",
       "remove": "Remove product",
       "total": "Products total: {{total}}",
       "product": {

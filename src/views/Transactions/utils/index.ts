@@ -118,6 +118,13 @@ export const isTransactionProductComplete = (
   item: TransactionProductFormItem,
 ): boolean => getTransactionProductErrorKeys(item).length === 0;
 
+/** Amount with two decimals in the user's locale (`14,35` / `14.35`). */
+export const formatTransactionAmount = (value: number, language: string) =>
+  new Intl.NumberFormat(language, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value);
+
 /** Products total as a transaction amount (cents precision). */
 export const getTransactionProductsAmount = (
   products: TransactionProductFormItem[] = [],

@@ -255,6 +255,9 @@ main,
    product lists) grows past the screen with no way to scroll. */
 .dialog.sito-ui-dialog {
   @apply max-h-[calc(100dvh-2rem)] overflow-y-auto;
+  /* The @sito/ui sticky header paints this color behind itself; match the
+     dialog background (white by default). */
+  --sito-ui-color-surface: var(--color-base);
 }
 
 @media not all and (min-width: 40rem) {

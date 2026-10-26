@@ -33,3 +33,9 @@
 .transaction-products-dialog-total {
   @apply text-sm text-text-muted;
 }
+
+/* Sticky like @sito/ui dialog actions: the dialog is the scroll container
+   and has 1.25rem (p-5) of padding, which the negative offsets cancel. */
+.transaction-products-dialog-actions {
+  @apply sticky -bottom-5 z-[1] -mb-5 bg-base pb-5;
+}

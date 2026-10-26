@@ -13,6 +13,7 @@ import { TransactionProductsDialog } from "../TransactionProductsDialog";
 // utils
 import {
   getTransactionProductsAmount,
+  formatTransactionAmount,
   getTransactionProductsTotal,
   isTransactionProductComplete,
 } from "../../utils";
@@ -31,7 +32,7 @@ export function TransactionProductsField(
   props: TransactionProductsFieldPropsType,
 ) {
   const { control, setValue, isLoading } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [open, setOpen] = useState(false);
 
   const { fields, append, remove } = useFieldArray({
@@ -73,7 +74,9 @@ export function TransactionProductsField(
         </span>
         {fields.length > 0 && (
           <span className="transaction-products-summary">
-            {t("_entities:transaction.products.summaryTotal", { total })}
+            {t("_entities:transaction.products.summaryTotal", {
+              total: formatTransactionAmount(total, i18n.language),
+            })}
           </span>
         )}
         {hasError && (

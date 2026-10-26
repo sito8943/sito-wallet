@@ -6,6 +6,7 @@ import {
   dtoToForm,
   emptyTransaction,
   formToDto,
+  formatTransactionAmount,
   getTransactionProductErrorKeys,
   getTransactionProductsAmount,
   getTransactionProductsTotal,
@@ -166,5 +167,12 @@ describe("purchaseProviderToDto", () => {
       purchaseProviderToDto({ id: 3, name: "Store", updatedAt: new Date() }),
     ).toEqual({ purchaseProviderId: 3 });
     expect(purchaseProviderToDto(null)).toEqual({ purchaseProviderId: null });
+  });
+});
+
+describe("formatTransactionAmount", () => {
+  it("shows two decimals in the user's locale, without float noise", () => {
+    expect(formatTransactionAmount(28.659999999999997, "es")).toBe("28,66");
+    expect(formatTransactionAmount(3, "en")).toBe("3.00");
   });
 });

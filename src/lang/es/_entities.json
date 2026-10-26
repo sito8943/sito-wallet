@@ -203,7 +203,7 @@
     },
     "products": {
       "label": "Productos",
-      "add": "Añadir producto",
+      "add": "Añadir",
       "remove": "Quitar producto",
       "total": "Total productos: {{total}}",
       "product": {

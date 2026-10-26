@@ -24,6 +24,7 @@ import { useProductsCommon } from "../../../../hooks/queries/useProductsCommon";
 import {
   emptyTransactionProduct,
   getTransactionProductErrorKeys,
+  formatTransactionAmount,
   getTransactionProductsTotal,
   newProductOption,
 } from "../../utils";
@@ -37,7 +38,7 @@ export function TransactionProductsDialog(
   props: TransactionProductsDialogPropsType,
 ) {
   const { open, onClose, control, isLoading, fields, append, remove } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const products = useProductsCommon();
   const productOptions = useMemo(
@@ -172,30 +173,36 @@ export function TransactionProductsDialog(
           </div>
         ))}
       </div>
-      <div className="transaction-products-dialog-footer">
-        <Button
-          type="button"
-          variant="outlined"
-          disabled={isLoading}
-          onClick={() => whenComplete(() => append(emptyTransactionProduct()))}
-        >
-          <FontAwesomeIcon icon={faPlus} />{" "}
-          {t("_entities:transaction.products.add")}
-        </Button>
-        <span className="transaction-products-dialog-total">
-          {t("_entities:transaction.products.total", { total })}
-        </span>
-      </div>
-      <div className="transaction-products-dialog-footer">
-        <span />
-        <Button
-          type="button"
-          variant="submit"
-          color="primary"
-          onClick={() => whenComplete(onClose)}
-        >
-          {t("_entities:transaction.products.done")}
-        </Button>
+      <div className="transaction-products-dialog-actions">
+        <div className="transaction-products-dialog-footer">
+          <Button
+            type="button"
+            variant="outlined"
+            disabled={isLoading}
+            onClick={() =>
+              whenComplete(() => append(emptyTransactionProduct()))
+            }
+          >
+            <FontAwesomeIcon icon={faPlus} />{" "}
+            {t("_entities:transaction.products.add")}
+          </Button>
+          <span className="transaction-products-dialog-total">
+            {t("_entities:transaction.products.total", {
+              total: formatTransactionAmount(total, i18n.language),
+            })}
+          </span>
+        </div>
+        <div className="transaction-products-dialog-footer">
+          <span />
+          <Button
+            type="button"
+            variant="submit"
+            color="primary"
+            onClick={() => whenComplete(onClose)}
+          >
+            {t("_entities:transaction.products.done")}
+          </Button>
+        </div>
       </div>
     </Dialog>
   );
