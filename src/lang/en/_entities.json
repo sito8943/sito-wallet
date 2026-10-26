@@ -216,12 +216,13 @@
         "label": "Price",
         "required": "Price is required"
       },
-      "edit": "Edit products",
+      "edit": "Edit",
       "empty": "No products",
       "done": "Done",
       "incomplete": "Some products are missing a product or price",
-      "summary_one": "{{count}} product · Total: {{total}}",
-      "summary_other": "{{count}} products · Total: {{total}}"
+      "count_one": "{{count}} product",
+      "count_other": "{{count}} products",
+      "summaryTotal": "Total: {{total}}"
     }
   },
   "transactionCategory": {

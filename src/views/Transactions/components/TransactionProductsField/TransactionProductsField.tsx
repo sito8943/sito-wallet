@@ -56,12 +56,16 @@ export function TransactionProductsField(
         </span>
         <span className="transaction-products-summary">
           {fields.length
-            ? t("_entities:transaction.products.summary", {
+            ? t("_entities:transaction.products.count", {
                 count: fields.length,
-                total,
               })
             : t("_entities:transaction.products.empty")}
         </span>
+        {fields.length > 0 && (
+          <span className="transaction-products-summary">
+            {t("_entities:transaction.products.summaryTotal", { total })}
+          </span>
+        )}
         {hasError && (
           <span className="transaction-products-error">
             {t("_entities:transaction.products.incomplete")}

@@ -4,6 +4,10 @@
   @apply flex items-center justify-between gap-2 rounded-lg border-2 border-border/40 p-3;
 }
 
+.transaction-products > .button {
+  @apply shrink-0;
+}
+
 .transaction-products-info {
   @apply flex flex-col gap-0.5;
 }

@@ -216,12 +216,13 @@
         "label": "Precio",
         "required": "El precio es requerido"
       },
-      "edit": "Editar productos",
+      "edit": "Editar",
       "empty": "Sin productos",
       "done": "Listo",
       "incomplete": "Hay productos sin producto o sin precio",
-      "summary_one": "{{count}} producto · Total: {{total}}",
-      "summary_other": "{{count}} productos · Total: {{total}}"
+      "count_one": "{{count}} producto",
+      "count_other": "{{count}} productos",
+      "summaryTotal": "Total: {{total}}"
     }
   },
   "transactionCategory": {
