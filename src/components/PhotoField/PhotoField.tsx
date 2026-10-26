@@ -9,10 +9,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
-import { Button, TextInput } from "@sito/dashboard-app";
+import { Button, TextInput, useNotification } from "@sito/dashboard-app";
 
 // lib
-import { isExternalPhoto } from "lib";
+import { getPhotoFileErrorKey, isExternalPhoto } from "lib";
 
 // components
 import { ProviderPhoto } from "../ProviderPhoto";
@@ -29,6 +29,7 @@ export function PhotoField(props: PhotoFieldPropsType) {
   const { inputId, values, disabled, onChange } = props;
   const { photo, photoUrl, file, removePhoto } = values;
   const { t } = useTranslation();
+  const { showErrorNotification } = useNotification();
 
   const filePreview = useMemo(
     () => (file ? URL.createObjectURL(file) : ""),
@@ -120,8 +121,15 @@ export function PhotoField(props: PhotoFieldPropsType) {
         disabled={disabled}
         onChange={(event) => {
           const selected = event.currentTarget.files?.[0] ?? null;
-          onChange({ file: selected, photoUrl: "", removePhoto: false });
           event.currentTarget.value = "";
+          if (!selected) return;
+
+          const errorKey = getPhotoFileErrorKey(selected);
+          if (errorKey) {
+            showErrorNotification({ message: t(errorKey) });
+            return;
+          }
+          onChange({ file: selected, photoUrl: "", removePhoto: false });
         }}
       />
       <TextInput

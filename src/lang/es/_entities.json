@@ -81,7 +81,11 @@
       "url": {
         "label": "O pega la URL de una imagen",
         "placeholder": "https://..."
-      }
+      },
+      "invalidType": "Solo se permiten imágenes JPG, PNG o WEBP",
+      "tooLarge": "La imagen debe pesar 5 MB o menos",
+      "invalidUrl": "La URL de la foto no es válida",
+      "required": "Selecciona una imagen para subir"
     }
   },
   "user": {

@@ -1,1 +1,3 @@
-export const PHOTO_ACCEPT = "image/jpeg,image/png,image/webp";
+import { PHOTO_ALLOWED_TYPES } from "lib";
+
+export const PHOTO_ACCEPT = PHOTO_ALLOWED_TYPES.join(",");
