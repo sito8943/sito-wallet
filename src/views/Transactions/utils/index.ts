@@ -5,6 +5,7 @@ import { formatForDatetimeLocal, type Option } from "@sito/dashboard-app";
 
 import type {
   CommonAccountDto,
+  CommonProductDto,
   CommonTransactionCategoryDto,
   TransactionDto,
   TransactionProductDto,
@@ -47,13 +48,25 @@ export const transactionProductsToForm = (
     unitPrice,
   }));
 
+/**
+ * Option for a product typed in the form that doesn't exist yet. It has no id
+ * (0) until the backend creates it when the transaction is saved.
+ */
+export const newProductOption = (name: string): CommonProductDto => ({
+  id: 0,
+  name,
+  updatedAt: new Date(),
+});
+
 export const transactionProductsFormToDto = (
   products: TransactionProductFormItem[] = [],
 ): TransactionProductInputDto[] =>
   products
     .filter((item) => item.product)
     .map((item) => ({
-      productId: item.product?.id ?? 0,
+      ...(item.product?.id
+        ? { productId: item.product.id }
+        : { productName: item.product?.name.trim() }),
       quantity: toOptionalNumber(item.quantity),
       unitPrice: toOptionalNumber(item.unitPrice) ?? 0,
     }));

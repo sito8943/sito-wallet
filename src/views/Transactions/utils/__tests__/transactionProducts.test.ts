@@ -9,6 +9,7 @@ import {
   getTransactionProductErrorKeys,
   getTransactionProductsTotal,
   isTransactionProductComplete,
+  newProductOption,
   transactionProductsFormToDto,
 } from "..";
 
@@ -125,5 +126,19 @@ describe("getTransactionProductErrorKeys", () => {
         unitPrice: 3,
       }),
     ).toEqual([]);
+  });
+});
+
+describe("new products typed in the form", () => {
+  it("are sent by name so the backend creates them", () => {
+    expect(
+      transactionProductsFormToDto([
+        { product: newProductOption(" Bread "), quantity: "", unitPrice: "2" },
+        { product: milk, quantity: 1, unitPrice: 1 },
+      ]),
+    ).toEqual([
+      { productName: "Bread", quantity: undefined, unitPrice: 2 },
+      { productId: 5, quantity: 1, unitPrice: 1 },
+    ]);
   });
 });

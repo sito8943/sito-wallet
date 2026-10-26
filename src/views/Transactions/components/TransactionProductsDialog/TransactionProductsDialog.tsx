@@ -25,6 +25,7 @@ import {
   emptyTransactionProduct,
   getTransactionProductErrorKeys,
   getTransactionProductsTotal,
+  newProductOption,
 } from "../../utils";
 
 // types
@@ -95,6 +96,13 @@ export function TransactionProductsDialog(
                       "_entities:transaction.products.product.label",
                     )}`}
                     multiple={false}
+                    createOption={{
+                      onCreate: (name) => onChange(newProductOption(name)),
+                      renderLabel: (name) =>
+                        t("_entities:transaction.products.product.create", {
+                          name,
+                        }),
+                    }}
                     {...rest}
                   />
                 )}

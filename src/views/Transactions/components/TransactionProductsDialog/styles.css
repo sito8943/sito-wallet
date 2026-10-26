@@ -19,7 +19,7 @@
 }
 
 .transaction-products-dialog-error {
-  @apply -mt-4 text-sm text-error;
+  @apply -mt-4 text-sm text-bg-error;
 }
 
 .transaction-products-dialog-empty {

@@ -207,7 +207,8 @@
       "total": "Products total: {{total}}",
       "product": {
         "label": "Product",
-        "required": "Product is required"
+        "required": "Product is required",
+        "create": "Create “{{name}}”"
       },
       "quantity": {
         "label": "Quantity"
