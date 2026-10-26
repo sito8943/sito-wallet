@@ -704,7 +704,7 @@
     "receipt": {
       "scan": "Escanear ticket",
       "scanning": "Leyendo ticket…",
-      "hint": "Rellena el formulario con la foto del ticket; revísalo antes de guardar.",
+      "hint": "Encuadra solo el ticket, plano, recto y con buena luz. Rellena el formulario; revísalo antes de guardar.",
       "success": "Ticket leído. Revisa los datos antes de guardar.",
       "totalOnly": "Tienda no reconocida: solo se leyeron la fecha y el total.",
       "mismatch": "Los productos leídos no suman el total del ticket. Revísalos antes de guardar.",
