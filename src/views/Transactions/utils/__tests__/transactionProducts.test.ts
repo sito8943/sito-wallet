@@ -7,6 +7,7 @@ import {
   emptyTransaction,
   formToDto,
   getTransactionProductErrorKeys,
+  getTransactionProductsAmount,
   getTransactionProductsTotal,
   isTransactionProductComplete,
   newProductOption,
@@ -140,5 +141,16 @@ describe("new products typed in the form", () => {
       { productName: "Bread", quantity: undefined, unitPrice: 2 },
       { productId: 5, quantity: 1, unitPrice: 1 },
     ]);
+  });
+});
+
+describe("getTransactionProductsAmount", () => {
+  it("rounds the products total to cents", () => {
+    expect(
+      getTransactionProductsAmount([
+        { product: milk, quantity: "3", unitPrice: "0.1" },
+        { product: milk, quantity: "", unitPrice: "1.005" },
+      ]),
+    ).toBe(1.31);
   });
 });

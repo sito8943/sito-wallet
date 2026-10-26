@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useFieldArray, useFormState, useWatch } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,6 +12,7 @@ import { TransactionProductsDialog } from "../TransactionProductsDialog";
 
 // utils
 import {
+  getTransactionProductsAmount,
   getTransactionProductsTotal,
   isTransactionProductComplete,
 } from "../../utils";
@@ -29,7 +30,7 @@ import "./styles.css";
 export function TransactionProductsField(
   props: TransactionProductsFieldPropsType,
 ) {
-  const { control, isLoading } = props;
+  const { control, setValue, isLoading } = props;
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
@@ -45,8 +46,17 @@ export function TransactionProductsField(
 
   const watchedProducts = useWatch({ control, name: "products" });
   const total = getTransactionProductsTotal(watchedProducts);
-  const { errors } = useFormState({ control, name: "products" });
+  const { errors, dirtyFields } = useFormState({ control, name: "products" });
   const hasError = !!errors.products;
+
+  // Once the user touches the products, their total drives the amount. Not
+  // before: loading a transaction to edit must keep its stored amount.
+  const productsDirty = !!dirtyFields.products;
+  const amount = getTransactionProductsAmount(watchedProducts);
+  useEffect(() => {
+    if (!productsDirty || fields.length === 0) return;
+    setValue?.("amount", amount, { shouldDirty: true, shouldValidate: true });
+  }, [amount, productsDirty, fields.length, setValue]);
 
   return (
     <div className="transaction-products">

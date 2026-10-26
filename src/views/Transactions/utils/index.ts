@@ -102,6 +102,11 @@ export const isTransactionProductComplete = (
   item: TransactionProductFormItem,
 ): boolean => getTransactionProductErrorKeys(item).length === 0;
 
+/** Products total as a transaction amount (cents precision). */
+export const getTransactionProductsAmount = (
+  products: TransactionProductFormItem[] = [],
+): number => Math.round(getTransactionProductsTotal(products) * 100) / 100;
+
 export const formToDto = ({
   account,
   categories,

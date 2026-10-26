@@ -234,7 +234,11 @@ export function TransactionForm(props: TransactionFormPropsType) {
         )}
       />
       {control && (
-        <TransactionProductsField control={control} isLoading={isLoading} />
+        <TransactionProductsField
+          control={control}
+          setValue={setValue}
+          isLoading={isLoading}
+        />
       )}
       <Controller
         control={control}
