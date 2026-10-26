@@ -11,6 +11,8 @@ import {
   getTransactionProductsTotal,
   isTransactionProductComplete,
   newProductOption,
+  newPurchaseProviderOption,
+  purchaseProviderToDto,
   transactionProductsFormToDto,
 } from "..";
 
@@ -152,5 +154,17 @@ describe("getTransactionProductsAmount", () => {
         { product: milk, quantity: "", unitPrice: "1.005" },
       ]),
     ).toBe(1.31);
+  });
+});
+
+describe("purchaseProviderToDto", () => {
+  it("sends a new provider by name and an existing one by id", () => {
+    expect(
+      purchaseProviderToDto(newPurchaseProviderOption(" Vivari ")),
+    ).toEqual({ purchaseProviderId: null, purchaseProviderName: "Vivari" });
+    expect(
+      purchaseProviderToDto({ id: 3, name: "Store", updatedAt: new Date() }),
+    ).toEqual({ purchaseProviderId: 3 });
+    expect(purchaseProviderToDto(null)).toEqual({ purchaseProviderId: null });
   });
 });

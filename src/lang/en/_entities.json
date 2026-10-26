@@ -198,7 +198,8 @@
     },
     "purchaseProvider": {
       "label": "Provider",
-      "placeholder": "Who did you pay?"
+      "placeholder": "Who did you pay?",
+      "create": "Create “{{name}}”"
     },
     "products": {
       "label": "Products",

@@ -11,6 +11,8 @@ export interface AddTransactionDto {
   type?: TransactionType;
   /** Omit to keep the current value; null clears it. */
   purchaseProviderId?: number | null;
+  /** Without `purchaseProviderId`: the backend reuses a provider with this name or creates it. */
+  purchaseProviderName?: string;
   /** Omit to keep the current lines; [] clears them. */
   products?: TransactionProductInputDto[] | null;
 }

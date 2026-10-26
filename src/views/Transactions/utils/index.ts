@@ -6,6 +6,7 @@ import { formatForDatetimeLocal, type Option } from "@sito/dashboard-app";
 import type {
   CommonAccountDto,
   CommonProductDto,
+  CommonPurchaseProviderDto,
   CommonTransactionCategoryDto,
   TransactionDto,
   TransactionProductDto,
@@ -57,6 +58,19 @@ export const newProductOption = (name: string): CommonProductDto => ({
   name,
   updatedAt: new Date(),
 });
+
+/** Option for a provider typed in the form that doesn't exist yet (id 0). */
+export const newPurchaseProviderOption = (
+  name: string,
+): CommonPurchaseProviderDto => ({ id: 0, name, updatedAt: new Date() });
+
+/** A provider without id is sent by name so the backend creates it. */
+export const purchaseProviderToDto = (
+  provider: CommonPurchaseProviderDto | null,
+): { purchaseProviderId: number | null; purchaseProviderName?: string } =>
+  provider && !provider.id
+    ? { purchaseProviderId: null, purchaseProviderName: provider.name.trim() }
+    : { purchaseProviderId: provider?.id ?? null };
 
 export const transactionProductsFormToDto = (
   products: TransactionProductFormItem[] = [],
@@ -125,7 +139,7 @@ export const formToDto = ({
     accountId: account?.id ?? 0,
     categoryIds: normalizedCategories.map((category) => category.id),
     ...(primaryCategory ? { type: primaryCategory.type } : {}),
-    purchaseProviderId: purchaseProvider?.id ?? null,
+    ...purchaseProviderToDto(purchaseProvider),
     products: transactionProductsFormToDto(products),
   };
 };

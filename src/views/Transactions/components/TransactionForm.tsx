@@ -13,6 +13,9 @@ import {
 // types
 import type { TransactionFormPropsType } from "../types";
 
+// utils
+import { newPurchaseProviderOption } from "../utils";
+
 // lib
 import type { CommonTransactionCategoryDto } from "lib";
 import {
@@ -229,6 +232,11 @@ export function TransactionForm(props: TransactionFormPropsType) {
               "_entities:transaction.purchaseProvider.label",
             )}`}
             multiple={false}
+            createOption={{
+              onCreate: (name) => onChange(newPurchaseProviderOption(name)),
+              renderLabel: (name) =>
+                t("_entities:transaction.purchaseProvider.create", { name }),
+            }}
             {...rest}
           />
         )}

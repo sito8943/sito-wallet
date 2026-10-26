@@ -16,6 +16,7 @@ import { useManager } from "providers";
 import {
   AccountsQueryKeys,
   ProductsQueryKeys,
+  PurchaseProvidersQueryKeys,
   TransactionsQueryKeys,
 } from "hooks";
 
@@ -53,8 +54,9 @@ export function useEditTransaction(): UseActionDialog<
     onSuccess: async () => {
       await Promise.all([
         queryClient.invalidateQueries({ ...AccountsQueryKeys.all() }),
-        // Products typed by name are created with the transaction.
+        // Products/providers typed by name are created with the transaction.
         queryClient.invalidateQueries({ ...ProductsQueryKeys.all() }),
+        queryClient.invalidateQueries({ ...PurchaseProvidersQueryKeys.all() }),
         queryClient.invalidateQueries({
           queryKey: [...TransactionsQueryKeys.all().queryKey, "weekly"],
         }),
