@@ -1,0 +1,5 @@
+@reference "../../../../styles/variables.css";
+
+.receipt-scan-input {
+  @apply hidden;
+}

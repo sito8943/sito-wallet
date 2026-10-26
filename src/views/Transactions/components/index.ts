@@ -5,3 +5,4 @@ export * from "./AssignAccountDialog";
 export * from "./AssignCategoryDialog";
 export * from "./TransactionsFiltersDialog";
 export * from "./WeeklyTransactionsDialog";
+export * from "./ReceiptScanFab";

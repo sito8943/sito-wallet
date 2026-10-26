@@ -1,8 +1,4 @@
-import type {
-  FieldValues,
-  UseFormGetValues,
-  UseFormSetValue,
-} from "react-hook-form";
+import type { FieldValues } from "react-hook-form";
 
 // @sito/dashboard
 import type {
@@ -10,6 +6,7 @@ import type {
   BaseEntityDto,
   UseActionDialog,
   FormDialogPropsType,
+  OpenFormDialogParamsType,
   TriggerFormDialogPropsType,
   SortOrder,
   Option,
@@ -64,8 +61,8 @@ export interface TransactionFormType
 }
 
 export type UseReceiptScanPropsType = {
-  setValue?: UseFormSetValue<TransactionFormType>;
-  getValues?: UseFormGetValues<TransactionFormType>;
+  /** Called with the form values read from the receipt. */
+  onDraft: (values: ReceiptFormValues) => void;
 };
 
 /** Form fields a scanned receipt can fill. */
@@ -88,7 +85,9 @@ export type TransactionFormPropsType =
   };
 
 export interface TriggerTransactionPropsType extends TransactionFormPropsType {
-  openDialog: (id?: number) => void;
+  openDialog: (
+    params?: number | OpenFormDialogParamsType<TransactionFormType>,
+  ) => void;
 }
 
 export type AddTransactionDialogPropsType = TriggerTransactionPropsType;

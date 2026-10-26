@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { useNotification } from "@sito/dashboard-app";
+import { formatForDatetimeLocal, useNotification } from "@sito/dashboard-app";
 
 // providers
 import { useManager } from "providers";
@@ -20,9 +20,9 @@ import { getReceiptScanErrorKey, receiptDraftToForm } from "../utils";
 // types
 import type { UseReceiptScanPropsType } from "../types";
 
-/** Reads a receipt photo and fills the transaction form with it. */
+/** Reads a receipt photo and hands back the transaction form values. */
 export function useReceiptScan(props: UseReceiptScanPropsType) {
-  const { setValue, getValues } = props;
+  const { onDraft } = props;
   const { t } = useTranslation();
   const manager = useManager();
   const { showSuccessNotification, showErrorNotification } = useNotification();
@@ -37,25 +37,13 @@ export function useReceiptScan(props: UseReceiptScanPropsType) {
       try {
         const photo = await prepareReceiptPhoto(file);
         const draft = await manager.Transactions.scanReceipt(photo);
-        const values = receiptDraftToForm(draft, {
-          products: products.data ?? [],
-          purchaseProviders: purchaseProviders.data ?? [],
-          currentDate: getValues?.("date") ?? "",
-        });
-
-        // Products go in without marking them dirty: a dirty list drives the
-        // amount, and here the receipt total is the one to keep.
-        if (values.products) setValue?.("products", values.products);
-        if (values.purchaseProvider)
-          setValue?.("purchaseProvider", values.purchaseProvider, {
-            shouldDirty: true,
-          });
-        if (values.date) setValue?.("date", values.date, { shouldDirty: true });
-        if (values.amount !== undefined)
-          setValue?.("amount", values.amount, {
-            shouldDirty: true,
-            shouldValidate: true,
-          });
+        onDraft(
+          receiptDraftToForm(draft, {
+            products: products.data ?? [],
+            purchaseProviders: purchaseProviders.data ?? [],
+            currentDate: formatForDatetimeLocal(),
+          }),
+        );
 
         if (draft.matchesTotal === false) {
           showErrorNotification({
@@ -77,11 +65,10 @@ export function useReceiptScan(props: UseReceiptScanPropsType) {
       }
     },
     [
-      getValues,
       manager,
+      onDraft,
       products.data,
       purchaseProviders.data,
-      setValue,
       showErrorNotification,
       showSuccessNotification,
       t,

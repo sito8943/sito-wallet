@@ -704,7 +704,6 @@
     "receipt": {
       "scan": "Scan receipt",
       "scanning": "Reading receipt…",
-      "hint": "Frame only the receipt, flat, straight and well lit. It fills the form; review it before saving.",
       "success": "Receipt read. Review the details before saving.",
       "totalOnly": "Store not recognized: only the date and total were read.",
       "mismatch": "The products read don't add up to the receipt total. Review them before saving.",

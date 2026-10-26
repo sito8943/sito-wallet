@@ -141,10 +141,6 @@ const mockPurchaseProvidersCommon = vi.fn(() => ({
 vi.mock("../../../../hooks/queries/usePurchaseProvidersCommon", () => ({
   usePurchaseProvidersCommon: () => mockPurchaseProvidersCommon(),
 }));
-vi.mock("../ReceiptScanButton", () => ({
-  ReceiptScanButton: () => <div data-testid="receipt-scan" />,
-}));
-
 vi.mock("../TransactionProductsField", () => ({
   TransactionProductsField: () => <div data-testid="transaction-products" />,
 }));
