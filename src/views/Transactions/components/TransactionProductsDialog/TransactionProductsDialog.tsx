@@ -63,81 +63,88 @@ export function TransactionProductsDialog(
         )}
         {fields.map((field, index) => (
           <div key={field.id} className="transaction-products-dialog-row">
-            <Controller
-              control={control}
-              name={`products.${index}.product`}
-              disabled={isLoading}
-              rules={{
-                validate: (value) =>
-                  !!value ||
-                  t("_entities:transaction.products.product.required"),
-              }}
-              render={({ field: { value, onChange, ...rest } }) => (
-                <AutocompleteInput
-                  required
-                  options={productOptions}
-                  value={value}
-                  onChange={(next) => onChange(next)}
-                  label={t("_entities:transaction.products.product.label")}
-                  autoComplete={`${Tables.Transactions}-${t(
-                    "_entities:transaction.products.product.label",
-                  )}`}
-                  multiple={false}
-                  {...rest}
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              name={`products.${index}.quantity`}
-              disabled={isLoading}
-              render={({ field: { value, ...rest } }) => (
-                <TextInput
-                  type="number"
-                  min={0}
-                  step="any"
-                  value={value ?? ""}
-                  label={t("_entities:transaction.products.quantity.label")}
-                  {...rest}
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              name={`products.${index}.unitPrice`}
-              disabled={isLoading}
-              rules={{
-                required: t(
-                  "_entities:transaction.products.unitPrice.required",
-                ),
-                min: {
-                  value: 0,
-                  message: t(
+            <div className="transaction-products-dialog-row-main">
+              <Controller
+                control={control}
+                name={`products.${index}.product`}
+                disabled={isLoading}
+                rules={{
+                  validate: (value) =>
+                    !!value ||
+                    t("_entities:transaction.products.product.required"),
+                }}
+                render={({ field: { value, onChange, ...rest } }) => (
+                  <AutocompleteInput
+                    required
+                    options={productOptions}
+                    value={value}
+                    onChange={(next) => onChange(next)}
+                    label={t("_entities:transaction.products.product.label")}
+                    autoComplete={`${Tables.Transactions}-${t(
+                      "_entities:transaction.products.product.label",
+                    )}`}
+                    multiple={false}
+                    {...rest}
+                  />
+                )}
+              />
+              <IconButton
+                type="button"
+                icon={faTrash}
+                color="error"
+                disabled={isLoading}
+                onClick={() => remove(index)}
+                aria-label={t("_entities:transaction.products.remove")}
+                data-tooltip-id="tooltip"
+                data-tooltip-content={t(
+                  "_entities:transaction.products.remove",
+                )}
+              />
+            </div>
+            <div className="transaction-products-dialog-row-details">
+              <Controller
+                control={control}
+                name={`products.${index}.quantity`}
+                disabled={isLoading}
+                render={({ field: { value, ...rest } }) => (
+                  <TextInput
+                    type="number"
+                    min={0}
+                    step="any"
+                    value={value ?? ""}
+                    label={t("_entities:transaction.products.quantity.label")}
+                    {...rest}
+                  />
+                )}
+              />
+              <Controller
+                control={control}
+                name={`products.${index}.unitPrice`}
+                disabled={isLoading}
+                rules={{
+                  required: t(
                     "_entities:transaction.products.unitPrice.required",
                   ),
-                },
-              }}
-              render={({ field: { value, ...rest } }) => (
-                <TextInput
-                  required
-                  type="number"
-                  min={0}
-                  step="any"
-                  value={value ?? ""}
-                  label={t("_entities:transaction.products.unitPrice.label")}
-                  {...rest}
-                />
-              )}
-            />
-            <IconButton
-              type="button"
-              icon={faTrash}
-              disabled={isLoading}
-              onClick={() => remove(index)}
-              aria-label={t("_entities:transaction.products.remove")}
-              data-tooltip-id="tooltip"
-              data-tooltip-content={t("_entities:transaction.products.remove")}
-            />
+                  min: {
+                    value: 0,
+                    message: t(
+                      "_entities:transaction.products.unitPrice.required",
+                    ),
+                  },
+                }}
+                render={({ field: { value, ...rest } }) => (
+                  <TextInput
+                    required
+                    type="number"
+                    min={0}
+                    step="any"
+                    value={value ?? ""}
+                    label={t("_entities:transaction.products.unitPrice.label")}
+                    {...rest}
+                  />
+                )}
+              />
+            </div>
           </div>
         ))}
       </div>

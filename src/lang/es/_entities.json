@@ -210,7 +210,7 @@
         "required": "El producto es requerido"
       },
       "quantity": {
-        "label": "Cant."
+        "label": "Cantidad"
       },
       "unitPrice": {
         "label": "Precio",

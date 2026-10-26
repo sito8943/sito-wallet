@@ -6,7 +6,16 @@
 }
 
 .transaction-products-dialog-row {
-  @apply grid grid-cols-[1fr_5rem_6rem_auto] items-start gap-2;
+  /* Product + delete on top, quantity + price below. */
+  @apply flex flex-col gap-6 border-b border-border/40 pb-4;
+}
+
+.transaction-products-dialog-row-main {
+  @apply grid grid-cols-[1fr_auto] items-center gap-2;
+}
+
+.transaction-products-dialog-row-details {
+  @apply grid grid-cols-2 gap-2;
 }
 
 .transaction-products-dialog-empty {
