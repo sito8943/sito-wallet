@@ -14,6 +14,7 @@ overrides:
   axios: 1.20.0
   source-map-js: 1.2.2
   '@sito/ui': 0.9.0
+  '@sito/dashboard': 0.3.5
 
 importers:
 
@@ -1370,8 +1371,8 @@ packages:
       '@supabase/supabase-js':
         optional: true
 
-  '@sito/dashboard@0.3.4':
-    resolution: {integrity: sha512-kAzlvOfF2LiRFN8mn4Y71c+MhhnokXJr7NupgL1qbnybrsfZmgIaGgrX/SprFBcV4ZzgC12dSVAFQTExdewbEg==}
+  '@sito/dashboard@0.3.5':
+    resolution: {integrity: sha512-Im/R0WDK8oMVLlsyTQlCRrKag7HkBqDcXPjheCK1cBf9Btz4DBVIvYVd+PPBDg7qYtDut5Y8361Z2yahMs+aLA==}
     engines: {node: ^22.13.0}
     peerDependencies:
       '@sito/ui': 0.9.0
@@ -4611,7 +4612,7 @@ snapshots:
       '@fortawesome/free-regular-svg-icons': 7.0.0
       '@fortawesome/free-solid-svg-icons': 7.0.0
       '@fortawesome/react-fontawesome': 3.4.0(@fortawesome/fontawesome-svg-core@7.0.0)(react@19.2.7)
-      '@sito/dashboard': 0.3.4(@sito/ui@0.9.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@sito/dashboard': 0.3.5(@sito/ui@0.9.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@sito/ui': 0.9.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@tanstack/react-query': 5.83.0(react@19.2.7)
       '@use-gesture/react': 10.3.1(react@19.2.7)
@@ -4622,7 +4623,7 @@ snapshots:
     optionalDependencies:
       '@supabase/supabase-js': 2.110.6
 
-  '@sito/dashboard@0.3.4(@sito/ui@0.9.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@sito/dashboard@0.3.5(@sito/ui@0.9.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       '@sito/ui': 0.9.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react: 19.2.7

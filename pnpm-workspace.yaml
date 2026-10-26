@@ -12,7 +12,7 @@ allowBuilds:
   esbuild: true
 
 overrides:
-  "@sito/dashboard": 0.3.1
+  "@sito/dashboard": 0.3.5
   tar: 7.5.8
   minimatch: 10.2.3
   follow-redirects: 1.16.1
