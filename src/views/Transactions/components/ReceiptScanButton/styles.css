@@ -1,0 +1,13 @@
+@reference "../../../../styles/variables.css";
+
+.receipt-scan {
+  @apply mb-4 flex flex-col gap-1;
+}
+
+.receipt-scan-hint {
+  @apply text-xs text-text-muted;
+}
+
+.receipt-scan-input {
+  @apply hidden;
+}

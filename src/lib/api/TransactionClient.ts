@@ -31,11 +31,13 @@ import type {
   AssignTransactionCategoryDto,
   TransferTransactionDto,
   TransferTransactionResponseDto,
+  ReceiptDraftDto,
 } from "lib";
 import { parseJSONFile, TransactionType } from "lib";
 
 // utils
 import { config } from "../../config";
+import { sendFile } from "./fileUpload";
 
 type UnknownRangeValue = {
   start?: unknown;
@@ -333,5 +335,15 @@ export default class TransactionClient extends BaseClient<
 
   async assignCategory(data: AssignTransactionCategoryDto): Promise<number> {
     return await this.api.patch(`${this.table}/assign-category`, data);
+  }
+
+  /** Reads a receipt photo into a transaction draft. Nothing is saved. */
+  async scanReceipt(file: File): Promise<ReceiptDraftDto> {
+    return await sendFile<ReceiptDraftDto>(
+      `${config.apiUrl}receipts/scan`,
+      file,
+      this.api.defaultTokenAcquirer(),
+      Methods.POST,
+    );
   }
 }

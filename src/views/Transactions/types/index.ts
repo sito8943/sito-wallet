@@ -1,4 +1,8 @@
-import type { FieldValues } from "react-hook-form";
+import type {
+  FieldValues,
+  UseFormGetValues,
+  UseFormSetValue,
+} from "react-hook-form";
 
 // @sito/dashboard
 import type {
@@ -58,6 +62,16 @@ export interface TransactionFormType
   purchaseProvider: CommonPurchaseProviderDto | null;
   products: TransactionProductFormItem[];
 }
+
+export type UseReceiptScanPropsType = {
+  setValue?: UseFormSetValue<TransactionFormType>;
+  getValues?: UseFormGetValues<TransactionFormType>;
+};
+
+/** Form fields a scanned receipt can fill. */
+export type ReceiptFormValues = Partial<
+  Pick<TransactionFormType, "amount" | "date" | "purchaseProvider" | "products">
+>;
 
 /** Number inputs hand back strings, so quantity/price accept both. */
 export type TransactionProductFormItem = {

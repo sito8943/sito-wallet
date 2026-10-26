@@ -18,14 +18,22 @@ const isRequestOptions = (
     ("headers" in value || "credentials" in value),
   );
 
-/**
- * PATCHes a photo as multipart/form-data. APIClient only sends JSON, so the
- * upload goes through fetch with the client's own auth config.
- */
-export async function uploadEntityPhoto<TResult>(
+/** PATCHes an entity photo as multipart/form-data. */
+export const uploadEntityPhoto = <TResult>(
   url: string,
   file: File,
   tokenConfig: PhotoUploadRequestConfig | undefined,
+): Promise<TResult> => sendFile<TResult>(url, file, tokenConfig, Methods.PATCH);
+
+/**
+ * Sends a file as multipart/form-data (`file` field). APIClient only sends
+ * JSON, so the upload goes through fetch with the client's own auth config.
+ */
+export async function sendFile<TResult>(
+  url: string,
+  file: File,
+  tokenConfig: PhotoUploadRequestConfig | undefined,
+  method: Methods,
 ): Promise<TResult> {
   const formData = new FormData();
   formData.append("file", file);
@@ -34,7 +42,7 @@ export async function uploadEntityPhoto<TResult>(
     : { headers: tokenConfig };
 
   const response = await fetch(url, {
-    method: Methods.PATCH,
+    method,
     headers: requestConfig.headers,
     credentials: requestConfig.credentials,
     body: formData,

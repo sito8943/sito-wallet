@@ -16,7 +16,7 @@ import type {
 import { parseJSONFile } from "lib";
 
 import { config } from "../../config";
-import { uploadEntityPhoto } from "./photoUpload";
+import { uploadEntityPhoto } from "./fileUpload";
 
 export default class SubscriptionProviderClient extends BaseClient<
   Tables,

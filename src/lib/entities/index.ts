@@ -8,6 +8,7 @@ export * from "./subscription";
 export * from "./subscriptionProvider";
 export * from "./product";
 export * from "./purchaseProvider";
+export * from "./receipt";
 export * from "./debt";
 export * from "./notification";
 export * from "./user";

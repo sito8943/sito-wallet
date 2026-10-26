@@ -700,6 +700,23 @@
     "export": {
       "title": "Exportar transacciones",
       "includeCurrentAccount": "Incluir filtro de la cuenta actual"
+    },
+    "receipt": {
+      "scan": "Escanear ticket",
+      "scanning": "Leyendo ticket…",
+      "hint": "Rellena el formulario con la foto del ticket; revísalo antes de guardar.",
+      "success": "Ticket leído. Revisa los datos antes de guardar.",
+      "totalOnly": "Tienda no reconocida: solo se leyeron la fecha y el total.",
+      "mismatch": "Los productos leídos no suman el total del ticket. Revísalos antes de guardar.",
+      "errors": {
+        "generic": "No se pudo leer el ticket",
+        "invalidType": "Solo se pueden escanear fotos JPG o PNG",
+        "tooLarge": "La foto es demasiado grande",
+        "invalidImage": "La foto no se pudo abrir",
+        "unreadable": "No se encontró texto en la foto. Prueba con más luz y el ticket recto.",
+        "ocrUnavailable": "El lector de tickets no está disponible en el servidor",
+        "required": "Selecciona una foto del ticket"
+      }
     }
   },
   "transactionCategories": {

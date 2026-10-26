@@ -7,6 +7,7 @@ import type {
   CommonAccountDto,
   CommonProductDto,
   CommonPurchaseProviderDto,
+  ReceiptDraftDto,
   CommonTransactionCategoryDto,
   TransactionDto,
   TransactionProductDto,
@@ -23,6 +24,7 @@ import {
 import type {
   AssignTransactionAccountFormType,
   AssignTransactionCategoryFormType,
+  ReceiptFormValues,
   TransactionFormType,
   TransactionProductFormItem,
 } from "../types";
@@ -247,3 +249,62 @@ export const getTransactionAutoFilterOptions = (t: TFunction): Option[] =>
   ] as Option[];
 
 export * from "./weeklyTransactions";
+
+const normalizeName = (name: string) => name.trim().toLowerCase();
+
+/** Catalog item with the same name, ignoring case and surrounding spaces. */
+export const findByName = <TItem extends { name: string }>(
+  items: TItem[],
+  name: string,
+): TItem | undefined =>
+  items.find((item) => normalizeName(item.name) === normalizeName(name));
+
+/**
+ * Form values from a scanned receipt. Known provider/products are matched by
+ * name; the rest become new options, created when the transaction is saved.
+ * The date keeps the time already in the form (receipts are read by day).
+ */
+export const receiptDraftToForm = (
+  draft: ReceiptDraftDto,
+  catalog: {
+    products: CommonProductDto[];
+    purchaseProviders: CommonPurchaseProviderDto[];
+    currentDate: string;
+  },
+): ReceiptFormValues => {
+  const values: ReceiptFormValues = {};
+
+  if (draft.total !== null) values.amount = draft.total;
+
+  if (draft.date) {
+    const time = catalog.currentDate.slice(11, 16) || "12:00";
+    values.date = `${draft.date}T${time}`;
+  }
+
+  if (draft.providerName) {
+    values.purchaseProvider =
+      findByName(catalog.purchaseProviders, draft.providerName) ??
+      newPurchaseProviderOption(draft.providerName);
+  }
+
+  if (draft.products.length) {
+    values.products = draft.products.map((line) => ({
+      product:
+        findByName(catalog.products, line.name) ?? newProductOption(line.name),
+      quantity: line.quantity ?? 1,
+      unitPrice: line.unitPrice,
+    }));
+  }
+
+  return values;
+};
+
+/** Translation key for a failed receipt scan (backend `receipt.*` codes). */
+export const getReceiptScanErrorKey = (error: unknown): string => {
+  const message =
+    typeof error === "object" && error !== null && "message" in error
+      ? String(error.message)
+      : "";
+  const code = /^receipt\.([a-zA-Z]+)$/.exec(message)?.[1];
+  return `_pages:transactions.receipt.errors.${code ?? "generic"}`;
+};
