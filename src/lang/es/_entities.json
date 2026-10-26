@@ -215,7 +215,13 @@
       "unitPrice": {
         "label": "Precio",
         "required": "El precio es requerido"
-      }
+      },
+      "edit": "Editar productos",
+      "empty": "Sin productos",
+      "done": "Listo",
+      "incomplete": "Hay productos sin producto o sin precio",
+      "summary_one": "{{count}} producto · Total: {{total}}",
+      "summary_other": "{{count}} productos · Total: {{total}}"
     }
   },
   "transactionCategory": {

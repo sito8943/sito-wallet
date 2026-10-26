@@ -69,6 +69,14 @@ export const getTransactionProductsTotal = (
     0,
   );
 
+/** A product row can be saved once it has a product and a non-negative price. */
+export const isTransactionProductComplete = (
+  item: TransactionProductFormItem,
+): boolean => {
+  const unitPrice = toOptionalNumber(item.unitPrice);
+  return !!item.product && unitPrice !== undefined && unitPrice >= 0;
+};
+
 export const formToDto = ({
   account,
   categories,

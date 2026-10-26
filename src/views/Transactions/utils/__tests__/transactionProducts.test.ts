@@ -7,6 +7,7 @@ import {
   emptyTransaction,
   formToDto,
   getTransactionProductsTotal,
+  isTransactionProductComplete,
   transactionProductsFormToDto,
 } from "..";
 
@@ -68,5 +69,38 @@ describe("transaction products form mapping", () => {
         { product: milk, quantity: "", unitPrice: 3 },
       ]),
     ).toBe(5.5);
+  });
+});
+
+describe("isTransactionProductComplete", () => {
+  it("needs a product and a non-negative price", () => {
+    expect(
+      isTransactionProductComplete({
+        product: milk,
+        quantity: 1,
+        unitPrice: "0",
+      }),
+    ).toBe(true);
+    expect(
+      isTransactionProductComplete({
+        product: null,
+        quantity: 1,
+        unitPrice: 2,
+      }),
+    ).toBe(false);
+    expect(
+      isTransactionProductComplete({
+        product: milk,
+        quantity: 1,
+        unitPrice: "",
+      }),
+    ).toBe(false);
+    expect(
+      isTransactionProductComplete({
+        product: milk,
+        quantity: 1,
+        unitPrice: -1,
+      }),
+    ).toBe(false);
   });
 });

@@ -1,21 +1,21 @@
 @reference "../../../../styles/variables.css";
 
 .transaction-products {
-  @apply flex flex-col gap-2;
+  @apply flex items-center justify-between gap-2 rounded-lg border-2 border-border/40 p-3;
 }
 
-.transaction-products-header {
-  @apply flex items-center justify-between gap-2;
+.transaction-products-info {
+  @apply flex flex-col gap-0.5;
 }
 
 .transaction-products-title {
   @apply text-sm font-medium text-text;
 }
 
-.transaction-products-row {
-  @apply grid grid-cols-[1fr_5rem_6rem_auto] items-start gap-2;
+.transaction-products-summary {
+  @apply text-sm text-text-muted;
 }
 
-.transaction-products-total {
-  @apply text-right text-sm text-text-muted;
+.transaction-products-error {
+  @apply text-sm text-error;
 }

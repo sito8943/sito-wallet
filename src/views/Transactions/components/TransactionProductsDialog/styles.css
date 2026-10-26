@@ -1,0 +1,22 @@
+@reference "../../../../styles/variables.css";
+
+.transaction-products-dialog-list {
+  /* Rows are spaced for the floating labels that sit above each input. */
+  @apply flex flex-col gap-6 pt-4;
+}
+
+.transaction-products-dialog-row {
+  @apply grid grid-cols-[1fr_5rem_6rem_auto] items-start gap-2;
+}
+
+.transaction-products-dialog-empty {
+  @apply text-sm text-text-muted;
+}
+
+.transaction-products-dialog-footer {
+  @apply mt-4 flex items-center justify-between gap-2;
+}
+
+.transaction-products-dialog-total {
+  @apply text-sm text-text-muted;
+}
