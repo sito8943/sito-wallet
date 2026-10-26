@@ -1,9 +1,5 @@
 @reference "../../../styles/variables.css";
 
-.subscription-provider-file-input {
-  @apply hidden;
-}
-
 .subscription-provider-card-link {
   @apply inline-flex items-center gap-1 text-xs text-bg-primary underline;
 }
