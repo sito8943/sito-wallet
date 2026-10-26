@@ -18,9 +18,11 @@ overrides:
   follow-redirects: 1.16.1
   axios: 1.20.0
   source-map-js: 1.2.2
+  "@sito/ui": 0.9.0
 
 # TS 7 es valido; i18next/react-i18next aun declaran peer typescript@^5
 peerDependencyRules:
   allowedVersions:
     "i18next>typescript": "7"
     "react-i18next>typescript": "7"
+    "@sito/dashboard>@sito/ui": "0.9.0"
