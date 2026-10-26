@@ -20,3 +20,15 @@
 .transaction-products-dialog-total {
   @apply text-sm text-text-muted;
 }
+
+/* dashboard-app resets the dialog to `max-height: none; overflow: visible`,
+   so a long list would grow past the viewport with no way to scroll. */
+.dialog.sito-ui-dialog.transaction-products-dialog {
+  @apply max-h-[calc(100dvh-2rem)] overflow-y-auto;
+}
+
+@media not all and (min-width: 40rem) {
+  .dialog.sito-ui-dialog.transaction-products-dialog.dialog-mobile-full-screen {
+    @apply h-dvh max-h-dvh;
+  }
+}
