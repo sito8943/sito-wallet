@@ -32,6 +32,11 @@
   @apply text-xs text-warning;
 }
 
+.photo-field-url {
+  /* Room for the TextInput floating label, which sits above the input box. */
+  @apply mt-5;
+}
+
 .photo-field-file-input {
   @apply hidden;
 }

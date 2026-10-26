@@ -132,21 +132,23 @@ export function PhotoField(props: PhotoFieldPropsType) {
           onChange({ file: selected, photoUrl: "", removePhoto: false });
         }}
       />
-      <TextInput
-        type="url"
-        autoComplete="off"
-        disabled={disabled}
-        value={photoUrl}
-        label={t("_entities:base.photo.url.label")}
-        placeholder={t("_entities:base.photo.url.placeholder")}
-        onChange={(event) =>
-          onChange({
-            photoUrl: event.currentTarget.value,
-            file: null,
-            removePhoto: false,
-          })
-        }
-      />
+      <div className="photo-field-url">
+        <TextInput
+          type="url"
+          autoComplete="off"
+          disabled={disabled}
+          value={photoUrl}
+          label={t("_entities:base.photo.url.label")}
+          placeholder={t("_entities:base.photo.url.placeholder")}
+          onChange={(event) =>
+            onChange({
+              photoUrl: event.currentTarget.value,
+              file: null,
+              removePhoto: false,
+            })
+          }
+        />
+      </div>
     </div>
   );
 }
