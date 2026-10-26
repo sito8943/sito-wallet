@@ -9,7 +9,7 @@ import { TransactionForm } from "./TransactionForm";
 
 export function AddTransactionDialog(props: AddTransactionDialogPropsType) {
   return (
-    <FormDialog {...props}>
+    <FormDialog mobileFullScreen {...props}>
       <TransactionForm {...props} />
     </FormDialog>
   );
