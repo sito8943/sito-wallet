@@ -69,13 +69,25 @@ export const getTransactionProductsTotal = (
     0,
   );
 
+/** Translation keys of what a product row is missing; empty when complete. */
+export const getTransactionProductErrorKeys = (
+  item: TransactionProductFormItem,
+): string[] => {
+  const keys: string[] = [];
+  if (!item.product)
+    keys.push("_entities:transaction.products.product.required");
+
+  const unitPrice = toOptionalNumber(item.unitPrice);
+  if (unitPrice === undefined || unitPrice < 0) {
+    keys.push("_entities:transaction.products.unitPrice.required");
+  }
+  return keys;
+};
+
 /** A product row can be saved once it has a product and a non-negative price. */
 export const isTransactionProductComplete = (
   item: TransactionProductFormItem,
-): boolean => {
-  const unitPrice = toOptionalNumber(item.unitPrice);
-  return !!item.product && unitPrice !== undefined && unitPrice >= 0;
-};
+): boolean => getTransactionProductErrorKeys(item).length === 0;
 
 export const formToDto = ({
   account,

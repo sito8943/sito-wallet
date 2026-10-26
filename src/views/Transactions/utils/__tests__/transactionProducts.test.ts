@@ -6,6 +6,7 @@ import {
   dtoToForm,
   emptyTransaction,
   formToDto,
+  getTransactionProductErrorKeys,
   getTransactionProductsTotal,
   isTransactionProductComplete,
   transactionProductsFormToDto,
@@ -102,5 +103,27 @@ describe("isTransactionProductComplete", () => {
         unitPrice: -1,
       }),
     ).toBe(false);
+  });
+});
+
+describe("getTransactionProductErrorKeys", () => {
+  it("lists each missing field", () => {
+    expect(
+      getTransactionProductErrorKeys({
+        product: null,
+        quantity: 1,
+        unitPrice: "",
+      }),
+    ).toEqual([
+      "_entities:transaction.products.product.required",
+      "_entities:transaction.products.unitPrice.required",
+    ]);
+    expect(
+      getTransactionProductErrorKeys({
+        product: milk,
+        quantity: 1,
+        unitPrice: 3,
+      }),
+    ).toEqual([]);
   });
 });

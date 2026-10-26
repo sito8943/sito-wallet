@@ -18,6 +18,10 @@
   @apply grid grid-cols-2 gap-2;
 }
 
+.transaction-products-dialog-error {
+  @apply -mt-4 text-sm text-error;
+}
+
 .transaction-products-dialog-empty {
   @apply text-sm text-text-muted;
 }

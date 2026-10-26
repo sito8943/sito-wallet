@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Controller, useWatch } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,6 +23,7 @@ import { useProductsCommon } from "../../../../hooks/queries/useProductsCommon";
 // utils
 import {
   emptyTransactionProduct,
+  getTransactionProductErrorKeys,
   getTransactionProductsTotal,
 } from "../../utils";
 
@@ -45,6 +46,16 @@ export function TransactionProductsDialog(
 
   const watchedProducts = useWatch({ control, name: "products" });
   const total = getTransactionProductsTotal(watchedProducts);
+
+  // Row errors only show after trying to add or finish with incomplete rows.
+  const [showErrors, setShowErrors] = useState(false);
+  const rowErrors = (watchedProducts ?? []).map(getTransactionProductErrorKeys);
+  const hasIncomplete = rowErrors.some((keys) => keys.length > 0);
+
+  const whenComplete = (action: () => void) => {
+    setShowErrors(hasIncomplete);
+    if (!hasIncomplete) action();
+  };
 
   return (
     <Dialog
@@ -145,6 +156,12 @@ export function TransactionProductsDialog(
                 )}
               />
             </div>
+            {showErrors &&
+              rowErrors[index]?.map((key) => (
+                <span key={key} className="transaction-products-dialog-error">
+                  {t(key)}
+                </span>
+              ))}
           </div>
         ))}
       </div>
@@ -153,7 +170,7 @@ export function TransactionProductsDialog(
           type="button"
           variant="outlined"
           disabled={isLoading}
-          onClick={() => append(emptyTransactionProduct())}
+          onClick={() => whenComplete(() => append(emptyTransactionProduct()))}
         >
           <FontAwesomeIcon icon={faPlus} />{" "}
           {t("_entities:transaction.products.add")}
@@ -168,7 +185,7 @@ export function TransactionProductsDialog(
           type="button"
           variant="submit"
           color="primary"
-          onClick={onClose}
+          onClick={() => whenComplete(onClose)}
         >
           {t("_entities:transaction.products.done")}
         </Button>
