@@ -249,3 +249,16 @@ main,
     width: 100vw;
   }
 }
+
+/* Package bug: dashboard-app resets dialogs to `max-height: none;
+   overflow: visible`, so a dialog taller than the viewport (long forms,
+   product lists) grows past the screen with no way to scroll. */
+.dialog.sito-ui-dialog {
+  @apply max-h-[calc(100dvh-2rem)] overflow-y-auto;
+}
+
+@media not all and (min-width: 40rem) {
+  .dialog.sito-ui-dialog.dialog-mobile-full-screen {
+    @apply h-dvh max-h-dvh;
+  }
+}

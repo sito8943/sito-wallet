@@ -65,7 +65,6 @@ export function TransactionProductsDialog(
       mobileFullScreen
       title={t("_entities:transaction.products.label")}
       containerClassName="!z-60"
-      className="transaction-products-dialog"
     >
       <div className="transaction-products-dialog-list">
         {fields.length === 0 && (
