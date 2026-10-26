@@ -770,7 +770,8 @@
     "add": "Agregar producto",
     "forms": {
       "add": "Nuevo producto",
-      "edit": "Editar producto"
+      "edit": "Editar producto",
+      "editAria": "Click para editar producto"
     }
   },
   "purchaseProviders": {
@@ -779,7 +780,8 @@
     "add": "Agregar proveedor",
     "forms": {
       "add": "Nuevo proveedor",
-      "edit": "Editar proveedor"
+      "edit": "Editar proveedor",
+      "editAria": "Click para editar proveedor"
     }
   },
   "purchaseCatalog": {

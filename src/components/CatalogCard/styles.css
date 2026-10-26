@@ -1,0 +1,17 @@
+@reference "../../styles/variables.css";
+
+.catalog-card-container {
+  @apply max-xs:min-h-0 max-xs:rounded-xl max-xs:p-2.5;
+}
+
+.catalog-card-title-row {
+  @apply flex min-w-0 items-center gap-3;
+}
+
+.catalog-card-photo {
+  @apply flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-base-light text-text-muted;
+}
+
+.catalog-card-photo-image {
+  @apply h-full w-full object-cover;
+}

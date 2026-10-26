@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { faCubes } from "@fortawesome/free-solid-svg-icons";
 
@@ -8,17 +8,25 @@ import {
   Empty,
   Error as ErrorView,
   Page,
+  PrettyGrid,
   useDeleteDialog,
 } from "@sito/dashboard-app";
 
 // hooks
-import { ProductsQueryKeys, useProductsCommon, useMobileNavbar } from "hooks";
+import {
+  ProductsQueryKeys,
+  useProductsCommon,
+  useMobileNavbar,
+  useSwipeDeleteState,
+} from "hooks";
 
 // providers
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 // components
-import { CatalogItem } from "components";
+import type { CatalogRowDto } from "components";
+import { CatalogCard, toCatalogRow } from "components";
+import { getDeleteAction } from "../../components/Card/utils";
 import { AddProductDialog, EditProductDialog } from "./components";
 
 // hooks
@@ -29,7 +37,7 @@ export function Products() {
   const manager = useManager();
 
   const { data, isLoading, error } = useProductsCommon();
-  const items = data ?? [];
+  const items = useMemo(() => (data ?? []).map(toCatalogRow), [data]);
 
   const addProduct = useAddProductDialog();
   const editProduct = useEditProductDialog();
@@ -37,6 +45,12 @@ export function Products() {
     mutationFn: (ids) => manager.Products.softDelete(ids),
     ...ProductsQueryKeys.all(),
   });
+  const swipeDelete = useSwipeDeleteState(deleteProduct.handleClose);
+
+  const getActions = useCallback(
+    (record: CatalogRowDto) => [deleteProduct.action(record)],
+    [deleteProduct],
+  );
 
   useMobileNavbar(t("_pages:products.title"));
 
@@ -62,27 +76,45 @@ export function Products() {
         <ErrorView error={error} />
       ) : (
         <>
-          {items.length === 0 ? (
-            <Empty
-              message={t("_pages:products.empty")}
-              iconProps={{ icon: faCubes }}
-            />
-          ) : (
-            <ul className="full-grid">
-              {items.map((item) => (
-                <CatalogItem
-                  key={item.id}
-                  id={item.id}
-                  name={item.name}
-                  onEdit={editProduct.openDialog}
-                  onDelete={(id) => deleteProduct.onClick(id)}
+          <PrettyGrid
+            data={items}
+            className="full-grid"
+            emptyComponent={
+              <Empty
+                message={t("_pages:products.empty")}
+                iconProps={{ icon: faCubes }}
+              />
+            }
+            renderComponent={(item) => {
+              const actions = getActions(item);
+              const deleteAction = getDeleteAction(actions);
+
+              return (
+                <CatalogCard
+                  {...item}
+                  actions={actions}
+                  onClick={(id) => editProduct.openDialog(id)}
+                  editLabel={t("_pages:products.forms.edit")}
+                  editAriaLabel={t("_pages:products.forms.editAria")}
+                  swipeDeleteOpen={swipeDelete.swipedId === item.id}
+                  onSwipeDelete={
+                    deleteAction
+                      ? () => {
+                          swipeDelete.openSwipe(item.id);
+                          deleteAction.onClick(item);
+                        }
+                      : undefined
+                  }
                 />
-              ))}
-            </ul>
-          )}
+              );
+            }}
+          />
           <AddProductDialog {...addProduct} />
           <EditProductDialog {...editProduct} />
-          <ConfirmationDialog {...deleteProduct} />
+          <ConfirmationDialog
+            {...deleteProduct}
+            handleClose={swipeDelete.handleDialogClose}
+          />
         </>
       )}
     </Page>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { faStore } from "@fortawesome/free-solid-svg-icons";
 
@@ -8,6 +8,7 @@ import {
   Empty,
   Error as ErrorView,
   Page,
+  PrettyGrid,
   useDeleteDialog,
 } from "@sito/dashboard-app";
 
@@ -16,13 +17,16 @@ import {
   PurchaseProvidersQueryKeys,
   usePurchaseProvidersCommon,
   useMobileNavbar,
+  useSwipeDeleteState,
 } from "hooks";
 
 // providers
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 // components
-import { CatalogItem } from "components";
+import type { CatalogRowDto } from "components";
+import { CatalogCard, toCatalogRow } from "components";
+import { getDeleteAction } from "../../components/Card/utils";
 import {
   AddPurchaseProviderDialog,
   EditPurchaseProviderDialog,
@@ -39,7 +43,7 @@ export function PurchaseProviders() {
   const manager = useManager();
 
   const { data, isLoading, error } = usePurchaseProvidersCommon();
-  const items = data ?? [];
+  const items = useMemo(() => (data ?? []).map(toCatalogRow), [data]);
 
   const addPurchaseProvider = useAddPurchaseProviderDialog();
   const editPurchaseProvider = useEditPurchaseProviderDialog();
@@ -47,6 +51,12 @@ export function PurchaseProviders() {
     mutationFn: (ids) => manager.PurchaseProviders.softDelete(ids),
     ...PurchaseProvidersQueryKeys.all(),
   });
+  const swipeDelete = useSwipeDeleteState(deletePurchaseProvider.handleClose);
+
+  const getActions = useCallback(
+    (record: CatalogRowDto) => [deletePurchaseProvider.action(record)],
+    [deletePurchaseProvider],
+  );
 
   useMobileNavbar(t("_pages:purchaseProviders.title"));
 
@@ -72,28 +82,46 @@ export function PurchaseProviders() {
         <ErrorView error={error} />
       ) : (
         <>
-          {items.length === 0 ? (
-            <Empty
-              message={t("_pages:purchaseProviders.empty")}
-              iconProps={{ icon: faStore }}
-            />
-          ) : (
-            <ul className="full-grid">
-              {items.map((item) => (
-                <CatalogItem
-                  key={item.id}
-                  id={item.id}
-                  name={item.name}
-                  photo={item.photo}
-                  onEdit={editPurchaseProvider.openDialog}
-                  onDelete={(id) => deletePurchaseProvider.onClick(id)}
+          <PrettyGrid
+            data={items}
+            className="full-grid"
+            emptyComponent={
+              <Empty
+                message={t("_pages:purchaseProviders.empty")}
+                iconProps={{ icon: faStore }}
+              />
+            }
+            renderComponent={(item) => {
+              const actions = getActions(item);
+              const deleteAction = getDeleteAction(actions);
+
+              return (
+                <CatalogCard
+                  {...item}
+                  actions={actions}
+                  showPhoto
+                  onClick={(id) => editPurchaseProvider.openDialog(id)}
+                  editLabel={t("_pages:purchaseProviders.forms.edit")}
+                  editAriaLabel={t("_pages:purchaseProviders.forms.editAria")}
+                  swipeDeleteOpen={swipeDelete.swipedId === item.id}
+                  onSwipeDelete={
+                    deleteAction
+                      ? () => {
+                          swipeDelete.openSwipe(item.id);
+                          deleteAction.onClick(item);
+                        }
+                      : undefined
+                  }
                 />
-              ))}
-            </ul>
-          )}
+              );
+            }}
+          />
           <AddPurchaseProviderDialog {...addPurchaseProvider} />
           <EditPurchaseProviderDialog {...editPurchaseProvider} />
-          <ConfirmationDialog {...deletePurchaseProvider} />
+          <ConfirmationDialog
+            {...deletePurchaseProvider}
+            handleClose={swipeDelete.handleDialogClose}
+          />
         </>
       )}
     </Page>
