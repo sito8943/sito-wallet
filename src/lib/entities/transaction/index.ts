@@ -3,6 +3,8 @@ export * from "./UpdateTransactionDto";
 export * from "./FilterTransactionDto";
 export * from "./CommonTransactionDto";
 export * from "./TransactionDto";
+export * from "./TransactionProductDto";
+export * from "./TransactionProductInputDto";
 export * from "./TransactionType";
 export * from "./TransactionTypeResumeDto";
 export * from "./TransactionTypeResumeBatchDto";

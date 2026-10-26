@@ -15,6 +15,8 @@ import type {
 // types
 import type {
   CommonAccountDto,
+  CommonProductDto,
+  CommonPurchaseProviderDto,
   CommonTransactionCategoryDto,
   TransactionDto,
   TransactionType,
@@ -48,10 +50,21 @@ export interface TransactionFormType
       | "user"
       | "category"
       | "categories"
+      | "purchaseProvider"
+      | "products"
     >,
     FieldValues {
   categories: CommonTransactionCategoryDto[];
+  purchaseProvider: CommonPurchaseProviderDto | null;
+  products: TransactionProductFormItem[];
 }
+
+/** Number inputs hand back strings, so quantity/price accept both. */
+export type TransactionProductFormItem = {
+  product: CommonProductDto | null;
+  quantity: number | string;
+  unitPrice: number | string;
+};
 
 export type TransactionFormPropsType =
   FormDialogPropsType<TransactionFormType> & {

@@ -133,6 +133,18 @@ vi.mock("../../../../hooks/queries/useTransactionCategoriesCommon", () => ({
   useTransactionCategoriesCommon: () => mockCategoriesCommon(),
 }));
 
+const mockPurchaseProvidersCommon = vi.fn(() => ({
+  data: [{ id: 3, name: "Supermarket" }],
+  isLoading: false,
+}));
+
+vi.mock("../../../../hooks/queries/usePurchaseProvidersCommon", () => ({
+  usePurchaseProvidersCommon: () => mockPurchaseProvidersCommon(),
+}));
+vi.mock("../TransactionProductsField", () => ({
+  TransactionProductsField: () => <div data-testid="transaction-products" />,
+}));
+
 vi.mock("lib", () => ({
   Tables: { Transactions: "transactions" },
 }));
@@ -316,6 +328,19 @@ describe("TransactionForm", () => {
       "autocomplete-_entities:transaction.category.label",
     );
     expect(categoryEl).toBeDisabled();
+  });
+
+  it("renders optional purchase provider and products fields", () => {
+    render(<TransactionFormWrapper open={true} account={defaultAccount} />, {
+      wrapper: makeWrapper(),
+    });
+
+    const providerEl = screen.getByTestId(
+      "autocomplete-_entities:transaction.purchaseProvider.label",
+    );
+    expect(providerEl).not.toBeRequired();
+    expect(providerEl).toHaveTextContent("Supermarket");
+    expect(screen.getByTestId("transaction-products")).toBeInTheDocument();
   });
 
   it("disables account autocomplete when lockAccount=true", () => {

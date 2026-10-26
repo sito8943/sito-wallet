@@ -7,6 +7,8 @@ import type {
   CommonAccountDto,
   CommonTransactionCategoryDto,
   TransactionDto,
+  TransactionProductDto,
+  TransactionProductInputDto,
   UpdateTransactionDto,
   AssignTransactionAccountDto,
   AssignTransactionCategoryDto,
@@ -20,12 +22,58 @@ import type {
   AssignTransactionAccountFormType,
   AssignTransactionCategoryFormType,
   TransactionFormType,
+  TransactionProductFormItem,
 } from "../types";
 import { TransactionAutoFilterMode } from "../types";
+
+const toOptionalNumber = (value: number | string): number | undefined => {
+  if (value === "") return undefined;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+};
+
+export const emptyTransactionProduct = (): TransactionProductFormItem => ({
+  product: null,
+  quantity: 1,
+  unitPrice: "",
+});
+
+export const transactionProductsToForm = (
+  products: TransactionProductDto[] = [],
+): TransactionProductFormItem[] =>
+  products.map(({ product, quantity, unitPrice }) => ({
+    product,
+    quantity,
+    unitPrice,
+  }));
+
+export const transactionProductsFormToDto = (
+  products: TransactionProductFormItem[] = [],
+): TransactionProductInputDto[] =>
+  products
+    .filter((item) => item.product)
+    .map((item) => ({
+      productId: item.product?.id ?? 0,
+      quantity: toOptionalNumber(item.quantity),
+      unitPrice: toOptionalNumber(item.unitPrice) ?? 0,
+    }));
+
+export const getTransactionProductsTotal = (
+  products: TransactionProductFormItem[] = [],
+): number =>
+  products.reduce(
+    (total, item) =>
+      total +
+      (toOptionalNumber(item.quantity) ?? 1) *
+        (toOptionalNumber(item.unitPrice) ?? 0),
+    0,
+  );
 
 export const formToDto = ({
   account,
   categories,
+  purchaseProvider,
+  products,
   ...data
 }: TransactionFormType): UpdateTransactionDto => {
   const normalizedCategories =
@@ -39,6 +87,8 @@ export const formToDto = ({
     accountId: account?.id ?? 0,
     categoryIds: normalizedCategories.map((category) => category.id),
     ...(primaryCategory ? { type: primaryCategory.type } : {}),
+    purchaseProviderId: purchaseProvider?.id ?? null,
+    products: transactionProductsFormToDto(products),
   };
 };
 
@@ -48,6 +98,8 @@ export const dtoToForm = (dto: TransactionDto): TransactionFormType => {
   return {
     ...dto,
     categories,
+    purchaseProvider: dto.purchaseProvider ?? null,
+    products: transactionProductsToForm(dto.products),
     accountId: dto.account?.id ?? 0,
     categoryIds: categories.map((category) => category.id),
     date: dto.date
@@ -64,6 +116,8 @@ export const addEmptyTransaction = (
   description: "",
   account,
   categories,
+  purchaseProvider: null,
+  products: [],
   amount: 0,
   date: formatForDatetimeLocal(),
 });
@@ -76,6 +130,8 @@ export const emptyTransaction = (
   description: "",
   account,
   categories: [],
+  purchaseProvider: null,
+  products: [],
   amount: 0,
   date: formatForDatetimeLocal(),
 });

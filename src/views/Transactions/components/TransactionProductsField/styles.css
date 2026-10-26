@@ -1,0 +1,21 @@
+@reference "../../../../styles/variables.css";
+
+.transaction-products {
+  @apply flex flex-col gap-2;
+}
+
+.transaction-products-header {
+  @apply flex items-center justify-between gap-2;
+}
+
+.transaction-products-title {
+  @apply text-sm font-medium text-text;
+}
+
+.transaction-products-row {
+  @apply grid grid-cols-[1fr_5rem_6rem_auto] items-start gap-2;
+}
+
+.transaction-products-total {
+  @apply text-right text-sm text-text-muted;
+}

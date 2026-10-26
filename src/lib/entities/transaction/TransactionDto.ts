@@ -1,5 +1,10 @@
 import type { BaseEntityDto } from "@sito/dashboard-app";
-import type { CommonAccountDto, CommonTransactionCategoryDto } from "lib";
+import type {
+  CommonAccountDto,
+  CommonPurchaseProviderDto,
+  CommonTransactionCategoryDto,
+} from "lib";
+import type { TransactionProductDto } from "./TransactionProductDto";
 
 export interface TransactionDto extends BaseEntityDto {
   description: string | null;
@@ -9,4 +14,6 @@ export interface TransactionDto extends BaseEntityDto {
   categories?: CommonTransactionCategoryDto[] | null;
   category?: CommonTransactionCategoryDto | null;
   date: string | null;
+  purchaseProvider?: CommonPurchaseProviderDto | null;
+  products?: TransactionProductDto[];
 }
