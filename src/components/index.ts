@@ -10,3 +10,6 @@ export * from "./ColorVignette";
 export * from "./UpdateDialog";
 export * from "./PrefabSuggestions";
 export * from "./QueryError";
+export * from "./CatalogItem";
+export * from "./PhotoField";
+export * from "./ProviderPhoto";

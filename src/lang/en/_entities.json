@@ -70,6 +70,18 @@
     },
     "createdAt": {
       "label": "Created At"
+    },
+    "photo": {
+      "label": "Photo",
+      "upload": "Upload photo",
+      "replace": "Change photo",
+      "delete": "Remove photo",
+      "selectedFile": "File: {{name}}",
+      "deleteOnSave": "The photo will be removed on save",
+      "url": {
+        "label": "Or paste an image URL",
+        "placeholder": "https://..."
+      }
     }
   },
   "user": {
@@ -178,6 +190,27 @@
       "oppositeExcludedCategories": {
         "label": "Opposite type excluded categories",
         "placeholder": "Select opposite type categories to exclude"
+      }
+    },
+    "purchaseProvider": {
+      "label": "Provider",
+      "placeholder": "Who did you pay?"
+    },
+    "products": {
+      "label": "Products",
+      "add": "Add product",
+      "remove": "Remove product",
+      "total": "Products total: {{total}}",
+      "product": {
+        "label": "Product",
+        "required": "Product is required"
+      },
+      "quantity": {
+        "label": "Qty"
+      },
+      "unitPrice": {
+        "label": "Price",
+        "required": "Price is required"
       }
     }
   },
@@ -454,6 +487,18 @@
     "category": {
       "label": "Category",
       "placeholder": "Select a category"
+    }
+  },
+  "product": {
+    "name": {
+      "placeholder": "E.g. Milk",
+      "unique": "A product with that name already exists"
+    }
+  },
+  "purchaseProvider": {
+    "name": {
+      "placeholder": "E.g. Supermarket",
+      "unique": "A provider with that name already exists"
     }
   }
 }

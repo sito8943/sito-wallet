@@ -764,6 +764,35 @@
       "editAria": "Haz clic para editar el proveedor"
     }
   },
+  "products": {
+    "title": "Productos",
+    "empty": "Aún no tienes productos guardados. Agrega uno para empezar.",
+    "add": "Agregar producto",
+    "forms": {
+      "add": "Nuevo producto",
+      "edit": "Editar producto"
+    }
+  },
+  "purchaseProviders": {
+    "title": "Proveedores",
+    "empty": "Aún no tienes proveedores guardados. Agrega uno para empezar.",
+    "add": "Agregar proveedor",
+    "forms": {
+      "add": "Nuevo proveedor",
+      "edit": "Editar proveedor"
+    }
+  },
+  "purchaseCatalog": {
+    "add": "Agregar",
+    "edit": "Editar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "name": "Nombre",
+    "photo": "Foto (URL, opcional)",
+    "saved": "Guardado correctamente",
+    "deleted": "Eliminado correctamente"
+  },
   "users": {
     "title": "Usuarios",
     "empty": "No hay usuarios. Crea uno para empezar.",

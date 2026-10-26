@@ -764,6 +764,35 @@
       "editAria": "Click to edit provider"
     }
   },
+  "products": {
+    "title": "Products",
+    "empty": "You don't have any products yet. Add one to get started.",
+    "add": "Add product",
+    "forms": {
+      "add": "New product",
+      "edit": "Edit product"
+    }
+  },
+  "purchaseProviders": {
+    "title": "Providers",
+    "empty": "You don't have any providers yet. Add one to get started.",
+    "add": "Add provider",
+    "forms": {
+      "add": "New provider",
+      "edit": "Edit provider"
+    }
+  },
+  "purchaseCatalog": {
+    "add": "Add",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "name": "Name",
+    "photo": "Photo URL (optional)",
+    "saved": "Saved successfully",
+    "deleted": "Deleted successfully"
+  },
   "users": {
     "title": "Users",
     "empty": "No users yet. Create one to get started.",

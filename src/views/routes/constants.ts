@@ -86,6 +86,16 @@ export const routeComponents = defineRouteComponents({
       }),
     ),
   ),
+  Products: loadable(() =>
+    import("views/Products/Products").then((module) => ({
+      default: module.Products,
+    })),
+  ),
+  PurchaseProviders: loadable(() =>
+    import("views/PurchaseProviders/PurchaseProviders").then((module) => ({
+      default: module.PurchaseProviders,
+    })),
+  ),
   Debts: loadable(() =>
     import("views/Debts/Debts").then((module) => ({
       default: module.Debts,

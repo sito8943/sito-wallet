@@ -70,6 +70,18 @@
     },
     "createdAt": {
       "label": "Fecha de creación"
+    },
+    "photo": {
+      "label": "Foto",
+      "upload": "Subir foto",
+      "replace": "Cambiar foto",
+      "delete": "Quitar foto",
+      "selectedFile": "Archivo: {{name}}",
+      "deleteOnSave": "La foto se quitará al guardar",
+      "url": {
+        "label": "O pega la URL de una imagen",
+        "placeholder": "https://..."
+      }
     }
   },
   "user": {
@@ -178,6 +190,27 @@
       "oppositeExcludedCategories": {
         "label": "Categorías excluidas del tipo opuesto",
         "placeholder": "Selecciona categorías del tipo opuesto a excluir"
+      }
+    },
+    "purchaseProvider": {
+      "label": "Proveedor",
+      "placeholder": "¿A quién le pagaste?"
+    },
+    "products": {
+      "label": "Productos",
+      "add": "Añadir producto",
+      "remove": "Quitar producto",
+      "total": "Total productos: {{total}}",
+      "product": {
+        "label": "Producto",
+        "required": "El producto es requerido"
+      },
+      "quantity": {
+        "label": "Cant."
+      },
+      "unitPrice": {
+        "label": "Precio",
+        "required": "El precio es requerido"
       }
     }
   },
@@ -454,6 +487,18 @@
     "category": {
       "label": "Categoría",
       "placeholder": "Selecciona una categoría"
+    }
+  },
+  "product": {
+    "name": {
+      "placeholder": "Ej: Leche",
+      "unique": "Ya existe un producto con ese nombre"
+    }
+  },
+  "purchaseProvider": {
+    "name": {
+      "placeholder": "Ej: Supermercado",
+      "unique": "Ya existe un proveedor con ese nombre"
     }
   }
 }

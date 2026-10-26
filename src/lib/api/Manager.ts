@@ -9,6 +9,8 @@ import SubscriptionProviderClient from "./SubscriptionProviderClient";
 import SubscriptionClient from "./SubscriptionClient";
 import DebtClient from "./DebtClient";
 import NotificationClient from "./NotificationClient";
+import ProductClient from "./ProductClient";
+import PurchaseProviderClient from "./PurchaseProviderClient";
 import UserClient from "./UserClient";
 import UserEntityConfigClient from "./UserEntityConfigClient";
 import { AuthApiClient, type WalletAuthApiClient } from "./AuthApiClient";
@@ -32,6 +34,8 @@ export class Manager extends IManager {
   subscriptions: SubscriptionClient = new SubscriptionClient();
   debts: DebtClient = new DebtClient();
   notifications: NotificationClient = new NotificationClient();
+  products: ProductClient = new ProductClient();
+  purchaseProviders: PurchaseProviderClient = new PurchaseProviderClient();
   users: UserClient = new UserClient();
   userEntityConfigs: UserEntityConfigClient = new UserEntityConfigClient();
   authApi: WalletAuthApiClient = new AuthApiClient(
@@ -117,6 +121,14 @@ export class Manager extends IManager {
 
   get Notifications(): NotificationClient {
     return this.notifications;
+  }
+
+  get Products(): ProductClient {
+    return this.products;
+  }
+
+  get PurchaseProviders(): PurchaseProviderClient {
+    return this.purchaseProviders;
   }
 
   get Users(): UserClient {

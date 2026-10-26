@@ -14,6 +14,8 @@ export const AppRoutes: { [key: string]: string } = {
   home: "/",
   notifications: "/notifications",
   transactions: "/transactions",
+  products: "/products",
+  purchaseProviders: "/purchase-providers",
   transactionCategories: "/transaction-categories",
   subscriptions: "/subscriptions",
   subscriptionNew: "/subscriptions/new",

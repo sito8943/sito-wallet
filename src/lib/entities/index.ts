@@ -6,6 +6,8 @@ export * from "./dashboard";
 export * from "./profile";
 export * from "./subscription";
 export * from "./subscriptionProvider";
+export * from "./product";
+export * from "./purchaseProvider";
 export * from "./debt";
 export * from "./notification";
 export * from "./user";
