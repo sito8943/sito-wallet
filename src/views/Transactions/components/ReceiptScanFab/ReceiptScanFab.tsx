@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { faReceipt, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faCircleNotch, faReceipt } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
-import { IconButton } from "@sito/dashboard-app";
+import { IconButton, classNames } from "@sito/dashboard-app";
 
 // constants
 import { RECEIPT_SCAN_ACCEPT, RECEIPT_SCAN_INPUT_ID } from "./constants";
@@ -29,7 +29,7 @@ export function ReceiptScanFab(props: ReceiptScanFabPropsType) {
     <>
       <IconButton
         type="button"
-        icon={isScanning ? faSpinner : faReceipt}
+        icon={isScanning ? faCircleNotch : faReceipt}
         variant="submit"
         color="primary"
         disabled={disabled || isScanning}
@@ -37,7 +37,10 @@ export function ReceiptScanFab(props: ReceiptScanFabPropsType) {
         data-tooltip-id="tooltip"
         data-tooltip-content={label}
         aria-label={label}
-        className="fixed right-4 bottom-20 z-30 !h-12 !w-12 !min-w-0 !rounded-full !p-0 shadow-lg sm:hidden"
+        className={classNames(
+          "receipt-scan-fab fixed right-4 bottom-20 z-30 !h-12 !w-12 !min-w-0 !rounded-full !p-0 shadow-lg sm:hidden",
+          isScanning && "scanning",
+        )}
       />
       <input
         id={RECEIPT_SCAN_INPUT_ID}

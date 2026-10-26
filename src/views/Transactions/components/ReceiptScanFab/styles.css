@@ -3,3 +3,9 @@
 .receipt-scan-input {
   @apply hidden;
 }
+
+/* IconButton doesn't take an icon class, so the spinner is animated here
+   (`rotate` keyframes live in index.css). */
+.receipt-scan-fab.scanning svg {
+  animation: rotate 1000ms linear infinite;
+}
