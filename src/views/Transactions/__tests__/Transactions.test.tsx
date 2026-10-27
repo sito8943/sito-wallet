@@ -97,10 +97,12 @@ vi.mock("providers", () => ({
 // Local hooks
 const mockOpenDialog = vi.fn();
 vi.mock("../hooks", () => ({
-  useReceiptScan: () => ({ scan: vi.fn(), isScanning: false }),
-  useAddTransaction: () => ({
-    openDialog: mockOpenDialog,
-    action: vi.fn(() => ({ id: "add", onClick: mockOpenDialog })),
+  useQuickAddTransaction: () => ({
+    addTransaction: {
+      openDialog: mockOpenDialog,
+      action: vi.fn(() => ({ id: "add", onClick: mockOpenDialog })),
+    },
+    receiptScan: { scan: vi.fn(), isScanning: false },
   }),
   useEditTransaction: () => ({
     action: vi.fn((record: { id: number }) => ({

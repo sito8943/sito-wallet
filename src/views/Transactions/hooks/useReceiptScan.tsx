@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
 import { formatForDatetimeLocal, useNotification } from "@sito/dashboard-app";
@@ -8,10 +9,10 @@ import { formatForDatetimeLocal, useNotification } from "@sito/dashboard-app";
 import { useManager } from "providers";
 
 // hooks
-import { useProductsCommon } from "../../../hooks/queries/useProductsCommon";
-import { usePurchaseProvidersCommon } from "../../../hooks/queries/usePurchaseProvidersCommon";
+import { ProductsQueryKeys, PurchaseProvidersQueryKeys } from "hooks";
 
 // lib
+import type { CommonProductDto, CommonPurchaseProviderDto } from "lib";
 import { prepareReceiptPhoto } from "lib";
 
 // utils
@@ -27,20 +28,37 @@ export function useReceiptScan(props: UseReceiptScanPropsType) {
   const manager = useManager();
   const { showSuccessNotification, showErrorNotification } = useNotification();
 
-  const products = useProductsCommon();
-  const purchaseProviders = usePurchaseProvidersCommon();
+  const queryClient = useQueryClient();
   const [isScanning, setIsScanning] = useState(false);
 
   const scan = useCallback(
     async (file: File) => {
       setIsScanning(true);
+      // Catalogs are only needed to match the receipt, so they're loaded on
+      // scan (cached when already fetched) instead of on mount: the scan FAB
+      // also lives on Home. Matching is best-effort, hence the `[]` fallback.
+      const catalogs = Promise.all([
+        queryClient
+          .ensureQueryData<CommonProductDto[]>({
+            ...ProductsQueryKeys.common(),
+            queryFn: () => manager.Products.commonGet({}),
+          })
+          .catch(() => []),
+        queryClient
+          .ensureQueryData<CommonPurchaseProviderDto[]>({
+            ...PurchaseProvidersQueryKeys.common(),
+            queryFn: () => manager.PurchaseProviders.commonGet({}),
+          })
+          .catch(() => []),
+      ]);
       try {
         const photo = await prepareReceiptPhoto(file);
         const draft = await manager.Transactions.scanReceipt(photo);
+        const [products, purchaseProviders] = await catalogs;
         onDraft(
           receiptDraftToForm(draft, {
-            products: products.data ?? [],
-            purchaseProviders: purchaseProviders.data ?? [],
+            products,
+            purchaseProviders,
             currentDate: formatForDatetimeLocal(),
           }),
         );
@@ -67,8 +85,7 @@ export function useReceiptScan(props: UseReceiptScanPropsType) {
     [
       manager,
       onDraft,
-      products.data,
-      purchaseProviders.data,
+      queryClient,
       showErrorNotification,
       showSuccessNotification,
       t,

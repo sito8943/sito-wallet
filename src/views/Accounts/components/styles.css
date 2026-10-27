@@ -30,8 +30,8 @@
   color: var(--account-on-brand);
 }
 
-/* The action icons carry their own color (.account-action-icon → text-bg-primary,
-   a dark navy) which would otherwise stay invisible on a dark brand surface.
+/* The action icons carry their own color (.account-action-icon → text-text-primary,
+   the brand text tone) which would otherwise stay invisible on a dark brand surface.
    Force the brand foreground so they read against the card. */
 .account-card--branded .account-action-icon {
   color: var(--account-on-brand);

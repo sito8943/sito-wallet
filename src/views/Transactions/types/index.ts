@@ -60,6 +60,11 @@ export interface TransactionFormType
   products: TransactionProductFormItem[];
 }
 
+export type UseQuickAddTransactionPropsType = {
+  /** Account preselected in the form (and in scanned drafts). */
+  account: CommonAccountDto | null;
+};
+
 export type UseReceiptScanPropsType = {
   /** Called with the form values read from the receipt. */
   onDraft: (values: ReceiptFormValues) => void;

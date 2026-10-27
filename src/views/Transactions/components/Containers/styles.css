@@ -25,7 +25,7 @@
 }
 
 .transaction-table-category-button {
-  @apply flex items-center gap-2 text-primary hover:underline cursor-pointer;
+  @apply flex items-center gap-2 text-text-primary hover:underline cursor-pointer;
 }
 
 .transaction-table-category-label {

@@ -14,11 +14,11 @@
 }
 
 .onboarding-entity-card-selected {
-  @apply border-primary bg-base text-primary;
+  @apply border-primary bg-base text-text-primary;
 }
 
 .onboarding-entity-card-icon {
-  @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bg-primary text-info;
+  @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bg-primary text-on-brand;
 }
 
 .onboarding-entity-card-copy {

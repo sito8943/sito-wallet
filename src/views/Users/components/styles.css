@@ -45,7 +45,7 @@
 }
 
 .user-card-admin-badge {
-  @apply inline-flex items-center gap-1 rounded-full bg-bg-primary px-2 py-0.5 text-xs text-base;
+  @apply inline-flex items-center gap-1 rounded-full bg-bg-primary px-2 py-0.5 text-xs text-on-brand;
 }
 
 .user-card-email {

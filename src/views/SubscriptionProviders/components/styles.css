@@ -1,7 +1,7 @@
 @reference "../../../styles/variables.css";
 
 .subscription-provider-card-link {
-  @apply inline-flex items-center gap-1 text-xs text-bg-primary underline;
+  @apply inline-flex items-center gap-1 text-xs text-text-primary underline;
 }
 
 .subscription-provider-card-content {

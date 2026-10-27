@@ -12,7 +12,11 @@ import {
 import { ProfileQueryKeys, useMyProfile, useMobileNavbar } from "hooks";
 
 // components
-import { ChangePasswordForm, ProfileForm } from "./components";
+import {
+  AppearanceSettings,
+  ChangePasswordForm,
+  ProfileForm,
+} from "./components";
 
 // utils
 import { toRenderableError } from "./utils";
@@ -53,6 +57,7 @@ export function Profile() {
         <div className="profile-forms">
           <ProfileForm profile={profile} />
           <ChangePasswordForm />
+          <AppearanceSettings />
         </div>
       )}
     </Page>

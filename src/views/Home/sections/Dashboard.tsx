@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 // @sito/dashboard-app
 import {
@@ -8,7 +8,7 @@ import {
 } from "@sito/dashboard-app";
 
 // components
-import { QueryError } from "components";
+import { BottomNavAction, QueryError } from "components";
 import {
   AddCard,
   TransactionTypeResume,
@@ -42,11 +42,7 @@ import { useAddDashboardCard } from "../hooks";
 import { DashboardCardType } from "lib";
 
 // providers
-import {
-  useFeatureFlags,
-  useManager,
-  useRegisterBottomNavAction,
-} from "providers";
+import { useFeatureFlags, useManager } from "providers";
 import { isDashboardCardEnabled } from "../utils";
 import { useDashboardReorder } from "./useDashboardReorder";
 import { sortDashboardItems } from "./utils";
@@ -57,6 +53,8 @@ export const Dashboard = () => {
   const manager = useManager();
   const { isFeatureEnabled } = useFeatureFlags();
   const subscriptionsEnabled = isFeatureEnabled("subscriptionsEnabled");
+  // With transactions on, Home's bottom-nav "Add" belongs to QuickTransaction.
+  const transactionsEnabled = isFeatureEnabled("transactionsEnabled");
 
   const addDashboardCard = useAddDashboardCard();
 
@@ -237,12 +235,10 @@ export const Dashboard = () => {
     typeResumeBatchResultsByCardId,
   ]);
 
-  const openAddDashboardRef = useRef(addDashboardCard.openDialog);
-  useEffect(() => {
-    openAddDashboardRef.current = addDashboardCard.openDialog;
-  }, [addDashboardCard.openDialog]);
-  useRegisterBottomNavAction(
-    useCallback(() => openAddDashboardRef.current(), []),
+  const { openDialog: openAddDashboardCard } = addDashboardCard;
+  const openAddDashboardCardAction = useCallback(
+    () => openAddDashboardCard(),
+    [openAddDashboardCard],
   );
 
   const hasCards = (cards?.length ?? 0) > 0;
@@ -264,6 +260,10 @@ export const Dashboard = () => {
           />
         </li>
       </ul>
+
+      {!transactionsEnabled && (
+        <BottomNavAction action={openAddDashboardCardAction} />
+      )}
 
       {/* Dialogs */}
       <AddDashboardCardDialog {...addDashboardCard} />

@@ -5,6 +5,7 @@ export * from "./ProfileLanguageSyncProvider";
 export * from "./OnlineStatusSyncProvider";
 export * from "./QueryPersistence";
 export * from "./FeatureFlags/";
+export * from "./Theme";
 export {
   BottomNavActionProvider,
   useBottomNavAction,

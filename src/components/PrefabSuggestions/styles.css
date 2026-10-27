@@ -27,11 +27,11 @@
 }
 
 .prefab-suggestions-card-selected {
-  @apply border-primary bg-base text-primary;
+  @apply border-primary bg-base text-text-primary;
 }
 
 .prefab-suggestions-card-symbol {
-  @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bg-primary text-info text-lg font-semibold;
+  @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bg-primary text-on-brand text-lg font-semibold;
 }
 
 .prefab-suggestions-card-dot {

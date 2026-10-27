@@ -74,7 +74,7 @@
 }
 
 .transaction-card--idle {
-  @apply bg-base hover:!bg-hover-primary hover:!text-white;
+  @apply bg-base hover:!bg-hover-primary hover:!text-on-brand;
 }
 
 .transaction-card-type {
@@ -98,7 +98,7 @@
 }
 
 .transaction-card-selection-indicator--selected {
-  @apply text-primary;
+  @apply text-text-primary;
 }
 
 .transaction-card-selection-indicator--idle {

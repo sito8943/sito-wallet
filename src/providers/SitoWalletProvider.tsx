@@ -20,6 +20,7 @@ import { NotificationsProvider } from "./Notifications";
 import { OnlineStatusSyncProvider } from "./OnlineStatusSyncProvider";
 import { ProfileLanguageSyncProvider } from "./ProfileLanguageSyncProvider";
 import { QueryPersistenceProvider } from "./QueryPersistence";
+import { ThemeProvider } from "./Theme";
 
 // config
 import { config } from "../config";
@@ -62,29 +63,31 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
   );
 
   return (
-    <AppProviders
-      config={{
-        location,
-        navigate: navigateFn,
-        linkComponent: Link,
-        searchComponent: SearchModal,
-      }}
-      manager={{ manager, queryClient }}
-      auth={authConfig}
-    >
-      <TranslationProvider t={t} language={i18n.language}>
-        <QueryPersistenceProvider>
-          <OnlineStatusSyncProvider>
-            <AuthAccountPersistenceProvider>
-              <ProfileLanguageSyncProvider>
-                <FeatureFlagsProvider>
-                  <NotificationsProvider>{children}</NotificationsProvider>
-                </FeatureFlagsProvider>
-              </ProfileLanguageSyncProvider>
-            </AuthAccountPersistenceProvider>
-          </OnlineStatusSyncProvider>
-        </QueryPersistenceProvider>
-      </TranslationProvider>
-    </AppProviders>
+    <ThemeProvider>
+      <AppProviders
+        config={{
+          location,
+          navigate: navigateFn,
+          linkComponent: Link,
+          searchComponent: SearchModal,
+        }}
+        manager={{ manager, queryClient }}
+        auth={authConfig}
+      >
+        <TranslationProvider t={t} language={i18n.language}>
+          <QueryPersistenceProvider>
+            <OnlineStatusSyncProvider>
+              <AuthAccountPersistenceProvider>
+                <ProfileLanguageSyncProvider>
+                  <FeatureFlagsProvider>
+                    <NotificationsProvider>{children}</NotificationsProvider>
+                  </FeatureFlagsProvider>
+                </ProfileLanguageSyncProvider>
+              </AuthAccountPersistenceProvider>
+            </OnlineStatusSyncProvider>
+          </QueryPersistenceProvider>
+        </TranslationProvider>
+      </AppProviders>
+    </ThemeProvider>
   );
 };

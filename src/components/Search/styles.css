@@ -46,7 +46,7 @@
 }
 
 .search-page-result {
-  @apply flex gap-2 items-center p-2 text-text hover:text-base hover:bg-bg-primary rounded;
+  @apply flex gap-2 items-center p-2 text-text hover:text-on-brand hover:bg-bg-primary rounded;
 }
 
 .search-page-result-label {
@@ -54,7 +54,7 @@
 }
 
 .search-page-result-icon {
-  @apply text-text-muted group-hover:text-base/50;
+  @apply text-text-muted group-hover:text-on-brand/60;
 }
 
 .search-page-result-type {
@@ -62,7 +62,7 @@
 }
 
 .search-page-result-time {
-  @apply text-xs flex-1 text-end text-text-muted group-hover:text-base/50;
+  @apply text-xs flex-1 text-end text-text-muted group-hover:text-on-brand/60;
 }
 
 .search-results {

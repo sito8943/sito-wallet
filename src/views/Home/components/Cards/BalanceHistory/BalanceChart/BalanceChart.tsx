@@ -12,6 +12,9 @@ import {
 } from "chart.js";
 import type { ChartData, ChartOptions, TooltipItem } from "chart.js";
 
+// providers
+import { useTheme } from "providers";
+
 // types
 import type { BalanceChartPropsType } from "./types";
 
@@ -40,7 +43,9 @@ export const BalanceChart = (props: BalanceChartPropsType) => {
     netLabel,
   } = props;
 
-  const lineColor = cssVar("--color-primary", "#041e42");
+  // Subscribing re-renders on theme flips so the tokens below are re-read.
+  useTheme();
+  const lineColor = cssVar("--color-text-primary", "#041e42");
   const textColor = cssVar("--color-text-muted", "#4d4d4d");
   const gridColor = cssVar("--color-border", "#cccccc");
 
