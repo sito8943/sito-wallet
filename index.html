@@ -30,6 +30,23 @@
     <meta name="twitter:image" content="/pwa-512x512.png" />
     <link rel="canonical" href="https://wallet.sito8943.com/" />
     <title>Sito Wallet</title>
+    <script>
+      // Apply the stored theme before first paint (no light flash in dark
+      // mode). Key/values mirror src/lib/utils/theme/constants.ts.
+      (function () {
+        try {
+          var mode = localStorage.getItem("sito-wallet-theme");
+          var dark =
+            mode === "dark" ||
+            (mode !== "light" &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) {
+            document.documentElement.classList.add("dark");
+            document.documentElement.style.colorScheme = "dark";
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
 
   <body>
