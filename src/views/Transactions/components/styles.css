@@ -93,6 +93,10 @@
   @apply text-xs text-left flex gap-1;
 }
 
+.transaction-card-meta-category--auto {
+  @apply max-sm:hidden;
+}
+
 .transaction-card-amount {
   @apply shrink-0;
 }
