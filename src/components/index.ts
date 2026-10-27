@@ -13,3 +13,4 @@ export * from "./QueryError";
 export * from "./CatalogCard";
 export * from "./PhotoField";
 export * from "./ProviderPhoto";
+export * from "./BottomNavAction";
