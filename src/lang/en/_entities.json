@@ -70,6 +70,22 @@
     },
     "createdAt": {
       "label": "Created At"
+    },
+    "photo": {
+      "label": "Photo",
+      "upload": "Upload photo",
+      "replace": "Change photo",
+      "delete": "Remove photo",
+      "selectedFile": "File: {{name}}",
+      "deleteOnSave": "The photo will be removed on save",
+      "url": {
+        "label": "Or paste an image URL",
+        "placeholder": "https://..."
+      },
+      "invalidType": "Only JPG, PNG or WEBP images are allowed",
+      "tooLarge": "Image must be 5 MB or less",
+      "invalidUrl": "That photo URL is not valid",
+      "required": "Select an image to upload"
     }
   },
   "user": {
@@ -179,6 +195,36 @@
         "label": "Opposite type excluded categories",
         "placeholder": "Select opposite type categories to exclude"
       }
+    },
+    "purchaseProvider": {
+      "label": "Provider",
+      "placeholder": "Who did you pay?",
+      "create": "Create “{{name}}”"
+    },
+    "products": {
+      "label": "Products",
+      "add": "Add",
+      "remove": "Remove product",
+      "total": "Products total: {{total}}",
+      "product": {
+        "label": "Product",
+        "required": "Product is required",
+        "create": "Create “{{name}}”"
+      },
+      "quantity": {
+        "label": "Quantity"
+      },
+      "unitPrice": {
+        "label": "Price",
+        "required": "Price is required"
+      },
+      "edit": "Edit",
+      "empty": "No products",
+      "done": "Done",
+      "incomplete": "Some products are missing a product or price",
+      "count_one": "{{count}} product",
+      "count_other": "{{count}} products",
+      "summaryTotal": "Total: {{total}}"
     }
   },
   "transactionCategory": {
@@ -454,6 +500,18 @@
     "category": {
       "label": "Category",
       "placeholder": "Select a category"
+    }
+  },
+  "product": {
+    "name": {
+      "placeholder": "E.g. Milk",
+      "unique": "A product with that name already exists"
+    }
+  },
+  "purchaseProvider": {
+    "name": {
+      "placeholder": "E.g. Supermarket",
+      "unique": "A provider with that name already exists"
     }
   }
 }

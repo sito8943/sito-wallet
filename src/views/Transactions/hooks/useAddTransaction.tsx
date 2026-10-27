@@ -8,7 +8,12 @@ import { useNotification, usePostDialog } from "@sito/dashboard-app";
 import { useManager } from "providers";
 
 // hooks
-import { AccountsQueryKeys, TransactionsQueryKeys } from "hooks";
+import {
+  AccountsQueryKeys,
+  ProductsQueryKeys,
+  PurchaseProvidersQueryKeys,
+  TransactionsQueryKeys,
+} from "hooks";
 
 // utils
 import { addEmptyTransaction, formToDto } from "../utils";
@@ -47,6 +52,9 @@ export function useAddTransaction(
     onSuccess: async () => {
       await Promise.all([
         queryClient.invalidateQueries({ ...AccountsQueryKeys.all() }),
+        // Products/providers typed by name are created with the transaction.
+        queryClient.invalidateQueries({ ...ProductsQueryKeys.all() }),
+        queryClient.invalidateQueries({ ...PurchaseProvidersQueryKeys.all() }),
         queryClient.invalidateQueries({
           queryKey: [...TransactionsQueryKeys.all().queryKey, "weekly"],
         }),

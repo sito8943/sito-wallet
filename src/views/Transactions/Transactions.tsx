@@ -22,7 +22,7 @@ import {
 } from "@sito/dashboard-app";
 
 // icons
-import { faAdd, faWallet } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faReceipt, faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // hooks
@@ -31,6 +31,7 @@ import {
   useEditTransaction,
   useAssignTransactionAccountAction,
   useAssignTransactionCategoryAction,
+  useReceiptScan,
 } from "./hooks";
 import { useAddAccountDialog } from "../Accounts/hooks";
 import { useEditTransactionCategoryDialog } from "../TransactionCategories/hooks";
@@ -51,12 +52,17 @@ import {
   AssignAccountDialog,
   AssignCategoryDialog,
   EditTransactionDialog,
+  RECEIPT_SCAN_INPUT_ID,
+  ReceiptScanFab,
   TransactionGrid,
   TransactionTable,
   WeeklyTransactionsDialog,
 } from "./components";
 import { AddAccountDialog } from "../Accounts";
 import { EditTransactionCategoryDialog } from "../TransactionCategories/components";
+
+// utils
+import { addEmptyTransaction } from "./utils";
 
 // lib
 import type {
@@ -441,6 +447,35 @@ export function Transactions() {
     return [exportTransactions.action(), importTransactions.action()];
   }, [exportTransactions, importTransactions]);
 
+  // A scanned receipt opens "new transaction" already filled in.
+  const receiptScan = useReceiptScan({
+    onDraft: useCallback(
+      (values) =>
+        addTransaction.openDialog({
+          values: {
+            ...addEmptyTransaction(selectedAccount ?? null),
+            ...values,
+          },
+        }),
+      [addTransaction, selectedAccount],
+    ),
+  });
+
+  // On mobile the scan is a FAB; on desktop it's a toolbar action.
+  const desktopToolbar = useMemo(
+    () => [
+      {
+        id: "scan-receipt",
+        icon: <FontAwesomeIcon icon={faReceipt} />,
+        disabled: isAccountLoading || receiptScan.isScanning,
+        onClick: () => document.getElementById(RECEIPT_SCAN_INPUT_ID)?.click(),
+        tooltip: t("_pages:transactions.receipt.scan"),
+      },
+      ...pageToolbar,
+    ],
+    [isAccountLoading, pageToolbar, receiptScan.isScanning, t],
+  );
+
   useMobileNavbar(t("_pages:transactions.title"), pageToolbar);
 
   const openAddTransactionRef = useRef(addTransaction.openDialog);
@@ -504,7 +539,7 @@ export function Transactions() {
       title={t("_pages:transactions.title")}
       className="transactions-page"
       isLoading={isAccountLoading || categories.isLoading}
-      actions={pageToolbar}
+      actions={desktopToolbar}
       addOptions={{
         onClick: () => addTransaction.openDialog(),
         disabled: isAccountLoading,
@@ -566,6 +601,11 @@ export function Transactions() {
       <AddAccountDialog {...addAccount} />
       <EditTransactionDialog {...editTransaction} />
       <AddTransactionDialog {...addTransaction} />
+      <ReceiptScanFab
+        onScan={receiptScan.scan}
+        isScanning={receiptScan.isScanning}
+        disabled={isAccountLoading}
+      />
       <ConfirmationDialog
         {...deleteTransaction}
         handleClose={transactionSwipeDelete.handleDialogClose}

@@ -3,6 +3,7 @@ import type { FieldValues } from "react-hook-form";
 import type { ActionType, FormDialogPropsType } from "@sito/dashboard-app";
 
 import type {
+  PhotoFormValues,
   AddSubscriptionProviderDto,
   CommonSubscriptionProviderDto,
   SubscriptionProviderDto,
@@ -24,14 +25,12 @@ export interface SubscriptionProviderCardPropsType extends SubscriptionProviderD
   onSwipeDelete?: () => void;
 }
 
-export interface SubscriptionProviderFormType extends FieldValues {
+export interface SubscriptionProviderFormType
+  extends FieldValues, PhotoFormValues {
   id: number;
   name: string;
   description: string;
   website: string;
-  photo: string;
-  file: File | null;
-  removePhoto: boolean;
 }
 
 export type SubscriptionProviderFormPropsType =

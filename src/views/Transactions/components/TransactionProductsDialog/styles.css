@@ -1,0 +1,41 @@
+@reference "../../../../styles/variables.css";
+
+.transaction-products-dialog-list {
+  /* Rows are spaced for the floating labels that sit above each input. */
+  @apply flex flex-col gap-6 pt-4;
+}
+
+.transaction-products-dialog-row {
+  /* Product + delete on top, quantity + price below. */
+  @apply flex flex-col gap-6 border-b border-border/40 pb-4;
+}
+
+.transaction-products-dialog-row-main {
+  @apply grid grid-cols-[1fr_auto] items-center gap-2;
+}
+
+.transaction-products-dialog-row-details {
+  @apply grid grid-cols-2 gap-2;
+}
+
+.transaction-products-dialog-error {
+  @apply -mt-4 text-sm text-bg-error;
+}
+
+.transaction-products-dialog-empty {
+  @apply text-sm text-text-muted;
+}
+
+.transaction-products-dialog-footer {
+  @apply flex items-center justify-between gap-2;
+}
+
+.transaction-products-dialog-total {
+  @apply text-sm text-text-muted;
+}
+
+/* Uses dashboard-app's sticky `.dialog-actions` (pinned to the dialog's
+   bottom with its background); here it stacks two rows instead of one. */
+.transaction-products-dialog-actions {
+  @apply flex-col items-stretch;
+}

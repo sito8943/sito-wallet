@@ -27,6 +27,8 @@ export const Routes = () => {
     Subscriptions,
     SubscriptionEditor,
     SubscriptionProviders,
+    Products,
+    PurchaseProviders,
     Debts,
     DebtEditor,
     Transactions,
@@ -124,6 +126,11 @@ export const Routes = () => {
               <FeatureUnavailable module="subscriptions" />
             )
           }
+        />
+        <Route path={AppRoutes.products} element={<Products />} />
+        <Route
+          path={AppRoutes.purchaseProviders}
+          element={<PurchaseProviders />}
         />
         <Route
           path={AppRoutes.debts}

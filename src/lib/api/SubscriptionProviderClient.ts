@@ -13,27 +13,10 @@ import type {
   SubscriptionProviderDto,
   UpdateSubscriptionProviderDto,
 } from "lib";
-import { parseErrorMessage, parseJSONFile } from "lib";
+import { parseJSONFile } from "lib";
 
 import { config } from "../../config";
-
-type RequestConfig = HeadersInit | RequestOptions;
-
-type RequestOptions = {
-  headers?: HeadersInit;
-  credentials?: RequestCredentials;
-};
-
-const isRequestOptions = (
-  value: RequestConfig | undefined,
-): value is RequestOptions =>
-  Boolean(
-    value &&
-    typeof value === "object" &&
-    !Array.isArray(value) &&
-    !(value instanceof Headers) &&
-    ("headers" in value || "credentials" in value),
-  );
+import { uploadEntityPhoto } from "./fileUpload";
 
 export default class SubscriptionProviderClient extends BaseClient<
   Tables,
@@ -53,50 +36,11 @@ export default class SubscriptionProviderClient extends BaseClient<
   }
 
   async updatePhoto(id: number, file: File): Promise<SubscriptionProviderDto> {
-    const formData = new FormData();
-    formData.append("file", file);
-    const tokenConfig = this.api.defaultTokenAcquirer();
-    const requestConfig: RequestOptions = isRequestOptions(tokenConfig)
-      ? tokenConfig
-      : { headers: tokenConfig };
-
-    const response = await fetch(`${config.apiUrl}${this.table}/${id}/photo`, {
-      method: Methods.PATCH,
-      headers: requestConfig.headers,
-      credentials: requestConfig.credentials,
-      body: formData,
-    });
-
-    const payloadText = await response.text();
-    let payload: unknown = null;
-    let isText = false;
-
-    try {
-      payload = payloadText ? JSON.parse(payloadText) : null;
-    } catch {
-      isText = true;
-      payload = payloadText;
-    }
-
-    if (!response.ok) {
-      throw {
-        status: response.status,
-        message: parseErrorMessage(payload, response.statusText),
-      };
-    }
-
-    if (response.ok && isText) {
-      return { photo: payload as string } as unknown as SubscriptionProviderDto;
-    }
-
-    if (!payload || typeof payload !== "object") {
-      throw {
-        status: response.status,
-        message: "Unknown error",
-      };
-    }
-
-    return payload as SubscriptionProviderDto;
+    return await uploadEntityPhoto<SubscriptionProviderDto>(
+      `${config.apiUrl}${this.table}/${id}/photo`,
+      file,
+      this.api.defaultTokenAcquirer(),
+    );
   }
 
   async deletePhoto(id: number): Promise<SubscriptionProviderDto> {

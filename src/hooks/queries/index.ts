@@ -8,6 +8,8 @@ export * from "./useDashboard";
 export * from "./useProfile";
 export * from "./useSubscriptions";
 export * from "./useSubscriptionProviders";
+export * from "./useProducts";
+export * from "./usePurchaseProviders";
 export * from "./useDebts";
 export * from "./useNotifications";
 export * from "./useUsers";

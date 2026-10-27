@@ -1,0 +1,42 @@
+@reference "../../styles/variables.css";
+
+.photo-field {
+  @apply flex flex-col gap-2 rounded-xl border border-border p-3;
+}
+
+.photo-field-label {
+  @apply text-sm text-text;
+}
+
+.photo-field-row {
+  @apply flex items-center gap-3;
+}
+
+.photo-field-preview {
+  @apply flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-base;
+}
+
+.photo-field-image {
+  @apply h-full w-full object-cover;
+}
+
+.photo-field-actions {
+  @apply flex flex-col items-start gap-1;
+}
+
+.photo-field-hint {
+  @apply text-xs text-text-muted;
+}
+
+.photo-field-warning {
+  @apply text-xs text-warning;
+}
+
+.photo-field-url {
+  /* Room for the TextInput floating label, which sits above the input box. */
+  @apply mt-5;
+}
+
+.photo-field-file-input {
+  @apply hidden;
+}

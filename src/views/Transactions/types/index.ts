@@ -6,6 +6,7 @@ import type {
   BaseEntityDto,
   UseActionDialog,
   FormDialogPropsType,
+  OpenFormDialogParamsType,
   TriggerFormDialogPropsType,
   SortOrder,
   Option,
@@ -15,6 +16,8 @@ import type {
 // types
 import type {
   CommonAccountDto,
+  CommonProductDto,
+  CommonPurchaseProviderDto,
   CommonTransactionCategoryDto,
   TransactionDto,
   TransactionType,
@@ -48,10 +51,31 @@ export interface TransactionFormType
       | "user"
       | "category"
       | "categories"
+      | "purchaseProvider"
+      | "products"
     >,
     FieldValues {
   categories: CommonTransactionCategoryDto[];
+  purchaseProvider: CommonPurchaseProviderDto | null;
+  products: TransactionProductFormItem[];
 }
+
+export type UseReceiptScanPropsType = {
+  /** Called with the form values read from the receipt. */
+  onDraft: (values: ReceiptFormValues) => void;
+};
+
+/** Form fields a scanned receipt can fill. */
+export type ReceiptFormValues = Partial<
+  Pick<TransactionFormType, "amount" | "date" | "purchaseProvider" | "products">
+>;
+
+/** Number inputs hand back strings, so quantity/price accept both. */
+export type TransactionProductFormItem = {
+  product: CommonProductDto | null;
+  quantity: number | string;
+  unitPrice: number | string;
+};
 
 export type TransactionFormPropsType =
   FormDialogPropsType<TransactionFormType> & {
@@ -61,7 +85,9 @@ export type TransactionFormPropsType =
   };
 
 export interface TriggerTransactionPropsType extends TransactionFormPropsType {
-  openDialog: (id?: number) => void;
+  openDialog: (
+    params?: number | OpenFormDialogParamsType<TransactionFormType>,
+  ) => void;
 }
 
 export type AddTransactionDialogPropsType = TriggerTransactionPropsType;

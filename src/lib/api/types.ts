@@ -4,6 +4,8 @@ export enum Tables {
   Transactions = "transactions",
   TransactionCategories = "transaction-categories",
   SubscriptionProviders = "subscription-providers",
+  Products = "products",
+  PurchaseProviders = "purchase-providers",
   Subscriptions = "subscriptions",
   Debts = "debts",
   Notifications = "notifications",
@@ -18,6 +20,8 @@ export enum TablesCamelCase {
   Transactions = "transactions",
   TransactionCategories = "transactionCategories",
   SubscriptionProviders = "subscriptionProviders",
+  Products = "products",
+  PurchaseProviders = "purchaseProviders",
   Subscriptions = "subscriptions",
   Debts = "debts",
   Notifications = "notifications",
@@ -32,6 +36,8 @@ export enum EntityName {
   Transaction = "transaction",
   TransactionCategory = "transactionCategory",
   SubscriptionProvider = "subscriptionProvider",
+  Product = "product",
+  PurchaseProvider = "purchaseProvider",
   Subscription = "subscription",
   Debt = "debt",
   Notification = "notification",
@@ -39,3 +45,10 @@ export enum EntityName {
   Profile = "profile",
   User = "user",
 }
+
+export type PhotoUploadRequestOptions = {
+  headers?: HeadersInit;
+  credentials?: RequestCredentials;
+};
+
+export type PhotoUploadRequestConfig = HeadersInit | PhotoUploadRequestOptions;

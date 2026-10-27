@@ -1,4 +1,5 @@
 import type { SubscriptionProviderDto } from "lib";
+import { photoToFormValues, resolvePhotoPayload } from "lib";
 
 import type {
   CreateSubscriptionProviderMutationDto,
@@ -18,9 +19,7 @@ export const subscriptionProviderDtoToForm = (
   name: dto.name,
   description: dto.description ?? "",
   website: dto.website ?? "",
-  photo: dto.photo ?? "",
-  file: null,
-  removePhoto: false,
+  ...photoToFormValues(dto.photo),
 });
 
 export const subscriptionProviderFormToCreateDto = (
@@ -31,6 +30,7 @@ export const subscriptionProviderFormToCreateDto = (
       name: form.name.trim(),
       description: toNullableValue(form.description),
       website: toNullableValue(form.website),
+      photo: resolvePhotoPayload(form),
     },
     file: form.file ?? null,
   };
@@ -56,9 +56,7 @@ export const emptyAddSubscriptionProviderForm: Omit<
   name: "",
   description: "",
   website: "",
-  photo: "",
-  file: null,
-  removePhoto: false,
+  ...photoToFormValues(),
   enabled: true,
 };
 
@@ -67,9 +65,7 @@ export const emptySubscriptionProviderForm: SubscriptionProviderFormType = {
   name: "",
   description: "",
   website: "",
-  photo: "",
-  file: null,
-  removePhoto: false,
+  ...photoToFormValues(),
   enabled: true,
 };
 

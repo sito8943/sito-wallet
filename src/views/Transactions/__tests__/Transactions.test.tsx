@@ -97,6 +97,7 @@ vi.mock("providers", () => ({
 // Local hooks
 const mockOpenDialog = vi.fn();
 vi.mock("../hooks", () => ({
+  useReceiptScan: () => ({ scan: vi.fn(), isScanning: false }),
   useAddTransaction: () => ({
     openDialog: mockOpenDialog,
     action: vi.fn(() => ({ id: "add", onClick: mockOpenDialog })),
@@ -235,6 +236,8 @@ vi.mock("@sito/dashboard-app", () => ({
 // Local components
 vi.mock("../components", () => ({
   AddTransactionDialog: () => null,
+  RECEIPT_SCAN_INPUT_ID: "receipt-scan-input",
+  ReceiptScanFab: () => null,
   AssignAccountDialog: () => null,
   AssignCategoryDialog: () => null,
   EditTransactionDialog: () => null,

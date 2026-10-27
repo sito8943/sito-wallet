@@ -2,6 +2,8 @@ export * from "./Manager";
 export * from "./AuthApiClient";
 export { default as FeatureFlagClient } from "./FeatureFlagClient";
 export { default as NotificationClient } from "./NotificationClient";
+export { default as ProductClient } from "./ProductClient";
+export { default as PurchaseProviderClient } from "./PurchaseProviderClient";
 export { default as SubscriptionClient } from "./SubscriptionClient";
 export { default as SubscriptionProviderClient } from "./SubscriptionProviderClient";
 export { default as DebtClient } from "./DebtClient";

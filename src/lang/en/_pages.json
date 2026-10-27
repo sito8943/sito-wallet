@@ -700,6 +700,22 @@
     "export": {
       "title": "Export transactions",
       "includeCurrentAccount": "Include current account filter"
+    },
+    "receipt": {
+      "scan": "Scan receipt",
+      "scanning": "Reading receipt…",
+      "success": "Receipt read. Review the details before saving.",
+      "totalOnly": "Store not recognized: only the date and total were read.",
+      "mismatch": "The products read don't add up to the receipt total. Review them before saving.",
+      "errors": {
+        "generic": "Couldn't read the receipt",
+        "invalidType": "Only JPG or PNG photos can be scanned",
+        "tooLarge": "The photo is too large",
+        "invalidImage": "The photo couldn't be opened",
+        "unreadable": "No text found in the photo. Try with more light and the receipt straight.",
+        "ocrUnavailable": "The receipt reader isn't available on the server",
+        "required": "Select a photo of the receipt"
+      }
     }
   },
   "transactionCategories": {
@@ -763,6 +779,37 @@
       "edit": "Edit provider",
       "editAria": "Click to edit provider"
     }
+  },
+  "products": {
+    "title": "Products",
+    "empty": "You don't have any products yet. Add one to get started.",
+    "add": "Add product",
+    "forms": {
+      "add": "New product",
+      "edit": "Edit product",
+      "editAria": "Click to edit product"
+    }
+  },
+  "purchaseProviders": {
+    "title": "Providers",
+    "empty": "You don't have any providers yet. Add one to get started.",
+    "add": "Add provider",
+    "forms": {
+      "add": "New provider",
+      "edit": "Edit provider",
+      "editAria": "Click to edit provider"
+    }
+  },
+  "purchaseCatalog": {
+    "add": "Add",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "name": "Name",
+    "photo": "Photo URL (optional)",
+    "saved": "Saved successfully",
+    "deleted": "Deleted successfully"
   },
   "users": {
     "title": "Users",

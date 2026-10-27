@@ -1,7 +1,7 @@
 {
   "name": "sito-wallet",
   "private": true,
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -29,7 +29,9 @@
     "@fortawesome/free-solid-svg-icons": "7.0.0",
     "@fortawesome/react-fontawesome": "3.4.0",
     "@loadable/component": "5.16.7",
-    "@sito/dashboard-app": "0.2.5",
+    "@sito/dashboard": "0.3.7",
+    "@sito/dashboard-app": "0.2.7",
+    "@sito/ui": "0.9.1",
     "@stomp/stompjs": "^7.3.0",
     "@supabase/supabase-js": "^2.100.0",
     "@tailwindcss/vite": "4.3.2",

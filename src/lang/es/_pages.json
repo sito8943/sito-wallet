@@ -700,6 +700,22 @@
     "export": {
       "title": "Exportar transacciones",
       "includeCurrentAccount": "Incluir filtro de la cuenta actual"
+    },
+    "receipt": {
+      "scan": "Escanear ticket",
+      "scanning": "Leyendo ticket…",
+      "success": "Ticket leído. Revisa los datos antes de guardar.",
+      "totalOnly": "Tienda no reconocida: solo se leyeron la fecha y el total.",
+      "mismatch": "Los productos leídos no suman el total del ticket. Revísalos antes de guardar.",
+      "errors": {
+        "generic": "No se pudo leer el ticket",
+        "invalidType": "Solo se pueden escanear fotos JPG o PNG",
+        "tooLarge": "La foto es demasiado grande",
+        "invalidImage": "La foto no se pudo abrir",
+        "unreadable": "No se encontró texto en la foto. Prueba con más luz y el ticket recto.",
+        "ocrUnavailable": "El lector de tickets no está disponible en el servidor",
+        "required": "Selecciona una foto del ticket"
+      }
     }
   },
   "transactionCategories": {
@@ -763,6 +779,37 @@
       "edit": "Editar proveedor",
       "editAria": "Haz clic para editar el proveedor"
     }
+  },
+  "products": {
+    "title": "Productos",
+    "empty": "Aún no tienes productos guardados. Agrega uno para empezar.",
+    "add": "Agregar producto",
+    "forms": {
+      "add": "Nuevo producto",
+      "edit": "Editar producto",
+      "editAria": "Click para editar producto"
+    }
+  },
+  "purchaseProviders": {
+    "title": "Proveedores",
+    "empty": "Aún no tienes proveedores guardados. Agrega uno para empezar.",
+    "add": "Agregar proveedor",
+    "forms": {
+      "add": "Nuevo proveedor",
+      "edit": "Editar proveedor",
+      "editAria": "Click para editar proveedor"
+    }
+  },
+  "purchaseCatalog": {
+    "add": "Agregar",
+    "edit": "Editar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "name": "Nombre",
+    "photo": "Foto (URL, opcional)",
+    "saved": "Guardado correctamente",
+    "deleted": "Eliminado correctamente"
   },
   "users": {
     "title": "Usuarios",
