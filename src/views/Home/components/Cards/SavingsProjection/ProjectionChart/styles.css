@@ -1,0 +1,6 @@
+@reference "../../../../../../styles/variables.css";
+
+.savings-projection-chart {
+  @apply relative w-full cursor-pointer;
+  height: 180px;
+}

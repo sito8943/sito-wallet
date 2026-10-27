@@ -474,7 +474,8 @@
         "SubscriptionForecast": "Subscription Forecast",
         "BalanceHistory": "Balance History",
         "LastTransactions": "Last Transactions",
-        "CategoryAverage": "Category Average"
+        "CategoryAverage": "Category Average",
+        "SavingsProjection": "Savings Projection"
       }
     }
   },

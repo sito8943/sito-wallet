@@ -206,6 +206,46 @@
           "12M": "12 meses",
           "YTD": "Año en curso"
         }
+      },
+      "savingsProjection": {
+        "configTitle": "Configurar proyección de ahorro",
+        "accountLabel": "Cuenta de ahorro",
+        "horizonLabel": "Horizonte",
+        "noSavingAccounts": "No tienes cuentas de ahorro. Crea una cuenta de tipo Ahorro para usar esta tarjeta.",
+        "noAccount": "Configura la tarjeta y elige una cuenta de ahorro",
+        "notConfigured": "Esta cuenta no es de ahorro o no tiene un interés configurado.",
+        "editAccount": "Configurar intereses",
+        "error": "No se pudo calcular la proyección",
+        "empty": "No hay datos de proyección para este horizonte",
+        "balance": "Saldo",
+        "accrued": "Interés devengado",
+        "credited": "Interés abonado",
+        "totalInterest": "Intereses en el periodo",
+        "endBalance": "Saldo final",
+        "effectiveRate": "TAE efectiva",
+        "vsAer": "TAE declarada: {{aer}}",
+        "aerMismatch": "La configuración produce una TAE de {{effective}} frente a la declarada de {{aer}} ({{deviation}} pp). Revisa los intereses de la cuenta.",
+        "clickHint": "Toca un mes para ver el detalle diario",
+        "horizons": {
+          "1M": "1M",
+          "3M": "3M",
+          "6M": "6M",
+          "1Y": "1A",
+          "3Y": "3A",
+          "5Y": "5A",
+          "10Y": "10A"
+        },
+        "daily": {
+          "title": "Detalle diario · {{month}}",
+          "caption": "Detalle diario de intereses en {{currency}}",
+          "empty": "No hay días proyectados en este mes",
+          "date": "Fecha",
+          "opening": "Saldo inicial",
+          "earning": "Saldo que genera",
+          "accrued": "Devengado",
+          "credited": "Abonado",
+          "closing": "Saldo final"
+        }
       }
     }
   },

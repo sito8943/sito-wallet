@@ -206,6 +206,46 @@
           "12M": "12 months",
           "YTD": "Year to date"
         }
+      },
+      "savingsProjection": {
+        "configTitle": "Configure savings projection",
+        "accountLabel": "Savings account",
+        "horizonLabel": "Horizon",
+        "noSavingAccounts": "You have no savings accounts. Create an account of type Savings to use this card.",
+        "noAccount": "Configure the card and pick a savings account",
+        "notConfigured": "This account is not a savings account or has no interest rate set.",
+        "editAccount": "Set up interest",
+        "error": "The projection could not be computed",
+        "empty": "No projection data for this horizon",
+        "balance": "Balance",
+        "accrued": "Accrued interest",
+        "credited": "Credited interest",
+        "totalInterest": "Interest over the period",
+        "endBalance": "End balance",
+        "effectiveRate": "Effective AER",
+        "vsAer": "Stated AER: {{aer}}",
+        "aerMismatch": "The configuration yields an AER of {{effective}} versus the stated {{aer}} ({{deviation}} pp). Check the account's interest settings.",
+        "clickHint": "Tap a month to see the daily breakdown",
+        "horizons": {
+          "1M": "1M",
+          "3M": "3M",
+          "6M": "6M",
+          "1Y": "1Y",
+          "3Y": "3Y",
+          "5Y": "5Y",
+          "10Y": "10Y"
+        },
+        "daily": {
+          "title": "Daily breakdown · {{month}}",
+          "caption": "Daily interest breakdown in {{currency}}",
+          "empty": "No projected days in this month",
+          "date": "Date",
+          "opening": "Opening",
+          "earning": "Earning balance",
+          "accrued": "Accrued",
+          "credited": "Credited",
+          "closing": "Closing"
+        }
       }
     }
   },

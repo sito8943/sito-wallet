@@ -6,3 +6,4 @@ export * from "./SubscriptionForecast/SubscriptionForecastCard";
 export * from "./BalanceHistory/BalanceHistoryCard";
 export * from "./LastTransactions/LastTransactionsCard";
 export * from "./CategoryAverage/CategoryAverageCard";
+export * from "./SavingsProjection/SavingsProjectionCard";
