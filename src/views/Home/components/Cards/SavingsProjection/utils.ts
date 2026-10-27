@@ -1,10 +1,12 @@
 import type {
+  CommonAccountDto,
   SavingsProjectionDto,
   SavingsProjectionHorizon,
   UpdateDashboardCardConfigDto,
 } from "lib";
 
 // types
+import type { AdjustBalanceAccountType } from "../../../../Accounts/types";
 import {
   SavingsProjectionViewState,
   type ResolveViewStateArgs,
@@ -136,3 +138,16 @@ export const formatDayLabel = (date: string, locale: string): string =>
     month: "short",
     weekday: "short",
   }).format(new Date(`${date}T00:00:00`));
+
+/**
+ * Account for the adjust-balance dialog, built from the card's own data: the
+ * configured account and the projection's start balance (its current
+ * balance), so the action needs no extra request.
+ */
+export const toAdjustBalanceAccount = (
+  account: CommonAccountDto | null | undefined,
+  data: SavingsProjectionDto | undefined,
+): AdjustBalanceAccountType | null =>
+  account && data
+    ? { id: account.id, currency: account.currency, balance: data.startBalance }
+    : null;

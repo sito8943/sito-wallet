@@ -3,17 +3,21 @@ import { useTranslation } from "react-i18next";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faScaleBalanced } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
-import { Button } from "@sito/dashboard-app";
+import { Button, IconButton } from "@sito/dashboard-app";
 
 // hooks
 import { useSavingsProjection } from "../../../../../hooks/queries/useSavingsProjection";
-import { useEditAccountDialog } from "../../../../Accounts/hooks";
+import {
+  useAdjustBalanceMutation,
+  useEditAccountDialog,
+} from "../../../../Accounts/hooks";
 
 // components
 import { EditAccountDialog } from "../../../../Accounts/components/AccountDialog";
+import { AdjustBalanceDialog } from "../../../../Accounts/components/AdjustBalanceDialog";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { ActiveFilters } from "./ActiveFilters";
 import { ProjectionSummary } from "./ProjectionSummary";
@@ -37,6 +41,7 @@ import {
   getActiveFiltersCount,
   parseFormConfig,
   resolveViewState,
+  toAdjustBalanceAccount,
 } from "./utils";
 
 export const SavingsProjectionCard = (props: SavingsProjectionPropsType) => {
@@ -46,9 +51,10 @@ export const SavingsProjectionCard = (props: SavingsProjectionPropsType) => {
     useState<CardConfigOverrideType | null>(null);
   const effectiveConfig = resolveCardConfig(config, configOverride);
 
-  const { accountId, horizon, currencySymbol } = useMemo(() => {
+  const { account, accountId, horizon, currencySymbol } = useMemo(() => {
     const parsed = parseFormConfig(effectiveConfig);
     return {
+      account: parsed.account,
       accountId: parsed.account?.id,
       horizon: parsed.horizon,
       currencySymbol: parsed.account?.currency?.symbol ?? "",
@@ -73,6 +79,9 @@ export const SavingsProjectionCard = (props: SavingsProjectionPropsType) => {
 
   const editAccount = useEditAccountDialog();
   const { openDialog: openEditAccount } = editAccount;
+
+  const adjustBalance = useAdjustBalanceMutation();
+  const adjustableAccount = toAdjustBalanceAccount(account, data);
 
   const renderBody = () => {
     switch (viewState) {
@@ -114,6 +123,22 @@ export const SavingsProjectionCard = (props: SavingsProjectionPropsType) => {
         if (!data) return null;
         return (
           <div className="savings-projection-content">
+            {adjustableAccount && (
+              <div className="savings-projection-actions">
+                <IconButton
+                  disabled={adjustBalance.isLoading}
+                  onClick={() =>
+                    adjustBalance.openForAccount(adjustableAccount)
+                  }
+                  icon={faScaleBalanced}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={t(
+                    "_pages:accounts.actions.adjustBalance.text",
+                  )}
+                  aria-label={t("_pages:accounts.actions.adjustBalance.text")}
+                />
+              </div>
+            )}
             <ProjectionSummary
               data={data}
               locale={i18n.language}
@@ -182,6 +207,7 @@ export const SavingsProjectionCard = (props: SavingsProjectionPropsType) => {
         currencySymbol={currencySymbol}
       />
       <EditAccountDialog {...editAccount} />
+      <AdjustBalanceDialog {...adjustBalance} />
     </>
   );
 };

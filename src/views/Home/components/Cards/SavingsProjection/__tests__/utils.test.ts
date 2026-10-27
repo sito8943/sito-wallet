@@ -17,6 +17,7 @@ import {
   resolveHorizon,
   resolveViewState,
   shouldWarnAer,
+  toAdjustBalanceAccount,
 } from "../utils";
 import { SAVINGS_PROJECTION_HORIZONS } from "../constants";
 
@@ -199,5 +200,28 @@ describe("formatting", () => {
   it("formats month labels", () => {
     expect(formatMonthLabel("2026-10", "en")).toBe("Oct 26");
     expect(formatMonthLabel("2026-10", "en", "long")).toBe("October 2026");
+  });
+});
+
+describe("toAdjustBalanceAccount", () => {
+  const account = {
+    id: 4,
+    name: "Savings",
+    currency: null,
+    updatedAt: new Date(),
+  };
+
+  it("uses the projection's start balance as the current balance", () => {
+    const data = { startBalance: 1000.5 } as SavingsProjectionDto;
+    expect(toAdjustBalanceAccount(account, data)).toEqual({
+      id: 4,
+      currency: null,
+      balance: 1000.5,
+    });
+  });
+
+  it("returns null without an account or projection", () => {
+    expect(toAdjustBalanceAccount(null, undefined)).toBeNull();
+    expect(toAdjustBalanceAccount(account, undefined)).toBeNull();
   });
 });

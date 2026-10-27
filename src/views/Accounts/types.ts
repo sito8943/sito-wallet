@@ -70,9 +70,16 @@ export interface AdjustBalanceFormType {
   description: string;
 }
 
+/** What the adjust-balance dialog needs; callers without a full AccountDto
+ * (e.g. dashboard cards) can pass just these. */
+export type AdjustBalanceAccountType = Pick<
+  AccountDto,
+  "id" | "balance" | "currency"
+>;
+
 export interface AdjustBalanceDialogPropsType extends TriggerFormDialogPropsType<AdjustBalanceFormType> {
   confirmationProps?: ConfirmationDialogPropsType;
-  selectedAccount: AccountDto | null;
+  selectedAccount: AdjustBalanceAccountType | null;
 }
 
 export interface TransferFormType extends FieldValues {

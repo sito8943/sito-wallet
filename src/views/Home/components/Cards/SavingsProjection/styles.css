@@ -52,3 +52,7 @@
 .savings-projection-warning {
   @apply flex items-center gap-2 text-xs bg-bg-warning text-warning p-2 rounded-xl;
 }
+
+.savings-projection-actions {
+  @apply flex items-center justify-end gap-1;
+}
