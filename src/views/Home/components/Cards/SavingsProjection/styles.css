@@ -29,8 +29,9 @@
   @apply grid grid-cols-3 gap-2 max-xs:grid-cols-1;
 }
 
+/* Mobile: one line per stat (label left, value right) to save height. */
 .savings-projection-stat {
-  @apply flex flex-col gap-0.5 rounded-xl bg-base p-2;
+  @apply flex flex-col gap-0.5 rounded-xl bg-base p-2 max-xs:flex-row max-xs:items-center max-xs:justify-between max-xs:gap-2;
 }
 
 .savings-projection-stat dt {
@@ -46,7 +47,7 @@
 }
 
 .savings-projection-stat-sub {
-  @apply text-xs font-normal text-text-muted;
+  @apply text-xs font-normal text-text-muted max-xs:hidden;
 }
 
 .savings-projection-warning {
