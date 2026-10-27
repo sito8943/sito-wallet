@@ -4,6 +4,7 @@ import type { TransactionDto } from "lib";
 
 import {
   dtoToForm,
+  findProductByNameOrAlias,
   emptyTransaction,
   formToDto,
   formatTransactionAmount,
@@ -174,5 +175,24 @@ describe("formatTransactionAmount", () => {
   it("shows two decimals in the user's locale, without float noise", () => {
     expect(formatTransactionAmount(28.659999999999997, "es")).toBe("28,66");
     expect(formatTransactionAmount(3, "en")).toBe("3.00");
+  });
+});
+
+describe("findProductByNameOrAlias", () => {
+  const smoothie = { id: 7, name: "SMOOTHIE BOWL", alias: "Smoothie" };
+  const products = [milk, smoothie].map((product) => ({
+    ...product,
+    updatedAt: new Date(),
+  }));
+
+  it("matches by alias or name, ignoring case and spaces", () => {
+    expect(findProductByNameOrAlias(products, " smoothie ")?.id).toBe(7);
+    expect(findProductByNameOrAlias(products, "smoothie bowl")?.id).toBe(7);
+    expect(findProductByNameOrAlias(products, "MILK")?.id).toBe(5);
+  });
+
+  it("returns undefined for partial or unknown names", () => {
+    expect(findProductByNameOrAlias(products, "smoo")).toBeUndefined();
+    expect(findProductByNameOrAlias(products, "Bread")).toBeUndefined();
   });
 });
