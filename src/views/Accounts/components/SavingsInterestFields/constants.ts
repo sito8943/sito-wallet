@@ -12,13 +12,14 @@ import { InterestPresetId } from "./types";
 
 export const INTEREST_PRESETS: Record<InterestPresetId, InterestPresetValues> =
   {
-    // Revolut UK Instant Access Savings: daily accrual on ACT/365, paid daily
-    // (credited the next day) and compounded daily, rounded at payout.
-    [InterestPresetId.RevolutUkInstantAccess]: {
+    // Revolut Instant Access Savings: daily accrual on ACT/365, paid daily
+    // (credited the next day), rounded at payout. No compounding: the app
+    // quotes AER = NIR (e.g. 1.15% / 1.15%), so paid interest doesn't earn.
+    [InterestPresetId.RevolutInstantAccess]: {
       interestDayCount: InterestDayCount.Act365,
       interestPayoutFrequency: InterestPayoutFrequency.Daily,
       interestPayoutDelayDays: 1,
-      interestCompoundingFrequency: InterestCompoundingFrequency.Daily,
+      interestCompoundingFrequency: InterestCompoundingFrequency.None,
       interestRoundingStage: InterestRoundingStage.Payout,
       interestRoundingMode: InterestRoundingMode.HalfUp,
       interestRoundingScale: 2,

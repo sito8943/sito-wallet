@@ -10,7 +10,7 @@ export type SavingsInterestFieldsPropsType = Pick<
 
 /** Known bank products whose interest mechanics we can prefill. */
 export enum InterestPresetId {
-  RevolutUkInstantAccess = "revolutUkInstantAccess",
+  RevolutInstantAccess = "revolutInstantAccess",
 }
 
 /**

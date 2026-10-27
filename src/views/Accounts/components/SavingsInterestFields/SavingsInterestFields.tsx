@@ -147,12 +147,12 @@ export function SavingsInterestFields(props: SavingsInterestFieldsPropsType) {
           type="button"
           variant="outlined"
           disabled={isLoading}
-          onClick={() => applyPreset(InterestPresetId.RevolutUkInstantAccess)}
+          onClick={() => applyPreset(InterestPresetId.RevolutInstantAccess)}
           aria-label={t("_entities:account.interest.preset.apply")}
         >
           <FontAwesomeIcon icon={faWandMagicSparkles} />
           {t(
-            `_entities:account.interest.preset.values.${InterestPresetId.RevolutUkInstantAccess}`,
+            `_entities:account.interest.preset.values.${InterestPresetId.RevolutInstantAccess}`,
           )}
         </Button>
       </div>

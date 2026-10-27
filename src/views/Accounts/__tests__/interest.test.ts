@@ -108,14 +108,14 @@ describe("account form → DTO", () => {
 });
 
 describe("interest presets", () => {
-  it("Revolut UK Instant Access fills the mechanics but not the rates", () => {
-    const preset = INTEREST_PRESETS[InterestPresetId.RevolutUkInstantAccess];
+  it("Revolut Instant Access fills the mechanics but not the rates", () => {
+    const preset = INTEREST_PRESETS[InterestPresetId.RevolutInstantAccess];
 
     expect(preset).toEqual({
       interestDayCount: InterestDayCount.Act365,
       interestPayoutFrequency: InterestPayoutFrequency.Daily,
       interestPayoutDelayDays: 1,
-      interestCompoundingFrequency: InterestCompoundingFrequency.Daily,
+      interestCompoundingFrequency: InterestCompoundingFrequency.None,
       interestRoundingStage: InterestRoundingStage.Payout,
       interestRoundingMode: InterestRoundingMode.HalfUp,
       interestRoundingScale: 2,
@@ -127,13 +127,13 @@ describe("interest presets", () => {
   it("matches the contract's int values", () => {
     expect(
       Object.fromEntries(
-        getInterestPresetEntries(InterestPresetId.RevolutUkInstantAccess),
+        getInterestPresetEntries(InterestPresetId.RevolutInstantAccess),
       ),
     ).toEqual({
       interestDayCount: 0,
       interestPayoutFrequency: 0,
       interestPayoutDelayDays: 1,
-      interestCompoundingFrequency: 0,
+      interestCompoundingFrequency: 4,
       interestRoundingStage: 1,
       interestRoundingMode: 0,
       interestRoundingScale: 2,

@@ -165,9 +165,9 @@
         "hide": "Hide advanced settings"
       },
       "preset": {
-        "apply": "Apply the Revolut UK Instant Access settings",
+        "apply": "Apply the Revolut Instant Access settings",
         "values": {
-          "revolutUkInstantAccess": "Revolut UK Instant Access"
+          "revolutInstantAccess": "Revolut Instant Access"
         }
       },
       "dayCount": {
