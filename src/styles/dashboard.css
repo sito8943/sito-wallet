@@ -277,3 +277,9 @@ main,
 .dialog .sito-ui-dialog-actions {
   background-color: var(--color-base);
 }
+
+/* Spinner inside primary submit buttons (`color="stroke-base"` in the lib):
+   `--color-base` is dark in this theme, so it vanished on the brand fill. */
+.dark .stroke-base {
+  stroke: var(--color-on-brand);
+}
