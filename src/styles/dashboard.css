@@ -266,3 +266,14 @@ main,
 .dark .icon-button.submit.secondary {
   color: var(--color-on-brand);
 }
+
+/* The sticky dialog header also carries @sito/ui's `.sito-ui-dialog__header`
+   (surface = base-light), which wins over dashboard-app's `.dialog-header`
+   (base) by source order, so it stood out against the dialog body (base).
+   Pin header and actions to the dialog's own background. */
+.dialog .dialog-header,
+.dialog .sito-ui-dialog__header,
+.dialog .dialog-actions,
+.dialog .sito-ui-dialog-actions {
+  background-color: var(--color-base);
+}
