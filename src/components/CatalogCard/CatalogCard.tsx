@@ -14,6 +14,7 @@ export function CatalogCard(props: CatalogCardPropsType) {
   const {
     id,
     name,
+    subtitle,
     photo,
     showPhoto = false,
     actions,
@@ -40,7 +41,12 @@ export function CatalogCard(props: CatalogCardPropsType) {
               )}
             </div>
           )}
-          <ItemCardTitle>{name}</ItemCardTitle>
+          <div className="catalog-card-text">
+            <ItemCardTitle>{name}</ItemCardTitle>
+            {subtitle && (
+              <span className="catalog-card-subtitle">{subtitle}</span>
+            )}
+          </div>
         </div>
       }
       deleted={false}

@@ -15,7 +15,7 @@ import {
 } from "@sito/dashboard-app";
 
 // lib
-import { Tables } from "lib";
+import { Tables, getProductLabel } from "lib";
 
 // hooks
 import { useProductsCommon } from "../../../../hooks/queries/useProductsCommon";
@@ -41,8 +41,13 @@ export function TransactionProductsDialog(
   const { t, i18n } = useTranslation();
 
   const products = useProductsCommon();
+  // Options show "alias (name)"; the form keeps the catalog product as is.
   const productOptions = useMemo(
-    () => [...(products.data ?? [])] as Option[],
+    () =>
+      (products.data ?? []).map((product) => ({
+        ...product,
+        name: getProductLabel(product),
+      })) as Option[],
     [products.data],
   );
 
@@ -89,8 +94,17 @@ export function TransactionProductsDialog(
                   <AutocompleteInput
                     required
                     options={productOptions}
-                    value={value}
-                    onChange={(next) => onChange(next)}
+                    value={value && { ...value, name: getProductLabel(value) }}
+                    onChange={(next) =>
+                      onChange(
+                        (next &&
+                          !Array.isArray(next) &&
+                          products.data?.find(
+                            (product) => product.id === next.id,
+                          )) ||
+                          next,
+                      )
+                    }
                     label={t("_entities:transaction.products.product.label")}
                     autoComplete={`${Tables.Transactions}-${t(
                       "_entities:transaction.products.product.label",

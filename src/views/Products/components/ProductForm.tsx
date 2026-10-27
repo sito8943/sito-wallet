@@ -35,6 +35,22 @@ export function ProductForm(props: ProductFormPropsType) {
           />
         )}
       />
+      <Controller
+        control={control}
+        name="alias"
+        disabled={isLoading}
+        render={({ field: { value, ...rest } }) => (
+          <TextInput
+            maxLength={255}
+            autoComplete="off"
+            value={value ?? ""}
+            label={t("_entities:product.alias.label")}
+            placeholder={t("_entities:product.alias.placeholder")}
+            helperText={t("_entities:product.alias.helper")}
+            {...rest}
+          />
+        )}
+      />
     </>
   );
 }

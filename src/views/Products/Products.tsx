@@ -37,7 +37,18 @@ export function Products() {
   const manager = useManager();
 
   const { data, isLoading, error } = useProductsCommon();
-  const items = useMemo(() => (data ?? []).map(toCatalogRow), [data]);
+  // The alias is how the user knows the product; the receipt name goes below.
+  const items = useMemo(
+    () =>
+      (data ?? []).map((product) =>
+        toCatalogRow({
+          ...product,
+          name: product.alias || product.name,
+          subtitle: product.alias ? product.name : null,
+        }),
+      ),
+    [data],
+  );
 
   const addProduct = useAddProductDialog();
   const editProduct = useEditProductDialog();
