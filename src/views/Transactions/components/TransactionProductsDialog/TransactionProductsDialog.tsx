@@ -23,6 +23,7 @@ import { useProductsCommon } from "../../../../hooks/queries/useProductsCommon";
 // utils
 import {
   emptyTransactionProduct,
+  findProductByNameOrAlias,
   getTransactionProductErrorKeys,
   formatTransactionAmount,
   getTransactionProductsTotal,
@@ -111,11 +112,29 @@ export function TransactionProductsDialog(
                     )}`}
                     multiple={false}
                     createOption={{
-                      onCreate: (name) => onChange(newProductOption(name)),
-                      renderLabel: (name) =>
-                        t("_entities:transaction.products.product.create", {
+                      // Typing an exact alias or name offers the existing
+                      // product instead of creating a duplicate.
+                      onCreate: (name) =>
+                        onChange(
+                          findProductByNameOrAlias(products.data ?? [], name) ??
+                            newProductOption(name),
+                        ),
+                      renderLabel: (name) => {
+                        const existing = findProductByNameOrAlias(
+                          products.data ?? [],
                           name,
-                        }),
+                        );
+                        return existing
+                          ? t(
+                              "_entities:transaction.products.product.useExisting",
+                              {
+                                name: getProductLabel(existing),
+                              },
+                            )
+                          : t("_entities:transaction.products.product.create", {
+                              name,
+                            });
+                      },
                     }}
                     {...rest}
                   />

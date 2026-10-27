@@ -266,6 +266,17 @@ export const findByName = <TItem extends { name: string }>(
 ): TItem | undefined =>
   items.find((item) => normalizeName(item.name) === normalizeName(name));
 
+/** Catalog product whose name or alias matches, ignoring case and spaces. */
+export const findProductByNameOrAlias = (
+  products: CommonProductDto[],
+  name: string,
+): CommonProductDto | undefined =>
+  products.find(
+    (product) =>
+      normalizeName(product.name) === normalizeName(name) ||
+      (!!product.alias && normalizeName(product.alias) === normalizeName(name)),
+  );
+
 /**
  * Form values from a scanned receipt. Known provider/products are matched by
  * name; the rest become new options, created when the transaction is saved.

@@ -209,7 +209,8 @@
       "product": {
         "label": "Producto",
         "required": "El producto es requerido",
-        "create": "Crear «{{name}}»"
+        "create": "Crear «{{name}}»",
+        "useExisting": "Usar «{{name}}»"
       },
       "quantity": {
         "label": "Cantidad"
