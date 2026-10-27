@@ -30,5 +30,11 @@
 }
 
 .savings-interest-advanced {
-  @apply !flex-col !items-stretch !gap-4 pt-2;
+  @apply !flex-col !items-stretch !gap-6;
+}
+
+/* Room for the first floating label. A margin, not padding on the content:
+   padding stays visible when the accordion collapses to 0fr. */
+.savings-interest-advanced > :first-child {
+  @apply mt-4;
 }
