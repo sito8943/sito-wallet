@@ -38,7 +38,7 @@ export function ReceiptScanFab(props: ReceiptScanFabPropsType) {
         data-tooltip-content={label}
         aria-label={label}
         className={classNames(
-          "receipt-scan-fab fixed right-4 bottom-20 z-30 !h-12 !w-12 !min-w-0 !rounded-full !p-0 shadow-lg sm:hidden",
+          "receipt-scan-fab fixed right-4 bottom-5 z-30 !h-12 !w-12 !min-w-0 !rounded-full !p-0 shadow-lg sm:hidden",
           isScanning && "scanning",
         )}
       />
