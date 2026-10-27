@@ -242,7 +242,8 @@
       "personal": "Personal",
       "photo": "Photo",
       "data": "Data",
-      "security": "Security"
+      "security": "Security",
+      "appearance": "Appearance"
     },
     "actions": {
       "save": "Save changes",
@@ -256,14 +257,16 @@
       "photo": "Photo",
       "language": "Language",
       "hideDeletedEntities": "Hide deleted items",
-      "currentPassword": "Current password"
+      "currentPassword": "Current password",
+      "theme": "Theme"
     },
     "helper": {
       "photo": "Allowed types: JPG, PNG, WEBP. Max size: 5 MB.",
       "photoAdvice": "Please avoid uploading personal photos. We recommend using avatars or abstract images instead.",
       "language": "Choose the app language for your profile.",
       "hideDeletedEntities": "When enabled, deleted items will not be shown in list views.",
-      "changePassword": "For security, changing your password will sign you out of the current session."
+      "changePassword": "For security, changing your password will sign you out of the current session.",
+      "theme": "Saved on this device. \"System\" follows your device settings."
     },
     "messages": {
       "updated": "Profile updated successfully",
@@ -276,7 +279,12 @@
       "enabled": "Enabled",
       "disabled": "Disabled",
       "languageSpanish": "Spanish",
-      "languageEnglish": "English"
+      "languageEnglish": "English",
+      "theme": {
+        "system": "System",
+        "light": "Light",
+        "dark": "Dark"
+      }
     },
     "errors": {
       "nameRequired": "Name is required",

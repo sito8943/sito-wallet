@@ -135,3 +135,7 @@
 .profile-photo-fallback {
   @apply text-4xl text-text-muted;
 }
+
+.profile-section-appearance {
+  @apply flex flex-col gap-4;
+}

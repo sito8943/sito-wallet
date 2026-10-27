@@ -242,7 +242,8 @@
       "personal": "Personal",
       "photo": "Foto",
       "data": "Datos",
-      "security": "Seguridad"
+      "security": "Seguridad",
+      "appearance": "Apariencia"
     },
     "actions": {
       "save": "Guardar cambios",
@@ -256,14 +257,16 @@
       "photo": "Foto",
       "language": "Idioma",
       "hideDeletedEntities": "Ocultar elementos eliminados",
-      "currentPassword": "Contraseña actual"
+      "currentPassword": "Contraseña actual",
+      "theme": "Tema"
     },
     "helper": {
       "photo": "Tipos permitidos: JPG, PNG, WEBP. Tamaño máximo: 5 MB.",
       "photoAdvice": "Por favor, evita subir fotos personales. Te recomendamos usar avatares o imagenes abstractas.",
       "language": "Elige el idioma de la aplicación para tu perfil.",
       "hideDeletedEntities": "Si está activado, los elementos eliminados no se mostrarán en las listas.",
-      "changePassword": "Por seguridad, al cambiar la contraseña se cerrará tu sesión actual."
+      "changePassword": "Por seguridad, al cambiar la contraseña se cerrará tu sesión actual.",
+      "theme": "Se guarda en este dispositivo. \"Sistema\" sigue la configuración de tu dispositivo."
     },
     "messages": {
       "updated": "Perfil actualizado correctamente",
@@ -276,7 +279,12 @@
       "enabled": "Activo",
       "disabled": "Inactivo",
       "languageSpanish": "Español",
-      "languageEnglish": "Inglés"
+      "languageEnglish": "Inglés",
+      "theme": {
+        "system": "Sistema",
+        "light": "Claro",
+        "dark": "Oscuro"
+      }
     },
     "errors": {
       "nameRequired": "El nombre es requerido",
