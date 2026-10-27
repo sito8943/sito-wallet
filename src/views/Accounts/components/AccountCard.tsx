@@ -15,7 +15,7 @@ import { LastTransactions } from "./LastTransactions";
 import type { AccountCardPropsType } from "../types";
 
 // lib
-import { AccountType } from "lib";
+import { AccountType, supportsBankName } from "lib";
 
 // views
 import { Currency } from "views/Currencies/components/Currency";
@@ -53,9 +53,9 @@ export function AccountCard(props: AccountCardPropsType) {
   } = props;
   const deleted = !!deletedAt;
 
-  // Branded card visual only for Card-type accounts that name a known bank.
+  // Branded card visual only for Card/Saving accounts that name a known bank.
   const theme =
-    type === AccountType.Card && !deleted
+    supportsBankName(type) && !deleted
       ? getAccountCardTheme(bankName)
       : undefined;
 

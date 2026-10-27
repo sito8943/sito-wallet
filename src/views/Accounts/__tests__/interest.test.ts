@@ -96,6 +96,15 @@ describe("account form → DTO", () => {
     expect(dto.type).toBe(AccountType.Physical);
     expect(dto).toMatchObject(EMPTY_INTEREST_CONFIG);
   });
+
+  it("keeps the bank on saving accounts and drops it on physical ones", () => {
+    const withBank = { ...savingForm, bankName: "revolut" };
+
+    expect(formToAddDto(withBank).bankName).toBe("revolut");
+    expect(
+      formToAddDto({ ...withBank, type: AccountType.Physical }).bankName,
+    ).toBeUndefined();
+  });
 });
 
 describe("interest presets", () => {

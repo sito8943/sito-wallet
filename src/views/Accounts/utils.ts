@@ -8,20 +8,25 @@ import type {
   TransferTransactionDto,
   UpdateAccountDto,
 } from "lib";
-import { AccountType, isSavingAccountType, parseNullableNumber } from "lib";
+import {
+  AccountType,
+  isSavingAccountType,
+  parseNullableNumber,
+  supportsBankName,
+} from "lib";
 import type {
   AccountFormType,
   AccountInterestFormType,
   TransferFormType,
 } from "./types";
 
-// bankName only applies to Card accounts; strip it otherwise and drop empty
+// bankName only applies to Card and Saving accounts; strip it otherwise and drop empty
 // selections so we never persist a blank brand.
 const normalizeBankName = (
   type: AccountType,
   bankName?: string,
 ): string | undefined => {
-  if (type !== AccountType.Card) return undefined;
+  if (!supportsBankName(type)) return undefined;
   const trimmed = bankName?.trim();
   return trimmed ? trimmed : undefined;
 };

@@ -10,6 +10,12 @@ import { parseNullableNumber } from "./number";
 export const isSavingAccountType = (type: unknown): boolean =>
   parseNullableNumber(type) === AccountType.Saving;
 
+/** Account types that name a bank (and get its branded card visual). */
+export const supportsBankName = (type: unknown): boolean => {
+  const value = parseNullableNumber(type);
+  return value === AccountType.Card || value === AccountType.Saving;
+};
+
 /** Saving accounts only (pickers for savings-only features). */
 export const filterSavingAccounts = (
   accounts: CommonAccountDto[],

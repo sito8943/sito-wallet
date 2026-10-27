@@ -25,6 +25,7 @@ import {
   AccountType,
   ACCOUNT_BANK_OPTIONS,
   isSavingAccountType,
+  supportsBankName,
 } from "lib";
 
 // utils
@@ -73,7 +74,7 @@ export function AccountForm(props: AccountFormPropsType) {
   );
 
   const { type, id } = useWatch({ control });
-  const isCard = type === AccountType.Card;
+  const hasBank = supportsBankName(type);
   const isSaving = isSavingAccountType(type);
 
   return (
@@ -182,7 +183,7 @@ export function AccountForm(props: AccountFormPropsType) {
           )}
         />
       </div>
-      {isCard && (
+      {hasBank && (
         <Controller
           control={control}
           name="bankName"

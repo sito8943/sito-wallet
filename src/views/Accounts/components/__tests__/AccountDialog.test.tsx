@@ -173,6 +173,7 @@ vi.mock("lib", () => ({
   Tables: { Accounts: "accounts" },
   AccountType: { Physical: 0, Card: 1, Saving: 2 },
   isSavingAccountType: (type: unknown) => Number(type) === 2,
+  supportsBankName: (type: unknown) => [1, 2].includes(Number(type)),
   ACCOUNT_BANK_OPTIONS: [
     { id: 1, label: "Imagin" },
     { id: 2, label: "Caixa" },

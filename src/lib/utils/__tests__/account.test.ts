@@ -2,7 +2,11 @@ import { describe, expect, it } from "vitest";
 
 import type { CommonAccountDto } from "../../entities";
 import { AccountType } from "../../entities/account/AccountType";
-import { filterSavingAccounts, isSavingAccountType } from "../account";
+import {
+  filterSavingAccounts,
+  isSavingAccountType,
+  supportsBankName,
+} from "../account";
 import { parseNullableNumber } from "../number";
 
 describe("isSavingAccountType", () => {
@@ -42,5 +46,14 @@ describe("parseNullableNumber", () => {
     expect(parseNullableNumber(null)).toBeNull();
     expect(parseNullableNumber(undefined)).toBeNull();
     expect(parseNullableNumber("abc")).toBeNull();
+  });
+});
+
+describe("supportsBankName", () => {
+  it("allows a bank on Card and Saving accounts only", () => {
+    expect(supportsBankName(AccountType.Card)).toBe(true);
+    expect(supportsBankName(AccountType.Saving)).toBe(true);
+    expect(supportsBankName("2")).toBe(true);
+    expect(supportsBankName(AccountType.Physical)).toBe(false);
   });
 });
