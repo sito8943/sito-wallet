@@ -506,6 +506,11 @@
     "name": {
       "placeholder": "E.g. Milk",
       "unique": "A product with that name already exists"
+    },
+    "alias": {
+      "label": "Alias",
+      "placeholder": "E.g. The good milk",
+      "helper": "What you call it. The name stays the one on the receipt."
     }
   },
   "purchaseProvider": {

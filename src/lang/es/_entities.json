@@ -506,6 +506,11 @@
     "name": {
       "placeholder": "Ej: Leche",
       "unique": "Ya existe un producto con ese nombre"
+    },
+    "alias": {
+      "label": "Alias",
+      "placeholder": "Ej: Leche de la buena",
+      "helper": "Cómo lo identificas tú. El nombre sigue siendo el del ticket."
     }
   },
   "purchaseProvider": {

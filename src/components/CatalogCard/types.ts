@@ -7,6 +7,8 @@ import type { ActionType, BaseEntityDto } from "@sito/dashboard-app";
  */
 export interface CatalogRowDto extends BaseEntityDto {
   name: string;
+  /** Secondary line under the name (e.g. a product's receipt name). */
+  subtitle?: string | null;
   photo?: string | null;
 }
 
@@ -14,6 +16,7 @@ export type CatalogCommonItem = {
   id: number;
   name: string;
   updatedAt: Date;
+  subtitle?: string | null;
   photo?: string | null;
 };
 

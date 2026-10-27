@@ -15,3 +15,11 @@
 .catalog-card-photo-image {
   @apply h-full w-full object-cover;
 }
+
+.catalog-card-text {
+  @apply flex min-w-0 flex-col;
+}
+
+.catalog-card-subtitle {
+  @apply truncate text-xs text-text-muted;
+}

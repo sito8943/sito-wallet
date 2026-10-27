@@ -5,6 +5,7 @@ import type { FormDialogPropsType } from "@sito/dashboard-app";
 export interface ProductFormType extends FieldValues {
   id: number;
   name: string;
+  alias: string;
 }
 
 export type ProductFormPropsType = FormDialogPropsType<ProductFormType>;
