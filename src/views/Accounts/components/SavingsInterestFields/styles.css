@@ -1,0 +1,33 @@
+@reference "../../../../styles/variables.css";
+
+.savings-interest {
+  @apply flex flex-col gap-4 rounded-2xl border border-border p-3;
+}
+
+.savings-interest-title {
+  @apply text-sm font-semibold text-text-primary;
+}
+
+.savings-interest-hint {
+  @apply text-xs text-text-muted;
+}
+
+.savings-interest-actions {
+  @apply flex flex-wrap items-center justify-between gap-2;
+}
+
+.savings-interest-advanced-toggle {
+  @apply flex items-center gap-2 text-sm text-text-primary;
+}
+
+.savings-interest-advanced-chevron {
+  @apply transition-transform duration-300;
+}
+
+.savings-interest-advanced-chevron.open {
+  @apply rotate-180;
+}
+
+.savings-interest-advanced {
+  @apply !flex-col !items-stretch !gap-4 pt-2;
+}

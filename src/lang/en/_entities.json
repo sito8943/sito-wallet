@@ -146,6 +146,80 @@
       "placeholder": "Ex: 600",
       "required": "Balance is required",
       "greaterThan0": "Insufficient balance"
+    },
+    "interest": {
+      "title": "Interest",
+      "hint": "Interest is computed from the nominal rate; the AER is only used to validate the configuration.",
+      "defaultOption": "Default",
+      "rate": {
+        "label": "Nominal annual rate (NIR) %",
+        "placeholder": "Ex: 2.86",
+        "min": "The rate can't be negative"
+      },
+      "aer": {
+        "label": "AER %",
+        "placeholder": "Ex: 2.90"
+      },
+      "advanced": {
+        "show": "Advanced settings",
+        "hide": "Hide advanced settings"
+      },
+      "preset": {
+        "apply": "Apply the Revolut UK Instant Access settings",
+        "values": {
+          "revolutUkInstantAccess": "Revolut UK Instant Access"
+        }
+      },
+      "dayCount": {
+        "label": "Day count",
+        "values": {
+          "Act365": "ACT/365",
+          "ActAct": "ACT/ACT (365/366)",
+          "Act360": "ACT/360"
+        }
+      },
+      "payoutFrequency": {
+        "label": "Payout frequency",
+        "values": {
+          "Daily": "Daily",
+          "Monthly": "Monthly",
+          "Quarterly": "Quarterly",
+          "Annually": "Annually"
+        }
+      },
+      "payoutDelayDays": {
+        "label": "Days until payout",
+        "min": "Days can't be negative"
+      },
+      "compoundingFrequency": {
+        "label": "Compounding",
+        "values": {
+          "Daily": "Daily",
+          "Monthly": "Monthly",
+          "Quarterly": "Quarterly",
+          "Annually": "Annually",
+          "None": "No compounding"
+        }
+      },
+      "roundingStage": {
+        "label": "Rounding stage",
+        "values": {
+          "Daily": "Each day",
+          "Payout": "At payout"
+        }
+      },
+      "roundingMode": {
+        "label": "Rounding mode",
+        "values": {
+          "HalfUp": "Half up",
+          "HalfEven": "Half even",
+          "Down": "Truncate"
+        }
+      },
+      "roundingScale": {
+        "label": "Decimals",
+        "min": "Decimals can't be negative"
+      }
     }
   },
   "transaction": {

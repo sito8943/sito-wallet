@@ -146,6 +146,80 @@
       "placeholder": "ej: 600",
       "required": "El saldo es requerido",
       "greaterThan0": "Saldo insuficiente"
+    },
+    "interest": {
+      "title": "Intereses",
+      "hint": "El interés se calcula con el TIN; la TAE solo se usa para validar la configuración.",
+      "defaultOption": "Por defecto",
+      "rate": {
+        "label": "Interés nominal anual (TIN/NIR) %",
+        "placeholder": "Ej: 2.86",
+        "min": "El interés no puede ser negativo"
+      },
+      "aer": {
+        "label": "TAE (AER) %",
+        "placeholder": "Ej: 2.90"
+      },
+      "advanced": {
+        "show": "Configuración avanzada",
+        "hide": "Ocultar configuración avanzada"
+      },
+      "preset": {
+        "apply": "Aplicar la configuración de Revolut UK Instant Access",
+        "values": {
+          "revolutUkInstantAccess": "Revolut UK Instant Access"
+        }
+      },
+      "dayCount": {
+        "label": "Base de días",
+        "values": {
+          "Act365": "ACT/365",
+          "ActAct": "ACT/ACT (365/366)",
+          "Act360": "ACT/360"
+        }
+      },
+      "payoutFrequency": {
+        "label": "Frecuencia de abono",
+        "values": {
+          "Daily": "Diaria",
+          "Monthly": "Mensual",
+          "Quarterly": "Trimestral",
+          "Annually": "Anual"
+        }
+      },
+      "payoutDelayDays": {
+        "label": "Días hasta el abono",
+        "min": "Los días no pueden ser negativos"
+      },
+      "compoundingFrequency": {
+        "label": "Capitalización",
+        "values": {
+          "Daily": "Diaria",
+          "Monthly": "Mensual",
+          "Quarterly": "Trimestral",
+          "Annually": "Anual",
+          "None": "Sin capitalización"
+        }
+      },
+      "roundingStage": {
+        "label": "Momento del redondeo",
+        "values": {
+          "Daily": "Cada día",
+          "Payout": "Al abonar"
+        }
+      },
+      "roundingMode": {
+        "label": "Modo de redondeo",
+        "values": {
+          "HalfUp": "Mitad hacia arriba",
+          "HalfEven": "Mitad al par",
+          "Down": "Truncar"
+        }
+      },
+      "roundingScale": {
+        "label": "Decimales",
+        "min": "Los decimales no pueden ser negativos"
+      }
     }
   },
   "transaction": {
