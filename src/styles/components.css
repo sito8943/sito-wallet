@@ -24,7 +24,7 @@ a.primary {
 }
 
 .primary {
-  @apply text-primary;
+  @apply text-text-primary;
 }
 
 .secondary {
@@ -54,8 +54,9 @@ a.primary {
   @apply bg-quaternary;
 }
 
+/* Unlayered, so it also wins over the `text-primary` utility (libs too). */
 .text-primary {
-  @apply text-primary;
+  color: var(--color-text-primary);
 }
 
 .text-secondary {
@@ -115,7 +116,7 @@ a.primary {
 
 .account-action-icon,
 .transaction-action-icon {
-  @apply text-bg-primary;
+  @apply text-text-primary;
 }
 
 .transaction-category-card-title-row,

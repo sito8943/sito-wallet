@@ -23,7 +23,8 @@
 }
 
 select > option {
-  color: black !important;
+  color: var(--color-text) !important;
+  background-color: var(--color-base-light);
 }
 
 .autocomplete-suggestions-container {
@@ -71,7 +72,7 @@ select > option {
 }
 
 .filter-dropdown-submit {
-  @apply bg-bg-primary hover:bg-hover-primary text-base;
+  @apply bg-bg-primary hover:bg-hover-primary text-on-brand;
 }
 
 .filter-container {
@@ -123,15 +124,15 @@ select > option {
 }
 
 .button.outlined.primary:enabled:hover {
-  @apply bg-primary border-primary text-base;
+  @apply bg-primary border-primary text-on-brand;
 }
 
 .button.submit.primary {
-  @apply bg-bg-primary text-base;
+  @apply bg-bg-primary text-on-brand;
 }
 
 .button.submit.primary:enabled:hover {
-  @apply bg-primary text-base;
+  @apply bg-primary text-on-brand;
 }
 
 .button.outlined.secondary {
@@ -139,23 +140,23 @@ select > option {
 }
 
 .button.outlined.secondary:enabled:hover {
-  @apply bg-secondary border-secondary text-base;
+  @apply bg-secondary border-secondary text-on-brand;
 }
 
 .button.submit.secondary {
-  @apply bg-bg-secondary text-base;
+  @apply bg-bg-secondary text-on-brand;
 }
 
 .button.submit.secondary:enabled:hover {
-  @apply bg-secondary text-base;
+  @apply bg-secondary text-on-brand;
 }
 
 .button.submit.tertiary {
-  @apply bg-bg-tertiary text-base;
+  @apply bg-bg-tertiary text-on-brand;
 }
 
 .button.submit.tertiary:enabled:hover {
-  @apply bg-tertiary text-base;
+  @apply bg-tertiary text-on-brand;
 }
 
 .button.outlined.tertiary {
@@ -163,15 +164,15 @@ select > option {
 }
 
 .button.outlined.tertiary:enabled:hover {
-  @apply bg-tertiary border-tertiary text-base;
+  @apply bg-tertiary border-tertiary text-on-brand;
 }
 
 .button.submit.quaternary {
-  @apply bg-bg-quaternary text-base;
+  @apply bg-bg-quaternary text-on-brand;
 }
 
 .button.submit.quaternary:enabled:hover {
-  @apply bg-quaternary text-base;
+  @apply bg-quaternary text-on-brand;
 }
 
 .button.outlined.quaternary {
@@ -179,7 +180,7 @@ select > option {
 }
 
 .button.outlined.quaternary:enabled:hover {
-  @apply bg-quaternary border-quaternary text-base;
+  @apply bg-quaternary border-quaternary text-on-brand;
 }
 
 .filter-dropdown-backdrop.opened {
@@ -239,4 +240,29 @@ main,
 
 .select-input-label.input-label-normal {
   @apply whitespace-nowrap;
+}
+
+/* Dark mode: @sito/dashboard-app paints text on brand fills with
+   `--color-base-light`, which is a dark surface in this theme. Point those
+   foregrounds at `--color-on-brand` instead. */
+.dark .header,
+.dark .header h1,
+.dark .header .icon-button,
+.dark .navbar-menu,
+.dark .navbar-right .actions-container .actions-container-item .action,
+.dark .page-header,
+.dark .page-header .action,
+.dark .page-header-back,
+.dark .page-header-actions-mobile .actions-dropdown-trigger,
+.dark .top-banner--primary,
+.dark .top-banner--secondary,
+.dark .top-banner--tertiary,
+.dark .top-banner--quaternary,
+.dark .chip-main.chip-primary,
+.dark .chip-main.chip-secondary,
+.dark .button.submit.primary,
+.dark .button.submit.secondary,
+.dark .icon-button.submit.primary,
+.dark .icon-button.submit.secondary {
+  color: var(--color-on-brand);
 }

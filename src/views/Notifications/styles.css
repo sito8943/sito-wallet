@@ -29,7 +29,7 @@
 }
 
 .notifications-item-icon {
-  @apply mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bg-primary text-info;
+  @apply mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bg-primary text-on-brand;
 }
 
 .notifications-item-content {

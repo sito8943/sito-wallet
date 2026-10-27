@@ -20,6 +20,10 @@
   --color-text: #0d0d0d;
   --color-border: hsl(0 0% 80%);
   --color-text-muted: hsl(0 0% 30%);
+  /* brand used as text/accent on page surfaces (links, icons, logo) */
+  --color-text-primary: #041e42;
+  /* text on brand-filled surfaces (header, submit buttons, brand chips) */
+  --color-on-brand: hsl(0 0% 100%);
   /** Notification colors **/
   --color-bg-info: #0070ba;
   --color-info: #fbfbfb;
@@ -30,4 +34,51 @@
   --color-bg-error: hsl(0, 50%, 51%);
   --color-error: #fbfbfb;
   --breakpoint-xs: 28rem;
+}
+
+/* Class-based dark mode: `dark:` utilities follow `<html class="dark">`
+   (toggled by ThemeProvider), not the OS media query. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/** Dark theme — same token names, so every `bg-*`/`text-*` utility and the
+    @sito/dashboard-app theme flip automatically. Brand fills stay mid-tone
+    (light text on top, see `--color-on-brand` + dashboard.css); brand used as
+    text goes through `--color-text-primary`, which is lighter here.
+    Keep values hex: the balance chart appends alpha to them. **/
+.dark {
+  --color-primary: #1f4f99;
+  --color-bg-primary: #1a4285;
+  --color-hover-primary: #2d62b8;
+  --color-secondary: #cd212a;
+  --color-bg-secondary: #a51b22;
+  --color-hover-secondary: #e03a42;
+  --color-tertiary: #0a8a70;
+  --color-bg-tertiary: #08705b;
+  --color-hover-tertiary: #12a585;
+  --color-quaternary: #b87a1f;
+  --color-bg-quaternary: #9a6619;
+  --color-hover-quaternary: #d08e2a;
+  --color-text-primary: #8ab4f8;
+  --color-on-brand: #f1f5fb;
+  /* surfaces: base-dark = recessed, base = page, base-light = raised */
+  --color-base-dark: #0b0f16;
+  --color-base: #0f141c;
+  --color-base-light: #1a212c;
+  --color-text: #e6e9ef;
+  --color-border: #343d4b;
+  --color-text-muted: #a0a8b6;
+  /** Notification colors (text stays light on mid-tone fills) **/
+  --color-bg-info: #1f6fb0;
+  --color-info: #f1f5fb;
+  --color-bg-success: #1f8a55;
+  --color-success: #f1f5fb;
+  --color-bg-warning: #e8a33a;
+  --color-warning: #111111;
+  --color-bg-error: #c24a4a;
+  --color-error: #f1f5fb;
+  /* @sito/ui (dialogs) maps most of its tokens to ours; these two it doesn't */
+  --sito-ui-color-scheme: dark;
+  --sito-ui-color-text-muted: var(--color-text-muted);
+  --sito-ui-color-primary-text: var(--color-on-brand);
+  --sito-ui-color-secondary-text: var(--color-on-brand);
 }
