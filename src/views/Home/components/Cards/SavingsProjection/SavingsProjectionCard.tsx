@@ -51,12 +51,21 @@ export const SavingsProjectionCard = (props: SavingsProjectionPropsType) => {
     useState<CardConfigOverrideType | null>(null);
   const effectiveConfig = resolveCardConfig(config, configOverride);
 
-  const { account, accountId, horizon, currencySymbol } = useMemo(() => {
+  const {
+    account,
+    accountId,
+    horizon,
+    monthlyDeposit,
+    depositDay,
+    currencySymbol,
+  } = useMemo(() => {
     const parsed = parseFormConfig(effectiveConfig);
     return {
       account: parsed.account,
       accountId: parsed.account?.id,
       horizon: parsed.horizon,
+      monthlyDeposit: parsed.monthlyDeposit,
+      depositDay: parsed.depositDay,
       currencySymbol: parsed.account?.currency?.symbol ?? "",
     };
   }, [effectiveConfig]);
@@ -64,6 +73,8 @@ export const SavingsProjectionCard = (props: SavingsProjectionPropsType) => {
   const { data, isLoading, error } = useSavingsProjection({
     accountId,
     horizon,
+    monthlyDeposit,
+    depositDay,
   });
 
   const viewState = resolveViewState({ accountId, isLoading, error, data });
@@ -157,6 +168,9 @@ export const SavingsProjectionCard = (props: SavingsProjectionPropsType) => {
               creditedLabel={t(
                 "_pages:home.dashboard.savingsProjection.credited",
               )}
+              depositedLabel={t(
+                "_pages:home.dashboard.savingsProjection.deposited",
+              )}
               onMonthClick={openDailyBreakdown}
             />
             <p className="savings-projection-hint">
@@ -193,6 +207,8 @@ export const SavingsProjectionCard = (props: SavingsProjectionPropsType) => {
           <ActiveFilters
             account={formConfig.account}
             horizon={formConfig.horizon}
+            monthlyDeposit={formConfig.monthlyDeposit}
+            depositDay={formConfig.depositDay}
           />
         )}
       >
@@ -203,6 +219,8 @@ export const SavingsProjectionCard = (props: SavingsProjectionPropsType) => {
         onClose={closeDailyBreakdown}
         accountId={accountId}
         month={selectedMonth}
+        monthlyDeposit={monthlyDeposit}
+        depositDay={depositDay}
         locale={i18n.language}
         currencySymbol={currencySymbol}
       />

@@ -7,6 +7,8 @@ export type SavingsProjectionDayDto = {
   /** Interest accrued that day (full precision). */
   accrued: number;
   credited: number;
+  /** Deposit made that day (0 when none). */
+  deposited: number;
   closingBalance: number;
   accruedPending: number;
 };

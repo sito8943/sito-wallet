@@ -1,4 +1,9 @@
-import { SavingsProjectionHorizon } from "lib";
+import {
+  DEFAULT_SAVINGS_DEPOSIT_DAY,
+  SAVINGS_DEPOSIT_DAY_MAX,
+  SAVINGS_DEPOSIT_DAY_MIN,
+  SavingsProjectionHorizon,
+} from "lib";
 import type { SavingsProjectionFormType } from "./types";
 
 /** Horizon presets in display order. */
@@ -18,8 +23,16 @@ export const DEFAULT_SAVINGS_PROJECTION_HORIZON =
 export const defaultConfig: SavingsProjectionFormType = {
   account: null,
   horizon: DEFAULT_SAVINGS_PROJECTION_HORIZON,
+  monthlyDeposit: null,
+  depositDay: DEFAULT_SAVINGS_DEPOSIT_DAY,
   showFiltersAsBadge: false,
 };
+
+/** Deposit day options for the config dialog (1–31). */
+export const SAVINGS_DEPOSIT_DAYS: number[] = Array.from(
+  { length: SAVINGS_DEPOSIT_DAY_MAX - SAVINGS_DEPOSIT_DAY_MIN + 1 },
+  (_, index) => SAVINGS_DEPOSIT_DAY_MIN + index,
+);
 
 /** HTTP status the backend returns for non-Saving / rate-less accounts. */
 export const NOT_CONFIGURED_STATUS = 400;

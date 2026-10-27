@@ -4,14 +4,19 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWarning } from "@fortawesome/free-solid-svg-icons";
 
+// @sito/dashboard-app
+import { classNames } from "@sito/dashboard-app";
+
 // types
 import type { ProjectionSummaryPropsType } from "./types";
 
 // utils
 import {
   formatAmount,
+  formatDepositAmount,
   formatDeviation,
   formatRate,
+  hasDeposits,
   shouldWarnAer,
 } from "./utils";
 
@@ -22,16 +27,32 @@ export const ProjectionSummary = (props: ProjectionSummaryPropsType) => {
   const { t } = useTranslation();
 
   const hasAer = data.aer !== null && data.aer !== undefined;
+  const showDeposits = hasDeposits(data);
 
   return (
     <div className="savings-projection-summary">
-      <dl className="savings-projection-stats">
+      <dl
+        className={classNames(
+          "savings-projection-stats",
+          showDeposits && "with-deposits",
+        )}
+      >
         <div className="savings-projection-stat">
           <dt>{t("_pages:home.dashboard.savingsProjection.totalInterest")}</dt>
           <dd className="savings-projection-stat-value positive">
             +{formatAmount(data.totalInterest, locale)} {currencySymbol}
           </dd>
         </div>
+        {showDeposits && (
+          <div className="savings-projection-stat">
+            <dt>
+              {t("_pages:home.dashboard.savingsProjection.totalDeposits")}
+            </dt>
+            <dd className="savings-projection-stat-value">
+              {formatDepositAmount(data.totalDeposits, locale, currencySymbol)}
+            </dd>
+          </div>
+        )}
         <div className="savings-projection-stat">
           <dt>{t("_pages:home.dashboard.savingsProjection.endBalance")}</dt>
           <dd className="savings-projection-stat-value">

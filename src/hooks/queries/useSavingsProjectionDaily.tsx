@@ -16,6 +16,7 @@ import type {
   FilterSavingsProjectionDailyDto,
   SavingsProjectionDailyDto,
 } from "lib";
+import { toSavingsDepositFilter } from "lib";
 
 import { AccountsQueryKeys } from "./queryKeys/accountsQueryKeys";
 
@@ -26,8 +27,9 @@ export function useSavingsProjectionDaily(
     () => ({
       accountId: props.accountId ?? 0,
       month: props.month ?? "",
+      ...toSavingsDepositFilter(props.monthlyDeposit, props.depositDay),
     }),
-    [props.accountId, props.month],
+    [props.accountId, props.month, props.monthlyDeposit, props.depositDay],
   );
 
   const manager = useManager();

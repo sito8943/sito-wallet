@@ -244,8 +244,18 @@
           "earning": "Saldo que genera",
           "accrued": "Devengado",
           "credited": "Abonado",
-          "closing": "Saldo final"
-        }
+          "closing": "Saldo final",
+          "deposited": "Aporte"
+        },
+        "monthlyDepositLabel": "Aporte mensual",
+        "monthlyDepositLabelWithCurrency": "Aporte mensual ({{currency}})",
+        "monthlyDepositPlaceholder": "Opcional",
+        "monthlyDepositHelper": "Simula un ingreso fijo cada mes en la cuenta.",
+        "depositDayLabel": "Día del aporte",
+        "depositDayHelper": "Si el mes es más corto, el aporte se hace el último día.",
+        "depositFilter": "{{amount}} / mes (día {{day}})",
+        "totalDeposits": "Aportes",
+        "deposited": "Aporte"
       }
     }
   },

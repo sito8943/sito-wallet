@@ -9,13 +9,20 @@ import {
   CheckInput,
   FormDialog,
   SelectInput,
+  TextInput,
 } from "@sito/dashboard-app";
 
 // hooks
 import { useAccountsCommon } from "../../../../../hooks/queries/useAccountsCommon";
 
 // lib
-import { Tables, filterSavingAccounts } from "lib";
+import {
+  SAVINGS_MONTHLY_DEPOSIT_MAX,
+  Tables,
+  filterSavingAccounts,
+  parseNullableNumber,
+  resolveMonthlyDeposit,
+} from "lib";
 
 // types
 import type {
@@ -26,6 +33,7 @@ import type {
 // constants
 import {
   DEFAULT_SAVINGS_PROJECTION_HORIZON,
+  SAVINGS_DEPOSIT_DAYS,
   SAVINGS_PROJECTION_HORIZONS,
 } from "./constants";
 
@@ -55,7 +63,16 @@ export const ConfigFormDialog = (
     [t],
   );
 
+  const depositDayOptions = useMemo<Option[]>(
+    () => SAVINGS_DEPOSIT_DAYS.map((day) => ({ id: day, value: String(day) })),
+    [],
+  );
+
   const horizon = useWatch({ control, name: "horizon" });
+  const account = useWatch({ control, name: "account" });
+  const monthlyDeposit = useWatch({ control, name: "monthlyDeposit" });
+  const hasDeposit = resolveMonthlyDeposit(monthlyDeposit) !== null;
+  const currencySymbol = account?.currency?.symbol;
 
   useEffect(() => {
     if (setValue && horizon === undefined) {
@@ -106,6 +123,59 @@ export const ConfigFormDialog = (
           />
         )}
       />
+      <Controller
+        control={control}
+        name="monthlyDeposit"
+        render={({ field: { value, onChange, ...rest } }) => (
+          <TextInput
+            type="number"
+            min={0}
+            max={SAVINGS_MONTHLY_DEPOSIT_MAX}
+            step="0.01"
+            value={value ?? ""}
+            onChange={(e) => onChange(parseNullableNumber(e.target.value))}
+            label={
+              currencySymbol
+                ? t(
+                    "_pages:home.dashboard.savingsProjection.monthlyDepositLabelWithCurrency",
+                    { currency: currencySymbol },
+                  )
+                : t(
+                    "_pages:home.dashboard.savingsProjection.monthlyDepositLabel",
+                  )
+            }
+            placeholder={t(
+              "_pages:home.dashboard.savingsProjection.monthlyDepositPlaceholder",
+            )}
+            helperText={t(
+              "_pages:home.dashboard.savingsProjection.monthlyDepositHelper",
+            )}
+            {...rest}
+          />
+        )}
+      />
+      {hasDeposit && (
+        <Controller
+          control={control}
+          name="depositDay"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <SelectInput
+              required
+              options={depositDayOptions}
+              value={value}
+              onChange={(e) => onChange(Number(e.target.value))}
+              label={t(
+                "_pages:home.dashboard.savingsProjection.depositDayLabel",
+              )}
+              helperText={t(
+                "_pages:home.dashboard.savingsProjection.depositDayHelper",
+              )}
+              inputClassName="dashboard-card-select-input"
+              {...rest}
+            />
+          )}
+        />
+      )}
       <Controller
         control={control}
         name="showFiltersAsBadge"

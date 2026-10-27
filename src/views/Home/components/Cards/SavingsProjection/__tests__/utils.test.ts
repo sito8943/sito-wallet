@@ -7,10 +7,13 @@ import { SavingsProjectionViewState } from "../types";
 import {
   formToDto,
   formatAmount,
+  formatDepositAmount,
   formatDeviation,
   formatMonthLabel,
   formatRate,
   getActiveFiltersCount,
+  hasDailyDeposits,
+  hasDeposits,
   isNotConfiguredError,
   parseFormConfig,
   parseMonth,
@@ -19,7 +22,10 @@ import {
   shouldWarnAer,
   toAdjustBalanceAccount,
 } from "../utils";
-import { SAVINGS_PROJECTION_HORIZONS } from "../constants";
+import {
+  SAVINGS_DEPOSIT_DAYS,
+  SAVINGS_PROJECTION_HORIZONS,
+} from "../constants";
 
 const projection = (
   overrides: Partial<SavingsProjectionDto> = {},
@@ -37,12 +43,16 @@ const projection = (
   effectiveAnnualRate: 2.9009,
   aerDeviation: 0.0009,
   aerMatches: true,
+  monthlyDeposit: 0,
+  depositDay: 1,
+  totalDeposits: 0,
   points: [
     {
       month: "2026-10",
       openingBalance: 1000,
       accrued: 0.39,
       credited: 0.39,
+      deposited: 0,
       closingBalance: 1000.39,
       accruedPending: 0.08,
     },
@@ -83,6 +93,8 @@ describe("card config", () => {
       userId: 3,
       account,
       horizon: SavingsProjectionHorizon.ThreeYears,
+      monthlyDeposit: 50,
+      depositDay: 15,
       showFiltersAsBadge: true,
     });
 
@@ -91,16 +103,41 @@ describe("card config", () => {
     expect(parseFormConfig(dto.config)).toEqual({
       account,
       horizon: SavingsProjectionHorizon.ThreeYears,
+      monthlyDeposit: 50,
+      depositDay: 15,
       showFiltersAsBadge: true,
     });
+  });
+
+  it("stores no deposit for empty, zero or negative amounts", () => {
+    const base = parseFormConfig(null);
+    for (const monthlyDeposit of [null, 0, -10]) {
+      const config = JSON.parse(
+        formToDto({ ...base, monthlyDeposit, depositDay: 40 }).config,
+      ) as Record<string, unknown>;
+      expect(config.monthlyDeposit).toBeNull();
+      expect(config.depositDay).toBe(1);
+    }
+  });
+
+  it("sanitises stored deposit values", () => {
+    expect(
+      parseFormConfig('{"monthlyDeposit":"25.5","depositDay":31}'),
+    ).toMatchObject({ monthlyDeposit: 25.5, depositDay: 31 });
+    expect(
+      parseFormConfig('{"monthlyDeposit":-3,"depositDay":0}'),
+    ).toMatchObject({ monthlyDeposit: null, depositDay: 1 });
   });
 
   it("defaults empty or broken config", () => {
     expect(parseFormConfig(null)).toEqual({
       account: null,
       horizon: SavingsProjectionHorizon.OneYear,
+      monthlyDeposit: null,
+      depositDay: 1,
       showFiltersAsBadge: false,
     });
+    expect(parseFormConfig("{broken").monthlyDeposit).toBeNull();
     expect(parseFormConfig('{"horizon":"bad"}').horizon).toBe(
       SavingsProjectionHorizon.OneYear,
     );
@@ -115,6 +152,51 @@ describe("card config", () => {
         account: { id: 1, name: "S", currency: null },
       }),
     ).toBe(2);
+  });
+
+  it("counts the monthly deposit only when an amount > 0 is set", () => {
+    const base = parseFormConfig(null);
+    expect(getActiveFiltersCount({ ...base, monthlyDeposit: 0 })).toBe(1);
+    expect(getActiveFiltersCount({ ...base, monthlyDeposit: 50 })).toBe(2);
+  });
+
+  it("offers deposit days 1 to 31", () => {
+    expect(SAVINGS_DEPOSIT_DAYS).toHaveLength(31);
+    expect(SAVINGS_DEPOSIT_DAYS[0]).toBe(1);
+    expect(SAVINGS_DEPOSIT_DAYS[30]).toBe(31);
+  });
+});
+
+describe("deposits", () => {
+  it("shows the deposits stat only when something was deposited", () => {
+    expect(hasDeposits(projection())).toBe(false);
+    expect(hasDeposits(projection({ totalDeposits: 600 }))).toBe(true);
+  });
+
+  it("shows the daily deposit column only when a day has one", () => {
+    const day = {
+      date: "2026-11-01",
+      openingBalance: 1000,
+      earningBalance: 1000,
+      accrued: 0.08,
+      credited: 0,
+      deposited: 0,
+      closingBalance: 1000,
+      accruedPending: 0.08,
+    };
+    expect(hasDailyDeposits(undefined)).toBe(false);
+    expect(hasDailyDeposits({ month: "2026-11", days: [day] })).toBe(false);
+    expect(
+      hasDailyDeposits({
+        month: "2026-11",
+        days: [day, { ...day, date: "2026-11-02", deposited: 50 }],
+      }),
+    ).toBe(true);
+  });
+
+  it("formats the signed deposit amount with its currency", () => {
+    expect(formatDepositAmount(50, "en", "€")).toBe("+50.00 €");
+    expect(formatDepositAmount(50, "en", "")).toBe("+50.00");
   });
 });
 

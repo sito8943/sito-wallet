@@ -244,8 +244,18 @@
           "earning": "Earning balance",
           "accrued": "Accrued",
           "credited": "Credited",
-          "closing": "Closing"
-        }
+          "closing": "Closing",
+          "deposited": "Deposit"
+        },
+        "monthlyDepositLabel": "Monthly deposit",
+        "monthlyDepositLabelWithCurrency": "Monthly deposit ({{currency}})",
+        "monthlyDepositPlaceholder": "Optional",
+        "monthlyDepositHelper": "Simulates a fixed deposit into the account every month.",
+        "depositDayLabel": "Deposit day",
+        "depositDayHelper": "In shorter months the deposit is made on the last day.",
+        "depositFilter": "{{amount}} / month (day {{day}})",
+        "totalDeposits": "Deposits",
+        "deposited": "Deposit"
       }
     }
   },

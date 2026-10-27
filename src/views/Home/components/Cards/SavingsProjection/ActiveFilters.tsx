@@ -6,11 +6,14 @@ import { Chip } from "@sito/dashboard-app";
 // types
 import type { ActiveFiltersPropsType } from "./types";
 
+// utils
+import { formatDepositAmount } from "./utils";
+
 import "../styles.css";
 
 export const ActiveFilters = (props: ActiveFiltersPropsType) => {
-  const { account, horizon } = props;
-  const { t } = useTranslation();
+  const { account, horizon, monthlyDeposit, depositDay } = props;
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="dashboard-card-active-filters">
@@ -22,6 +25,22 @@ export const ActiveFilters = (props: ActiveFiltersPropsType) => {
           </p>
         }
       />
+      {monthlyDeposit !== null && monthlyDeposit > 0 && (
+        <Chip
+          text={
+            <p>
+              {t("_pages:home.dashboard.savingsProjection.depositFilter", {
+                amount: formatDepositAmount(
+                  monthlyDeposit,
+                  i18n.language,
+                  account?.currency?.symbol ?? "",
+                ),
+                day: depositDay,
+              })}
+            </p>
+          }
+        />
+      )}
     </div>
   );
 };

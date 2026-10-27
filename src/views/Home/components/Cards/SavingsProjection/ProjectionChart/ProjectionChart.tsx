@@ -43,6 +43,7 @@ export const ProjectionChart = (props: ProjectionChartPropsType) => {
     balanceLabel,
     accruedLabel,
     creditedLabel,
+    depositedLabel,
     onMonthClick,
   } = props;
 
@@ -96,6 +97,11 @@ export const ProjectionChart = (props: ProjectionChartPropsType) => {
               const point = points[items[0].dataIndex];
               if (!point) return [];
               return [
+                ...(point.deposited > 0
+                  ? [
+                      `${depositedLabel}: +${formatAmount(point.deposited, locale)} ${currencySymbol}`,
+                    ]
+                  : []),
                 `${accruedLabel}: ${formatAmount(point.accrued, locale, 4)} ${currencySymbol}`,
                 `${creditedLabel}: ${formatAmount(point.credited, locale)} ${currencySymbol}`,
               ];
@@ -121,6 +127,7 @@ export const ProjectionChart = (props: ProjectionChartPropsType) => {
       balanceLabel,
       accruedLabel,
       creditedLabel,
+      depositedLabel,
       textColor,
       gridColor,
       onMonthClick,

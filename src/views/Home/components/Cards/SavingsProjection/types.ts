@@ -23,12 +23,18 @@ export interface SavingsProjectionFormType
     FieldValues {
   account: CommonAccountDto | null;
   horizon: SavingsProjectionHorizon;
+  /** Simulated monthly deposit; null = no deposits. */
+  monthlyDeposit: number | null;
+  /** 1–31; shorter months deposit on their last day. */
+  depositDay: number;
   showFiltersAsBadge: boolean;
 }
 
 export type ActiveFiltersPropsType = {
   account: CommonAccountDto | null;
   horizon: SavingsProjectionHorizon;
+  monthlyDeposit: number | null;
+  depositDay: number;
 };
 
 /** What the card body renders. */

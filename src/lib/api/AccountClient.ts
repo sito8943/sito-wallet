@@ -25,7 +25,7 @@ import type {
   FilterSavingsProjectionDto,
   FilterSavingsProjectionDailyDto,
 } from "lib";
-import { parseJSONFile } from "lib";
+import { appendSavingsDepositParams, parseJSONFile } from "lib";
 
 // config
 import { config } from "../../config";
@@ -103,7 +103,10 @@ export default class AccountClient extends BaseClient<
   async savingsProjection(
     filters: FilterSavingsProjectionDto,
   ): Promise<SavingsProjectionDto> {
-    const searchParams = new URLSearchParams({ horizon: filters.horizon });
+    const searchParams = appendSavingsDepositParams(
+      new URLSearchParams({ horizon: filters.horizon }),
+      filters,
+    );
 
     const builtUrl = `${this.table}/${filters.accountId}/savings-projection?${searchParams.toString()}`;
 
@@ -118,7 +121,10 @@ export default class AccountClient extends BaseClient<
   async savingsProjectionDaily(
     filters: FilterSavingsProjectionDailyDto,
   ): Promise<SavingsProjectionDailyDto> {
-    const searchParams = new URLSearchParams({ month: filters.month });
+    const searchParams = appendSavingsDepositParams(
+      new URLSearchParams({ month: filters.month }),
+      filters,
+    );
 
     const builtUrl = `${this.table}/${filters.accountId}/savings-projection/daily?${searchParams.toString()}`;
 

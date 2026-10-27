@@ -13,7 +13,7 @@ import type { UseSavingsProjectionPropsType } from "./types.ts";
 
 // lib
 import type { FilterSavingsProjectionDto, SavingsProjectionDto } from "lib";
-import { SavingsProjectionHorizon } from "lib";
+import { SavingsProjectionHorizon, toSavingsDepositFilter } from "lib";
 
 import { AccountsQueryKeys } from "./queryKeys/accountsQueryKeys";
 
@@ -24,8 +24,9 @@ export function useSavingsProjection(
     () => ({
       accountId: props.accountId ?? 0,
       horizon: props.horizon ?? SavingsProjectionHorizon.OneYear,
+      ...toSavingsDepositFilter(props.monthlyDeposit, props.depositDay),
     }),
-    [props.accountId, props.horizon],
+    [props.accountId, props.horizon, props.monthlyDeposit, props.depositDay],
   );
 
   const manager = useManager();

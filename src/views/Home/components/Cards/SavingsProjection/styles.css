@@ -21,12 +21,18 @@
   @apply text-center;
 }
 
+/* Container so the stats grid adapts to the card width, not the viewport. */
 .savings-projection-summary {
-  @apply flex flex-col gap-2 w-full;
+  @apply @container flex flex-col gap-2 w-full;
 }
 
 .savings-projection-stats {
   @apply grid grid-cols-3 gap-2 max-xs:grid-cols-1;
+}
+
+/* 4 stats: 2×2 in narrow cards, one row when the card is wide enough. */
+.savings-projection-stats.with-deposits {
+  @apply grid-cols-2 @xl:grid-cols-4 max-xs:grid-cols-1;
 }
 
 /* Mobile: one line per stat (label left, value right) to save height. */

@@ -25,3 +25,5 @@ export * from "./SavingsProjectionDayDto";
 export * from "./SavingsProjectionDailyDto";
 export * from "./FilterSavingsProjectionDto";
 export * from "./FilterSavingsProjectionDailyDto";
+export * from "./SavingsProjectionDeposit";
+export * from "./SavingsProjectionDepositDto";

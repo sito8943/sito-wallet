@@ -1,9 +1,11 @@
 import type {
   CommonAccountDto,
+  SavingsProjectionDailyDto,
   SavingsProjectionDto,
   SavingsProjectionHorizon,
   UpdateDashboardCardConfigDto,
 } from "lib";
+import { resolveDepositDay, resolveMonthlyDeposit } from "lib";
 
 // types
 import type { AdjustBalanceAccountType } from "../../../../Accounts/types";
@@ -25,15 +27,20 @@ import {
 
 export const formToDto = (
   data: SavingsProjectionFormType,
-): UpdateDashboardCardConfigDto => ({
-  userId: data.userId,
-  id: data.id,
-  config: JSON.stringify({
-    account: data.account,
-    horizon: data.horizon,
-    showFiltersAsBadge: !!data.showFiltersAsBadge,
-  }),
-});
+): UpdateDashboardCardConfigDto => {
+  const monthlyDeposit = resolveMonthlyDeposit(data.monthlyDeposit);
+  return {
+    userId: data.userId,
+    id: data.id,
+    config: JSON.stringify({
+      account: data.account,
+      horizon: data.horizon,
+      monthlyDeposit,
+      depositDay: resolveDepositDay(data.depositDay),
+      showFiltersAsBadge: !!data.showFiltersAsBadge,
+    }),
+  };
+};
 
 /** Falls back to the default horizon for missing/unknown stored values. */
 export const resolveHorizon = (value: unknown): SavingsProjectionHorizon =>
@@ -49,6 +56,8 @@ export const parseFormConfig = (
       ...defaultConfig,
       ...parsed,
       horizon: resolveHorizon(parsed.horizon),
+      monthlyDeposit: resolveMonthlyDeposit(parsed.monthlyDeposit),
+      depositDay: resolveDepositDay(parsed.depositDay),
     };
   } catch (err) {
     console.error(err);
@@ -58,7 +67,19 @@ export const parseFormConfig = (
 
 export const getActiveFiltersCount = (
   formConfig: SavingsProjectionFormType,
-): number => 1 + (formConfig.account ? 1 : 0);
+): number =>
+  1 +
+  (formConfig.account ? 1 : 0) +
+  (resolveMonthlyDeposit(formConfig.monthlyDeposit) !== null ? 1 : 0);
+
+/** The summary shows the "Deposits" stat only when something was deposited. */
+export const hasDeposits = (data: SavingsProjectionDto): boolean =>
+  data.totalDeposits > 0;
+
+/** The daily table shows the "Deposit" column only when some day has one. */
+export const hasDailyDeposits = (
+  data: SavingsProjectionDailyDto | undefined,
+): boolean => !!data?.days.some((day) => day.deposited > 0);
 
 /** 400 = account is not Saving or has no interest rate configured. */
 export const isNotConfiguredError = (error: unknown): boolean =>
@@ -96,6 +117,13 @@ export const formatAmount = (
     minimumFractionDigits: AMOUNT_DECIMALS,
     maximumFractionDigits: Math.max(maxDecimals, AMOUNT_DECIMALS),
   }).format(value);
+
+/** Signed deposit amount with its currency, e.g. "+50.00 €". */
+export const formatDepositAmount = (
+  value: number,
+  locale: string,
+  currencySymbol: string,
+): string => `+${formatAmount(value, locale)} ${currencySymbol}`.trim();
 
 /** Percentage with up to 4 decimals, e.g. "2.9009 %" (value already in %). */
 export const formatRate = (value: number, locale: string): string =>

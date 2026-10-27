@@ -7,6 +7,8 @@ export type SavingsProjectionPointDto = {
   accrued: number;
   /** Interest credited during the month. */
   credited: number;
+  /** Deposits made during the month. */
+  deposited: number;
   /** Balance at the end of the month (or at the projection end date). */
   closingBalance: number;
   /** Accrued interest not yet credited at the end of the month. */

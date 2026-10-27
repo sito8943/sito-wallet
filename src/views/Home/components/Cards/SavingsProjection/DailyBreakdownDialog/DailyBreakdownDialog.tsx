@@ -17,21 +17,38 @@ import { DAILY_BREAKDOWN_DIALOG_CLASS_NAME } from "./constants";
 import { ACCRUED_MAX_DECIMALS } from "../constants";
 
 // utils
-import { formatAmount, formatDayLabel, formatMonthLabel } from "../utils";
+import {
+  formatAmount,
+  formatDayLabel,
+  formatMonthLabel,
+  hasDailyDeposits,
+} from "../utils";
 
 import "./styles.css";
 
 export const DailyBreakdownDialog = (props: DailyBreakdownDialogPropsType) => {
-  const { open, onClose, accountId, month, locale, currencySymbol } = props;
+  const {
+    open,
+    onClose,
+    accountId,
+    month,
+    monthlyDeposit,
+    depositDay,
+    locale,
+    currencySymbol,
+  } = props;
   const { t } = useTranslation();
 
   // Lazy: only fetch while the dialog is open for a given month.
   const { data, isLoading, error } = useSavingsProjectionDaily({
     accountId,
     month: open ? month : undefined,
+    monthlyDeposit,
+    depositDay,
   });
 
   const days = data?.days ?? [];
+  const showDeposits = hasDailyDeposits(data);
 
   return (
     <Dialog
@@ -69,6 +86,13 @@ export const DailyBreakdownDialog = (props: DailyBreakdownDialogPropsType) => {
                   <th scope="col">
                     {t("_pages:home.dashboard.savingsProjection.daily.opening")}
                   </th>
+                  {showDeposits && (
+                    <th scope="col">
+                      {t(
+                        "_pages:home.dashboard.savingsProjection.daily.deposited",
+                      )}
+                    </th>
+                  )}
                   <th scope="col">
                     {t("_pages:home.dashboard.savingsProjection.daily.earning")}
                   </th>
@@ -93,6 +117,12 @@ export const DailyBreakdownDialog = (props: DailyBreakdownDialogPropsType) => {
                   >
                     <td>{formatDayLabel(day.date, locale)}</td>
                     <td>{formatAmount(day.openingBalance, locale)}</td>
+                    {showDeposits && (
+                      <td>
+                        {day.deposited > 0 && "+"}
+                        {formatAmount(day.deposited, locale)}
+                      </td>
+                    )}
                     <td>{formatAmount(day.earningBalance, locale)}</td>
                     <td>
                       {formatAmount(day.accrued, locale, ACCRUED_MAX_DECIMALS)}
