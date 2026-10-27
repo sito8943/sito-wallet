@@ -5,3 +5,4 @@ export * from "./useAssignTransactionCategory";
 export * from "./useTransactionsMobileFiltersDialog";
 export * from "./useWeeklyTransactionsList";
 export * from "./useReceiptScan";
+export * from "./useQuickAddTransaction";

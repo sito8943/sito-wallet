@@ -27,11 +27,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // hooks
 import {
-  useAddTransaction,
   useEditTransaction,
   useAssignTransactionAccountAction,
   useAssignTransactionCategoryAction,
-  useReceiptScan,
+  useQuickAddTransaction,
 } from "./hooks";
 import { useAddAccountDialog } from "../Accounts/hooks";
 import { useEditTransactionCategoryDialog } from "../TransactionCategories/hooks";
@@ -60,9 +59,6 @@ import {
 } from "./components";
 import { AddAccountDialog } from "../Accounts";
 import { EditTransactionCategoryDialog } from "../TransactionCategories/components";
-
-// utils
-import { addEmptyTransaction } from "./utils";
 
 // lib
 import type {
@@ -253,8 +249,9 @@ export function Transactions() {
     ...TransactionsQueryKeys.all(),
   });
 
-  const addTransaction = useAddTransaction({
-    account: selectedAccount as CommonAccountDto,
+  // A scanned receipt opens "new transaction" already filled in.
+  const { addTransaction, receiptScan } = useQuickAddTransaction({
+    account: (selectedAccount as CommonAccountDto) ?? null,
   });
 
   const editTransaction = useEditTransaction();
@@ -455,20 +452,6 @@ export function Transactions() {
   const pageToolbar = useMemo(() => {
     return [exportTransactions.action(), importTransactions.action()];
   }, [exportTransactions, importTransactions]);
-
-  // A scanned receipt opens "new transaction" already filled in.
-  const receiptScan = useReceiptScan({
-    onDraft: useCallback(
-      (values) =>
-        addTransaction.openDialog({
-          values: {
-            ...addEmptyTransaction(selectedAccount ?? null),
-            ...values,
-          },
-        }),
-      [addTransaction, selectedAccount],
-    ),
-  });
 
   // On mobile the scan is a FAB; on desktop it's a toolbar action.
   const desktopToolbar = useMemo(
