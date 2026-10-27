@@ -298,4 +298,23 @@ describe("TransactionCard", () => {
 
     expect(onDelete).toHaveBeenCalledWith(baseTransaction);
   });
+  it("marks an auto-only category name so mobile can hide it", () => {
+    const { rerender } = render(
+      <TransactionCard
+        {...baseTransaction}
+        category={{ ...baseTransaction.category, auto: true }}
+        actions={[]}
+      />,
+    );
+
+    expect(
+      screen.getByText(/_entities:transactionCategory\.name\.init/),
+    ).toHaveClass("transaction-card-meta-category--auto");
+
+    rerender(<TransactionCard {...baseTransaction} actions={[]} />);
+
+    expect(screen.getByText(/Food/)).not.toHaveClass(
+      "transaction-card-meta-category--auto",
+    );
+  });
 });
