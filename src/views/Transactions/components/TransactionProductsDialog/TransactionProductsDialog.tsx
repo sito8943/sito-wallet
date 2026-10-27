@@ -173,7 +173,7 @@ export function TransactionProductsDialog(
           </div>
         ))}
       </div>
-      <div className="transaction-products-dialog-actions">
+      <div className="dialog-actions transaction-products-dialog-actions">
         <div className="transaction-products-dialog-footer">
           <Button
             type="button"

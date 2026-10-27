@@ -240,28 +240,3 @@ main,
 .select-input-label.input-label-normal {
   @apply whitespace-nowrap;
 }
-
-/* Package bug: an unconditional `width: auto` rule ships after the
-   mobile full-screen rule and cancels its `width: 100vw`, so full-screen
-   dialogs collapse to content width on mobile (visible while loading). */
-@media not all and (min-width: 40rem) {
-  .dialog.sito-ui-dialog.dialog-mobile-full-screen {
-    width: 100vw;
-  }
-}
-
-/* Package bug: dashboard-app resets dialogs to `max-height: none;
-   overflow: visible`, so a dialog taller than the viewport (long forms,
-   product lists) grows past the screen with no way to scroll. */
-.dialog.sito-ui-dialog {
-  @apply max-h-[calc(100dvh-2rem)] overflow-y-auto;
-  /* The @sito/ui sticky header paints this color behind itself; match the
-     dialog background (white by default). */
-  --sito-ui-color-surface: var(--color-base);
-}
-
-@media not all and (min-width: 40rem) {
-  .dialog.sito-ui-dialog.dialog-mobile-full-screen {
-    @apply h-dvh max-h-dvh;
-  }
-}

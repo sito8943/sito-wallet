@@ -27,15 +27,15 @@
 }
 
 .transaction-products-dialog-footer {
-  @apply mt-4 flex items-center justify-between gap-2;
+  @apply flex items-center justify-between gap-2;
 }
 
 .transaction-products-dialog-total {
   @apply text-sm text-text-muted;
 }
 
-/* Sticky like @sito/ui dialog actions: the dialog is the scroll container
-   and has 1.25rem (p-5) of padding, which the negative offsets cancel. */
+/* Uses dashboard-app's sticky `.dialog-actions` (pinned to the dialog's
+   bottom with its background); here it stacks two rows instead of one. */
 .transaction-products-dialog-actions {
-  @apply sticky -bottom-5 z-[1] -mb-5 bg-base pb-5;
+  @apply flex-col items-stretch;
 }
