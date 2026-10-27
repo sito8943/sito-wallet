@@ -1,0 +1,65 @@
+@reference "../../../../../styles/variables.css";
+
+.savings-projection-card {
+  @apply !h-auto overflow-hidden;
+}
+
+.savings-projection-content {
+  @apply flex flex-col gap-3 w-full;
+}
+
+.savings-projection-empty {
+  @apply flex flex-col items-center gap-3 text-text-muted text-sm text-center py-6;
+}
+
+.savings-projection-hint,
+.savings-projection-config-hint {
+  @apply text-xs text-text-muted;
+}
+
+.savings-projection-hint {
+  @apply text-center;
+}
+
+/* Container so the stats grid adapts to the card width, not the viewport. */
+.savings-projection-summary {
+  @apply @container flex flex-col gap-2 w-full;
+}
+
+.savings-projection-stats {
+  @apply grid grid-cols-3 gap-2 max-xs:grid-cols-1;
+}
+
+/* 4 stats: 2×2 in narrow cards, one row when the card is wide enough. */
+.savings-projection-stats.with-deposits {
+  @apply grid-cols-2 @xl:grid-cols-4 max-xs:grid-cols-1;
+}
+
+/* Mobile: one line per stat (label left, value right) to save height. */
+.savings-projection-stat {
+  @apply flex flex-col gap-0.5 rounded-xl bg-base p-2 max-xs:flex-row max-xs:items-center max-xs:justify-between max-xs:gap-2;
+}
+
+.savings-projection-stat dt {
+  @apply text-xs text-text-muted;
+}
+
+.savings-projection-stat-value {
+  @apply flex flex-col text-sm font-semibold text-text;
+}
+
+.savings-projection-stat-value.positive {
+  @apply text-text-primary;
+}
+
+.savings-projection-stat-sub {
+  @apply text-xs font-normal text-text-muted max-xs:hidden;
+}
+
+.savings-projection-warning {
+  @apply flex items-center gap-2 text-xs bg-bg-warning text-warning p-2 rounded-xl;
+}
+
+.savings-projection-actions {
+  @apply flex items-center justify-end gap-1;
+}

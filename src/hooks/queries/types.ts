@@ -16,6 +16,7 @@ import type {
   FilterTransactionTypeResumeDto,
   GetSubscriptionRenewalsQuery,
   GetAccountByIdQueryDto,
+  SavingsProjectionHorizon,
 } from "lib";
 
 export type UseFetchPropsType<TRow, TFilterDto = BaseFilterDto> = {
@@ -75,4 +76,21 @@ export type UseBalanceHistoryPropsType = {
   from?: string;
   to?: string;
   granularity?: BalanceHistoryGranularity;
+};
+
+/** Optional monthly deposit; only sent when the amount is > 0. */
+export type UseSavingsDepositPropsType = {
+  monthlyDeposit?: number | null;
+  depositDay?: number;
+};
+
+export type UseSavingsProjectionPropsType = UseSavingsDepositPropsType & {
+  accountId?: number;
+  horizon?: SavingsProjectionHorizon;
+};
+
+export type UseSavingsProjectionDailyPropsType = UseSavingsDepositPropsType & {
+  accountId?: number;
+  /** YYYY-MM; the query stays idle while undefined. */
+  month?: string;
 };

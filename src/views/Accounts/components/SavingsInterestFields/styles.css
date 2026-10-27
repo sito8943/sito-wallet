@@ -1,0 +1,40 @@
+@reference "../../../../styles/variables.css";
+
+.savings-interest {
+  @apply flex flex-col gap-4 pt-4;
+}
+
+/* Rates side by side; stacked on narrow screens so labels don't wrap. */
+.savings-interest-rates {
+  @apply grid grid-cols-2 gap-x-2 gap-y-6 max-xs:grid-cols-1;
+}
+
+.savings-interest-hint {
+  @apply text-xs text-text-muted;
+}
+
+.savings-interest-actions {
+  @apply flex flex-wrap items-center justify-between gap-2;
+}
+
+.savings-interest-advanced-toggle {
+  @apply flex items-center gap-2 text-sm text-text-primary;
+}
+
+.savings-interest-advanced-chevron {
+  @apply transition-transform duration-300;
+}
+
+.savings-interest-advanced-chevron.open {
+  @apply rotate-180;
+}
+
+.savings-interest-advanced {
+  @apply !flex-col !items-stretch !gap-6;
+}
+
+/* Room for the first floating label. A margin, not padding on the content:
+   padding stays visible when the accordion collapses to 0fr. */
+.savings-interest-advanced > :first-child {
+  @apply mt-4;
+}

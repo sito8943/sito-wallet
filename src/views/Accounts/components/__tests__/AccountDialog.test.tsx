@@ -171,7 +171,9 @@ vi.mock("hooks/queries/useCurrenciesCommon", () => ({
 
 vi.mock("lib", () => ({
   Tables: { Accounts: "accounts" },
-  AccountType: { Physical: 0, Card: 1 },
+  AccountType: { Physical: 0, Card: 1, Saving: 2 },
+  isSavingAccountType: (type: unknown) => Number(type) === 2,
+  supportsBankName: (type: unknown) => [1, 2].includes(Number(type)),
   ACCOUNT_BANK_OPTIONS: [
     { id: 1, label: "Imagin" },
     { id: 2, label: "Caixa" },
@@ -194,6 +196,10 @@ vi.mock("lib", () => ({
   },
   isAdminSession: (account?: { admin?: boolean | null }) =>
     account?.admin === true,
+}));
+
+vi.mock("../SavingsInterestField", () => ({
+  SavingsInterestField: () => <div data-testid="savings-interest-field" />,
 }));
 
 vi.mock("../utils", () => ({
@@ -222,10 +228,12 @@ function AccountFormWrapper({
   open,
   setValue: externalSetValue,
   isLoading = false,
+  type = 0,
 }: {
   open: boolean;
   setValue?: ReturnType<typeof useForm>["setValue"];
   isLoading?: boolean;
+  type?: number;
 }) {
   const form = useForm({
     defaultValues: {
@@ -233,7 +241,7 @@ function AccountFormWrapper({
       userId: 0,
       name: "",
       balance: "",
-      type: 0,
+      type,
       currency: null,
       description: "",
     },
@@ -344,6 +352,22 @@ describe("AccountForm", () => {
     });
 
     expect(setValue).not.toHaveBeenCalled();
+  });
+
+  it("hides the interest section for non-saving accounts", () => {
+    render(<AccountFormWrapper open={true} type={0} />, {
+      wrapper: makeWrapper(),
+    });
+
+    expect(screen.queryByTestId("savings-interest-field")).toBeNull();
+  });
+
+  it("shows the interest section for saving accounts", () => {
+    render(<AccountFormWrapper open={true} type={2} />, {
+      wrapper: makeWrapper(),
+    });
+
+    expect(screen.getByTestId("savings-interest-field")).toBeInTheDocument();
   });
 });
 

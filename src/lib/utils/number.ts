@@ -12,3 +12,15 @@ export const parseFiniteNumber = (value: unknown, fallback = 0): number => {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : fallback;
 };
+
+/**
+ * Coerces a raw (form) value to a finite number, returning `null` for
+ * null/undefined, blank strings or values that do not parse.
+ */
+export const parseNullableNumber = (value: unknown): number | null => {
+  if (value === null || value === undefined) return null;
+  if (typeof value === "string" && value.trim().length === 0) return null;
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+};

@@ -337,6 +337,10 @@ export function Transactions() {
     entity: Tables.Transactions,
     fileProcessor: handleTransactionProcess,
     mutationFn: (data) => manager.Transactions.import(data),
+    // Imported transactions move account balances (and savings projections).
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ ...AccountsQueryKeys.all() });
+    },
     ...TransactionsQueryKeys.all(),
   });
 

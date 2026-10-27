@@ -10,7 +10,11 @@ import type {
 } from "@sito/dashboard-app";
 
 // lib
-import type { AccountDto, CommonAccountDto } from "lib";
+import type {
+  AccountDto,
+  AccountInterestConfigDto,
+  CommonAccountDto,
+} from "lib";
 
 export interface AccountCardPropsType extends Omit<
   Partial<AccountDto>,
@@ -32,9 +36,25 @@ export interface AccountCardPropsType extends Omit<
   hideDescription?: boolean;
 }
 
+/** Raw form value: inputs/selects emit strings, DTOs bring numbers. */
+export type AccountInterestFormValue = number | string | null | undefined;
+
+/** Interest fields as held by the account form (coerced on submit). */
+export type AccountInterestFormType = {
+  [K in keyof AccountInterestConfigDto]?: AccountInterestFormValue;
+};
+
 export interface AccountFormType
   extends
-    Omit<AccountDto, "deletedAt" | "createdAt" | "updatedAt" | "user">,
+    Omit<
+      AccountDto,
+      | "deletedAt"
+      | "createdAt"
+      | "updatedAt"
+      | "user"
+      | keyof AccountInterestConfigDto
+    >,
+    AccountInterestFormType,
     FieldValues {
   userId: number;
 }
@@ -50,9 +70,16 @@ export interface AdjustBalanceFormType {
   description: string;
 }
 
+/** What the adjust-balance dialog needs; callers without a full AccountDto
+ * (e.g. dashboard cards) can pass just these. */
+export type AdjustBalanceAccountType = Pick<
+  AccountDto,
+  "id" | "balance" | "currency"
+>;
+
 export interface AdjustBalanceDialogPropsType extends TriggerFormDialogPropsType<AdjustBalanceFormType> {
   confirmationProps?: ConfirmationDialogPropsType;
-  selectedAccount: AccountDto | null;
+  selectedAccount: AdjustBalanceAccountType | null;
 }
 
 export interface TransferFormType extends FieldValues {

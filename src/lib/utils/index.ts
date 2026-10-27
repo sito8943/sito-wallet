@@ -15,6 +15,8 @@ export * from "./photo";
 export * from "./image";
 export * from "./theme";
 export * from "./product";
+export * from "./account";
+export * from "./savingsProjection";
 
 export const randomBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);

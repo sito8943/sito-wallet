@@ -20,10 +20,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { AccountFormPropsType } from "../types";
 
 // lib
-import { Tables, AccountType, ACCOUNT_BANK_OPTIONS } from "lib";
+import {
+  Tables,
+  AccountType,
+  ACCOUNT_BANK_OPTIONS,
+  isSavingAccountType,
+  supportsBankName,
+} from "lib";
 
 // utils
 import { icons } from "./utils";
+
+// components
+import { SavingsInterestField } from "./SavingsInterestField";
 
 // hooks
 import { useCurrenciesCommon } from "hooks/queries/useCurrenciesCommon";
@@ -65,7 +74,8 @@ export function AccountForm(props: AccountFormPropsType) {
   );
 
   const { type, id } = useWatch({ control });
-  const isCard = type === AccountType.Card;
+  const hasBank = supportsBankName(type);
+  const isSaving = isSavingAccountType(type);
 
   return (
     <>
@@ -137,7 +147,7 @@ export function AccountForm(props: AccountFormPropsType) {
               required
               options={typeOptions}
               value={value}
-              onChange={(e) => onChange(e.target.value)}
+              onChange={(e) => onChange(Number(e.target.value))}
               label={t("_entities:account.type.label")}
               inputClassName="account-form-type-input"
               {...rest}
@@ -173,7 +183,7 @@ export function AccountForm(props: AccountFormPropsType) {
           )}
         />
       </div>
-      {isCard && (
+      {hasBank && (
         <Controller
           control={control}
           name="bankName"
@@ -188,6 +198,13 @@ export function AccountForm(props: AccountFormPropsType) {
               {...rest}
             />
           )}
+        />
+      )}
+      {isSaving && (
+        <SavingsInterestField
+          control={control}
+          setValue={setValue}
+          isLoading={isLoading}
         />
       )}
       <Controller

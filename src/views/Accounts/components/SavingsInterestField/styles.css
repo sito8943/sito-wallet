@@ -1,0 +1,25 @@
+@reference "../../../../styles/variables.css";
+
+.savings-interest-field {
+  @apply flex items-center justify-between gap-2 rounded-lg border-2 border-border/40 p-3;
+}
+
+.savings-interest-field > .button {
+  @apply shrink-0;
+}
+
+.savings-interest-field-info {
+  @apply flex flex-col gap-0.5;
+}
+
+.savings-interest-field-title {
+  @apply text-sm font-medium text-text;
+}
+
+.savings-interest-field-summary {
+  @apply text-sm text-text-muted;
+}
+
+.savings-interest-field-error {
+  @apply text-sm text-error;
+}

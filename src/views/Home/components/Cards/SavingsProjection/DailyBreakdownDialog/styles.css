@@ -1,0 +1,38 @@
+@reference "../../../../../../styles/variables.css";
+
+.savings-projection-daily-dialog {
+  @apply sm:max-h-[calc(100vh-4rem)] sm:overflow-hidden;
+}
+
+.savings-projection-daily-content {
+  @apply mt-2 flex min-h-0 flex-1 flex-col;
+}
+
+.savings-projection-daily-loading {
+  @apply flex min-h-40 flex-1 items-center justify-center py-10;
+}
+
+.savings-projection-daily-scroll {
+  @apply min-h-0 flex-1 overflow-auto pb-4 sm:max-h-[60vh];
+}
+
+.savings-projection-daily-table {
+  @apply w-full border-collapse text-xs text-text;
+}
+
+.savings-projection-daily-table th {
+  @apply sticky top-0 bg-base-light px-2 py-2 text-end font-semibold text-text-muted whitespace-nowrap;
+}
+
+.savings-projection-daily-table th:first-child,
+.savings-projection-daily-table td:first-child {
+  @apply text-start;
+}
+
+.savings-projection-daily-table td {
+  @apply border-t border-border px-2 py-1.5 text-end tabular-nums whitespace-nowrap;
+}
+
+.savings-projection-daily-table tr.credited td {
+  @apply text-text-primary font-semibold;
+}

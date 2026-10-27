@@ -6,4 +6,5 @@ export enum DashboardCardType {
   BalanceHistory = 4,
   LastTransactions = 5,
   CategoryAverage = 6,
+  SavingsProjection = 7,
 }

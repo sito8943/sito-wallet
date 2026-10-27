@@ -17,10 +17,10 @@ import { AccountsQueryKeys, TransactionsQueryKeys } from "hooks";
 import { useManager } from "providers";
 
 // lib
-import type { AccountDto, AdjustBalanceDto, TransactionDto } from "lib";
+import type { AdjustBalanceDto, TransactionDto } from "lib";
 
 // types
-import type { AdjustBalanceFormType } from "../types";
+import type { AdjustBalanceAccountType, AdjustBalanceFormType } from "../types";
 import {
   adjustBalanceDefaultValues,
   adjustBalanceFormToDto,
@@ -33,9 +33,8 @@ export const useAdjustBalanceMutation = () => {
   const manager = useManager();
   const queryClient = useQueryClient();
 
-  const [selectedAccount, setSelectedAccount] = useState<AccountDto | null>(
-    null,
-  );
+  const [selectedAccount, setSelectedAccount] =
+    useState<AdjustBalanceAccountType | null>(null);
 
   const formDialog = usePostDialog<
     AdjustBalanceDto,
@@ -69,7 +68,7 @@ export const useAdjustBalanceMutation = () => {
   });
 
   const handleOpen = useCallback(
-    (record: AccountDto) => {
+    (record: AdjustBalanceAccountType) => {
       setSelectedAccount(record);
       formDialog.openDialog();
     },
@@ -83,6 +82,8 @@ export const useAdjustBalanceMutation = () => {
   return {
     ...formDialog,
     action,
+    /** Opens the dialog without a table action (e.g. from a dashboard card). */
+    openForAccount: handleOpen,
     selectedAccount,
   };
 };

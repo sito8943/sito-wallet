@@ -4,9 +4,10 @@ import type { BaseEntityDto, CommonUserDto } from "@sito/dashboard-app";
 // lib
 import type { CommonCurrencyDto } from "lib";
 import type { AccountType } from "./AccountType";
+import type { AccountInterestConfigDto } from "./AccountInterestConfigDto";
 import type { TransactionDto } from "../transaction/TransactionDto";
 
-export interface AccountDto extends BaseEntityDto {
+export interface AccountDto extends BaseEntityDto, AccountInterestConfigDto {
   name: string;
   description: string;
   currency: CommonCurrencyDto | null;
