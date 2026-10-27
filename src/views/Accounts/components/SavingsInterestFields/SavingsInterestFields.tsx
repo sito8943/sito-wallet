@@ -75,11 +75,8 @@ export function SavingsInterestFields(props: SavingsInterestFieldsPropsType) {
   );
 
   return (
-    <fieldset className="savings-interest">
-      <legend className="savings-interest-title">
-        {t("_entities:account.interest.title")}
-      </legend>
-      <div className="account-form-row">
+    <div className="savings-interest">
+      <div className="savings-interest-rates">
         <Controller
           control={control}
           name="interestRate"
@@ -230,6 +227,6 @@ export function SavingsInterestFields(props: SavingsInterestFieldsPropsType) {
           />
         </div>
       </Accordion>
-    </fieldset>
+    </div>
   );
 }

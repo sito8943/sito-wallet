@@ -31,7 +31,7 @@ import {
 import { icons } from "./utils";
 
 // components
-import { SavingsInterestFields } from "./SavingsInterestFields";
+import { SavingsInterestField } from "./SavingsInterestField";
 
 // hooks
 import { useCurrenciesCommon } from "hooks/queries/useCurrenciesCommon";
@@ -200,7 +200,7 @@ export function AccountForm(props: AccountFormPropsType) {
         />
       )}
       {isSaving && (
-        <SavingsInterestFields
+        <SavingsInterestField
           control={control}
           setValue={setValue}
           isLoading={isLoading}

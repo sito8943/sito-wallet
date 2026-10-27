@@ -197,8 +197,8 @@ vi.mock("lib", () => ({
     account?.admin === true,
 }));
 
-vi.mock("../SavingsInterestFields", () => ({
-  SavingsInterestFields: () => <div data-testid="savings-interest-fields" />,
+vi.mock("../SavingsInterestField", () => ({
+  SavingsInterestField: () => <div data-testid="savings-interest-field" />,
 }));
 
 vi.mock("../utils", () => ({
@@ -358,7 +358,7 @@ describe("AccountForm", () => {
       wrapper: makeWrapper(),
     });
 
-    expect(screen.queryByTestId("savings-interest-fields")).toBeNull();
+    expect(screen.queryByTestId("savings-interest-field")).toBeNull();
   });
 
   it("shows the interest section for saving accounts", () => {
@@ -366,7 +366,7 @@ describe("AccountForm", () => {
       wrapper: makeWrapper(),
     });
 
-    expect(screen.getByTestId("savings-interest-fields")).toBeInTheDocument();
+    expect(screen.getByTestId("savings-interest-field")).toBeInTheDocument();
   });
 });
 

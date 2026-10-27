@@ -1,11 +1,12 @@
 @reference "../../../../styles/variables.css";
 
 .savings-interest {
-  @apply flex flex-col gap-4 rounded-2xl border border-border p-3;
+  @apply flex flex-col gap-4 pt-4;
 }
 
-.savings-interest-title {
-  @apply text-sm font-semibold text-text-primary;
+/* Rates side by side; stacked on narrow screens so labels don't wrap. */
+.savings-interest-rates {
+  @apply grid grid-cols-2 gap-x-2 gap-y-6 max-xs:grid-cols-1;
 }
 
 .savings-interest-hint {

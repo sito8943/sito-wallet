@@ -152,7 +152,7 @@
       "hint": "El interés se calcula con el TIN; la TAE solo se usa para validar la configuración.",
       "defaultOption": "Por defecto",
       "rate": {
-        "label": "Interés nominal anual (TIN/NIR) %",
+        "label": "TIN (NIR) %",
         "placeholder": "Ej: 2.86",
         "min": "El interés no puede ser negativo"
       },
@@ -219,7 +219,14 @@
       "roundingScale": {
         "label": "Decimales",
         "min": "Los decimales no pueden ser negativos"
-      }
+      },
+      "notConfigured": "Sin configurar",
+      "summary": "TIN {{rate}}% · TAE {{aer}}%",
+      "summaryRate": "TIN {{rate}}%",
+      "invalid": "Revisa la configuración de intereses",
+      "configure": "Configurar",
+      "edit": "Editar",
+      "done": "Listo"
     }
   },
   "transaction": {
