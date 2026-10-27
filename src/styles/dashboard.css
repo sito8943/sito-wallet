@@ -283,3 +283,11 @@ main,
 .dark .stroke-base {
   stroke: var(--color-on-brand);
 }
+
+/* Keyboard-highlighted option: dashboard-app hardcodes slate-200 (light),
+   so in dark mode the light option text vanished on it. Match the hover
+   surface, which follows the theme. */
+.dark .select-input-option-item.highlighted,
+.dark .autocomplete-suggestion-item.highlighted {
+  background-color: var(--color-base-dark);
+}
