@@ -291,3 +291,10 @@ main,
 .dark .autocomplete-suggestion-item.highlighted {
   background-color: var(--color-base-dark);
 }
+
+/* Dropdowns (z-30) sat under dashboard-app's sticky `.dialog-actions` (z-40),
+   so a list opened near the bottom of a dialog got cut off. Float them above. */
+.dialog .select-input-options-container,
+.dialog .autocomplete-suggestions-container {
+  z-index: 50;
+}
