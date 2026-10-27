@@ -127,7 +127,8 @@
       "required": "Type is required",
       "values": {
         "Physical": "Physical",
-        "Card": "Digital"
+        "Card": "Digital",
+        "Saving": "Savings"
       }
     },
     "bank": {

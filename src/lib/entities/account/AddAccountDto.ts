@@ -1,6 +1,7 @@
-import type { AccountType } from "lib";
+import type { AccountType } from "./AccountType";
+import type { AccountInterestConfigDto } from "./AccountInterestConfigDto";
 
-export interface AddAccountDto {
+export interface AddAccountDto extends AccountInterestConfigDto {
   name: string;
   balance: number;
   description: string;

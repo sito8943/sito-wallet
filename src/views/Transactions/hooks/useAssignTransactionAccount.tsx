@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "@tanstack/react-query";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,7 +14,7 @@ import { usePostDialog } from "@sito/dashboard-app";
 import { useManager } from "providers";
 
 // hooks
-import { TransactionsQueryKeys } from "hooks";
+import { AccountsQueryKeys, TransactionsQueryKeys } from "hooks";
 
 // lib
 import type { AssignTransactionAccountDto, TransactionDto } from "lib";
@@ -32,6 +33,7 @@ export function useAssignTransactionAccountAction(): UseActionDialog<
   const { t } = useTranslation();
 
   const manager = useManager();
+  const queryClient = useQueryClient();
 
   const dialog = usePostDialog<
     AssignTransactionAccountDto,
@@ -45,6 +47,11 @@ export function useAssignTransactionAccountAction(): UseActionDialog<
       "_pages:transactions.actions.assignAccount.successMessage",
     ),
     title: t("_pages:transactions.actions.assignAccount.title"),
+    // Moving transactions between accounts changes both balances (and any
+    // savings projection built on them).
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ ...AccountsQueryKeys.all() });
+    },
     ...TransactionsQueryKeys.all(),
   });
 

@@ -1,14 +1,20 @@
-import { faCreditCard, faMoneyBill } from "@fortawesome/free-solid-svg-icons";
+import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCreditCard,
+  faMoneyBill,
+  faPiggyBank,
+} from "@fortawesome/free-solid-svg-icons";
 
 // lib
-import { ACCOUNT_BANK_NAME } from "lib";
+import { ACCOUNT_BANK_NAME, AccountType } from "lib";
 
 // types
 import type { AccountCardTheme } from "./types";
 
-export const icons = {
-  0: faMoneyBill,
-  1: faCreditCard,
+export const icons: Record<AccountType, IconDefinition> = {
+  [AccountType.Physical]: faMoneyBill,
+  [AccountType.Card]: faCreditCard,
+  [AccountType.Saving]: faPiggyBank,
 };
 
 // Per-bank brand palette for the account card. Ported from SitoWallet native

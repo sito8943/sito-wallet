@@ -16,6 +16,7 @@ import type {
   FilterTransactionTypeResumeDto,
   GetSubscriptionRenewalsQuery,
   GetAccountByIdQueryDto,
+  SavingsProjectionHorizon,
 } from "lib";
 
 export type UseFetchPropsType<TRow, TFilterDto = BaseFilterDto> = {
@@ -75,4 +76,15 @@ export type UseBalanceHistoryPropsType = {
   from?: string;
   to?: string;
   granularity?: BalanceHistoryGranularity;
+};
+
+export type UseSavingsProjectionPropsType = {
+  accountId?: number;
+  horizon?: SavingsProjectionHorizon;
+};
+
+export type UseSavingsProjectionDailyPropsType = {
+  accountId?: number;
+  /** YYYY-MM; the query stays idle while undefined. */
+  month?: string;
 };

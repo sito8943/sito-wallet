@@ -20,6 +20,10 @@ import type {
   BalanceHistoryDto,
   FilterBalanceHistoryDto,
   GetAccountByIdQueryDto,
+  SavingsProjectionDto,
+  SavingsProjectionDailyDto,
+  FilterSavingsProjectionDto,
+  FilterSavingsProjectionDailyDto,
 } from "lib";
 import { parseJSONFile } from "lib";
 
@@ -89,6 +93,36 @@ export default class AccountClient extends BaseClient<
     const builtUrl = `${this.table}/${filters.accountId}/balance-history?${searchParams.toString()}`;
 
     return await this.api.doQuery<BalanceHistoryDto>(
+      builtUrl,
+      Methods.GET,
+      undefined,
+      this.api.defaultTokenAcquirer(),
+    );
+  }
+
+  async savingsProjection(
+    filters: FilterSavingsProjectionDto,
+  ): Promise<SavingsProjectionDto> {
+    const searchParams = new URLSearchParams({ horizon: filters.horizon });
+
+    const builtUrl = `${this.table}/${filters.accountId}/savings-projection?${searchParams.toString()}`;
+
+    return await this.api.doQuery<SavingsProjectionDto>(
+      builtUrl,
+      Methods.GET,
+      undefined,
+      this.api.defaultTokenAcquirer(),
+    );
+  }
+
+  async savingsProjectionDaily(
+    filters: FilterSavingsProjectionDailyDto,
+  ): Promise<SavingsProjectionDailyDto> {
+    const searchParams = new URLSearchParams({ month: filters.month });
+
+    const builtUrl = `${this.table}/${filters.accountId}/savings-projection/daily?${searchParams.toString()}`;
+
+    return await this.api.doQuery<SavingsProjectionDailyDto>(
       builtUrl,
       Methods.GET,
       undefined,
