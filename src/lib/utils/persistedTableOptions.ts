@@ -10,6 +10,23 @@ export type PersistedTableState = {
   filters: Record<string, unknown>;
 };
 
+/** Sorting a view falls back to when the user hasn't picked one. */
+export type PersistedTableSortingDefaults = {
+  sortingBy: string;
+  sortingOrder: string;
+};
+
+/**
+ * `TableOptionsProvider`'s own default sort. No view offers it as a choice,
+ * so a saved `id` only means "never picked" and gets the view's default.
+ */
+export const TABLE_PROVIDER_SORTING_BY = "id";
+
+export const DEFAULT_TABLE_SORTING: PersistedTableSortingDefaults = {
+  sortingBy: TABLE_PROVIDER_SORTING_BY,
+  sortingOrder: "DESC",
+};
+
 const buildKey = (view: string, tabId: string | number): string =>
   `${config.tableOptions}:${view}:${tabId}`;
 

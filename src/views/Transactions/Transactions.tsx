@@ -83,6 +83,9 @@ import {
 // providers
 import { useRegisterBottomNavAction, useManager } from "providers";
 
+// constants
+import { TRANSACTIONS_DEFAULT_SORTING } from "./constants";
+
 // styles
 import "./styles.css";
 
@@ -182,7 +185,13 @@ export function Transactions() {
     }
   }, [accounts, tabValue]);
 
-  usePersistedTableOptions("transactions", selectedAccount?.id);
+  // Newest first by transaction date (the table provider defaults to id,
+  // i.e. creation order, which drifts as soon as a date is edited).
+  usePersistedTableOptions(
+    "transactions",
+    selectedAccount?.id,
+    TRANSACTIONS_DEFAULT_SORTING,
+  );
 
   const addAccount = useAddAccountDialog();
 

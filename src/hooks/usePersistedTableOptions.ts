@@ -1,7 +1,13 @@
 import { useEffect, useRef, useCallback } from "react";
 import { useTableOptions } from "@sito/dashboard-app";
 
-import { saveTableOptions, loadTableOptions } from "lib";
+import {
+  DEFAULT_TABLE_SORTING,
+  TABLE_PROVIDER_SORTING_BY,
+  saveTableOptions,
+  loadTableOptions,
+} from "lib";
+import type { PersistedTableSortingDefaults } from "lib";
 
 /**
  * Persists table filters and sorting per view+tab in localStorage.
@@ -10,6 +16,7 @@ import { saveTableOptions, loadTableOptions } from "lib";
 export function usePersistedTableOptions(
   view: string,
   tabId: string | number | undefined,
+  defaultSorting: PersistedTableSortingDefaults = DEFAULT_TABLE_SORTING,
 ) {
   const {
     filters,
@@ -44,9 +51,17 @@ export function usePersistedTableOptions(
       isRestoring.current = true;
 
       if (saved) {
-        setSortingBy(saved.sortingBy);
+        const pickedSorting =
+          !!saved.sortingBy && saved.sortingBy !== TABLE_PROVIDER_SORTING_BY;
+        setSortingBy(
+          pickedSorting ? saved.sortingBy : defaultSorting.sortingBy,
+        );
         setSortingOrder(
-          saved.sortingOrder as Parameters<typeof setSortingOrder>[0],
+          (pickedSorting
+            ? saved.sortingOrder
+            : defaultSorting.sortingOrder) as Parameters<
+            typeof setSortingOrder
+          >[0],
         );
 
         // Rebuild filters in the format onFilterApply expects
@@ -60,8 +75,10 @@ export function usePersistedTableOptions(
         onFilterApply(filtersForApply);
       } else {
         // No saved state — reset to defaults
-        setSortingBy("id");
-        setSortingOrder("DESC" as Parameters<typeof setSortingOrder>[0]);
+        setSortingBy(defaultSorting.sortingBy);
+        setSortingOrder(
+          defaultSorting.sortingOrder as Parameters<typeof setSortingOrder>[0],
+        );
         clearFilters();
       }
 
@@ -70,6 +87,7 @@ export function usePersistedTableOptions(
     },
     [
       view,
+      defaultSorting,
       setSortingBy,
       setSortingOrder,
       onFilterApply,
