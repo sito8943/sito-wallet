@@ -267,29 +267,10 @@ main,
   color: var(--color-on-brand);
 }
 
-/* The sticky dialog header also carries @sito/ui's `.sito-ui-dialog__header`
-   (surface = base-light), which wins over dashboard-app's `.dialog-header`
-   (base) by source order, so it stood out against the dialog body (base).
-   Pin header and actions to the dialog's own background. */
-.dialog .dialog-header,
-.dialog .sito-ui-dialog__header,
-.dialog .dialog-actions,
-.dialog .sito-ui-dialog-actions {
-  background-color: var(--color-base);
-}
-
 /* Spinner inside primary submit buttons (`color="stroke-base"` in the lib):
    `--color-base` is dark in this theme, so it vanished on the brand fill. */
 .dark .stroke-base {
   stroke: var(--color-on-brand);
-}
-
-/* Keyboard-highlighted option: dashboard-app hardcodes slate-200 (light),
-   so in dark mode the light option text vanished on it. Match the hover
-   surface, which follows the theme. */
-.dark .select-input-option-item.highlighted,
-.dark .autocomplete-suggestion-item.highlighted {
-  background-color: var(--color-base-dark);
 }
 
 /* Dropdowns (z-30) sat under dashboard-app's sticky `.dialog-actions` (z-40),
