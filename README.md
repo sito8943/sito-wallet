@@ -33,6 +33,7 @@ Keys are read in `src/config.ts`, with a sample in `_env.example`.
 Main keys:
 
 - `VITE_API_URL`: API base URL
+- `VITE_AUTH_URL`: sito-auth base URL (sign-in, session, refresh, admin users). Defaults to `VITE_API_URL`
 - `VITE_THIS_URL`: public app URL
 - User/state `VITE_*`: `BASIC_KEY`, `CACHE`, `VALIDATION_COOKIE`, `RECOVERING_COOKIE`, `USER`, `ACCEPT_COOKIE`, `DECLINE_COOKIE`, `LANGUAGE`, `REMEMBER`, `ONBOARDING`, `GUEST_MODE`, `RECENT_SEARCHES`
 - `VITE_SUPABASE_CO`, `VITE_SUPABASE_ANON`: Supabase credentials
