@@ -38,11 +38,13 @@ export default class SubscriptionClient extends BaseClient<
   ImportPreviewSubscriptionDto
 > {
   constructor() {
-    super(Tables.Subscriptions, config.apiUrl, config.auth.user, true, {
-      rememberKey: config.auth.remember,
-      refreshTokenKey: config.auth.refreshTokenKey,
-      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-    });
+    super(
+      Tables.Subscriptions,
+      config.apiUrl,
+      config.auth.user,
+      true,
+      config.auth.clientConfig,
+    );
   }
 
   async renewals(

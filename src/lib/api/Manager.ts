@@ -38,14 +38,11 @@ export class Manager extends IManager {
   purchaseProviders: PurchaseProviderClient = new PurchaseProviderClient();
   users: UserClient = new UserClient();
   userEntityConfigs: UserEntityConfigClient = new UserEntityConfigClient();
+  // Sign-in, session, refresh and passwords live in sito-auth.
   authApi: WalletAuthApiClient = new AuthApiClient(
-    config.apiUrl,
+    config.authUrl,
     config.auth.user,
-    {
-      rememberKey: config.auth.remember,
-      refreshTokenKey: config.auth.refreshTokenKey,
-      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-    },
+    config.auth.clientConfig,
     {
       endpoints: {
         confirmEmailFallback: "auth/email/confirm/verify",
@@ -54,11 +51,7 @@ export class Manager extends IManager {
   );
 
   constructor() {
-    super(config.apiUrl, config.auth.user, {
-      rememberKey: config.auth.remember,
-      refreshTokenKey: config.auth.refreshTokenKey,
-      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-    });
+    super(config.authUrl, config.auth.user, config.auth.clientConfig);
   }
 
   get TransactionCategories(): TransactionCategoryClient {

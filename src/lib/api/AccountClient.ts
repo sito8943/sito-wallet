@@ -42,11 +42,13 @@ export default class AccountClient extends BaseClient<
   /**
    */
   constructor() {
-    super(Tables.Accounts, config.apiUrl, config.auth.user, true, {
-      rememberKey: config.auth.remember,
-      refreshTokenKey: config.auth.refreshTokenKey,
-      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-    });
+    super(
+      Tables.Accounts,
+      config.apiUrl,
+      config.auth.user,
+      true,
+      config.auth.clientConfig,
+    );
   }
 
   async getById(

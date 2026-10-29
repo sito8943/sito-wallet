@@ -64,11 +64,7 @@ export default class ProfileClient {
     config.auth.user,
     true,
     undefined,
-    {
-      rememberKey: config.auth.remember,
-      refreshTokenKey: config.auth.refreshTokenKey,
-      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-    },
+    config.auth.clientConfig,
   );
 
   async create(data: AddProfileDto): Promise<number> {

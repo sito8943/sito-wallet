@@ -28,11 +28,13 @@ export default class DebtClient extends BaseClient<
   ImportPreviewDebtDto
 > {
   constructor() {
-    super(Tables.Debts, config.apiUrl, config.auth.user, true, {
-      rememberKey: config.auth.remember,
-      refreshTokenKey: config.auth.refreshTokenKey,
-      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-    });
+    super(
+      Tables.Debts,
+      config.apiUrl,
+      config.auth.user,
+      true,
+      config.auth.clientConfig,
+    );
   }
 
   async cancel(debtId: number): Promise<number> {

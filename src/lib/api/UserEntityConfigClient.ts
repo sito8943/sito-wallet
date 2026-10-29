@@ -16,11 +16,7 @@ export default class UserEntityConfigClient {
     config.auth.user,
     true,
     undefined,
-    {
-      rememberKey: config.auth.remember,
-      refreshTokenKey: config.auth.refreshTokenKey,
-      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-    },
+    config.auth.clientConfig,
   );
 
   async getAll(): Promise<UserEntityConfigDto[]> {

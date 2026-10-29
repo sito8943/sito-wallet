@@ -2,6 +2,7 @@ import type { AppFeatures } from "./lib/api/featureFlags/types";
 
 const {
   VITE_API_URL,
+  VITE_AUTH_URL,
   VITE_THIS_URL,
   VITE_LANGUAGE,
   VITE_BASIC_KEY,
@@ -85,9 +86,13 @@ const featureFlagsDefaults: AppFeatures = {
 };
 
 const serverUrl = new URL(VITE_API_URL).origin;
+// sito-auth (shared Sito accounts). Defaults to the API server for setups
+// that serve both behind one URL.
+const authUrl = VITE_AUTH_URL || VITE_API_URL;
 
 export const config = {
   apiUrl: VITE_API_URL,
+  authUrl,
   serverUrl,
   thisUrl: VITE_THIS_URL,
   language: VITE_LANGUAGE,
@@ -123,5 +128,12 @@ export const config = {
     refreshTokenKey: authRefreshTokenKey,
     accessTokenExpiresAtKey: authAccessTokenExpiresAtKey,
     accountSnapshotKey: authAccountSnapshotKey,
+    /** Shared by every API client: same token storage, refresh on sito-auth. */
+    clientConfig: {
+      rememberKey: authRememberKey,
+      refreshTokenKey: authRefreshTokenKey,
+      accessTokenExpiresAtKey: authAccessTokenExpiresAtKey,
+      refreshEndpoint: new URL("auth/refresh", authUrl).toString(),
+    },
   },
 };
