@@ -160,11 +160,13 @@ export default class TransactionClient extends BaseClient<
   /**
    */
   constructor() {
-    super(Tables.Transactions, config.apiUrl, config.auth.user, true, {
-      rememberKey: config.auth.remember,
-      refreshTokenKey: config.auth.refreshTokenKey,
-      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-    });
+    super(
+      Tables.Transactions,
+      config.apiUrl,
+      config.auth.user,
+      true,
+      config.auth.clientConfig,
+    );
   }
 
   async transfer(

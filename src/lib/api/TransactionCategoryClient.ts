@@ -30,11 +30,13 @@ export default class TransactionCategoryClient extends BaseClient<
   /**
    */
   constructor() {
-    super(Tables.TransactionCategories, config.apiUrl, config.auth.user, true, {
-      rememberKey: config.auth.remember,
-      refreshTokenKey: config.auth.refreshTokenKey,
-      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-    });
+    super(
+      Tables.TransactionCategories,
+      config.apiUrl,
+      config.auth.user,
+      true,
+      config.auth.clientConfig,
+    );
   }
 
   async processImport(

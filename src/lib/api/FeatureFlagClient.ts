@@ -18,11 +18,7 @@ export default class FeatureFlagClient {
     config.auth.user,
     true,
     undefined,
-    {
-      rememberKey: config.auth.remember,
-      refreshTokenKey: config.auth.refreshTokenKey,
-      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-    },
+    config.auth.clientConfig,
   );
 
   async getFeatures(): Promise<AppFeaturesPayload> {

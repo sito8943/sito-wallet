@@ -22,10 +22,12 @@ export default class ProductClient extends BaseClient<
   number
 > {
   constructor() {
-    super(Tables.Products, config.apiUrl, config.auth.user, true, {
-      rememberKey: config.auth.remember,
-      refreshTokenKey: config.auth.refreshTokenKey,
-      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-    });
+    super(
+      Tables.Products,
+      config.apiUrl,
+      config.auth.user,
+      true,
+      config.auth.clientConfig,
+    );
   }
 }

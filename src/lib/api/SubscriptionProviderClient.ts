@@ -28,11 +28,13 @@ export default class SubscriptionProviderClient extends BaseClient<
   ImportPreviewSubscriptionProviderDto
 > {
   constructor() {
-    super(Tables.SubscriptionProviders, config.apiUrl, config.auth.user, true, {
-      rememberKey: config.auth.remember,
-      refreshTokenKey: config.auth.refreshTokenKey,
-      accessTokenExpiresAtKey: config.auth.accessTokenExpiresAtKey,
-    });
+    super(
+      Tables.SubscriptionProviders,
+      config.apiUrl,
+      config.auth.user,
+      true,
+      config.auth.clientConfig,
+    );
   }
 
   async updatePhoto(id: number, file: File): Promise<SubscriptionProviderDto> {
