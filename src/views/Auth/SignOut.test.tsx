@@ -10,10 +10,13 @@ const mockQueryClientClear = vi.fn();
 const mockNavigate = vi.fn();
 
 vi.mock("@sito/dashboard-app", () => ({
-  SplashScreen: () => <div data-testid="splash-screen" />,
   useAuth: () => ({
     logoutUser: mockLogoutUser,
   }),
+}));
+
+vi.mock("components", () => ({
+  SplashScreen: () => <div data-testid="splash-screen" />,
 }));
 
 vi.mock("providers", () => ({

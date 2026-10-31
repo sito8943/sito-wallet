@@ -106,7 +106,6 @@ vi.mock("@sito/dashboard-app", () => ({
   useNotification: () => ({
     showErrorNotification: vi.fn(),
   }),
-  SplashScreen: () => <div data-testid="splash-screen" />,
   BaseLinkPropsType: class {},
 }));
 
@@ -123,6 +122,8 @@ vi.mock("hooks", () => ({
 }));
 
 vi.mock("components", () => ({
+  SplashScreen: ({ visible = true }: { visible?: boolean }) =>
+    visible ? <div data-testid="splash-screen" /> : null,
   SearchModal: () => <div data-testid="search-modal" />,
   OfflineBanner: () => <div data-testid="offline-banner" />,
   QueryError: ({ error }: { error?: Error }) => (

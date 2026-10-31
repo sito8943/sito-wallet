@@ -1,8 +1,7 @@
 import { Suspense } from "react";
 
 // components
-import { SplashScreen } from "@sito/dashboard-app";
-import { UpdateDialog } from "components";
+import { SplashScreen, UpdateDialog } from "components";
 
 // hooks
 import { useAppSession } from "./hooks/useAppSession";
@@ -15,13 +14,18 @@ function App() {
   const loading = useAppSession();
   useSeo();
 
-  if (loading) return <SplashScreen />;
-
+  // The splash stays mounted over the app and fades out once the session
+  // is resolved, instead of being swapped out abruptly.
   return (
-    <Suspense fallback={<SplashScreen />}>
-      <Routes />
-      <UpdateDialog />
-    </Suspense>
+    <>
+      <SplashScreen visible={loading} />
+      {!loading && (
+        <Suspense fallback={<SplashScreen />}>
+          <Routes />
+          <UpdateDialog />
+        </Suspense>
+      )}
+    </>
   );
 }
 

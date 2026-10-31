@@ -13,7 +13,6 @@ const mockClearPersistedPublicSessionAccount = vi.fn();
 const mockUseSeo = vi.fn();
 
 vi.mock("@sito/dashboard-app", () => ({
-  SplashScreen: () => <div data-testid="splash-screen" />,
   useAuth: () => ({
     logUser: mockLogUser,
     logoutUser: mockLogoutUser,
@@ -49,6 +48,8 @@ vi.mock("./Routes", () => ({
 }));
 
 vi.mock("components", () => ({
+  SplashScreen: ({ visible = true }: { visible?: boolean }) =>
+    visible ? <div data-testid="splash-screen" /> : null,
   UpdateDialog: () => null,
 }));
 
