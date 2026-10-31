@@ -38,7 +38,7 @@ export const AccountsQueryKeys = {
   }),
   balanceHistory: (filters: FilterBalanceHistoryDto) => ({
     queryKey: [...AccountsQueryKeys.all().queryKey, "balance-history", filters],
-    enabled: !!filters.accountId && !!filters.from && !!filters.to,
+    enabled: filters.accountIds.length > 0 && !!filters.from && !!filters.to,
   }),
   // Nested under "accounts" so every account/transaction mutation that
   // invalidates `AccountsQueryKeys.all()` also refreshes the projections.

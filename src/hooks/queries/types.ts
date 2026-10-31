@@ -72,7 +72,7 @@ export type UseSubscriptionProvidersCommonProps = {
 };
 
 export type UseBalanceHistoryPropsType = {
-  accountId?: number;
+  accountIds?: number[];
   from?: string;
   to?: string;
   granularity?: BalanceHistoryGranularity;

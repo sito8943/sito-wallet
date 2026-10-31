@@ -22,12 +22,12 @@ export function useBalanceHistory(
 ): UseQueryResult<BalanceHistoryDto> {
   const filters = useMemo<FilterBalanceHistoryDto>(
     () => ({
-      accountId: props.accountId ?? 0,
+      accountIds: props.accountIds ?? [],
       from: props.from ?? "",
       to: props.to ?? "",
       granularity: props.granularity ?? BalanceHistoryGranularity.Day,
     }),
-    [props.accountId, props.from, props.to, props.granularity],
+    [props.accountIds, props.from, props.to, props.granularity],
   );
 
   const manager = useManager();

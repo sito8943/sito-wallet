@@ -8,6 +8,8 @@ export type BalanceHistoryAccountDto = {
 
 export type BalanceHistoryDto = {
   account: BalanceHistoryAccountDto;
+  /** Every account merged into this history (one item for single-account). */
+  accounts?: BalanceHistoryAccountDto[];
   from: string;
   to: string;
   granularity: BalanceHistoryGranularity;

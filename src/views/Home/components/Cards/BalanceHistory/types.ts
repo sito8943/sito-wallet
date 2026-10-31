@@ -27,13 +27,19 @@ export interface BalanceHistoryFormType
   extends
     Omit<UpdateDashboardCardConfigDto, "config" | "userId" | "id">,
     FieldValues {
-  account: CommonAccountDto | null;
+  /** Merged and charted as a single account; all share one currency. */
+  accounts: CommonAccountDto[];
   preset: BalanceHistoryPreset;
   showFiltersAsBadge: boolean;
 }
 
+/** Persisted config; `account` is the legacy single-account shape. */
+export type StoredBalanceHistoryConfigType = Partial<BalanceHistoryFormType> & {
+  account?: CommonAccountDto | null;
+};
+
 export type ActiveFiltersPropsType = {
-  account: CommonAccountDto | null;
+  accounts: CommonAccountDto[];
   preset: BalanceHistoryPreset;
 };
 

@@ -40,23 +40,19 @@ export const BalanceHistoryCard = (props: BalanceHistoryPropsType) => {
     useState<CardConfigOverrideType | null>(null);
   const effectiveConfig = resolveCardConfig(config, configOverride);
 
-  const { accountId, preset } = useMemo(() => {
+  const { accountIds, preset, currencySymbol } = useMemo(() => {
     const parsed = parseFormConfig(effectiveConfig);
     return {
-      accountId: parsed.account?.id,
+      accountIds: parsed.accounts.map((account) => account.id),
       preset: resolvePreset(parsed.preset),
+      currencySymbol: parsed.accounts[0]?.currency?.symbol ?? "",
     };
-  }, [effectiveConfig]);
-
-  const currencySymbol = useMemo(() => {
-    const parsed = parseFormConfig(effectiveConfig);
-    return parsed.account?.currency?.symbol ?? "";
   }, [effectiveConfig]);
 
   const range = useMemo(() => presetToRange(preset), [preset]);
 
   const { data, isLoading } = useBalanceHistory({
-    accountId,
+    accountIds,
     from: range.from,
     to: range.to,
     granularity: presetGranularity(preset),
@@ -91,13 +87,13 @@ export const BalanceHistoryCard = (props: BalanceHistoryPropsType) => {
       getActiveFiltersCount={getActiveFiltersCount}
       renderActiveFilters={({ formConfig }) => (
         <ActiveFilters
-          account={formConfig.account}
+          accounts={formConfig.accounts}
           preset={resolvePreset(formConfig.preset)}
         />
       )}
     >
       {() => {
-        if (!accountId)
+        if (!accountIds.length)
           return (
             <p className="balance-history-empty">
               {t("_pages:home.dashboard.balanceHistory.noAccount")}

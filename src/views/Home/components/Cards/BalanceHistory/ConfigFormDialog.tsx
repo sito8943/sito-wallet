@@ -27,6 +27,9 @@ import {
 // constants
 import { DEFAULT_BALANCE_HISTORY_PRESET } from "./constants";
 
+// utils
+import { filterAccountsByCurrency } from "./utils";
+
 import "../styles.css";
 
 export const ConfigFormDialog = (
@@ -47,6 +50,12 @@ export const ConfigFormDialog = (
   );
 
   const preset = useWatch({ control, name: "preset" });
+  const selectedAccounts = useWatch({ control, name: "accounts" });
+
+  const accountOptions = useMemo(
+    () => filterAccountsByCurrency(accounts ?? [], selectedAccounts),
+    [accounts, selectedAccounts],
+  );
 
   useEffect(() => {
     if (setValue && preset === undefined) {
@@ -61,16 +70,17 @@ export const ConfigFormDialog = (
     >
       <Controller
         control={control}
-        name="account"
+        name="accounts"
         render={({ field: { value, onChange, ...rest } }) => (
           <AutocompleteInput
             value={value}
+            multiple
             label={t("_entities:transaction.account.label")}
             autoComplete={`${Tables.Accounts}-${t(
               "_entities:transaction.account.label",
             )}`}
             onChange={(v) => onChange(v)}
-            options={accounts ?? []}
+            options={accountOptions}
             containerClassName="dashboard-card-autocomplete-full"
             {...rest}
           />

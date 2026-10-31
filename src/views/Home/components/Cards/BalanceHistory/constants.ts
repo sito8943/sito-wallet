@@ -28,7 +28,7 @@ export const BALANCE_HISTORY_PRESETS: Record<BalanceHistoryPreset, PresetDef> =
 export const DEFAULT_BALANCE_HISTORY_PRESET = BalanceHistoryPreset.Month;
 
 export const defaultConfig: BalanceHistoryFormType = {
-  account: null,
+  accounts: [],
   preset: DEFAULT_BALANCE_HISTORY_PRESET,
   showFiltersAsBadge: false,
 };
