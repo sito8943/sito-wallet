@@ -183,6 +183,7 @@ export function TransactionForm(props: TransactionFormPropsType) {
             maxLength={20}
             value={value ?? ""}
             type="number"
+            step="any"
             autoComplete={`${Tables.Transactions}-${t(
               "_entities:transaction.amount.label",
             )}`}

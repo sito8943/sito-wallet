@@ -70,6 +70,7 @@ export function AdjustBalanceDialog(props: AdjustBalanceDialogPropsType) {
               id="newBalance"
               required
               type="number"
+              step="any"
               value={value ?? ""}
               label={t(
                 "_pages:accounts.actions.adjustBalance.dialog.newBalance",
