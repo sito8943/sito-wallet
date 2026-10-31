@@ -182,6 +182,7 @@ export const TransactionsMobileFilters = (
             <TextInput
               id="mobile-transaction-amount-filter"
               type="number"
+              step="any"
               label={t("_entities:transaction.amount.label")}
               placeholder={t("_entities:transaction.amount.placeholder")}
               value={value ?? ""}

@@ -126,6 +126,7 @@ export function AccountForm(props: AccountFormPropsType) {
               maxLength={20}
               value={value ?? ""}
               type="number"
+              step="any"
               autoComplete={`${Tables.Accounts}-${t(
                 "_entities:account.balance.initial",
               )}`}
