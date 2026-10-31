@@ -9,12 +9,14 @@ import type { ActiveFiltersPropsType } from "./types";
 import "../styles.css";
 
 export const ActiveFilters = (props: ActiveFiltersPropsType) => {
-  const { account, preset } = props;
+  const { accounts, preset } = props;
   const { t } = useTranslation();
 
   return (
     <div className="dashboard-card-active-filters">
-      {account && <Chip text={<p>{account.name}</p>} />}
+      {accounts.map((account) => (
+        <Chip key={account.id} text={<p>{account.name}</p>} />
+      ))}
       <Chip
         text={
           <p>{t(`_pages:home.dashboard.balanceHistory.presets.${preset}`)}</p>

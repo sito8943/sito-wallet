@@ -92,7 +92,15 @@ export default class AccountClient extends BaseClient<
       searchParams.set("userId", String(filters.userId));
     }
 
-    const builtUrl = `${this.table}/${filters.accountId}/balance-history?${searchParams.toString()}`;
+    const [firstAccountId] = filters.accountIds;
+    if (filters.accountIds.length > 1) {
+      searchParams.set("accountIds", filters.accountIds.join(","));
+    }
+
+    const builtUrl =
+      filters.accountIds.length > 1
+        ? `${this.table}/balance-history?${searchParams.toString()}`
+        : `${this.table}/${firstAccountId}/balance-history?${searchParams.toString()}`;
 
     return await this.api.doQuery<BalanceHistoryDto>(
       builtUrl,
