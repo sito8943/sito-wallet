@@ -13,7 +13,6 @@ import {
   DashboardHeader,
   fromLocal,
   NavbarProvider,
-  SplashScreen,
   TableOptionsProvider,
   useAuth,
 } from "@sito/dashboard-app";
@@ -24,7 +23,7 @@ import { useFeatureFlags } from "providers";
 import { useAppPreload } from "hooks";
 
 // components
-import { OfflineBanner, QueryError } from "components";
+import { OfflineBanner, QueryError, SplashScreen } from "components";
 
 // config
 import { config } from "../../config";
@@ -92,51 +91,52 @@ export function View() {
     [isFeatureEnabled, t],
   );
 
+  const showSplash = preloadLoading || shouldRedirect;
+
   // The banner has to ride along with the splash screen too: an offline cold
   // start sits here first, and without it that wait carries no explanation.
-  if (preloadLoading || shouldRedirect)
-    return (
-      <>
-        <OfflineBanner className="offline-banner--splash" />
-        <SplashScreen />
-      </>
-    );
-
+  // The splash stays mounted so it fades out over the shell.
   return (
-    <NavbarProvider>
-      <BottomNavActionProvider>
-        <AppShell
-          header={
-            <>
-              <OfflineBanner />
-              <DashboardHeader
-                menuMap={featureFilteredMenuMap}
-                navbarProps={{ showSearch: showNavbarSearch }}
-              />
-            </>
-          }
-          footer={
-            <DashboardFooter
-              copyrightText={t("_pages:footer.copyright")}
-              bottomNavSpacing
-            />
-          }
-          bottomNavigation={
-            <BottomNavigation
-              items={bottomNavigationItems}
-              isItemActive={isBottomNavItemActive}
-              className="!bottom-0"
-            />
-          }
-          extras={<Tooltip id="tooltip" />}
-        >
-          <ErrorBoundary FallbackComponent={QueryError}>
-            <TableOptionsProvider>
-              <Outlet />
-            </TableOptionsProvider>
-          </ErrorBoundary>
-        </AppShell>
-      </BottomNavActionProvider>
-    </NavbarProvider>
+    <>
+      {showSplash && <OfflineBanner className="offline-banner--splash" />}
+      <SplashScreen visible={showSplash} />
+      {!showSplash && (
+        <NavbarProvider>
+          <BottomNavActionProvider>
+            <AppShell
+              header={
+                <>
+                  <OfflineBanner />
+                  <DashboardHeader
+                    menuMap={featureFilteredMenuMap}
+                    navbarProps={{ showSearch: showNavbarSearch }}
+                  />
+                </>
+              }
+              footer={
+                <DashboardFooter
+                  copyrightText={t("_pages:footer.copyright")}
+                  bottomNavSpacing
+                />
+              }
+              bottomNavigation={
+                <BottomNavigation
+                  items={bottomNavigationItems}
+                  isItemActive={isBottomNavItemActive}
+                  className="!bottom-0"
+                />
+              }
+              extras={<Tooltip id="tooltip" />}
+            >
+              <ErrorBoundary FallbackComponent={QueryError}>
+                <TableOptionsProvider>
+                  <Outlet />
+                </TableOptionsProvider>
+              </ErrorBoundary>
+            </AppShell>
+          </BottomNavActionProvider>
+        </NavbarProvider>
+      )}
+    </>
   );
 }

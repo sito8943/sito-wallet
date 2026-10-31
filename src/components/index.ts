@@ -14,3 +14,4 @@ export * from "./CatalogCard";
 export * from "./PhotoField";
 export * from "./ProviderPhoto";
 export * from "./BottomNavAction";
+export * from "./SplashScreen";

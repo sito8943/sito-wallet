@@ -1,0 +1,20 @@
+@reference "../../styles/variables.css";
+
+/* Above the app shell; the offline banner (z-70) still rides on top. */
+.splash-screen {
+  @apply fixed inset-0 z-[60] flex flex-col items-center justify-center gap-6 bg-base opacity-100 transition-opacity duration-500;
+}
+
+/* Fading out before unmount */
+.splash-screen.exiting {
+  @apply pointer-events-none opacity-0;
+}
+
+.splash-screen-title {
+  @apply text-3xl font-bold uppercase text-text-primary;
+}
+
+/* The lib's .loading fills its parent; keep it to the spinner's size */
+.splash-screen-loading {
+  @apply h-auto w-auto;
+}

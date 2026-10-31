@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
-import { useAuth, SplashScreen } from "@sito/dashboard-app";
+import { useAuth } from "@sito/dashboard-app";
+
+// components
+import { SplashScreen } from "components";
 
 // providers
 import { clearPersistedQueryCache, useFeatureFlags } from "providers";
