@@ -10,6 +10,8 @@ export interface ReceiptDraftDto {
   providerName: string | null;
   /** ISO date (`yyyy-MM-dd`). */
   date: string | null;
+  /** Ticket time (`HH:mm`), read next to the date; null when missing. */
+  time: string | null;
   total: number | null;
   products: ReceiptDraftProductDto[];
   productsTotal: number | null;

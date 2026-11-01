@@ -280,7 +280,7 @@ export const findProductByNameOrAlias = (
 /**
  * Form values from a scanned receipt. Known provider/products are matched by
  * name; the rest become new options, created when the transaction is saved.
- * The date keeps the time already in the form (receipts are read by day).
+ * The date uses the ticket time; without it, the time already in the form.
  */
 export const receiptDraftToForm = (
   draft: ReceiptDraftDto,
@@ -295,7 +295,7 @@ export const receiptDraftToForm = (
   if (draft.total !== null) values.amount = draft.total;
 
   if (draft.date) {
-    const time = catalog.currentDate.slice(11, 16) || "12:00";
+    const time = draft.time ?? (catalog.currentDate.slice(11, 16) || "12:00");
     values.date = `${draft.date}T${time}`;
   }
 
