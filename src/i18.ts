@@ -1,3 +1,4 @@
+import { dashboardAppResources } from "@sito/dashboard-app/i18n";
 import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
@@ -70,6 +71,16 @@ const loadLanguageResources = async (
   return parsed;
 };
 
+/**
+ * Adds @sito/dashboard-app's default translations (e.g. password toggle
+ * labels) under the app's own: existing app keys are never overwritten.
+ */
+const addLibraryDefaults = (lng: SupportedLng) => {
+  Object.entries(dashboardAppResources[lng]).forEach(([ns, bundle]) => {
+    i18n.addResourceBundle(lng, ns, bundle, true, false);
+  });
+};
+
 const applyLanguageResources = (
   lng: SupportedLng,
   resources: LanguageResources,
@@ -84,6 +95,7 @@ const applyLanguageResources = (
   );
   i18n.addResourceBundle(lng, "_pages", resources._pages, true, true);
   i18n.addResourceBundle(lng, "_entities", resources._entities, true, true);
+  addLibraryDefaults(lng);
   appliedLanguages.add(lng);
 };
 
@@ -119,6 +131,8 @@ export const initI18n = async () => {
       resources,
     });
 
+  addLibraryDefaults(fallbackLng);
+  if (preferredLng !== fallbackLng) addLibraryDefaults(preferredLng);
   appliedLanguages.add(fallbackLng);
   appliedLanguages.add(preferredLng);
 
