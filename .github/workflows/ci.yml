@@ -114,5 +114,3 @@ jobs:
         run: pnpm run test:e2e
         env:
           E2E_BASE_URL: http://localhost:5173
-          E2E_EMAIL: ${{ secrets.E2E_EMAIL }}
-          E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}

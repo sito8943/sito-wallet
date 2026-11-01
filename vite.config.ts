@@ -157,7 +157,7 @@ function rawFsDenyGuard(externalAllowedRoots: string[] = []) {
 }
 
 // https://vite.dev/config/
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ command, mode, isPreview }) => {
   const linkedDashboardRealRoot = pathExists(linkedDashboardRoot)
     ? realpathSync(linkedDashboardRoot)
     : linkedDashboardRoot;
@@ -188,7 +188,8 @@ export default defineConfig(({ command, mode }) => {
     plugins: [
       react(),
       tailwindcss(),
-      mkcert(),
+      // Dev server only: `vite preview` stays on http so Playwright (E2E) can reach it.
+      ...(isPreview ? [] : [mkcert()]),
       rawFsDenyGuard(externalAllowedRoots),
       VitePWA({
         registerType: "prompt",
@@ -240,7 +241,7 @@ export default defineConfig(({ command, mode }) => {
       }),
     ],
     server: {
-      https: {},
+      https: isPreview ? undefined : {},
       fs: {
         strict: true,
         allow: fsAllowRoots,
