@@ -12,6 +12,7 @@ const draft = (overrides: Partial<ReceiptDraftDto> = {}): ReceiptDraftDto => ({
   parser: "consum",
   providerName: "CONSUM",
   date: "2026-10-26",
+  time: null,
   total: 2.98,
   products: [
     { name: "leche ", quantity: 2, unitPrice: 0.89 },
@@ -42,6 +43,16 @@ describe("receiptDraftToForm", () => {
         unitPrice: 1.2,
       },
     ]);
+  });
+
+  it("uses the ticket time when the receipt has it", () => {
+    const values = receiptDraftToForm(draft({ time: "15:42" }), {
+      products: [],
+      purchaseProviders: [],
+      currentDate: "2026-10-27T21:40",
+    });
+
+    expect(values.date).toBe("2026-10-26T15:42");
   });
 
   it("only fills what the receipt had", () => {
