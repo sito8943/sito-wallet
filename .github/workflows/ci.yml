@@ -81,24 +81,26 @@ jobs:
 
       - name: Build app
         run: pnpm run build
+        # Fixed, non-secret values: the smoke tests run offline (every
+        # non-localhost request is aborted), so no real endpoint or key is used.
         env:
-          VITE_API_URL: ${{ secrets.VITE_API_URL }}
-          VITE_THIS_URL: ${{ secrets.VITE_THIS_URL }}
+          VITE_API_URL: https://api.e2e.invalid/
+          VITE_AUTH_URL: https://auth.e2e.invalid/
+          VITE_THIS_URL: http://localhost:5173/
           VITE_APP_VERSION: ${{ github.sha }}
-          VITE_LANGUAGE: en
-          VITE_BASIC_KEY: ${{ secrets.VITE_BASIC_KEY }}
-          VITE_ACCEPT_COOKIE: ${{ secrets.VITE_ACCEPT_COOKIE }}
-          VITE_DECLINE_COOKIE: ${{ secrets.VITE_DECLINE_COOKIE }}
-          VITE_REMEMBER: ${{ secrets.VITE_REMEMBER }}
-          VITE_USER: ${{ secrets.VITE_USER }}
-          VITE_VALIDATION_COOKIE: ${{ secrets.VITE_VALIDATION_COOKIE }}
-          VITE_RECOVERING_COOKIE: ${{ secrets.VITE_RECOVERING_COOKIE }}
-          VITE_CRYPTO: ${{ secrets.VITE_CRYPTO }}
-          VITE_SUPABASE_CO: ${{ secrets.VITE_SUPABASE_CO }}
-          VITE_SUPABASE_ANON: ${{ secrets.VITE_SUPABASE_ANON }}
-          VITE_CACHE: ${{ secrets.VITE_CACHE }}
-          VITE_ONBOARDING: ${{ secrets.VITE_ONBOARDING }}
-          VITE_RECENT_SEARCHES: ${{ secrets.VITE_RECENT_SEARCHES }}
+          VITE_LANGUAGE: language_wallet
+          VITE_ACCEPT_COOKIE: accept_wallet
+          VITE_DECLINE_COOKIE: decline_wallet
+          VITE_REMEMBER: remember_wallet
+          VITE_USER: user_wallet
+          VITE_VALIDATION_COOKIE: validation_wallet
+          VITE_RECOVERING_COOKIE: recovering_wallet
+          VITE_CRYPTO: e2e.wallet
+          VITE_SUPABASE_CO: https://supabase.e2e.invalid
+          VITE_SUPABASE_ANON: e2e
+          VITE_CACHE: cache_wallet
+          VITE_ONBOARDING: onboarding_wallet
+          VITE_RECENT_SEARCHES: recent_searches_wallet
           VITE_INDEXED_DB_NAME: sito_wallet_indexed_db
           VITE_SERVER_PROBE_INTERVAL: 15000
           VITE_SERVER_STATUS_PATH: /sync/status
