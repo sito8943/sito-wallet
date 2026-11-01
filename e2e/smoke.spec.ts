@@ -16,6 +16,16 @@ async function skipOnboarding(page: Page) {
 }
 
 test.describe("Public smoke", () => {
+  // Keep the run offline: a slow or unreachable API would leave the app
+  // waiting for the session on "/" (as it did in CI). A failed request is
+  // the anonymous visitor case these tests cover.
+  test.beforeEach(async ({ page }) => {
+    await page.route(
+      (url) => url.hostname !== "localhost",
+      (route) => route.abort(),
+    );
+  });
+
   test("first visit shows onboarding", async ({ page }) => {
     await page.goto("/");
 
