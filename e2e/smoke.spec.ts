@@ -74,3 +74,14 @@ test.describe("Public smoke", () => {
     await expect(page.locator('input[name="email"]')).toBeVisible();
   });
 });
+
+test("a hung API does not block the app on the splash", async ({ page }) => {
+  // Requests that never answer: the session check must give up by itself.
+  await page.route(
+    (url) => url.hostname !== "localhost",
+    () => new Promise(() => {}),
+  );
+
+  await page.goto("/");
+  await expect(page).toHaveURL(/\/onboarding$/, { timeout: 15_000 });
+});

@@ -8,7 +8,9 @@ import {
   readStoredSessionFromSnapshot,
 } from "lib";
 
-import { useOnlineStatus } from "./useOnlineStatus";
+import { useOnlineStatus } from "../useOnlineStatus";
+
+import { SESSION_BOOTSTRAP_TIMEOUT_MS } from "./constants";
 
 export const useAppSession = (): boolean => {
   const { logUser, logoutUser } = useAuth();
@@ -27,8 +29,10 @@ export const useAppSession = (): boolean => {
 
   useEffect(() => {
     let isMounted = true;
+    let timeoutId: number | undefined;
 
     const finishLoading = () => {
+      window.clearTimeout(timeoutId);
       window.setTimeout(() => {
         if (isMounted) setLoading(false);
       }, 300);
@@ -45,6 +49,16 @@ export const useAppSession = (): boolean => {
         finishLoading();
         return;
       }
+
+      // A hung request would keep the splash forever: stop waiting, keep the
+      // stored session like offline does. A late answer still applies.
+      timeoutId = window.setTimeout(() => {
+        if (!isMounted) return;
+        if (rememberedSession) {
+          bootstrapContextRef.current.logUser(rememberedSession, rememberMe);
+        }
+        finishLoading();
+      }, SESSION_BOOTSTRAP_TIMEOUT_MS);
 
       try {
         const session =
@@ -81,6 +95,7 @@ export const useAppSession = (): boolean => {
 
     return () => {
       isMounted = false;
+      window.clearTimeout(timeoutId);
     };
   }, []);
 
