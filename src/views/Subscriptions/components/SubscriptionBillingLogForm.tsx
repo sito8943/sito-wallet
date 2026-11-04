@@ -23,7 +23,7 @@ export function SubscriptionBillingLogForm(
   const { control, isLoading, open, setValue, selectedSubscription } = props;
   const { t } = useTranslation();
 
-  const currenciesQuery = useCurrenciesCommon();
+  const currenciesQuery = useCurrenciesCommon({ includeShared: true });
 
   const currencyOptions = useMemo(
     () => [...(currenciesQuery.data ?? [])] as Option[],
