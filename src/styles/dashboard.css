@@ -279,3 +279,18 @@ main,
 .dialog .autocomplete-suggestions-container {
   z-index: 50;
 }
+
+/* @sito/ui's pressed state sets `transform: scale(...)` (or `none` with reduced
+   motion) on every button, which replaced the `translateY(-50%)` that centres
+   the password toggle: the eye button dropped half its height while pressed.
+   Keep the centring and press with the standalone `scale` property instead. */
+.text-input-field .password-icon.sito-ui-button:not(:disabled):active {
+  transform: translateY(-50%);
+  scale: var(--sito-ui-button-active-scale, 0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-input-field .password-icon.sito-ui-button:not(:disabled):active {
+    scale: none;
+  }
+}
