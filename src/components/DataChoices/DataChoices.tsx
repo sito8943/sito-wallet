@@ -16,7 +16,7 @@ import "./styles.css";
  * Asks before turning on optional technologies. Accept and reject have the
  * same weight; the choice can be changed in Profile or the cookies policy.
  */
-export function CookieBanner() {
+export function DataChoices() {
   const { t } = useTranslation();
   const { isBannerOpen, setAnalytics } = useConsent();
 
@@ -24,28 +24,28 @@ export function CookieBanner() {
 
   return (
     <section
-      className="cookie-banner"
+      className="data-choices"
       role="dialog"
       aria-live="polite"
-      aria-labelledby="cookie-banner-title"
+      aria-labelledby="data-choices-title"
     >
-      <div className="cookie-banner-text">
-        <h2 id="cookie-banner-title" className="cookie-banner-title">
+      <div className="data-choices-text">
+        <h2 id="data-choices-title" className="data-choices-title">
           {t("_pages:cookieBanner.title")}
         </h2>
         <p>
           {t("_pages:cookieBanner.body")}{" "}
-          <Link to={AppRoutes.cookiesPolicy} className="cookie-banner-link">
+          <Link to={AppRoutes.cookiesPolicy} className="data-choices-link">
             {t("_pages:cookieBanner.policy")}
           </Link>
         </p>
       </div>
-      <div className="cookie-banner-actions">
+      <div className="data-choices-actions">
         <Button
           type="button"
           variant="outlined"
           color="primary"
-          className="cookie-banner-button"
+          className="data-choices-button"
           onClick={() => setAnalytics(false)}
         >
           {t("_pages:cookieBanner.reject")}
@@ -54,7 +54,7 @@ export function CookieBanner() {
           type="button"
           variant="outlined"
           color="primary"
-          className="cookie-banner-button"
+          className="data-choices-button"
           onClick={() => setAnalytics(true)}
         >
           {t("_pages:cookieBanner.accept")}
