@@ -25,3 +25,8 @@ peerDependencyRules:
   allowedVersions:
     "i18next>typescript": "7"
     "react-i18next>typescript": "7"
+
+# Temporal: fix de AutocompleteInput hasta publicar @sito/dashboard 0.4.4
+# (sito8943/-sito-dashboard#87). Al subir el pin, borrar esto y patches/.
+patchedDependencies:
+  "@sito/dashboard@0.4.3": patches/@sito__dashboard@0.4.3.patch

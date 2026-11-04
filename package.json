@@ -103,6 +103,9 @@
         "i18next>typescript": "7",
         "react-i18next>typescript": "7"
       }
+    },
+    "patchedDependencies": {
+      "@sito/dashboard@0.4.3": "patches/@sito__dashboard@0.4.3.patch"
     }
   },
   "overrides": {
