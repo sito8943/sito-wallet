@@ -28,7 +28,7 @@ import { AddTransactionDialog } from "../../../../Transactions/components";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { ActiveFilters } from "./ActiveFilters";
 import { DashboardCard } from "../DashboardCard";
-import { RecentTransactionsDialog } from "../RecentTransactionsDialog";
+import { RecentTransactionsDialog } from "views/Transactions";
 import { LastTransactionsList } from "../LastTransactions";
 import { resolveCardConfig } from "../utils";
 

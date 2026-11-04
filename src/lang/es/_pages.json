@@ -776,6 +776,11 @@
         "ocrUnavailable": "El lector de tickets no está disponible en el servidor",
         "required": "Selecciona una foto del ticket"
       }
+    },
+    "catalogHistory": {
+      "action": "Ver transacciones",
+      "title": "Transacciones · {{name}}",
+      "actionWithCount": "Ver transacciones ({{count}})"
     }
   },
   "transactionCategories": {
@@ -848,7 +853,8 @@
       "add": "Nuevo producto",
       "edit": "Editar producto",
       "editAria": "Click para editar producto"
-    }
+    },
+    "transactionsEmpty": "No hay transacciones con este producto"
   },
   "purchaseProviders": {
     "title": "Proveedores",
@@ -858,7 +864,8 @@
       "add": "Nuevo proveedor",
       "edit": "Editar proveedor",
       "editAria": "Click para editar proveedor"
-    }
+    },
+    "transactionsEmpty": "No hay transacciones de este vendedor"
   },
   "purchaseCatalog": {
     "add": "Agregar",

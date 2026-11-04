@@ -21,17 +21,21 @@ export const normalizeRecentExcludedCategoryIds = (
 
 export const getRecentTransactionsQuery = (
   excludedCategoryIds: number[],
-): QueryParam<TransactionDto> =>
-  excludedCategoryIds.length
+  limit: number = RECENT_TRANSACTIONS_LIMIT,
+): QueryParam<TransactionDto> => {
+  const base = excludedCategoryIds.length
     ? RECENT_TRANSACTIONS_PREFILTER_QUERY
     : RECENT_TRANSACTIONS_QUERY;
+  return { ...base, pageSize: Math.max(base.pageSize ?? limit, limit) };
+};
 
 export const filterRecentTransactions = (
   transactions: TransactionDto[],
   excludedCategoryIds: number[],
+  limit: number = RECENT_TRANSACTIONS_LIMIT,
 ): TransactionDto[] => {
   if (!excludedCategoryIds.length) {
-    return transactions.slice(0, RECENT_TRANSACTIONS_LIMIT);
+    return transactions.slice(0, limit);
   }
 
   const excludedCategoryIdSet = new Set(excludedCategoryIds);
@@ -44,5 +48,5 @@ export const filterRecentTransactions = (
         excludedCategoryIdSet.has(category.id),
       );
     })
-    .slice(0, RECENT_TRANSACTIONS_LIMIT);
+    .slice(0, limit);
 };

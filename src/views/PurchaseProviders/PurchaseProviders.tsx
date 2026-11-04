@@ -20,6 +20,12 @@ import {
   useSwipeDeleteState,
 } from "hooks";
 
+// views
+import {
+  RecentTransactionsDialog,
+  useCatalogTransactionsDialog,
+} from "views/Transactions";
+
 // providers
 import { useManager, useRegisterBottomNavAction } from "providers";
 
@@ -53,9 +59,17 @@ export function PurchaseProviders() {
   });
   const swipeDelete = useSwipeDeleteState(deletePurchaseProvider.handleClose);
 
+  const purchaseProviderTransactions = useCatalogTransactionsDialog({
+    filterKey: "purchaseProviderId",
+    emptyMessage: t("_pages:purchaseProviders.transactionsEmpty"),
+  });
+
   const getActions = useCallback(
-    (record: CatalogRowDto) => [deletePurchaseProvider.action(record)],
-    [deletePurchaseProvider],
+    (record: CatalogRowDto) => [
+      purchaseProviderTransactions.action(record),
+      deletePurchaseProvider.action(record),
+    ],
+    [deletePurchaseProvider, purchaseProviderTransactions],
   );
 
   useMobileNavbar(t("_pages:purchaseProviders.title"));
@@ -118,6 +132,7 @@ export function PurchaseProviders() {
           />
           <AddPurchaseProviderDialog {...addPurchaseProvider} />
           <EditPurchaseProviderDialog {...editPurchaseProvider} />
+          <RecentTransactionsDialog {...purchaseProviderTransactions.dialog} />
           <ConfirmationDialog
             {...deletePurchaseProvider}
             handleClose={swipeDelete.handleDialogClose}

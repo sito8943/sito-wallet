@@ -8,6 +8,7 @@ import type { FilterTransactionDto, TransactionDto } from "lib";
 import { normalizeListFilters } from "lib";
 import { useManager } from "providers";
 
+import { RECENT_TRANSACTIONS_LIMIT } from "./constants";
 import type { UseRecentTransactionsPropsType } from "./types";
 import {
   filterRecentTransactions,
@@ -18,7 +19,13 @@ import {
 export const useRecentTransactions = (
   props: UseRecentTransactionsPropsType,
 ) => {
-  const { open, filters, excludedCategoryIds, enabled = true } = props;
+  const {
+    open,
+    filters,
+    excludedCategoryIds,
+    enabled = true,
+    limit = RECENT_TRANSACTIONS_LIMIT,
+  } = props;
   const manager = useManager();
   const { account } = useAuth();
 
@@ -28,8 +35,8 @@ export const useRecentTransactions = (
   );
 
   const query = useMemo(
-    () => getRecentTransactionsQuery(normalizedExcludedCategoryIds),
-    [normalizedExcludedCategoryIds],
+    () => getRecentTransactionsQuery(normalizedExcludedCategoryIds, limit),
+    [normalizedExcludedCategoryIds, limit],
   );
 
   const normalizedFilters = useMemo(
@@ -52,6 +59,7 @@ export const useRecentTransactions = (
       return filterRecentTransactions(
         response.items ?? [],
         normalizedExcludedCategoryIds,
+        limit,
       );
     },
   });

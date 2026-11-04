@@ -7,11 +7,9 @@ import { QueryError } from "components";
 
 import type { TransactionDto } from "lib";
 
-import {
-  EditTransactionDialog,
-  TransactionCard,
-  useEditTransaction,
-} from "views/Transactions";
+import { useEditTransaction } from "../../hooks";
+import { EditTransactionDialog } from "../EditTransactionDialog";
+import { TransactionCard } from "../TransactionCard";
 
 import { RECENT_TRANSACTIONS_DIALOG_CLASS_NAME } from "./constants";
 import type { RecentTransactionsDialogPropsType } from "./types";
@@ -22,7 +20,7 @@ import "./styles.css";
 export const RecentTransactionsDialog = (
   props: RecentTransactionsDialogPropsType,
 ) => {
-  const { open, onClose, title } = props;
+  const { open, onClose, title, emptyMessage } = props;
   const { t } = useTranslation();
 
   const editTransaction = useEditTransaction();
@@ -45,7 +43,10 @@ export const RecentTransactionsDialog = (
           <QueryError error={error} />
         ) : !transactions.length ? (
           <Empty
-            message={t("_pages:home.dashboard.recentTransactions.empty")}
+            message={
+              emptyMessage ??
+              t("_pages:home.dashboard.recentTransactions.empty")
+            }
           />
         ) : (
           <ul className="recent-transactions-list">

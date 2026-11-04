@@ -31,7 +31,7 @@ import { ActiveFilters } from "./ActiveFilters";
 import { AddTransactionDialog } from "../../../../Transactions/components";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { DashboardCard } from "../DashboardCard";
-import { RecentTransactionsDialog } from "../RecentTransactionsDialog";
+import { RecentTransactionsDialog } from "views/Transactions";
 import { TypeResumeRow } from "./TypeResumeRow";
 import { TypeResumeCategoriesDialog } from "./TypeResumeCategoriesDialog";
 import { TypeResumePredictionDialog } from "./TypeResumePredictionDialog";

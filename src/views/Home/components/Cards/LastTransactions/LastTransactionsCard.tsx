@@ -29,7 +29,7 @@ import { useAddTransaction } from "../../../../Transactions/hooks";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { ActiveFilters } from "./ActiveFilters";
 import { DashboardCard } from "../DashboardCard";
-import { RecentTransactionsDialog } from "../RecentTransactionsDialog";
+import { RecentTransactionsDialog } from "views/Transactions";
 import { resolveCardConfig } from "../utils";
 import { LastTransactionsList } from "./LastTransactionsList";
 
