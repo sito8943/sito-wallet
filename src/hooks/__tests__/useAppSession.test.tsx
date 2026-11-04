@@ -25,6 +25,10 @@ vi.mock("lib", () => ({
   clearPersistedPublicSessionAccount: vi.fn(),
   readStoredRememberMe: () => true,
   readStoredSessionFromSnapshot: () => mocks.storedSession,
+  withStoredRefreshToken: <T,>(session: T) => ({
+    ...session,
+    refreshToken: "stored-refresh",
+  }),
 }));
 
 vi.mock("../useOnlineStatus", () => ({ useOnlineStatus: () => true }));
@@ -77,6 +81,10 @@ describe("useAppSession", () => {
     });
 
     expect(result.current).toBe(false);
-    expect(mocks.logUser).toHaveBeenCalledWith({ id: 1 }, true);
+    // The session check never carries the refresh token: keep the stored one.
+    expect(mocks.logUser).toHaveBeenCalledWith(
+      { id: 1, refreshToken: "stored-refresh" },
+      true,
+    );
   });
 });
