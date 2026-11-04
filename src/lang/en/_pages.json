@@ -774,6 +774,10 @@
         "ocrUnavailable": "The receipt reader isn't available on the server",
         "required": "Select a photo of the receipt"
       }
+    },
+    "catalogHistory": {
+      "action": "View transactions",
+      "title": "Transactions · {{name}}"
     }
   },
   "transactionCategories": {
@@ -846,7 +850,8 @@
       "add": "New product",
       "edit": "Edit product",
       "editAria": "Click to edit product"
-    }
+    },
+    "transactionsEmpty": "No transactions with this product"
   },
   "purchaseProviders": {
     "title": "Providers",
@@ -856,7 +861,8 @@
       "add": "New provider",
       "edit": "Edit provider",
       "editAria": "Click to edit provider"
-    }
+    },
+    "transactionsEmpty": "No transactions from this seller"
   },
   "purchaseCatalog": {
     "add": "Add",

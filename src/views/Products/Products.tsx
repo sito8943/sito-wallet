@@ -20,6 +20,12 @@ import {
   useSwipeDeleteState,
 } from "hooks";
 
+// views
+import {
+  RecentTransactionsDialog,
+  useCatalogTransactionsDialog,
+} from "views/Transactions";
+
 // providers
 import { useManager, useRegisterBottomNavAction } from "providers";
 
@@ -58,9 +64,17 @@ export function Products() {
   });
   const swipeDelete = useSwipeDeleteState(deleteProduct.handleClose);
 
+  const productTransactions = useCatalogTransactionsDialog({
+    filterKey: "productId",
+    emptyMessage: t("_pages:products.transactionsEmpty"),
+  });
+
   const getActions = useCallback(
-    (record: CatalogRowDto) => [deleteProduct.action(record)],
-    [deleteProduct],
+    (record: CatalogRowDto) => [
+      productTransactions.action(record),
+      deleteProduct.action(record),
+    ],
+    [deleteProduct, productTransactions],
   );
 
   useMobileNavbar(t("_pages:products.title"));
@@ -122,6 +136,7 @@ export function Products() {
           />
           <AddProductDialog {...addProduct} />
           <EditProductDialog {...editProduct} />
+          <RecentTransactionsDialog {...productTransactions.dialog} />
           <ConfirmationDialog
             {...deleteProduct}
             handleClose={swipeDelete.handleDialogClose}

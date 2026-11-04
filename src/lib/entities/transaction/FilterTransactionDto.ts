@@ -14,4 +14,7 @@ export interface FilterTransactionDto extends BaseFilterDto {
   currencyId?: number;
   type?: TransactionType;
   description?: string;
+  /** Transactions with at least one line of this product. */
+  productId?: number;
+  purchaseProviderId?: number;
 }
