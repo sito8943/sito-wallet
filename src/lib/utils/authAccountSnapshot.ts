@@ -81,3 +81,22 @@ export const readStoredSessionFromSnapshot = (): WalletSessionDto | null => {
       : null,
   };
 };
+
+/**
+ * `/auth/session` only re-reads the user: it never returns the refresh token.
+ * `logUser` drops the stored one when the session has none, which ended a
+ * remembered session at the next access-token expiry. Keep the stored token
+ * (read now, since a request may have just rotated it).
+ */
+export const withStoredRefreshToken = <
+  T extends { refreshToken?: string | null },
+>(
+  session: T,
+): T => {
+  if (isNonEmptyString(session.refreshToken)) return session;
+
+  const refreshToken = fromLocal(config.auth.refreshTokenKey);
+  return isNonEmptyString(refreshToken)
+    ? { ...session, refreshToken }
+    : session;
+};

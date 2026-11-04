@@ -6,6 +6,7 @@ import {
   clearPersistedPublicSessionAccount,
   readStoredRememberMe,
   readStoredSessionFromSnapshot,
+  withStoredRefreshToken,
 } from "lib";
 
 import { useOnlineStatus } from "../useOnlineStatus";
@@ -66,7 +67,10 @@ export const useAppSession = (): boolean => {
 
         if (!isMounted) return;
 
-        bootstrapContextRef.current.logUser(session, rememberMe);
+        bootstrapContextRef.current.logUser(
+          withStoredRefreshToken(session),
+          rememberMe,
+        );
       } catch (error) {
         if (!isMounted) return;
 
