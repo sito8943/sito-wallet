@@ -126,3 +126,95 @@ jobs:
             playwright-report/
             test-results/
           retention-days: 7
+
+  deploy-live:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [lint-and-test, e2e]
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-live
+      cancel-in-progress: false
+    environment:
+      name: production
+      url: https://wallet.sito8943.com
+
+    steps:
+      - name: Check deploy secrets
+        id: secrets
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SITONOTAS }}
+        run: |
+          if [ -n "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::FIREBASE_SERVICE_ACCOUNT_SITONOTAS is not set; skipping live deploy."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout
+        if: steps.secrets.outputs.enabled == 'true'
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        if: steps.secrets.outputs.enabled == 'true'
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.34.4
+
+      - name: Setup Node
+        if: steps.secrets.outputs.enabled == 'true'
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        if: steps.secrets.outputs.enabled == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        if: steps.secrets.outputs.enabled == 'true'
+        run: pnpm run build
+        # Storage keys must keep the values of the builds already deployed:
+        # changing one would sign users out or orphan their offline data.
+        env:
+          VITE_API_URL: https://api.wallet.sito8943.com/
+          VITE_AUTH_URL: https://api.auth.sito8943.com/
+          VITE_THIS_URL: https://wallet.sito8943.com/
+          VITE_SUPABASE_CO: https://xpdglokzzqnckjrmcnjl.supabase.co
+          VITE_SUPABASE_ANON: ${{ secrets.VITE_SUPABASE_ANON }}
+          VITE_CRYPTO: ${{ secrets.VITE_CRYPTO }}
+          VITE_USAGE_URL: https://api.usage.sito8943.com
+          VITE_USAGE_KEY: ${{ secrets.VITE_USAGE_KEY }}
+          VITE_BASIC_KEY: basic_wallet
+          VITE_CACHE: cache_wallet
+          VITE_VALIDATION_COOKIE: validation_wallet
+          VITE_RECOVERING_COOKIE: recovering_wallet
+          VITE_USER: user_wallet
+          VITE_ACCEPT_COOKIE: accept_wallet
+          VITE_DECLINE_COOKIE: decline_wallet
+          VITE_LANGUAGE: language_wallet
+          VITE_REMEMBER: remember_wallet
+          VITE_REFRESH_TOKEN_KEY: refresh_token_wallet
+          VITE_ACCESS_TOKEN_EXPIRES_AT_KEY: access_token_expires_at
+          VITE_ONBOARDING: onboarding_wallet
+          VITE_RECENT_SEARCHES: recent_searches_wallet
+          VITE_INDEXED_DB_NAME: sito_wallet_db
+          VITE_SERVER_PROBE_INTERVAL: 15000
+          VITE_SERVER_STATUS_PATH: /sync/status
+          VITE_FEATURE_FLAGS_STORAGE_KEY: featureFlags
+          VITE_FEATURE_BALANCE_GREATER_THAN_ZERO_DEFAULT: "false"
+          VITE_FEATURE_CURRENCIES_ENABLED_DEFAULT: "true"
+          VITE_FEATURE_ACCOUNTS_ENABLED_DEFAULT: "true"
+          VITE_FEATURE_TRANSACTIONS_ENABLED_DEFAULT: "true"
+          VITE_FEATURE_SUBSCRIPTIONS_ENABLED_DEFAULT: "true"
+          VITE_FEATURE_DEBTS_ENABLED_DEFAULT: "true"
+
+      - name: Deploy live
+        if: steps.secrets.outputs.enabled == 'true'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SITONOTAS }}
+          projectId: sitonotas
+          channelId: live
