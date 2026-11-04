@@ -13,7 +13,7 @@ import { useNotification, usePostDialog } from "@sito/dashboard-app";
 import { useManager } from "providers";
 
 // hooks
-import { TransactionsQueryKeys } from "hooks";
+import { TransactionsQueryKeys, useInvalidateCatalogs } from "hooks";
 
 // lib
 import type { AssignTransactionCategoryDto, TransactionDto } from "lib";
@@ -32,6 +32,7 @@ export function useAssignTransactionCategoryAction(): UseActionDialog<
   const { t } = useTranslation();
 
   const manager = useManager();
+  const invalidateCatalogs = useInvalidateCatalogs();
   const { showErrorNotification } = useNotification();
 
   const dialog = usePostDialog<
@@ -42,6 +43,7 @@ export function useAssignTransactionCategoryAction(): UseActionDialog<
     formToDto: assignCategoryFormToDto,
     defaultValues: emptyAssignCategoryForm(),
     mutationFn: (data) => manager.Transactions.assignCategory(data),
+    onSuccess: invalidateCatalogs,
     onSuccessMessage: t(
       "_pages:transactions.actions.assignCategory.successMessage",
     ),

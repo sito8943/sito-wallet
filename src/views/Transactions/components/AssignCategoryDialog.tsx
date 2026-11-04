@@ -26,7 +26,7 @@ export function AssignCategoryDialog(
 
   const { t } = useTranslation();
 
-  const categories = useTransactionCategoriesCommon();
+  const categories = useTransactionCategoriesCommon({ includeShared: true });
 
   const categoryOptions = useMemo(
     () =>

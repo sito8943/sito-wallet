@@ -41,7 +41,7 @@ export function TransactionProductsDialog(
   const { open, onClose, control, isLoading, fields, append, remove } = props;
   const { t, i18n } = useTranslation();
 
-  const products = useProductsCommon();
+  const products = useProductsCommon({ includeShared: true });
   // Options show "alias (name)"; the form keeps the catalog product as is.
   const productOptions = useMemo(
     () =>

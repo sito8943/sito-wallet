@@ -10,8 +10,7 @@ import { useManager } from "providers";
 // hooks
 import {
   AccountsQueryKeys,
-  ProductsQueryKeys,
-  PurchaseProvidersQueryKeys,
+  useInvalidateCatalogs,
   TransactionsQueryKeys,
 } from "hooks";
 
@@ -37,6 +36,7 @@ export function useAddTransaction(
 
   const manager = useManager();
   const queryClient = useQueryClient();
+  const invalidateCatalogs = useInvalidateCatalogs();
 
   const { showErrorNotification } = useNotification();
 
@@ -52,9 +52,8 @@ export function useAddTransaction(
     onSuccess: async () => {
       await Promise.all([
         queryClient.invalidateQueries({ ...AccountsQueryKeys.all() }),
-        // Products/providers typed by name are created with the transaction.
-        queryClient.invalidateQueries({ ...ProductsQueryKeys.all() }),
-        queryClient.invalidateQueries({ ...PurchaseProvidersQueryKeys.all() }),
+        // New products/providers and clones of shared catalog items.
+        invalidateCatalogs(),
         queryClient.invalidateQueries({
           queryKey: [...TransactionsQueryKeys.all().queryKey, "weekly"],
         }),

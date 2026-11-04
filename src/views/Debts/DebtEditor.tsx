@@ -15,6 +15,7 @@ import {
 import {
   AccountsQueryKeys,
   DebtsQueryKeys,
+  useInvalidateCatalogs,
   useMobileNavbar,
   useMutationErrorHandler,
 } from "hooks";
@@ -54,6 +55,7 @@ export function DebtEditor() {
   const queryClient = useQueryClient();
   const { showErrorNotification, showSuccessNotification } = useNotification();
   const handleMutationError = useMutationErrorHandler();
+  const invalidateCatalogs = useInvalidateCatalogs();
 
   const manager = useManager();
   const debtsClient = "Debts" in manager ? manager.Debts : null;
@@ -96,6 +98,8 @@ export function DebtEditor() {
       return await debtsClient.insert(debtFormToCreateDto(values));
     },
     onSuccess: async () => {
+      // Shared catalog items used here are cloned into the user's account.
+      await invalidateCatalogs();
       showSuccessNotification({
         message: isEditMode
           ? t("_pages:common.actions.edit.successMessage")

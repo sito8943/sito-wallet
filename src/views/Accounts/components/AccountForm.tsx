@@ -48,7 +48,7 @@ export function AccountForm(props: AccountFormPropsType) {
     if (account && setValue) setValue("userId", account?.id ?? 0);
   }, [account, setValue, open]);
 
-  const currencies = useCurrenciesCommon();
+  const currencies = useCurrenciesCommon({ includeShared: true });
 
   const currencyOptions = useMemo(
     () => [...(currencies?.data ?? [])] as Option[],

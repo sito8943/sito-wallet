@@ -9,3 +9,4 @@ export * from "./useSwipeDeleteState";
 export * from "./useSeo";
 export * from "./useCalendarTimeAge";
 export * from "./useMutationErrorHandler";
+export * from "./useInvalidateCatalogs";

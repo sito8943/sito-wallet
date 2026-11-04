@@ -56,14 +56,14 @@ export function TransactionForm(props: TransactionFormPropsType) {
     [accounts.data],
   );
 
-  const purchaseProviders = usePurchaseProvidersCommon();
+  const purchaseProviders = usePurchaseProvidersCommon({ includeShared: true });
 
   const purchaseProviderOptions = useMemo(
     () => [...(purchaseProviders?.data ?? [])] as Option[],
     [purchaseProviders.data],
   );
 
-  const categories = useTransactionCategoriesCommon();
+  const categories = useTransactionCategoriesCommon({ includeShared: true });
 
   const categoryOptions = useMemo(
     () =>
