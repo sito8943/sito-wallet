@@ -30,6 +30,8 @@ const {
   VITE_FEATURE_TRANSACTIONS_ENABLED_DEFAULT,
   VITE_FEATURE_SUBSCRIPTIONS_ENABLED_DEFAULT,
   VITE_FEATURE_DEBTS_ENABLED_DEFAULT,
+  VITE_USAGE_URL,
+  VITE_USAGE_KEY,
 } = import.meta.env;
 
 const parseStrictBoolean = (
@@ -122,6 +124,16 @@ export const config = {
     defaults: featureFlagsDefaults,
   },
   tableOptions: "sito-wallet:table-options",
+  /** Consent for optional technologies (cookie banner). */
+  consent: {
+    storageKey: VITE_ACCEPT_COOKIE || "consent_wallet",
+  },
+  /** Anonymous feature usage (sito-feature-usage). Empty URL: off. Needs consent. */
+  featureUsage: {
+    app: "wallet",
+    url: VITE_USAGE_URL || "",
+    key: VITE_USAGE_KEY || "",
+  },
   auth: {
     user: authUserKey,
     remember: authRememberKey,

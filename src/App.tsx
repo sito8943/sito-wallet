@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 
 // components
-import { SplashScreen, UpdateDialog } from "components";
+import { DataChoices, SplashScreen, UpdateDialog } from "components";
 
 // hooks
 import { useAppSession } from "./hooks/useAppSession";
@@ -23,6 +23,7 @@ function App() {
         <Suspense fallback={<SplashScreen />}>
           <Routes />
           <UpdateDialog />
+          <DataChoices />
         </Suspense>
       )}
     </>

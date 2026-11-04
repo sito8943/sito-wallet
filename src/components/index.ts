@@ -4,6 +4,7 @@ export * from "./Accordion";
 export * from "./Search";
 export * from "./Logo";
 export * from "./OfflineBanner";
+export * from "./DataChoices";
 export * from "./Image";
 export * from "./MobileSelectionBar";
 export * from "./ColorVignette";

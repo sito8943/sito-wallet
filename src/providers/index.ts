@@ -5,6 +5,8 @@ export * from "./ProfileLanguageSyncProvider";
 export * from "./OnlineStatusSyncProvider";
 export * from "./QueryPersistence";
 export * from "./FeatureFlags/";
+export * from "./Consent";
+export * from "./FeatureUsage";
 export * from "./Theme";
 export {
   BottomNavActionProvider,
