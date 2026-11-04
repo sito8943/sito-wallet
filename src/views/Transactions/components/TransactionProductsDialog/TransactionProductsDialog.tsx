@@ -15,7 +15,7 @@ import {
 } from "@sito/dashboard-app";
 
 // lib
-import { Tables, getProductLabel } from "lib";
+import { Tables, getProductLabel, withProductLabel } from "lib";
 
 // hooks
 import { useProductsCommon } from "../../../../hooks/queries/useProductsCommon";
@@ -95,7 +95,7 @@ export function TransactionProductsDialog(
                   <AutocompleteInput
                     required
                     options={productOptions}
-                    value={value && { ...value, name: getProductLabel(value) }}
+                    value={value && withProductLabel(value)}
                     onChange={(next) =>
                       onChange(
                         (next &&
