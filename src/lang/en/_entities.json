@@ -602,5 +602,8 @@
       "placeholder": "E.g. Supermarket",
       "unique": "A provider with that name already exists"
     }
+  },
+  "catalog": {
+    "sharedLabel": "{{name}} · by {{owner}}"
   }
 }

@@ -15,3 +15,4 @@ export * from "./user";
 export * from "./auth";
 export * from "./ImportDto";
 export * from "./ImportPreviewDto";
+export * from "./catalog";

@@ -602,5 +602,8 @@
       "placeholder": "Ej: Supermercado",
       "unique": "Ya existe un proveedor con ese nombre"
     }
+  },
+  "catalog": {
+    "sharedLabel": "{{name}} · de {{owner}}"
   }
 }
