@@ -10,6 +10,8 @@ export interface CatalogRowDto extends BaseEntityDto {
   /** Secondary line under the name (e.g. a product's receipt name). */
   subtitle?: string | null;
   photo?: string | null;
+  /** Shown as a badge on the "view transactions" action. */
+  transactionCount?: number;
 }
 
 export type CatalogCommonItem = {
@@ -18,6 +20,7 @@ export type CatalogCommonItem = {
   updatedAt: Date;
   subtitle?: string | null;
   photo?: string | null;
+  transactionCount?: number;
 };
 
 export interface CatalogCardPropsType extends CatalogRowDto {

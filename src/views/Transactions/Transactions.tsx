@@ -36,6 +36,8 @@ import { useAddAccountDialog } from "../Accounts/hooks";
 import { useEditTransactionCategoryDialog } from "../TransactionCategories/hooks";
 import {
   AccountsQueryKeys,
+  ProductsQueryKeys,
+  PurchaseProvidersQueryKeys,
   TransactionsQueryKeys,
   useMobileNavbar,
   usePersistedTableOptions,
@@ -200,6 +202,9 @@ export function Transactions() {
     onSuccess: async () => {
       await Promise.all([
         queryClient.invalidateQueries({ ...AccountsQueryKeys.all() }),
+        // Products and sellers carry a transaction count.
+        queryClient.invalidateQueries({ ...ProductsQueryKeys.all() }),
+        queryClient.invalidateQueries({ ...PurchaseProvidersQueryKeys.all() }),
         queryClient.invalidateQueries({
           queryKey: [...TransactionsQueryKeys.all().queryKey, "weekly"],
         }),
@@ -229,6 +234,9 @@ export function Transactions() {
     onSuccess: async () => {
       await Promise.all([
         queryClient.invalidateQueries({ ...AccountsQueryKeys.all() }),
+        // Products and sellers carry a transaction count.
+        queryClient.invalidateQueries({ ...ProductsQueryKeys.all() }),
+        queryClient.invalidateQueries({ ...PurchaseProvidersQueryKeys.all() }),
         queryClient.invalidateQueries({
           queryKey: [...TransactionsQueryKeys.all().queryKey, "weekly"],
         }),

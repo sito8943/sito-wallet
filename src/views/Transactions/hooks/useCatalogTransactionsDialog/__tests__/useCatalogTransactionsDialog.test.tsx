@@ -65,6 +65,22 @@ describe("useCatalogTransactionsDialog", () => {
     expect(result.current.dialog.filters).toEqual({ purchaseProviderId: 7 });
   });
 
+  it("names the count in the tooltip when there are transactions", () => {
+    const { result } = renderHook(() =>
+      useCatalogTransactionsDialog({
+        filterKey: "productId",
+        emptyMessage: "empty",
+      }),
+    );
+
+    expect(result.current.action(record).tooltip).toBe(
+      "_pages:transactions.catalogHistory.action",
+    );
+    expect(
+      result.current.action({ ...record, transactionCount: 3 }).tooltip,
+    ).toBe("_pages:transactions.catalogHistory.actionWithCount");
+  });
+
   it("hides the action when transactions are disabled", () => {
     flags.transactionsEnabled = false;
     const { result } = renderHook(() =>

@@ -1,10 +1,15 @@
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReceipt } from "@fortawesome/free-solid-svg-icons";
 
 // providers
 import { useFeatureFlags } from "providers";
+
+// components
+import {
+  CountBadgeIcon,
+  formatBadgeCount,
+} from "../../../../components/CountBadgeIcon";
 
 // types
 import type { CatalogRowDto } from "components";
@@ -47,8 +52,13 @@ export function useCatalogTransactionsDialog(
       id: CATALOG_TRANSACTIONS_ACTION_ID,
       hidden: !transactionsEnabled,
       disabled: !transactionsEnabled,
-      icon: <FontAwesomeIcon icon={faReceipt} />,
-      tooltip: t("_pages:transactions.catalogHistory.action"),
+      icon: <CountBadgeIcon icon={faReceipt} count={record.transactionCount} />,
+      tooltip: t(
+        formatBadgeCount(record.transactionCount)
+          ? "_pages:transactions.catalogHistory.actionWithCount"
+          : "_pages:transactions.catalogHistory.action",
+        { count: record.transactionCount },
+      ),
       onClick: () =>
         setState({
           open: true,

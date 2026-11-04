@@ -15,3 +15,4 @@ export * from "./PhotoField";
 export * from "./ProviderPhoto";
 export * from "./BottomNavAction";
 export * from "./SplashScreen";
+export * from "./CountBadgeIcon";

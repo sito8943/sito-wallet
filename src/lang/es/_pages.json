@@ -777,7 +777,8 @@
     },
     "catalogHistory": {
       "action": "Ver transacciones",
-      "title": "Transacciones · {{name}}"
+      "title": "Transacciones · {{name}}",
+      "actionWithCount": "Ver transacciones ({{count}})"
     }
   },
   "transactionCategories": {

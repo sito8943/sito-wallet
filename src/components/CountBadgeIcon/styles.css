@@ -1,0 +1,10 @@
+@reference "../../styles/variables.css";
+
+.count-badge-icon {
+  @apply relative inline-flex items-center justify-center;
+}
+
+/* Pill anchored to the icon's top-right corner; wide enough for "+99". */
+.count-badge {
+  @apply pointer-events-none absolute -top-2 -right-3 flex h-4 min-w-4 items-center justify-center rounded-full bg-bg-primary px-1 text-[10px] leading-none font-semibold text-on-brand;
+}
