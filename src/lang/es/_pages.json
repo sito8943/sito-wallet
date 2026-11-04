@@ -293,7 +293,8 @@
       "photo": "Foto",
       "data": "Datos",
       "security": "Seguridad",
-      "appearance": "Apariencia"
+      "appearance": "Apariencia",
+      "privacy": "Privacidad"
     },
     "actions": {
       "save": "Guardar cambios",
@@ -309,7 +310,8 @@
       "hideDeletedEntities": "Ocultar elementos eliminados",
       "currentPassword": "Contraseña actual",
       "theme": "Tema",
-      "publicCatalogs": "Catálogos públicos"
+      "publicCatalogs": "Catálogos públicos",
+      "analytics": "Analítica anónima de uso"
     },
     "helper": {
       "photo": "Tipos permitidos: JPG, PNG, WEBP. Tamaño máximo: 5 MB.",
@@ -318,7 +320,8 @@
       "hideDeletedEntities": "Si está activado, los elementos eliminados no se mostrarán en las listas.",
       "changePassword": "Por seguridad, al cambiar la contraseña se cerrará tu sesión actual.",
       "theme": "Se guarda en este dispositivo. \"Sistema\" sigue la configuración de tu dispositivo.",
-      "publicCatalogs": "Tus monedas, categorías, productos, vendedores y proveedores de suscripción aparecerán a otros usuarios para que los usen. Al usarlos se crea una copia en su cuenta; los tuyos siguen siendo solo tuyos."
+      "publicCatalogs": "Tus monedas, categorías, productos, vendedores y proveedores de suscripción aparecerán a otros usuarios para que los usen. Al usarlos se crea una copia en su cuenta; los tuyos siguen siendo solo tuyos.",
+      "analytics": "Cuenta qué pantallas se usan, sin datos tuyos ni de tu dispositivo. Puedes cambiarlo cuando quieras."
     },
     "messages": {
       "updated": "Perfil actualizado correctamente",
@@ -336,6 +339,10 @@
         "system": "Sistema",
         "light": "Claro",
         "dark": "Oscuro"
+      },
+      "analytics": {
+        "allowed": "Permitida",
+        "denied": "No permitida"
       }
     },
     "errors": {
@@ -1015,7 +1022,7 @@
   },
   "cookiesPolicy": {
     "title": "Política de Cookies y Tecnologías Similares",
-    "body": "<p>Esta política explica cómo Sito Wallet utiliza cookies y tecnologías de almacenamiento/acceso local en el dispositivo del usuario, conforme al artículo 22.2 de la LSSI y normativa de privacidad aplicable.</p><p><strong>Sito Wallet es totalmente gratuita, de código abierto y no opera con dinero real.</strong></p><p><strong>Última actualización:</strong> 29 de marzo de 2026.</p>",
+    "body": "<p>Esta política explica cómo Sito Wallet utiliza cookies y tecnologías de almacenamiento/acceso local en el dispositivo del usuario, conforme al artículo 22.2 de la LSSI y normativa de privacidad aplicable.</p><p><strong>Sito Wallet es totalmente gratuita, de código abierto y no opera con dinero real.</strong></p><p><strong>Última actualización:</strong> 4 de noviembre de 2026.</p>",
     "sections": [
       {
         "title": "1. Qué son las cookies y tecnologías similares",
@@ -1023,15 +1030,15 @@
       },
       {
         "title": "2. Tecnologías usadas en esta app",
-        "body": "<ul><li><strong>Cookies técnicas</strong> vinculadas a librerías/base de sesión del cliente.</li><li><strong>Local Storage</strong> para sesión, preferencias, búsquedas recientes, banderas de funcionalidades y metadatos de sincronización.</li><li><strong>IndexedDB</strong> para persistencia local de datos financieros y cola de sincronización offline.</li></ul>"
+        "body": "<ul><li><strong>Cookies técnicas</strong> vinculadas a librerías/base de sesión del cliente.</li><li><strong>Local Storage</strong> para sesión, preferencias, búsquedas recientes, banderas de funcionalidades y metadatos de sincronización.</li><li><strong>IndexedDB</strong> para persistencia local de datos financieros y cola de sincronización offline.</li><li><strong>Analítica anónima de uso (opcional, solo con tu consentimiento):</strong> recuentos de qué pantallas se usan y qué día, enviados a un servicio propio (sito-feature-usage) sin usuario, cuenta, dispositivo, IP ni contenido. La app guarda en Local Storage los recuentos pendientes de envío y tu elección.</li></ul>"
       },
       {
         "title": "3. Finalidades",
-        "body": "<ul><li>Autenticación y mantenimiento de sesión.</li><li>Recordar preferencias esenciales de uso.</li><li>Habilitar modo offline y sincronización diferida.</li><li>Mejorar estabilidad técnica y recuperación ante desconexiones.</li></ul>"
+        "body": "<ul><li>Autenticación y mantenimiento de sesión.</li><li>Recordar preferencias esenciales de uso.</li><li>Habilitar modo offline y sincronización diferida.</li><li>Mejorar estabilidad técnica y recuperación ante desconexiones.</li><li>Con tu consentimiento: saber qué funciones se usan para mejorar la app, con totales diarios anónimos.</li></ul>"
       },
       {
         "title": "4. Base de legitimación",
-        "body": "<p>Las tecnologías estrictamente necesarias para prestar el servicio solicitado por el usuario se apoyan en la excepción del artículo 22.2 LSSI. Si en el futuro se incorporan tecnologías no necesarias (por ejemplo, analítica no exenta o publicidad), se solicitará consentimiento previo antes de activarlas.</p>"
+        "body": "<p>Las tecnologías estrictamente necesarias para prestar el servicio solicitado por el usuario se apoyan en la excepción del artículo 22.2 LSSI. Si en el futuro se incorporan tecnologías no necesarias (por ejemplo, analítica no exenta o publicidad), se solicitará consentimiento previo antes de activarlas.</p><p>La analítica anónima de uso no es estrictamente necesaria: solo se activa si la aceptas en el aviso de cookies, y puedes retirarla en cualquier momento.</p>"
       },
       {
         "title": "5. Cookies propias y de terceros",
@@ -1043,7 +1050,7 @@
       },
       {
         "title": "7. Gestión y revocación",
-        "body": "<ul><li>Puedes borrar o bloquear cookies y almacenamiento local desde tu navegador.</li><li>Cuando existan categorías no necesarias, la app mostrará panel de preferencias con opciones equivalentes para aceptar/rechazar y revocar en cualquier momento.</li><li>La retirada del consentimiento será tan sencilla como su otorgamiento.</li></ul>"
+        "body": "<ul><li>Puedes borrar o bloquear cookies y almacenamiento local desde tu navegador.</li><li>Cuando existan categorías no necesarias, la app mostrará panel de preferencias con opciones equivalentes para aceptar/rechazar y revocar en cualquier momento.</li><li>La retirada del consentimiento será tan sencilla como su otorgamiento.</li><li>Puedes aceptar, rechazar o cambiar la analítica anónima desde el aviso de cookies (botón «Cambiar preferencias de cookies» de esta página) o en Perfil → Privacidad; al retirarla se borran los recuentos pendientes guardados en tu dispositivo.</li></ul>"
       },
       {
         "title": "8. Más información",
@@ -1234,5 +1241,13 @@
         "successMessage": "Pago actualizado correctamente"
       }
     }
+  },
+  "cookieBanner": {
+    "title": "Cookies y privacidad",
+    "body": "Usamos almacenamiento local necesario para tu sesión, tus preferencias y el modo offline. Con tu permiso, también contamos de forma anónima qué pantallas se usan (sin datos tuyos) para mejorar la app.",
+    "policy": "Política de cookies",
+    "accept": "Aceptar",
+    "reject": "Rechazar",
+    "change": "Cambiar preferencias de cookies"
   }
 }

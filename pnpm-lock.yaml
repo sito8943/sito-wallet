@@ -53,8 +53,8 @@ importers:
         specifier: 0.3.2
         version: 0.3.2(@fortawesome/fontawesome-svg-core@7.0.0)(@fortawesome/free-regular-svg-icons@7.0.0)(@fortawesome/free-solid-svg-icons@7.0.0)(@fortawesome/react-fontawesome@3.4.0(@fortawesome/fontawesome-svg-core@7.0.0)(react@19.2.7))(@sito/dashboard@0.4.4(@sito/ui@0.10.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@sito/ui@0.10.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@supabase/supabase-js@2.110.6)(@tanstack/react-query@5.83.0(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react-hook-form@7.81.0(react@19.2.7))(react@19.2.7)
       '@sito/feature-usage':
-        specifier: github:sito8943/sito-feature-usage-js#v0.1.0-alpha.1
-        version: https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/c741e8c86c4125dd16a439b29d4a8676b05a413d(react@19.2.7)
+        specifier: github:sito8943/sito-feature-usage-js#v0.1.0-alpha.2
+        version: https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/5bd0b62a3c8087bc09bf95fa1e70552d2a9634bb(react@19.2.7)
       '@sito/ui':
         specifier: 0.10.1
         version: 0.10.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -1401,9 +1401,9 @@ packages:
       react: ^19.0.0
       react-dom: ^19.0.0
 
-  '@sito/feature-usage@https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/c741e8c86c4125dd16a439b29d4a8676b05a413d':
-    resolution: {gitHosted: true, integrity: sha512-CjYvyETJJJI9WTRl8S8Vdn+gdRHgVEtlXRHCA5Jm8xnfz7KyFzYLR9CQ2eyCUzG+yixN0QdsS7FSyf78gTJOkg==, tarball: https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/c741e8c86c4125dd16a439b29d4a8676b05a413d}
-    version: 0.1.0-alpha.1
+  '@sito/feature-usage@https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/5bd0b62a3c8087bc09bf95fa1e70552d2a9634bb':
+    resolution: {gitHosted: true, integrity: sha512-M6CEGRvOCpQxBVKz6fgfz26Z3yFH7RvBtd8AHgWa/a3KnNqT9G9yZeQQXrNXdEGyhgGCTcV4wOPNu36K1yzkLA==, tarball: https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/5bd0b62a3c8087bc09bf95fa1e70552d2a9634bb}
+    version: 0.1.0-alpha.2
     peerDependencies:
       react: ^19.0.0
     peerDependenciesMeta:
@@ -4630,7 +4630,7 @@ snapshots:
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
 
-  '@sito/feature-usage@https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/c741e8c86c4125dd16a439b29d4a8676b05a413d(react@19.2.7)':
+  '@sito/feature-usage@https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/5bd0b62a3c8087bc09bf95fa1e70552d2a9634bb(react@19.2.7)':
     optionalDependencies:
       react: 19.2.7
 

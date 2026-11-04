@@ -293,7 +293,8 @@
       "photo": "Photo",
       "data": "Data",
       "security": "Security",
-      "appearance": "Appearance"
+      "appearance": "Appearance",
+      "privacy": "Privacy"
     },
     "actions": {
       "save": "Save changes",
@@ -309,7 +310,8 @@
       "hideDeletedEntities": "Hide deleted items",
       "currentPassword": "Current password",
       "theme": "Theme",
-      "publicCatalogs": "Public catalogs"
+      "publicCatalogs": "Public catalogs",
+      "analytics": "Anonymous usage analytics"
     },
     "helper": {
       "photo": "Allowed types: JPG, PNG, WEBP. Max size: 5 MB.",
@@ -318,7 +320,8 @@
       "hideDeletedEntities": "When enabled, deleted items will not be shown in list views.",
       "changePassword": "For security, changing your password will sign you out of the current session.",
       "theme": "Saved on this device. \"System\" follows your device settings.",
-      "publicCatalogs": "Your currencies, categories, products, sellers and subscription providers are offered to other users. Using one creates a copy in their account; yours stay yours."
+      "publicCatalogs": "Your currencies, categories, products, sellers and subscription providers are offered to other users. Using one creates a copy in their account; yours stay yours.",
+      "analytics": "Counts which screens are used, with no data about you or your device. You can change it at any time."
     },
     "messages": {
       "updated": "Profile updated successfully",
@@ -336,6 +339,10 @@
         "system": "System",
         "light": "Light",
         "dark": "Dark"
+      },
+      "analytics": {
+        "allowed": "Allowed",
+        "denied": "Not allowed"
       }
     },
     "errors": {
@@ -1015,7 +1022,7 @@
   },
   "cookiesPolicy": {
     "title": "Cookies and Similar Technologies Policy",
-    "body": "<p>This policy explains how Sito Wallet uses cookies and local storage/access technologies on user devices, in line with Article 22.2 LSSI and applicable privacy regulations.</p><p><strong>Sito Wallet is completely free, open source, and does not operate with real money.</strong></p><p><strong>Last updated:</strong> March 29, 2026.</p>",
+    "body": "<p>This policy explains how Sito Wallet uses cookies and local storage/access technologies on user devices, in line with Article 22.2 LSSI and applicable privacy regulations.</p><p><strong>Sito Wallet is completely free, open source, and does not operate with real money.</strong></p><p><strong>Last updated:</strong> November 4, 2026.</p>",
     "sections": [
       {
         "title": "1. What cookies and similar technologies are",
@@ -1023,15 +1030,15 @@
       },
       {
         "title": "2. Technologies used in this app",
-        "body": "<ul><li><strong>Technical cookies</strong> related to client session/base libraries.</li><li><strong>Local Storage</strong> for session data, preferences, recent searches, feature flags, and sync metadata.</li><li><strong>IndexedDB</strong> for local financial data persistence and offline synchronization queues.</li></ul>"
+        "body": "<ul><li><strong>Technical cookies</strong> related to client session/base libraries.</li><li><strong>Local Storage</strong> for session data, preferences, recent searches, feature flags, and sync metadata.</li><li><strong>IndexedDB</strong> for local financial data persistence and offline synchronization queues.</li><li><strong>Anonymous usage analytics (optional, only with your consent):</strong> counts of which screens are used and on which day, sent to our own service (sito-feature-usage) with no user, account, device, IP or content. The app keeps unsent counts and your choice in Local Storage.</li></ul>"
       },
       {
         "title": "3. Purposes",
-        "body": "<ul><li>Authentication and session continuity.</li><li>Remember essential user preferences.</li><li>Enable offline mode and deferred synchronization.</li><li>Improve technical stability and disconnection recovery.</li></ul>"
+        "body": "<ul><li>Authentication and session continuity.</li><li>Remember essential user preferences.</li><li>Enable offline mode and deferred synchronization.</li><li>Improve technical stability and disconnection recovery.</li><li>With your consent: knowing which features are used to improve the app, as anonymous daily totals.</li></ul>"
       },
       {
         "title": "4. Legal basis",
-        "body": "<p>Technologies strictly necessary to provide the service explicitly requested by the user rely on the Article 22.2 LSSI exemption. If non-essential technologies are introduced in the future (for example, non-exempt analytics or advertising), prior consent will be requested before activation.</p>"
+        "body": "<p>Technologies strictly necessary to provide the service explicitly requested by the user rely on the Article 22.2 LSSI exemption. If non-essential technologies are introduced in the future (for example, non-exempt analytics or advertising), prior consent will be requested before activation.</p><p>Anonymous usage analytics is not strictly necessary: it is only turned on if you accept it in the cookie notice, and you can withdraw it at any time.</p>"
       },
       {
         "title": "5. First-party and third-party cookies",
@@ -1043,7 +1050,7 @@
       },
       {
         "title": "7. Management and withdrawal",
-        "body": "<ul><li>You can clear or block cookies and local storage through your browser settings.</li><li>When non-essential categories exist, the app will provide a preferences panel with equivalent accept/reject and revocation options at any time.</li><li>Withdrawing consent will be as easy as granting it.</li></ul>"
+        "body": "<ul><li>You can clear or block cookies and local storage through your browser settings.</li><li>When non-essential categories exist, the app will provide a preferences panel with equivalent accept/reject and revocation options at any time.</li><li>Withdrawing consent will be as easy as granting it.</li><li>You can accept, reject or change anonymous analytics from the cookie notice (“Change cookie preferences” button on this page) or in Profile → Privacy; withdrawing it deletes the pending counts kept on your device.</li></ul>"
       },
       {
         "title": "8. More information",
@@ -1234,5 +1241,13 @@
         "successMessage": "Payment updated successfully"
       }
     }
+  },
+  "cookieBanner": {
+    "title": "Cookies and privacy",
+    "body": "We use local storage that is needed for your session, your preferences and offline mode. With your permission, we also count anonymously which screens are used (no data about you) to improve the app.",
+    "policy": "Cookies policy",
+    "accept": "Accept",
+    "reject": "Reject",
+    "change": "Change cookie preferences"
   }
 }

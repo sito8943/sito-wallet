@@ -124,7 +124,11 @@ export const config = {
     defaults: featureFlagsDefaults,
   },
   tableOptions: "sito-wallet:table-options",
-  /** Anonymous feature usage (sito-feature-usage). Empty URL: off. */
+  /** Consent for optional technologies (cookie banner). */
+  consent: {
+    storageKey: VITE_ACCEPT_COOKIE || "consent_wallet",
+  },
+  /** Anonymous feature usage (sito-feature-usage). Empty URL: off. Needs consent. */
   featureUsage: {
     app: "wallet",
     url: VITE_USAGE_URL || "",

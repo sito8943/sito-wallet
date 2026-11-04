@@ -51,6 +51,7 @@ vi.mock("components", () => ({
   SplashScreen: ({ visible = true }: { visible?: boolean }) =>
     visible ? <div data-testid="splash-screen" /> : null,
   UpdateDialog: () => null,
+  CookieBanner: () => null,
 }));
 
 vi.mock("lib", () => {

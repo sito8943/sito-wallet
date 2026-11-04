@@ -1,14 +1,19 @@
 import { useTranslation, Trans } from "react-i18next";
 
 import {
+  Button,
   LegalPage,
   LegalSection,
   richTextComponents,
   type LegalContentSectionType,
 } from "@sito/dashboard-app";
 
+// providers
+import { useConsent } from "providers";
+
 export const CookiesPolicy = () => {
   const { t } = useTranslation();
+  const { openBanner } = useConsent();
 
   const sections = t("_pages:cookiesPolicy.sections", {
     returnObjects: true,
@@ -34,6 +39,16 @@ export const CookiesPolicy = () => {
           </LegalSection>
         ))}
       </section>
+      <div className="mt-6">
+        <Button
+          type="button"
+          variant="outlined"
+          color="primary"
+          onClick={openBanner}
+        >
+          {t("_pages:cookieBanner.change")}
+        </Button>
+      </div>
     </LegalPage>
   );
 };
