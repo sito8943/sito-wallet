@@ -1053,7 +1053,7 @@
   },
   "privacyPolicy": {
     "title": "Política de Privacidad",
-    "body": "<p>Esta política describe cómo tratamos datos personales en Sito Wallet y qué derechos te asisten como usuario.</p><p><strong>Sito Wallet es totalmente gratuita, de código abierto y no opera con dinero real.</strong></p><p><strong>Última actualización:</strong> 29 de marzo de 2026.</p>",
+    "body": "<p>Esta política describe cómo tratamos datos personales en Sito Wallet y qué derechos te asisten como usuario.</p><p><strong>Sito Wallet es totalmente gratuita, de código abierto y no opera con dinero real.</strong></p><p><strong>Última actualización:</strong> 4 de noviembre de 2026.</p>",
     "sections": [
       {
         "title": "1. Responsable del tratamiento",
@@ -1061,11 +1061,11 @@
       },
       {
         "title": "2. Categorías de datos tratados",
-        "body": "<ul><li>Datos de identificación y cuenta (usuario, email, identificadores internos).</li><li>Datos de perfil (nombre visible, descripción y foto opcional).</li><li>Datos financieros introducidos por el usuario (cuentas, saldos, categorías y transacciones).</li><li>Datos técnicos de sesión y sincronización (tokens, metadatos de dispositivo/sync, estado de conectividad).</li><li>Preferencias de uso almacenadas localmente (idioma, onboarding, filtros, búsquedas recientes y ajustes de interfaz).</li></ul>"
+        "body": "<ul><li>Datos de identificación y cuenta (usuario, email, identificadores internos).</li><li>Datos de perfil (nombre visible, descripción y foto opcional).</li><li>Datos financieros introducidos por el usuario (cuentas, saldos, categorías y transacciones).</li><li>Datos técnicos de sesión y sincronización (tokens, metadatos de dispositivo/sync, estado de conectividad).</li><li>Preferencias de uso almacenadas localmente (idioma, onboarding, filtros, búsquedas recientes y ajustes de interfaz).</li><li>Recuentos anónimos de uso de funciones (qué pantalla o función se usó y qué día, sin usuario, cuenta, dispositivo, IP ni contenido), guardados solo como totales diarios; la app conserva en el almacenamiento local los recuentos aún no enviados.</li></ul>"
       },
       {
         "title": "3. Finalidades y bases jurídicas",
-        "body": "<ul><li><strong>Prestar el servicio principal:</strong> ejecución de la relación contractual/condiciones de uso.</li><li><strong>Autenticación y seguridad:</strong> interés legítimo en proteger cuentas y prevenir accesos indebidos.</li><li><strong>Persistencia y funcionamiento offline:</strong> ejecución del servicio solicitado por el usuario.</li><li><strong>Soporte técnico y mejora de estabilidad:</strong> interés legítimo en mantener continuidad y calidad del servicio.</li><li><strong>Cumplimiento normativo:</strong> cuando exista obligación legal aplicable.</li><li><strong>Importante:</strong> la app solo sirve para registro y organización; no realiza operaciones financieras reales ni custodia dinero.</li></ul>"
+        "body": "<ul><li><strong>Prestar el servicio principal:</strong> ejecución de la relación contractual/condiciones de uso.</li><li><strong>Autenticación y seguridad:</strong> interés legítimo en proteger cuentas y prevenir accesos indebidos.</li><li><strong>Persistencia y funcionamiento offline:</strong> ejecución del servicio solicitado por el usuario.</li><li><strong>Soporte técnico y mejora de estabilidad:</strong> interés legítimo en mantener continuidad y calidad del servicio.</li><li><strong>Cumplimiento normativo:</strong> cuando exista obligación legal aplicable.</li><li><strong>Importante:</strong> la app solo sirve para registro y organización; no realiza operaciones financieras reales ni custodia dinero.</li><li><strong>Saber qué funciones se usan para mejorar la app:</strong> interés legítimo; solo totales diarios anónimos por función, nunca vinculados a una persona.</li></ul>"
       },
       {
         "title": "4. Origen de los datos",

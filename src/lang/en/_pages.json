@@ -1053,7 +1053,7 @@
   },
   "privacyPolicy": {
     "title": "Privacy Policy",
-    "body": "<p>This policy describes how we process personal data in Sito Wallet and the rights available to users.</p><p><strong>Sito Wallet is completely free, open source, and does not operate with real money.</strong></p><p><strong>Last updated:</strong> March 29, 2026.</p>",
+    "body": "<p>This policy describes how we process personal data in Sito Wallet and the rights available to users.</p><p><strong>Sito Wallet is completely free, open source, and does not operate with real money.</strong></p><p><strong>Last updated:</strong> November 4, 2026.</p>",
     "sections": [
       {
         "title": "1. Data controller",
@@ -1061,11 +1061,11 @@
       },
       {
         "title": "2. Categories of data processed",
-        "body": "<ul><li>Account and identification data (username, email, internal identifiers).</li><li>Profile data (display name, description, optional photo).</li><li>Financial data entered by users (accounts, balances, categories, transactions).</li><li>Session and synchronization technical data (tokens, device/sync metadata, connectivity status).</li><li>Locally stored usage preferences (language, onboarding, filters, recent searches, interface settings).</li></ul>"
+        "body": "<ul><li>Account and identification data (username, email, internal identifiers).</li><li>Profile data (display name, description, optional photo).</li><li>Financial data entered by users (accounts, balances, categories, transactions).</li><li>Session and synchronization technical data (tokens, device/sync metadata, connectivity status).</li><li>Locally stored usage preferences (language, onboarding, filters, recent searches, interface settings).</li><li>Anonymous feature usage counts (which screen or feature was used and on which day, with no user, account, device, IP or content), kept only as daily totals; the app keeps unsent counts in local storage.</li></ul>"
       },
       {
         "title": "3. Purposes and legal bases",
-        "body": "<ul><li><strong>Provide core service:</strong> performance of the user relationship/terms.</li><li><strong>Authentication and security:</strong> legitimate interest in protecting accounts and preventing unauthorized access.</li><li><strong>Persistence and offline functionality:</strong> performance of the service requested by the user.</li><li><strong>Technical support and stability improvements:</strong> legitimate interest in service continuity and quality.</li><li><strong>Regulatory compliance:</strong> when required by applicable law.</li><li><strong>Important:</strong> the app is only for record-keeping and organization; it does not execute real financial operations or hold money.</li></ul>"
+        "body": "<ul><li><strong>Provide core service:</strong> performance of the user relationship/terms.</li><li><strong>Authentication and security:</strong> legitimate interest in protecting accounts and preventing unauthorized access.</li><li><strong>Persistence and offline functionality:</strong> performance of the service requested by the user.</li><li><strong>Technical support and stability improvements:</strong> legitimate interest in service continuity and quality.</li><li><strong>Regulatory compliance:</strong> when required by applicable law.</li><li><strong>Important:</strong> the app is only for record-keeping and organization; it does not execute real financial operations or hold money.</li><li><strong>Knowing which features are used to improve the app:</strong> legitimate interest; only anonymous daily totals per feature, never linked to a person.</li></ul>"
       },
       {
         "title": "4. Data sources",

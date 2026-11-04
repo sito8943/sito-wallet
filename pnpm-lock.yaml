@@ -52,6 +52,9 @@ importers:
       '@sito/dashboard-app':
         specifier: 0.3.2
         version: 0.3.2(@fortawesome/fontawesome-svg-core@7.0.0)(@fortawesome/free-regular-svg-icons@7.0.0)(@fortawesome/free-solid-svg-icons@7.0.0)(@fortawesome/react-fontawesome@3.4.0(@fortawesome/fontawesome-svg-core@7.0.0)(react@19.2.7))(@sito/dashboard@0.4.4(@sito/ui@0.10.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@sito/ui@0.10.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@supabase/supabase-js@2.110.6)(@tanstack/react-query@5.83.0(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react-hook-form@7.81.0(react@19.2.7))(react@19.2.7)
+      '@sito/feature-usage':
+        specifier: github:sito8943/sito-feature-usage-js#v0.1.0-alpha.1
+        version: https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/c741e8c86c4125dd16a439b29d4a8676b05a413d(react@19.2.7)
       '@sito/ui':
         specifier: 0.10.1
         version: 0.10.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -1397,6 +1400,15 @@ packages:
       '@sito/ui': '>=0.3.2 <0.11.0'
       react: ^19.0.0
       react-dom: ^19.0.0
+
+  '@sito/feature-usage@https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/c741e8c86c4125dd16a439b29d4a8676b05a413d':
+    resolution: {gitHosted: true, integrity: sha512-CjYvyETJJJI9WTRl8S8Vdn+gdRHgVEtlXRHCA5Jm8xnfz7KyFzYLR9CQ2eyCUzG+yixN0QdsS7FSyf78gTJOkg==, tarball: https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/c741e8c86c4125dd16a439b29d4a8676b05a413d}
+    version: 0.1.0-alpha.1
+    peerDependencies:
+      react: ^19.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
 
   '@sito/ui@0.10.1':
     resolution: {integrity: sha512-WMhiswb5ohOgJatYh1TUGyqbxbjARCrnNd3Xv6szP8To7c+CHRCIokBCJpRizE23sJGW4lk2YL1BTa4mbs0zeA==}
@@ -4617,6 +4629,10 @@ snapshots:
       '@sito/ui': 0.10.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
+
+  '@sito/feature-usage@https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/c741e8c86c4125dd16a439b29d4a8676b05a413d(react@19.2.7)':
+    optionalDependencies:
+      react: 19.2.7
 
   '@sito/ui@0.10.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:

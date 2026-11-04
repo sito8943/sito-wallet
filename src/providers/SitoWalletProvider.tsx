@@ -16,6 +16,7 @@ import { Manager } from "lib";
 
 import { AuthAccountPersistenceProvider } from "./AuthAccountPersistenceProvider";
 import { FeatureFlagsProvider } from "./FeatureFlags/FeatureFlagsProvider";
+import { FeatureUsageProvider } from "./FeatureUsage";
 import { NotificationsProvider } from "./Notifications";
 import { OnlineStatusSyncProvider } from "./OnlineStatusSyncProvider";
 import { ProfileLanguageSyncProvider } from "./ProfileLanguageSyncProvider";
@@ -80,7 +81,9 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
               <AuthAccountPersistenceProvider>
                 <ProfileLanguageSyncProvider>
                   <FeatureFlagsProvider>
-                    <NotificationsProvider>{children}</NotificationsProvider>
+                    <FeatureUsageProvider>
+                      <NotificationsProvider>{children}</NotificationsProvider>
+                    </FeatureUsageProvider>
                   </FeatureFlagsProvider>
                 </ProfileLanguageSyncProvider>
               </AuthAccountPersistenceProvider>
