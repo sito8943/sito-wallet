@@ -54,7 +54,11 @@ export function useReceiptScan(props: UseReceiptScanPropsType) {
       try {
         const photo = await prepareReceiptPhoto(file);
         const draft = await manager.Transactions.scanReceipt(photo);
-        const [products, purchaseProviders] = await catalogs;
+        // Match the receipt against the user's own catalog only; other
+        // users' public items are for pickers.
+        const [products, purchaseProviders] = (await catalogs).map((items) =>
+          items.filter((item) => !item.shared),
+        ) as [CommonProductDto[], CommonPurchaseProviderDto[]];
         onDraft(
           receiptDraftToForm(draft, {
             products,

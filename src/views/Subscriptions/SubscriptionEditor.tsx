@@ -14,6 +14,7 @@ import {
 
 import {
   SubscriptionsQueryKeys,
+  useInvalidateCatalogs,
   useMobileNavbar,
   useMutationErrorHandler,
 } from "hooks";
@@ -62,6 +63,7 @@ export function SubscriptionEditor() {
   const navigate = useNavigate();
   const { showSuccessNotification } = useNotification();
   const handleMutationError = useMutationErrorHandler();
+  const invalidateCatalogs = useInvalidateCatalogs();
 
   const manager = useManager();
   const subscriptionsClient =
@@ -116,6 +118,8 @@ export function SubscriptionEditor() {
       );
     },
     onSuccess: async () => {
+      // Shared catalog items used here are cloned into the user's account.
+      await invalidateCatalogs();
       showSuccessNotification({
         message: isEditMode
           ? t("_pages:common.actions.edit.successMessage")

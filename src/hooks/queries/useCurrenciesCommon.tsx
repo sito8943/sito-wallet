@@ -15,8 +15,14 @@ import {
 import { useHideDeletedEntitiesPreference } from "./useHideDeletedEntitiesPreference";
 
 import { CurrenciesQueryKeys } from "./queryKeys/currenciesQueryKeys";
+import { useCatalogSelect } from "./useCatalogSelect";
+import type { UseCatalogCommonProps } from "./types";
 
-export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
+export function useCurrenciesCommon(
+  props: UseCatalogCommonProps = {},
+): UseQueryResult<CommonCurrencyDto[]> {
+  const { includeShared = false } = props;
+  const select = useCatalogSelect<CommonCurrencyDto>(includeShared);
   const manager = useManager();
   const { account } = useAuth();
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
@@ -33,5 +39,6 @@ export function useCurrenciesCommon(): UseQueryResult<CommonCurrencyDto[]> {
     ...CurrenciesQueryKeys.common(commonFilters),
     enabled: !!account?.id,
     queryFn: () => manager.Currencies.commonGet(commonFilters),
+    select,
   });
 }

@@ -19,9 +19,14 @@ import { useHideDeletedEntitiesPreference } from "./useHideDeletedEntitiesPrefer
 
 import { TransactionCategoriesQueryKeys } from "./queryKeys/transactionCategoriesQueryKeys";
 
-export function useTransactionCategoriesCommon(): UseQueryResult<
-  CommonTransactionCategoryDto[]
-> {
+import { useCatalogSelect } from "./useCatalogSelect";
+import type { UseCatalogCommonProps } from "./types";
+
+export function useTransactionCategoriesCommon(
+  props: UseCatalogCommonProps = {},
+): UseQueryResult<CommonTransactionCategoryDto[]> {
+  const { includeShared = false } = props;
+  const select = useCatalogSelect<CommonTransactionCategoryDto>(includeShared);
   const manager = useManager();
   const { account } = useAuth();
   const hideDeletedEntities = useHideDeletedEntitiesPreference();
@@ -38,5 +43,6 @@ export function useTransactionCategoriesCommon(): UseQueryResult<
     ...TransactionCategoriesQueryKeys.common(commonFilters),
     enabled: !!account?.id,
     queryFn: () => manager.TransactionCategories.commonGet(commonFilters),
+    select,
   });
 }

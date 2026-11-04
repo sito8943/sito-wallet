@@ -7,7 +7,11 @@ import { usePutDialog } from "@sito/dashboard-app";
 import { useManager } from "providers";
 
 // hooks
-import { AccountsQueryKeys, useMutationErrorHandler } from "hooks";
+import {
+  AccountsQueryKeys,
+  useInvalidateCatalogs,
+  useMutationErrorHandler,
+} from "hooks";
 
 // utils
 import { dtoToForm, emptyAccount, formToUpdateDto } from "../utils";
@@ -23,6 +27,7 @@ export function useEditAccountDialog() {
   const handleMutationError = useMutationErrorHandler();
 
   const manager = useManager();
+  const invalidateCatalogs = useInvalidateCatalogs();
 
   return usePutDialog<
     AccountDto,
@@ -35,6 +40,8 @@ export function useEditAccountDialog() {
     defaultValues: emptyAccount,
     getFunction: (id) => manager.Accounts.getById(id),
     mutationFn: (data) => manager.Accounts.update(data),
+    // A shared currency is cloned into the account owner's catalog.
+    onSuccess: invalidateCatalogs,
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:accounts.forms.edit"),
     onError: (error) =>

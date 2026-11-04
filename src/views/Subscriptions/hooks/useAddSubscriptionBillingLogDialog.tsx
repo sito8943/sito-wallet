@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 import { useNotification, usePostDialog } from "@sito/dashboard-app";
 
-import { SubscriptionsQueryKeys } from "hooks";
+import { SubscriptionsQueryKeys, useInvalidateCatalogs } from "hooks";
 import { useManager } from "providers";
 
 import type { AddSubscriptionBillingLogDto, SubscriptionDto } from "lib";
@@ -19,6 +19,7 @@ import { useAddSubscriptionBillingLogAction } from "./useAddSubscriptionBillingL
 export function useAddSubscriptionBillingLogDialog() {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
+  const invalidateCatalogs = useInvalidateCatalogs();
   const { showErrorNotification } = useNotification();
 
   const manager = useManager();
@@ -52,9 +53,11 @@ export function useAddSubscriptionBillingLogDialog() {
       "_pages:subscriptions.actions.billingLog.successMessage",
     ),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        ...SubscriptionsQueryKeys.all(),
-      });
+      await Promise.all([
+        queryClient.invalidateQueries({ ...SubscriptionsQueryKeys.all() }),
+        // A shared currency is cloned into the user's account.
+        invalidateCatalogs(),
+      ]);
       setSelectedSubscription(null);
     },
     title: t("_pages:subscriptions.actions.billingLog.title"),

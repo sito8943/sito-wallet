@@ -57,6 +57,7 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
       name: "",
       language: "es",
       hideDeletedEntities: false,
+      publicCatalogs: false,
     },
   });
 
@@ -73,6 +74,7 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
         profile.language ?? i18n.resolvedLanguage ?? i18n.language,
       ),
       hideDeletedEntities: !!profile.hideDeletedEntities,
+      publicCatalogs: !!profile.publicCatalogs,
     });
   }, [i18n.language, i18n.resolvedLanguage, profile, reset]);
 
@@ -96,6 +98,10 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
     control,
     name: "hideDeletedEntities",
   });
+  const currentPublicCatalogs = !!useWatch({
+    control,
+    name: "publicCatalogs",
+  });
   const normalizedName = currentName.trim();
   const formDisabled = updateProfile.isPending;
   const saveDisabled =
@@ -110,6 +116,7 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
       name: values.name.trim(),
       language: normalizeProfileLanguage(values.language),
       hideDeletedEntities: values.hideDeletedEntities,
+      publicCatalogs: values.publicCatalogs,
     };
 
     try {
@@ -125,6 +132,7 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
         name: payload.name ?? "",
         language: payload.language ?? "es",
         hideDeletedEntities: !!payload.hideDeletedEntities,
+        publicCatalogs: !!payload.publicCatalogs,
       });
       showSuccessNotification({
         message: t("_pages:profile.messages.updated"),
@@ -272,6 +280,45 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
                   containerClassName="shrink-0"
                   inputClassName="profile-toggle-input"
                   aria-labelledby="hide-deleted-entities-label"
+                  checked={!!field.value}
+                  disabled={formDisabled}
+                  onBlur={field.onBlur}
+                  onChange={(event) =>
+                    field.onChange(event.currentTarget.checked)
+                  }
+                />
+              )}
+            />
+          </div>
+
+          <div className="profile-toggle">
+            <div className="profile-toggle-copy">
+              <span id="public-catalogs-label">
+                {t("_pages:profile.labels.publicCatalogs")}
+              </span>
+              <span className="profile-toggle-hint">
+                {t("_pages:profile.helper.publicCatalogs")}
+              </span>
+              <span className="profile-toggle-hint">
+                {currentPublicCatalogs
+                  ? t("_pages:profile.values.enabled")
+                  : t("_pages:profile.values.disabled")}
+              </span>
+            </div>
+
+            <Controller
+              control={control}
+              name="publicCatalogs"
+              disabled={formDisabled}
+              render={({ field }) => (
+                <CheckInput
+                  id="public-catalogs"
+                  name={field.name}
+                  label=""
+                  labelClassName="hidden"
+                  containerClassName="shrink-0"
+                  inputClassName="profile-toggle-input"
+                  aria-labelledby="public-catalogs-label"
                   checked={!!field.value}
                   disabled={formDisabled}
                   onBlur={field.onBlur}

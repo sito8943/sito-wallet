@@ -67,7 +67,7 @@ export type UseSubscriptionsRenewalsProps = {
 export type UseSubscriptionsRenewalsForecastProps =
   GetSubscriptionRenewalsQuery;
 
-export type UseSubscriptionProvidersCommonProps = {
+export type UseSubscriptionProvidersCommonProps = UseCatalogCommonProps & {
   onlyEnabled?: boolean;
 };
 
@@ -93,4 +93,12 @@ export type UseSavingsProjectionDailyPropsType = UseSavingsDepositPropsType & {
   accountId?: number;
   /** YYYY-MM; the query stays idle while undefined. */
   month?: string;
+};
+
+export type UseCatalogCommonProps = {
+  /**
+   * Also list other users' public items (labelled with their owner). Only
+   * for pickers whose save endpoint clones them into the caller's account.
+   */
+  includeShared?: boolean;
 };

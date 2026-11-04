@@ -308,7 +308,8 @@
       "language": "Idioma",
       "hideDeletedEntities": "Ocultar elementos eliminados",
       "currentPassword": "Contraseña actual",
-      "theme": "Tema"
+      "theme": "Tema",
+      "publicCatalogs": "Catálogos públicos"
     },
     "helper": {
       "photo": "Tipos permitidos: JPG, PNG, WEBP. Tamaño máximo: 5 MB.",
@@ -316,7 +317,8 @@
       "language": "Elige el idioma de la aplicación para tu perfil.",
       "hideDeletedEntities": "Si está activado, los elementos eliminados no se mostrarán en las listas.",
       "changePassword": "Por seguridad, al cambiar la contraseña se cerrará tu sesión actual.",
-      "theme": "Se guarda en este dispositivo. \"Sistema\" sigue la configuración de tu dispositivo."
+      "theme": "Se guarda en este dispositivo. \"Sistema\" sigue la configuración de tu dispositivo.",
+      "publicCatalogs": "Tus monedas, categorías, productos, vendedores y proveedores de suscripción aparecerán a otros usuarios para que los usen. Al usarlos se crea una copia en su cuenta; los tuyos siguen siendo solo tuyos."
     },
     "messages": {
       "updated": "Perfil actualizado correctamente",

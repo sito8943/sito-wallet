@@ -4,6 +4,7 @@ export type ProfileFormType = {
   name: string;
   language: ProfileLanguage;
   hideDeletedEntities: boolean;
+  publicCatalogs: boolean;
 };
 
 export type ChangePasswordFormType = {

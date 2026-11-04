@@ -10,4 +10,6 @@ export interface ProfileDto extends BaseEntityDto {
   user: CommonUserProfileDto | null;
   language?: ProfileLanguage;
   hideDeletedEntities?: boolean;
+  /** Offers the user's catalogs to other users (cloned when they use them). */
+  publicCatalogs?: boolean;
 }

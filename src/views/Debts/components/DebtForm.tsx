@@ -27,7 +27,7 @@ export function DebtForm(props: DebtFormPropsType) {
   const { control, isLoading } = props;
   const { t } = useTranslation();
 
-  const currenciesQuery = useCurrenciesCommon();
+  const currenciesQuery = useCurrenciesCommon({ includeShared: true });
 
   const currencyOptions = useMemo(
     () => [...(currenciesQuery.data ?? [])] as Option[],

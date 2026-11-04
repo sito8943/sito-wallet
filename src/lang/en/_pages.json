@@ -308,7 +308,8 @@
       "language": "Language",
       "hideDeletedEntities": "Hide deleted items",
       "currentPassword": "Current password",
-      "theme": "Theme"
+      "theme": "Theme",
+      "publicCatalogs": "Public catalogs"
     },
     "helper": {
       "photo": "Allowed types: JPG, PNG, WEBP. Max size: 5 MB.",
@@ -316,7 +317,8 @@
       "language": "Choose the app language for your profile.",
       "hideDeletedEntities": "When enabled, deleted items will not be shown in list views.",
       "changePassword": "For security, changing your password will sign you out of the current session.",
-      "theme": "Saved on this device. \"System\" follows your device settings."
+      "theme": "Saved on this device. \"System\" follows your device settings.",
+      "publicCatalogs": "Your currencies, categories, products, sellers and subscription providers are offered to other users. Using one creates a copy in their account; yours stay yours."
     },
     "messages": {
       "updated": "Profile updated successfully",

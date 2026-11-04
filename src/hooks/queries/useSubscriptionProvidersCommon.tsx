@@ -17,11 +17,13 @@ import {
 
 import { SubscriptionProvidersQueryKeys } from "./queryKeys/subscriptionProvidersQueryKeys";
 import type { UseSubscriptionProvidersCommonProps } from "./types";
+import { useCatalogSelect } from "./useCatalogSelect";
 
 export function useSubscriptionProvidersCommon(
   props: UseSubscriptionProvidersCommonProps = {},
 ): UseQueryResult<CommonSubscriptionProviderDto[]> {
-  const { onlyEnabled = true } = props;
+  const { onlyEnabled = true, includeShared = false } = props;
+  const select = useCatalogSelect<CommonSubscriptionProviderDto>(includeShared);
 
   const manager = useManager();
   const subscriptionProvidersClient =
@@ -48,5 +50,6 @@ export function useSubscriptionProvidersCommon(
 
       return subscriptionProvidersClient.commonGet(commonFilters);
     },
+    select,
   });
 }

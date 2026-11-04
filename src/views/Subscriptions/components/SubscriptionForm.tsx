@@ -43,10 +43,15 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
   } = props;
   const { t } = useTranslation();
 
-  const providersQuery = useSubscriptionProvidersCommon({ onlyEnabled: true });
-  const currenciesQuery = useCurrenciesCommon();
+  const providersQuery = useSubscriptionProvidersCommon({
+    onlyEnabled: true,
+    includeShared: true,
+  });
+  const currenciesQuery = useCurrenciesCommon({ includeShared: true });
   const accountsQuery = useAccountsCommon();
-  const categoriesQuery = useTransactionCategoriesCommon();
+  const categoriesQuery = useTransactionCategoriesCommon({
+    includeShared: true,
+  });
 
   const providerOptions = useMemo(
     () => [...(providersQuery.data ?? [])] as Option[],
