@@ -7,9 +7,13 @@ export type RecentTransactionsDialogPropsType = {
   filters: FilterTransactionDto;
   excludedCategoryIds?: number[];
   enabled?: boolean;
+  /** Max transactions shown, newest first. Defaults to the recent limit. */
+  limit?: number;
+  /** Replaces the default "no transactions for these filters" text. */
+  emptyMessage?: string;
 };
 
 export type UseRecentTransactionsPropsType = Pick<
   RecentTransactionsDialogPropsType,
-  "open" | "filters" | "excludedCategoryIds" | "enabled"
+  "open" | "filters" | "excludedCategoryIds" | "enabled" | "limit"
 >;

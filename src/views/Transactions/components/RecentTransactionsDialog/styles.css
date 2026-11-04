@@ -1,4 +1,4 @@
-@reference "../../../../../styles/variables.css";
+@reference "../../../../styles/variables.css";
 
 .recent-transactions-dialog {
   @apply sm:max-h-[calc(100vh-4rem)] sm:overflow-hidden;
