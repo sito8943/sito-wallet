@@ -283,7 +283,10 @@ main,
 /* @sito/ui's pressed state sets `transform: scale(...)` (or `none` with reduced
    motion) on every button, which replaced the `translateY(-50%)` that centres
    the password toggle: the eye button dropped half its height while pressed.
-   Keep the centring and press with the standalone `scale` property instead. */
+   Keep the centring and press with the standalone `scale` property instead.
+   Fixed upstream in @sito/ui 0.10.2, but @sito/dashboard 0.4.4 still bundles
+   the 0.10.1 button styles (dist/sitoUi.css): drop this with
+   @sito/dashboard >= 0.4.5. */
 .text-input-field .password-icon.sito-ui-button:not(:disabled):active {
   transform: translateY(-50%);
   scale: var(--sito-ui-button-active-scale, 0.97);
@@ -293,16 +296,4 @@ main,
   .text-input-field .password-icon.sito-ui-button:not(:disabled):active {
     scale: none;
   }
-}
-
-/* dashboard-app's drawer is a fixed, 100vh panel with no overflow, so on
-   short (mobile) screens the last menu entries were cut off and could not be
-   reached. Let it scroll on its own, without dragging the page behind it, and
-   size it to the visible viewport (100vh also counts the area hidden by the
-   mobile browser bars). */
-aside.drawer {
-  height: 100dvh;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
 }
