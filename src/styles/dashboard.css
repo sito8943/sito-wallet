@@ -294,3 +294,15 @@ main,
     scale: none;
   }
 }
+
+/* dashboard-app's drawer is a fixed, 100vh panel with no overflow, so on
+   short (mobile) screens the last menu entries were cut off and could not be
+   reached. Let it scroll on its own, without dragging the page behind it, and
+   size it to the visible viewport (100vh also counts the area hidden by the
+   mobile browser bars). */
+aside.drawer {
+  height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
+}
