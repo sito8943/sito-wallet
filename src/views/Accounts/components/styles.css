@@ -132,9 +132,9 @@
 }
 
 .type-group-value--income {
-  @apply text-lg font-semibold text-bg-success;
+  @apply text-lg font-semibold text-text-success;
 }
 
 .type-group-value--expense {
-  @apply text-lg font-semibold text-bg-error;
+  @apply text-lg font-semibold text-text-error;
 }

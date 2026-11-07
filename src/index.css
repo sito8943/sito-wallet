@@ -104,11 +104,11 @@ main {
 }
 
 .inverted-success {
-  @apply text-bg-success;
+  @apply text-text-success;
 }
 
 .inverted-error {
-  @apply text-bg-error;
+  @apply text-text-error;
 }
 
 .appear {

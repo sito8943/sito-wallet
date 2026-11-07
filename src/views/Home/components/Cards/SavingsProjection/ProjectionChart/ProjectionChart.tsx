@@ -12,8 +12,8 @@ import {
 } from "chart.js";
 import type { ChartData, ChartOptions, TooltipItem } from "chart.js";
 
-// providers
-import { useTheme } from "providers";
+// @sito/dashboard-app
+import { useTheme } from "@sito/dashboard-app";
 
 // types
 import type { ProjectionChartPropsType } from "./types";

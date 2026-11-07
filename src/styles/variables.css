@@ -27,18 +27,34 @@
   /** Notification colors **/
   --color-bg-info: #0070ba;
   --color-info: #fbfbfb;
-  --color-bg-success: hsl(149.76, 68%, 36%);
+  /* fills keep >= 4.5:1 (WCAG AA) with their on-fill text */
+  --color-bg-success: #167a48;
   --color-success: #fbfbfb;
   --color-bg-warning: #ffa500;
   --color-warning: #000000;
   --color-bg-error: hsl(0, 50%, 51%);
   --color-error: #fbfbfb;
+  /* status color used as text on page surfaces (amounts, deleted labels);
+     >= 4.5:1 on base-dark/base/base-light */
+  --color-text-success: #137043;
+  --color-text-error: #b33c3c;
   --breakpoint-xs: 28rem;
 }
 
 /* Class-based dark mode: `dark:` utilities follow `<html class="dark">`
    (toggled by ThemeProvider), not the OS media query. */
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Light tokens that differ from @sito/dashboard-app's defaults. The build
+   leaves `@layer theme` empty (the @theme values above only survive as
+   `var(--x, fallback)`), and the lib declares its light defaults on
+   `:where(:root)`, so those would win at runtime. Declaring them on `:root`
+   (before `.dark`, same specificity) makes ours apply. */
+:root {
+  --color-bg-success: #167a48;
+  --color-text-success: #137043;
+  --color-text-error: #b33c3c;
+}
 
 /** Dark theme — same token names, so every `bg-*`/`text-*` utility and the
     @sito/dashboard-app theme flip automatically. Brand fills stay mid-tone
@@ -70,12 +86,14 @@
   /** Notification colors (text stays light on mid-tone fills) **/
   --color-bg-info: #1f6fb0;
   --color-info: #f1f5fb;
-  --color-bg-success: #1f8a55;
+  --color-bg-success: #1a7a4c;
   --color-success: #f1f5fb;
   --color-bg-warning: #e8a33a;
   --color-warning: #111111;
-  --color-bg-error: #c24a4a;
+  --color-bg-error: #b84040;
   --color-error: #f1f5fb;
+  --color-text-success: #3fb87e;
+  --color-text-error: #ee7070;
   /* @sito/ui (dialogs) maps most of its tokens to ours; these two it doesn't */
   --sito-ui-color-scheme: dark;
   --sito-ui-color-text-muted: var(--color-text-muted);

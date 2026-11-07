@@ -4,7 +4,11 @@ import { useTranslation } from "react-i18next";
 import { QueryClient } from "@tanstack/react-query";
 
 // @sito/dashboard-app
-import { AppProviders, TranslationProvider } from "@sito/dashboard-app";
+import {
+  AppProviders,
+  ThemeProvider,
+  TranslationProvider,
+} from "@sito/dashboard-app";
 
 // components
 import { SearchModal } from "components";
@@ -12,7 +16,7 @@ import { SearchModal } from "components";
 import { type BasicProviderPropTypes } from "./types";
 
 // lib
-import { Manager } from "lib";
+import { Manager, THEME_COLOR_META, THEME_STORAGE_KEY } from "lib";
 
 import { AuthAccountPersistenceProvider } from "./AuthAccountPersistenceProvider";
 import { FeatureFlagsProvider } from "./FeatureFlags/FeatureFlagsProvider";
@@ -22,7 +26,6 @@ import { NotificationsProvider } from "./Notifications";
 import { OnlineStatusSyncProvider } from "./OnlineStatusSyncProvider";
 import { ProfileLanguageSyncProvider } from "./ProfileLanguageSyncProvider";
 import { QueryPersistenceProvider } from "./QueryPersistence";
-import { ThemeProvider } from "./Theme";
 
 // config
 import { config } from "../config";
@@ -65,7 +68,10 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
   );
 
   return (
-    <ThemeProvider>
+    <ThemeProvider
+      storageKey={THEME_STORAGE_KEY}
+      themeColors={THEME_COLOR_META}
+    >
       <AppProviders
         config={{
           location,

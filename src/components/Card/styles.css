@@ -53,7 +53,7 @@
 }
 
 .item-card-selection-indicator--selected {
-  @apply text-bg-success;
+  @apply text-text-success;
 }
 
 .item-card-selection-indicator--idle {
@@ -65,7 +65,7 @@
 }
 
 .item-card-title--deleted {
-  @apply !text-bg-error;
+  @apply !text-text-error;
 }
 
 .item-card-title--active {

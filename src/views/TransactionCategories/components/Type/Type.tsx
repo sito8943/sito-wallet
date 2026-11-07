@@ -33,7 +33,7 @@ export const Type = (props: TypePropsType) => {
     if (filled)
       return type === TransactionType.In ? "chip-success" : "chip-danger";
     return `${
-      type === TransactionType.In ? "!text-bg-success" : "!text-bg-error"
+      type === TransactionType.In ? "!text-text-success" : "!text-text-error"
     } !p-0 !bg-transparent`;
   }, [filled, type]);
 

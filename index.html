@@ -33,18 +33,21 @@
     <title>Sito Wallet</title>
     <script>
       // Apply the stored theme before first paint (no light flash in dark
-      // mode). Key/values mirror src/lib/utils/theme/constants.ts.
+      // mode). Readable equivalent of @sito/dashboard-app's
+      // getThemeBootScript({ storageKey: "sito-wallet-theme" }); the key must
+      // match THEME_STORAGE_KEY in src/lib/utils/theme/constants.ts.
       (function () {
         try {
           var mode = localStorage.getItem("sito-wallet-theme");
+          if (mode !== "system" && mode !== "light" && mode !== "dark")
+            mode = "system";
           var dark =
             mode === "dark" ||
-            (mode !== "light" &&
+            (mode === "system" &&
               window.matchMedia("(prefers-color-scheme: dark)").matches);
-          if (dark) {
-            document.documentElement.classList.add("dark");
-            document.documentElement.style.colorScheme = "dark";
-          }
+          var root = document.documentElement;
+          if (dark) root.classList.add("dark");
+          root.style.colorScheme = dark ? "dark" : "light";
         } catch (e) {}
       })();
     </script>

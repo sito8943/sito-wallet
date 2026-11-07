@@ -142,7 +142,7 @@ a.primary {
 .currency-card-description--deleted,
 .user-card-email--deleted,
 .transaction-card-description--deleted {
-  @apply !text-bg-error;
+  @apply !text-text-error;
 }
 
 .account-form-row,
