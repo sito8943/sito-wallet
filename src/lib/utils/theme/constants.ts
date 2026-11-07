@@ -1,17 +1,12 @@
-import type { ResolvedTheme, ThemeMode } from "./types";
+import type { ThemeColors } from "@sito/dashboard-app";
 
-// Keep in sync with the inline boot script in `index.html` (avoids a flash of
-// the wrong theme before React mounts).
+// Wallet-specific config for @sito/dashboard-app's ThemeProvider.
+// Keep the key: it holds users' saved preference (also read by the inline boot
+// script in `index.html`).
 export const THEME_STORAGE_KEY = "sito-wallet-theme";
 
-export const THEME_MODES: readonly ThemeMode[] = ["system", "light", "dark"];
-
-export const DARK_THEME_CLASS = "dark";
-
-export const DARK_SCHEME_QUERY = "(prefers-color-scheme: dark)";
-
 /** `<meta name="theme-color">` per theme (browser chrome / PWA status bar). */
-export const THEME_COLOR_META: Record<ResolvedTheme, string> = {
+export const THEME_COLOR_META = {
   light: "#041e42",
   dark: "#0f141c",
-};
+} as const satisfies ThemeColors;

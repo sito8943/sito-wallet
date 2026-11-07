@@ -65,5 +65,5 @@ export const getWeeklyTransactionAmountClassName = (
   transaction: TransactionDto,
 ): string =>
   getWeeklyTransactionType(transaction) === TransactionType.Out
-    ? "text-bg-error"
-    : "text-bg-success";
+    ? "text-text-error"
+    : "text-text-success";

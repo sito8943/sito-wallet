@@ -3,13 +3,12 @@ import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
 import type { Option } from "@sito/dashboard-app";
-import { SelectInput } from "@sito/dashboard-app";
-
-// providers
-import { useTheme } from "providers";
-
-// lib
-import { THEME_MODES, isThemeMode } from "lib";
+import {
+  SelectInput,
+  THEME_MODES,
+  isThemeMode,
+  useTheme,
+} from "@sito/dashboard-app";
 
 import "./styles.css";
 

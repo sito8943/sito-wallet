@@ -53,19 +53,19 @@
 }
 
 .type-resume-opposite-amount--income {
-  @apply text-bg-success;
+  @apply text-text-success;
 }
 
 .type-resume-opposite-amount--expense {
-  @apply text-bg-error;
+  @apply text-text-error;
 }
 
 .type-resume-amount--income {
-  @apply text-bg-success;
+  @apply text-text-success;
 }
 
 .type-resume-amount--expense {
-  @apply text-bg-error;
+  @apply text-text-error;
 }
 
 .type-resume-compare {

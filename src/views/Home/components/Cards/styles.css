@@ -51,7 +51,7 @@
 }
 
 .dashboard-card-title-success {
-  @apply mt-1 text-bg-success;
+  @apply mt-1 text-text-success;
 }
 
 .dashboard-card-active-filters {
@@ -107,7 +107,7 @@
 }
 
 .current-balance-debt {
-  @apply text-bg-error;
+  @apply text-text-error;
 }
 
 .current-balance-actions {
@@ -319,5 +319,5 @@
 }
 
 .weekly-spent-amount {
-  @apply self-end text-4xl font-bold text-bg-error;
+  @apply self-end text-4xl font-bold text-text-error;
 }

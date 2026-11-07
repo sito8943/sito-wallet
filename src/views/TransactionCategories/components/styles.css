@@ -17,11 +17,11 @@
 }
 
 .transaction-category-card-mobile-type--income {
-  @apply bg-bg-success/10 !text-bg-success border-bg-success/30;
+  @apply bg-bg-success/10 !text-text-success border-bg-success/30;
 }
 
 .transaction-category-card-mobile-type--expense {
-  @apply bg-bg-error/10 !text-bg-error border-bg-error/30;
+  @apply bg-bg-error/10 !text-text-error border-bg-error/30;
 }
 
 .transaction-category-card-mobile-type-text {

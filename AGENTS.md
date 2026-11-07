@@ -43,8 +43,11 @@ Available status classes (from `src/index.css`):
 
 - `.status-success` → `bg-bg-success text-success`
 - `.status-error` → `bg-bg-error text-error`
-- `.inverted-success` → `text-bg-success`
-- `.inverted-error` → `text-bg-error`
+- `.inverted-success` → `text-text-success`
+- `.inverted-error` → `text-text-error`
+
+Status color as text on page surfaces: use `text-text-success` / `text-text-error`
+(not `text-bg-*`, which are fill colors and fail contrast on dark surfaces).
 
 Use the `status-*` prefix for filled semantic states. Generic classes such as
 `.success` and `.error` are reserved by shared UI packages and must not be

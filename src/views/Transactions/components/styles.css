@@ -142,11 +142,11 @@
 }
 
 .weekly-card-current--expense {
-  @apply text-bg-error;
+  @apply text-text-error;
 }
 
 .weekly-card-current--income {
-  @apply text-bg-success;
+  @apply text-text-success;
 }
 
 .weekly-card-difference {
@@ -154,17 +154,17 @@
 }
 
 .weekly-card-difference--expense-up {
-  @apply text-bg-error;
+  @apply text-text-error;
 }
 
 .weekly-card-difference--expense-down {
-  @apply text-bg-success;
+  @apply text-text-success;
 }
 
 .weekly-card-difference--income-up {
-  @apply text-bg-success;
+  @apply text-text-success;
 }
 
 .weekly-card-difference--income-down {
-  @apply text-bg-error;
+  @apply text-text-error;
 }
