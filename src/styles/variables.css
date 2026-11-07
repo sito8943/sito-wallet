@@ -1,4 +1,13 @@
-@import "tailwindcss";
+/* `@import "tailwindcss"` split up so the theme is NOT in `@layer theme`.
+   @sito/dashboard-app's bundled CSS declares its light defaults unlayered
+   (`:where(:root) { --color-*: ... }`), and any unlayered rule beats a layered
+   one, so tokens emitted in `@layer theme` would lose to the lib defaults.
+   Unlayered, our `:root, :host` (0,1,0) beats `:where(:root)` (0,0,0), and the
+   `.dark` block below (same specificity, later) still overrides it. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css";
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
 
 @theme {
   --color-primary: #041e42;
@@ -44,17 +53,6 @@
 /* Class-based dark mode: `dark:` utilities follow `<html class="dark">`
    (toggled by ThemeProvider), not the OS media query. */
 @custom-variant dark (&:where(.dark, .dark *));
-
-/* Light tokens that differ from @sito/dashboard-app's defaults. The build
-   leaves `@layer theme` empty (the @theme values above only survive as
-   `var(--x, fallback)`), and the lib declares its light defaults on
-   `:where(:root)`, so those would win at runtime. Declaring them on `:root`
-   (before `.dark`, same specificity) makes ours apply. */
-:root {
-  --color-bg-success: #167a48;
-  --color-text-success: #137043;
-  --color-text-error: #b33c3c;
-}
 
 /** Dark theme — same token names, so every `bg-*`/`text-*` utility and the
     @sito/dashboard-app theme flip automatically. Brand fills stay mid-tone
