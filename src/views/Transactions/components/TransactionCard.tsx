@@ -54,6 +54,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
     actions,
     swipeDeleteOpen = false,
     onSwipeDelete,
+    footer,
   } = props;
   const deleted = !!deletedAt;
   const touchTimeoutRef = useRef<number | null>(null);
@@ -232,6 +233,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
             </span>
             {dateLabel}
           </div>
+          {footer}
         </div>
         <p className="transaction-card-amount">
           {amount}{" "}

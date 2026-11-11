@@ -10,6 +10,7 @@ import type { TransactionDto } from "lib";
 import { useEditTransaction } from "../../hooks";
 import { EditTransactionDialog } from "../EditTransactionDialog";
 import { TransactionCard } from "../TransactionCard";
+import { TransactionProductPrice } from "../TransactionProductPrice";
 
 import { RECENT_TRANSACTIONS_DIALOG_CLASS_NAME } from "./constants";
 import type { RecentTransactionsDialogPropsType } from "./types";
@@ -20,7 +21,8 @@ import "./styles.css";
 export const RecentTransactionsDialog = (
   props: RecentTransactionsDialogPropsType,
 ) => {
-  const { open, onClose, title, emptyMessage } = props;
+  const { open, onClose, title, emptyMessage, filters } = props;
+  const productId = filters.productId;
   const { t } = useTranslation();
 
   const editTransaction = useEditTransaction();
@@ -56,6 +58,15 @@ export const RecentTransactionsDialog = (
                 {...transaction}
                 actions={[]}
                 onClick={editTransaction.openDialog}
+                footer={
+                  productId ? (
+                    <TransactionProductPrice
+                      products={transaction.products}
+                      productId={productId}
+                      currency={transaction.account?.currency}
+                    />
+                  ) : undefined
+                }
               />
             ))}
           </ul>

@@ -1,0 +1,5 @@
+@reference "../../../../styles/variables.css";
+
+.transaction-product-price {
+  @apply text-xs text-left text-text-muted;
+}
