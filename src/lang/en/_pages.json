@@ -787,6 +787,7 @@
     "catalogHistory": {
       "action": "View transactions",
       "title": "Transactions · {{name}}",
+      "productPrice": "{{unitPrice}} × {{quantity}} = {{total}}",
       "actionWithCount": "View transactions ({{count}})"
     }
   },

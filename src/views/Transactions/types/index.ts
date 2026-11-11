@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { FieldValues } from "react-hook-form";
 
 // @sito/dashboard
@@ -38,6 +39,8 @@ export interface TransactionCardPropsType extends TransactionDto {
   onLongPress?: (id: number) => void;
   swipeDeleteOpen?: boolean;
   onSwipeDelete?: () => void;
+  /** Extra details shown under the date (e.g. a product's price). */
+  footer?: ReactNode;
 }
 
 export interface TransactionFormType
