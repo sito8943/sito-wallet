@@ -6,6 +6,7 @@ export interface CommonProductDto
   name: string;
   /** Name the user knows the product by; `name` is the receipt name. */
   alias?: string | null;
+  photo?: string | null;
   /** Active transactions that use it (from `/common`). */
   transactionCount?: number;
 }

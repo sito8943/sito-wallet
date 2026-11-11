@@ -1,15 +1,28 @@
 import { useTranslation } from "react-i18next";
-import { Controller } from "react-hook-form";
+import { Controller, useWatch } from "react-hook-form";
 
 // @sito/dashboard-app
 import { TextInput } from "@sito/dashboard-app";
 
+// lib
+import type { PhotoFormValues } from "lib";
+
+// components
+import { PhotoField } from "components";
+
 // types
 import type { ProductFormPropsType } from "../types";
 
+// constants
+import { PRODUCT_PHOTO_INPUT_ID } from "./constants";
+
 export function ProductForm(props: ProductFormPropsType) {
-  const { control, isLoading } = props;
+  const { control, isLoading, setValue } = props;
   const { t } = useTranslation();
+  const [photo, photoUrl, file, removePhoto] = useWatch({
+    control,
+    name: ["photo", "photoUrl", "file", "removePhoto"],
+  });
 
   return (
     <>
@@ -50,6 +63,18 @@ export function ProductForm(props: ProductFormPropsType) {
             {...rest}
           />
         )}
+      />
+      <PhotoField
+        inputId={PRODUCT_PHOTO_INPUT_ID}
+        disabled={isLoading}
+        values={{ photo, photoUrl, file, removePhoto }}
+        onChange={(patch) =>
+          Object.entries(patch).forEach(([key, value]) =>
+            setValue?.(key as keyof PhotoFormValues, value, {
+              shouldDirty: true,
+            }),
+          )
+        }
       />
     </>
   );

@@ -9,24 +9,25 @@ import { ProductsQueryKeys, useMutationErrorHandler } from "hooks";
 // providers
 import { useManager } from "providers";
 
-// lib
-import type { AddProductDto } from "lib";
-
 // utils
 import { emptyProductForm, productFormToAddDto } from "../utils";
 
 // types
-import type { ProductFormType } from "../types";
+import type { CreateProductMutationDto, ProductFormType } from "../types";
 
 export function useAddProductDialog() {
   const { t } = useTranslation();
   const handleMutationError = useMutationErrorHandler();
   const manager = useManager();
 
-  return usePostDialog<AddProductDto, number, ProductFormType>({
+  return usePostDialog<CreateProductMutationDto, number, ProductFormType>({
     formToDto: productFormToAddDto,
     defaultValues: emptyProductForm,
-    mutationFn: (data) => manager.Products.insert(data),
+    mutationFn: async ({ payload, file }) => {
+      const id = await manager.Products.insert(payload);
+      if (file) await manager.Products.updatePhoto(id, file);
+      return id;
+    },
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:products.forms.add"),
     onError: (error) =>
