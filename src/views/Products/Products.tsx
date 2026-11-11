@@ -118,6 +118,7 @@ export function Products() {
                 <CatalogCard
                   {...item}
                   actions={actions}
+                  showPhoto
                   onClick={(id) => editProduct.openDialog(id)}
                   editLabel={t("_pages:products.forms.edit")}
                   editAriaLabel={t("_pages:products.forms.editAria")}
