@@ -7,4 +7,5 @@ export * from "./useAdjustBalanceAction";
 export * from "./useAdjustBalanceMutation";
 export * from "./useTransferAction";
 export * from "./useTransferDialog";
+export * from "./useAdjustRewardsAction";
 export * from "./useAdjustRewardsMutation";

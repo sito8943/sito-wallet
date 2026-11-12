@@ -129,4 +129,5 @@ export enum AccountActions {
   SyncAccount = "syncAccount",
   AdjustBalance = "adjustBalance",
   Transfer = "transfer",
+  AdjustRewards = "adjustRewards",
 }

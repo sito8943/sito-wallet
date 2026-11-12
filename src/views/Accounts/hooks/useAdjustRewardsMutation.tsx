@@ -11,16 +11,18 @@ import {
 
 // hooks
 import { AccountsQueryKeys } from "hooks";
+import { useAdjustRewardsAction } from "./useAdjustRewardsAction";
 
 // providers
 import { useManager } from "providers";
 
 // lib
-import type { AccountRewardsDto, AdjustRewardsDto } from "lib";
+import type { AccountDto, AccountRewardsDto, AdjustRewardsDto } from "lib";
 
 // types
 import type { AdjustRewardsAccountType, AdjustRewardsFormType } from "../types";
 import {
+  accountToAdjustRewardsAccount,
   adjustRewardsDefaultValues,
   adjustRewardsFormToDto,
 } from "./adjustRewardsMutation.utils";
@@ -71,8 +73,17 @@ export const useAdjustRewardsMutation = () => {
     [openDialog],
   );
 
+  const { action } = useAdjustRewardsAction({
+    onClick: useCallback(
+      (record: AccountDto) =>
+        openForAccount(accountToAdjustRewardsAccount(record)),
+      [openForAccount],
+    ),
+  });
+
   return {
     ...formDialog,
+    action,
     openForAccount,
     selectedAccount,
   };
