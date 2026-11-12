@@ -40,18 +40,6 @@
   @apply flex flex-col gap-2;
 }
 
-.ai-agents-capabilities-list {
-  @apply flex flex-col gap-2;
-}
-
-.ai-agents-capability {
-  @apply flex items-start gap-2 text-sm;
-}
-
-.ai-agents-capability-icon {
-  @apply mt-1 text-text-success;
-}
-
 .ai-agents-warning {
   @apply flex items-start gap-2 rounded-xl bg-bg-warning p-3 text-sm text-warning;
 }
@@ -134,4 +122,28 @@
 
 .ai-agents-created-actions {
   @apply flex justify-end;
+}
+
+.ai-agents-steps {
+  @apply list-decimal space-y-3 pl-5 text-sm;
+}
+
+.ai-agents-step {
+  @apply pl-1;
+}
+
+.ai-agents-step > * + * {
+  @apply mt-2;
+}
+
+.ai-agents-step::marker {
+  @apply font-semibold text-text-muted;
+}
+
+.ai-agents-info {
+  @apply flex items-start gap-2 rounded-xl bg-bg-info p-3 text-sm text-info;
+}
+
+.ai-agents-info svg {
+  @apply mt-1 shrink-0;
 }

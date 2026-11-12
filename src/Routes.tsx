@@ -1,5 +1,5 @@
 // layouts
-import { View, Auth } from "./layouts";
+import { View, Auth, Standalone } from "./layouts";
 import { Routes as ReactRoutes, Route } from "react-router-dom";
 import { useAuth } from "@sito/dashboard-app";
 import { useFeatureFlags } from "providers";
@@ -36,6 +36,7 @@ export const Routes = () => {
     Currencies,
     Profile,
     AiAgents,
+    OAuthConsent,
     Users,
     FeatureUnavailable,
     About,
@@ -65,6 +66,9 @@ export const Routes = () => {
       </Route>
       <Route path={AppRoutes.signOut} element={<SignOut />} />
       <Route path={AppRoutes.onboarding} element={<Onboarding />} />
+      <Route element={<Standalone />}>
+        <Route path={AppRoutes.oauthConsent} element={<OAuthConsent />} />
+      </Route>
       <Route path={AppRoutes.home} element={<View />}>
         <Route index element={<Home />} />
         <Route path={AppRoutes.notifications} element={<Notifications />} />

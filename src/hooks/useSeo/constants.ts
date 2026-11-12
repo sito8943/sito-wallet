@@ -138,6 +138,12 @@ export const seoRouteDefinitions: SeoRouteDefinition[] = [
     robots: SEO_PRIVATE_ROBOTS,
   },
   {
+    path: AppRoutes.oauthConsent,
+    titleKey: "_pages:oauthConsent.title",
+    descriptionKey: "_pages:seo.routes.oauthConsent.description",
+    robots: SEO_PRIVATE_ROBOTS,
+  },
+  {
     path: AppRoutes.users,
     titleKey: "_pages:pages.users",
     descriptionKey: "_pages:seo.routes.users.description",

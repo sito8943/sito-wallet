@@ -17,3 +17,4 @@ export * from "./ProviderPhoto";
 export * from "./BottomNavAction";
 export * from "./SplashScreen";
 export * from "./CountBadgeIcon";
+export * from "./McpCapabilityList";

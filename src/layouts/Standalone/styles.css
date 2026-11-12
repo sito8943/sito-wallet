@@ -1,0 +1,6 @@
+@reference "../../styles/variables.css";
+
+/* pb-40 keeps the actions above the data-choices (cookie) banner. */
+.standalone-layout {
+  @apply min-h-dvh w-full items-center justify-center bg-base px-4 pt-8 pb-40;
+}

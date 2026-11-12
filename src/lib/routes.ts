@@ -28,6 +28,7 @@ export const AppRoutes: { [key: string]: string } = {
   currencies: "/currencies",
   profile: "/profile",
   aiAgents: "/ai-agents",
+  oauthConsent: "/oauth/consent",
   users: "/users",
   about: "/about-us",
   cookiesPolicy: "/cookies-policy",
@@ -39,6 +40,8 @@ export const AppRoutes: { [key: string]: string } = {
 export const RouteQueryParam = {
   accountId: "accountId",
   transactionId: "transactionId",
+  /** Authorization request id sito-auth appends to the consent URL. */
+  oauthRequest: "request",
 } as const;
 
 export const AuthRouteQueryParam = {
@@ -87,4 +90,10 @@ export const getSubscriptionEditRoute = (
 
 export const getDebtEditRoute = (debtId: number | string): string => {
   return AppRoutes.debtEdit.replace(":debtId", String(debtId));
+};
+
+export const getOAuthConsentRoute = (requestId: string): string => {
+  const search = new URLSearchParams();
+  search.set(RouteQueryParam.oauthRequest, requestId);
+  return `${AppRoutes.oauthConsent}?${search.toString()}`;
 };

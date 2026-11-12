@@ -391,7 +391,7 @@
       "description": "MCP (Model Context Protocol) permite que agentes de IA como Claude Code, Codex o Claude Desktop trabajen con tu billetera. Pregúntales por tus cuentas y gastos, o pídeles que registren transacciones por ti.",
       "capabilitiesTitle": "Qué puede hacer un agente",
       "capabilities": {
-        "read": "Consultar tus cuentas, saldos, transacciones, categorías, monedas, deudas, próximas renovaciones y resúmenes",
+        "read": "Consultar tus cuentas, saldos, transacciones, categorías, monedas, deudas, suscripciones y próximas renovaciones, y resúmenes",
         "transactions": "Crear transacciones de ingresos y gastos",
         "transfers": "Crear transferencias entre tus cuentas",
         "rewards": "Ajustar los puntos de recompensa de tus tarjetas"
@@ -432,22 +432,67 @@
         "done": "Ya guardé mi clave"
       }
     },
+    "apps": {
+      "title": "Apps conectadas",
+      "description": "Apps a las que permitiste usar tu billetera con tu cuenta, como ChatGPT o claude.ai.",
+      "empty": "No hay apps conectadas. Añade Sito Wallet como conector en ChatGPT o claude.ai para verla aquí.",
+      "connectedAt": "Conectada el {{date}}",
+      "disconnectAction": "Desconectar",
+      "disconnect": {
+        "title": "¿Desconectar \"{{name}}\"?",
+        "message": "La app pierde el acceso a tu billetera. Para volver a usarla tendrás que conectarla y permitirla de nuevo.",
+        "successMessage": "App desconectada"
+      }
+    },
     "setup": {
       "title": "Conecta un cliente",
-      "description": "Elige tu cliente y pega el fragmento. Sustituye swal_... por tu clave de API.",
+      "description": "Elige tu cliente. En los fragmentos, sustituye swal_... por tu clave de API. ChatGPT y claude.ai no necesitan clave: los apruebas con tu cuenta.",
       "urlLabel": "URL del servidor",
       "copyUrl": "Copiar URL del servidor",
       "copySnippet": "Copiar fragmento",
       "clients": {
         "claudeCode": "Claude Code",
         "codex": "Codex",
-        "claudeDesktop": "Claude Desktop"
+        "claudeDesktop": "Claude Desktop",
+        "connector": "ChatGPT / claude.ai"
       },
       "hints": {
         "claudeCode": "Ejecuta este comando en una terminal.",
         "codex": "Añade esto a {{file}}.",
         "claudeDesktop": "Añade esto a {{file}} y reinicia Claude Desktop. Requiere Node.js."
+      },
+      "connector": {
+        "steps": {
+          "open": "En claude.ai o ChatGPT, abre Ajustes → Conectores y añade un conector personalizado.",
+          "url": "Pega esta URL del servidor:",
+          "oauth": "Si te pide autenticación, elige OAuth. Deja vacíos el ID y el secreto de cliente.",
+          "approve": "Conecta: te llevará a Sito Wallet. Inicia sesión y pulsa Permitir."
+        },
+        "noKey": "No necesitas clave de API. La app aparecerá en Apps conectadas, donde puedes desconectarla cuando quieras."
       }
+    }
+  },
+  "oauthConsent": {
+    "title": "Conectar una app",
+    "heading": "{{client}} quiere acceder a tu {{resource}}",
+    "account": "Sesión iniciada como",
+    "switchAccount": "Usar otra cuenta",
+    "capabilitiesTitle": "Esto permitirá a {{client}}:",
+    "redirect": "Cuando respondas, volverás a {{host}}.",
+    "revokeNote": "Puedes desconectarla cuando quieras desde Agentes de IA en Sito Wallet.",
+    "trust": "Permite el acceso solo si empezaste tú la conexión desde {{host}}.",
+    "allow": "Permitir",
+    "deny": "Denegar",
+    "loading": "Cargando la solicitud…",
+    "notFound": {
+      "title": "Esta solicitud ya no es válida",
+      "body": "No existe, caducó o ya fue respondida. Vuelve a conectar desde tu app de IA.",
+      "home": "Ir al inicio"
+    },
+    "errors": {
+      "load": "No se pudo cargar la solicitud.",
+      "decision": "No se pudo enviar tu respuesta. Inténtalo de nuevo.",
+      "invalidRedirect": "La app envió una dirección de retorno no válida. Vuelve a conectar."
     }
   },
   "common": {
@@ -1307,6 +1352,9 @@
       },
       "notFound": {
         "description": "La página solicitada no existe o ya no está disponible en Sito Wallet."
+      },
+      "oauthConsent": {
+        "description": "Permite o deniega a una app de IA el acceso a tu Sito Wallet."
       }
     }
   },

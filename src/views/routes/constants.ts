@@ -131,6 +131,11 @@ export const routeComponents = defineRouteComponents({
       default: module.AiAgents,
     })),
   ),
+  OAuthConsent: loadable(() =>
+    import("views/OAuthConsent/OAuthConsent").then((module) => ({
+      default: module.OAuthConsent,
+    })),
+  ),
   Users: loadable(() =>
     import("views/Users/Users").then((module) => ({
       default: module.Users,

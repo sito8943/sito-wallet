@@ -8,7 +8,15 @@ import type {
 } from "@sito/dashboard-app";
 
 // lib
-import type { ApiKeyDto, CreatedApiKeyDto } from "lib";
+import type {
+  ApiKeyDto,
+  CreatedApiKeyDto,
+  McpClient,
+  OAuthGrantDto,
+} from "lib";
+
+// constants
+import type { MCP_CONNECTOR_TAB } from "./constants";
 
 export interface CreateApiKeyFormType extends FieldValues {
   name: string;
@@ -55,7 +63,38 @@ export interface McpSetupInstructionsPropsType {
   mcpUrl: string;
   /** Full key to fill in the snippets; the placeholder is used without it. */
   apiKey?: string | null;
+  /** Adds the ChatGPT / claude.ai tab (OAuth, no key). Defaults to true. */
+  withConnector?: boolean;
 }
+
+/** Id of a setup tab: a snippet client or the OAuth connector. */
+export type McpSetupTabId = McpClient | typeof MCP_CONNECTOR_TAB;
+
+export interface McpConnectorStepsPropsType {
+  mcpUrl: string;
+}
+
+export interface ConnectedAppsSectionPropsType {
+  /** Grants of this wallet's MCP server only. */
+  grants: OAuthGrantDto[];
+  isLoading: boolean;
+  hasError: boolean;
+  onRetry: () => void;
+  onDisconnect: (grant: OAuthGrantDto) => void;
+}
+
+export interface ConnectedAppListItemPropsType {
+  grant: OAuthGrantDto;
+  onDisconnect: (grant: OAuthGrantDto) => void;
+  disabled?: boolean;
+}
+
+export interface UseDisconnectAppDialogReturnType extends ConfirmationDialogPropsType {
+  target: OAuthGrantDto | null;
+  openForGrant: (grant: OAuthGrantDto) => void;
+}
+
+export type DisconnectAppDialogPropsType = UseDisconnectAppDialogReturnType;
 
 export interface CodeSnippetPropsType {
   code: string;

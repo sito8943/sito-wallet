@@ -31,6 +31,7 @@ export const WALLET_FEATURES = [
   "page.currencies",
   "page.profile",
   "page.ai_agents",
+  "page.oauth_consent",
   "page.users",
   "page.about",
   "page.cookies_policy",

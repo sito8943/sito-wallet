@@ -5,6 +5,9 @@ import {
 } from "./constants";
 import { McpClient, type McpSnippetParams } from "./types";
 
+// types
+import type { OAuthGrantDto } from "../entities/oauth";
+
 /**
  * MCP endpoint for an API base URL, with or without a trailing slash:
  * "https://api.example.com/" and "https://api.example.com" both give
@@ -12,6 +15,23 @@ import { McpClient, type McpSnippetParams } from "./types";
  */
 export const getMcpUrl = (apiUrl: string): string =>
   `${apiUrl.trim().replace(/\/+$/, "")}/${MCP_PATH}`;
+
+const normalizeResourceUrl = (url: string): string =>
+  url.trim().replace(/\/+$/, "").toLowerCase();
+
+/**
+ * Grants for this wallet's MCP server only (sito-auth lists the grants of
+ * every app). Trailing slashes and letter case are ignored.
+ */
+export const filterMcpGrants = (
+  grants: OAuthGrantDto[],
+  mcpUrl: string,
+): OAuthGrantDto[] => {
+  const target = normalizeResourceUrl(mcpUrl);
+  return grants.filter(
+    (grant) => normalizeResourceUrl(grant.resource) === target,
+  );
+};
 
 /** Key to print in a snippet: the given one, or the placeholder. */
 export const resolveMcpApiKey = (apiKey?: string | null): string =>
