@@ -8,16 +8,23 @@ import { McpClient, type McpSnippetParams } from "./types";
 // types
 import type { OAuthGrantDto } from "../entities/oauth";
 
+/** Drops trailing "/" without a regex (`/\/+$/` backtracks on long runs of "/"). */
+const trimTrailingSlashes = (value: string): string => {
+  let end = value.length;
+  while (end > 0 && value[end - 1] === "/") end--;
+  return value.slice(0, end);
+};
+
 /**
  * MCP endpoint for an API base URL, with or without a trailing slash:
  * "https://api.example.com/" and "https://api.example.com" both give
  * "https://api.example.com/mcp".
  */
 export const getMcpUrl = (apiUrl: string): string =>
-  `${apiUrl.trim().replace(/\/+$/, "")}/${MCP_PATH}`;
+  `${trimTrailingSlashes(apiUrl.trim())}/${MCP_PATH}`;
 
 const normalizeResourceUrl = (url: string): string =>
-  url.trim().replace(/\/+$/, "").toLowerCase();
+  trimTrailingSlashes(url.trim()).toLowerCase();
 
 /**
  * Grants for this wallet's MCP server only (sito-auth lists the grants of
