@@ -19,8 +19,12 @@ describe("getMcpUrl", () => {
   });
 
   it("handles long runs of slashes", () => {
-    expect(getMcpUrl(`https://api.wallet.sito8943.com${"/".repeat(50_000)}`)).toBe(URL);
-    expect(getMcpUrl(`${"/".repeat(50_000)}x`)).toBe(`${"/".repeat(50_000)}x/mcp`);
+    expect(
+      getMcpUrl(`https://api.wallet.sito8943.com${"/".repeat(50_000)}`),
+    ).toBe(URL);
+    expect(getMcpUrl(`${"/".repeat(50_000)}x`)).toBe(
+      `${"/".repeat(50_000)}x/mcp`,
+    );
   });
 });
 
