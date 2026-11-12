@@ -27,8 +27,10 @@ import {
   getAdjustedRewardsBalance,
 } from "../components/AdjustRewardsDialog/utils";
 import {
+  accountToAdjustRewardsAccount,
   adjustRewardsDefaultValues,
   adjustRewardsFormToDto,
+  canAdjustRewards,
 } from "../hooks/adjustRewardsMutation.utils";
 
 const cardForm: AccountFormType = {
@@ -284,5 +286,55 @@ describe("rewards excluded categories", () => {
       [4],
     );
     expect(selectCategoriesByIds(options, undefined)).toEqual([]);
+  });
+});
+
+describe("adjust points from the accounts list", () => {
+  const listedCard = {
+    id: 9,
+    name: "Revolut",
+    type: AccountType.Card,
+    balance: 250,
+    currency: null,
+    user: null,
+    deletedAt: null,
+    rewardsName: "RevPoints",
+    rewardsSpendUnit: 1,
+    rewardsPointsPerUnit: 1,
+    rewardsAdjustment: -20,
+    rewardsBalance: 130,
+  } as unknown as AccountDto;
+
+  it("is offered only on live card accounts with rewards", () => {
+    expect(canAdjustRewards(listedCard)).toBe(true);
+    expect(
+      canAdjustRewards({ ...listedCard, deletedAt: new Date() } as AccountDto),
+    ).toBe(false);
+    expect(
+      canAdjustRewards({ ...listedCard, rewardsBalance: null } as AccountDto),
+    ).toBe(false);
+    expect(
+      canAdjustRewards({
+        ...listedCard,
+        type: AccountType.Physical,
+      } as AccountDto),
+    ).toBe(false);
+    expect(
+      canAdjustRewards({ ...listedCard, rewardsSpendUnit: null } as AccountDto),
+    ).toBe(false);
+  });
+
+  it("maps the listed account to the dialog data", () => {
+    expect(accountToAdjustRewardsAccount(listedCard)).toEqual({
+      id: 9,
+      rewards: { name: "RevPoints", balance: 130, earned: 150 },
+    });
+    expect(
+      accountToAdjustRewardsAccount({
+        ...listedCard,
+        rewardsName: null,
+        rewardsAdjustment: null,
+      } as AccountDto).rewards,
+    ).toEqual({ name: null, balance: 130, earned: 130 });
   });
 });

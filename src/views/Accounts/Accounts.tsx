@@ -31,6 +31,7 @@ import {
   AccountCard,
   EditAccountDialog,
   AdjustBalanceDialog,
+  AdjustRewardsDialog,
   TransferDialog,
 } from "./components";
 import { AddTransactionDialog } from "../Transactions/components/AddTransactionDialog";
@@ -49,6 +50,7 @@ import {
   useEditAccountDialog,
   useViewTransactionsAction,
   useAdjustBalanceMutation,
+  useAdjustRewardsMutation,
   useTransferDialog,
 } from "./hooks";
 import { useAddTransaction } from "../Transactions/hooks/useAddTransaction";
@@ -147,6 +149,8 @@ export function Accounts() {
 
   const adjustBalance = useAdjustBalanceMutation();
 
+  const adjustRewards = useAdjustRewardsMutation();
+
   // #endregion
 
   const getActions = useCallback(
@@ -165,6 +169,7 @@ export function Accounts() {
       transfer.action(record),
       viewTransactions.action(record),
       adjustBalance.action(record),
+      adjustRewards.action(record),
       deleteAccount.action(record),
       // restore defaults to multiple:false in the lib; enable batch restore
       { ...restoreAccount.action(record), multiple: true },
@@ -172,6 +177,7 @@ export function Accounts() {
     [
       addTransaction,
       adjustBalance,
+      adjustRewards,
       deleteAccount,
       restoreAccount,
       t,
@@ -291,6 +297,7 @@ export function Accounts() {
           <ConfirmationDialog {...restoreAccount} />
           <ImportDialog {...importAccounts} />
           <AdjustBalanceDialog {...adjustBalance} />
+          <AdjustRewardsDialog {...adjustRewards} />
         </>
       ) : (
         <QueryError error={error} />

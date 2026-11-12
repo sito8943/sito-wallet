@@ -5,6 +5,10 @@ export interface UseAdjustBalanceActionProps {
   hidden?: boolean;
 }
 
+export interface UseAdjustRewardsActionProps {
+  onClick: (record: AccountDto) => void;
+}
+
 export interface UseTransferActionProps {
   onClick: (record: AccountDto) => void;
   canTransfer: (record: AccountDto) => boolean;
