@@ -17,6 +17,11 @@ describe("getMcpUrl", () => {
   ])("normalizes %s", (apiUrl, expected) => {
     expect(getMcpUrl(apiUrl)).toBe(expected);
   });
+
+  it("handles long runs of slashes", () => {
+    expect(getMcpUrl(`https://api.wallet.sito8943.com${"/".repeat(50_000)}`)).toBe(URL);
+    expect(getMcpUrl(`${"/".repeat(50_000)}x`)).toBe(`${"/".repeat(50_000)}x/mcp`);
+  });
 });
 
 describe("resolveMcpApiKey", () => {
