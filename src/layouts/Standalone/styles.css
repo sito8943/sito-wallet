@@ -1,6 +1,9 @@
 @reference "../../styles/variables.css";
 
-/* pb-40 keeps the actions above the data-choices (cookie) banner. */
+/*
+ * Top-aligned (not centered) and pb-40 so the actions stay above the
+ * data-choices (cookie) banner on short screens.
+ */
 .standalone-layout {
-  @apply min-h-dvh w-full items-center justify-center bg-base px-4 pt-8 pb-40;
+  @apply flex min-h-dvh w-full flex-col items-center justify-start bg-base px-4 pt-8 pb-40;
 }
