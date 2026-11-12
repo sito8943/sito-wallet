@@ -50,7 +50,11 @@ export function CreatedApiKeyDialog(props: CreatedApiKeyDialogPropsType) {
             <h4 className="ai-agents-subtitle">
               {t("_pages:aiAgents.keys.created.setupTitle")}
             </h4>
-            <McpSetupInstructions mcpUrl={mcpUrl} apiKey={createdKey.key} />
+            <McpSetupInstructions
+              mcpUrl={mcpUrl}
+              apiKey={createdKey.key}
+              withConnector={false}
+            />
           </div>
           <div className="ai-agents-created-actions">
             <Button

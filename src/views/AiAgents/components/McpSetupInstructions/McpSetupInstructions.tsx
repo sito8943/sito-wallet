@@ -14,22 +14,26 @@ import {
 } from "lib";
 
 // constants
-import { RAW_INTERPOLATION } from "../../constants";
+import { MCP_CONNECTOR_TAB, RAW_INTERPOLATION } from "../../constants";
 
 // components
 import { CodeSnippet } from "../CodeSnippet";
+import { McpConnectorSteps } from "../McpConnectorSteps";
 
 // types
-import type { McpSetupInstructionsPropsType } from "../../types";
+import type { McpSetupInstructionsPropsType, McpSetupTabId } from "../../types";
 
-/** One tab per AI client with its ready-to-paste snippet. */
+/**
+ * One tab per AI client with its ready-to-paste snippet, plus the
+ * ChatGPT / claude.ai connector tab (OAuth, no API key).
+ */
 export function McpSetupInstructions(props: McpSetupInstructionsPropsType) {
-  const { mcpUrl, apiKey } = props;
+  const { mcpUrl, apiKey, withConnector = true } = props;
   const { t } = useTranslation();
 
-  const tabs = useMemo<TabsType<McpClient>[]>(
-    () =>
-      MCP_CLIENTS.map((client) => ({
+  const tabs = useMemo<TabsType<McpSetupTabId>[]>(() => {
+    const snippetTabs: TabsType<McpSetupTabId>[] = MCP_CLIENTS.map(
+      (client) => ({
         id: client,
         label: t(`_pages:aiAgents.setup.clients.${client}`),
         content: (
@@ -46,12 +50,23 @@ export function McpSetupInstructions(props: McpSetupInstructionsPropsType) {
             />
           </div>
         ),
-      })),
-    [apiKey, mcpUrl, t],
-  );
+      }),
+    );
+
+    if (!withConnector) return snippetTabs;
+
+    return [
+      ...snippetTabs,
+      {
+        id: MCP_CONNECTOR_TAB,
+        label: t("_pages:aiAgents.setup.clients.connector"),
+        content: <McpConnectorSteps mcpUrl={mcpUrl} />,
+      },
+    ];
+  }, [apiKey, mcpUrl, t, withConnector]);
 
   return (
-    <TabsLayout<McpClient>
+    <TabsLayout<McpSetupTabId>
       tabs={tabs}
       defaultTab={McpClient.ClaudeCode}
       useLinks={false}

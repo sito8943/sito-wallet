@@ -14,6 +14,7 @@ import PurchaseProviderClient from "./PurchaseProviderClient";
 import UserClient from "./UserClient";
 import UserEntityConfigClient from "./UserEntityConfigClient";
 import ApiKeyClient from "./ApiKeyClient";
+import OAuthClient from "./OAuthClient";
 import { AuthApiClient, type WalletAuthApiClient } from "./AuthApiClient";
 // @sito/dashboard-app
 import { IManager } from "@sito/dashboard-app";
@@ -40,6 +41,8 @@ export class Manager extends IManager {
   users: UserClient = new UserClient();
   userEntityConfigs: UserEntityConfigClient = new UserEntityConfigClient();
   apiKeys: ApiKeyClient = new ApiKeyClient();
+  // OAuth consent and connected apps live in sito-auth.
+  oauth: OAuthClient = new OAuthClient();
   // Sign-in, session, refresh and passwords live in sito-auth.
   authApi: WalletAuthApiClient = new AuthApiClient(
     config.authUrl,
@@ -136,6 +139,10 @@ export class Manager extends IManager {
 
   get ApiKeys(): ApiKeyClient {
     return this.apiKeys;
+  }
+
+  get OAuth(): OAuthClient {
+    return this.oauth;
   }
 
   get AuthApi(): WalletAuthApiClient {

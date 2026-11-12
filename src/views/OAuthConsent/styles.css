@@ -1,0 +1,86 @@
+@reference "../../styles/variables.css";
+
+.oauth-consent-card {
+  @apply flex w-full max-w-md flex-col gap-5 rounded-3xl bg-base-light p-5 sm:p-8;
+}
+
+.oauth-consent-card--centered {
+  @apply items-center text-center;
+}
+
+.oauth-consent-logo {
+  @apply flex justify-center;
+}
+
+/* Compact logo: the card is about the request, not the brand. */
+.oauth-consent-logo .text-logo-vector {
+  @apply h-10 w-17;
+}
+
+.oauth-consent-logo .text-logo-title {
+  @apply text-xl;
+}
+
+.oauth-consent-title {
+  @apply text-xl font-semibold leading-snug sm:text-2xl;
+}
+
+.oauth-consent-subtitle {
+  @apply text-sm font-semibold;
+}
+
+.oauth-consent-muted {
+  @apply text-sm text-text-muted;
+}
+
+.oauth-consent-state-icon {
+  @apply text-3xl text-text-muted;
+}
+
+.oauth-consent-account {
+  @apply flex flex-wrap items-center gap-x-3 gap-y-1 rounded-2xl border border-border bg-base px-3 py-2 text-sm;
+}
+
+.oauth-consent-account-icon {
+  @apply text-2xl text-text-muted;
+}
+
+.oauth-consent-account-content {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
+.oauth-consent-account-email {
+  @apply truncate font-semibold;
+}
+
+.oauth-consent-section {
+  @apply flex flex-col gap-3;
+}
+
+.oauth-consent-notes {
+  @apply flex flex-col gap-2 text-sm text-text-muted;
+}
+
+.oauth-consent-note {
+  @apply flex items-start gap-2;
+}
+
+.oauth-consent-note svg {
+  @apply mt-1 shrink-0;
+}
+
+.oauth-consent-trust {
+  @apply rounded-xl bg-bg-warning p-3 text-sm text-warning;
+}
+
+.oauth-consent-actions {
+  @apply flex flex-col-reverse gap-3 sm:flex-row sm:justify-end;
+}
+
+.oauth-consent-button {
+  @apply w-full justify-center sm:w-auto;
+}
+
+.oauth-consent-link {
+  @apply text-sm font-medium text-text-primary underline-offset-2 hover:underline disabled:opacity-50;
+}

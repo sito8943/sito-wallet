@@ -9,7 +9,7 @@ import { AuthShell, useAuth } from "@sito/dashboard-app";
 import { QueryError } from "components";
 
 // lib
-import { AppRoutes } from "lib";
+import { AppRoutes, consumeReturnTo } from "lib";
 
 // constants
 import { publicAuthRoutes } from "./constants";
@@ -23,7 +23,10 @@ export const Auth = () => {
     if (!account.email) return;
     if (publicAuthRoutes.has(location.pathname)) return;
 
-    navigate(AppRoutes.home);
+    // Signed in (just now or before): go back to the page that asked for
+    // sign-in, if any. This runs after SignIn's own navigation, so it is the
+    // one that consumes the stored URL.
+    navigate(consumeReturnTo() ?? AppRoutes.home);
   }, [account.email, location.pathname, navigate]);
 
   return (

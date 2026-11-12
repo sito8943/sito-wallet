@@ -22,3 +22,15 @@ export const MCP_CLIENT_CONFIG_FILES: Record<McpClient, string | null> = {
   [McpClient.Codex]: "~/.codex/config.toml",
   [McpClient.ClaudeDesktop]: "claude_desktop_config.json",
 };
+
+/**
+ * What a connected agent can do, in display order
+ * (`_pages:aiAgents.intro.capabilities.*`). Shared by the AI agents page and
+ * the OAuth consent page.
+ */
+export const MCP_CAPABILITY_KEYS = [
+  "read",
+  "transactions",
+  "transfers",
+  "rewards",
+] as const;

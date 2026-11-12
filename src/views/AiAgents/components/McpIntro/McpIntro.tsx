@@ -2,10 +2,10 @@ import { useTranslation } from "react-i18next";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faWarning } from "@fortawesome/free-solid-svg-icons";
+import { faWarning } from "@fortawesome/free-solid-svg-icons";
 
-// constants
-import { MCP_CAPABILITY_KEYS } from "../../constants";
+// components
+import { McpCapabilityList } from "components";
 
 /** What MCP is for, what an agent can do and the security note. */
 export function McpIntro() {
@@ -21,17 +21,7 @@ export function McpIntro() {
         <h4 className="ai-agents-subtitle">
           {t("_pages:aiAgents.intro.capabilitiesTitle")}
         </h4>
-        <ul className="ai-agents-capabilities-list">
-          {MCP_CAPABILITY_KEYS.map((key) => (
-            <li key={key} className="ai-agents-capability">
-              <FontAwesomeIcon
-                icon={faCheck}
-                className="ai-agents-capability-icon"
-              />
-              <span>{t(`_pages:aiAgents.intro.capabilities.${key}`)}</span>
-            </li>
-          ))}
-        </ul>
+        <McpCapabilityList />
       </div>
       <p className="ai-agents-warning" role="note">
         <FontAwesomeIcon icon={faWarning} />

@@ -37,7 +37,10 @@ vi.mock("components", () => ({
   ),
 }));
 
+const mockConsumeReturnTo = vi.fn<() => string | null>(() => null);
+
 vi.mock("lib", () => ({
+  consumeReturnTo: () => mockConsumeReturnTo(),
   AppRoutes: {
     home: "/",
     confirmEmailSuccess: "/auth/confirm-email-success",
@@ -84,6 +87,8 @@ function renderAuth(
 describe("Auth layout", () => {
   beforeEach(() => {
     mockNavigate.mockReset();
+    mockConsumeReturnTo.mockReset();
+    mockConsumeReturnTo.mockReturnValue(null);
   });
 
   describe("redirect when authenticated", () => {
@@ -91,6 +96,14 @@ describe("Auth layout", () => {
       renderAuth({ email: "user@example.com" });
 
       expect(mockNavigate).toHaveBeenCalledWith("/");
+    });
+
+    it("goes back to the stored return URL instead of home", () => {
+      mockConsumeReturnTo.mockReturnValue("/oauth/consent?request=abc");
+
+      renderAuth({ email: "user@example.com" });
+
+      expect(mockNavigate).toHaveBeenCalledWith("/oauth/consent?request=abc");
     });
 
     it("does NOT call navigate on confirm email callback routes", () => {

@@ -1,0 +1,13 @@
+@reference "../../styles/variables.css";
+
+.mcp-capability-list {
+  @apply flex flex-col gap-2;
+}
+
+.mcp-capability {
+  @apply flex items-start gap-2 text-sm;
+}
+
+.mcp-capability-icon {
+  @apply mt-1 shrink-0 text-text-success;
+}

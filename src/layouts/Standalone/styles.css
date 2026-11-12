@@ -1,0 +1,9 @@
+@reference "../../styles/variables.css";
+
+/*
+ * Top-aligned (not centered) and pb-40 so the actions stay above the
+ * data-choices (cookie) banner on short screens.
+ */
+.standalone-layout {
+  @apply flex min-h-dvh w-full flex-col items-center justify-start bg-base px-4 pt-8 pb-40;
+}

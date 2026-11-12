@@ -19,5 +19,8 @@ export * from "./consent";
 // mcp (AI agents)
 export * from "./mcp";
 
+// page to reopen after signing in
+export * from "./returnTo";
+
 // types
 export * from "./types";

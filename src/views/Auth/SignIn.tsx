@@ -9,7 +9,7 @@ import {
 } from "@sito/dashboard-app";
 
 import { TextLogo } from "components";
-import { AppRoutes, randomBackgroundColor } from "lib";
+import { AppRoutes, peekReturnTo, randomBackgroundColor } from "lib";
 import { useManager } from "providers";
 
 import "./styles.css";
@@ -49,7 +49,10 @@ export function SignIn() {
       onSubmit={async (values) => {
         const session = await manager.Auth.login(values);
         logUser(session, values.rememberMe);
-        navigate(AppRoutes.home);
+        // Back to the page that asked for sign-in (e.g. OAuth consent). Only
+        // peek: the Auth layout also redirects once the account is set, and
+        // that later navigation consumes it.
+        navigate(peekReturnTo() ?? AppRoutes.home);
       }}
       onError={(error, { setError }) => {
         if (

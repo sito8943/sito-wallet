@@ -53,3 +53,9 @@ export type PhotoUploadRequestOptions = {
 };
 
 export type PhotoUploadRequestConfig = HeadersInit | PhotoUploadRequestOptions;
+
+/** sito-auth OAuth endpoints for the signed-in user (consent and grants). */
+export enum OAuthEndpoints {
+  Requests = "oauth/requests",
+  Grants = "oauth/grants",
+}

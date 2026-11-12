@@ -391,7 +391,7 @@
       "description": "MCP (Model Context Protocol) lets AI agents such as Claude Code, Codex or Claude Desktop work with your wallet. Ask them about your accounts and spending, or have them record transactions for you.",
       "capabilitiesTitle": "What an agent can do",
       "capabilities": {
-        "read": "Read your accounts, balances, transactions, categories, currencies, debts, upcoming renewals and summaries",
+        "read": "Read your accounts, balances, transactions, categories, currencies, debts, subscriptions and upcoming renewals, and summaries",
         "transactions": "Create income and expense transactions",
         "transfers": "Create transfers between your accounts",
         "rewards": "Adjust the reward points of your cards"
@@ -432,22 +432,67 @@
         "done": "I saved my key"
       }
     },
+    "apps": {
+      "title": "Connected apps",
+      "description": "Apps you allowed to use your wallet with your account, such as ChatGPT or claude.ai.",
+      "empty": "No connected apps. Add Sito Wallet as a connector in ChatGPT or claude.ai to see it here.",
+      "connectedAt": "Connected {{date}}",
+      "disconnectAction": "Disconnect",
+      "disconnect": {
+        "title": "Disconnect \"{{name}}\"?",
+        "message": "The app loses access to your wallet. To use it again you will have to connect and allow it again.",
+        "successMessage": "App disconnected"
+      }
+    },
     "setup": {
       "title": "Connect a client",
-      "description": "Pick your client and paste the snippet. Replace swal_... with your API key.",
+      "description": "Pick your client. In the snippets, replace swal_... with your API key. ChatGPT and claude.ai need no key: you approve them with your account.",
       "urlLabel": "Server URL",
       "copyUrl": "Copy server URL",
       "copySnippet": "Copy snippet",
       "clients": {
         "claudeCode": "Claude Code",
         "codex": "Codex",
-        "claudeDesktop": "Claude Desktop"
+        "claudeDesktop": "Claude Desktop",
+        "connector": "ChatGPT / claude.ai"
       },
       "hints": {
         "claudeCode": "Run this command in a terminal.",
         "codex": "Add this to {{file}}.",
         "claudeDesktop": "Add this to {{file}} and restart Claude Desktop. Requires Node.js."
+      },
+      "connector": {
+        "steps": {
+          "open": "In claude.ai or ChatGPT, open Settings → Connectors and add a custom connector.",
+          "url": "Paste this server URL:",
+          "oauth": "If asked for authentication, choose OAuth. Leave client ID and secret empty.",
+          "approve": "Connect: you are sent to Sito Wallet. Sign in and press Allow."
+        },
+        "noKey": "No API key needed. The app shows up in Connected apps, where you can disconnect it at any time."
       }
+    }
+  },
+  "oauthConsent": {
+    "title": "Connect an app",
+    "heading": "{{client}} wants to access your {{resource}}",
+    "account": "Signed in as",
+    "switchAccount": "Use another account",
+    "capabilitiesTitle": "This will let {{client}}:",
+    "redirect": "After you answer, you go back to {{host}}.",
+    "revokeNote": "You can disconnect it at any time from AI agents in Sito Wallet.",
+    "trust": "Allow only if you started connecting from {{host}} yourself.",
+    "allow": "Allow",
+    "deny": "Deny",
+    "loading": "Loading the request…",
+    "notFound": {
+      "title": "This request is no longer valid",
+      "body": "It is unknown, expired or was already answered. Start connecting again from your AI app.",
+      "home": "Go to home"
+    },
+    "errors": {
+      "load": "The request could not be loaded.",
+      "decision": "Your answer could not be sent. Try again.",
+      "invalidRedirect": "The app sent an invalid return address. Start connecting again."
     }
   },
   "common": {
@@ -1307,6 +1352,9 @@
       },
       "notFound": {
         "description": "The requested page does not exist or is no longer available in Sito Wallet."
+      },
+      "oauthConsent": {
+        "description": "Allow or deny an AI app access to your Sito Wallet."
       }
     }
   },
