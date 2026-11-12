@@ -5,9 +5,11 @@ import type { BaseEntityDto, CommonUserDto } from "@sito/dashboard-app";
 import type { CommonCurrencyDto } from "lib";
 import type { AccountType } from "./AccountType";
 import type { AccountInterestConfigDto } from "./AccountInterestConfigDto";
+import type { AccountRewardsConfigDto } from "./AccountRewardsConfigDto";
 import type { TransactionDto } from "../transaction/TransactionDto";
 
-export interface AccountDto extends BaseEntityDto, AccountInterestConfigDto {
+export interface AccountDto
+  extends BaseEntityDto, AccountInterestConfigDto, AccountRewardsConfigDto {
   name: string;
   description: string;
   currency: CommonCurrencyDto | null;
@@ -17,4 +19,10 @@ export interface AccountDto extends BaseEntityDto, AccountInterestConfigDto {
   balance: number;
   pendingDebts?: number | null;
   lastTransactions?: TransactionDto[];
+  /** Manual points correction (read-only: ignored by add/update). */
+  rewardsAdjustment?: number | null;
+  /** Read-only: current points balance (Card with rewards), null otherwise. */
+  rewardsBalance?: number | null;
+  /** Categories (or groups) whose spends earn no points; empty for non-card. */
+  rewardsExcludedCategoryIds?: number[];
 }

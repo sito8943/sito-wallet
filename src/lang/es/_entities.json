@@ -227,6 +227,61 @@
       "configure": "Configurar",
       "edit": "Editar",
       "done": "Listo"
+    },
+    "rewards": {
+      "title": "Puntos / recompensas",
+      "defaultName": "Puntos",
+      "hint": "Los puntos se ganan con los gastos de la tarjeta (no cuentan transferencias ni ajustes de saldo). Deja ambos vacíos para desactivarlos.",
+      "notConfigured": "Sin configurar",
+      "summary": "{{points}} pt por cada {{unit}} gastado",
+      "summaryNamed": "{{name}} · {{points}} pt por cada {{unit}} gastado",
+      "invalid": "Revisa la configuración de puntos",
+      "configure": "Configurar",
+      "edit": "Editar",
+      "done": "Listo",
+      "plans": {
+        "label": "Plan de {{bank}}",
+        "apply": "Aplicar el plan {{plan}}"
+      },
+      "name": {
+        "label": "Nombre del programa",
+        "placeholder": "Ej: RevPoints",
+        "maxLength": "Hasta 40 caracteres"
+      },
+      "spendUnit": {
+        "label": "Gasto por tramo",
+        "placeholder": "Ej: 10"
+      },
+      "pointsPerUnit": {
+        "label": "Puntos por tramo",
+        "placeholder": "Ej: 1"
+      },
+      "pair": {
+        "incomplete": "Indica el gasto y los puntos, o deja ambos vacíos",
+        "notPositive": "Debe ser mayor que 0"
+      },
+      "rounding": {
+        "label": "Redondeo",
+        "default": "Por defecto (tramos completos por transacción)",
+        "values": {
+          "FloorPerTransaction": "Tramos completos por transacción",
+          "Exact": "Exacto (2 decimales)"
+        }
+      },
+      "pointValue": {
+        "label": "Valor de 1 punto",
+        "placeholder": "Ej: 0.01",
+        "min": "El valor no puede ser negativo"
+      },
+      "startDate": {
+        "label": "Contar gastos desde",
+        "helper": "Déjalo vacío para contar todo el historial"
+      },
+      "excludedCategories": {
+        "label": "Categorías que no suman puntos",
+        "placeholder": "Ej: Transferencias a personas, Comisiones",
+        "hint": "Los gastos en estas categorías (o en sus grupos) no suman puntos"
+      }
     }
   },
   "transaction": {
@@ -483,7 +538,8 @@
         "BalanceHistory": "Histórico de saldo",
         "LastTransactions": "Últimas transacciones",
         "CategoryAverage": "Promedio por categoría",
-        "SavingsProjection": "Proyección de ahorro"
+        "SavingsProjection": "Proyección de ahorro",
+        "CardRewards": "Puntos de tarjeta"
       }
     }
   },

@@ -3,6 +3,7 @@ import { formatForDatetimeLocal } from "@sito/dashboard-app";
 import type {
   AccountDto,
   AccountInterestConfigDto,
+  AccountRewardsConfigDto,
   AddAccountDto,
   CommonAccountDto,
   TransferTransactionDto,
@@ -10,6 +11,8 @@ import type {
 } from "lib";
 import {
   AccountType,
+  REWARDS_NAME_MAX_LENGTH,
+  isCardAccountType,
   isSavingAccountType,
   parseNullableNumber,
   supportsBankName,
@@ -17,6 +20,7 @@ import {
 import type {
   AccountFormType,
   AccountInterestFormType,
+  AccountRewardsFormType,
   TransferFormType,
 } from "./types";
 
@@ -69,6 +73,66 @@ export const normalizeInterestConfig = (
   };
 };
 
+/** Empty rewards configuration: what non-Card accounts always send. */
+export const EMPTY_REWARDS_CONFIG: Required<AccountRewardsConfigDto> = {
+  rewardsName: null,
+  rewardsSpendUnit: null,
+  rewardsPointsPerUnit: null,
+  rewardsRounding: null,
+  rewardsPointValue: null,
+  rewardsStartDate: null,
+};
+
+/** Trimmed text (capped at `maxLength`), or null when blank. */
+const normalizeNullableText = (
+  value: unknown,
+  maxLength?: number,
+): string | null => {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  return maxLength ? trimmed.slice(0, maxLength) : trimmed;
+};
+
+/**
+ * Rewards fields only apply to Card accounts: cleared for any other type,
+ * otherwise coerced from raw form values (strings) to numbers/strings or null.
+ */
+export const normalizeRewardsConfig = (
+  type: unknown,
+  form: AccountRewardsFormType,
+): Required<AccountRewardsConfigDto> => {
+  if (!isCardAccountType(type)) return { ...EMPTY_REWARDS_CONFIG };
+
+  return {
+    rewardsName: normalizeNullableText(
+      form.rewardsName,
+      REWARDS_NAME_MAX_LENGTH,
+    ),
+    rewardsSpendUnit: parseNullableNumber(form.rewardsSpendUnit),
+    rewardsPointsPerUnit: parseNullableNumber(form.rewardsPointsPerUnit),
+    rewardsRounding: parseNullableNumber(form.rewardsRounding),
+    rewardsPointValue: parseNullableNumber(form.rewardsPointValue),
+    rewardsStartDate: normalizeNullableText(form.rewardsStartDate),
+  };
+};
+
+/**
+ * Excluded categories only apply to Card accounts: [] for any other type,
+ * otherwise the valid, de-duplicated ids. Always an array so an update
+ * replaces the stored list (null would keep it).
+ */
+export const normalizeRewardsExcludedCategoryIds = (
+  type: unknown,
+  ids: unknown,
+): number[] => {
+  if (!isCardAccountType(type) || !Array.isArray(ids)) return [];
+  const valid = ids
+    .map((id) => parseNullableNumber(id))
+    .filter((id): id is number => id !== null && id > 0);
+  return [...new Set(valid)];
+};
+
 /** The type SelectInput emits strings; the API expects the enum number. */
 const normalizeAccountType = (type: unknown): AccountType =>
   parseNullableNumber(type) ?? AccountType.Physical;
@@ -77,13 +141,20 @@ export const formToUpdateDto = ({
   currency,
   userId,
   bankName,
+  // Read-only on the API: never sent back.
+  rewardsAdjustment: _rewardsAdjustment,
   ...rest
 }: AccountFormType): UpdateAccountDto => {
   const type = normalizeAccountType(rest.type);
   return {
     ...rest,
-    // Overrides the raw interest values carried by `rest`.
+    // Override the raw interest/rewards values carried by `rest`.
     ...normalizeInterestConfig(type, rest),
+    ...normalizeRewardsConfig(type, rest),
+    rewardsExcludedCategoryIds: normalizeRewardsExcludedCategoryIds(
+      type,
+      rest.rewardsExcludedCategoryIds,
+    ),
     type,
     bankName: normalizeBankName(type, bankName),
     currencyId: currency?.id ?? 0,
@@ -95,13 +166,20 @@ export const formToAddDto = ({
   currency,
   userId,
   bankName,
+  // Read-only on the API: never sent back.
+  rewardsAdjustment: _rewardsAdjustment,
   ...rest
 }: AccountFormType): AddAccountDto => {
   const type = normalizeAccountType(rest.type);
   return {
     ...rest,
-    // Overrides the raw interest values carried by `rest`.
+    // Override the raw interest/rewards values carried by `rest`.
     ...normalizeInterestConfig(type, rest),
+    ...normalizeRewardsConfig(type, rest),
+    rewardsExcludedCategoryIds: normalizeRewardsExcludedCategoryIds(
+      type,
+      rest.rewardsExcludedCategoryIds,
+    ),
     type,
     bankName: normalizeBankName(type, bankName),
     currencyId: currency?.id ?? 0,
@@ -111,6 +189,7 @@ export const formToAddDto = ({
 
 export const dtoToForm = (dto: AccountDto): AccountFormType => ({
   ...dto,
+  rewardsExcludedCategoryIds: dto.rewardsExcludedCategoryIds ?? [],
   userId: dto.user?.id ?? 0,
 });
 
@@ -123,6 +202,8 @@ export const addEmptyAccount: Omit<AccountFormType, "if"> = {
   currency: null,
   userId: 0,
   ...EMPTY_INTEREST_CONFIG,
+  ...EMPTY_REWARDS_CONFIG,
+  rewardsExcludedCategoryIds: [],
 };
 
 export const emptyAccount: AccountFormType = {
@@ -135,6 +216,8 @@ export const emptyAccount: AccountFormType = {
   currency: null,
   userId: 0,
   ...EMPTY_INTEREST_CONFIG,
+  ...EMPTY_REWARDS_CONFIG,
+  rewardsExcludedCategoryIds: [],
 };
 
 export const getTransferDefaultValues = (): TransferFormType => ({

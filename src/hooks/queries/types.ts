@@ -95,6 +95,14 @@ export type UseSavingsProjectionDailyPropsType = UseSavingsDepositPropsType & {
   month?: string;
 };
 
+export type UseAccountRewardsPropsType = {
+  /** The query stays idle while undefined. */
+  accountId?: number;
+  /** Months of history (1–60, default 12). */
+  months?: number;
+  enabled?: boolean;
+};
+
 export type UseCatalogCommonProps = {
   /**
    * Also list other users' public items (labelled with their owner). Only

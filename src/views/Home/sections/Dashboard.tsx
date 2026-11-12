@@ -18,6 +18,7 @@ import {
   LastTransactionsCard,
   CategoryAverageCard,
   SavingsProjectionCard,
+  CardRewardsCard,
 } from "../components/Cards";
 import { AddDashboardCardDialog } from "../components";
 import { resolveCardConfig } from "../components/Cards/utils";
@@ -218,6 +219,19 @@ export const Dashboard = () => {
           return (
             <li key={item.id} {...listItemProps}>
               <SavingsProjectionCard
+                onDelete={() => {
+                  void deleteDashboardCard.onClick([item.id]);
+                }}
+                dragHandleProps={dragHandleProps}
+                key={item.id}
+                {...item}
+              />
+            </li>
+          );
+        case DashboardCardType.CardRewards:
+          return (
+            <li key={item.id} {...listItemProps}>
+              <CardRewardsCard
                 onDelete={() => {
                   void deleteDashboardCard.onClick([item.id]);
                 }}

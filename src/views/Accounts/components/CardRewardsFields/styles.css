@@ -1,0 +1,31 @@
+@reference "../../../../styles/variables.css";
+
+.card-rewards {
+  @apply flex flex-col gap-6 pt-4;
+}
+
+/* Pairs side by side; stacked on narrow screens so labels don't wrap. */
+.card-rewards-row {
+  @apply grid grid-cols-2 gap-x-2 gap-y-6 max-xs:grid-cols-1;
+}
+
+.card-rewards-hint {
+  @apply -mt-4 text-xs text-text-muted;
+}
+
+.card-rewards-plans {
+  @apply flex flex-col gap-2;
+}
+
+.card-rewards-plans-label {
+  @apply text-sm font-medium text-text;
+}
+
+.card-rewards-plans-list {
+  @apply flex flex-wrap gap-2;
+}
+
+/* AutocompleteInput keeps a bottom margin of its own; pull the hint up to it. */
+.card-rewards-excluded-hint {
+  @apply -mt-5;
+}

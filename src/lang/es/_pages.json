@@ -256,6 +256,23 @@
         "depositFilter": "{{amount}} / mes (día {{day}})",
         "totalDeposits": "Aportes",
         "deposited": "Aporte"
+      },
+      "cardRewards": {
+        "configTitle": "Configurar puntos de tarjeta",
+        "accountLabel": "Cuenta de tarjeta",
+        "accountHint": "Elige una cuenta de tarjeta con puntos configurados",
+        "noCardAccounts": "No tienes cuentas de tarjeta. Crea una cuenta de tipo Tarjeta para usar esta tarjeta.",
+        "noAccount": "Configura la tarjeta y elige una cuenta de tarjeta",
+        "notConfigured": "Esta cuenta no es una tarjeta o no tiene puntos configurados.",
+        "editAccount": "Configurar puntos",
+        "error": "No se pudieron cargar los puntos",
+        "empty": "Sin gastos elegibles en los últimos meses",
+        "balance": "Saldo de {{name}}",
+        "value": "≈ {{value}}",
+        "thisMonth": "Ganados este mes",
+        "eligibleSpent": "Gasto elegible",
+        "earned": "Puntos ganados",
+        "spent": "Gastado"
       }
     }
   },
@@ -706,6 +723,33 @@
           "confirmTitle": "Confirmar ajuste de saldo",
           "confirmMessage": "¿Quieres aplicar este nuevo saldo a la cuenta?",
           "sameBalance": "El nuevo saldo debe ser diferente al saldo actual"
+        }
+      },
+      "adjustRewards": {
+        "text": "Ajustar puntos",
+        "successMessage": "Puntos ajustados correctamente",
+        "modes": {
+          "delta": "Canjear / sumar",
+          "balance": "Igualar al saldo del banco"
+        },
+        "dialog": {
+          "title": "Ajustar puntos",
+          "current": "{{name}} actuales",
+          "mode": "Tipo de ajuste",
+          "delta": {
+            "label": "Puntos a sumar",
+            "placeholder": "Ej: -500",
+            "helper": "Usa un número negativo para canjear puntos"
+          },
+          "balance": {
+            "label": "Saldo en tu banco",
+            "placeholder": "Ej: 1250",
+            "helper": "El saldo mostrado coincidirá con este valor"
+          },
+          "result": "Nuevo saldo: {{balance}}",
+          "required": "Introduce un número",
+          "zeroDelta": "La cantidad no puede ser 0",
+          "sameBalance": "El nuevo saldo debe ser diferente al actual"
         }
       }
     },

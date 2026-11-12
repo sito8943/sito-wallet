@@ -24,6 +24,7 @@ import {
   Tables,
   AccountType,
   ACCOUNT_BANK_OPTIONS,
+  isCardAccountType,
   isSavingAccountType,
   supportsBankName,
 } from "lib";
@@ -33,6 +34,7 @@ import { icons } from "./utils";
 
 // components
 import { SavingsInterestField } from "./SavingsInterestField";
+import { CardRewardsField } from "./CardRewardsField";
 
 // hooks
 import { useCurrenciesCommon } from "hooks/queries/useCurrenciesCommon";
@@ -76,6 +78,7 @@ export function AccountForm(props: AccountFormPropsType) {
   const { type, id } = useWatch({ control });
   const hasBank = supportsBankName(type);
   const isSaving = isSavingAccountType(type);
+  const isCard = isCardAccountType(type);
 
   return (
     <>
@@ -203,6 +206,13 @@ export function AccountForm(props: AccountFormPropsType) {
       )}
       {isSaving && (
         <SavingsInterestField
+          control={control}
+          setValue={setValue}
+          isLoading={isLoading}
+        />
+      )}
+      {isCard && (
+        <CardRewardsField
           control={control}
           setValue={setValue}
           isLoading={isLoading}

@@ -1,0 +1,25 @@
+@reference "../../../../styles/variables.css";
+
+.card-rewards-field {
+  @apply flex items-center justify-between gap-2 rounded-lg border-2 border-border/40 p-3;
+}
+
+.card-rewards-field > .button {
+  @apply shrink-0;
+}
+
+.card-rewards-field-info {
+  @apply flex flex-col gap-0.5;
+}
+
+.card-rewards-field-title {
+  @apply text-sm font-medium text-text;
+}
+
+.card-rewards-field-summary {
+  @apply text-sm text-text-muted;
+}
+
+.card-rewards-field-error {
+  @apply text-sm text-error;
+}

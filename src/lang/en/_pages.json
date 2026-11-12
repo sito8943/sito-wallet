@@ -256,6 +256,23 @@
         "depositFilter": "{{amount}} / month (day {{day}})",
         "totalDeposits": "Deposits",
         "deposited": "Deposit"
+      },
+      "cardRewards": {
+        "configTitle": "Configure card rewards",
+        "accountLabel": "Card account",
+        "accountHint": "Pick a card account with points set up",
+        "noCardAccounts": "You have no card accounts. Create an account of type Card to use this card.",
+        "noAccount": "Configure the card and pick a card account",
+        "notConfigured": "This account is not a card or has no points set up.",
+        "editAccount": "Set up points",
+        "error": "The points could not be loaded",
+        "empty": "No eligible spending in the last months",
+        "balance": "{{name}} balance",
+        "value": "≈ {{value}}",
+        "thisMonth": "Earned this month",
+        "eligibleSpent": "Eligible spending",
+        "earned": "Points earned",
+        "spent": "Spent"
       }
     }
   },
@@ -706,6 +723,33 @@
           "confirmTitle": "Confirm balance adjustment",
           "confirmMessage": "Do you want to apply this new balance to the account?",
           "sameBalance": "New balance must be different from current balance"
+        }
+      },
+      "adjustRewards": {
+        "text": "Adjust points",
+        "successMessage": "Points adjusted successfully",
+        "modes": {
+          "delta": "Redeem / add",
+          "balance": "Set to bank balance"
+        },
+        "dialog": {
+          "title": "Adjust points",
+          "current": "Current {{name}}",
+          "mode": "Adjustment type",
+          "delta": {
+            "label": "Points to add",
+            "placeholder": "Ex: -500",
+            "helper": "Use a negative number to redeem points"
+          },
+          "balance": {
+            "label": "Balance in your bank",
+            "placeholder": "Ex: 1250",
+            "helper": "The balance shown will match this value"
+          },
+          "result": "New balance: {{balance}}",
+          "required": "Enter a number",
+          "zeroDelta": "The amount can't be 0",
+          "sameBalance": "The new balance must be different from the current one"
         }
       }
     },
