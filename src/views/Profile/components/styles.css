@@ -139,3 +139,7 @@
 .profile-section-appearance {
   @apply flex flex-col gap-4;
 }
+
+.profile-link {
+  @apply inline-flex items-center gap-2 self-start rounded-xl border border-border px-4 py-2 text-sm font-semibold hover:bg-base-light;
+}

@@ -12,6 +12,7 @@ export enum Tables {
   UserDashboardConfig = "user-dashboard-config",
   Profiles = "profiles",
   Users = "users",
+  ApiKeys = "api-keys",
 }
 
 export enum TablesCamelCase {

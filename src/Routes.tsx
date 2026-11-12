@@ -35,6 +35,7 @@ export const Routes = () => {
     Accounts,
     Currencies,
     Profile,
+    AiAgents,
     Users,
     FeatureUnavailable,
     About,
@@ -183,6 +184,7 @@ export const Routes = () => {
           }
         />
         <Route path={AppRoutes.profile} element={<Profile />} />
+        <Route path={AppRoutes.aiAgents} element={<AiAgents />} />
         <Route
           path={AppRoutes.users}
           element={canAccessUsers ? <Users /> : <NotFound />}

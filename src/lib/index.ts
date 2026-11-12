@@ -16,5 +16,8 @@ export * from "./featureUsage";
 // consent
 export * from "./consent";
 
+// mcp (AI agents)
+export * from "./mcp";
+
 // types
 export * from "./types";

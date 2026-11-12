@@ -28,6 +28,7 @@ import {
   faBell,
   faBuilding,
   faHandHoldingDollar,
+  faRobot,
 } from "@fortawesome/free-solid-svg-icons";
 
 // lib
@@ -50,6 +51,7 @@ export enum MenuKeys {
   SignOut = "signOut",
   SignIn = "auth.signIn",
   Profile = "profile",
+  AiAgents = "aiAgents",
   About = "about",
   CookiesPolicy = "cookiesPolicy",
   TermsAndConditions = "termsAndConditions",
@@ -152,6 +154,12 @@ const getMenuMap = (): MenuItemType<MenuKeys>[] => [
     path: AppRoutes.profile,
     auth: true,
     icon: <FontAwesomeIcon icon={faUser} />,
+  },
+  {
+    page: MenuKeys.AiAgents,
+    path: AppRoutes.aiAgents,
+    auth: true,
+    icon: <FontAwesomeIcon icon={faRobot} />,
   },
   {
     page: MenuKeys.SignOut,

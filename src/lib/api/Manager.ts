@@ -13,6 +13,7 @@ import ProductClient from "./ProductClient";
 import PurchaseProviderClient from "./PurchaseProviderClient";
 import UserClient from "./UserClient";
 import UserEntityConfigClient from "./UserEntityConfigClient";
+import ApiKeyClient from "./ApiKeyClient";
 import { AuthApiClient, type WalletAuthApiClient } from "./AuthApiClient";
 // @sito/dashboard-app
 import { IManager } from "@sito/dashboard-app";
@@ -38,6 +39,7 @@ export class Manager extends IManager {
   purchaseProviders: PurchaseProviderClient = new PurchaseProviderClient();
   users: UserClient = new UserClient();
   userEntityConfigs: UserEntityConfigClient = new UserEntityConfigClient();
+  apiKeys: ApiKeyClient = new ApiKeyClient();
   // Sign-in, session, refresh and passwords live in sito-auth.
   authApi: WalletAuthApiClient = new AuthApiClient(
     config.authUrl,
@@ -130,6 +132,10 @@ export class Manager extends IManager {
 
   get UserEntityConfigs(): UserEntityConfigClient {
     return this.userEntityConfigs;
+  }
+
+  get ApiKeys(): ApiKeyClient {
+    return this.apiKeys;
   }
 
   get AuthApi(): WalletAuthApiClient {

@@ -13,6 +13,7 @@ import { ProfileQueryKeys, useMyProfile, useMobileNavbar } from "hooks";
 
 // components
 import {
+  AiAgentsSettings,
   AppearanceSettings,
   ChangePasswordForm,
   PrivacySettings,
@@ -60,6 +61,7 @@ export function Profile() {
           <ChangePasswordForm />
           <AppearanceSettings />
           <PrivacySettings />
+          <AiAgentsSettings />
         </div>
       )}
     </Page>

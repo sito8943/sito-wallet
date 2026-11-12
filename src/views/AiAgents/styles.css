@@ -1,0 +1,137 @@
+@reference "../../styles/variables.css";
+
+.ai-agents-view {
+  @apply mr-auto grid w-full max-w-[86rem] gap-6 lg:grid-cols-2;
+}
+
+.ai-agents-card {
+  @apply flex min-w-0 flex-col gap-4 rounded-2xl p-4 sm:p-6;
+}
+
+.ai-agents-card--wide {
+  @apply lg:col-span-2;
+}
+
+.ai-agents-card-header {
+  @apply flex flex-wrap items-center justify-between gap-3;
+}
+
+.ai-agents-card-heading {
+  @apply flex flex-col gap-1;
+}
+
+.ai-agents-card-title {
+  @apply text-xs uppercase tracking-wide text-text-muted;
+}
+
+.ai-agents-subtitle {
+  @apply text-sm font-semibold;
+}
+
+.ai-agents-text {
+  @apply text-sm;
+}
+
+.ai-agents-muted {
+  @apply text-sm text-text-muted;
+}
+
+.ai-agents-capabilities {
+  @apply flex flex-col gap-2;
+}
+
+.ai-agents-capabilities-list {
+  @apply flex flex-col gap-2;
+}
+
+.ai-agents-capability {
+  @apply flex items-start gap-2 text-sm;
+}
+
+.ai-agents-capability-icon {
+  @apply mt-1 text-text-success;
+}
+
+.ai-agents-warning {
+  @apply flex items-start gap-2 rounded-xl bg-bg-warning p-3 text-sm text-warning;
+}
+
+.ai-agents-warning svg {
+  @apply mt-1 shrink-0;
+}
+
+.ai-agents-loading {
+  @apply flex justify-center py-6;
+}
+
+.ai-agents-empty {
+  @apply rounded-2xl border border-dashed border-border bg-base-light px-4 py-8 text-center text-sm text-text-muted;
+}
+
+.ai-agents-keys {
+  @apply flex flex-col gap-3;
+}
+
+.ai-agents-key {
+  @apply flex items-center gap-3 rounded-2xl border border-border bg-base-light p-3;
+}
+
+.ai-agents-key-icon {
+  @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bg-primary text-on-brand;
+}
+
+.ai-agents-key-content {
+  @apply flex min-w-0 flex-1 flex-col gap-1;
+}
+
+.ai-agents-key-name {
+  @apply truncate font-semibold;
+}
+
+.ai-agents-key-prefix {
+  @apply font-mono text-sm text-text-muted;
+}
+
+.ai-agents-key-meta {
+  @apply flex flex-wrap gap-x-3 gap-y-1 text-xs text-text-muted;
+}
+
+.ai-agents-snippet {
+  @apply flex min-w-0 flex-col gap-1;
+}
+
+.ai-agents-snippet-label {
+  @apply text-sm text-text-muted;
+}
+
+.ai-agents-snippet-body {
+  @apply flex items-start gap-2 rounded-xl border border-border bg-base p-3;
+}
+
+.ai-agents-snippet-code {
+  @apply min-w-0 flex-1 overflow-x-auto whitespace-pre font-mono text-xs leading-relaxed;
+}
+
+.ai-agents-snippet-code--wrap {
+  @apply whitespace-pre-wrap break-all;
+}
+
+.ai-agents-snippet-copy {
+  @apply shrink-0;
+}
+
+.ai-agents-setup-tab {
+  @apply flex flex-col gap-3 pt-3;
+}
+
+.ai-agents-created {
+  @apply flex flex-col gap-4;
+}
+
+.ai-agents-created-setup {
+  @apply flex flex-col gap-2;
+}
+
+.ai-agents-created-actions {
+  @apply flex justify-end;
+}
