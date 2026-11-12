@@ -13,6 +13,9 @@ import type {
 import type {
   AccountDto,
   AccountInterestConfigDto,
+  AccountRewardsConfigDto,
+  AccountRewardsDto,
+  AdjustRewardsMode,
   CommonAccountDto,
 } from "lib";
 
@@ -44,6 +47,14 @@ export type AccountInterestFormType = {
   [K in keyof AccountInterestConfigDto]?: AccountInterestFormValue;
 };
 
+/** Raw rewards value: inputs/selects emit strings, DTOs bring numbers. */
+export type AccountRewardsFormValue = number | string | null | undefined;
+
+/** Rewards fields as held by the account form (coerced on submit). */
+export type AccountRewardsFormType = {
+  [K in keyof AccountRewardsConfigDto]?: AccountRewardsFormValue;
+};
+
 export interface AccountFormType
   extends
     Omit<
@@ -53,8 +64,10 @@ export interface AccountFormType
       | "updatedAt"
       | "user"
       | keyof AccountInterestConfigDto
+      | keyof AccountRewardsConfigDto
     >,
     AccountInterestFormType,
+    AccountRewardsFormType,
     FieldValues {
   userId: number;
 }
@@ -80,6 +93,22 @@ export type AdjustBalanceAccountType = Pick<
 export interface AdjustBalanceDialogPropsType extends TriggerFormDialogPropsType<AdjustBalanceFormType> {
   confirmationProps?: ConfirmationDialogPropsType;
   selectedAccount: AdjustBalanceAccountType | null;
+}
+
+export interface AdjustRewardsFormType extends FieldValues {
+  mode: AdjustRewardsMode;
+  /** Points to add/redeem (Delta) or the bank's balance (Balance). */
+  amount: string;
+}
+
+/** What the adjust-points dialog needs: the account and its rewards data. */
+export type AdjustRewardsAccountType = {
+  id: number;
+  rewards: Pick<AccountRewardsDto, "name" | "balance" | "earned">;
+};
+
+export interface AdjustRewardsDialogPropsType extends TriggerFormDialogPropsType<AdjustRewardsFormType> {
+  selectedAccount: AdjustRewardsAccountType | null;
 }
 
 export interface TransferFormType extends FieldValues {

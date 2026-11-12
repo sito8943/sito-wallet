@@ -3,6 +3,7 @@ import type { QueryParam } from "@sito/dashboard-app";
 import type {
   AccountDto,
   FilterAccountDto,
+  FilterAccountRewardsDto,
   FilterBalanceHistoryDto,
   FilterSavingsProjectionDailyDto,
   FilterSavingsProjectionDto,
@@ -56,5 +57,13 @@ export const AccountsQueryKeys = {
       filters,
     ],
     enabled: !!filters.accountId && !!filters.month,
+  }),
+  // Nested under "accounts" too: transaction mutations change earned points.
+  rewardsAll: () => ({
+    queryKey: [...AccountsQueryKeys.all().queryKey, "rewards"],
+  }),
+  rewards: (filters: FilterAccountRewardsDto) => ({
+    queryKey: [...AccountsQueryKeys.rewardsAll().queryKey, filters],
+    enabled: !!filters.accountId,
   }),
 };

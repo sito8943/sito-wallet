@@ -24,8 +24,14 @@ import type {
   SavingsProjectionDailyDto,
   FilterSavingsProjectionDto,
   FilterSavingsProjectionDailyDto,
+  AccountRewardsDto,
+  AdjustRewardsDto,
 } from "lib";
-import { appendSavingsDepositParams, parseJSONFile } from "lib";
+import {
+  appendSavingsDepositParams,
+  parseJSONFile,
+  resolveRewardsMonths,
+} from "lib";
 
 // config
 import { config } from "../../config";
@@ -144,6 +150,28 @@ export default class AccountClient extends BaseClient<
       undefined,
       this.api.defaultTokenAcquirer(),
     );
+  }
+
+  /** Points balance and monthly history of a Card account with rewards. */
+  async getRewards(id: number, months?: number): Promise<AccountRewardsDto> {
+    const searchParams = new URLSearchParams({
+      months: String(resolveRewardsMonths(months)),
+    });
+
+    return await this.api.doQuery<AccountRewardsDto>(
+      `${this.table}/${id}/rewards?${searchParams.toString()}`,
+      Methods.GET,
+      undefined,
+      this.api.defaultTokenAcquirer(),
+    );
+  }
+
+  /** Redeem/add points (`delta`) or sync the balance with the bank. */
+  async adjustRewards(
+    id: number,
+    data: AdjustRewardsDto,
+  ): Promise<AccountRewardsDto> {
+    return await this.api.patch(`${this.table}/${id}/rewards/adjust`, data);
   }
 
   async processImport(

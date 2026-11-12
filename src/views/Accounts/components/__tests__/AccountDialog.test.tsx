@@ -173,6 +173,7 @@ vi.mock("lib", () => ({
   Tables: { Accounts: "accounts" },
   AccountType: { Physical: 0, Card: 1, Saving: 2 },
   isSavingAccountType: (type: unknown) => Number(type) === 2,
+  isCardAccountType: (type: unknown) => Number(type) === 1,
   supportsBankName: (type: unknown) => [1, 2].includes(Number(type)),
   ACCOUNT_BANK_OPTIONS: [
     { id: 1, label: "Imagin" },
@@ -200,6 +201,10 @@ vi.mock("lib", () => ({
 
 vi.mock("../SavingsInterestField", () => ({
   SavingsInterestField: () => <div data-testid="savings-interest-field" />,
+}));
+
+vi.mock("../CardRewardsField", () => ({
+  CardRewardsField: () => <div data-testid="card-rewards-field" />,
 }));
 
 vi.mock("../utils", () => ({
@@ -368,6 +373,21 @@ describe("AccountForm", () => {
     });
 
     expect(screen.getByTestId("savings-interest-field")).toBeInTheDocument();
+  });
+
+  it("shows the rewards section only for card accounts", () => {
+    const { unmount } = render(<AccountFormWrapper open={true} type={1} />, {
+      wrapper: makeWrapper(),
+    });
+
+    expect(screen.getByTestId("card-rewards-field")).toBeInTheDocument();
+    expect(screen.queryByTestId("savings-interest-field")).toBeNull();
+    unmount();
+
+    render(<AccountFormWrapper open={true} type={2} />, {
+      wrapper: makeWrapper(),
+    });
+    expect(screen.queryByTestId("card-rewards-field")).toBeNull();
   });
 });
 

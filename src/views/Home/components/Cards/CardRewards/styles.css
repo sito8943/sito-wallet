@@ -1,0 +1,56 @@
+@reference "../../../../../styles/variables.css";
+
+.card-rewards-card {
+  @apply !h-auto overflow-hidden;
+}
+
+.card-rewards-content {
+  @apply flex flex-col gap-3 w-full;
+}
+
+.card-rewards-empty {
+  @apply flex flex-col items-center gap-3 text-text-muted text-sm text-center py-6;
+}
+
+.card-rewards-hint,
+.card-rewards-config-hint {
+  @apply text-xs text-text-muted;
+}
+
+.card-rewards-hint {
+  @apply text-center;
+}
+
+.card-rewards-actions {
+  @apply flex items-center justify-end gap-1;
+}
+
+/* Container so the stats grid adapts to the card width, not the viewport. */
+.card-rewards-summary {
+  @apply @container w-full;
+}
+
+.card-rewards-stats {
+  @apply grid grid-cols-3 gap-2 max-xs:grid-cols-1;
+}
+
+/* Mobile: one line per stat (label left, value right) to save height. */
+.card-rewards-stat {
+  @apply flex flex-col gap-0.5 rounded-xl bg-base p-2 max-xs:flex-row max-xs:items-center max-xs:justify-between max-xs:gap-2;
+}
+
+.card-rewards-stat dt {
+  @apply text-xs text-text-muted;
+}
+
+.card-rewards-stat-value {
+  @apply flex flex-col text-sm font-semibold text-text;
+}
+
+.card-rewards-stat-value.positive {
+  @apply text-text-primary;
+}
+
+.card-rewards-stat-sub {
+  @apply text-xs font-normal text-text-muted;
+}

@@ -7,4 +7,6 @@ export interface CommonAccountDto extends BaseCommonEntityDto {
   currency: CommonCurrencyDto | null;
   /** Sent by the backend so pickers can filter (e.g. Saving accounts only). */
   type?: AccountType;
+  /** True for Card accounts with a rewards program configured. */
+  rewardsConfigured?: boolean;
 }

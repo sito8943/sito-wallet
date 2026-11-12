@@ -227,6 +227,61 @@
       "configure": "Set up",
       "edit": "Edit",
       "done": "Done"
+    },
+    "rewards": {
+      "title": "Points / rewards",
+      "defaultName": "Points",
+      "hint": "Points are earned on the card's spending (transfers and balance adjustments don't count). Leave both empty to disable.",
+      "notConfigured": "Not set up",
+      "summary": "{{points}} pt per {{unit}} spent",
+      "summaryNamed": "{{name}} · {{points}} pt per {{unit}} spent",
+      "invalid": "Check the rewards settings",
+      "configure": "Set up",
+      "edit": "Edit",
+      "done": "Done",
+      "plans": {
+        "label": "{{bank}} plan",
+        "apply": "Apply the {{plan}} plan"
+      },
+      "name": {
+        "label": "Program name",
+        "placeholder": "Ex: RevPoints",
+        "maxLength": "Up to 40 characters"
+      },
+      "spendUnit": {
+        "label": "Spend per step",
+        "placeholder": "Ex: 10"
+      },
+      "pointsPerUnit": {
+        "label": "Points per step",
+        "placeholder": "Ex: 1"
+      },
+      "pair": {
+        "incomplete": "Set both the spend and the points, or leave both empty",
+        "notPositive": "Must be greater than 0"
+      },
+      "rounding": {
+        "label": "Rounding",
+        "default": "Default (whole steps per transaction)",
+        "values": {
+          "FloorPerTransaction": "Whole steps per transaction",
+          "Exact": "Exact (2 decimals)"
+        }
+      },
+      "pointValue": {
+        "label": "Value of 1 point",
+        "placeholder": "Ex: 0.01",
+        "min": "The value can't be negative"
+      },
+      "startDate": {
+        "label": "Count spending from",
+        "helper": "Leave empty to count all history"
+      },
+      "excludedCategories": {
+        "label": "Categories that don't earn points",
+        "placeholder": "Ex: Transfers to people, Fees",
+        "hint": "Spends in these categories (or in their groups) don't earn points"
+      }
     }
   },
   "transaction": {
@@ -483,7 +538,8 @@
         "BalanceHistory": "Balance History",
         "LastTransactions": "Last Transactions",
         "CategoryAverage": "Category Average",
-        "SavingsProjection": "Savings Projection"
+        "SavingsProjection": "Savings Projection",
+        "CardRewards": "Card Rewards"
       }
     }
   },

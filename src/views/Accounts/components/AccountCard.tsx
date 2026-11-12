@@ -10,12 +10,13 @@ import { Chip } from "@sito/dashboard-app";
 import TypeResume from "./TypeResume";
 import { ItemCard } from "components";
 import { LastTransactions } from "./LastTransactions";
+import { AccountRewardsChip } from "./AccountRewardsChip";
 
 // types
 import type { AccountCardPropsType } from "../types";
 
 // lib
-import { AccountType, supportsBankName } from "lib";
+import { AccountType, hasRewardsConfigured, supportsBankName } from "lib";
 
 // views
 import { Currency } from "views/Currencies/components/Currency";
@@ -50,6 +51,8 @@ export function AccountCard(props: AccountCardPropsType) {
     hideDescription = false,
     swipeDeleteOpen,
     onSwipeDelete,
+    rewardsName,
+    rewardsBalance,
   } = props;
   const deleted = !!deletedAt;
 
@@ -58,6 +61,11 @@ export function AccountCard(props: AccountCardPropsType) {
     supportsBankName(type) && !deleted
       ? getAccountCardTheme(bankName)
       : undefined;
+
+  // Points only for live Card accounts whose rewards are configured; the
+  // balance comes with the account list (no request per card).
+  const showRewards =
+    !deleted && hasRewardsConfigured(props) && rewardsBalance != null;
 
   return (
     <ItemCard
@@ -161,6 +169,12 @@ export function AccountCard(props: AccountCardPropsType) {
             </>
           }
         />
+        {showRewards && (
+          <AccountRewardsChip
+            balance={rewardsBalance}
+            rewardsName={rewardsName}
+          />
+        )}
       </div>
       {showLastTransactions && id && currency && (
         <LastTransactions accountId={id} currency={currency} />

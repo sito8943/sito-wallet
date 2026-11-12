@@ -1,0 +1,6 @@
+@reference "../../../../../../styles/variables.css";
+
+.card-rewards-chart {
+  @apply relative w-full;
+  height: 180px;
+}
