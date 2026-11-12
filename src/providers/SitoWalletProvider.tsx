@@ -81,6 +81,12 @@ export const SitoWalletProvider = ({ children }: BasicProviderPropTypes) => {
         }}
         manager={{ manager, queryClient }}
         auth={authConfig}
+        // AppProviders sits above TranslationProvider, so the toast labels
+        // are translated here.
+        notification={{
+          label: t("_accessibility:labels.notifications"),
+          closeLabel: t("_accessibility:ariaLabels.closeNotification"),
+        }}
       >
         <TranslationProvider t={t} language={i18n.language}>
           <QueryPersistenceProvider>
