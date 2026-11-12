@@ -45,6 +45,7 @@ vi.mock("lib", () => ({
   AppRoutes: {
     home: "/",
     profile: "/profile",
+    aiAgents: "/ai-agents",
     users: "/users",
     transactions: "/transactions",
     transactionCategories: "/transaction-categories",

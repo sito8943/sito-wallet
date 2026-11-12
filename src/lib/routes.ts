@@ -27,6 +27,7 @@ export const AppRoutes: { [key: string]: string } = {
   accounts: "/accounts",
   currencies: "/currencies",
   profile: "/profile",
+  aiAgents: "/ai-agents",
   users: "/users",
   about: "/about-us",
   cookiesPolicy: "/cookies-policy",

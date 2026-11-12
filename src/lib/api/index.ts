@@ -9,6 +9,7 @@ export { default as SubscriptionProviderClient } from "./SubscriptionProviderCli
 export { default as DebtClient } from "./DebtClient";
 export { default as UserClient } from "./UserClient";
 export { default as UserEntityConfigClient } from "./UserEntityConfigClient";
+export { default as ApiKeyClient } from "./ApiKeyClient";
 export * from "./featureFlags/types";
 export * from "./userEntityConfigs";
 export * from "./listDefaults";

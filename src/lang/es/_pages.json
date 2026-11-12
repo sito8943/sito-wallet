@@ -3,6 +3,7 @@
     "home": "Inicio",
     "notifications": "Notificaciones",
     "profile": "Perfil",
+    "aiAgents": "Agentes de IA",
     "accounts": "Cuentas",
     "transactions": "Transacciones",
     "transactionCategories": "Categorías",
@@ -311,13 +312,15 @@
       "data": "Datos",
       "security": "Seguridad",
       "appearance": "Apariencia",
-      "privacy": "Privacidad"
+      "privacy": "Privacidad",
+      "aiAgents": "Agentes de IA"
     },
     "actions": {
       "save": "Guardar cambios",
       "changePassword": "Cambiar contraseña",
       "uploadPhoto": "Subir foto",
-      "deletePhoto": "Eliminar foto"
+      "deletePhoto": "Eliminar foto",
+      "aiAgents": "Gestionar agentes de IA"
     },
     "labels": {
       "username": "Usuario",
@@ -338,7 +341,8 @@
       "changePassword": "Por seguridad, al cambiar la contraseña se cerrará tu sesión actual.",
       "theme": "Se guarda en este dispositivo. \"Sistema\" sigue la configuración de tu dispositivo.",
       "publicCatalogs": "Tus monedas, categorías, productos, vendedores y proveedores de suscripción aparecerán a otros usuarios para que los usen. Al usarlos se crea una copia en su cuenta; los tuyos siguen siendo solo tuyos.",
-      "analytics": "Cuenta qué pantallas se usan, sin datos tuyos ni de tu dispositivo. Puedes cambiarlo cuando quieras."
+      "analytics": "Cuenta qué pantallas se usan, sin datos tuyos ni de tu dispositivo. Puedes cambiarlo cuando quieras.",
+      "aiAgents": "Permite que agentes de IA como Claude Code o Codex consulten tus finanzas y registren transacciones con una clave de API personal."
     },
     "messages": {
       "updated": "Perfil actualizado correctamente",
@@ -378,6 +382,72 @@
       "uploadError": "Error al subir la foto",
       "deleteSuccess": "Foto eliminada correctamente",
       "deleteError": "Error al eliminar la foto"
+    }
+  },
+  "aiAgents": {
+    "title": "Agentes de IA (MCP)",
+    "intro": {
+      "title": "Conecta tus agentes de IA",
+      "description": "MCP (Model Context Protocol) permite que agentes de IA como Claude Code, Codex o Claude Desktop trabajen con tu billetera. Pregúntales por tus cuentas y gastos, o pídeles que registren transacciones por ti.",
+      "capabilitiesTitle": "Qué puede hacer un agente",
+      "capabilities": {
+        "read": "Consultar tus cuentas, saldos, transacciones, categorías, monedas, deudas, próximas renovaciones y resúmenes",
+        "transactions": "Crear transacciones de ingresos y gastos",
+        "transfers": "Crear transferencias entre tus cuentas",
+        "rewards": "Ajustar los puntos de recompensa de tus tarjetas"
+      },
+      "security": "Una clave de API da acceso a los datos de tu billetera. Mantenla en secreto, usa una clave por dispositivo o agente y revócala de inmediato si se filtra."
+    },
+    "keys": {
+      "title": "Claves de API",
+      "count": "{{count}} de {{max}} claves",
+      "create": "Crear clave",
+      "empty": "Todavía no tienes claves de API. Crea una para conectar un agente.",
+      "limitReached": "Llegaste al límite de {{max}} claves. Revoca una para crear otra.",
+      "createdAt": "Creada {{date}}",
+      "lastUsed": "Último uso {{date}}",
+      "neverUsed": "Nunca usada",
+      "revokeAction": "Revocar clave",
+      "revoke": {
+        "title": "¿Revocar \"{{name}}\"?",
+        "message": "Los agentes que usan esta clave pierden el acceso de inmediato. No se puede deshacer.",
+        "successMessage": "Clave de API revocada"
+      },
+      "dialog": {
+        "title": "Nueva clave de API",
+        "nameLabel": "Nombre",
+        "namePlaceholder": "Claude Code portátil",
+        "nameHelper": "Una etiqueta para reconocer dónde usas esta clave.",
+        "nameRequired": "El nombre es obligatorio",
+        "nameMax": "El nombre debe tener como máximo {{max}} caracteres",
+        "successMessage": "Clave de API creada",
+        "fallbackError": "No se pudo crear la clave de API"
+      },
+      "created": {
+        "title": "Copia tu clave de API",
+        "warning": "Esta es la única vez que se muestra la clave completa. Cópiala ahora y guárdala en un lugar seguro. Si la pierdes, revócala y crea una nueva.",
+        "keyLabel": "Clave de API \"{{name}}\"",
+        "copyKey": "Copiar clave de API",
+        "setupTitle": "Configura tu cliente",
+        "done": "Ya guardé mi clave"
+      }
+    },
+    "setup": {
+      "title": "Conecta un cliente",
+      "description": "Elige tu cliente y pega el fragmento. Sustituye swal_... por tu clave de API.",
+      "urlLabel": "URL del servidor",
+      "copyUrl": "Copiar URL del servidor",
+      "copySnippet": "Copiar fragmento",
+      "clients": {
+        "claudeCode": "Claude Code",
+        "codex": "Codex",
+        "claudeDesktop": "Claude Desktop"
+      },
+      "hints": {
+        "claudeCode": "Ejecuta este comando en una terminal.",
+        "codex": "Añade esto a {{file}}.",
+        "claudeDesktop": "Añade esto a {{file}} y reinicia Claude Desktop. Requiere Node.js."
+      }
     }
   },
   "common": {
@@ -1192,6 +1262,9 @@
       },
       "profile": {
         "description": "Actualiza tu perfil, idioma y preferencias personales dentro de Sito Wallet."
+      },
+      "aiAgents": {
+        "description": "Crea claves de API personales y conecta agentes de IA como Claude Code, Codex o Claude Desktop a Sito Wallet."
       },
       "users": {
         "description": "Administra usuarios y restablece datos desde la zona de gestión de Sito Wallet."

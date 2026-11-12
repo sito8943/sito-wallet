@@ -147,6 +147,8 @@
   "messages": {
     "saved": "Guardado correctamente",
     "empty": "Nada que mostrar",
-    "message": "Nada que mostrar"
+    "message": "Nada que mostrar",
+    "copied": "Copiado al portapapeles",
+    "copyFailed": "No se pudo copiar al portapapeles"
   }
 }

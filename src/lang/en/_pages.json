@@ -3,6 +3,7 @@
     "home": "Home",
     "notifications": "Notifications",
     "profile": "Profile",
+    "aiAgents": "AI agents",
     "accounts": "Accounts",
     "transactions": "Transactions",
     "transactionCategories": "Categories",
@@ -311,13 +312,15 @@
       "data": "Data",
       "security": "Security",
       "appearance": "Appearance",
-      "privacy": "Privacy"
+      "privacy": "Privacy",
+      "aiAgents": "AI agents"
     },
     "actions": {
       "save": "Save changes",
       "changePassword": "Change password",
       "uploadPhoto": "Upload photo",
-      "deletePhoto": "Delete photo"
+      "deletePhoto": "Delete photo",
+      "aiAgents": "Manage AI agents"
     },
     "labels": {
       "username": "Username",
@@ -338,7 +341,8 @@
       "changePassword": "For security, changing your password will sign you out of the current session.",
       "theme": "Saved on this device. \"System\" follows your device settings.",
       "publicCatalogs": "Your currencies, categories, products, sellers and subscription providers are offered to other users. Using one creates a copy in their account; yours stay yours.",
-      "analytics": "Counts which screens are used, with no data about you or your device. You can change it at any time."
+      "analytics": "Counts which screens are used, with no data about you or your device. You can change it at any time.",
+      "aiAgents": "Let AI agents such as Claude Code or Codex read your finances and record transactions with a personal API key."
     },
     "messages": {
       "updated": "Profile updated successfully",
@@ -378,6 +382,72 @@
       "uploadError": "Failed to upload photo",
       "deleteSuccess": "Photo deleted successfully",
       "deleteError": "Failed to delete photo"
+    }
+  },
+  "aiAgents": {
+    "title": "AI agents (MCP)",
+    "intro": {
+      "title": "Connect your AI agents",
+      "description": "MCP (Model Context Protocol) lets AI agents such as Claude Code, Codex or Claude Desktop work with your wallet. Ask them about your accounts and spending, or have them record transactions for you.",
+      "capabilitiesTitle": "What an agent can do",
+      "capabilities": {
+        "read": "Read your accounts, balances, transactions, categories, currencies, debts, upcoming renewals and summaries",
+        "transactions": "Create income and expense transactions",
+        "transfers": "Create transfers between your accounts",
+        "rewards": "Adjust the reward points of your cards"
+      },
+      "security": "An API key gives access to your wallet data. Keep it secret, use one key per device or agent, and revoke it right away if it leaks."
+    },
+    "keys": {
+      "title": "API keys",
+      "count": "{{count}} of {{max}} keys",
+      "create": "Create key",
+      "empty": "You have no API keys yet. Create one to connect an agent.",
+      "limitReached": "You reached the limit of {{max}} keys. Revoke one to create another.",
+      "createdAt": "Created {{date}}",
+      "lastUsed": "Last used {{date}}",
+      "neverUsed": "Never used",
+      "revokeAction": "Revoke key",
+      "revoke": {
+        "title": "Revoke \"{{name}}\"?",
+        "message": "Agents using this key lose access immediately. This cannot be undone.",
+        "successMessage": "API key revoked"
+      },
+      "dialog": {
+        "title": "New API key",
+        "nameLabel": "Name",
+        "namePlaceholder": "Claude Code laptop",
+        "nameHelper": "A label to recognize where you use this key.",
+        "nameRequired": "Name is required",
+        "nameMax": "Name must be at most {{max}} characters",
+        "successMessage": "API key created",
+        "fallbackError": "The API key could not be created"
+      },
+      "created": {
+        "title": "Copy your API key",
+        "warning": "This is the only time the full key is shown. Copy it now and store it somewhere safe. If you lose it, revoke it and create a new one.",
+        "keyLabel": "API key \"{{name}}\"",
+        "copyKey": "Copy API key",
+        "setupTitle": "Set up your client",
+        "done": "I saved my key"
+      }
+    },
+    "setup": {
+      "title": "Connect a client",
+      "description": "Pick your client and paste the snippet. Replace swal_... with your API key.",
+      "urlLabel": "Server URL",
+      "copyUrl": "Copy server URL",
+      "copySnippet": "Copy snippet",
+      "clients": {
+        "claudeCode": "Claude Code",
+        "codex": "Codex",
+        "claudeDesktop": "Claude Desktop"
+      },
+      "hints": {
+        "claudeCode": "Run this command in a terminal.",
+        "codex": "Add this to {{file}}.",
+        "claudeDesktop": "Add this to {{file}} and restart Claude Desktop. Requires Node.js."
+      }
     }
   },
   "common": {
@@ -1192,6 +1262,9 @@
       },
       "profile": {
         "description": "Update your profile, language, and personal preferences in Sito Wallet."
+      },
+      "aiAgents": {
+        "description": "Create personal API keys and connect AI agents such as Claude Code, Codex or Claude Desktop to Sito Wallet."
       },
       "users": {
         "description": "Manage users and reset data from the Sito Wallet administration area."

@@ -86,6 +86,11 @@
       "tooLarge": "Image must be 5 MB or less",
       "invalidUrl": "That photo URL is not valid",
       "required": "Select an image to upload"
+    },
+    "apiKeys": {
+      "limitReached": "You can have up to 10 API keys. Revoke one to create another.",
+      "nameRequired": "Give the API key a name.",
+      "nameTooLong": "The API key name can have up to 60 characters."
     }
   },
   "user": {

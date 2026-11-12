@@ -132,6 +132,12 @@ export const seoRouteDefinitions: SeoRouteDefinition[] = [
     robots: SEO_PRIVATE_ROBOTS,
   },
   {
+    path: AppRoutes.aiAgents,
+    titleKey: "_pages:pages.aiAgents",
+    descriptionKey: "_pages:seo.routes.aiAgents.description",
+    robots: SEO_PRIVATE_ROBOTS,
+  },
+  {
     path: AppRoutes.users,
     titleKey: "_pages:pages.users",
     descriptionKey: "_pages:seo.routes.users.description",

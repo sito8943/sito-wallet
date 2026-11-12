@@ -126,6 +126,11 @@ export const routeComponents = defineRouteComponents({
       default: module.Profile,
     })),
   ),
+  AiAgents: loadable(() =>
+    import("views/AiAgents/AiAgents").then((module) => ({
+      default: module.AiAgents,
+    })),
+  ),
   Users: loadable(() =>
     import("views/Users/Users").then((module) => ({
       default: module.Users,

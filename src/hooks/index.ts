@@ -10,3 +10,4 @@ export * from "./useSeo";
 export * from "./useCalendarTimeAge";
 export * from "./useMutationErrorHandler";
 export * from "./useInvalidateCatalogs";
+export * from "./useCopyToClipboard";

@@ -9,6 +9,12 @@ describe("getBackendErrorCodeKey", () => {
     );
   });
 
+  it("maps api key codes to their translation key", () => {
+    expect(getBackendErrorCodeKey("apiKeys.limitReached")).toBe(
+      "_entities:base.apiKeys.limitReached",
+    );
+  });
+
   it("ignores free text and other codes", () => {
     expect(getBackendErrorCodeKey("Name is required")).toBeNull();
     expect(getBackendErrorCodeKey("name.label")).toBeNull();
