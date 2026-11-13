@@ -59,7 +59,8 @@ vi.mock("@sito/dashboard-app", () => ({
   Loading: () => <span>loading</span>,
 }));
 
-vi.mock("components", () => ({
+vi.mock("components", async () => ({
+  ...(await import("../../../components/McpAccessSelector")),
   TextLogo: () => <span>logo</span>,
   McpCapabilityList: () => <ul aria-label="capabilities" />,
 }));
@@ -81,6 +82,7 @@ vi.mock("hooks", async () => ({
 vi.mock("lib", async () => ({
   ...(await import("../../../lib/routes")),
   ...(await import("../../../lib/utils/url")),
+  ...(await import("../../../lib/mcp")),
   saveReturnTo: mockSaveReturnTo,
 }));
 
@@ -181,13 +183,44 @@ describe("OAuthConsent", () => {
 
     await waitFor(() => expect(allowButton()).toBeDisabled());
     expect(denyButton()).toBeDisabled();
-    expect(mockApprove).toHaveBeenCalledWith("req_1");
+    expect(mockApprove).toHaveBeenCalledWith("req_1", "FULL");
 
     resolveApprove({ redirectUrl: CODE_URL });
 
     await waitFor(() => expect(assign).toHaveBeenCalledWith(CODE_URL));
     expect(mockDeny).not.toHaveBeenCalled();
     expect(allowButton()).toBeDisabled();
+  });
+
+  it("defaults to read and write access", async () => {
+    mockGetRequest.mockResolvedValue(request);
+    renderConsent();
+
+    expect(
+      await screen.findByRole("radio", {
+        name: /_pages:aiAgents.access.levels.full.label/,
+      }),
+    ).toBeChecked();
+  });
+
+  it.each([
+    ["read", "READ"],
+    ["write", "WRITE"],
+  ])("approves with the %s access level", async (key, access) => {
+    mockGetRequest.mockResolvedValue(request);
+    mockApprove.mockResolvedValue({ redirectUrl: CODE_URL });
+    renderConsent();
+
+    fireEvent.click(
+      await screen.findByRole("radio", {
+        name: new RegExp(`_pages:aiAgents.access.levels.${key}.label`),
+      }),
+    );
+    fireEvent.click(allowButton());
+
+    await waitFor(() =>
+      expect(mockApprove).toHaveBeenCalledWith("req_1", access),
+    );
   });
 
   it("denies and leaves for the redirect URL with the error", async () => {
