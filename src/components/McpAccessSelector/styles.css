@@ -1,0 +1,33 @@
+@reference "../../styles/variables.css";
+
+.mcp-access-selector {
+  @apply flex min-w-0 flex-col gap-2 disabled:opacity-60;
+}
+
+.mcp-access-selector-legend {
+  @apply mb-2 text-sm font-semibold;
+}
+
+.mcp-access-option {
+  @apply flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-base p-3 transition-colors has-checked:border-primary has-checked:bg-base-light;
+}
+
+.mcp-access-selector:disabled .mcp-access-option {
+  @apply cursor-not-allowed;
+}
+
+.mcp-access-option-input {
+  @apply mt-1 shrink-0 accent-primary;
+}
+
+.mcp-access-option-content {
+  @apply flex min-w-0 flex-col gap-0.5;
+}
+
+.mcp-access-option-label {
+  @apply text-sm font-semibold;
+}
+
+.mcp-access-option-description {
+  @apply text-xs text-text-muted;
+}

@@ -1,4 +1,4 @@
-import { API_KEY_NAME_MAX_LENGTH, type AddApiKeyDto } from "lib";
+import { API_KEY_NAME_MAX_LENGTH, toMcpAccess, type AddApiKeyDto } from "lib";
 
 import { API_KEY_PREFIX_SUFFIX } from "./constants";
 import type { CreateApiKeyFormType } from "./types";
@@ -9,7 +9,10 @@ export const formatApiKeyPrefix = (prefix: string): string =>
 
 export const createApiKeyFormToDto = (
   data: CreateApiKeyFormType,
-): AddApiKeyDto => ({ name: data.name.trim() });
+): AddApiKeyDto => ({
+  name: data.name.trim(),
+  access: toMcpAccess(data.access),
+});
 
 /** Translation key of the name error, or null when valid (1..60 chars). */
 export const getApiKeyNameErrorKey = (name: unknown): string | null => {

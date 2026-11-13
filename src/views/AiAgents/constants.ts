@@ -1,7 +1,11 @@
+// lib
+import { DEFAULT_MCP_ACCESS } from "lib";
+
 import type { CreateApiKeyFormType } from "./types";
 
 export const CREATE_API_KEY_DEFAULT_VALUES: CreateApiKeyFormType = {
   name: "",
+  access: DEFAULT_MCP_ACCESS,
 };
 
 /** Ellipsis appended to the visible key prefix. */

@@ -8,7 +8,10 @@ import { faKey, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { IconButton } from "@sito/dashboard-app";
 
 // lib
-import { formatDateTime } from "lib";
+import { formatDateTime, toMcpAccess } from "lib";
+
+// components
+import { McpAccessBadge } from "components";
 
 // constants
 import { RAW_INTERPOLATION } from "../../constants";
@@ -30,7 +33,10 @@ export function ApiKeyListItem(props: ApiKeyListItemPropsType) {
         <FontAwesomeIcon icon={faKey} />
       </span>
       <div className="ai-agents-key-content">
-        <p className="ai-agents-key-name">{apiKey.name}</p>
+        <div className="ai-agents-key-title">
+          <p className="ai-agents-key-name">{apiKey.name}</p>
+          <McpAccessBadge access={toMcpAccess(apiKey.access)} />
+        </div>
         <code className="ai-agents-key-prefix">
           {formatApiKeyPrefix(apiKey.prefix)}
         </code>

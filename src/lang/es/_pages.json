@@ -397,7 +397,26 @@
         "transfers": "Crear transferencias entre tus cuentas",
         "rewards": "Ajustar los puntos de recompensa de tus tarjetas"
       },
-      "security": "Una clave de API da acceso a los datos de tu billetera. Mantenla en secreto, usa una clave por dispositivo o agente y revócala de inmediato si se filtra."
+      "security": "Una clave de API da acceso a los datos de tu billetera. Mantenla en secreto, usa una clave por dispositivo o agente y revócala de inmediato si se filtra.",
+      "accessTitle": "Niveles de acceso",
+      "access": "Cada clave de API o app conectada tiene su propio nivel de acceso. Lectura y escritura (por defecto): todo lo anterior. Solo lectura: puede consultar pero nunca cambiar nada. Solo escritura: puede añadir o cambiar datos, pero no consultar tu historial, saldos ni resúmenes."
+    },
+    "access": {
+      "label": "Acceso",
+      "levels": {
+        "full": {
+          "label": "Lectura y escritura",
+          "description": "Consultar tus datos y añadirlos o cambiarlos."
+        },
+        "read": {
+          "label": "Solo lectura",
+          "description": "Consultar cuentas, saldos, transacciones y resúmenes, sin cambiar nada."
+        },
+        "write": {
+          "label": "Solo escritura",
+          "description": "Añadir o cambiar datos, pero no consultar tu historial, saldos ni resúmenes."
+        }
+      }
     },
     "keys": {
       "title": "Claves de API",

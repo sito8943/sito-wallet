@@ -72,6 +72,14 @@
   @apply flex min-w-0 flex-1 flex-col gap-1;
 }
 
+.ai-agents-key-title {
+  @apply flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1;
+}
+
+.ai-agents-access-selector {
+  @apply mt-4;
+}
+
 .ai-agents-key-name {
   @apply truncate font-semibold;
 }

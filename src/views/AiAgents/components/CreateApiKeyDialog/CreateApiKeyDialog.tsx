@@ -7,6 +7,9 @@ import { FormDialog, State, TextInput } from "@sito/dashboard-app";
 // lib
 import { API_KEY_NAME_MAX_LENGTH } from "lib";
 
+// components
+import { McpAccessSelector } from "components";
+
 // utils
 import { getApiKeyNameErrorKey } from "../../utils";
 
@@ -16,7 +19,7 @@ import type {
   CreateApiKeyFormType,
 } from "../../types";
 
-/** Asks for the key name (1..60 chars). */
+/** Asks for the key name (1..60 chars) and its access level. */
 export function CreateApiKeyDialog(props: CreateApiKeyDialogPropsType) {
   const { control, isLoading } = props;
   const { t } = useTranslation();
@@ -49,6 +52,20 @@ export function CreateApiKeyDialog(props: CreateApiKeyDialogPropsType) {
             }
             state={error ? State.error : State.default}
             {...rest}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="access"
+        disabled={isLoading}
+        render={({ field: { value, onChange, name, disabled } }) => (
+          <McpAccessSelector
+            name={name}
+            value={value}
+            onChange={onChange}
+            disabled={disabled}
+            className="ai-agents-access-selector"
           />
         )}
       />

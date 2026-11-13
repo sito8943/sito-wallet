@@ -20,6 +20,10 @@ vi.mock("@sito/dashboard-app", () => ({
   }),
 }));
 
+vi.mock("lib", async () => ({
+  ...(await import("../../../lib/mcp")),
+}));
+
 vi.mock("providers", () => ({
   useManager: () => ({ ApiKeys: { revoke: mockRevoke } }),
 }));

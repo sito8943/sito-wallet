@@ -18,3 +18,5 @@ export * from "./BottomNavAction";
 export * from "./SplashScreen";
 export * from "./CountBadgeIcon";
 export * from "./McpCapabilityList";
+export * from "./McpAccessBadge";
+export * from "./McpAccessSelector";
