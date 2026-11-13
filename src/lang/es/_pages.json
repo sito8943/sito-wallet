@@ -393,8 +393,9 @@
       "capabilitiesTitle": "Qué puede hacer un agente",
       "capabilities": {
         "read": "Consultar tus cuentas, saldos, transacciones, categorías, monedas, deudas, suscripciones y próximas renovaciones, y resúmenes",
-        "transactions": "Crear transacciones de ingresos y gastos",
+        "transactions": "Crear, editar y borrar transacciones de ingresos y gastos",
         "transfers": "Crear transferencias entre tus cuentas",
+        "debts": "Crear, editar, pagar y cancelar deudas",
         "rewards": "Ajustar los puntos de recompensa de tus tarjetas"
       },
       "security": "Una clave de API da acceso a los datos de tu billetera. Mantenla en secreto, usa una clave por dispositivo o agente y revócala de inmediato si se filtra.",

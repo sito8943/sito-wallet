@@ -393,8 +393,9 @@
       "capabilitiesTitle": "What an agent can do",
       "capabilities": {
         "read": "Read your accounts, balances, transactions, categories, currencies, debts, subscriptions and upcoming renewals, and summaries",
-        "transactions": "Create income and expense transactions",
+        "transactions": "Create, edit and delete income and expense transactions",
         "transfers": "Create transfers between your accounts",
+        "debts": "Create, edit, pay and cancel debts",
         "rewards": "Adjust the reward points of your cards"
       },
       "security": "An API key gives access to your wallet data. Keep it secret, use one key per device or agent, and revoke it right away if it leaks.",
