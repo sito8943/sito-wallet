@@ -392,8 +392,8 @@
       "description": "MCP (Model Context Protocol) permite que agentes de IA como Claude Code, Codex o Claude Desktop trabajen con tu billetera. Pregúntales por tus cuentas y gastos, o pídeles que registren transacciones por ti.",
       "capabilitiesTitle": "Qué puede hacer un agente",
       "capabilities": {
-        "read": "Consultar tus cuentas, saldos, transacciones, categorías, monedas, deudas, suscripciones y próximas renovaciones, y resúmenes",
-        "transactions": "Crear, editar y borrar transacciones de ingresos y gastos, con tienda y productos de un ticket",
+        "read": "Consultar tus cuentas, saldos, transacciones, categorías, monedas, deudas, suscripciones y próximas renovaciones, resúmenes e historial de saldo",
+        "transactions": "Crear, editar, borrar y restaurar transacciones de ingresos y gastos, con tienda y productos de un ticket",
         "transfers": "Crear transferencias entre tus cuentas",
         "debts": "Crear, editar, pagar y cancelar deudas",
         "subscriptions": "Crear, editar, pausar y cancelar suscripciones y añadir sus proveedores",
