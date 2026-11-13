@@ -29,6 +29,7 @@ import {
   faBuilding,
   faHandHoldingDollar,
   faRobot,
+  faCommentDots,
 } from "@fortawesome/free-solid-svg-icons";
 
 // lib
@@ -48,6 +49,7 @@ export enum MenuKeys {
   Currencies = "currencies",
   Movements = "movements",
   Users = "users",
+  Feedback = "feedback",
   SignOut = "signOut",
   SignIn = "auth.signIn",
   Profile = "profile",
@@ -126,6 +128,13 @@ const getMenuMap = (): MenuItemType<MenuKeys>[] => [
     auth: true,
     access: (account) => isAdminSession(account),
     icon: <FontAwesomeIcon icon={faUsers} />,
+  },
+  {
+    page: MenuKeys.Feedback,
+    path: AppRoutes.feedback,
+    auth: true,
+    access: (account) => isAdminSession(account),
+    icon: <FontAwesomeIcon icon={faCommentDots} />,
   },
   { type: "divider", access: (account) => isAdminSession(account) },
   {

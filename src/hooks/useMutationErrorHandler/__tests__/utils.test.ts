@@ -15,6 +15,12 @@ describe("getBackendErrorCodeKey", () => {
     );
   });
 
+  it("maps feedback codes to their translation key", () => {
+    expect(getBackendErrorCodeKey("feedback.limitReached")).toBe(
+      "_entities:base.feedback.limitReached",
+    );
+  });
+
   it("ignores free text and other codes", () => {
     expect(getBackendErrorCodeKey("Name is required")).toBeNull();
     expect(getBackendErrorCodeKey("name.label")).toBeNull();

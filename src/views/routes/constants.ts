@@ -141,6 +141,11 @@ export const routeComponents = defineRouteComponents({
       default: module.Users,
     })),
   ),
+  Feedback: loadable(() =>
+    import("views/Feedback/Feedback").then((module) => ({
+      default: module.Feedback,
+    })),
+  ),
   FeatureUnavailable: loadable(() =>
     import("views/FeatureUnavailable").then((module) => ({
       default: module.FeatureUnavailable,

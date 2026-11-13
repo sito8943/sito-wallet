@@ -14,6 +14,7 @@
     "debtNew": "Nueva deuda",
     "currencies": "Monedas",
     "users": "Usuarios",
+    "feedback": "Comentarios",
     "about": "Acerca de Sito Wallet",
     "terms-and-conditions": "Términos y Condiciones",
     "cookies-policy": "Política de Cookies",
@@ -1045,6 +1046,39 @@
     "saved": "Guardado correctamente",
     "deleted": "Eliminado correctamente"
   },
+  "feedback": {
+    "title": "Comentarios",
+    "hint": "Lo que los usuarios contaron a su agente de IA (o a la app) que falla, falta o podría mejorar. Solo lo ven los administradores.",
+    "inbox": "Bandeja de entrada",
+    "openCount": "Abiertos: {{count}}",
+    "empty": "Aún no hay comentarios.",
+    "allResolved": "Todos los comentarios están resueltos.",
+    "showResolved": "Mostrar resueltos ({{count}})",
+    "hideResolved": "Ocultar resueltos",
+    "resolveAction": "Marcar como resuelto",
+    "reopenAction": "Reabrir",
+    "kinds": {
+      "bug": "Error",
+      "missing": "Falta",
+      "idea": "Idea"
+    },
+    "sources": {
+      "web": "App web",
+      "key": "Clave de API",
+      "app": "App conectada"
+    },
+    "entry": {
+      "user": "{{username}} ({{email}})",
+      "account": "Cuenta: {{name}}",
+      "resolvedAt": "Resuelto {{date}}"
+    },
+    "resolve": {
+      "successMessage": "Comentario marcado como resuelto"
+    },
+    "reopen": {
+      "successMessage": "Comentario reabierto"
+    }
+  },
   "users": {
     "title": "Usuarios",
     "empty": "No hay usuarios. Crea uno para empezar.",
@@ -1228,7 +1262,7 @@
       },
       {
         "title": "2. Categorías de datos tratados",
-        "body": "<ul><li>Datos de identificación y cuenta (usuario, email, identificadores internos).</li><li>Datos de perfil (nombre visible, descripción y foto opcional).</li><li>Datos financieros introducidos por el usuario (cuentas, saldos, categorías y transacciones).</li><li>Datos técnicos de sesión y sincronización (tokens, metadatos de dispositivo/sync, estado de conectividad).</li><li>Preferencias de uso almacenadas localmente (idioma, onboarding, filtros, búsquedas recientes y ajustes de interfaz).</li><li>Recuentos anónimos de uso de funciones (qué pantalla o función se usó y qué día, sin usuario, cuenta, dispositivo, IP ni contenido), guardados solo como totales diarios; la app conserva en el almacenamiento local los recuentos aún no enviados.</li><li>Recuentos anónimos de herramientas de agentes de IA (MCP): qué herramienta usó un agente que conectaste y qué día, contados por nuestro servidor sin usuario, cuenta, IP ni contenido, guardados solo como totales diarios.</li></ul>"
+        "body": "<ul><li>Datos de identificación y cuenta (usuario, email, identificadores internos).</li><li>Datos de perfil (nombre visible, descripción y foto opcional).</li><li>Datos financieros introducidos por el usuario (cuentas, saldos, categorías y transacciones).</li><li>Datos técnicos de sesión y sincronización (tokens, metadatos de dispositivo/sync, estado de conectividad).</li><li>Preferencias de uso almacenadas localmente (idioma, onboarding, filtros, búsquedas recientes y ajustes de interfaz).</li><li>Recuentos anónimos de uso de funciones (qué pantalla o función se usó y qué día, sin usuario, cuenta, dispositivo, IP ni contenido), guardados solo como totales diarios; la app conserva en el almacenamiento local los recuentos aún no enviados.</li><li>Comentarios que envías a través de tu agente de IA o de la app (lo que dijiste, su tipo, la cuenta a la que se refiere si la hay y cómo se envió), guardados con tu cuenta para corregir errores y mejorar la app, leídos solo por los administradores de la app y eliminados con tu cuenta.</li><li>Recuentos anónimos de herramientas de agentes de IA (MCP): qué herramienta usó un agente que conectaste y qué día, contados por nuestro servidor sin usuario, cuenta, IP ni contenido, guardados solo como totales diarios.</li></ul>"
       },
       {
         "title": "3. Finalidades y bases jurídicas",
@@ -1248,7 +1282,7 @@
       },
       {
         "title": "7. Plazos de conservación",
-        "body": "<ul><li>Datos de cuenta y perfil: mientras la cuenta esté activa o hasta solicitud válida de supresión, salvo obligación legal de conservación.</li><li>Datos financieros creados por el usuario: hasta su eliminación por el usuario o por cierre de cuenta, con posibles copias de seguridad temporales.</li><li>Metadatos técnicos/sync: durante el tiempo necesario para integridad operativa, resolución de incidencias y continuidad del servicio.</li><li>Datos locales en navegador: hasta cierre de sesión, limpieza del navegador o eliminación manual por el usuario, según cada tipo de dato.</li></ul>"
+        "body": "<ul><li>Datos de cuenta y perfil: mientras la cuenta esté activa o hasta solicitud válida de supresión, salvo obligación legal de conservación.</li><li>Datos financieros creados por el usuario: hasta su eliminación por el usuario o por cierre de cuenta, con posibles copias de seguridad temporales.</li><li>Metadatos técnicos/sync: durante el tiempo necesario para integridad operativa, resolución de incidencias y continuidad del servicio.</li><li>Datos locales en navegador: hasta cierre de sesión, limpieza del navegador o eliminación manual por el usuario, según cada tipo de dato.</li><li>Comentarios que envías: mientras tu cuenta esté activa; se eliminan con tu cuenta.</li></ul>"
       },
       {
         "title": "8. Derechos de las personas usuarias",
@@ -1310,6 +1344,9 @@
       },
       "aiAgents": {
         "description": "Crea claves de API personales y conecta agentes de IA como Claude Code, Codex o Claude Desktop a Sito Wallet."
+      },
+      "feedback": {
+        "description": "Revisa lo que los usuarios contaron a su agente de IA o a la app que falla, falta o podría mejorar."
       },
       "users": {
         "description": "Administra usuarios y restablece datos desde la zona de gestión de Sito Wallet."

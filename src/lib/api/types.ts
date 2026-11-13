@@ -13,6 +13,7 @@ export enum Tables {
   Profiles = "profiles",
   Users = "users",
   ApiKeys = "api-keys",
+  Feedback = "feedback",
 }
 
 export enum TablesCamelCase {

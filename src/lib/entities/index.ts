@@ -12,6 +12,7 @@ export * from "./receipt";
 export * from "./debt";
 export * from "./notification";
 export * from "./apiKey";
+export * from "./feedback";
 export * from "./oauth";
 export * from "./user";
 export * from "./auth";

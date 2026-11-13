@@ -150,6 +150,12 @@ export const seoRouteDefinitions: SeoRouteDefinition[] = [
     robots: SEO_PRIVATE_ROBOTS,
   },
   {
+    path: AppRoutes.feedback,
+    titleKey: "_pages:pages.feedback",
+    descriptionKey: "_pages:seo.routes.feedback.description",
+    robots: SEO_PRIVATE_ROBOTS,
+  },
+  {
     path: AppRoutes.about,
     titleKey: "_pages:about.title",
     descriptionKey: "_pages:seo.routes.about.description",

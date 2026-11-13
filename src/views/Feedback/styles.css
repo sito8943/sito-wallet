@@ -1,0 +1,73 @@
+@reference "../../styles/variables.css";
+
+.feedback-view {
+  @apply mr-auto flex w-full max-w-[86rem] flex-col gap-4;
+}
+
+.feedback-card {
+  @apply flex min-w-0 flex-col gap-4 rounded-2xl p-4 sm:p-6;
+}
+
+.feedback-card-header {
+  @apply flex flex-wrap items-center justify-between gap-3;
+}
+
+.feedback-card-title {
+  @apply text-xs uppercase tracking-wide text-text-muted;
+}
+
+.feedback-muted {
+  @apply text-sm text-text-muted;
+}
+
+.feedback-loading {
+  @apply flex justify-center py-6;
+}
+
+.feedback-empty {
+  @apply rounded-2xl border border-dashed border-border bg-base-light px-4 py-8 text-center text-sm text-text-muted;
+}
+
+.feedback-list {
+  @apply flex flex-col gap-3;
+}
+
+.feedback-entry {
+  @apply flex items-start gap-3 rounded-2xl border border-border bg-base-light p-3;
+}
+
+.feedback-entry--resolved {
+  @apply opacity-60;
+}
+
+.feedback-entry-content {
+  @apply flex min-w-0 flex-1 flex-col items-start gap-2;
+}
+
+.feedback-entry-text {
+  @apply whitespace-pre-wrap text-sm [overflow-wrap:anywhere];
+}
+
+.feedback-entry-meta {
+  @apply flex flex-wrap gap-x-3 gap-y-1 text-xs text-text-muted;
+}
+
+.feedback-kind {
+  @apply rounded-full px-2 py-0.5 text-xs font-semibold;
+}
+
+.feedback-kind--bug {
+  @apply bg-bg-error text-error;
+}
+
+.feedback-kind--missing {
+  @apply bg-bg-warning text-warning;
+}
+
+.feedback-kind--idea {
+  @apply bg-bg-info text-info;
+}
+
+.feedback-toggle {
+  @apply flex justify-center;
+}

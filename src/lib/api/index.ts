@@ -10,6 +10,7 @@ export { default as DebtClient } from "./DebtClient";
 export { default as UserClient } from "./UserClient";
 export { default as UserEntityConfigClient } from "./UserEntityConfigClient";
 export { default as ApiKeyClient } from "./ApiKeyClient";
+export { default as FeedbackClient } from "./FeedbackClient";
 export { default as OAuthClient } from "./OAuthClient";
 export * from "./featureFlags/types";
 export * from "./userEntityConfigs";
