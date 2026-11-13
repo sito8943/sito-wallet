@@ -21,7 +21,8 @@ import type { ApiKeysSectionPropsType } from "../../types";
 
 /** Active keys with create/revoke actions, or the empty state. */
 export function ApiKeysSection(props: ApiKeysSectionPropsType) {
-  const { apiKeys, isLoading, hasError, onRetry, onCreate, onRevoke } = props;
+  const { apiKeys, isLoading, hasError, onRetry, onCreate, onEdit, onRevoke } =
+    props;
   const { t } = useTranslation();
 
   const limitReached = isApiKeyLimitReached(
@@ -75,6 +76,7 @@ export function ApiKeysSection(props: ApiKeysSectionPropsType) {
             <ApiKeyListItem
               key={apiKey.id}
               apiKey={apiKey}
+              onEdit={onEdit}
               onRevoke={onRevoke}
             />
           ))}

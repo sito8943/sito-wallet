@@ -2,13 +2,13 @@ import { useTranslation } from "react-i18next";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faKey, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faKey, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
 import { IconButton } from "@sito/dashboard-app";
 
 // lib
-import { formatDateTime, toMcpAccess } from "lib";
+import { formatDateTime, toMcpAccess, toMcpAreas } from "lib";
 
 // components
 import { McpAccessBadge } from "components";
@@ -17,15 +17,17 @@ import { McpAccessBadge } from "components";
 import { RAW_INTERPOLATION } from "../../constants";
 
 // utils
-import { formatApiKeyPrefix } from "../../utils";
+import { formatApiKeyPrefix, getApiKeyAreaLabelKeys } from "../../utils";
 
 // types
 import type { ApiKeyListItemPropsType } from "../../types";
 
 export function ApiKeyListItem(props: ApiKeyListItemPropsType) {
-  const { apiKey, onRevoke, disabled } = props;
+  const { apiKey, onEdit, onRevoke, disabled } = props;
   const { t } = useTranslation();
+  const editLabel = t("_pages:aiAgents.keys.editAction");
   const revokeLabel = t("_pages:aiAgents.keys.revokeAction");
+  const areaLabelKeys = getApiKeyAreaLabelKeys(toMcpAreas(apiKey.areas));
 
   return (
     <li className="ai-agents-key">
@@ -37,6 +39,14 @@ export function ApiKeyListItem(props: ApiKeyListItemPropsType) {
           <p className="ai-agents-key-name">{apiKey.name}</p>
           <McpAccessBadge access={toMcpAccess(apiKey.access)} />
         </div>
+        {areaLabelKeys && (
+          <p className="ai-agents-key-areas">
+            {t("_pages:aiAgents.keys.areas", {
+              areas: areaLabelKeys.map((key) => t(key)).join(", "),
+              interpolation: RAW_INTERPOLATION,
+            })}
+          </p>
+        )}
         <code className="ai-agents-key-prefix">
           {formatApiKeyPrefix(apiKey.prefix)}
         </code>
@@ -57,6 +67,15 @@ export function ApiKeyListItem(props: ApiKeyListItemPropsType) {
           </span>
         </p>
       </div>
+      <IconButton
+        icon={faPencil}
+        type="button"
+        disabled={disabled}
+        aria-label={`${editLabel}: ${apiKey.name}`}
+        data-tooltip-id="tooltip"
+        data-tooltip-content={editLabel}
+        onClick={() => onEdit(apiKey)}
+      />
       <IconButton
         icon={faTrash}
         type="button"

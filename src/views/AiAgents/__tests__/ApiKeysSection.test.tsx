@@ -3,7 +3,8 @@ import { describe, expect, it, vi } from "vitest";
 import type { ReactNode } from "react";
 
 import type { ApiKeyDto } from "lib";
-import { McpAccess } from "../../../lib/mcp/types";
+import { McpAccess, McpArea } from "../../../lib/mcp/types";
+import { MCP_AREAS } from "../../../lib/mcp/constants";
 
 vi.mock("lib", async () => ({
   ...(await import("../../../lib/mcp")),
@@ -71,6 +72,7 @@ const buildKey = (
   id: number,
   lastUsedAt: string | null = null,
   access: McpAccess = McpAccess.Full,
+  areas: McpArea[] = [...MCP_AREAS],
 ): ApiKeyDto => ({
   id,
   name: `Key ${id}`,
@@ -78,6 +80,7 @@ const buildKey = (
   createdAt: "2026-11-01T10:00:00Z",
   lastUsedAt,
   access,
+  areas,
 });
 
 const renderSection = (apiKeys: ApiKeyDto[], hasError = false) => {
@@ -87,6 +90,7 @@ const renderSection = (apiKeys: ApiKeyDto[], hasError = false) => {
     hasError,
     onRetry: vi.fn(),
     onCreate: vi.fn(),
+    onEdit: vi.fn(),
     onRevoke: vi.fn(),
   };
   render(<ApiKeysSection {...props} />);
@@ -118,6 +122,25 @@ describe("ApiKeysSection", () => {
       screen.getByLabelText("_pages:aiAgents.keys.revokeAction: Key 2"),
     );
     expect(props.onRevoke).toHaveBeenCalledWith(used);
+  });
+
+  it("shows the areas of a limited key only, and edits it", () => {
+    const limited = buildKey(2, null, McpAccess.Full, [
+      McpArea.Debts,
+      McpArea.Transactions,
+    ]);
+    const props = renderSection([buildKey(1), limited]);
+
+    const areas = screen.getAllByText(/_pages:aiAgents.keys.areas/);
+    expect(areas).toHaveLength(1);
+    expect(areas[0].textContent).toContain(
+      "_pages:aiAgents.areas.items.transactions.label, _pages:aiAgents.areas.items.debts.label",
+    );
+
+    fireEvent.click(
+      screen.getByLabelText("_pages:aiAgents.keys.editAction: Key 2"),
+    );
+    expect(props.onEdit).toHaveBeenCalledWith(limited);
   });
 
   it("shows the access level of each key", () => {

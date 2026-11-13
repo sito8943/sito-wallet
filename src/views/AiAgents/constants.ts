@@ -1,11 +1,12 @@
 // lib
-import { DEFAULT_MCP_ACCESS } from "lib";
+import { DEFAULT_MCP_ACCESS, MCP_AREAS } from "lib";
 
-import type { CreateApiKeyFormType } from "./types";
+import type { ApiKeyFormType } from "./types";
 
-export const CREATE_API_KEY_DEFAULT_VALUES: CreateApiKeyFormType = {
+export const CREATE_API_KEY_DEFAULT_VALUES: ApiKeyFormType = {
   name: "",
   access: DEFAULT_MCP_ACCESS,
+  areas: [...MCP_AREAS],
 };
 
 /** Ellipsis appended to the visible key prefix. */
@@ -27,3 +28,9 @@ export const MCP_CONNECTOR_STEP_KEYS = [
   "oauth",
   "approve",
 ] as const;
+
+/** Tabs of the API key form, under the name: access level and areas. */
+export const API_KEY_FORM_TAB = {
+  access: "access",
+  areas: "areas",
+} as const;

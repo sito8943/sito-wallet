@@ -20,10 +20,7 @@ import { CREATE_API_KEY_DEFAULT_VALUES } from "../constants";
 import { createApiKeyFormToDto } from "../utils";
 
 // types
-import type {
-  CreateApiKeyFormType,
-  UseCreateApiKeyDialogReturnType,
-} from "../types";
+import type { ApiKeyFormType, UseCreateApiKeyDialogReturnType } from "../types";
 
 /** Name form + the created key, kept in memory only until dismissed. */
 export function useCreateApiKeyDialog(): UseCreateApiKeyDialogReturnType {
@@ -36,7 +33,7 @@ export function useCreateApiKeyDialog(): UseCreateApiKeyDialogReturnType {
   const formDialog = usePostDialog<
     AddApiKeyDto,
     CreatedApiKeyDto,
-    CreateApiKeyFormType
+    ApiKeyFormType
   >({
     formToDto: createApiKeyFormToDto,
     defaultValues: CREATE_API_KEY_DEFAULT_VALUES,

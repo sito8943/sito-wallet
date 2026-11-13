@@ -402,7 +402,7 @@
       },
       "security": "An API key gives access to your wallet data. Keep it secret, use one key per device or agent, and revoke it right away if it leaks.",
       "accessTitle": "Access levels",
-      "access": "Each API key or connected app has its own access level. Read and write (default): everything listed above. Read only: it can look but never change anything. Write only: it can add or change data but cannot browse your history, balances or summaries."
+      "access": "Each API key or connected app has its own access level. Read and write (default): everything listed above. Read only: it can look but never change anything. Write only: it can add or change data but cannot browse your history, balances or summaries. An API key can also be limited to some areas (transactions, debts...), and you can edit both at any time."
     },
     "access": {
       "label": "Access",
@@ -421,6 +421,39 @@
         }
       }
     },
+    "areas": {
+      "label": "Areas",
+      "helper": "What this key can use. Lists of accounts, categories and currencies stay available so the agent can pick ids.",
+      "selectAll": "Select all",
+      "invert": "Invert selection",
+      "required": "Pick at least one area.",
+      "items": {
+        "transactions": {
+          "label": "Transactions",
+          "description": "Income, expenses, transfers, summaries and restoring deleted ones."
+        },
+        "debts": {
+          "label": "Debts",
+          "description": "Create, edit, pay and cancel debts."
+        },
+        "subscriptions": {
+          "label": "Subscriptions",
+          "description": "Subscriptions, their providers and upcoming renewals."
+        },
+        "accounts": {
+          "label": "Accounts",
+          "description": "Create and edit accounts, balances, balance history and card points."
+        },
+        "categories": {
+          "label": "Categories",
+          "description": "Create and edit categories."
+        },
+        "currencies": {
+          "label": "Currencies",
+          "description": "Create and edit currencies and exchange rates."
+        }
+      }
+    },
     "keys": {
       "title": "API keys",
       "count": "{{count}} of {{max}} keys",
@@ -430,6 +463,8 @@
       "createdAt": "Created {{date}}",
       "lastUsed": "Last used {{date}}",
       "neverUsed": "Never used",
+      "areas": "Areas: {{areas}}",
+      "editAction": "Edit key",
       "revokeAction": "Revoke key",
       "revoke": {
         "confirm": "Revoke",
@@ -445,7 +480,8 @@
         "nameRequired": "Name is required",
         "nameMax": "Name must be at most {{max}} characters",
         "successMessage": "API key created",
-        "fallbackError": "The API key could not be created"
+        "fallbackError": "The API key could not be created",
+        "areasTab": "Areas ({{count}}/{{total}})"
       },
       "created": {
         "title": "Copy your API key",
@@ -454,6 +490,10 @@
         "copyKey": "Copy API key",
         "setupTitle": "Set up your client",
         "done": "I saved my key"
+      },
+      "edit": {
+        "title": "Edit API key",
+        "successMessage": "API key updated"
       }
     },
     "apps": {

@@ -7,7 +7,12 @@ import { Tables } from "./types";
 import { config } from "../../config";
 
 // types
-import type { AddApiKeyDto, ApiKeyDto, CreatedApiKeyDto } from "lib";
+import type {
+  AddApiKeyDto,
+  ApiKeyDto,
+  CreatedApiKeyDto,
+  UpdateApiKeyDto,
+} from "lib";
 
 /** Personal API keys for AI agents (MCP). Only reachable with a session JWT. */
 export default class ApiKeyClient {
@@ -36,6 +41,17 @@ export default class ApiKeyClient {
       this.table,
       Methods.POST,
       data,
+      this.api.defaultTokenAcquirer(),
+    );
+  }
+
+  /** Renames a key or changes its access or areas; applies on its next request. */
+  async update(data: UpdateApiKeyDto): Promise<ApiKeyDto> {
+    const { id, ...changes } = data;
+    return await this.api.doQuery<ApiKeyDto, Omit<UpdateApiKeyDto, "id">>(
+      `${this.table}/${id}`,
+      Methods.PATCH,
+      changes,
       this.api.defaultTokenAcquirer(),
     );
   }

@@ -1,4 +1,4 @@
-import type { McpAccess } from "../../mcp/types";
+import type { McpAccess, McpArea } from "../../mcp/types";
 
 /** Personal API key used by AI agents to reach the MCP endpoint. */
 export interface ApiKeyDto {
@@ -13,4 +13,6 @@ export interface ApiKeyDto {
   lastUsedAt: string | null;
   /** What the key may do (read and write, read only or write only). */
   access: McpAccess;
+  /** Parts of the wallet the key may use (every area when unrestricted). */
+  areas: McpArea[];
 }

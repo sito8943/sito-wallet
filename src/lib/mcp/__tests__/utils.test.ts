@@ -1,15 +1,17 @@
 import { describe, expect, it } from "vitest";
 
-import { MCP_API_KEY_PLACEHOLDER } from "../constants";
-import { McpAccess, McpClient } from "../types";
+import { MCP_API_KEY_PLACEHOLDER, MCP_AREAS } from "../constants";
+import { McpAccess, McpArea, McpClient } from "../types";
 import {
   buildMcpSnippet,
   filterMcpGrants,
   getMcpAccessFromScopes,
   getMcpUrl,
+  hasAllMcpAreas,
   isMcpAccess,
   resolveMcpApiKey,
   toMcpAccess,
+  toMcpAreas,
 } from "../utils";
 
 const URL = "https://api.wallet.sito8943.com/mcp";
@@ -158,6 +160,23 @@ describe("isMcpAccess / toMcpAccess", () => {
     (value) => {
       expect(isMcpAccess(value)).toBe(false);
       expect(toMcpAccess(value)).toBe(McpAccess.Full);
+    },
+  );
+});
+
+describe("toMcpAreas", () => {
+  it("keeps known areas in display order", () => {
+    expect(toMcpAreas([McpArea.Currencies, "GONE", McpArea.Debts])).toEqual([
+      McpArea.Debts,
+      McpArea.Currencies,
+    ]);
+  });
+
+  it.each([undefined, null, [], "DEBTS"])(
+    "treats %j as every area",
+    (value) => {
+      expect(toMcpAreas(value)).toEqual(MCP_AREAS);
+      expect(hasAllMcpAreas(toMcpAreas(value))).toBe(true);
     },
   );
 });

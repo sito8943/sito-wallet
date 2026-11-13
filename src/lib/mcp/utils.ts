@@ -1,12 +1,13 @@
 import {
   DEFAULT_MCP_ACCESS,
   MCP_API_KEY_PLACEHOLDER,
+  MCP_AREAS,
   MCP_PATH,
   MCP_READ_ONLY_SCOPE,
   MCP_SERVER_NAME,
   MCP_WRITE_ONLY_SCOPE,
 } from "./constants";
-import { McpAccess, McpClient, type McpSnippetParams } from "./types";
+import { McpAccess, McpArea, McpClient, type McpSnippetParams } from "./types";
 
 // types
 import type { OAuthGrantDto } from "../entities/oauth";
@@ -55,6 +56,27 @@ export const isMcpAccess = (value: unknown): value is McpAccess =>
  */
 export const toMcpAccess = (value: unknown): McpAccess =>
   isMcpAccess(value) ? value : DEFAULT_MCP_ACCESS;
+
+const MCP_AREA_VALUES: readonly string[] = Object.values(McpArea);
+
+/** True when `value` is a known area. */
+export const isMcpArea = (value: unknown): value is McpArea =>
+  typeof value === "string" && MCP_AREA_VALUES.includes(value);
+
+/**
+ * Areas of external data (e.g. an API key from the backend), in display
+ * order. Unknown values are dropped; a missing or empty list means all areas
+ * (keys created before areas existed).
+ */
+export const toMcpAreas = (value: unknown): McpArea[] => {
+  const known = Array.isArray(value) ? value.filter(isMcpArea) : [];
+  if (!known.length) return [...MCP_AREAS];
+  return MCP_AREAS.filter((area) => known.includes(area));
+};
+
+/** True when `areas` covers every area (an unrestricted key). */
+export const hasAllMcpAreas = (areas: readonly McpArea[]): boolean =>
+  MCP_AREAS.every((area) => areas.includes(area));
 
 /**
  * Access level of an OAuth grant, from its scopes: `mcp:read-only` gives

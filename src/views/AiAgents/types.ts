@@ -1,4 +1,4 @@
-import type { FieldValues } from "react-hook-form";
+import type { Control, FieldValues } from "react-hook-form";
 
 // @sito/dashboard-app
 import type {
@@ -12,25 +12,43 @@ import type {
   ApiKeyDto,
   CreatedApiKeyDto,
   McpAccess,
+  McpArea,
   McpClient,
   OAuthGrantDto,
 } from "lib";
 
 // constants
-import type { MCP_CONNECTOR_TAB } from "./constants";
+import type { API_KEY_FORM_TAB, MCP_CONNECTOR_TAB } from "./constants";
 
-export interface CreateApiKeyFormType extends FieldValues {
+/** Create and edit form of an API key (id only when editing). */
+export interface ApiKeyFormType extends FieldValues {
+  id?: number;
   name: string;
   access: McpAccess;
+  areas: McpArea[];
 }
 
 export type CreateApiKeyDialogPropsType =
-  TriggerFormDialogPropsType<CreateApiKeyFormType>;
+  TriggerFormDialogPropsType<ApiKeyFormType>;
 
-export interface UseCreateApiKeyDialogReturnType extends UseFormDialogReturnType<CreateApiKeyFormType> {
+export type EditApiKeyDialogPropsType = UseEditApiKeyDialogReturnType;
+
+export type ApiKeyFormTabId =
+  (typeof API_KEY_FORM_TAB)[keyof typeof API_KEY_FORM_TAB];
+
+export interface ApiKeyFormFieldsPropsType {
+  control: Control<ApiKeyFormType>;
+  isLoading?: boolean;
+}
+
+export interface UseCreateApiKeyDialogReturnType extends UseFormDialogReturnType<ApiKeyFormType> {
   /** Key just created (full secret), shown once and then discarded. */
   createdKey: CreatedApiKeyDto | null;
   clearCreatedKey: () => void;
+}
+
+export interface UseEditApiKeyDialogReturnType extends UseFormDialogReturnType<ApiKeyFormType> {
+  openForKey: (apiKey: ApiKeyDto) => void;
 }
 
 export interface UseRevokeApiKeyDialogReturnType extends ConfirmationDialogPropsType {
@@ -53,6 +71,7 @@ export interface CreatedApiKeyDialogPropsType {
 
 export interface ApiKeyListItemPropsType {
   apiKey: ApiKeyDto;
+  onEdit: (apiKey: ApiKeyDto) => void;
   onRevoke: (apiKey: ApiKeyDto) => void;
   disabled?: boolean;
 }
@@ -63,6 +82,7 @@ export interface ApiKeysSectionPropsType {
   hasError: boolean;
   onRetry: () => void;
   onCreate: () => void;
+  onEdit: (apiKey: ApiKeyDto) => void;
   onRevoke: (apiKey: ApiKeyDto) => void;
 }
 

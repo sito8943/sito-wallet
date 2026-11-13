@@ -1,0 +1,45 @@
+@reference "../../styles/variables.css";
+
+.mcp-area-selector {
+  @apply flex min-w-0 flex-col gap-2 disabled:opacity-60;
+}
+
+.mcp-area-selector-legend {
+  @apply mb-1 text-sm font-semibold;
+}
+
+.mcp-area-selector-helper {
+  @apply mb-1 text-xs text-text-muted;
+}
+
+.mcp-area-selector-actions {
+  @apply flex flex-wrap gap-2;
+}
+
+.mcp-area-option {
+  @apply flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-base p-3 transition-colors has-checked:border-primary has-checked:bg-base-light;
+}
+
+.mcp-area-selector:disabled .mcp-area-option {
+  @apply cursor-not-allowed;
+}
+
+.mcp-area-option-input {
+  @apply mt-1 shrink-0 accent-primary;
+}
+
+.mcp-area-option-content {
+  @apply flex min-w-0 flex-col gap-0.5;
+}
+
+.mcp-area-option-label {
+  @apply text-sm font-semibold;
+}
+
+.mcp-area-option-description {
+  @apply text-xs text-text-muted;
+}
+
+.mcp-area-selector-error {
+  @apply text-xs text-text-error;
+}
