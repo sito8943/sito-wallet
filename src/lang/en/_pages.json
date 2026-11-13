@@ -1182,7 +1182,7 @@
   },
   "cookiesPolicy": {
     "title": "Cookies and Similar Technologies Policy",
-    "body": "<p>This policy explains how Sito Wallet uses cookies and local storage/access technologies on user devices, in line with Article 22.2 LSSI and applicable privacy regulations.</p><p><strong>Sito Wallet is completely free, open source, and does not operate with real money.</strong></p><p><strong>Last updated:</strong> November 4, 2026.</p>",
+    "body": "<p>This policy explains how Sito Wallet uses cookies and local storage/access technologies on user devices, in line with Article 22.2 LSSI and applicable privacy regulations.</p><p><strong>Sito Wallet is completely free, open source, and does not operate with real money.</strong></p><p><strong>Last updated:</strong> November 13, 2026.</p>",
     "sections": [
       {
         "title": "1. What cookies and similar technologies are",
@@ -1190,7 +1190,7 @@
       },
       {
         "title": "2. Technologies used in this app",
-        "body": "<ul><li><strong>Technical cookies</strong> related to client session/base libraries.</li><li><strong>Local Storage</strong> for session data, preferences, recent searches, feature flags, and sync metadata.</li><li><strong>IndexedDB</strong> for local financial data persistence and offline synchronization queues.</li><li><strong>Anonymous usage analytics (optional, only with your consent):</strong> counts of which screens are used and on which day, sent to our own service (sito-feature-usage) with no user, account, device, IP or content. The app keeps unsent counts and your choice in Local Storage.</li></ul>"
+        "body": "<ul><li><strong>Technical cookies</strong> related to client session/base libraries.</li><li><strong>Local Storage</strong> for session data, preferences, recent searches, feature flags, and sync metadata.</li><li><strong>IndexedDB</strong> for local financial data persistence and offline synchronization queues.</li><li><strong>Anonymous usage analytics (optional, only with your consent):</strong> counts of which screens are used and on which day, sent to our own service (sito-feature-usage) with no user, account, device, IP or content. The app keeps unsent counts and your choice in Local Storage.</li><li><strong>AI agents (MCP):</strong> when an AI agent you connected (ChatGPT, Claude…) uses a Sito Wallet tool, our server counts which tool was used and on which day (for example, “create transaction”), with no user, account, IP or content. Nothing is stored on your device, so it does not depend on this consent.</li></ul>"
       },
       {
         "title": "3. Purposes",
@@ -1220,7 +1220,7 @@
   },
   "privacyPolicy": {
     "title": "Privacy Policy",
-    "body": "<p>This policy describes how we process personal data in Sito Wallet and the rights available to users.</p><p><strong>Sito Wallet is completely free, open source, and does not operate with real money.</strong></p><p><strong>Last updated:</strong> November 4, 2026.</p>",
+    "body": "<p>This policy describes how we process personal data in Sito Wallet and the rights available to users.</p><p><strong>Sito Wallet is completely free, open source, and does not operate with real money.</strong></p><p><strong>Last updated:</strong> November 13, 2026.</p>",
     "sections": [
       {
         "title": "1. Data controller",
@@ -1228,7 +1228,7 @@
       },
       {
         "title": "2. Categories of data processed",
-        "body": "<ul><li>Account and identification data (username, email, internal identifiers).</li><li>Profile data (display name, description, optional photo).</li><li>Financial data entered by users (accounts, balances, categories, transactions).</li><li>Session and synchronization technical data (tokens, device/sync metadata, connectivity status).</li><li>Locally stored usage preferences (language, onboarding, filters, recent searches, interface settings).</li><li>Anonymous feature usage counts (which screen or feature was used and on which day, with no user, account, device, IP or content), kept only as daily totals; the app keeps unsent counts in local storage.</li></ul>"
+        "body": "<ul><li>Account and identification data (username, email, internal identifiers).</li><li>Profile data (display name, description, optional photo).</li><li>Financial data entered by users (accounts, balances, categories, transactions).</li><li>Session and synchronization technical data (tokens, device/sync metadata, connectivity status).</li><li>Locally stored usage preferences (language, onboarding, filters, recent searches, interface settings).</li><li>Anonymous feature usage counts (which screen or feature was used and on which day, with no user, account, device, IP or content), kept only as daily totals; the app keeps unsent counts in local storage.</li><li>Anonymous counts of AI agent tools (MCP): which tool an agent you connected used and on which day, counted by our server with no user, account, IP or content, kept only as daily totals.</li></ul>"
       },
       {
         "title": "3. Purposes and legal bases",
