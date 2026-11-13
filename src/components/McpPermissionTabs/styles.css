@@ -1,0 +1,23 @@
+@reference "../../styles/variables.css";
+
+.mcp-permission-tabs {
+  @apply flex min-w-0 flex-col;
+}
+
+.mcp-permission-tabs-list {
+  @apply mt-4 mb-3;
+}
+
+/* Same width on both tabs, so a dialog doesn't jump when switching. */
+.mcp-permission-tabs-panel {
+  @apply flex w-xl max-w-full flex-col gap-4;
+}
+
+.mcp-permission-tabs-panel[hidden] {
+  @apply hidden;
+}
+
+/* The tab already names the panel; keep the legend for screen readers only. */
+.mcp-permission-tabs-panel legend {
+  @apply sr-only;
+}

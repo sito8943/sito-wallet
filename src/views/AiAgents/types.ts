@@ -18,7 +18,7 @@ import type {
 } from "lib";
 
 // constants
-import type { API_KEY_FORM_TAB, MCP_CONNECTOR_TAB } from "./constants";
+import type { MCP_CONNECTOR_TAB } from "./constants";
 
 /** Create and edit form of an API key (id only when editing). */
 export interface ApiKeyFormType extends FieldValues {
@@ -32,9 +32,6 @@ export type CreateApiKeyDialogPropsType =
   TriggerFormDialogPropsType<ApiKeyFormType>;
 
 export type EditApiKeyDialogPropsType = UseEditApiKeyDialogReturnType;
-
-export type ApiKeyFormTabId =
-  (typeof API_KEY_FORM_TAB)[keyof typeof API_KEY_FORM_TAB];
 
 export interface ApiKeyFormFieldsPropsType {
   control: Control<ApiKeyFormType>;
@@ -107,11 +104,32 @@ export interface ConnectedAppsSectionPropsType {
   isLoading: boolean;
   hasError: boolean;
   onRetry: () => void;
+  onEdit: (grant: OAuthGrantDto) => void;
   onDisconnect: (grant: OAuthGrantDto) => void;
 }
 
+/** Edit form of a connected app: its access level and areas. */
+export interface ConnectedAppFormType extends FieldValues {
+  id: number;
+  access: McpAccess;
+  areas: McpArea[];
+}
+
+export interface ConnectedAppFormFieldsPropsType {
+  control: Control<ConnectedAppFormType>;
+  isLoading?: boolean;
+}
+
+export interface UseEditConnectedAppDialogReturnType extends UseFormDialogReturnType<ConnectedAppFormType> {
+  openForGrant: (grant: OAuthGrantDto) => void;
+}
+
+export type EditConnectedAppDialogPropsType =
+  UseEditConnectedAppDialogReturnType;
+
 export interface ConnectedAppListItemPropsType {
   grant: OAuthGrantDto;
+  onEdit: (grant: OAuthGrantDto) => void;
   onDisconnect: (grant: OAuthGrantDto) => void;
   disabled?: boolean;
 }

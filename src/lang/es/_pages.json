@@ -402,7 +402,7 @@
       },
       "security": "Una clave de API da acceso a los datos de tu billetera. Mantenla en secreto, usa una clave por dispositivo o agente y revócala de inmediato si se filtra.",
       "accessTitle": "Niveles de acceso",
-      "access": "Cada clave de API o app conectada tiene su propio nivel de acceso. Lectura y escritura (por defecto): todo lo anterior. Solo lectura: puede consultar pero nunca cambiar nada. Solo escritura: puede añadir o cambiar datos, pero no consultar tu historial, saldos ni resúmenes. Una clave de API también se puede limitar a algunas áreas (transacciones, deudas...), y ambas cosas se pueden editar cuando quieras."
+      "access": "Cada clave de API o app conectada tiene su propio nivel de acceso. Lectura y escritura (por defecto): todo lo anterior. Solo lectura: puede consultar pero nunca cambiar nada. Solo escritura: puede añadir o cambiar datos, pero no consultar tu historial, saldos ni resúmenes. Ambas se pueden limitar también a algunas áreas (transacciones, deudas...) y editar cuando quieras."
     },
     "access": {
       "label": "Acceso",
@@ -423,7 +423,8 @@
     },
     "areas": {
       "label": "Áreas",
-      "helper": "Qué puede usar esta clave. Las listas de cuentas, categorías y monedas siguen disponibles para que el agente elija ids.",
+      "tab": "Áreas ({{count}}/{{total}})",
+      "helper": "Qué puede usar esta conexión. Las listas de cuentas, categorías y monedas siguen disponibles para que el agente elija ids.",
       "selectAll": "Marcar todas",
       "invert": "Invertir selección",
       "required": "Elige al menos un área.",
@@ -480,8 +481,7 @@
         "nameRequired": "El nombre es obligatorio",
         "nameMax": "El nombre debe tener como máximo {{max}} caracteres",
         "successMessage": "Clave de API creada",
-        "fallbackError": "No se pudo crear la clave de API",
-        "areasTab": "Áreas ({{count}}/{{total}})"
+        "fallbackError": "No se pudo crear la clave de API"
       },
       "created": {
         "title": "Copia tu clave de API",
@@ -501,12 +501,18 @@
       "description": "Apps a las que permitiste usar tu billetera con tu cuenta, como ChatGPT o claude.ai.",
       "empty": "No hay apps conectadas. Añade Sito Wallet como conector en ChatGPT o claude.ai para verla aquí.",
       "connectedAt": "Conectada el {{date}}",
+      "editAction": "Editar app",
       "disconnectAction": "Desconectar",
       "disconnect": {
         "confirm": "Desconectar",
         "title": "¿Desconectar \"{{name}}\"?",
         "message": "La app pierde el acceso a tu billetera. Para volver a usarla tendrás que conectarla y permitirla de nuevo.",
         "successMessage": "App desconectada"
+      },
+      "edit": {
+        "title": "Editar app conectada",
+        "note": "La app recibe los cambios la próxima vez que renueve su acceso (en menos de una hora).",
+        "successMessage": "App conectada actualizada"
       }
     },
     "setup": {

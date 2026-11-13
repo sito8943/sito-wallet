@@ -9,7 +9,14 @@ import { useNotification } from "@sito/dashboard-app";
 import { useManager } from "providers";
 
 // lib
-import { DEFAULT_MCP_ACCESS, isHttpUrl, type McpAccess } from "lib";
+import {
+  DEFAULT_MCP_ACCESS,
+  MCP_AREAS,
+  isHttpUrl,
+  toMcpAreasPayload,
+  type McpAccess,
+  type McpArea,
+} from "lib";
 
 // constants
 import { CONSENT_NOT_FOUND_STATUS } from "../constants";
@@ -21,7 +28,7 @@ import { hasHttpStatus } from "../utils";
 import { ConsentDecision, type UseConsentDecisionReturnType } from "../types";
 
 /**
- * Keeps the chosen access level, sends Allow (with that level) or Deny to
+ * Keeps the chosen access level and areas, sends Allow (with them) or Deny to
  * sito-auth and leaves for the client's redirect URL
  * (with the code, or with `error=access_denied`).
  */
@@ -33,12 +40,13 @@ export function useConsentDecision(
   const { showErrorNotification } = useNotification();
   const [expired, setExpired] = useState(false);
   const [access, setAccess] = useState<McpAccess>(DEFAULT_MCP_ACCESS);
+  const [areas, setAreas] = useState<McpArea[]>(() => [...MCP_AREAS]);
 
   const mutation = useMutation({
     mutationFn: (decision: ConsentDecision) => {
       const id = requestId ?? "";
       return decision === ConsentDecision.Approve
-        ? manager.OAuth.approve(id, access)
+        ? manager.OAuth.approve(id, access, toMcpAreasPayload(areas))
         : manager.OAuth.deny(id);
     },
     onSuccess: ({ redirectUrl }) => {
@@ -69,14 +77,18 @@ export function useConsentDecision(
   const decide = useCallback(
     (decision: ConsentDecision) => {
       if (!requestId || isSubmitting) return;
+      // Allow needs at least one area (the button is disabled meanwhile).
+      if (decision === ConsentDecision.Approve && !areas.length) return;
       mutate(decision);
     },
-    [isSubmitting, mutate, requestId],
+    [areas.length, isSubmitting, mutate, requestId],
   );
 
   return {
     access,
     setAccess,
+    areas,
+    setAreas,
     decide,
     pendingDecision: isSubmitting ? (variables ?? null) : null,
     isSubmitting,

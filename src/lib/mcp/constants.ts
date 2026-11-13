@@ -80,3 +80,6 @@ export const MCP_AREA_KEYS: Record<McpArea, string> = {
   [McpArea.Categories]: "categories",
   [McpArea.Currencies]: "currencies",
 };
+
+/** OAuth scope prefix sito-auth adds per allowed area: `mcp:area:transactions`. */
+export const MCP_AREA_SCOPE_PREFIX = "mcp:area:";

@@ -21,3 +21,4 @@ export * from "./McpCapabilityList";
 export * from "./McpAccessBadge";
 export * from "./McpAccessSelector";
 export * from "./McpAreaSelector";
+export * from "./McpPermissionTabs";

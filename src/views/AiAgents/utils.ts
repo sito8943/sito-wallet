@@ -1,17 +1,22 @@
 import {
   API_KEY_NAME_MAX_LENGTH,
   MCP_AREA_KEYS,
+  getMcpAccessFromScopes,
+  getMcpAreasFromScopes,
   hasAllMcpAreas,
   toMcpAccess,
   toMcpAreas,
+  toMcpAreasPayload,
   type AddApiKeyDto,
   type ApiKeyDto,
   type McpArea,
+  type OAuthGrantDto,
+  type OAuthUpdateGrantDto,
   type UpdateApiKeyDto,
 } from "lib";
 
 import { API_KEY_PREFIX_SUFFIX } from "./constants";
-import type { ApiKeyFormType } from "./types";
+import type { ApiKeyFormType, ConnectedAppFormType } from "./types";
 
 /** Visible part of a key, e.g. "swal_Ab12Cd…". */
 export const formatApiKeyPrefix = (prefix: string): string =>
@@ -72,3 +77,19 @@ export const getApiKeyNameErrorKey = (name: unknown): string | null => {
 /** True when the user cannot create more keys. */
 export const isApiKeyLimitReached = (count: number, max: number): boolean =>
   count >= max;
+
+/** A connected app's grant as the edit form (level and areas from its scopes). */
+export const grantToForm = (grant: OAuthGrantDto): ConnectedAppFormType => ({
+  id: Number(grant.id),
+  access: getMcpAccessFromScopes(grant.scopes),
+  areas: getMcpAreasFromScopes(grant.scopes),
+});
+
+export const connectedAppFormToUpdateDto = (
+  data: ConnectedAppFormType,
+  grant?: OAuthGrantDto,
+): OAuthUpdateGrantDto => ({
+  id: grant?.id ?? data.id,
+  access: toMcpAccess(data.access),
+  areas: toMcpAreasPayload(toMcpAreas(data.areas)),
+});

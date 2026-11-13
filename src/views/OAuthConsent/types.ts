@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 // lib
-import type { McpAccess, OAuthRequestDto } from "lib";
+import type { McpAccess, McpArea, OAuthRequestDto } from "lib";
 
 /** What the consent page shows. */
 export enum ConsentStatus {
@@ -33,6 +33,9 @@ export interface UseConsentDecisionReturnType {
   /** Access level sent with Allow (read and write by default). */
   access: McpAccess;
   setAccess: (access: McpAccess) => void;
+  /** Areas sent with Allow (every area by default; at least one). */
+  areas: McpArea[];
+  setAreas: (areas: McpArea[]) => void;
   decide: (decision: ConsentDecision) => void;
   /** Decision being sent, or already sent and redirecting. */
   pendingDecision: ConsentDecision | null;
@@ -51,6 +54,8 @@ export interface ConsentRequestPropsType {
   email: string;
   access: McpAccess;
   onAccessChange: (access: McpAccess) => void;
+  areas: McpArea[];
+  onAreasChange: (areas: McpArea[]) => void;
   pendingDecision: ConsentDecision | null;
   isSubmitting: boolean;
   onDecide: (decision: ConsentDecision) => void;

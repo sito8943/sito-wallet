@@ -1,39 +1,53 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Controller, useFormState, useWatch } from "react-hook-form";
+import { Controller, useController, useFormState } from "react-hook-form";
 
 // @sito/dashboard-app
-import { State, TabsLayout, TextInput } from "@sito/dashboard-app";
+import { State, TextInput } from "@sito/dashboard-app";
 
 // lib
-import { API_KEY_NAME_MAX_LENGTH, MCP_AREAS } from "lib";
+import { API_KEY_NAME_MAX_LENGTH } from "lib";
 
 // components
-import { McpAccessSelector, McpAreaSelector } from "components";
-
-// constants
-import { API_KEY_FORM_TAB } from "../../constants";
+import {
+  MCP_PERMISSION_TAB,
+  McpPermissionTabs,
+  type McpPermissionTabId,
+} from "components";
 
 // utils
 import { getApiKeyAreasErrorKey, getApiKeyNameErrorKey } from "../../utils";
 
 // types
-import type { ApiKeyFormFieldsPropsType, ApiKeyFormTabId } from "../../types";
+import type { ApiKeyFormFieldsPropsType } from "../../types";
 
-/**
- * Name (1..60 chars) on top; access level and areas on two tabs. Both tab
- * panels stay mounted (the inactive one hidden) so every field validates.
- */
+/** Name (1..60 chars) on top, then the access level and areas tabs. */
 export function ApiKeyFormFields(props: ApiKeyFormFieldsPropsType) {
   const { control, isLoading = false } = props;
   const { t } = useTranslation();
-  const [tab, setTab] = useState<ApiKeyFormTabId>(API_KEY_FORM_TAB.access);
+  const [tab, setTab] = useState<McpPermissionTabId>(MCP_PERMISSION_TAB.access);
   const { errors, submitCount } = useFormState({ control });
-  const areas = useWatch({ control, name: "areas" }) ?? [];
+
+  const { field: accessField } = useController({
+    control,
+    name: "access",
+    disabled: isLoading,
+  });
+  const { field: areasField, fieldState: areasState } = useController({
+    control,
+    name: "areas",
+    disabled: isLoading,
+    rules: {
+      validate: (value) => {
+        const errorKey = getApiKeyAreasErrorKey(value);
+        return errorKey === null || t(errorKey);
+      },
+    },
+  });
 
   // After a failed submit, show the areas tab if that is what is wrong.
   useEffect(() => {
-    if (submitCount && errors.areas) setTab(API_KEY_FORM_TAB.areas);
+    if (submitCount && errors.areas) setTab(MCP_PERMISSION_TAB.areas);
   }, [errors.areas, submitCount]);
 
   return (
@@ -67,73 +81,17 @@ export function ApiKeyFormFields(props: ApiKeyFormFieldsPropsType) {
           />
         )}
       />
-      <TabsLayout<ApiKeyFormTabId>
-        tabs={[
-          {
-            id: API_KEY_FORM_TAB.access,
-            label: t("_pages:aiAgents.access.label"),
-            content: null,
-          },
-          {
-            id: API_KEY_FORM_TAB.areas,
-            label: t("_pages:aiAgents.keys.dialog.areasTab", {
-              count: areas.length,
-              total: MCP_AREAS.length,
-            }),
-            content: null,
-          },
-        ]}
-        currentTab={tab}
-        useLinks={false}
+      <McpPermissionTabs
+        name="apiKey"
+        access={accessField.value}
+        onAccessChange={accessField.onChange}
+        areas={areasField.value ?? []}
+        onAreasChange={areasField.onChange}
+        areasError={areasState.error?.message}
+        disabled={isLoading}
+        tab={tab}
         onTabChange={setTab}
-        tabsContainerClassName="ai-agents-key-form-tabs"
       />
-      <div
-        className="ai-agents-key-form-panel"
-        hidden={tab !== API_KEY_FORM_TAB.access}
-      >
-        <Controller
-          control={control}
-          name="access"
-          disabled={isLoading}
-          render={({ field: { value, onChange, name, disabled } }) => (
-            <McpAccessSelector
-              name={name}
-              value={value}
-              onChange={onChange}
-              disabled={disabled}
-            />
-          )}
-        />
-      </div>
-      <div
-        className="ai-agents-key-form-panel"
-        hidden={tab !== API_KEY_FORM_TAB.areas}
-      >
-        <Controller
-          control={control}
-          name="areas"
-          disabled={isLoading}
-          rules={{
-            validate: (value) => {
-              const errorKey = getApiKeyAreasErrorKey(value);
-              return errorKey === null || t(errorKey);
-            },
-          }}
-          render={({
-            field: { value, onChange, name, disabled },
-            fieldState: { error },
-          }) => (
-            <McpAreaSelector
-              name={name}
-              value={value ?? []}
-              onChange={onChange}
-              disabled={disabled}
-              error={error?.message}
-            />
-          )}
-        />
-      </div>
     </>
   );
 }

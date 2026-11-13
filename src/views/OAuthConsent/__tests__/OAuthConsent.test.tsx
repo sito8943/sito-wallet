@@ -57,10 +57,27 @@ vi.mock("@sito/dashboard-app", () => ({
     </button>
   ),
   Loading: () => <span>loading</span>,
+  TabsLayout: ({
+    tabs,
+    onTabChange,
+  }: {
+    tabs: { id: string; label: string }[];
+    onTabChange: (id: string) => void;
+  }) => (
+    <ul>
+      {tabs.map((tab) => (
+        <li key={tab.id}>
+          <button type="button" onClick={() => onTabChange(tab.id)}>
+            {tab.label}
+          </button>
+        </li>
+      ))}
+    </ul>
+  ),
 }));
 
 vi.mock("components", async () => ({
-  ...(await import("../../../components/McpAccessSelector")),
+  ...(await import("../../../components/McpPermissionTabs")),
   TextLogo: () => <span>logo</span>,
   McpCapabilityList: () => <ul aria-label="capabilities" />,
 }));
@@ -183,7 +200,7 @@ describe("OAuthConsent", () => {
 
     await waitFor(() => expect(allowButton()).toBeDisabled());
     expect(denyButton()).toBeDisabled();
-    expect(mockApprove).toHaveBeenCalledWith("req_1", "FULL");
+    expect(mockApprove).toHaveBeenCalledWith("req_1", "FULL", null);
 
     resolveApprove({ redirectUrl: CODE_URL });
 
@@ -219,7 +236,36 @@ describe("OAuthConsent", () => {
     fireEvent.click(allowButton());
 
     await waitFor(() =>
-      expect(mockApprove).toHaveBeenCalledWith("req_1", access),
+      expect(mockApprove).toHaveBeenCalledWith("req_1", access, null),
+    );
+  });
+
+  it("approves with only the chosen areas", async () => {
+    mockGetRequest.mockResolvedValue(request);
+    mockApprove.mockResolvedValue({ redirectUrl: CODE_URL });
+    renderConsent();
+
+    fireEvent.click(
+      await screen.findByRole("button", { name: /_pages:aiAgents.areas.tab/ }),
+    );
+    fireEvent.click(
+      screen.getByRole("button", { name: /_pages:aiAgents.areas.invert/ }),
+    );
+    // Nothing selected: Allow waits for at least one area.
+    expect(allowButton()).toBeDisabled();
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "_pages:aiAgents.areas.required",
+    );
+
+    fireEvent.click(
+      screen.getByRole("checkbox", {
+        name: /_pages:aiAgents.areas.items.debts.label/,
+      }),
+    );
+    fireEvent.click(allowButton());
+
+    await waitFor(() =>
+      expect(mockApprove).toHaveBeenCalledWith("req_1", "FULL", ["DEBTS"]),
     );
   });
 

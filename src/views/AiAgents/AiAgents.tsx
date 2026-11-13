@@ -24,6 +24,7 @@ import {
   CreatedApiKeyDialog,
   DisconnectAppDialog,
   EditApiKeyDialog,
+  EditConnectedAppDialog,
   McpIntro,
   McpSetupInstructions,
   RevokeApiKeyDialog,
@@ -34,6 +35,7 @@ import {
   useCreateApiKeyDialog,
   useDisconnectAppDialog,
   useEditApiKeyDialog,
+  useEditConnectedAppDialog,
   useRevokeApiKeyDialog,
 } from "./hooks";
 
@@ -58,6 +60,7 @@ export function AiAgents() {
   const revokeApiKey = useRevokeApiKeyDialog();
   const grantsQuery = useOAuthGrantsList();
   const disconnectApp = useDisconnectAppDialog();
+  const editApp = useEditConnectedAppDialog();
 
   // sito-auth lists the grants of every Sito app: keep this wallet's only.
   const walletGrants = useMemo(
@@ -85,6 +88,7 @@ export function AiAgents() {
           isLoading={grantsQuery.isLoading}
           hasError={!!grantsQuery.error}
           onRetry={() => void grantsQuery.refetch()}
+          onEdit={editApp.openForGrant}
           onDisconnect={disconnectApp.openForGrant}
         />
         <section className="ai-agents-card ai-agents-card--wide base-border">
@@ -111,6 +115,7 @@ export function AiAgents() {
       />
       <EditApiKeyDialog {...editApiKey} />
       <RevokeApiKeyDialog {...revokeApiKey} />
+      <EditConnectedAppDialog {...editApp} />
       <DisconnectAppDialog {...disconnectApp} />
     </Page>
   );

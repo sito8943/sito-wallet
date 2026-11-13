@@ -11,6 +11,8 @@ vi.mock("lib", async () => ({
 import {
   apiKeyDtoToForm,
   apiKeyFormToUpdateDto,
+  connectedAppFormToUpdateDto,
+  grantToForm,
   createApiKeyFormToDto,
   getApiKeyAreaLabelKeys,
   getApiKeyAreasErrorKey,
@@ -116,6 +118,34 @@ describe("AiAgents utils", () => {
     expect(getApiKeyAreaLabelKeys([McpArea.Currencies])).toEqual([
       "_pages:aiAgents.areas.items.currencies.label",
     ]);
+  });
+
+  it("edits a connected app from its scopes", () => {
+    const grant = {
+      id: 5,
+      clientName: "ChatGPT",
+      resource: "https://api.wallet.sito8943.com/mcp",
+      resourceName: "Sito Wallet",
+      scopes: ["mcp", "mcp:write-only", "mcp:area:debts"],
+      createdAt: "2026-11-01T10:00:00Z",
+      lastUsedAt: null,
+    };
+    const form = grantToForm(grant);
+    expect(form).toEqual({
+      id: 5,
+      access: McpAccess.Write,
+      areas: [McpArea.Debts],
+    });
+    expect(connectedAppFormToUpdateDto(form, grant)).toEqual({
+      id: 5,
+      access: McpAccess.Write,
+      areas: [McpArea.Debts],
+    });
+    // Every area again: null, so sito-auth drops the area scopes.
+    expect(
+      connectedAppFormToUpdateDto({ ...form, areas: [...MCP_AREAS] }, grant)
+        .areas,
+    ).toBeNull();
   });
 
   it("detects the key limit", () => {

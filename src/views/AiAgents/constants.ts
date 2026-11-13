@@ -1,7 +1,7 @@
 // lib
 import { DEFAULT_MCP_ACCESS, MCP_AREAS } from "lib";
 
-import type { ApiKeyFormType } from "./types";
+import type { ApiKeyFormType, ConnectedAppFormType } from "./types";
 
 export const CREATE_API_KEY_DEFAULT_VALUES: ApiKeyFormType = {
   name: "",
@@ -29,8 +29,8 @@ export const MCP_CONNECTOR_STEP_KEYS = [
   "approve",
 ] as const;
 
-/** Tabs of the API key form, under the name: access level and areas. */
-export const API_KEY_FORM_TAB = {
-  access: "access",
-  areas: "areas",
-} as const;
+export const CONNECTED_APP_DEFAULT_VALUES: ConnectedAppFormType = {
+  id: 0,
+  access: DEFAULT_MCP_ACCESS,
+  areas: [...MCP_AREAS],
+};
