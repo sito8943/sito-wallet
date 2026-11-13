@@ -1,4 +1,4 @@
-import { McpAccess, McpClient } from "./types";
+import { McpAccess, McpArea, McpClient } from "./types";
 
 /** MCP server name registered in the AI clients. */
 export const MCP_SERVER_NAME = "sito-wallet";
@@ -60,3 +60,23 @@ export const MCP_READ_ONLY_SCOPE = "mcp:read-only";
 
 /** OAuth scope sito-auth adds to a write-only grant. */
 export const MCP_WRITE_ONLY_SCOPE = "mcp:write-only";
+
+/** Areas in display order; a new key gets all of them. */
+export const MCP_AREAS: McpArea[] = [
+  McpArea.Transactions,
+  McpArea.Debts,
+  McpArea.Subscriptions,
+  McpArea.Accounts,
+  McpArea.Categories,
+  McpArea.Currencies,
+];
+
+/** Translation key of each area (`_pages:aiAgents.areas.items.*`). */
+export const MCP_AREA_KEYS: Record<McpArea, string> = {
+  [McpArea.Transactions]: "transactions",
+  [McpArea.Debts]: "debts",
+  [McpArea.Subscriptions]: "subscriptions",
+  [McpArea.Accounts]: "accounts",
+  [McpArea.Categories]: "categories",
+  [McpArea.Currencies]: "currencies",
+};

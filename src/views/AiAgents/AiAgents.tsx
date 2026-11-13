@@ -23,6 +23,7 @@ import {
   CreateApiKeyDialog,
   CreatedApiKeyDialog,
   DisconnectAppDialog,
+  EditApiKeyDialog,
   McpIntro,
   McpSetupInstructions,
   RevokeApiKeyDialog,
@@ -32,6 +33,7 @@ import {
 import {
   useCreateApiKeyDialog,
   useDisconnectAppDialog,
+  useEditApiKeyDialog,
   useRevokeApiKeyDialog,
 } from "./hooks";
 
@@ -52,6 +54,7 @@ export function AiAgents() {
 
   const apiKeysQuery = useApiKeysList();
   const createApiKey = useCreateApiKeyDialog();
+  const editApiKey = useEditApiKeyDialog();
   const revokeApiKey = useRevokeApiKeyDialog();
   const grantsQuery = useOAuthGrantsList();
   const disconnectApp = useDisconnectAppDialog();
@@ -74,6 +77,7 @@ export function AiAgents() {
           hasError={!!apiKeysQuery.error}
           onRetry={() => void apiKeysQuery.refetch()}
           onCreate={() => createApiKey.openDialog()}
+          onEdit={editApiKey.openForKey}
           onRevoke={revokeApiKey.openForKey}
         />
         <ConnectedAppsSection
@@ -105,6 +109,7 @@ export function AiAgents() {
         mcpUrl={MCP_URL}
         handleClose={createApiKey.clearCreatedKey}
       />
+      <EditApiKeyDialog {...editApiKey} />
       <RevokeApiKeyDialog {...revokeApiKey} />
       <DisconnectAppDialog {...disconnectApp} />
     </Page>

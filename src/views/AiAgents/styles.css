@@ -76,16 +76,34 @@
   @apply flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1;
 }
 
-.ai-agents-access-selector {
-  @apply mt-4;
-}
-
 .ai-agents-key-name {
   @apply truncate font-semibold;
 }
 
 .ai-agents-key-prefix {
   @apply font-mono text-sm text-text-muted;
+}
+
+.ai-agents-key-form-tabs {
+  @apply mt-4 mb-3;
+}
+
+/* Same width on both tabs, so the dialog doesn't jump when switching. */
+.ai-agents-key-form-panel {
+  @apply flex w-xl max-w-full flex-col gap-4;
+}
+
+.ai-agents-key-form-panel[hidden] {
+  @apply hidden;
+}
+
+/* The tab already names the panel; keep the legend for screen readers only. */
+.ai-agents-key-form-panel legend {
+  @apply sr-only;
+}
+
+.ai-agents-key-areas {
+  @apply text-xs text-text;
 }
 
 .ai-agents-key-meta {

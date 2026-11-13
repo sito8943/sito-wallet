@@ -402,7 +402,7 @@
       },
       "security": "Una clave de API da acceso a los datos de tu billetera. Mantenla en secreto, usa una clave por dispositivo o agente y revócala de inmediato si se filtra.",
       "accessTitle": "Niveles de acceso",
-      "access": "Cada clave de API o app conectada tiene su propio nivel de acceso. Lectura y escritura (por defecto): todo lo anterior. Solo lectura: puede consultar pero nunca cambiar nada. Solo escritura: puede añadir o cambiar datos, pero no consultar tu historial, saldos ni resúmenes."
+      "access": "Cada clave de API o app conectada tiene su propio nivel de acceso. Lectura y escritura (por defecto): todo lo anterior. Solo lectura: puede consultar pero nunca cambiar nada. Solo escritura: puede añadir o cambiar datos, pero no consultar tu historial, saldos ni resúmenes. Una clave de API también se puede limitar a algunas áreas (transacciones, deudas...), y ambas cosas se pueden editar cuando quieras."
     },
     "access": {
       "label": "Acceso",
@@ -421,6 +421,39 @@
         }
       }
     },
+    "areas": {
+      "label": "Áreas",
+      "helper": "Qué puede usar esta clave. Las listas de cuentas, categorías y monedas siguen disponibles para que el agente elija ids.",
+      "selectAll": "Marcar todas",
+      "invert": "Invertir selección",
+      "required": "Elige al menos un área.",
+      "items": {
+        "transactions": {
+          "label": "Transacciones",
+          "description": "Ingresos, gastos, transferencias, resúmenes y restaurar las borradas."
+        },
+        "debts": {
+          "label": "Deudas",
+          "description": "Crear, editar, pagar y cancelar deudas."
+        },
+        "subscriptions": {
+          "label": "Suscripciones",
+          "description": "Suscripciones, sus proveedores y próximas renovaciones."
+        },
+        "accounts": {
+          "label": "Cuentas",
+          "description": "Crear y editar cuentas, saldos, historial de saldo y puntos de tarjeta."
+        },
+        "categories": {
+          "label": "Categorías",
+          "description": "Crear y editar categorías."
+        },
+        "currencies": {
+          "label": "Monedas",
+          "description": "Crear y editar monedas y tasas de cambio."
+        }
+      }
+    },
     "keys": {
       "title": "Claves de API",
       "count": "{{count}} de {{max}} claves",
@@ -430,6 +463,8 @@
       "createdAt": "Creada {{date}}",
       "lastUsed": "Último uso {{date}}",
       "neverUsed": "Nunca usada",
+      "areas": "Áreas: {{areas}}",
+      "editAction": "Editar clave",
       "revokeAction": "Revocar clave",
       "revoke": {
         "confirm": "Revocar",
@@ -445,7 +480,8 @@
         "nameRequired": "El nombre es obligatorio",
         "nameMax": "El nombre debe tener como máximo {{max}} caracteres",
         "successMessage": "Clave de API creada",
-        "fallbackError": "No se pudo crear la clave de API"
+        "fallbackError": "No se pudo crear la clave de API",
+        "areasTab": "Áreas ({{count}}/{{total}})"
       },
       "created": {
         "title": "Copia tu clave de API",
@@ -454,6 +490,10 @@
         "copyKey": "Copiar clave de API",
         "setupTitle": "Configura tu cliente",
         "done": "Ya guardé mi clave"
+      },
+      "edit": {
+        "title": "Editar clave de API",
+        "successMessage": "Clave de API actualizada"
       }
     },
     "apps": {

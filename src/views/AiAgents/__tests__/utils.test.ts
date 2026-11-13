@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { McpAccess } from "../../../lib/mcp/types";
+import { McpAccess, McpArea } from "../../../lib/mcp/types";
+import { MCP_AREAS } from "../../../lib/mcp/constants";
 
 vi.mock("lib", async () => ({
   ...(await import("../../../lib/mcp")),
@@ -8,7 +9,11 @@ vi.mock("lib", async () => ({
 }));
 
 import {
+  apiKeyDtoToForm,
+  apiKeyFormToUpdateDto,
   createApiKeyFormToDto,
+  getApiKeyAreaLabelKeys,
+  getApiKeyAreasErrorKey,
   formatApiKeyPrefix,
   getApiKeyNameErrorKey,
   isApiKeyLimitReached,
@@ -21,16 +26,24 @@ describe("AiAgents utils", () => {
 
   it("trims the name before sending it", () => {
     expect(
-      createApiKeyFormToDto({ name: "  Laptop  ", access: McpAccess.Full }),
-    ).toEqual({ name: "Laptop", access: McpAccess.Full });
+      createApiKeyFormToDto({
+        name: "  Laptop  ",
+        access: McpAccess.Full,
+        areas: [McpArea.Debts],
+      }),
+    ).toEqual({
+      name: "Laptop",
+      access: McpAccess.Full,
+      areas: [McpArea.Debts],
+    });
   });
 
   it.each([McpAccess.Full, McpAccess.Read, McpAccess.Write])(
     "sends the chosen access %s",
     (access) => {
-      expect(createApiKeyFormToDto({ name: "Agent", access }).access).toBe(
-        access,
-      );
+      expect(
+        createApiKeyFormToDto({ name: "Agent", access, areas: [] }).access,
+      ).toBe(access);
     },
   );
 
@@ -39,6 +52,7 @@ describe("AiAgents utils", () => {
       createApiKeyFormToDto({
         name: "Agent",
         access: "ADMIN" as McpAccess,
+        areas: [],
       }).access,
     ).toBe(McpAccess.Full);
   });
@@ -52,6 +66,56 @@ describe("AiAgents utils", () => {
     ["a".repeat(60), null],
   ])("validates name %j", (name, expected) => {
     expect(getApiKeyNameErrorKey(name)).toBe(expected);
+  });
+
+  it("round-trips a key through the edit form", () => {
+    const form = apiKeyDtoToForm({
+      id: 7,
+      name: "Bot",
+      prefix: "swal_Abc123",
+      createdAt: "2026-11-01T10:00:00Z",
+      lastUsedAt: null,
+      access: McpAccess.Read,
+      areas: [McpArea.Debts, McpArea.Transactions],
+    });
+    expect(form).toEqual({
+      id: 7,
+      name: "Bot",
+      access: McpAccess.Read,
+      areas: [McpArea.Transactions, McpArea.Debts],
+    });
+    expect(apiKeyFormToUpdateDto({ ...form, name: " Bot 2 " })).toEqual({
+      id: 7,
+      name: "Bot 2",
+      access: McpAccess.Read,
+      areas: [McpArea.Transactions, McpArea.Debts],
+    });
+  });
+
+  it("treats keys without areas as unrestricted", () => {
+    expect(
+      apiKeyDtoToForm({
+        id: 1,
+        name: "Old",
+        prefix: "swal_Old000",
+        createdAt: "2026-11-01T10:00:00Z",
+        lastUsedAt: null,
+        access: McpAccess.Full,
+        areas: undefined as unknown as McpArea[],
+      }).areas,
+    ).toEqual(MCP_AREAS);
+  });
+
+  it("requires at least one area", () => {
+    expect(getApiKeyAreasErrorKey([])).toBe("_pages:aiAgents.areas.required");
+    expect(getApiKeyAreasErrorKey([McpArea.Debts])).toBeNull();
+  });
+
+  it("only labels the areas of a limited key", () => {
+    expect(getApiKeyAreaLabelKeys(MCP_AREAS)).toBeNull();
+    expect(getApiKeyAreaLabelKeys([McpArea.Currencies])).toEqual([
+      "_pages:aiAgents.areas.items.currencies.label",
+    ]);
   });
 
   it("detects the key limit", () => {

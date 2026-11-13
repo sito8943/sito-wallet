@@ -24,3 +24,16 @@ export enum McpAccess {
   /** Write only: can add/change data but not browse history, balances or summaries. */
   Write = "WRITE",
 }
+
+/**
+ * Parts of the wallet an API key may use, on top of its access level.
+ * Values are the backend contract.
+ */
+export enum McpArea {
+  Transactions = "TRANSACTIONS",
+  Debts = "DEBTS",
+  Subscriptions = "SUBSCRIPTIONS",
+  Accounts = "ACCOUNTS",
+  Categories = "CATEGORIES",
+  Currencies = "CURRENCIES",
+}
