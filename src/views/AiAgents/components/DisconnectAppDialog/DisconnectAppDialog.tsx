@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
-// @sito/dashboard-app
-import { ConfirmationDialog } from "@sito/dashboard-app";
+// components
+import { ActionConfirmDialog } from "../ActionConfirmDialog";
 
 // types
 import type { DisconnectAppDialogPropsType } from "../../types";
@@ -12,12 +12,15 @@ export function DisconnectAppDialog(props: DisconnectAppDialogPropsType) {
   void openForGrant;
 
   return (
-    <ConfirmationDialog {...dialogProps}>
+    <ActionConfirmDialog
+      {...dialogProps}
+      confirmLabel={t("_pages:aiAgents.apps.disconnect.confirm")}
+    >
       {target && (
         <p className="ai-agents-text">
           {t("_pages:aiAgents.apps.disconnect.message")}
         </p>
       )}
-    </ConfirmationDialog>
+    </ActionConfirmDialog>
   );
 }

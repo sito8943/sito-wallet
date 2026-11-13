@@ -40,6 +40,11 @@ export interface UseRevokeApiKeyDialogReturnType extends ConfirmationDialogProps
 
 export type RevokeApiKeyDialogPropsType = UseRevokeApiKeyDialogReturnType;
 
+/** ConfirmationDialog props plus the primary button's label (the action). */
+export interface ActionConfirmDialogPropsType extends ConfirmationDialogPropsType {
+  confirmLabel: string;
+}
+
 export interface CreatedApiKeyDialogPropsType {
   createdKey: CreatedApiKeyDto | null;
   mcpUrl: string;
