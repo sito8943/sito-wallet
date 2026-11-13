@@ -9,7 +9,7 @@ import { useNotification } from "@sito/dashboard-app";
 import { useManager } from "providers";
 
 // lib
-import { isHttpUrl } from "lib";
+import { DEFAULT_MCP_ACCESS, isHttpUrl, type McpAccess } from "lib";
 
 // constants
 import { CONSENT_NOT_FOUND_STATUS } from "../constants";
@@ -21,7 +21,8 @@ import { hasHttpStatus } from "../utils";
 import { ConsentDecision, type UseConsentDecisionReturnType } from "../types";
 
 /**
- * Sends Allow/Deny to sito-auth and leaves for the client's redirect URL
+ * Keeps the chosen access level, sends Allow (with that level) or Deny to
+ * sito-auth and leaves for the client's redirect URL
  * (with the code, or with `error=access_denied`).
  */
 export function useConsentDecision(
@@ -31,12 +32,13 @@ export function useConsentDecision(
   const manager = useManager();
   const { showErrorNotification } = useNotification();
   const [expired, setExpired] = useState(false);
+  const [access, setAccess] = useState<McpAccess>(DEFAULT_MCP_ACCESS);
 
   const mutation = useMutation({
     mutationFn: (decision: ConsentDecision) => {
       const id = requestId ?? "";
       return decision === ConsentDecision.Approve
-        ? manager.OAuth.approve(id)
+        ? manager.OAuth.approve(id, access)
         : manager.OAuth.deny(id);
     },
     onSuccess: ({ redirectUrl }) => {
@@ -73,6 +75,8 @@ export function useConsentDecision(
   );
 
   return {
+    access,
+    setAccess,
     decide,
     pendingDecision: isSubmitting ? (variables ?? null) : null,
     isSubmitting,

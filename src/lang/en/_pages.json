@@ -393,11 +393,31 @@
       "capabilitiesTitle": "What an agent can do",
       "capabilities": {
         "read": "Read your accounts, balances, transactions, categories, currencies, debts, subscriptions and upcoming renewals, and summaries",
-        "transactions": "Create income and expense transactions",
+        "transactions": "Create, edit and delete income and expense transactions",
         "transfers": "Create transfers between your accounts",
+        "debts": "Create, edit, pay and cancel debts",
         "rewards": "Adjust the reward points of your cards"
       },
-      "security": "An API key gives access to your wallet data. Keep it secret, use one key per device or agent, and revoke it right away if it leaks."
+      "security": "An API key gives access to your wallet data. Keep it secret, use one key per device or agent, and revoke it right away if it leaks.",
+      "accessTitle": "Access levels",
+      "access": "Each API key or connected app has its own access level. Read and write (default): everything listed above. Read only: it can look but never change anything. Write only: it can add or change data but cannot browse your history, balances or summaries."
+    },
+    "access": {
+      "label": "Access",
+      "levels": {
+        "full": {
+          "label": "Read and write",
+          "description": "Read your data and add or change it."
+        },
+        "read": {
+          "label": "Read only",
+          "description": "Browse accounts, balances, transactions and summaries, without changing anything."
+        },
+        "write": {
+          "label": "Write only",
+          "description": "Add or change data, but not browse your history, balances or summaries."
+        }
+      }
     },
     "keys": {
       "title": "API keys",

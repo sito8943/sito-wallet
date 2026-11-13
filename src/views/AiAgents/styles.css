@@ -72,6 +72,14 @@
   @apply flex min-w-0 flex-1 flex-col gap-1;
 }
 
+.ai-agents-key-title {
+  @apply flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1;
+}
+
+.ai-agents-access-selector {
+  @apply mt-4;
+}
+
 .ai-agents-key-name {
   @apply truncate font-semibold;
 }
@@ -106,6 +114,15 @@
 
 .ai-agents-snippet-copy {
   @apply shrink-0;
+}
+
+/* Four client tabs don't fit a phone: scroll them sideways instead of the page. */
+.ai-agents-setup-tabs {
+  @apply min-w-0 max-w-full;
+}
+
+.ai-agents-setup-tabs > .tabs-container {
+  @apply max-w-full overflow-x-auto;
 }
 
 .ai-agents-setup-tab {

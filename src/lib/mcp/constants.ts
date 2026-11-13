@@ -1,4 +1,4 @@
-import { McpClient } from "./types";
+import { McpAccess, McpClient } from "./types";
 
 /** MCP server name registered in the AI clients. */
 export const MCP_SERVER_NAME = "sito-wallet";
@@ -32,5 +32,29 @@ export const MCP_CAPABILITY_KEYS = [
   "read",
   "transactions",
   "transfers",
+  "debts",
   "rewards",
 ] as const;
+
+/** Access level used when the user does not pick one (today's behaviour). */
+export const DEFAULT_MCP_ACCESS = McpAccess.Full;
+
+/** Access levels in display order. */
+export const MCP_ACCESS_LEVELS: McpAccess[] = [
+  McpAccess.Full,
+  McpAccess.Read,
+  McpAccess.Write,
+];
+
+/** Translation key of each level (`_pages:aiAgents.access.levels.*`). */
+export const MCP_ACCESS_KEYS: Record<McpAccess, string> = {
+  [McpAccess.Full]: "full",
+  [McpAccess.Read]: "read",
+  [McpAccess.Write]: "write",
+};
+
+/** OAuth scope sito-auth adds to a read-only grant. */
+export const MCP_READ_ONLY_SCOPE = "mcp:read-only";
+
+/** OAuth scope sito-auth adds to a write-only grant. */
+export const MCP_WRITE_ONLY_SCOPE = "mcp:write-only";

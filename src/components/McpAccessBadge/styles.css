@@ -1,0 +1,13 @@
+@reference "../../styles/variables.css";
+
+.mcp-access-badge {
+  @apply inline-flex w-fit items-center gap-1 rounded-full border border-border bg-base px-2 py-0.5 text-xs font-medium;
+}
+
+.mcp-access-badge--read {
+  @apply border-transparent bg-bg-info text-info;
+}
+
+.mcp-access-badge--write {
+  @apply border-transparent bg-bg-warning text-warning;
+}

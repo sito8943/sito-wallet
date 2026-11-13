@@ -12,7 +12,7 @@ import {
 import { Button } from "@sito/dashboard-app";
 
 // components
-import { McpCapabilityList } from "components";
+import { McpAccessSelector, McpCapabilityList } from "components";
 import { ConsentCard } from "../ConsentCard";
 
 // constants
@@ -21,11 +21,13 @@ import { RAW_INTERPOLATION } from "../../constants";
 // types
 import { ConsentDecision, type ConsentRequestPropsType } from "../../types";
 
-/** Who is asking, what it gets, and the Allow / Deny answer. */
+/** Who is asking, what it gets, its access level and the Allow / Deny answer. */
 export function ConsentRequest(props: ConsentRequestPropsType) {
   const {
     request,
     email,
+    access,
+    onAccessChange,
     pendingDecision,
     isSubmitting,
     onDecide,
@@ -73,6 +75,13 @@ export function ConsentRequest(props: ConsentRequestPropsType) {
         </h3>
         <McpCapabilityList />
       </div>
+
+      <McpAccessSelector
+        name="oauthAccess"
+        value={access}
+        onChange={onAccessChange}
+        disabled={isSubmitting}
+      />
 
       <ul className="oauth-consent-notes">
         <li className="oauth-consent-note">

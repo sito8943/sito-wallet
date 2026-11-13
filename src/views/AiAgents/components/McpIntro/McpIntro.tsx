@@ -23,6 +23,12 @@ export function McpIntro() {
         </h4>
         <McpCapabilityList />
       </div>
+      <div className="ai-agents-capabilities">
+        <h4 className="ai-agents-subtitle">
+          {t("_pages:aiAgents.intro.accessTitle")}
+        </h4>
+        <p className="ai-agents-muted">{t("_pages:aiAgents.intro.access")}</p>
+      </div>
       <p className="ai-agents-warning" role="note">
         <FontAwesomeIcon icon={faWarning} />
         <span>{t("_pages:aiAgents.intro.security")}</span>

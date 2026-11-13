@@ -1,3 +1,5 @@
+import type { McpAccess } from "../../mcp/types";
+
 /** Personal API key used by AI agents to reach the MCP endpoint. */
 export interface ApiKeyDto {
   id: number;
@@ -9,4 +11,6 @@ export interface ApiKeyDto {
   createdAt: string;
   /** ISO date-time, null when the key was never used. */
   lastUsedAt: string | null;
+  /** What the key may do (read and write, read only or write only). */
+  access: McpAccess;
 }

@@ -3,11 +3,16 @@ import { describe, expect, it, vi } from "vitest";
 import type { ReactNode } from "react";
 
 import type { ApiKeyDto } from "lib";
+import { McpAccess } from "../../../lib/mcp/types";
 
 vi.mock("lib", async () => ({
   ...(await import("../../../lib/mcp")),
   ...(await import("../../../lib/entities/apiKey/constants")),
   ...(await import("../../../lib/utils/date")),
+}));
+
+vi.mock("components", async () => ({
+  ...(await import("../../../components/McpAccessBadge")),
 }));
 
 vi.mock("react-i18next", () => ({
@@ -62,12 +67,17 @@ vi.mock("@sito/dashboard-app", () => ({
 
 import { ApiKeysSection } from "../components/ApiKeysSection";
 
-const buildKey = (id: number, lastUsedAt: string | null = null): ApiKeyDto => ({
+const buildKey = (
+  id: number,
+  lastUsedAt: string | null = null,
+  access: McpAccess = McpAccess.Full,
+): ApiKeyDto => ({
   id,
   name: `Key ${id}`,
   prefix: `swal_Key00${id}`,
   createdAt: "2026-11-01T10:00:00Z",
   lastUsedAt,
+  access,
 });
 
 const renderSection = (apiKeys: ApiKeyDto[], hasError = false) => {
@@ -108,6 +118,32 @@ describe("ApiKeysSection", () => {
       screen.getByLabelText("_pages:aiAgents.keys.revokeAction: Key 2"),
     );
     expect(props.onRevoke).toHaveBeenCalledWith(used);
+  });
+
+  it("shows the access level of each key", () => {
+    renderSection([
+      buildKey(1),
+      buildKey(2, null, McpAccess.Read),
+      buildKey(3, null, McpAccess.Write),
+    ]);
+
+    expect(
+      screen.getByText("_pages:aiAgents.access.levels.full.label"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("_pages:aiAgents.access.levels.read.label"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("_pages:aiAgents.access.levels.write.label"),
+    ).toBeInTheDocument();
+  });
+
+  it("shows read and write for a key without a known access", () => {
+    renderSection([buildKey(1, null, "UNKNOWN" as McpAccess)]);
+
+    expect(
+      screen.getByText("_pages:aiAgents.access.levels.full.label"),
+    ).toBeInTheDocument();
   });
 
   it("disables creation at the 10 keys limit", () => {

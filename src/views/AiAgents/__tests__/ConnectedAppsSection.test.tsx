@@ -4,7 +4,12 @@ import { describe, expect, it, vi } from "vitest";
 import type { OAuthGrantDto } from "lib";
 
 vi.mock("lib", async () => ({
+  ...(await import("../../../lib/mcp")),
   ...(await import("../../../lib/utils/date")),
+}));
+
+vi.mock("components", async () => ({
+  ...(await import("../../../components/McpAccessBadge")),
 }));
 
 vi.mock("react-i18next", () => ({
@@ -45,12 +50,13 @@ const buildGrant = (
   id: number,
   clientName: string,
   lastUsedAt: string | null = null,
+  scopes: string[] = ["mcp"],
 ): OAuthGrantDto => ({
   id,
   clientName,
   resource: "https://api.wallet.sito8943.com/mcp",
   resourceName: "Sito Wallet",
-  scopes: ["mcp"],
+  scopes,
   createdAt: "2026-11-01T10:00:00Z",
   lastUsedAt,
 });
@@ -97,6 +103,24 @@ describe("ConnectedAppsSection", () => {
       screen.getByLabelText("_pages:aiAgents.apps.disconnectAction: claude.ai"),
     );
     expect(props.onDisconnect).toHaveBeenCalledWith(claude);
+  });
+
+  it("shows the access level derived from the scopes", () => {
+    renderSection([
+      buildGrant(1, "ChatGPT"),
+      buildGrant(2, "claude.ai", null, ["mcp", "mcp:read-only"]),
+      buildGrant(3, "Other", null, ["mcp", "mcp:write-only"]),
+    ]);
+
+    expect(
+      screen.getByText("_pages:aiAgents.access.levels.full.label"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("_pages:aiAgents.access.levels.read.label"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("_pages:aiAgents.access.levels.write.label"),
+    ).toBeInTheDocument();
   });
 
   it("shows the loader while loading", () => {

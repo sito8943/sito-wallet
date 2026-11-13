@@ -8,7 +8,10 @@ import { faLinkSlash, faPlug } from "@fortawesome/free-solid-svg-icons";
 import { IconButton } from "@sito/dashboard-app";
 
 // lib
-import { formatDateTime } from "lib";
+import { formatDateTime, getMcpAccessFromScopes } from "lib";
+
+// components
+import { McpAccessBadge } from "components";
 
 // constants
 import { RAW_INTERPOLATION } from "../../constants";
@@ -27,7 +30,10 @@ export function ConnectedAppListItem(props: ConnectedAppListItemPropsType) {
         <FontAwesomeIcon icon={faPlug} />
       </span>
       <div className="ai-agents-key-content">
-        <p className="ai-agents-key-name">{grant.clientName}</p>
+        <div className="ai-agents-key-title">
+          <p className="ai-agents-key-name">{grant.clientName}</p>
+          <McpAccessBadge access={getMcpAccessFromScopes(grant.scopes)} />
+        </div>
         <p className="ai-agents-key-meta">
           <span>
             {t("_pages:aiAgents.apps.connectedAt", {

@@ -1,4 +1,11 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
+import { McpAccess } from "../../../lib/mcp/types";
+
+vi.mock("lib", async () => ({
+  ...(await import("../../../lib/mcp")),
+  ...(await import("../../../lib/entities/apiKey/constants")),
+}));
 
 import {
   createApiKeyFormToDto,
@@ -13,9 +20,27 @@ describe("AiAgents utils", () => {
   });
 
   it("trims the name before sending it", () => {
-    expect(createApiKeyFormToDto({ name: "  Laptop  " })).toEqual({
-      name: "Laptop",
-    });
+    expect(
+      createApiKeyFormToDto({ name: "  Laptop  ", access: McpAccess.Full }),
+    ).toEqual({ name: "Laptop", access: McpAccess.Full });
+  });
+
+  it.each([McpAccess.Full, McpAccess.Read, McpAccess.Write])(
+    "sends the chosen access %s",
+    (access) => {
+      expect(createApiKeyFormToDto({ name: "Agent", access }).access).toBe(
+        access,
+      );
+    },
+  );
+
+  it("falls back to read and write for an unknown access", () => {
+    expect(
+      createApiKeyFormToDto({
+        name: "Agent",
+        access: "ADMIN" as McpAccess,
+      }).access,
+    ).toBe(McpAccess.Full);
   });
 
   it.each([

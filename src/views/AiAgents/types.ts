@@ -11,6 +11,7 @@ import type {
 import type {
   ApiKeyDto,
   CreatedApiKeyDto,
+  McpAccess,
   McpClient,
   OAuthGrantDto,
 } from "lib";
@@ -20,6 +21,7 @@ import type { MCP_CONNECTOR_TAB } from "./constants";
 
 export interface CreateApiKeyFormType extends FieldValues {
   name: string;
+  access: McpAccess;
 }
 
 export type CreateApiKeyDialogPropsType =

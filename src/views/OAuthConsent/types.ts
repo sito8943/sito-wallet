@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 // lib
-import type { OAuthRequestDto } from "lib";
+import type { McpAccess, OAuthRequestDto } from "lib";
 
 /** What the consent page shows. */
 export enum ConsentStatus {
@@ -30,6 +30,9 @@ export interface ConsentStatusInput {
 }
 
 export interface UseConsentDecisionReturnType {
+  /** Access level sent with Allow (read and write by default). */
+  access: McpAccess;
+  setAccess: (access: McpAccess) => void;
   decide: (decision: ConsentDecision) => void;
   /** Decision being sent, or already sent and redirecting. */
   pendingDecision: ConsentDecision | null;
@@ -46,6 +49,8 @@ export interface ConsentCardPropsType {
 export interface ConsentRequestPropsType {
   request: OAuthRequestDto;
   email: string;
+  access: McpAccess;
+  onAccessChange: (access: McpAccess) => void;
   pendingDecision: ConsentDecision | null;
   isSubmitting: boolean;
   onDecide: (decision: ConsentDecision) => void;
