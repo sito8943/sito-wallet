@@ -33,6 +33,8 @@ export const MCP_CAPABILITY_KEYS = [
   "transactions",
   "transfers",
   "debts",
+  "subscriptions",
+  "setup",
   "rewards",
 ] as const;
 

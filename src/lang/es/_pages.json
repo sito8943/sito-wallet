@@ -396,6 +396,8 @@
         "transactions": "Crear, editar y borrar transacciones de ingresos y gastos",
         "transfers": "Crear transferencias entre tus cuentas",
         "debts": "Crear, editar, pagar y cancelar deudas",
+        "subscriptions": "Crear, editar, pausar y cancelar suscripciones y añadir sus proveedores",
+        "setup": "Crear y editar cuentas, categorías y monedas, y ajustar el saldo de una cuenta al real",
         "rewards": "Ajustar los puntos de recompensa de tus tarjetas"
       },
       "security": "Una clave de API da acceso a los datos de tu billetera. Mantenla en secreto, usa una clave por dispositivo o agente y revócala de inmediato si se filtra.",
