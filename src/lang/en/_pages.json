@@ -393,11 +393,11 @@
       "capabilitiesTitle": "What an agent can do",
       "capabilities": {
         "read": "Read your accounts, balances, transactions, categories, currencies, debts, subscriptions and upcoming renewals, and summaries",
-        "transactions": "Create, edit and delete income and expense transactions",
+        "transactions": "Create, edit and delete income and expense transactions, with store and items from a receipt",
         "transfers": "Create transfers between your accounts",
         "debts": "Create, edit, pay and cancel debts",
         "subscriptions": "Create, edit, pause and cancel subscriptions and add their providers",
-        "setup": "Create and edit accounts, categories and currencies, and set an account balance to the real one",
+        "setup": "Create and edit accounts, categories and currencies, and set or recalculate an account balance",
         "rewards": "Adjust the reward points of your cards"
       },
       "security": "An API key gives access to your wallet data. Keep it secret, use one key per device or agent, and revoke it right away if it leaks.",
@@ -432,6 +432,7 @@
       "neverUsed": "Never used",
       "revokeAction": "Revoke key",
       "revoke": {
+        "confirm": "Revoke",
         "title": "Revoke \"{{name}}\"?",
         "message": "Agents using this key lose access immediately. This cannot be undone.",
         "successMessage": "API key revoked"
@@ -462,6 +463,7 @@
       "connectedAt": "Connected {{date}}",
       "disconnectAction": "Disconnect",
       "disconnect": {
+        "confirm": "Disconnect",
         "title": "Disconnect \"{{name}}\"?",
         "message": "The app loses access to your wallet. To use it again you will have to connect and allow it again.",
         "successMessage": "App disconnected"

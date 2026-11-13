@@ -393,11 +393,11 @@
       "capabilitiesTitle": "Qué puede hacer un agente",
       "capabilities": {
         "read": "Consultar tus cuentas, saldos, transacciones, categorías, monedas, deudas, suscripciones y próximas renovaciones, y resúmenes",
-        "transactions": "Crear, editar y borrar transacciones de ingresos y gastos",
+        "transactions": "Crear, editar y borrar transacciones de ingresos y gastos, con tienda y productos de un ticket",
         "transfers": "Crear transferencias entre tus cuentas",
         "debts": "Crear, editar, pagar y cancelar deudas",
         "subscriptions": "Crear, editar, pausar y cancelar suscripciones y añadir sus proveedores",
-        "setup": "Crear y editar cuentas, categorías y monedas, y ajustar el saldo de una cuenta al real",
+        "setup": "Crear y editar cuentas, categorías y monedas, y ajustar o recalcular el saldo de una cuenta",
         "rewards": "Ajustar los puntos de recompensa de tus tarjetas"
       },
       "security": "Una clave de API da acceso a los datos de tu billetera. Mantenla en secreto, usa una clave por dispositivo o agente y revócala de inmediato si se filtra.",
@@ -432,6 +432,7 @@
       "neverUsed": "Nunca usada",
       "revokeAction": "Revocar clave",
       "revoke": {
+        "confirm": "Revocar",
         "title": "¿Revocar \"{{name}}\"?",
         "message": "Los agentes que usan esta clave pierden el acceso de inmediato. No se puede deshacer.",
         "successMessage": "Clave de API revocada"
@@ -462,6 +463,7 @@
       "connectedAt": "Conectada el {{date}}",
       "disconnectAction": "Desconectar",
       "disconnect": {
+        "confirm": "Desconectar",
         "title": "¿Desconectar \"{{name}}\"?",
         "message": "La app pierde el acceso a tu billetera. Para volver a usarla tendrás que conectarla y permitirla de nuevo.",
         "successMessage": "App desconectada"
