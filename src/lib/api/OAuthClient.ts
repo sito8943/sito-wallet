@@ -7,7 +7,16 @@ import { OAuthEndpoints } from "./types";
 import { config } from "../../config";
 
 // types
-import type { OAuthDecisionDto, OAuthGrantDto, OAuthRequestDto } from "lib";
+import type {
+  OAuthApproveDto,
+  OAuthDecisionDto,
+  OAuthGrantDto,
+  OAuthRequestDto,
+} from "lib";
+
+// mcp
+import { DEFAULT_MCP_ACCESS } from "../mcp/constants";
+import type { McpAccess } from "../mcp/types";
 
 /**
  * OAuth consent and connected apps (sito-auth). Uses the normal session
@@ -32,9 +41,15 @@ export default class OAuthClient {
     );
   }
 
-  /** Allows the request; the redirect URL carries the authorization code. */
-  async approve(id: string): Promise<OAuthDecisionDto> {
-    return await this.decide(id, "approve");
+  /**
+   * Allows the request with an access level (read and write by default); the
+   * redirect URL carries the authorization code.
+   */
+  async approve(
+    id: string,
+    access: McpAccess = DEFAULT_MCP_ACCESS,
+  ): Promise<OAuthDecisionDto> {
+    return await this.decide<OAuthApproveDto>(id, "approve", { access });
   }
 
   /** Denies the request; the redirect URL carries `error=access_denied`. */
@@ -62,14 +77,15 @@ export default class OAuthClient {
     );
   }
 
-  private async decide(
+  private async decide<TBody = undefined>(
     id: string,
     action: "approve" | "deny",
+    body?: TBody,
   ): Promise<OAuthDecisionDto> {
-    return await this.api.doQuery<OAuthDecisionDto>(
+    return await this.api.doQuery<OAuthDecisionDto, TBody>(
       `${OAuthEndpoints.Requests}/${encodeURIComponent(id)}/${action}`,
       Methods.POST,
-      undefined,
+      body,
       this.api.defaultTokenAcquirer(),
     );
   }

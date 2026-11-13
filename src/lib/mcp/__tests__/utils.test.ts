@@ -1,12 +1,15 @@
 import { describe, expect, it } from "vitest";
 
 import { MCP_API_KEY_PLACEHOLDER } from "../constants";
-import { McpClient } from "../types";
+import { McpAccess, McpClient } from "../types";
 import {
   buildMcpSnippet,
   filterMcpGrants,
+  getMcpAccessFromScopes,
   getMcpUrl,
+  isMcpAccess,
   resolveMcpApiKey,
+  toMcpAccess,
 } from "../utils";
 
 const URL = "https://api.wallet.sito8943.com/mcp";
@@ -118,4 +121,43 @@ describe("filterMcpGrants", () => {
       filterMcpGrants([grant(1, "http://localhost:8080/mcp")], URL),
     ).toEqual([]);
   });
+});
+
+describe("getMcpAccessFromScopes", () => {
+  it.each([
+    [["mcp", "mcp:read-only"], McpAccess.Read],
+    [["mcp:read-only"], McpAccess.Read],
+    [["mcp", "mcp:write-only"], McpAccess.Write],
+    [["mcp"], McpAccess.Full],
+    [[], McpAccess.Full],
+    [["mcp:read"], McpAccess.Full],
+    [["MCP:READ-ONLY"], McpAccess.Full],
+  ])("maps %j to %s", (scopes, expected) => {
+    expect(getMcpAccessFromScopes(scopes)).toBe(expected);
+  });
+
+  it("gives read only precedence when both scopes are present", () => {
+    expect(getMcpAccessFromScopes(["mcp:write-only", "mcp:read-only"])).toBe(
+      McpAccess.Read,
+    );
+  });
+
+  it.each([undefined, null])("falls back to read and write for %s", (s) => {
+    expect(getMcpAccessFromScopes(s)).toBe(McpAccess.Full);
+  });
+});
+
+describe("isMcpAccess / toMcpAccess", () => {
+  it.each(["FULL", "READ", "WRITE"])("accepts %s", (value) => {
+    expect(isMcpAccess(value)).toBe(true);
+    expect(toMcpAccess(value)).toBe(value);
+  });
+
+  it.each(["full", "ADMIN", "", undefined, null, 1, {}])(
+    "rejects %j and falls back to read and write",
+    (value) => {
+      expect(isMcpAccess(value)).toBe(false);
+      expect(toMcpAccess(value)).toBe(McpAccess.Full);
+    },
+  );
 });

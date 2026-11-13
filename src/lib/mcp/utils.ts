@@ -1,9 +1,12 @@
 import {
+  DEFAULT_MCP_ACCESS,
   MCP_API_KEY_PLACEHOLDER,
   MCP_PATH,
+  MCP_READ_ONLY_SCOPE,
   MCP_SERVER_NAME,
+  MCP_WRITE_ONLY_SCOPE,
 } from "./constants";
-import { McpClient, type McpSnippetParams } from "./types";
+import { McpAccess, McpClient, type McpSnippetParams } from "./types";
 
 // types
 import type { OAuthGrantDto } from "../entities/oauth";
@@ -38,6 +41,32 @@ export const filterMcpGrants = (
   return grants.filter(
     (grant) => normalizeResourceUrl(grant.resource) === target,
   );
+};
+
+const MCP_ACCESS_VALUES: readonly string[] = Object.values(McpAccess);
+
+/** True when `value` is a known access level. */
+export const isMcpAccess = (value: unknown): value is McpAccess =>
+  typeof value === "string" && MCP_ACCESS_VALUES.includes(value);
+
+/**
+ * Access level of external data (e.g. an API key from the backend); unknown or
+ * missing values fall back to the default (read and write).
+ */
+export const toMcpAccess = (value: unknown): McpAccess =>
+  isMcpAccess(value) ? value : DEFAULT_MCP_ACCESS;
+
+/**
+ * Access level of an OAuth grant, from its scopes: `mcp:read-only` gives
+ * read only, `mcp:write-only` gives write only, anything else read and write.
+ */
+export const getMcpAccessFromScopes = (
+  scopes: readonly string[] | null | undefined,
+): McpAccess => {
+  if (!scopes) return DEFAULT_MCP_ACCESS;
+  if (scopes.includes(MCP_READ_ONLY_SCOPE)) return McpAccess.Read;
+  if (scopes.includes(MCP_WRITE_ONLY_SCOPE)) return McpAccess.Write;
+  return DEFAULT_MCP_ACCESS;
 };
 
 /** Key to print in a snippet: the given one, or the placeholder. */

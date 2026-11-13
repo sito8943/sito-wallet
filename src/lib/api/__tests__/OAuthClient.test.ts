@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import OAuthClient from "../OAuthClient";
 import { config } from "../../../config";
+import { McpAccess } from "../../mcp/types";
 
 const mockFetch = vi.fn<typeof fetch>();
 
@@ -59,19 +60,35 @@ describe("OAuthClient", () => {
     );
   });
 
-  it.each([
-    ["approve", "https://chatgpt.com/cb?code=x&state=s"],
-    ["deny", "https://chatgpt.com/cb?error=access_denied&state=s"],
-  ] as const)("posts %s without a body", async (action, redirectUrl) => {
+  it("posts deny without a body", async () => {
+    const redirectUrl = "https://chatgpt.com/cb?error=access_denied&state=s";
     mockFetch.mockResolvedValue(jsonResponse({ redirectUrl }));
 
-    await expect(new OAuthClient()[action]("req_1")).resolves.toEqual({
+    await expect(new OAuthClient().deny("req_1")).resolves.toEqual({
       redirectUrl,
     });
     const [url, init] = mockFetch.mock.calls[0];
-    expect(url).toBe(`${AUTH}/oauth/requests/req_1/${action}`);
+    expect(url).toBe(`${AUTH}/oauth/requests/req_1/deny`);
     expect(init).toMatchObject({ method: "POST" });
     expect(init?.body).toBeUndefined();
+  });
+
+  it.each([
+    [undefined, McpAccess.Full],
+    [McpAccess.Full, McpAccess.Full],
+    [McpAccess.Read, McpAccess.Read],
+    [McpAccess.Write, McpAccess.Write],
+  ])("posts approve with access %s", async (access, expected) => {
+    const redirectUrl = "https://chatgpt.com/cb?code=x&state=s";
+    mockFetch.mockResolvedValue(jsonResponse({ redirectUrl }));
+
+    await expect(new OAuthClient().approve("req_1", access)).resolves.toEqual({
+      redirectUrl,
+    });
+    const [url, init] = mockFetch.mock.calls[0];
+    expect(url).toBe(`${AUTH}/oauth/requests/req_1/approve`);
+    expect(init).toMatchObject({ method: "POST" });
+    expect(JSON.parse(String(init?.body))).toEqual({ access: expected });
   });
 
   it("propagates 404 for an expired request", async () => {
