@@ -396,6 +396,8 @@
         "transactions": "Create, edit and delete income and expense transactions",
         "transfers": "Create transfers between your accounts",
         "debts": "Create, edit, pay and cancel debts",
+        "subscriptions": "Create, edit, pause and cancel subscriptions and add their providers",
+        "setup": "Create and edit accounts, categories and currencies, and set an account balance to the real one",
         "rewards": "Adjust the reward points of your cards"
       },
       "security": "An API key gives access to your wallet data. Keep it secret, use one key per device or agent, and revoke it right away if it leaks.",
