@@ -91,6 +91,11 @@
       "limitReached": "You can have up to 10 API keys. Revoke one to create another.",
       "nameRequired": "Give the API key a name.",
       "nameTooLong": "The API key name can have up to 60 characters."
+    },
+    "feedback": {
+      "textRequired": "Write what you want to tell us.",
+      "textTooLong": "The feedback can have up to 2000 characters.",
+      "limitReached": "You can send up to 20 feedback messages a day. Try again tomorrow."
     }
   },
   "user": {

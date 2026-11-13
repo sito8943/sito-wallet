@@ -14,6 +14,7 @@
     "debtNew": "New debt",
     "currencies": "Currencies",
     "users": "Users",
+    "feedback": "Feedback",
     "about": "About Sito Wallet",
     "terms-and-conditions": "Terms and Conditions",
     "cookies-policy": "Cookies Policy",
@@ -1045,6 +1046,39 @@
     "saved": "Saved successfully",
     "deleted": "Deleted successfully"
   },
+  "feedback": {
+    "title": "Feedback",
+    "hint": "What users told their AI agent (or the app) that fails, is missing or could be better. Only admins see it.",
+    "inbox": "Inbox",
+    "openCount": "Open: {{count}}",
+    "empty": "No feedback yet.",
+    "allResolved": "All feedback is resolved.",
+    "showResolved": "Show resolved ({{count}})",
+    "hideResolved": "Hide resolved",
+    "resolveAction": "Mark as resolved",
+    "reopenAction": "Reopen",
+    "kinds": {
+      "bug": "Bug",
+      "missing": "Missing",
+      "idea": "Idea"
+    },
+    "sources": {
+      "web": "App web",
+      "key": "API key",
+      "app": "Connected app"
+    },
+    "entry": {
+      "user": "{{username}} ({{email}})",
+      "account": "Account: {{name}}",
+      "resolvedAt": "Resolved {{date}}"
+    },
+    "resolve": {
+      "successMessage": "Feedback marked as resolved"
+    },
+    "reopen": {
+      "successMessage": "Feedback reopened"
+    }
+  },
   "users": {
     "title": "Users",
     "empty": "No users yet. Create one to get started.",
@@ -1220,7 +1254,7 @@
   },
   "privacyPolicy": {
     "title": "Privacy Policy",
-    "body": "<p>This policy describes how we process personal data in Sito Wallet and the rights available to users.</p><p><strong>Sito Wallet is completely free, open source, and does not operate with real money.</strong></p><p><strong>Last updated:</strong> November 4, 2026.</p>",
+    "body": "<p>This policy describes how we process personal data in Sito Wallet and the rights available to users.</p><p><strong>Sito Wallet is completely free, open source, and does not operate with real money.</strong></p><p><strong>Last updated:</strong> November 13, 2026.</p>",
     "sections": [
       {
         "title": "1. Data controller",
@@ -1228,7 +1262,7 @@
       },
       {
         "title": "2. Categories of data processed",
-        "body": "<ul><li>Account and identification data (username, email, internal identifiers).</li><li>Profile data (display name, description, optional photo).</li><li>Financial data entered by users (accounts, balances, categories, transactions).</li><li>Session and synchronization technical data (tokens, device/sync metadata, connectivity status).</li><li>Locally stored usage preferences (language, onboarding, filters, recent searches, interface settings).</li><li>Anonymous feature usage counts (which screen or feature was used and on which day, with no user, account, device, IP or content), kept only as daily totals; the app keeps unsent counts in local storage.</li></ul>"
+        "body": "<ul><li>Account and identification data (username, email, internal identifiers).</li><li>Profile data (display name, description, optional photo).</li><li>Financial data entered by users (accounts, balances, categories, transactions).</li><li>Session and synchronization technical data (tokens, device/sync metadata, connectivity status).</li><li>Locally stored usage preferences (language, onboarding, filters, recent searches, interface settings).</li><li>Anonymous feature usage counts (which screen or feature was used and on which day, with no user, account, device, IP or content), kept only as daily totals; the app keeps unsent counts in local storage.</li><li>Feedback you send through your AI agent or the app (what you said, its kind, the account it is about if any, and how it was sent), kept with your account to fix bugs and improve the app, read only by the app's administrators and deleted with your account.</li></ul>"
       },
       {
         "title": "3. Purposes and legal bases",
@@ -1248,7 +1282,7 @@
       },
       {
         "title": "7. Retention periods",
-        "body": "<ul><li>Account and profile data: while the account remains active or until a valid erasure request, unless legal retention is required.</li><li>User-created financial data: until user deletion or account closure, with possible temporary backup retention.</li><li>Technical/sync metadata: for the period required for operational integrity, incident resolution, and service continuity.</li><li>Browser-local data: until sign-out, browser cleanup, or manual user deletion, depending on data type.</li></ul>"
+        "body": "<ul><li>Account and profile data: while the account remains active or until a valid erasure request, unless legal retention is required.</li><li>User-created financial data: until user deletion or account closure, with possible temporary backup retention.</li><li>Technical/sync metadata: for the period required for operational integrity, incident resolution, and service continuity.</li><li>Browser-local data: until sign-out, browser cleanup, or manual user deletion, depending on data type.</li><li>Feedback you send: while your account remains active; it is deleted with your account.</li></ul>"
       },
       {
         "title": "8. User rights",
@@ -1310,6 +1344,9 @@
       },
       "aiAgents": {
         "description": "Create personal API keys and connect AI agents such as Claude Code, Codex or Claude Desktop to Sito Wallet."
+      },
+      "feedback": {
+        "description": "Review what users told their AI agent or the app that fails, is missing or could be better."
       },
       "users": {
         "description": "Manage users and reset data from the Sito Wallet administration area."

@@ -38,6 +38,7 @@ export const Routes = () => {
     AiAgents,
     OAuthConsent,
     Users,
+    Feedback,
     FeatureUnavailable,
     About,
     CookiesPolicy,
@@ -192,6 +193,10 @@ export const Routes = () => {
         <Route
           path={AppRoutes.users}
           element={canAccessUsers ? <Users /> : <NotFound />}
+        />
+        <Route
+          path={AppRoutes.feedback}
+          element={canAccessUsers ? <Feedback /> : <NotFound />}
         />
         <Route path={AppRoutes.about} element={<About />} />
         <Route path={AppRoutes.cookiesPolicy} element={<CookiesPolicy />} />

@@ -30,6 +30,7 @@ export const AppRoutes: { [key: string]: string } = {
   aiAgents: "/ai-agents",
   oauthConsent: "/oauth/consent",
   users: "/users",
+  feedback: "/feedback",
   about: "/about-us",
   cookiesPolicy: "/cookies-policy",
   privacyPolicy: "/privacy-policy",

@@ -18,4 +18,5 @@ export * from "./useNotifications";
 export * from "./useUsers";
 export * from "./useCatalogSelect";
 export * from "./useApiKeys";
+export * from "./useFeedback";
 export * from "./useOAuth";

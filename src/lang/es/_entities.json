@@ -91,6 +91,11 @@
       "limitReached": "Puedes tener hasta 10 claves de API. Revoca una para crear otra.",
       "nameRequired": "Ponle un nombre a la clave de API.",
       "nameTooLong": "El nombre de la clave de API puede tener hasta 60 caracteres."
+    },
+    "feedback": {
+      "textRequired": "Escribe lo que quieres contarnos.",
+      "textTooLong": "El comentario puede tener hasta 2000 caracteres.",
+      "limitReached": "Puedes enviar hasta 20 comentarios al día. Inténtalo mañana."
     }
   },
   "user": {

@@ -33,6 +33,7 @@ export const WALLET_FEATURES = [
   "page.ai_agents",
   "page.oauth_consent",
   "page.users",
+  "page.feedback",
   "page.about",
   "page.cookies_policy",
   "page.privacy_policy",

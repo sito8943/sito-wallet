@@ -24,6 +24,7 @@ export enum PageId {
   AiAgents = "aiAgents",
   Notifications = "notifications",
   Users = "users",
+  Feedback = "feedback",
   Transactions = "transactions",
   TransactionCategories = "transactionCategories",
   Subscriptions = "subscriptions",
@@ -61,6 +62,11 @@ export const sitemap: ViewPageType<PageId>[] = [
   {
     key: PageId.Users,
     path: AppRoutes.users,
+    access: (account) => isAdminSession(account),
+  },
+  {
+    key: PageId.Feedback,
+    path: AppRoutes.feedback,
     access: (account) => isAdminSession(account),
   },
   {
