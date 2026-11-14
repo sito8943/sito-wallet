@@ -243,8 +243,9 @@
       "defaultName": "Points",
       "hint": "Points are earned on the card's spending (transfers and balance adjustments don't count). Leave both empty to disable.",
       "notConfigured": "Not set up",
-      "summary": "{{points}} pt per {{unit}} spent",
-      "summaryNamed": "{{name}} · {{points}} pt per {{unit}} spent",
+      "rule_one": "{{points}} point for every {{amount}} spent",
+      "rule_other": "{{points}} points for every {{amount}} spent",
+      "summaryNamed": "{{name}} · {{rule}}",
       "invalid": "Check the rewards settings",
       "configure": "Set up",
       "edit": "Edit",
@@ -259,11 +260,12 @@
         "maxLength": "Up to 40 characters"
       },
       "spendUnit": {
-        "label": "Spend per step",
+        "label": "For every",
+        "labelWithCurrency": "For every ({{currency}})",
         "placeholder": "Ex: 10"
       },
       "pointsPerUnit": {
-        "label": "Points per step",
+        "label": "You earn (points)",
         "placeholder": "Ex: 1"
       },
       "pair": {

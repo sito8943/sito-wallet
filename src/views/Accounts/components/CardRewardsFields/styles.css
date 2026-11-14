@@ -9,6 +9,10 @@
   @apply grid grid-cols-2 gap-x-2 gap-y-6 max-xs:grid-cols-1;
 }
 
+.card-rewards-rule {
+  @apply -mt-4 text-sm font-semibold;
+}
+
 .card-rewards-hint {
   @apply -mt-4 text-xs text-text-muted;
 }

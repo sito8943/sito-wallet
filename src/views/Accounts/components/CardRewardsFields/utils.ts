@@ -1,3 +1,5 @@
+import type { TFunction } from "i18next";
+
 import type { CommonTransactionCategoryDto } from "lib";
 import { RewardsPairError, TransactionType, validateRewardsPair } from "lib";
 
@@ -33,4 +35,26 @@ export const selectCategoriesByIds = (
   if (!Array.isArray(ids)) return [];
   const selected = new Set(ids.map(Number));
   return options.filter((option) => selected.has(option.id));
+};
+
+/**
+ * The earning rule in words, e.g. "1 punto por cada 10 € gastados".
+ * Without a currency symbol the amount is just the number.
+ */
+export const getRewardsRuleText = (
+  t: TFunction,
+  language: string,
+  spendUnit: number,
+  pointsPerUnit: number,
+  currencySymbol?: string | null,
+): string => {
+  const format = (value: number) =>
+    value.toLocaleString(language, { maximumFractionDigits: 4 });
+  const unit = format(spendUnit);
+
+  return t("_entities:account.rewards.rule", {
+    count: pointsPerUnit,
+    points: format(pointsPerUnit),
+    amount: currencySymbol ? `${unit} ${currencySymbol}` : unit,
+  });
 };
