@@ -98,7 +98,7 @@
 }
 
 .transaction-card-amount {
-  @apply shrink-0;
+  @apply flex shrink-0 flex-col items-end gap-0.5;
 }
 
 .transaction-card-selection-indicator--selected {
