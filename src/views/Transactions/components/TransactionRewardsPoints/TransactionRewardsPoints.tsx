@@ -1,10 +1,10 @@
 import { useTranslation } from "react-i18next";
 
-// lib
-import { formatRewardsPoints } from "lib";
-
 // types
 import type { TransactionRewardsPointsPropsType } from "./types";
+
+// utils
+import { getRewardsPointsLabel } from "./utils";
 
 import "./styles.css";
 
@@ -15,14 +15,8 @@ export function TransactionRewardsPoints(
   const { points, rewardsName } = props;
   const { t, i18n } = useTranslation();
 
-  if (points === null || points === undefined) return null;
+  const label = getRewardsPointsLabel(t, i18n.language, points, rewardsName);
+  if (!label) return null;
 
-  return (
-    <span className="transaction-rewards-points">
-      {t("_entities:transaction.rewardsPoints.label", {
-        points: formatRewardsPoints(points, i18n.language),
-        name: rewardsName || t("_entities:account.rewards.defaultName"),
-      })}
-    </span>
-  );
+  return <span className="transaction-rewards-points">{label}</span>;
 }
