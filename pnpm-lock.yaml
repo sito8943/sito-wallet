@@ -15,11 +15,6 @@ overrides:
   source-map-js: 1.2.2
   glob: 14.0.3
 
-patchedDependencies:
-  '@sito/dashboard-app@0.4.1':
-    hash: 4ae93a1b3dc2ec5041ebd94ef90e6752b3a34b67484525b606dc1c1fe765223b
-    path: patches/@sito__dashboard-app@0.4.1.patch
-
 importers:
 
   .:
@@ -55,8 +50,8 @@ importers:
         specifier: 0.4.7
         version: 0.4.7(@sito/ui@0.11.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@sito/dashboard-app':
-        specifier: 0.4.1
-        version: 0.4.1(patch_hash=4ae93a1b3dc2ec5041ebd94ef90e6752b3a34b67484525b606dc1c1fe765223b)(@fortawesome/fontawesome-svg-core@7.0.0)(@fortawesome/free-regular-svg-icons@7.0.0)(@fortawesome/free-solid-svg-icons@7.0.0)(@fortawesome/react-fontawesome@3.4.0(@fortawesome/fontawesome-svg-core@7.0.0)(react@19.2.7))(@sito/dashboard@0.4.7(@sito/ui@0.11.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@sito/ui@0.11.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@supabase/supabase-js@2.110.6)(@tanstack/react-query@5.83.0(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react-hook-form@7.81.0(react@19.2.7))(react@19.2.7)
+        specifier: 0.4.2
+        version: 0.4.2(@fortawesome/fontawesome-svg-core@7.0.0)(@fortawesome/free-regular-svg-icons@7.0.0)(@fortawesome/free-solid-svg-icons@7.0.0)(@fortawesome/react-fontawesome@3.4.0(@fortawesome/fontawesome-svg-core@7.0.0)(react@19.2.7))(@sito/dashboard@0.4.7(@sito/ui@0.11.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@sito/ui@0.11.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@supabase/supabase-js@2.110.6)(@tanstack/react-query@5.83.0(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react-hook-form@7.81.0(react@19.2.7))(react@19.2.7)
       '@sito/feature-usage':
         specifier: github:sito8943/sito-feature-usage-js#v0.1.0-alpha.2
         version: https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/5bd0b62a3c8087bc09bf95fa1e70552d2a9634bb(react@19.2.7)
@@ -1379,8 +1374,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@sito/dashboard-app@0.4.1':
-    resolution: {integrity: sha512-yxJPt/MJVZ5Yr/+SkPJyotwNfHFl6JRIGe8zwum2Mj9IccStskIjCifPG197S8K2g4OiKl3vcZRwCHV6dFDfHg==}
+  '@sito/dashboard-app@0.4.2':
+    resolution: {integrity: sha512-w41KBmljah3s7anStW+5mOHxQn8uRU1HoGN2uBuAyxE5WkdOCh8BYAv7J2IxqrdAJJylWmDvmbpE/lZAR3bOHg==}
     engines: {node: ^22.13.0}
     peerDependencies:
       '@fortawesome/fontawesome-svg-core': '>=7.0.0 <8'
@@ -4612,7 +4607,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.65.1':
     optional: true
 
-  '@sito/dashboard-app@0.4.1(patch_hash=4ae93a1b3dc2ec5041ebd94ef90e6752b3a34b67484525b606dc1c1fe765223b)(@fortawesome/fontawesome-svg-core@7.0.0)(@fortawesome/free-regular-svg-icons@7.0.0)(@fortawesome/free-solid-svg-icons@7.0.0)(@fortawesome/react-fontawesome@3.4.0(@fortawesome/fontawesome-svg-core@7.0.0)(react@19.2.7))(@sito/dashboard@0.4.7(@sito/ui@0.11.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@sito/ui@0.11.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@supabase/supabase-js@2.110.6)(@tanstack/react-query@5.83.0(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react-hook-form@7.81.0(react@19.2.7))(react@19.2.7)':
+  '@sito/dashboard-app@0.4.2(@fortawesome/fontawesome-svg-core@7.0.0)(@fortawesome/free-regular-svg-icons@7.0.0)(@fortawesome/free-solid-svg-icons@7.0.0)(@fortawesome/react-fontawesome@3.4.0(@fortawesome/fontawesome-svg-core@7.0.0)(react@19.2.7))(@sito/dashboard@0.4.7(@sito/ui@0.11.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@sito/ui@0.11.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@supabase/supabase-js@2.110.6)(@tanstack/react-query@5.83.0(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react-hook-form@7.81.0(react@19.2.7))(react@19.2.7)':
     dependencies:
       '@fortawesome/fontawesome-svg-core': 7.0.0
       '@fortawesome/free-regular-svg-icons': 7.0.0
