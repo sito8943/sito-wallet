@@ -90,7 +90,17 @@
 }
 
 .transaction-card-meta {
-  @apply text-xs text-left flex gap-1;
+  @apply text-xs text-left flex items-center gap-1 w-full min-w-0;
+}
+
+/* Category shrinks with an ellipsis; separator and date never wrap. */
+.transaction-card-meta-category {
+  @apply min-w-0 truncate;
+}
+
+.transaction-card-meta-separator,
+.transaction-card-meta-date {
+  @apply shrink-0 whitespace-nowrap;
 }
 
 .transaction-card-meta-category--auto {
