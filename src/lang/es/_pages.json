@@ -453,7 +453,7 @@
         },
         "goals": {
           "label": "Metas",
-          "description": "Crear, editar, completar y cancelar metas de ahorro."
+          "description": "Crear, editar, completar y cancelar metas de ahorro, y consultar tus productos para crearlas."
         },
         "subscriptions": {
           "label": "Suscripciones",

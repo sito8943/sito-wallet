@@ -453,7 +453,7 @@
         },
         "goals": {
           "label": "Goals",
-          "description": "Create, edit, complete and cancel savings goals."
+          "description": "Create, edit, complete and cancel savings goals, and list your products to create them."
         },
         "subscriptions": {
           "label": "Subscriptions",
