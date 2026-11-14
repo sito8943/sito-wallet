@@ -15,6 +15,7 @@ const APP_FEATURE_KEYS: Array<keyof AppFeatures> = [
   "transactionsEnabled",
   "subscriptionsEnabled",
   "debtsEnabled",
+  "goalsEnabled",
 ];
 
 export const sanitizeFeaturePayload = (

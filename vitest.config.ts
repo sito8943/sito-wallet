@@ -82,6 +82,7 @@ export default defineConfig({
       VITE_FEATURE_TRANSACTIONS_ENABLED_DEFAULT: "true",
       VITE_FEATURE_SUBSCRIPTIONS_ENABLED_DEFAULT: "true",
       VITE_FEATURE_DEBTS_ENABLED_DEFAULT: "true",
+      VITE_FEATURE_GOALS_ENABLED_DEFAULT: "true",
     },
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
     exclude: ["e2e/**", "node_modules/**"],

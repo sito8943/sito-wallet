@@ -51,6 +51,7 @@ jobs:
           VITE_FEATURE_TRANSACTIONS_ENABLED_DEFAULT: "true"
           VITE_FEATURE_SUBSCRIPTIONS_ENABLED_DEFAULT: "true"
           VITE_FEATURE_DEBTS_ENABLED_DEFAULT: "true"
+          VITE_FEATURE_GOALS_ENABLED_DEFAULT: "true"
 
   e2e:
     runs-on: ubuntu-latest
@@ -111,6 +112,7 @@ jobs:
           VITE_FEATURE_TRANSACTIONS_ENABLED_DEFAULT: "true"
           VITE_FEATURE_SUBSCRIPTIONS_ENABLED_DEFAULT: "true"
           VITE_FEATURE_DEBTS_ENABLED_DEFAULT: "true"
+          VITE_FEATURE_GOALS_ENABLED_DEFAULT: "true"
 
       - name: Serve and run E2E smoke tests
         run: pnpm run test:e2e
@@ -209,6 +211,7 @@ jobs:
           VITE_FEATURE_TRANSACTIONS_ENABLED_DEFAULT: "true"
           VITE_FEATURE_SUBSCRIPTIONS_ENABLED_DEFAULT: "true"
           VITE_FEATURE_DEBTS_ENABLED_DEFAULT: "true"
+          VITE_FEATURE_GOALS_ENABLED_DEFAULT: "true"
 
       - name: Deploy live
         if: steps.secrets.outputs.enabled == 'true'

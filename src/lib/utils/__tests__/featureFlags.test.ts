@@ -28,6 +28,8 @@ const defaults: AppFeatures = {
   accountsEnabled: true,
   transactionsEnabled: true,
   subscriptionsEnabled: true,
+  debtsEnabled: true,
+  goalsEnabled: true,
 };
 
 describe("featureFlags utils", () => {
@@ -72,7 +74,19 @@ describe("featureFlags utils", () => {
       accountsEnabled: true,
       transactionsEnabled: false,
       subscriptionsEnabled: false,
+      debtsEnabled: true,
+      goalsEnabled: true,
     });
+  });
+
+  it("keeps the goals flag from the backend payload", () => {
+    expect(sanitizeFeaturePayload({ goalsEnabled: false })).toEqual({
+      goalsEnabled: false,
+    });
+    expect(
+      mergeAppFeatures({ defaults, payload: { goalsEnabled: false } })
+        .goalsEnabled,
+    ).toBe(false);
   });
 
   it("applies transaction-categories dependency from transactionsEnabled", () => {
