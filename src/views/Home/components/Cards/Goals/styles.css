@@ -44,7 +44,3 @@
 .goals-card-config {
   @apply min-h-64;
 }
-
-.goals-card-config-helper {
-  @apply -mt-4 text-xs text-text-muted;
-}

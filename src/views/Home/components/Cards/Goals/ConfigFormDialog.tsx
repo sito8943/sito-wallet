@@ -47,6 +47,7 @@ export const ConfigFormDialog = (
               value={value}
               multiple
               label={t("_pages:home.dashboard.goals.goalsLabel")}
+              helperText={t("_pages:home.dashboard.goals.goalsHelper")}
               autoComplete={`${Tables.Goals}-${t(
                 "_pages:home.dashboard.goals.goalsLabel",
               )}`}
@@ -57,10 +58,6 @@ export const ConfigFormDialog = (
             />
           )}
         />
-        {/* Outside the input: the lib centers chips on input + helper text. */}
-        <p className="goals-card-config-helper">
-          {t("_pages:home.dashboard.goals.goalsHelper")}
-        </p>
       </div>
     </FormDialog>
   );
