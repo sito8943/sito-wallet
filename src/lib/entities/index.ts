@@ -10,6 +10,7 @@ export * from "./product";
 export * from "./purchaseProvider";
 export * from "./receipt";
 export * from "./debt";
+export * from "./goal";
 export * from "./notification";
 export * from "./apiKey";
 export * from "./feedback";
