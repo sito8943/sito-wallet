@@ -1,6 +1,6 @@
 import type { DashboardDto, AddDashboardDto } from "lib";
 import { DashboardCardType } from "lib";
-import type { DashboardFormType } from "../types";
+import type { DashboardCardFeatures, DashboardFormType } from "../types";
 
 export const formToAddDto = ({
   config,
@@ -34,11 +34,12 @@ export const emptyDashboard: DashboardFormType = {
 
 export const isDashboardCardEnabled = (
   type: DashboardCardType,
-  subscriptionsEnabled: boolean,
+  features: DashboardCardFeatures,
 ): boolean => {
   if (type === DashboardCardType.WeeklySpent) return false;
   if (type === DashboardCardType.SubscriptionForecast)
-    return subscriptionsEnabled;
+    return features.subscriptionsEnabled;
+  if (type === DashboardCardType.Goals) return features.goalsEnabled;
 
   return true;
 };

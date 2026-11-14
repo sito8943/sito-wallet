@@ -25,3 +25,9 @@ export type AddDashboardDialogPropsType =
 
 export type EditDashboardDialogPropsType =
   FormDialogPropsType<DashboardFormType>;
+
+/** Feature flags that decide which dashboard card types are available. */
+export interface DashboardCardFeatures {
+  subscriptionsEnabled: boolean;
+  goalsEnabled: boolean;
+}

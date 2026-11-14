@@ -19,6 +19,7 @@ import {
   CategoryAverageCard,
   SavingsProjectionCard,
   CardRewardsCard,
+  GoalsCard,
 } from "../components/Cards";
 import { AddDashboardCardDialog } from "../components";
 import { resolveCardConfig } from "../components/Cards/utils";
@@ -55,6 +56,7 @@ export const Dashboard = () => {
   const manager = useManager();
   const { isFeatureEnabled } = useFeatureFlags();
   const subscriptionsEnabled = isFeatureEnabled("subscriptionsEnabled");
+  const goalsEnabled = isFeatureEnabled("goalsEnabled");
   // With transactions on, Home's bottom-nav "Add" belongs to QuickTransaction.
   const transactionsEnabled = isFeatureEnabled("transactionsEnabled");
 
@@ -73,9 +75,12 @@ export const Dashboard = () => {
   const visibleItems = useMemo(() => {
     if (!data) return [];
     return sortDashboardItems(data.items).filter((item) =>
-      isDashboardCardEnabled(item.type, subscriptionsEnabled),
+      isDashboardCardEnabled(item.type, {
+        subscriptionsEnabled,
+        goalsEnabled,
+      }),
     );
-  }, [data, subscriptionsEnabled]);
+  }, [data, goalsEnabled, subscriptionsEnabled]);
   const [typeResumeConfigOverrides, setTypeResumeConfigOverrides] = useState<
     Record<number, CardConfigOverrideType>
   >({});
@@ -232,6 +237,19 @@ export const Dashboard = () => {
           return (
             <li key={item.id} {...listItemProps}>
               <CardRewardsCard
+                onDelete={() => {
+                  void deleteDashboardCard.onClick([item.id]);
+                }}
+                dragHandleProps={dragHandleProps}
+                key={item.id}
+                {...item}
+              />
+            </li>
+          );
+        case DashboardCardType.Goals:
+          return (
+            <li key={item.id} {...listItemProps}>
+              <GoalsCard
                 onDelete={() => {
                   void deleteDashboardCard.onClick([item.id]);
                 }}

@@ -8,4 +8,5 @@ export enum DashboardCardType {
   CategoryAverage = 6,
   SavingsProjection = 7,
   CardRewards = 8,
+  Goals = 9,
 }

@@ -8,3 +8,4 @@ export * from "./LastTransactions/LastTransactionsCard";
 export * from "./CategoryAverage/CategoryAverageCard";
 export * from "./SavingsProjection/SavingsProjectionCard";
 export * from "./CardRewards/CardRewardsCard";
+export * from "./Goals/GoalsCard";
