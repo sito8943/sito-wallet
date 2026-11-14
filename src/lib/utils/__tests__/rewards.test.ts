@@ -30,11 +30,11 @@ describe("ACCOUNT_REWARDS_PRESETS", () => {
     ]);
   });
 
-  it("earns 1 RevPoint per step, floored per transaction", () => {
+  it("earns 1 RevPoint per step, proportionally (exact)", () => {
     revolutPlans.forEach(({ values }) => {
       expect(values.rewardsName).toBe("RevPoints");
       expect(values.rewardsPointsPerUnit).toBe(1);
-      expect(values.rewardsRounding).toBe(RewardsRounding.FloorPerTransaction);
+      expect(values.rewardsRounding).toBe(RewardsRounding.Exact);
     });
   });
 });
@@ -61,7 +61,7 @@ describe("getRewardsPresetEntries", () => {
       rewardsName: "RevPoints",
       rewardsSpendUnit: 4,
       rewardsPointsPerUnit: 1,
-      rewardsRounding: RewardsRounding.FloorPerTransaction,
+      rewardsRounding: RewardsRounding.Exact,
     });
   });
 

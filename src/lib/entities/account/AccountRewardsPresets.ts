@@ -25,11 +25,14 @@ export type AccountRewardsPlanPreset = {
   values: AccountRewardsPresetValues;
 };
 
-/** Shared mechanics of every Revolut plan (only the spend unit changes). */
+/**
+ * Shared mechanics of every Revolut plan (only the spend unit changes).
+ * RevPoints are proportional: 7.77 € on Standard (1 per 10 €) earns 0.77.
+ */
 const REVOLUT_REWARDS: Omit<AccountRewardsPresetValues, "rewardsSpendUnit"> = {
   rewardsName: "RevPoints",
   rewardsPointsPerUnit: 1,
-  rewardsRounding: RewardsRounding.FloorPerTransaction,
+  rewardsRounding: RewardsRounding.Exact,
 };
 
 /**
