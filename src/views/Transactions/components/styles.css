@@ -168,3 +168,11 @@
 .weekly-card-difference--income-down {
   @apply text-text-error;
 }
+
+.transaction-form-rewards-points {
+  @apply -mt-2 empty:hidden;
+}
+
+.transaction-form-rewards-points .transaction-rewards-points {
+  @apply text-left;
+}

@@ -9,4 +9,6 @@ export interface CommonAccountDto extends BaseCommonEntityDto {
   type?: AccountType;
   /** True for Card accounts with a rewards program configured. */
   rewardsConfigured?: boolean;
+  /** Rewards program name (e.g. "RevPoints"); null when not set. */
+  rewardsName?: string | null;
 }

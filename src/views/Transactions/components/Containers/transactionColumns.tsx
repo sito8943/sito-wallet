@@ -21,6 +21,7 @@ import type { TransactionTableRowType } from "../../types";
 import { Currency } from "views/Currencies/components/Currency";
 import { Type } from "views/TransactionCategories/components/Type";
 import { ColorVignette } from "components";
+import { TransactionRewardsPoints } from "../TransactionRewardsPoints";
 
 import "./styles.css";
 
@@ -106,14 +107,20 @@ export const getTransactionColumns = (
         const primaryCategory = getPrimaryTransactionCategory(entity);
 
         return (
-          <p>
-            {primaryCategory?.type === TransactionType.Out ? "- " : ""}
-            {amount}{" "}
-            <Currency
-              name={entity.account?.currency?.name}
-              symbol={entity.account?.currency?.symbol}
+          <div className="transaction-table-amount-cell">
+            <p>
+              {primaryCategory?.type === TransactionType.Out ? "- " : ""}
+              {amount}{" "}
+              <Currency
+                name={entity.account?.currency?.name}
+                symbol={entity.account?.currency?.symbol}
+              />
+            </p>
+            <TransactionRewardsPoints
+              points={entity.rewardsPoints}
+              rewardsName={entity.account?.rewardsName}
             />
-          </p>
+          </div>
         );
       },
     },

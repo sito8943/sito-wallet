@@ -375,8 +375,7 @@
       "summaryTotal": "Total: {{total}}"
     },
     "rewardsPoints": {
-      "label": "+{{points}} pt",
-      "aria": "{{points}} puntos ganados"
+      "label": "+{{points}} {{name}}"
     }
   },
   "transactionCategory": {

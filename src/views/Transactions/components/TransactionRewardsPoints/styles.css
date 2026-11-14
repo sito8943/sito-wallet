@@ -1,5 +1,5 @@
 @reference "../../../../styles/variables.css";
 
 .transaction-rewards-points {
-  @apply flex items-center justify-end gap-1 text-xs text-text-muted;
+  @apply block text-right text-xs text-text-muted;
 }

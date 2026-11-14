@@ -245,7 +245,10 @@ export function TransactionCard(props: TransactionCardPropsType) {
               symbol={account?.currency?.symbol}
             />
           </p>
-          <TransactionRewardsPoints points={rewardsPoints} />
+          <TransactionRewardsPoints
+            points={rewardsPoints}
+            rewardsName={account?.rewardsName}
+          />
         </div>
         {selectionMode ? (
           <span
