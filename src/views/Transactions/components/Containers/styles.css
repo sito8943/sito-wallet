@@ -39,3 +39,11 @@
 .transaction-table-description {
   @apply truncate;
 }
+
+.transaction-table-amount-cell {
+  @apply flex flex-col items-start gap-0.5;
+}
+
+.transaction-table-amount-cell .transaction-rewards-points {
+  @apply text-left;
+}

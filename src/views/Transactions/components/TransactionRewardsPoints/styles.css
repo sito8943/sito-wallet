@@ -1,0 +1,5 @@
+@reference "../../../../styles/variables.css";
+
+.transaction-rewards-points {
+  @apply block text-right text-xs text-text-muted;
+}

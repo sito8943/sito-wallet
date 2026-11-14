@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (k: string) => k,
+    i18n: { language: "en" },
   }),
 }));
 

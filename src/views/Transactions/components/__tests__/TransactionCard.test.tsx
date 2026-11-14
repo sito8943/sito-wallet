@@ -32,7 +32,9 @@ vi.mock("@use-gesture/react", () => ({
 
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
-    t: (key: string) => key,
+    t: (key: string, options?: { points?: string }) =>
+      options?.points ? `${key}:${options.points}` : key,
+    i18n: { language: "en" },
   }),
 }));
 
@@ -67,6 +69,7 @@ vi.mock("components", async () => {
 });
 
 vi.mock("lib", () => ({
+  formatRewardsPoints: (value: number) => String(value),
   TransactionType: {
     Out: 0,
     In: 1,
@@ -316,5 +319,33 @@ describe("TransactionCard", () => {
     expect(screen.getByText(/Food/)).not.toHaveClass(
       "transaction-card-meta-category--auto",
     );
+  });
+
+  it("shows the reward points the transaction earned", () => {
+    const { rerender } = render(
+      <TransactionCard {...baseTransaction} rewardsPoints={1.5} actions={[]} />,
+    );
+
+    expect(
+      screen.getByText("_entities:transaction.rewardsPoints.label:1.5"),
+    ).toBeInTheDocument();
+
+    rerender(
+      <TransactionCard {...baseTransaction} rewardsPoints={0} actions={[]} />,
+    );
+    expect(
+      screen.getByText("_entities:transaction.rewardsPoints.label:0"),
+    ).toBeInTheDocument();
+
+    rerender(
+      <TransactionCard
+        {...baseTransaction}
+        rewardsPoints={null}
+        actions={[]}
+      />,
+    );
+    expect(
+      screen.queryByText(/_entities:transaction\.rewardsPoints/),
+    ).not.toBeInTheDocument();
   });
 });
