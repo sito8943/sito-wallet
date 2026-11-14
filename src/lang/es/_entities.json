@@ -373,6 +373,9 @@
       "count_one": "{{count}} producto",
       "count_other": "{{count}} productos",
       "summaryTotal": "Total: {{total}}"
+    },
+    "rewardsPoints": {
+      "label": "+{{points}} {{name}}"
     }
   },
   "transactionCategory": {
