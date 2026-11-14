@@ -25,6 +25,24 @@ const formatNotificationDate = (
   }).format(date);
 };
 
+const DATE_ONLY_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
+
+/** "YYYY-MM-DD" read as a local date (not UTC midnight), without time. */
+const formatNotificationDay = (
+  value: unknown,
+  language: string,
+): string | undefined => {
+  if (typeof value !== "string") return undefined;
+
+  const match = DATE_ONLY_PATTERN.exec(value.trim());
+  if (!match) return undefined;
+
+  const [, year, month, day] = match;
+  return new Intl.DateTimeFormat(language, { dateStyle: "medium" }).format(
+    new Date(Number(year), Number(month) - 1, Number(day)),
+  );
+};
+
 const formatNotificationAmount = (
   value: unknown,
   language: string,
@@ -50,6 +68,8 @@ export const getNotificationTranslationValues = (
       language,
     ),
     amountFormatted: formatNotificationAmount(values.amount, language),
+    deadlineFormatted: formatNotificationDay(values.deadline, language),
+    remainingFormatted: formatNotificationAmount(values.remaining, language),
   };
 };
 

@@ -3,7 +3,9 @@ export type FeatureUnavailableModule =
   | "currencies"
   | "transactions"
   | "transactionCategories"
-  | "subscriptions";
+  | "subscriptions"
+  | "debts"
+  | "goals";
 
 export type FeatureUnavailableProps = {
   module: FeatureUnavailableModule;

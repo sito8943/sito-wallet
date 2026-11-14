@@ -1,0 +1,46 @@
+@reference "../../../../../styles/variables.css";
+
+.goals-card-content {
+  @apply flex flex-col gap-3;
+}
+
+.goals-card-list {
+  @apply flex flex-col gap-3;
+}
+
+.goals-card-row {
+  @apply flex flex-col gap-1;
+}
+
+.goals-card-row-header {
+  @apply flex items-baseline justify-between gap-2;
+}
+
+.goals-card-row-name {
+  @apply truncate font-semibold;
+}
+
+.goals-card-row-percent {
+  @apply shrink-0 text-sm text-text-muted;
+}
+
+.goals-card-row-meta {
+  @apply flex flex-wrap justify-between gap-2 text-xs text-text-muted;
+}
+
+.goals-card-row-overdue {
+  @apply text-text-error;
+}
+
+.goals-card-empty {
+  @apply text-sm text-text-muted;
+}
+
+.goals-card-link {
+  @apply self-end text-sm text-text-primary underline-offset-2 hover:underline;
+}
+
+/* Room below the single field so the goals list opens without being cut. */
+.goals-card-config {
+  @apply min-h-64;
+}

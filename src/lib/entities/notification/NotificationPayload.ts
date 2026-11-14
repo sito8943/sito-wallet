@@ -7,5 +7,18 @@ export interface SubscriptionRenewalReminderNotificationPayload {
   userId?: number;
 }
 
+export interface GoalDeadlineReminderNotificationPayload {
+  goalId?: number;
+  goalName?: string;
+  /** "YYYY-MM-DD". */
+  deadline?: string;
+  /** 7 or 0 (the deadline day). */
+  daysLeft?: number;
+  remaining?: number;
+  currencySymbol?: string;
+}
+
 export type NotificationPayload =
-  SubscriptionRenewalReminderNotificationPayload | Record<string, unknown>;
+  | SubscriptionRenewalReminderNotificationPayload
+  | GoalDeadlineReminderNotificationPayload
+  | Record<string, unknown>;

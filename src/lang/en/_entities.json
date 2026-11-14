@@ -552,7 +552,8 @@
         "LastTransactions": "Last Transactions",
         "CategoryAverage": "Category Average",
         "SavingsProjection": "Savings Projection",
-        "CardRewards": "Card Rewards"
+        "CardRewards": "Card Rewards",
+        "Goals": "Goals"
       }
     }
   },
@@ -653,6 +654,48 @@
     "category": {
       "label": "Category",
       "placeholder": "Select a category"
+    }
+  },
+  "goal": {
+    "name": {
+      "placeholder": "E.g. New bike"
+    },
+    "product": {
+      "label": "Product",
+      "helper": "Optional. Fills in the name, photo and its last purchase price."
+    },
+    "account": {
+      "label": "Account",
+      "helper": "Optional. The saved amount will be the account balance.",
+      "inUse": "Another active goal already uses this account: both will count the same balance."
+    },
+    "currency": {
+      "label": "Currency",
+      "placeholder": "Select a currency",
+      "required": "Currency is required"
+    },
+    "targetAmount": {
+      "label": "Target",
+      "placeholder": "E.g. 500.00",
+      "required": "Target is required",
+      "greaterThanZero": "Target must be greater than zero"
+    },
+    "savedAmount": {
+      "label": "Saved",
+      "placeholder": "E.g. 120.00",
+      "helper": "What you have saved so far. Update it any time.",
+      "min": "The saved amount cannot be negative"
+    },
+    "deadline": {
+      "label": "Deadline"
+    },
+    "status": {
+      "label": "Status",
+      "values": {
+        "ACTIVE": "Active",
+        "COMPLETED": "Completed",
+        "CANCELLED": "Cancelled"
+      }
     }
   },
   "product": {

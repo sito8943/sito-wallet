@@ -15,6 +15,7 @@ export * from "./photo";
 export * from "./image";
 export * from "./theme";
 export * from "./product";
+export * from "./goal";
 export * from "./account";
 export * from "./savingsProjection";
 export * from "./rewards";

@@ -54,6 +54,7 @@ vi.mock("lib", () => ({
     subscriptionProviders: "/subscription-providers",
     debts: "/debts",
     debtNew: "/debts/new",
+    goals: "/goals",
     accounts: "/accounts",
     currencies: "/currencies",
     notFound: "*",
@@ -85,6 +86,7 @@ describe("feature flags navigation guards", () => {
         accountsEnabled: true,
         currenciesEnabled: true,
         transactionCategoriesEnabled: false,
+        goalsEnabled: false,
       }),
     );
 
@@ -93,6 +95,7 @@ describe("feature flags navigation guards", () => {
     expect(menuPages).not.toContain(MenuKeys.Transactions);
     expect(menuPages).not.toContain(MenuKeys.TransactionCategories);
     expect(menuPages).not.toContain(MenuKeys.Subscriptions);
+    expect(menuPages).not.toContain(MenuKeys.Goals);
     expect(menuPages).toContain(MenuKeys.Accounts);
   });
 
@@ -102,6 +105,7 @@ describe("feature flags navigation guards", () => {
         transactionsEnabled: false,
         subscriptionsEnabled: false,
         debtsEnabled: false,
+        goalsEnabled: false,
         accountsEnabled: false,
         currenciesEnabled: true,
         transactionCategoriesEnabled: false,
@@ -117,7 +121,20 @@ describe("feature flags navigation guards", () => {
     expect(pageKeys).not.toContain(PageId.SubscriptionProviders);
     expect(pageKeys).not.toContain(PageId.Debts);
     expect(pageKeys).not.toContain(PageId.DebtNew);
+    expect(pageKeys).not.toContain(PageId.Goals);
     expect(pageKeys).not.toContain(PageId.Accounts);
     expect(pageKeys).toContain(PageId.Currencies);
+  });
+
+  it("shows goals when the flag is on", () => {
+    const menuPages = getFeatureFilteredMenuMap(checker({})).map(
+      (item) => item.page,
+    );
+    const pageKeys = getFeatureFilteredSitemap(checker({})).map(
+      (route) => route.key,
+    );
+
+    expect(menuPages).toContain(MenuKeys.Goals);
+    expect(pageKeys).toContain(PageId.Goals);
   });
 });

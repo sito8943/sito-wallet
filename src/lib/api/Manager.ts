@@ -8,6 +8,7 @@ import FeatureFlagClient from "./FeatureFlagClient";
 import SubscriptionProviderClient from "./SubscriptionProviderClient";
 import SubscriptionClient from "./SubscriptionClient";
 import DebtClient from "./DebtClient";
+import GoalClient from "./GoalClient";
 import NotificationClient from "./NotificationClient";
 import ProductClient from "./ProductClient";
 import PurchaseProviderClient from "./PurchaseProviderClient";
@@ -36,6 +37,7 @@ export class Manager extends IManager {
     new SubscriptionProviderClient();
   subscriptions: SubscriptionClient = new SubscriptionClient();
   debts: DebtClient = new DebtClient();
+  goals: GoalClient = new GoalClient();
   notifications: NotificationClient = new NotificationClient();
   products: ProductClient = new ProductClient();
   purchaseProviders: PurchaseProviderClient = new PurchaseProviderClient();
@@ -117,6 +119,10 @@ export class Manager extends IManager {
 
   get Debts(): DebtClient {
     return this.debts;
+  }
+
+  get Goals(): GoalClient {
+    return this.goals;
   }
 
   get Notifications(): NotificationClient {

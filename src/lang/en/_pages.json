@@ -12,6 +12,7 @@
     "subscriptionProviders": "Subscription providers",
     "debts": "Debts",
     "debtNew": "New debt",
+    "goals": "Goals",
     "currencies": "Currencies",
     "users": "Users",
     "feedback": "Feedback",
@@ -275,6 +276,14 @@
         "eligibleSpent": "Eligible spending",
         "earned": "Points earned",
         "spent": "Spent"
+      },
+      "goals": {
+        "configTitle": "Configure goals",
+        "goalsLabel": "Goals to show",
+        "goalsHelper": "Empty: every active goal, by deadline.",
+        "empty": "You don't have active goals",
+        "error": "The goals could not be loaded",
+        "viewAll": "View all goals"
       }
     }
   },
@@ -303,6 +312,10 @@
     "subscriptionRenewalReminder": {
       "title": "Upcoming renewal",
       "message": "{{subscriptionName}} renews on {{nextRenewalAtFormatted}}"
+    },
+    "goalDeadlineReminder": {
+      "title": "Your goal {{goalName}} is due soon",
+      "message": "You still need {{remainingFormatted}} {{currencySymbol}} for {{goalName}} by {{deadlineFormatted}}"
     }
   },
   "profile": {
@@ -392,10 +405,11 @@
       "description": "MCP (Model Context Protocol) lets AI agents such as Claude Code, Codex or Claude Desktop work with your wallet. Ask them about your accounts and spending, or have them record transactions for you.",
       "capabilitiesTitle": "What an agent can do",
       "capabilities": {
-        "read": "Read your accounts, balances, transactions, categories, currencies, debts, subscriptions and upcoming renewals, summaries and balance history",
+        "read": "Read your accounts, balances, transactions, categories, currencies, debts, goals, subscriptions and upcoming renewals, summaries and balance history",
         "transactions": "Create, edit, delete and restore income and expense transactions, with store and items from a receipt",
         "transfers": "Create transfers between your accounts",
         "debts": "Create, edit, pay and cancel debts",
+        "goals": "Create, edit, complete and cancel savings goals",
         "subscriptions": "Create, edit, pause and cancel subscriptions and add their providers",
         "setup": "Create and edit accounts, categories and currencies, and set or recalculate an account balance",
         "rewards": "Adjust the reward points of your cards"
@@ -436,6 +450,10 @@
         "debts": {
           "label": "Debts",
           "description": "Create, edit, pay and cancel debts."
+        },
+        "goals": {
+          "label": "Goals",
+          "description": "Create, edit, complete and cancel savings goals, and list your products to create them."
         },
         "subscriptions": {
           "label": "Subscriptions",
@@ -846,7 +864,8 @@
       "transactions": "transactions",
       "transactionCategories": "transaction categories",
       "subscriptions": "subscriptions",
-      "debts": "debts"
+      "debts": "debts",
+      "goals": "goals"
     }
   },
   "sync": {
@@ -1404,6 +1423,9 @@
       "subscriptionProviders": {
         "description": "Manage the providers linked to your subscriptions and reuse them in recurring payments."
       },
+      "goals": {
+        "description": "Save for what you want: goals with a target, deadline and progress."
+      },
       "accounts": {
         "description": "Review and organize bank accounts, cash, and digital wallets inside Sito Wallet."
       },
@@ -1513,6 +1535,56 @@
         "text": "Edit payment",
         "title": "Edit payment",
         "successMessage": "Payment updated successfully"
+      }
+    }
+  },
+  "goals": {
+    "title": "Goals",
+    "add": "Add a goal",
+    "empty": {
+      "active": "You don't have active goals. Create one to start saving.",
+      "completed": "You haven't completed any goal yet.",
+      "cancelled": "You don't have cancelled goals."
+    },
+    "tabs": {
+      "active": "Active",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "forms": {
+      "add": "New goal",
+      "edit": "Edit goal",
+      "editAria": "Click to edit the goal"
+    },
+    "labels": {
+      "progress": "{{saved}} / {{target}} {{currency}}",
+      "percent": "{{percent}} %",
+      "progressAria": "{{name}} progress",
+      "deadline": "Deadline: {{date}}",
+      "noDeadline": "No deadline",
+      "daysLeft_one": "{{count}} day left",
+      "daysLeft_other": "{{count}} days left",
+      "dueToday": "Due today",
+      "overdue": "Overdue",
+      "monthlyNeeded": "Save {{amount}} {{currency}}/month",
+      "reached": "Reached!"
+    },
+    "actions": {
+      "edit": {
+        "text": "Edit goal"
+      },
+      "complete": {
+        "text": "Mark completed",
+        "successMessage": "Goal marked as completed"
+      },
+      "cancel": {
+        "text": "Cancel goal",
+        "confirmTitle": "Cancel this goal?",
+        "successMessage": "Goal cancelled successfully"
+      },
+      "reopen": {
+        "text": "Reopen goal",
+        "successMessage": "Goal reopened successfully"
       }
     }
   },

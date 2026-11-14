@@ -19,6 +19,7 @@ export function AddDashboardCardForm(props: DashboardFormPropsType) {
   const { account } = useAuth();
   const { isFeatureEnabled } = useFeatureFlags();
   const subscriptionsEnabled = isFeatureEnabled("subscriptionsEnabled");
+  const goalsEnabled = isFeatureEnabled("goalsEnabled");
 
   useEffect(() => {
     if (account && setValue) setValue("userId", account?.id ?? 0);
@@ -30,14 +31,17 @@ export function AddDashboardCardForm(props: DashboardFormPropsType) {
         ?.filter(
           ({ value }) =>
             typeof value === "number" &&
-            isDashboardCardEnabled(value, subscriptionsEnabled),
+            isDashboardCardEnabled(value, {
+              subscriptionsEnabled,
+              goalsEnabled,
+            }),
         )
         .map(({ key, value }) => ({
           id: value as number,
           name: t(`_entities:userDashboardCard.type.values.${key}`),
         })) ?? []),
     ],
-    [subscriptionsEnabled, t],
+    [goalsEnabled, subscriptionsEnabled, t],
   );
 
   return (

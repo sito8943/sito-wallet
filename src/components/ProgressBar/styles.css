@@ -1,0 +1,21 @@
+@reference "../../styles/variables.css";
+
+.progress-bar {
+  @apply h-2 w-full overflow-hidden rounded-full bg-base-dark;
+}
+
+.progress-bar-fill {
+  @apply h-full rounded-full bg-bg-primary transition-[width] duration-300;
+}
+
+.progress-bar-fill--success {
+  @apply bg-bg-success;
+}
+
+.progress-bar-fill--warning {
+  @apply bg-bg-warning;
+}
+
+.progress-bar-fill--error {
+  @apply bg-bg-error;
+}

@@ -1,0 +1,9 @@
+@reference "../../styles/variables.css";
+
+.goals-tabs {
+  @apply w-full;
+}
+
+.goals-grid {
+  @apply gap-3;
+}

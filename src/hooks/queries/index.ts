@@ -14,6 +14,7 @@ export * from "./useSubscriptionProviders";
 export * from "./useProducts";
 export * from "./usePurchaseProviders";
 export * from "./useDebts";
+export * from "./useGoals";
 export * from "./useNotifications";
 export * from "./useUsers";
 export * from "./useCatalogSelect";

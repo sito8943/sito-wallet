@@ -552,7 +552,8 @@
         "LastTransactions": "Últimas transacciones",
         "CategoryAverage": "Promedio por categoría",
         "SavingsProjection": "Proyección de ahorro",
-        "CardRewards": "Puntos de tarjeta"
+        "CardRewards": "Puntos de tarjeta",
+        "Goals": "Metas"
       }
     }
   },
@@ -653,6 +654,48 @@
     "category": {
       "label": "Categoría",
       "placeholder": "Selecciona una categoría"
+    }
+  },
+  "goal": {
+    "name": {
+      "placeholder": "Ej: Bicicleta nueva"
+    },
+    "product": {
+      "label": "Producto",
+      "helper": "Opcional. Rellena el nombre, la foto y el precio de su última compra."
+    },
+    "account": {
+      "label": "Cuenta",
+      "helper": "Opcional. Lo ahorrado será el saldo de la cuenta.",
+      "inUse": "Otra meta activa ya usa esta cuenta: las dos contarán el mismo saldo."
+    },
+    "currency": {
+      "label": "Moneda",
+      "placeholder": "Selecciona una moneda",
+      "required": "La moneda es requerida"
+    },
+    "targetAmount": {
+      "label": "Objetivo",
+      "placeholder": "Ej: 500.00",
+      "required": "El objetivo es requerido",
+      "greaterThanZero": "El objetivo debe ser mayor que cero"
+    },
+    "savedAmount": {
+      "label": "Ahorrado",
+      "placeholder": "Ej: 120.00",
+      "helper": "Lo que llevas ahorrado. Actualízalo cuando quieras.",
+      "min": "Lo ahorrado no puede ser negativo"
+    },
+    "deadline": {
+      "label": "Fecha límite"
+    },
+    "status": {
+      "label": "Estado",
+      "values": {
+        "ACTIVE": "Activa",
+        "COMPLETED": "Cumplida",
+        "CANCELLED": "Cancelada"
+      }
     }
   },
   "product": {

@@ -114,6 +114,12 @@ export const seoRouteDefinitions: SeoRouteDefinition[] = [
     robots: SEO_PRIVATE_ROBOTS,
   },
   {
+    path: AppRoutes.goals,
+    titleKey: "_pages:pages.goals",
+    descriptionKey: "_pages:seo.routes.goals.description",
+    robots: SEO_PRIVATE_ROBOTS,
+  },
+  {
     path: AppRoutes.accounts,
     titleKey: "_pages:pages.accounts",
     descriptionKey: "_pages:seo.routes.accounts.description",

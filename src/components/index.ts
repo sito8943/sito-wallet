@@ -22,3 +22,4 @@ export * from "./McpAccessBadge";
 export * from "./McpAccessSelector";
 export * from "./McpAreaSelector";
 export * from "./McpPermissionTabs";
+export * from "./ProgressBar";
