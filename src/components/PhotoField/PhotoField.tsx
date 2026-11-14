@@ -26,7 +26,7 @@ import type { PhotoFieldPropsType } from "./types";
 import "./styles.css";
 
 export function PhotoField(props: PhotoFieldPropsType) {
-  const { inputId, values, disabled, onChange } = props;
+  const { inputId, values, disabled, onChange, hideUrl, fallbackPhoto } = props;
   const { photo, photoUrl, file, removePhoto } = values;
   const { t } = useTranslation();
   const { showErrorNotification } = useNotification();
@@ -68,6 +68,11 @@ export function PhotoField(props: PhotoFieldPropsType) {
             <img className="photo-field-image" src={filePreview} alt="" />
           ) : previewPhoto ? (
             <ProviderPhoto className="photo-field-image" photo={previewPhoto} />
+          ) : fallbackPhoto ? (
+            <ProviderPhoto
+              className="photo-field-image"
+              photo={fallbackPhoto}
+            />
           ) : (
             <FontAwesomeIcon icon={faImage} className="text-text-muted" />
           )}
@@ -132,23 +137,25 @@ export function PhotoField(props: PhotoFieldPropsType) {
           onChange({ file: selected, photoUrl: "", removePhoto: false });
         }}
       />
-      <div className="photo-field-url">
-        <TextInput
-          type="url"
-          autoComplete="off"
-          disabled={disabled}
-          value={photoUrl}
-          label={t("_entities:base.photo.url.label")}
-          placeholder={t("_entities:base.photo.url.placeholder")}
-          onChange={(event) =>
-            onChange({
-              photoUrl: event.currentTarget.value,
-              file: null,
-              removePhoto: false,
-            })
-          }
-        />
-      </div>
+      {!hideUrl && (
+        <div className="photo-field-url">
+          <TextInput
+            type="url"
+            autoComplete="off"
+            disabled={disabled}
+            value={photoUrl}
+            label={t("_entities:base.photo.url.label")}
+            placeholder={t("_entities:base.photo.url.placeholder")}
+            onChange={(event) =>
+              onChange({
+                photoUrl: event.currentTarget.value,
+                file: null,
+                removePhoto: false,
+              })
+            }
+          />
+        </div>
+      )}
     </div>
   );
 }
