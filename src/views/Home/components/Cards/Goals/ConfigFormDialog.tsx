@@ -19,6 +19,7 @@ import { ACTIVE_GOALS_FILTERS } from "./constants";
 import type { ConfigFormDialogPropsType, GoalsCardFormType } from "./types";
 
 import "../styles.css";
+import "./styles.css";
 
 export const ConfigFormDialog = (
   props: ConfigFormDialogPropsType<GoalsCardFormType>,
@@ -37,25 +38,30 @@ export const ConfigFormDialog = (
 
   return (
     <FormDialog title={t("_pages:home.dashboard.goals.configTitle")} {...props}>
-      <Controller
-        control={control}
-        name="goals"
-        render={({ field: { value, onChange, ...rest } }) => (
-          <AutocompleteInput
-            value={value}
-            multiple
-            label={t("_pages:home.dashboard.goals.goalsLabel")}
-            helperText={t("_pages:home.dashboard.goals.goalsHelper")}
-            autoComplete={`${Tables.Goals}-${t(
-              "_pages:home.dashboard.goals.goalsLabel",
-            )}`}
-            onChange={(v) => onChange(v)}
-            options={goalOptions}
-            containerClassName="dashboard-card-autocomplete-full"
-            {...rest}
-          />
-        )}
-      />
+      <div className="goals-card-config">
+        <Controller
+          control={control}
+          name="goals"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <AutocompleteInput
+              value={value}
+              multiple
+              label={t("_pages:home.dashboard.goals.goalsLabel")}
+              autoComplete={`${Tables.Goals}-${t(
+                "_pages:home.dashboard.goals.goalsLabel",
+              )}`}
+              onChange={(v) => onChange(v)}
+              options={goalOptions}
+              containerClassName="dashboard-card-autocomplete-full"
+              {...rest}
+            />
+          )}
+        />
+        {/* Outside the input: the lib centers chips on input + helper text. */}
+        <p className="goals-card-config-helper">
+          {t("_pages:home.dashboard.goals.goalsHelper")}
+        </p>
+      </div>
     </FormDialog>
   );
 };

@@ -39,3 +39,12 @@
 .goals-card-link {
   @apply self-end text-sm text-text-primary underline-offset-2 hover:underline;
 }
+
+/* Room below the single field so the goals list opens without being cut. */
+.goals-card-config {
+  @apply min-h-64;
+}
+
+.goals-card-config-helper {
+  @apply -mt-4 text-xs text-text-muted;
+}
