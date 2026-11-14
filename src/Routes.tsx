@@ -31,6 +31,7 @@ export const Routes = () => {
     PurchaseProviders,
     Debts,
     DebtEditor,
+    Goals,
     Transactions,
     Accounts,
     Currencies,
@@ -165,6 +166,16 @@ export const Routes = () => {
               <DebtEditor />
             ) : (
               <FeatureUnavailable module="debts" />
+            )
+          }
+        />
+        <Route
+          path={AppRoutes.goals}
+          element={
+            isFeatureEnabled("goalsEnabled") ? (
+              <Goals />
+            ) : (
+              <FeatureUnavailable module="goals" />
             )
           }
         />

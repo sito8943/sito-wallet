@@ -1,0 +1,9 @@
+@reference "../../../../styles/variables.css";
+
+.goal-form-grid {
+  @apply grid gap-5 md:grid-cols-2;
+}
+
+.goal-form-warning {
+  @apply flex items-center gap-2 rounded-lg bg-bg-warning px-3 py-2 text-sm text-warning;
+}

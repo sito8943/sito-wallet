@@ -12,6 +12,7 @@
     "subscriptionProviders": "Proveedores de suscripción",
     "debts": "Deudas",
     "debtNew": "Nueva deuda",
+    "goals": "Metas",
     "currencies": "Monedas",
     "users": "Usuarios",
     "feedback": "Comentarios",
@@ -275,6 +276,14 @@
         "eligibleSpent": "Gasto elegible",
         "earned": "Puntos ganados",
         "spent": "Gastado"
+      },
+      "goals": {
+        "configTitle": "Configurar metas",
+        "goalsLabel": "Metas a mostrar",
+        "goalsHelper": "Vacío: todas las metas activas, por fecha límite.",
+        "empty": "No tienes metas activas",
+        "error": "No se pudieron cargar las metas",
+        "viewAll": "Ver todas las metas"
       }
     }
   },
@@ -303,6 +312,10 @@
     "subscriptionRenewalReminder": {
       "title": "Próxima renovación",
       "message": "{{subscriptionName}} renueva el {{nextRenewalAtFormatted}}"
+    },
+    "goalDeadlineReminder": {
+      "title": "Tu meta {{goalName}} vence pronto",
+      "message": "Te faltan {{remainingFormatted}} {{currencySymbol}} para {{goalName}} antes del {{deadlineFormatted}}"
     }
   },
   "profile": {
@@ -392,10 +405,11 @@
       "description": "MCP (Model Context Protocol) permite que agentes de IA como Claude Code, Codex o Claude Desktop trabajen con tu billetera. Pregúntales por tus cuentas y gastos, o pídeles que registren transacciones por ti.",
       "capabilitiesTitle": "Qué puede hacer un agente",
       "capabilities": {
-        "read": "Consultar tus cuentas, saldos, transacciones, categorías, monedas, deudas, suscripciones y próximas renovaciones, resúmenes e historial de saldo",
+        "read": "Consultar tus cuentas, saldos, transacciones, categorías, monedas, deudas, metas, suscripciones y próximas renovaciones, resúmenes e historial de saldo",
         "transactions": "Crear, editar, borrar y restaurar transacciones de ingresos y gastos, con tienda y productos de un ticket",
         "transfers": "Crear transferencias entre tus cuentas",
         "debts": "Crear, editar, pagar y cancelar deudas",
+        "goals": "Crear, editar, completar y cancelar metas de ahorro",
         "subscriptions": "Crear, editar, pausar y cancelar suscripciones y añadir sus proveedores",
         "setup": "Crear y editar cuentas, categorías y monedas, y ajustar o recalcular el saldo de una cuenta",
         "rewards": "Ajustar los puntos de recompensa de tus tarjetas"
@@ -436,6 +450,10 @@
         "debts": {
           "label": "Deudas",
           "description": "Crear, editar, pagar y cancelar deudas."
+        },
+        "goals": {
+          "label": "Metas",
+          "description": "Crear, editar, completar y cancelar metas de ahorro."
         },
         "subscriptions": {
           "label": "Suscripciones",
@@ -846,7 +864,8 @@
       "transactions": "transacciones",
       "transactionCategories": "categorías de transacciones",
       "subscriptions": "suscripciones",
-      "debts": "deudas"
+      "debts": "deudas",
+      "goals": "metas"
     }
   },
   "sync": {
@@ -1404,6 +1423,9 @@
       "subscriptionProviders": {
         "description": "Gestiona los proveedores asociados a tus suscripciones y reutilízalos al crear pagos recurrentes."
       },
+      "goals": {
+        "description": "Ahorra para lo que quieres: metas con objetivo, fecha límite y progreso."
+      },
       "accounts": {
         "description": "Consulta y organiza tus cuentas bancarias, efectivo o carteras digitales en Sito Wallet."
       },
@@ -1513,6 +1535,56 @@
         "text": "Editar pago",
         "title": "Editar pago",
         "successMessage": "Pago actualizado correctamente"
+      }
+    }
+  },
+  "goals": {
+    "title": "Metas",
+    "add": "Agregar una meta",
+    "empty": {
+      "active": "No tienes metas activas. Crea una para empezar a ahorrar.",
+      "completed": "Todavía no has cumplido ninguna meta.",
+      "cancelled": "No tienes metas canceladas."
+    },
+    "tabs": {
+      "active": "Activas",
+      "completed": "Cumplidas",
+      "cancelled": "Canceladas"
+    },
+    "forms": {
+      "add": "Nueva meta",
+      "edit": "Editar meta",
+      "editAria": "Haz clic para editar la meta"
+    },
+    "labels": {
+      "progress": "{{saved}} / {{target}} {{currency}}",
+      "percent": "{{percent}} %",
+      "progressAria": "Progreso de {{name}}",
+      "deadline": "Fecha límite: {{date}}",
+      "noDeadline": "Sin fecha límite",
+      "daysLeft_one": "Falta {{count}} día",
+      "daysLeft_other": "Faltan {{count}} días",
+      "dueToday": "Vence hoy",
+      "overdue": "Vencida",
+      "monthlyNeeded": "Ahorra {{amount}} {{currency}}/mes",
+      "reached": "¡Alcanzada!"
+    },
+    "actions": {
+      "edit": {
+        "text": "Editar meta"
+      },
+      "complete": {
+        "text": "Marcar cumplida",
+        "successMessage": "Meta marcada como cumplida"
+      },
+      "cancel": {
+        "text": "Cancelar meta",
+        "confirmTitle": "¿Cancelar esta meta?",
+        "successMessage": "Meta cancelada correctamente"
+      },
+      "reopen": {
+        "text": "Reabrir meta",
+        "successMessage": "Meta reabierta correctamente"
       }
     }
   },

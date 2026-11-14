@@ -1,0 +1,81 @@
+@reference "../../../../styles/variables.css";
+
+.goal-card-content {
+  @apply gap-2;
+}
+
+.goal-card--closed {
+  @apply opacity-80;
+}
+
+.goal-card-title-row {
+  @apply flex w-full min-w-0 items-center gap-3;
+}
+
+.goal-card-photo {
+  @apply flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-base-light text-text-muted;
+}
+
+.goal-card-photo-image {
+  @apply h-full w-full object-cover;
+}
+
+.goal-card-heading {
+  @apply flex min-w-0 flex-col text-start;
+}
+
+.goal-card-description {
+  @apply line-clamp-2 text-xs text-text-muted;
+}
+
+.goal-card-progress {
+  @apply flex flex-col gap-1;
+}
+
+.goal-card-progress-row {
+  @apply flex items-baseline justify-between gap-2 text-sm;
+}
+
+.goal-card-amounts {
+  @apply font-semibold;
+}
+
+.goal-card-percent {
+  @apply text-text-muted;
+}
+
+.goal-card-meta {
+  @apply flex flex-wrap items-center gap-2 text-start text-sm text-text-muted;
+}
+
+.goal-card-days {
+  @apply rounded-full bg-base-dark px-2 py-0.5 text-xs text-text;
+}
+
+.goal-card-days--today {
+  @apply bg-bg-warning text-warning;
+}
+
+.goal-card-days--overdue {
+  @apply bg-bg-error text-error;
+}
+
+.goal-card-chips {
+  @apply flex flex-wrap gap-2 empty:hidden;
+}
+
+.goal-card-chip {
+  @apply inline-flex w-fit items-center gap-1 rounded-full border border-border px-2 py-0.5 text-xs;
+}
+
+.goal-card-chip--completed {
+  @apply border-transparent bg-bg-success text-success;
+}
+
+.goal-card-reached {
+  @apply flex flex-wrap items-center justify-between gap-2;
+}
+
+.goal-card-reached-badge {
+  @apply inline-flex items-center gap-1 rounded-full bg-bg-success px-3 py-1 text-sm font-semibold text-success;
+}

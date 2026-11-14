@@ -27,6 +27,7 @@ export const WALLET_FEATURES = [
   "page.debts",
   "page.debt_new",
   "page.debt_edit",
+  "page.goals",
   "page.accounts",
   "page.currencies",
   "page.profile",

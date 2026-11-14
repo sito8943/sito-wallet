@@ -24,6 +24,7 @@ export const AppRoutes: { [key: string]: string } = {
   debts: "/debts",
   debtNew: "/debts/new",
   debtEdit: "/debts/:debtId/edit",
+  goals: "/goals",
   accounts: "/accounts",
   currencies: "/currencies",
   profile: "/profile",

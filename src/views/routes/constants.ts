@@ -106,6 +106,11 @@ export const routeComponents = defineRouteComponents({
       default: module.DebtEditor,
     })),
   ),
+  Goals: loadable(() =>
+    import("views/Goals/Goals").then((module) => ({
+      default: module.Goals,
+    })),
+  ),
   Transactions: loadable(() =>
     import("views/Transactions/Transactions").then((module) => ({
       default: module.Transactions,
