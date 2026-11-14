@@ -262,10 +262,18 @@ describe("OAuthConsent", () => {
         name: /_pages:aiAgents.areas.items.debts.label/,
       }),
     );
+    fireEvent.click(
+      screen.getByRole("checkbox", {
+        name: /_pages:aiAgents.areas.items.goals.label/,
+      }),
+    );
     fireEvent.click(allowButton());
 
     await waitFor(() =>
-      expect(mockApprove).toHaveBeenCalledWith("req_1", "FULL", ["DEBTS"]),
+      expect(mockApprove).toHaveBeenCalledWith("req_1", "FULL", [
+        "DEBTS",
+        "GOALS",
+      ]),
     );
   });
 

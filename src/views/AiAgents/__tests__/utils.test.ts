@@ -118,6 +118,9 @@ describe("AiAgents utils", () => {
     expect(getApiKeyAreaLabelKeys([McpArea.Currencies])).toEqual([
       "_pages:aiAgents.areas.items.currencies.label",
     ]);
+    expect(getApiKeyAreaLabelKeys([McpArea.Goals])).toEqual([
+      "_pages:aiAgents.areas.items.goals.label",
+    ]);
   });
 
   it("edits a connected app from its scopes", () => {

@@ -33,6 +33,7 @@ export const MCP_CAPABILITY_KEYS = [
   "transactions",
   "transfers",
   "debts",
+  "goals",
   "subscriptions",
   "setup",
   "rewards",
@@ -65,6 +66,7 @@ export const MCP_WRITE_ONLY_SCOPE = "mcp:write-only";
 export const MCP_AREAS: McpArea[] = [
   McpArea.Transactions,
   McpArea.Debts,
+  McpArea.Goals,
   McpArea.Subscriptions,
   McpArea.Accounts,
   McpArea.Categories,
@@ -75,6 +77,7 @@ export const MCP_AREAS: McpArea[] = [
 export const MCP_AREA_KEYS: Record<McpArea, string> = {
   [McpArea.Transactions]: "transactions",
   [McpArea.Debts]: "debts",
+  [McpArea.Goals]: "goals",
   [McpArea.Subscriptions]: "subscriptions",
   [McpArea.Accounts]: "accounts",
   [McpArea.Categories]: "categories",

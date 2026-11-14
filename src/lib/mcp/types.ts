@@ -32,6 +32,7 @@ export enum McpAccess {
 export enum McpArea {
   Transactions = "TRANSACTIONS",
   Debts = "DEBTS",
+  Goals = "GOALS",
   Subscriptions = "SUBSCRIPTIONS",
   Accounts = "ACCOUNTS",
   Categories = "CATEGORIES",

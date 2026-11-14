@@ -168,10 +168,9 @@ describe("isMcpAccess / toMcpAccess", () => {
 
 describe("toMcpAreas", () => {
   it("keeps known areas in display order", () => {
-    expect(toMcpAreas([McpArea.Currencies, "GONE", McpArea.Debts])).toEqual([
-      McpArea.Debts,
-      McpArea.Currencies,
-    ]);
+    expect(
+      toMcpAreas([McpArea.Currencies, "GONE", McpArea.Goals, McpArea.Debts]),
+    ).toEqual([McpArea.Debts, McpArea.Goals, McpArea.Currencies]);
   });
 
   it.each([undefined, null, [], "DEBTS"])(
@@ -188,6 +187,12 @@ describe("getMcpAreasFromScopes", () => {
     expect(
       getMcpAreasFromScopes(["mcp", "mcp:area:debts", "mcp:area:transactions"]),
     ).toEqual([McpArea.Transactions, McpArea.Debts]);
+  });
+
+  it("reads the goals area scope", () => {
+    expect(
+      getMcpAreasFromScopes(["mcp", "mcp:area:currencies", "mcp:area:goals"]),
+    ).toEqual([McpArea.Goals, McpArea.Currencies]);
   });
 
   it.each([undefined, null, [], ["mcp", "mcp:read-only"]])(
