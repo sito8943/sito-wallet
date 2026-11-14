@@ -243,8 +243,9 @@
       "defaultName": "Puntos",
       "hint": "Los puntos se ganan con los gastos de la tarjeta (no cuentan transferencias ni ajustes de saldo). Deja ambos vacíos para desactivarlos.",
       "notConfigured": "Sin configurar",
-      "summary": "{{points}} pt por cada {{unit}} gastado",
-      "summaryNamed": "{{name}} · {{points}} pt por cada {{unit}} gastado",
+      "rule_one": "{{points}} punto por cada {{amount}} gastados",
+      "rule_other": "{{points}} puntos por cada {{amount}} gastados",
+      "summaryNamed": "{{name}} · {{rule}}",
       "invalid": "Revisa la configuración de puntos",
       "configure": "Configurar",
       "edit": "Editar",
@@ -259,11 +260,12 @@
         "maxLength": "Hasta 40 caracteres"
       },
       "spendUnit": {
-        "label": "Gasto por tramo",
+        "label": "Por cada",
+        "labelWithCurrency": "Por cada ({{currency}})",
         "placeholder": "Ej: 10"
       },
       "pointsPerUnit": {
-        "label": "Puntos por tramo",
+        "label": "Ganas (puntos)",
         "placeholder": "Ej: 1"
       },
       "pair": {

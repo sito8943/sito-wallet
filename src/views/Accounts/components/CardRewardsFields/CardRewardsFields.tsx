@@ -26,6 +26,7 @@ import {
   findMatchingRewardsPreset,
   getRewardsPresetEntries,
   getRewardsPresets,
+  parseNullableNumber,
 } from "lib";
 
 // hooks
@@ -42,6 +43,7 @@ import { numericEnumEntries } from "../SavingsInterestFields/utils";
 import {
   getExcludableRewardsCategories,
   getRewardsPairErrorKey,
+  getRewardsRuleText,
   selectCategoriesByIds,
 } from "./utils";
 
@@ -49,12 +51,28 @@ import "./styles.css";
 
 export function CardRewardsFields(props: CardRewardsFieldsPropsType) {
   const { control, setValue, isLoading } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  const [bankName, spendUnit, pointsPerUnit] = useWatch({
+  const [bankName, spendUnit, pointsPerUnit, currency] = useWatch({
     control,
-    name: ["bankName", "rewardsSpendUnit", "rewardsPointsPerUnit"],
+    name: ["bankName", "rewardsSpendUnit", "rewardsPointsPerUnit", "currency"],
   });
+  const currencySymbol = currency?.symbol || currency?.name;
+  const unitNumber = parseNullableNumber(spendUnit);
+  const pointsNumber = parseNullableNumber(pointsPerUnit);
+  const ruleText =
+    unitNumber !== null &&
+    pointsNumber !== null &&
+    unitNumber > 0 &&
+    pointsNumber > 0
+      ? getRewardsRuleText(
+          t,
+          i18n.language,
+          unitNumber,
+          pointsNumber,
+          currencySymbol,
+        )
+      : null;
 
   const presets = useMemo(() => getRewardsPresets(bankName), [bankName]);
   const selectedPreset = findMatchingRewardsPreset(presets, {
@@ -163,7 +181,13 @@ export function CardRewardsFields(props: CardRewardsFieldsPropsType) {
               step="any"
               min={0}
               value={value ?? ""}
-              label={t("_entities:account.rewards.spendUnit.label")}
+              label={
+                currencySymbol
+                  ? t("_entities:account.rewards.spendUnit.labelWithCurrency", {
+                      currency: currencySymbol,
+                    })
+                  : t("_entities:account.rewards.spendUnit.label")
+              }
               placeholder={t("_entities:account.rewards.spendUnit.placeholder")}
               {...rest}
             />
@@ -194,6 +218,7 @@ export function CardRewardsFields(props: CardRewardsFieldsPropsType) {
           )}
         />
       </div>
+      {ruleText && <p className="card-rewards-rule">{ruleText}</p>}
       <p className="card-rewards-hint">{t("_entities:account.rewards.hint")}</p>
       <Controller
         control={control}

@@ -15,6 +15,7 @@ import { CardRewardsDialog } from "../CardRewardsDialog";
 
 // constants
 import { REWARDS_FIELD_NAMES } from "../CardRewardsFields/constants";
+import { getRewardsRuleText } from "../CardRewardsFields/utils";
 
 // types
 import type { CardRewardsFieldPropsType } from "./types";
@@ -30,16 +31,28 @@ export function CardRewardsField(props: CardRewardsFieldPropsType) {
   const { t, i18n } = useTranslation();
   const [open, setOpen] = useState(false);
 
-  const [nameValue, unitValue, pointsValue] = useWatch({
+  const [nameValue, unitValue, pointsValue, currency] = useWatch({
     control,
-    name: ["rewardsName", "rewardsSpendUnit", "rewardsPointsPerUnit"],
+    name: [
+      "rewardsName",
+      "rewardsSpendUnit",
+      "rewardsPointsPerUnit",
+      "currency",
+    ],
   });
   const unit = parseNullableNumber(unitValue);
   const points = parseNullableNumber(pointsValue);
   const name = typeof nameValue === "string" ? nameValue.trim() : "";
   const configured = unit !== null && points !== null;
-  const formatNumber = (value: number) =>
-    value.toLocaleString(i18n.language, { maximumFractionDigits: 4 });
+  const rule = configured
+    ? getRewardsRuleText(
+        t,
+        i18n.language,
+        unit,
+        points,
+        currency?.symbol || currency?.name,
+      )
+    : "";
 
   const { errors } = useFormState({ control, name: REWARDS_FIELD_NAMES });
   const hasError = REWARDS_FIELD_NAMES.some((field) => !!errors[field]);
@@ -52,16 +65,9 @@ export function CardRewardsField(props: CardRewardsFieldPropsType) {
         </span>
         <span className="card-rewards-field-summary">
           {configured
-            ? t(
-                name
-                  ? "_entities:account.rewards.summaryNamed"
-                  : "_entities:account.rewards.summary",
-                {
-                  name,
-                  points: formatNumber(points),
-                  unit: formatNumber(unit),
-                },
-              )
+            ? name
+              ? t("_entities:account.rewards.summaryNamed", { name, rule })
+              : rule
             : t("_entities:account.rewards.notConfigured")}
         </span>
         {hasError && (
