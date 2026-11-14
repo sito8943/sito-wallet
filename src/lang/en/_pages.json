@@ -402,7 +402,7 @@
       },
       "security": "An API key gives access to your wallet data. Keep it secret, use one key per device or agent, and revoke it right away if it leaks.",
       "accessTitle": "Access levels",
-      "access": "Each API key or connected app has its own access level. Read and write (default): everything listed above. Read only: it can look but never change anything. Write only: it can add or change data but cannot browse your history, balances or summaries. An API key can also be limited to some areas (transactions, debts...), and you can edit both at any time."
+      "access": "Each API key or connected app has its own access level. Read and write (default): everything listed above. Read only: it can look but never change anything. Write only: it can add or change data but cannot browse your history, balances or summaries. Both can also be limited to some areas (transactions, debts...), and you can edit them at any time."
     },
     "access": {
       "label": "Access",
@@ -423,7 +423,8 @@
     },
     "areas": {
       "label": "Areas",
-      "helper": "What this key can use. Lists of accounts, categories and currencies stay available so the agent can pick ids.",
+      "tab": "Areas ({{count}}/{{total}})",
+      "helper": "What this connection can use. Lists of accounts, categories and currencies stay available so the agent can pick ids.",
       "selectAll": "Select all",
       "invert": "Invert selection",
       "required": "Pick at least one area.",
@@ -480,8 +481,7 @@
         "nameRequired": "Name is required",
         "nameMax": "Name must be at most {{max}} characters",
         "successMessage": "API key created",
-        "fallbackError": "The API key could not be created",
-        "areasTab": "Areas ({{count}}/{{total}})"
+        "fallbackError": "The API key could not be created"
       },
       "created": {
         "title": "Copy your API key",
@@ -501,12 +501,18 @@
       "description": "Apps you allowed to use your wallet with your account, such as ChatGPT or claude.ai.",
       "empty": "No connected apps. Add Sito Wallet as a connector in ChatGPT or claude.ai to see it here.",
       "connectedAt": "Connected {{date}}",
+      "editAction": "Edit app",
       "disconnectAction": "Disconnect",
       "disconnect": {
         "confirm": "Disconnect",
         "title": "Disconnect \"{{name}}\"?",
         "message": "The app loses access to your wallet. To use it again you will have to connect and allow it again.",
         "successMessage": "App disconnected"
+      },
+      "edit": {
+        "title": "Edit connected app",
+        "note": "The app gets the changes the next time it renews its access (within an hour).",
+        "successMessage": "Connected app updated"
       }
     },
     "setup": {

@@ -11,7 +11,7 @@ import type { ConnectedAppsSectionPropsType } from "../../types";
 
 /** Apps connected over OAuth (ChatGPT, claude.ai…) with a disconnect action. */
 export function ConnectedAppsSection(props: ConnectedAppsSectionPropsType) {
-  const { grants, isLoading, hasError, onRetry, onDisconnect } = props;
+  const { grants, isLoading, hasError, onRetry, onEdit, onDisconnect } = props;
   const { t } = useTranslation();
 
   return (
@@ -38,6 +38,7 @@ export function ConnectedAppsSection(props: ConnectedAppsSectionPropsType) {
             <ConnectedAppListItem
               key={grant.id}
               grant={grant}
+              onEdit={onEdit}
               onDisconnect={onDisconnect}
             />
           ))}

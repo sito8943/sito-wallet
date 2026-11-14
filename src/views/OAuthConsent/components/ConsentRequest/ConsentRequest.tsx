@@ -12,7 +12,7 @@ import {
 import { Button } from "@sito/dashboard-app";
 
 // components
-import { McpAccessSelector, McpCapabilityList } from "components";
+import { McpCapabilityList, McpPermissionTabs } from "components";
 import { ConsentCard } from "../ConsentCard";
 
 // constants
@@ -21,19 +21,22 @@ import { RAW_INTERPOLATION } from "../../constants";
 // types
 import { ConsentDecision, type ConsentRequestPropsType } from "../../types";
 
-/** Who is asking, what it gets, its access level and the Allow / Deny answer. */
+/** Who is asking, what it gets, its access level and areas, and the Allow / Deny answer. */
 export function ConsentRequest(props: ConsentRequestPropsType) {
   const {
     request,
     email,
     access,
     onAccessChange,
+    areas,
+    onAreasChange,
     pendingDecision,
     isSubmitting,
     onDecide,
     onSwitchAccount,
   } = props;
   const { t } = useTranslation();
+  const noAreas = !areas.length;
 
   const names = {
     client: request.clientName,
@@ -76,10 +79,13 @@ export function ConsentRequest(props: ConsentRequestPropsType) {
         <McpCapabilityList />
       </div>
 
-      <McpAccessSelector
-        name="oauthAccess"
-        value={access}
-        onChange={onAccessChange}
+      <McpPermissionTabs
+        name="oauth"
+        access={access}
+        onAccessChange={onAccessChange}
+        areas={areas}
+        onAreasChange={onAreasChange}
+        areasError={noAreas ? t("_pages:aiAgents.areas.required") : undefined}
         disabled={isSubmitting}
       />
 
@@ -115,7 +121,7 @@ export function ConsentRequest(props: ConsentRequestPropsType) {
           variant="submit"
           color="primary"
           className="oauth-consent-button"
-          disabled={isSubmitting}
+          disabled={isSubmitting || noAreas}
           aria-busy={pendingDecision === ConsentDecision.Approve}
           onClick={() => onDecide(ConsentDecision.Approve)}
         >

@@ -2,13 +2,21 @@ import { useTranslation } from "react-i18next";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLinkSlash, faPlug } from "@fortawesome/free-solid-svg-icons";
+import {
+  faLinkSlash,
+  faPencil,
+  faPlug,
+} from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
 import { IconButton } from "@sito/dashboard-app";
 
 // lib
-import { formatDateTime, getMcpAccessFromScopes } from "lib";
+import {
+  formatDateTime,
+  getMcpAccessFromScopes,
+  getMcpAreasFromScopes,
+} from "lib";
 
 // components
 import { McpAccessBadge } from "components";
@@ -16,13 +24,20 @@ import { McpAccessBadge } from "components";
 // constants
 import { RAW_INTERPOLATION } from "../../constants";
 
+// utils
+import { getApiKeyAreaLabelKeys } from "../../utils";
+
 // types
 import type { ConnectedAppListItemPropsType } from "../../types";
 
 export function ConnectedAppListItem(props: ConnectedAppListItemPropsType) {
-  const { grant, onDisconnect, disabled } = props;
+  const { grant, onEdit, onDisconnect, disabled } = props;
   const { t } = useTranslation();
+  const editLabel = t("_pages:aiAgents.apps.editAction");
   const disconnectLabel = t("_pages:aiAgents.apps.disconnectAction");
+  const areaLabelKeys = getApiKeyAreaLabelKeys(
+    getMcpAreasFromScopes(grant.scopes),
+  );
 
   return (
     <li className="ai-agents-key">
@@ -34,6 +49,14 @@ export function ConnectedAppListItem(props: ConnectedAppListItemPropsType) {
           <p className="ai-agents-key-name">{grant.clientName}</p>
           <McpAccessBadge access={getMcpAccessFromScopes(grant.scopes)} />
         </div>
+        {areaLabelKeys && (
+          <p className="ai-agents-key-areas">
+            {t("_pages:aiAgents.keys.areas", {
+              areas: areaLabelKeys.map((key) => t(key)).join(", "),
+              interpolation: RAW_INTERPOLATION,
+            })}
+          </p>
+        )}
         <p className="ai-agents-key-meta">
           <span>
             {t("_pages:aiAgents.apps.connectedAt", {
@@ -51,6 +74,15 @@ export function ConnectedAppListItem(props: ConnectedAppListItemPropsType) {
           </span>
         </p>
       </div>
+      <IconButton
+        icon={faPencil}
+        type="button"
+        disabled={disabled}
+        aria-label={`${editLabel}: ${grant.clientName}`}
+        data-tooltip-id="tooltip"
+        data-tooltip-content={editLabel}
+        onClick={() => onEdit(grant)}
+      />
       <IconButton
         icon={faLinkSlash}
         type="button"

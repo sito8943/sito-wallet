@@ -2,6 +2,7 @@ import {
   DEFAULT_MCP_ACCESS,
   MCP_API_KEY_PLACEHOLDER,
   MCP_AREAS,
+  MCP_AREA_SCOPE_PREFIX,
   MCP_PATH,
   MCP_READ_ONLY_SCOPE,
   MCP_SERVER_NAME,
@@ -77,6 +78,26 @@ export const toMcpAreas = (value: unknown): McpArea[] => {
 /** True when `areas` covers every area (an unrestricted key). */
 export const hasAllMcpAreas = (areas: readonly McpArea[]): boolean =>
   MCP_AREAS.every((area) => areas.includes(area));
+
+/**
+ * Areas of an OAuth grant, from its `mcp:area:<name>` scopes. No area scope
+ * means every area; area scopes naming none we know mean no area (like the
+ * backend).
+ */
+export const getMcpAreasFromScopes = (
+  scopes: readonly string[] | null | undefined,
+): McpArea[] => {
+  const names = (scopes ?? [])
+    .filter((scope) => scope.startsWith(MCP_AREA_SCOPE_PREFIX))
+    .map((scope) => scope.slice(MCP_AREA_SCOPE_PREFIX.length));
+  if (!names.length) return [...MCP_AREAS];
+  return MCP_AREAS.filter((area) => names.includes(area.toLowerCase()));
+};
+
+/** Areas to send to sito-auth: null when every area is picked (no limit). */
+export const toMcpAreasPayload = (
+  areas: readonly McpArea[],
+): McpArea[] | null => (hasAllMcpAreas(areas) ? null : [...areas]);
 
 /**
  * Access level of an OAuth grant, from its scopes: `mcp:read-only` gives

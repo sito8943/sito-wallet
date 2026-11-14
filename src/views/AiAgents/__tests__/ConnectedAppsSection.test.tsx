@@ -70,6 +70,7 @@ const renderSection = (
     isLoading: state.isLoading ?? false,
     hasError: state.hasError ?? false,
     onRetry: vi.fn(),
+    onEdit: vi.fn(),
     onDisconnect: vi.fn(),
   };
   render(<ConnectedAppsSection {...props} />);
@@ -137,5 +138,21 @@ describe("ConnectedAppsSection", () => {
 
     fireEvent.click(screen.getByText("_accessibility:errors.500"));
     expect(props.onRetry).toHaveBeenCalledOnce();
+  });
+
+  it("shows the areas of a limited app only, and edits it", () => {
+    const limited = buildGrant(2, "claude.ai", null, ["mcp", "mcp:area:debts"]);
+    const props = renderSection([buildGrant(1, "ChatGPT"), limited]);
+
+    const areas = screen.getAllByText(/_pages:aiAgents.keys.areas/);
+    expect(areas).toHaveLength(1);
+    expect(areas[0].textContent).toContain(
+      "_pages:aiAgents.areas.items.debts.label",
+    );
+
+    fireEvent.click(
+      screen.getByLabelText("_pages:aiAgents.apps.editAction: claude.ai"),
+    );
+    expect(props.onEdit).toHaveBeenCalledWith(limited);
   });
 });

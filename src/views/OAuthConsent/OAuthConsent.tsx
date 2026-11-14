@@ -87,6 +87,8 @@ export function OAuthConsent() {
       email={account.email ?? ""}
       access={decision.access}
       onAccessChange={decision.setAccess}
+      areas={decision.areas}
+      onAreasChange={decision.setAreas}
       pendingDecision={decision.pendingDecision}
       isSubmitting={decision.isSubmitting}
       onDecide={decision.decide}

@@ -6,12 +6,14 @@ import {
   buildMcpSnippet,
   filterMcpGrants,
   getMcpAccessFromScopes,
+  getMcpAreasFromScopes,
   getMcpUrl,
   hasAllMcpAreas,
   isMcpAccess,
   resolveMcpApiKey,
   toMcpAccess,
   toMcpAreas,
+  toMcpAreasPayload,
 } from "../utils";
 
 const URL = "https://api.wallet.sito8943.com/mcp";
@@ -179,4 +181,30 @@ describe("toMcpAreas", () => {
       expect(hasAllMcpAreas(toMcpAreas(value))).toBe(true);
     },
   );
+});
+
+describe("getMcpAreasFromScopes", () => {
+  it("reads the area scopes of a grant", () => {
+    expect(
+      getMcpAreasFromScopes(["mcp", "mcp:area:debts", "mcp:area:transactions"]),
+    ).toEqual([McpArea.Transactions, McpArea.Debts]);
+  });
+
+  it.each([undefined, null, [], ["mcp", "mcp:read-only"]])(
+    "treats %j as every area",
+    (scopes) => {
+      expect(getMcpAreasFromScopes(scopes)).toEqual(MCP_AREAS);
+    },
+  );
+
+  it("gives no area when every area scope is unknown", () => {
+    expect(getMcpAreasFromScopes(["mcp", "mcp:area:budgets"])).toEqual([]);
+  });
+});
+
+describe("toMcpAreasPayload", () => {
+  it("sends null for every area and the list otherwise", () => {
+    expect(toMcpAreasPayload(MCP_AREAS)).toBeNull();
+    expect(toMcpAreasPayload([McpArea.Debts])).toEqual([McpArea.Debts]);
+  });
 });
