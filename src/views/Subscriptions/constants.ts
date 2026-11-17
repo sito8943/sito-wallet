@@ -30,3 +30,6 @@ export const SUBSCRIPTION_STATUS_BADGE_CLASSNAME: Record<
   PAUSED: "bg-bg-warning text-warning",
   CANCELED: "error",
 };
+
+/** Attribute values are not HTML, so skip i18next escaping. */
+export const RAW_INTERPOLATION = { escapeValue: false } as const;

@@ -26,12 +26,15 @@ import { dtoToForm, emptyTransaction, formToDto } from "../utils";
 import type { UpdateTransactionDto, TransactionDto } from "lib";
 
 // types
-import type { TransactionFormType } from "../types";
+import type {
+  TransactionFormType,
+  UseEditTransactionPropsType,
+} from "../types";
 
-export function useEditTransaction(): UseActionDialog<
-  TransactionDto,
-  TransactionFormType
-> {
+export function useEditTransaction(
+  props: UseEditTransactionPropsType = {},
+): UseActionDialog<TransactionDto, TransactionFormType> {
+  const { onSuccess } = props;
   const { t } = useTranslation();
 
   const manager = useManager();
@@ -72,6 +75,7 @@ export function useEditTransaction(): UseActionDialog<
           ],
         }),
       ]);
+      await onSuccess?.();
     },
     title: t("_pages:transactions.forms.edit"),
     onError: (error) => {

@@ -2,6 +2,7 @@ import type {
   AddSubscriptionBillingLogDto,
   AddSubscriptionDto,
   CommonTransactionCategoryDto,
+  SubscriptionBillingLogDto,
   SubscriptionBillingUnit,
   SubscriptionDto,
   SubscriptionStatus,
@@ -229,4 +230,20 @@ export const subscriptionBillingLogFormToDto = (
     ...(currencyId !== null ? { currencyId } : {}),
     ...(note !== null ? { note } : {}),
   };
+};
+
+export const formatBillingLogPaidAt = (paidAt: string): string => {
+  const paidAtDate = new Date(paidAt);
+
+  return Number.isNaN(paidAtDate.getTime())
+    ? paidAt
+    : paidAtDate.toLocaleString();
+};
+
+export const getBillingLogAmountLabel = (
+  log: Pick<SubscriptionBillingLogDto, "amount" | "currency">,
+): string => {
+  const currencyLabel = log.currency?.symbol ?? log.currency?.name ?? "";
+
+  return currencyLabel ? `${log.amount} ${currencyLabel}` : `${log.amount}`;
 };

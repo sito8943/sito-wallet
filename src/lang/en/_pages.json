@@ -1084,7 +1084,8 @@
         "disabled": "You cannot register payments for canceled subscriptions",
         "title": "Register payment",
         "for": "Subscription",
-        "successMessage": "Payment registered successfully"
+        "successMessage": "Payment registered successfully",
+        "openTransaction": "Edit the transaction for the {{amount}} payment on {{paidAt}}"
       },
       "renewal": {
         "text": "Register renewal",

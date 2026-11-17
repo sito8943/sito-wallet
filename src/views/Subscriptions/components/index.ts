@@ -3,3 +3,4 @@ export * from "./SubscriptionForm";
 export * from "./SubscriptionBillingLogForm";
 export * from "./AddSubscriptionBillingLogDialog";
 export * from "./SubscriptionActivitySidebar";
+export * from "./SubscriptionBillingLogItem";
