@@ -8,6 +8,7 @@ import type {
   FilterSavingsProjectionDailyDto,
   FilterSavingsProjectionDto,
   GetAccountByIdQueryDto,
+  GetAccountsListOptionsDto,
 } from "lib";
 
 export const AccountsQueryKeys = {
@@ -23,12 +24,14 @@ export const AccountsQueryKeys = {
   infiniteList: (
     query: Omit<QueryParam<AccountDto>, "currentPage">,
     filters: FilterAccountDto,
+    options: GetAccountsListOptionsDto = {},
   ) => ({
     queryKey: [
       ...AccountsQueryKeys.all().queryKey,
       "infinite-list",
       query,
       filters,
+      options,
     ],
   }),
   common: (filters: FilterAccountDto) => ({

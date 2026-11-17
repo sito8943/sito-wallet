@@ -1,4 +1,10 @@
-import { BaseClient, Methods } from "@sito/dashboard-app";
+import {
+  BaseClient,
+  Methods,
+  parseQueries,
+  type QueryParam,
+  type QueryResult,
+} from "@sito/dashboard-app";
 
 // enum
 import { BalanceHistoryGranularity } from "lib";
@@ -20,6 +26,7 @@ import type {
   BalanceHistoryDto,
   FilterBalanceHistoryDto,
   GetAccountByIdQueryDto,
+  GetAccountsListOptionsDto,
   SavingsProjectionDto,
   SavingsProjectionDailyDto,
   FilterSavingsProjectionDto,
@@ -54,6 +61,43 @@ export default class AccountClient extends BaseClient<
       config.auth.user,
       true,
       config.auth.clientConfig,
+    );
+  }
+
+  /**
+   * Paginated list. `options` adds opt-in top-level params (e.g. each
+   * account's latest transactions) outside the shared `filters`, so other
+   * list consumers keep the plain request.
+   */
+  async get(
+    query?: QueryParam<AccountDto>,
+    filters?: FilterAccountDto,
+    options: GetAccountsListOptionsDto = {},
+  ): Promise<QueryResult<AccountDto>> {
+    if (!options.includeLastTransactions) return super.get(query, filters);
+
+    const searchParams = new URLSearchParams({
+      includeLastTransactions: "true",
+    });
+    if (options.lastTransactionsLimit != null) {
+      searchParams.set(
+        "lastTransactionsLimit",
+        String(options.lastTransactionsLimit),
+      );
+    }
+
+    const listUrl = parseQueries<AccountDto, FilterAccountDto>(
+      this.table,
+      query,
+      filters,
+    );
+    const separator = listUrl.includes("?") ? "&" : "?";
+
+    return await this.api.doQuery<QueryResult<AccountDto>>(
+      `${listUrl}${separator}${searchParams.toString()}`,
+      Methods.GET,
+      undefined,
+      this.api.defaultTokenAcquirer(),
     );
   }
 

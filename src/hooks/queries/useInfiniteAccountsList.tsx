@@ -6,10 +6,14 @@ import { useManager } from "providers";
 import { useAuth } from "@sito/dashboard-app";
 
 // types
-import type { UseFetchPropsType } from "./types.ts";
+import type { UseInfiniteAccountsListPropsType } from "./types.ts";
 
 // lib
-import type { AccountDto, FilterAccountDto } from "lib";
+import type {
+  AccountDto,
+  FilterAccountDto,
+  GetAccountsListOptionsDto,
+} from "lib";
 import {
   applyHideDeletedEntitiesPreference,
   defaultAccountsListFilters,
@@ -20,9 +24,13 @@ import { useHideDeletedEntitiesPreference } from "./useHideDeletedEntitiesPrefer
 import { AccountsQueryKeys } from "./queryKeys/accountsQueryKeys";
 
 export function useInfiniteAccountsList(
-  props: UseFetchPropsType<AccountDto, FilterAccountDto>,
+  props: UseInfiniteAccountsListPropsType,
 ) {
-  const { filters = defaultAccountsListFilters, query = {} } = props;
+  const {
+    filters = defaultAccountsListFilters,
+    query = {},
+    lastTransactionsLimit,
+  } = props;
 
   const manager = useManager();
   const { account } = useAuth();
@@ -46,8 +54,21 @@ export function useInfiniteAccountsList(
     [query.pageSize, query.sortingBy, query.sortingOrder],
   );
 
+  // Latest transactions travel with the page itself: no request per account.
+  const listOptions = useMemo<GetAccountsListOptionsDto>(
+    () =>
+      lastTransactionsLimit
+        ? { includeLastTransactions: true, lastTransactionsLimit }
+        : {},
+    [lastTransactionsLimit],
+  );
+
   return useInfiniteQuery({
-    ...AccountsQueryKeys.infiniteList(parsedQueries, parsedFilters),
+    ...AccountsQueryKeys.infiniteList(
+      parsedQueries,
+      parsedFilters,
+      listOptions,
+    ),
     enabled: !!account?.id,
     initialPageParam: 0,
     queryFn: ({ pageParam }) => {
@@ -57,7 +78,7 @@ export function useInfiniteAccountsList(
         currentPage,
       };
 
-      return manager.Accounts.get(requestQuery, parsedFilters);
+      return manager.Accounts.get(requestQuery, parsedFilters, listOptions);
     },
     getNextPageParam: (lastPage) => {
       const nextPage = lastPage.currentPage + 1;
