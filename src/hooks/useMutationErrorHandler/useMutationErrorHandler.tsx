@@ -10,7 +10,8 @@ import { getBackendErrorCodeKey } from "./utils";
  * Builds a reusable mutation `onError` handler that maps known HTTP errors to
  * user-friendly notifications instead of leaking raw backend/SQL messages.
  *
- * - 409 -> `config.uniqueKey` (unique constraint violations)
+ * - 409 -> known backend code (e.g. `restore.nameInUse`), else
+ *   `config.uniqueKey` (unique constraint violations)
  * - 400 -> backend message (translated when it is a known code such as
  *   `photo.tooLarge`), falling back to `config.badRequest.fallbackKey`
  * - anything else -> generic 500 message
@@ -22,9 +23,17 @@ export function useMutationErrorHandler(): MutationErrorHandler {
   return useCallback(
     (error: unknown, config: MutationErrorConfig = {}) => {
       if (isHttpError(error)) {
-        if (error.status === 409 && config.uniqueKey) {
-          showErrorNotification({ message: t(config.uniqueKey) });
-          return;
+        if (error.status === 409) {
+          const codeKey = getBackendErrorCodeKey(error.message);
+          if (codeKey && i18n.exists(codeKey)) {
+            showErrorNotification({ message: t(codeKey) });
+            return;
+          }
+
+          if (config.uniqueKey) {
+            showErrorNotification({ message: t(config.uniqueKey) });
+            return;
+          }
         }
 
         if (error.status === 400 && config.badRequest) {

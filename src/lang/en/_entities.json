@@ -96,6 +96,9 @@
       "textRequired": "Write what you want to tell us.",
       "textTooLong": "The feedback can have up to 2000 characters.",
       "limitReached": "You can send up to 20 feedback messages a day. Try again tomorrow."
+    },
+    "restore": {
+      "nameInUse": "An active one already uses that name. Rename it before restoring."
     }
   },
   "user": {
