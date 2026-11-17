@@ -428,7 +428,7 @@
     },
     "purchaseProvider": {
       "label": "Paid to",
-      "placeholder": "Select a provider"
+      "placeholder": "Who do you pay?"
     },
     "category": {
       "label": "Categories",

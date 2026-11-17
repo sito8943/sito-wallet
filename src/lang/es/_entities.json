@@ -427,8 +427,8 @@
       "requiredWhenAuto": "La cuenta es requerida cuando se crean transacciones automáticas"
     },
     "purchaseProvider": {
-      "label": "¿A quién se paga?",
-      "placeholder": "Selecciona un proveedor"
+      "label": "Se paga a",
+      "placeholder": "¿A quién se paga?"
     },
     "category": {
       "label": "Categorías",

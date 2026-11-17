@@ -20,6 +20,7 @@ export function SubscriptionCard(props: SubscriptionCardPropsType) {
     name,
     description,
     provider,
+    purchaseProvider,
     currency,
     amount,
     status,
@@ -84,6 +85,12 @@ export function SubscriptionCard(props: SubscriptionCardPropsType) {
       <p className="subscription-card-meta">
         {t("_entities:subscription.provider.label")}: {provider?.name ?? "-"}
       </p>
+      {purchaseProvider ? (
+        <p className="subscription-card-meta">
+          {t("_entities:subscription.purchaseProvider.label")}:{" "}
+          {purchaseProvider.name}
+        </p>
+      ) : null}
       <p className="subscription-card-meta">
         {t("_pages:subscriptions.labels.nextRenewal")}: {renewalLabel}
       </p>
