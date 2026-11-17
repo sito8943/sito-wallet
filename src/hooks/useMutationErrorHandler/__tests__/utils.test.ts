@@ -21,6 +21,12 @@ describe("getBackendErrorCodeKey", () => {
     );
   });
 
+  it("maps restore codes to their translation key", () => {
+    expect(getBackendErrorCodeKey("restore.nameInUse")).toBe(
+      "_entities:base.restore.nameInUse",
+    );
+  });
+
   it("ignores free text and other codes", () => {
     expect(getBackendErrorCodeKey("Name is required")).toBeNull();
     expect(getBackendErrorCodeKey("name.label")).toBeNull();

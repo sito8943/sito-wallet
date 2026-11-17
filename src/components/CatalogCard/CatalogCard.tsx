@@ -15,6 +15,7 @@ export function CatalogCard(props: CatalogCardPropsType) {
     name,
     subtitle,
     photo,
+    deletedAt,
     showPhoto = false,
     actions,
     onClick,
@@ -37,7 +38,7 @@ export function CatalogCard(props: CatalogCardPropsType) {
           </div>
         </div>
       }
-      deleted={false}
+      deleted={!!deletedAt}
       name={editLabel}
       aria-label={editAriaLabel}
       onClick={() => onClick(id)}

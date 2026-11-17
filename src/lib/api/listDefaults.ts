@@ -1,6 +1,8 @@
 import type {
   FilterAccountDto,
   FilterCurrencyDto,
+  FilterProductDto,
+  FilterPurchaseProviderDto,
   FilterTransactionCategoryDto,
   FilterTransactionDto,
 } from "../entities";
@@ -19,5 +21,13 @@ export const defaultTransactionCategoriesListFilters: FilterTransactionCategoryD
   };
 
 export const defaultTransactionsListFilters: FilterTransactionDto = {
+  softDeleteScope: "ACTIVE",
+};
+
+export const defaultProductsListFilters: FilterProductDto = {
+  softDeleteScope: "ACTIVE",
+};
+
+export const defaultPurchaseProvidersListFilters: FilterPurchaseProviderDto = {
   softDeleteScope: "ACTIVE",
 };

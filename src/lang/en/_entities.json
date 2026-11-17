@@ -96,6 +96,21 @@
       "textRequired": "Write what you want to tell us.",
       "textTooLong": "The feedback can have up to 2000 characters.",
       "limitReached": "You can send up to 20 feedback messages a day. Try again tomorrow."
+    },
+    "restore": {
+      "nameInUse": "An active one already uses that name. Rename it before restoring."
+    },
+    "data": {
+      "conflict": "An item with that data already exists."
+    },
+    "error": {
+      "unexpected": "Something went wrong. Please try again."
+    },
+    "query": {
+      "invalidSort": "You can't sort by that field."
+    },
+    "request": {
+      "invalid": "The request isn't valid."
     }
   },
   "user": {

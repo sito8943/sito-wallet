@@ -1,9 +1,8 @@
 import type { ActionType, BaseEntityDto } from "@sito/dashboard-app";
 
 /**
- * Products and purchase providers come from their `/common` endpoints, which
- * don't return `createdAt`/`deletedAt`. Cards and grids expect a full entity,
- * so items are adapted to this shape with `toCatalogRow`.
+ * Row shown by `CatalogCard` (products and purchase providers from their
+ * paged lists). A set `deletedAt` renders the card as deleted.
  */
 export interface CatalogRowDto extends BaseEntityDto {
   name: string;
@@ -13,15 +12,6 @@ export interface CatalogRowDto extends BaseEntityDto {
   /** Shown as a badge on the "view transactions" action. */
   transactionCount?: number;
 }
-
-export type CatalogCommonItem = {
-  id: number;
-  name: string;
-  updatedAt: Date;
-  subtitle?: string | null;
-  photo?: string | null;
-  transactionCount?: number;
-};
 
 export interface CatalogCardPropsType extends CatalogRowDto {
   actions: ActionType<CatalogRowDto>[];

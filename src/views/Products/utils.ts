@@ -1,3 +1,4 @@
+import type { CatalogRowDto } from "components";
 import type { ProductDto } from "lib";
 import { photoToFormValues, resolvePhotoPayload } from "lib";
 
@@ -37,4 +38,19 @@ export const productFormToUpdateDto = (
 ): UpdateProductMutationDto => ({
   payload: { id: form.id, ...productFormToAddDto(form).payload },
   file: form.file ?? null,
+});
+
+/**
+ * Card row for a product: the alias is how the user knows it, so it goes
+ * first and the receipt name below.
+ */
+export const productToCatalogRow = (product: ProductDto): CatalogRowDto => ({
+  id: product.id,
+  name: product.alias || product.name,
+  subtitle: product.alias ? product.name : null,
+  photo: product.photo,
+  transactionCount: product.transactionCount,
+  createdAt: product.createdAt,
+  updatedAt: product.updatedAt,
+  deletedAt: product.deletedAt,
 });

@@ -11,13 +11,16 @@ import {
   Page,
   PrettyGrid,
   useDeleteDialog,
+  useRestoreDialog,
 } from "@sito/dashboard-app";
 
 // hooks
 import {
   PurchaseProvidersQueryKeys,
-  usePurchaseProvidersCommon,
+  RESTORE_NAME_IN_USE_KEY,
+  useInfinitePurchaseProvidersList,
   useMobileNavbar,
+  useMutationErrorHandler,
   useSwipeDeleteState,
 } from "hooks";
 
@@ -32,7 +35,7 @@ import { useManager, useRegisterBottomNavAction } from "providers";
 
 // components
 import type { CatalogRowDto } from "components";
-import { CatalogCard, QueryError, toCatalogRow } from "components";
+import { CatalogCard, QueryError } from "components";
 import { getDeleteAction } from "../../components/Card/utils";
 import {
   AddPurchaseProviderDialog,
@@ -49,8 +52,20 @@ export function PurchaseProviders() {
   const { t } = useTranslation();
   const manager = useManager();
 
-  const { data, isLoading, error } = usePurchaseProvidersCommon();
-  const items = useMemo(() => (data ?? []).map(toCatalogRow), [data]);
+  const handleMutationError = useMutationErrorHandler();
+
+  const {
+    data,
+    isLoading,
+    error,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useInfinitePurchaseProvidersList({});
+  const items = useMemo<CatalogRowDto[]>(
+    () => data?.pages?.flatMap((page) => page.items) ?? [],
+    [data?.pages],
+  );
 
   const addPurchaseProvider = useAddPurchaseProviderDialog();
   const editPurchaseProvider = useEditPurchaseProviderDialog();
@@ -59,6 +74,12 @@ export function PurchaseProviders() {
     ...PurchaseProvidersQueryKeys.all(),
   });
   const swipeDelete = useSwipeDeleteState(deletePurchaseProvider.handleClose);
+  const restorePurchaseProvider = useRestoreDialog({
+    mutationFn: (ids) => manager.PurchaseProviders.restore(ids),
+    onError: (restoreError) =>
+      handleMutationError(restoreError, { uniqueKey: RESTORE_NAME_IN_USE_KEY }),
+    ...PurchaseProvidersQueryKeys.all(),
+  });
 
   const purchaseProviderTransactions = useCatalogTransactionsDialog({
     filterKey: "purchaseProviderId",
@@ -69,8 +90,13 @@ export function PurchaseProviders() {
     (record: CatalogRowDto) => [
       purchaseProviderTransactions.action(record),
       deletePurchaseProvider.action(record),
+      restorePurchaseProvider.action(record),
     ],
-    [deletePurchaseProvider, purchaseProviderTransactions],
+    [
+      deletePurchaseProvider,
+      restorePurchaseProvider,
+      purchaseProviderTransactions,
+    ],
   );
 
   useMobileNavbar(t("_pages:purchaseProviders.title"));
@@ -100,6 +126,12 @@ export function PurchaseProviders() {
           <PrettyGrid
             data={items}
             className="full-grid"
+            hasMore={!!hasNextPage}
+            loadingMore={isFetchingNextPage}
+            onLoadMore={() => {
+              if (!hasNextPage || isFetchingNextPage) return;
+              void fetchNextPage();
+            }}
             emptyComponent={
               <Empty
                 message={t("_pages:purchaseProviders.empty")}
@@ -145,6 +177,7 @@ export function PurchaseProviders() {
             {...deletePurchaseProvider}
             handleClose={swipeDelete.handleDialogClose}
           />
+          <ConfirmationDialog {...restorePurchaseProvider} />
         </>
       )}
     </Page>

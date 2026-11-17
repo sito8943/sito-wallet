@@ -96,6 +96,21 @@
       "textRequired": "Escribe lo que quieres contarnos.",
       "textTooLong": "El comentario puede tener hasta 2000 caracteres.",
       "limitReached": "Puedes enviar hasta 20 comentarios al día. Inténtalo mañana."
+    },
+    "restore": {
+      "nameInUse": "Ya existe uno activo con ese nombre. Renómbralo antes de restaurar."
+    },
+    "data": {
+      "conflict": "Ya existe un elemento con esos datos."
+    },
+    "error": {
+      "unexpected": "Ha ocurrido un error inesperado. Inténtalo de nuevo."
+    },
+    "query": {
+      "invalidSort": "No se puede ordenar por ese campo."
+    },
+    "request": {
+      "invalid": "La petición no es válida."
     }
   },
   "user": {

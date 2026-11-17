@@ -44,6 +44,8 @@ import {
   useMobileNavbar,
   useMobileMultiSelection,
   useSwipeDeleteState,
+  RESTORE_NAME_IN_USE_KEY,
+  useMutationErrorHandler,
 } from "hooks";
 import {
   useAddAccountDialog,
@@ -122,8 +124,11 @@ export function Accounts() {
   });
   const accountSwipeDelete = useSwipeDeleteState(deleteAccount.handleClose);
 
+  const handleMutationError = useMutationErrorHandler();
   const restoreAccount = useRestoreDialog({
     mutationFn: (dto) => manager.Accounts.restore(dto),
+    onError: (restoreError) =>
+      handleMutationError(restoreError, { uniqueKey: RESTORE_NAME_IN_USE_KEY }),
     ...AccountsQueryKeys.all(),
   });
 

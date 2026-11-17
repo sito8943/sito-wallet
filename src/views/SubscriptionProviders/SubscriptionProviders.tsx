@@ -29,6 +29,8 @@ import {
   useMobileMultiSelection,
   useMobileNavbar,
   useSwipeDeleteState,
+  RESTORE_NAME_IN_USE_KEY,
+  useMutationErrorHandler,
 } from "hooks";
 import { MobileSelectionBar, QueryError } from "components";
 import { useManager, useRegisterBottomNavAction } from "providers";
@@ -104,6 +106,7 @@ export function SubscriptionProviders() {
     deleteSubscriptionProvider.handleClose,
   );
 
+  const handleMutationError = useMutationErrorHandler();
   const restoreSubscriptionProvider = useRestoreDialog({
     mutationFn: async (ids) => {
       if (!subscriptionProvidersClient) {
@@ -112,6 +115,8 @@ export function SubscriptionProviders() {
 
       return await subscriptionProvidersClient.restore(ids);
     },
+    onError: (restoreError) =>
+      handleMutationError(restoreError, { uniqueKey: RESTORE_NAME_IN_USE_KEY }),
     ...SubscriptionProvidersQueryKeys.all(),
   });
 
