@@ -45,6 +45,7 @@ export function AccountCard(props: AccountCardPropsType) {
     balance,
     containerClassName,
     showLastTransactions,
+    lastTransactions,
     showTypeResume,
     showCurrency = true,
     hideDescription = false,
@@ -162,9 +163,9 @@ export function AccountCard(props: AccountCardPropsType) {
           />
         )}
       </div>
-      {showLastTransactions && id && currency && (
-        <LastTransactions accountId={id} />
-      )}
+      {showLastTransactions && !deleted && lastTransactions?.length ? (
+        <LastTransactions transactions={lastTransactions} />
+      ) : null}
       {showTypeResume && id && currency && (
         <TypeResume accountId={id} currency={currency} />
       )}

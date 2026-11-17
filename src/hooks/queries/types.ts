@@ -10,6 +10,8 @@ import type {
 
 // lib
 import type {
+  AccountDto,
+  FilterAccountDto,
   BalanceHistoryGranularity,
   FilterTransactionCategoryAverageDto,
   FilterTransactionGroupedByTypeDto,
@@ -22,6 +24,14 @@ import type {
 export type UseFetchPropsType<TRow, TFilterDto = BaseFilterDto> = {
   filters?: TFilterDto;
   query?: QueryParam<TRow>;
+};
+
+export type UseInfiniteAccountsListPropsType = UseFetchPropsType<
+  AccountDto,
+  FilterAccountDto
+> & {
+  /** When set, each account comes with this many latest transactions. */
+  lastTransactionsLimit?: number;
 };
 
 export type UseFetchByIdPropsType = {

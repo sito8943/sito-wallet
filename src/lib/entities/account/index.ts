@@ -12,6 +12,7 @@ export * from "./BalanceHistoryPointDto";
 export * from "./BalanceHistoryDto";
 export * from "./FilterBalanceHistoryDto";
 export * from "./GetAccountByIdQueryDto";
+export * from "./GetAccountsListOptionsDto";
 export * from "./InterestDayCount";
 export * from "./InterestPayoutFrequency";
 export * from "./InterestCompoundingFrequency";
