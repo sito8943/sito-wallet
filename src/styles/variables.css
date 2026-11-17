@@ -47,6 +47,8 @@
      >= 4.5:1 on base-dark/base/base-light */
   --color-text-success: #137043;
   --color-text-error: #b33c3c;
+  /* warning as text on page surfaces (hints, notices); amber, >= 4.5:1 on base */
+  --color-text-warning: #8a5300;
   --breakpoint-xs: 28rem;
 }
 
@@ -92,4 +94,5 @@
   --color-error: #f1f5fb;
   --color-text-success: #3fb87e;
   --color-text-error: #ee7070;
+  --color-text-warning: #f0b048;
 }

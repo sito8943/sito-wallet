@@ -17,11 +17,11 @@
 .text-input,
 .text-input-label,
 .select-input-label {
-  @apply !text-text disabled:!text-gray-500;
+  @apply !text-text disabled:!text-text-muted;
 }
 
 .select-input {
-  @apply !text-text disabled:!text-gray-500;
+  @apply !text-text disabled:!text-text-muted;
 }
 
 select > option {
@@ -94,7 +94,7 @@ select > option {
 }
 
 .button.close {
-  @apply hover:bg-red-500;
+  @apply hover:bg-bg-error hover:text-error;
 }
 
 .button.submit {
