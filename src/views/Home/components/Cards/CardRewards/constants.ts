@@ -14,4 +14,3 @@ export const CARD_REWARDS_MONTHS = DEFAULT_REWARDS_MONTHS;
 export const NOT_CONFIGURED_STATUS = 400;
 
 /** Decimals shown for currency amounts. */
-export const AMOUNT_DECIMALS = 2;

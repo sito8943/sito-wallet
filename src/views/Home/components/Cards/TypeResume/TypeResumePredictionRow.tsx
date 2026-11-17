@@ -1,7 +1,7 @@
 import { classNames } from "@sito/dashboard-app";
 import { useTranslation } from "react-i18next";
 
-import { Currency } from "../../../../Currencies";
+import { Money } from "components";
 
 import { getPredictionAmountClassName } from "./utils";
 
@@ -24,12 +24,16 @@ export const TypeResumePredictionRow = (
       />
       <span className="type-resume-prediction-label">{label}</span>
       <span className={getPredictionAmountClassName(values.previous, total)}>
-        {values.previous}{" "}
-        <Currency name={currencyName} symbol={currencySymbol} />
+        <Money
+          amount={values.previous}
+          currency={{ name: currencyName, symbol: currencySymbol }}
+        />
       </span>
       <span className={getPredictionAmountClassName(values.current, total)}>
-        {values.current}{" "}
-        <Currency name={currencyName} symbol={currencySymbol} />
+        <Money
+          amount={values.current}
+          currency={{ name: currencyName, symbol: currencySymbol }}
+        />
       </span>
       <span
         className={classNames(
@@ -40,8 +44,11 @@ export const TypeResumePredictionRow = (
           "_pages:home.dashboard.transactionTypeResume.prediction.estimate",
         )}
       >
-        ≈ {values.predicted}{" "}
-        <Currency name={currencyName} symbol={currencySymbol} />
+        ≈{" "}
+        <Money
+          amount={values.predicted}
+          currency={{ name: currencyName, symbol: currencySymbol }}
+        />
       </span>
     </div>
   );

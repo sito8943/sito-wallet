@@ -7,7 +7,13 @@ vi.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key: string, values?: Record<string, unknown>) =>
       values && "amount" in values ? `${key} ${String(values.amount)}` : key,
+    i18n: { language: "en" },
   }),
+}));
+
+// The components barrel pulls the PWA virtual module; load Money directly.
+vi.mock("components", async () => ({
+  Money: (await import("../../../../components/Money")).Money,
 }));
 
 const { SubscriptionBillingLogItem } =
@@ -15,7 +21,7 @@ const { SubscriptionBillingLogItem } =
 
 const baseLog: SubscriptionBillingLogDto = {
   id: 1,
-  amount: 23,
+  amount: 1234.5,
   paidAt: "2026-11-01T10:00:00",
   currency: { id: 1, name: "Euro", symbol: "€" },
   note: "Netflix",
@@ -37,7 +43,7 @@ describe("SubscriptionBillingLogItem", () => {
     );
 
     const button = screen.getByRole("button", {
-      name: "_pages:subscriptions.actions.billingLog.openTransaction 23 €",
+      name: "_pages:subscriptions.actions.billingLog.openTransaction 1,234.50 €",
     });
     expect(button).toHaveClass("subscription-activity-item", "clickable");
 
@@ -60,7 +66,12 @@ describe("SubscriptionBillingLogItem", () => {
     const item = screen.getByRole("listitem");
     expect(item).toHaveClass("subscription-activity-item");
     expect(item).not.toHaveClass("clickable");
-    expect(screen.getByText("23 €")).toBeInTheDocument();
+    const amount = item.querySelector(".subscription-activity-amount");
+    expect(amount).toHaveTextContent("1,234.50 €");
+    expect(screen.getByText("€")).toHaveAttribute(
+      "data-tooltip-content",
+      "Euro",
+    );
 
     fireEvent.click(item);
     expect(onClick).not.toHaveBeenCalled();

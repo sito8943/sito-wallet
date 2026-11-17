@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useWeekly } from "../../../../../hooks/queries/useWeekly";
 
 // components
-import { Currency } from "../../../../Currencies";
+import { Money } from "components";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { ActiveFilters } from "./ActiveFilters";
 import { DashboardCard } from "../DashboardCard";
@@ -83,7 +83,11 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
     >
       {() => (
         <p className="weekly-spent-amount poppins">
-          {isLoading ? "…" : amount} <Currency name={name} symbol={symbol} />
+          <Money
+            amount={amount}
+            currency={{ name, symbol }}
+            loading={isLoading}
+          />
         </p>
       )}
     </DashboardCard>

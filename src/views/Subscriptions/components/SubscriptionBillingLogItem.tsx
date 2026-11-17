@@ -1,22 +1,30 @@
 import { useTranslation } from "react-i18next";
 
 import { RAW_INTERPOLATION } from "../constants";
-import { formatBillingLogPaidAt, getBillingLogAmountLabel } from "../utils";
+import { Money } from "components";
+
+import {
+  formatBillingLogPaidAt,
+  getBillingLogAmountLabel,
+  getBillingLogCurrency,
+} from "../utils";
 import type { SubscriptionBillingLogItemPropsType } from "../types";
 
 export function SubscriptionBillingLogItem(
   props: SubscriptionBillingLogItemPropsType,
 ) {
   const { log, onClick } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  const amount = getBillingLogAmountLabel(log);
-  const paidAt = formatBillingLogPaidAt(log.paidAt);
+  const amount = getBillingLogAmountLabel(log, i18n.language);
+  const paidAt = formatBillingLogPaidAt(log.paidAt, i18n.language);
   const transactionId = log.transactionId ?? null;
 
   const content = (
     <>
-      <span className="subscription-activity-amount">{amount}</span>
+      <span className="subscription-activity-amount">
+        <Money amount={log.amount} currency={getBillingLogCurrency(log)} />
+      </span>
       <span className="subscription-activity-meta">
         {t("_entities:subscriptionBillingLog.paidAt.label")}: {paidAt}
       </span>

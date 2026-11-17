@@ -10,10 +10,12 @@ import { Button } from "@sito/dashboard-app";
 // components
 import { TransactionProductsDialog } from "../TransactionProductsDialog";
 
+// lib
+import { formatAmount } from "lib";
+
 // utils
 import {
   getTransactionProductsAmount,
-  formatTransactionAmount,
   getTransactionProductsTotal,
   isTransactionProductComplete,
 } from "../../utils";
@@ -75,7 +77,7 @@ export function TransactionProductsField(
         {fields.length > 0 && (
           <span className="transaction-products-summary">
             {t("_entities:transaction.products.summaryTotal", {
-              total: formatTransactionAmount(total, i18n.language),
+              total: formatAmount(total, i18n.language),
             })}
           </span>
         )}

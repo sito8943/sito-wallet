@@ -10,9 +10,11 @@ import { classNames } from "@sito/dashboard-app";
 // types
 import type { ProjectionSummaryPropsType } from "./types";
 
+// lib
+import { formatAmount } from "lib";
+
 // utils
 import {
-  formatAmount,
   formatDepositAmount,
   formatDeviation,
   formatRate,

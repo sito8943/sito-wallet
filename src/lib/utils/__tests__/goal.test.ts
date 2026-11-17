@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 
 import { GoalStatus } from "../../entities/goal/GoalStatus";
 import {
-  formatGoalAmount,
   formatGoalDeadline,
   formatGoalPercent,
   getGoalDeadlineInfo,
@@ -11,12 +10,6 @@ import {
 } from "../goal";
 
 describe("goal utils", () => {
-  it("formats amounts with two decimals in the locale", () => {
-    expect(formatGoalAmount(1234.5, "en-US")).toBe("1,234.50");
-    expect(formatGoalAmount(1234.5, "es-ES")).toBe("1234,50");
-    expect(formatGoalAmount(Number.NaN, "en-US")).toBe("0.00");
-  });
-
   it("formats percents with up to two decimals", () => {
     expect(formatGoalPercent(42.5, "en-US")).toBe("42.5");
     expect(formatGoalPercent(100, "en-US")).toBe("100");
@@ -26,7 +19,7 @@ describe("goal utils", () => {
   it("formats the deadline as a local date", () => {
     expect(formatGoalDeadline("2026-01-01", "en-US")).toBe("Jan 1, 2026");
     expect(formatGoalDeadline(null, "en-US")).toBeNull();
-    expect(formatGoalDeadline("whenever", "en-US")).toBe("whenever");
+    expect(formatGoalDeadline("whenever", "en-US")).toBe("-");
   });
 
   it.each([

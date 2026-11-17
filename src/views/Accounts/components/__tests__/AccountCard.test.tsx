@@ -20,14 +20,12 @@ vi.mock("@sito/dashboard-app", async (importOriginal) => ({
 
 vi.mock("components", async () => ({
   ItemCard: (await import("../../../../components/Card/ItemCard")).ItemCard,
+  Money: () => null,
 }));
 
 vi.mock("../TypeResume", () => ({ default: () => null }));
 vi.mock("../LastTransactions", () => ({ LastTransactions: () => null }));
 vi.mock("../AccountRewardsChip", () => ({ AccountRewardsChip: () => null }));
-vi.mock("views/Currencies/components/Currency", () => ({
-  Currency: () => null,
-}));
 
 import { AccountCard } from "../AccountCard";
 

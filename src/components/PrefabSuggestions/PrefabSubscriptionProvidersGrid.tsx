@@ -2,6 +2,8 @@ import { useTranslation } from "react-i18next";
 
 import { classNames } from "@sito/dashboard-app";
 
+import { formatAmount } from "../../lib/utils/money";
+
 import { FALLBACK_CURRENCY } from "./constants";
 import { toggleInArray } from "./utils";
 import type { PrefabSubscriptionProvidersGridPropsType } from "./types";
@@ -12,7 +14,7 @@ export function PrefabSubscriptionProvidersGrid(
   props: PrefabSubscriptionProvidersGridPropsType,
 ) {
   const { value, onChange, disabled, providers, defaultCurrencyCode } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="prefab-suggestions-grid">
@@ -45,7 +47,7 @@ export function PrefabSubscriptionProvidersGrid(
               </span>
               {displayPrice !== undefined && (
                 <span className="prefab-suggestions-card-description">
-                  {priceCurrency} {displayPrice}
+                  {priceCurrency} {formatAmount(displayPrice, i18n.language)}
                   {showFallback &&
                     ` ${t("_pages:prefabs.subscriptions.convertedHint")}`}
                 </span>

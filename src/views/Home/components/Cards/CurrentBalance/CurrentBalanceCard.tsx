@@ -21,7 +21,7 @@ import {
 import { useAddTransaction } from "../../../../Transactions/hooks";
 
 // components
-import { Currency } from "../../../../Currencies";
+import { Money } from "components";
 import { AdjustBalanceDialog } from "../../../../Accounts/components/AdjustBalanceDialog";
 import { TransferDialog } from "../../../../Accounts/components/TransferDialog";
 import { AddTransactionDialog } from "../../../../Transactions/components";
@@ -135,18 +135,26 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
             <div className="current-balance-summary">
               <div className="current-balance-amounts">
                 <p className="current-balance-amount poppins">
-                  {isLoading ? "…" : balance}{" "}
-                  <Currency name={currencyName} symbol={symbol} />
+                  <Money
+                    amount={balance}
+                    currency={{ name: currencyName, symbol }}
+                    loading={isLoading}
+                  />
                 </p>
                 {account && showDebts && pendingDebt > 0 && (
                   <p className="current-balance-real">
                     {t("_pages:home.dashboard.currentBalance.realBalance")}:{" "}
-                    {realBalance}{" "}
-                    <Currency name={currencyName} symbol={symbol} />{" "}
+                    <Money
+                      amount={realBalance}
+                      currency={{ name: currencyName, symbol }}
+                    />{" "}
                     <span className="current-balance-debt">
                       · {t("_pages:home.dashboard.currentBalance.pendingDebts")}{" "}
-                      −{pendingDebt}{" "}
-                      <Currency name={currencyName} symbol={symbol} />
+                      −
+                      <Money
+                        amount={pendingDebt}
+                        currency={{ name: currencyName, symbol }}
+                      />
                     </span>
                   </p>
                 )}

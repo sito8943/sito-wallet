@@ -1,9 +1,5 @@
 @reference "../../../styles/variables.css";
 
-.currency-symbol {
-  @apply text-xs;
-}
-
 .currency-card-title-main {
   @apply min-w-0 flex items-baseline gap-1;
 }

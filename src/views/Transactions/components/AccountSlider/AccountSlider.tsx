@@ -9,7 +9,7 @@ import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import { AccountCard } from "views/Accounts";
-import { Currency } from "views/Currencies/components/Currency";
+import { Currency, Money } from "components";
 
 // constants
 import { SLIDE_GAP } from "./constants";
@@ -170,10 +170,9 @@ export function AccountSlider(props: AccountSliderPropsType) {
               )}
             </p>
             <p className="account-slider-sticky-balance">
-              {activeAccount.balance}{" "}
-              <Currency
-                name={activeAccount.currency?.name}
-                symbol={activeAccount.currency?.symbol}
+              <Money
+                amount={activeAccount.balance}
+                currency={activeAccount.currency}
               />
             </p>
           </div>

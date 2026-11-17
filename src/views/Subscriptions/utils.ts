@@ -1,3 +1,4 @@
+import type { MoneyCurrencyType } from "components";
 import type {
   AddSubscriptionBillingLogDto,
   AddSubscriptionDto,
@@ -9,6 +10,8 @@ import type {
   UpdateSubscriptionDto,
 } from "lib";
 import {
+  formatAmount,
+  formatDateTime,
   normalizeSelectedTransactionCategories,
   nowDateTimeLocal,
   parseFiniteNumber,
@@ -232,18 +235,26 @@ export const subscriptionBillingLogFormToDto = (
   };
 };
 
-export const formatBillingLogPaidAt = (paidAt: string): string => {
-  const paidAtDate = new Date(paidAt);
+export const formatBillingLogPaidAt = (
+  paidAt: string,
+  locale: string,
+): string => formatDateTime(paidAt, locale);
 
-  return Number.isNaN(paidAtDate.getTime())
-    ? paidAt
-    : paidAtDate.toLocaleString();
-};
+/** Currency shown next to a billing log amount (name when no symbol). */
+export const getBillingLogCurrency = (
+  log: Pick<SubscriptionBillingLogDto, "currency">,
+): MoneyCurrencyType => ({
+  name: log.currency?.name ?? "",
+  symbol: log.currency?.symbol ?? log.currency?.name ?? "",
+});
 
+/** Plain-text amount for labels, e.g. "1.234,50 €". */
 export const getBillingLogAmountLabel = (
   log: Pick<SubscriptionBillingLogDto, "amount" | "currency">,
+  locale: string,
 ): string => {
-  const currencyLabel = log.currency?.symbol ?? log.currency?.name ?? "";
+  const amount = formatAmount(log.amount, locale);
+  const { symbol } = getBillingLogCurrency(log);
 
-  return currencyLabel ? `${log.amount} ${currencyLabel}` : `${log.amount}`;
+  return symbol ? `${amount} ${symbol}` : amount;
 };

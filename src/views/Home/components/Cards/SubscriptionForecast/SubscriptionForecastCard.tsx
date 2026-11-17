@@ -31,7 +31,7 @@ import {
 import { AddSubscriptionBillingLogDialog } from "views/Subscriptions/components";
 import { useAddSubscriptionBillingLogDialog } from "views/Subscriptions/hooks";
 import { toSubscriptionStatus } from "views/Subscriptions/utils";
-import { Currency } from "../../../../Currencies";
+import { Money } from "components";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { ActiveFilters } from "./ActiveFilters";
 import { RenewalsDialog } from "./RenewalsDialog";
@@ -206,11 +206,7 @@ export const SubscriptionForecastCard = (
                         key={`${total.currency ?? "none"}-${index}`}
                         className="subscription-forecast-total poppins"
                       >
-                        {total.amount}{" "}
-                        <Currency
-                          name={currency.name}
-                          symbol={currency.symbol}
-                        />
+                        <Money amount={total.amount} currency={currency} />
                       </p>
                     );
                   })

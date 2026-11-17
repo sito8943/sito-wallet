@@ -24,7 +24,7 @@ import type { ApiKeyListItemPropsType } from "../../types";
 
 export function ApiKeyListItem(props: ApiKeyListItemPropsType) {
   const { apiKey, onEdit, onRevoke, disabled } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const editLabel = t("_pages:aiAgents.keys.editAction");
   const revokeLabel = t("_pages:aiAgents.keys.revokeAction");
   const areaLabelKeys = getApiKeyAreaLabelKeys(toMcpAreas(apiKey.areas));
@@ -53,14 +53,14 @@ export function ApiKeyListItem(props: ApiKeyListItemPropsType) {
         <p className="ai-agents-key-meta">
           <span>
             {t("_pages:aiAgents.keys.createdAt", {
-              date: formatDateTime(apiKey.createdAt),
+              date: formatDateTime(apiKey.createdAt, i18n.language),
               interpolation: RAW_INTERPOLATION,
             })}
           </span>
           <span>
             {apiKey.lastUsedAt
               ? t("_pages:aiAgents.keys.lastUsed", {
-                  date: formatDateTime(apiKey.lastUsedAt),
+                  date: formatDateTime(apiKey.lastUsedAt, i18n.language),
                   interpolation: RAW_INTERPOLATION,
                 })
               : t("_pages:aiAgents.keys.neverUsed")}

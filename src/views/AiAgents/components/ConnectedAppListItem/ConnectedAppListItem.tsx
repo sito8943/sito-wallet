@@ -32,7 +32,7 @@ import type { ConnectedAppListItemPropsType } from "../../types";
 
 export function ConnectedAppListItem(props: ConnectedAppListItemPropsType) {
   const { grant, onEdit, onDisconnect, disabled } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const editLabel = t("_pages:aiAgents.apps.editAction");
   const disconnectLabel = t("_pages:aiAgents.apps.disconnectAction");
   const areaLabelKeys = getApiKeyAreaLabelKeys(
@@ -60,14 +60,14 @@ export function ConnectedAppListItem(props: ConnectedAppListItemPropsType) {
         <p className="ai-agents-key-meta">
           <span>
             {t("_pages:aiAgents.apps.connectedAt", {
-              date: formatDateTime(grant.createdAt),
+              date: formatDateTime(grant.createdAt, i18n.language),
               interpolation: RAW_INTERPOLATION,
             })}
           </span>
           <span>
             {grant.lastUsedAt
               ? t("_pages:aiAgents.keys.lastUsed", {
-                  date: formatDateTime(grant.lastUsedAt),
+                  date: formatDateTime(grant.lastUsedAt, i18n.language),
                   interpolation: RAW_INTERPOLATION,
                 })
               : t("_pages:aiAgents.keys.neverUsed")}

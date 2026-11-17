@@ -7,6 +7,7 @@ import { useCalendarTimeAge } from "hooks";
 // lib
 import {
   TransactionType,
+  formatAmount,
   getPrimaryTransactionCategory,
   getTransactionCategories,
 } from "lib";
@@ -21,7 +22,7 @@ import type { TransactionPropsType } from "./types";
 import "./styles.css";
 
 export const Transaction = (props: TransactionPropsType) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const { description, auto, date, amount, currency } = props;
 
@@ -101,7 +102,7 @@ export const Transaction = (props: TransactionPropsType) => {
       <p className="account-last-transaction-amount">
         <span className="account-last-transaction-amount-value">
           {isIn ? "+ " : "- "}
-          {amount}
+          {formatAmount(amount, i18n.language)}
         </span>
         <Currency {...currency} />
       </p>

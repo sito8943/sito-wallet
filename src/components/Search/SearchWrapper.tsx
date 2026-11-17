@@ -10,6 +10,8 @@ import { useDebouncedCallback } from "use-debounce";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getTransactionSearchRoute } from "../../lib/routes";
+import { formatDate, parseDisplayDate } from "../../lib/utils/date";
+import { formatAmount } from "../../lib/utils/money";
 import { useTransactionSearch } from "./useTransactionSearch";
 
 // "@sito/dashboard-app
@@ -138,13 +140,11 @@ export const SearchWrapper = (props: SearchWrapperPropsType) => {
         transaction.id,
         transaction.account?.id,
       );
-      const date = transaction.date ? new Date(transaction.date) : null;
+      const date = parseDisplayDate(transaction.date);
       const detail = [
-        new Intl.NumberFormat(i18n.language).format(transaction.amount),
+        formatAmount(transaction.amount, i18n.language),
         transaction.account?.currency?.symbol,
-        date && !Number.isNaN(date.getTime())
-          ? date.toLocaleDateString(i18n.language)
-          : null,
+        date ? formatDate(date, i18n.language) : null,
         transaction.account?.name,
       ]
         .filter(Boolean)

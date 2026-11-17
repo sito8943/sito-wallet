@@ -16,7 +16,7 @@ import {
 
 // lib
 import type { CommonProductDto } from "lib";
-import { Tables, getProductLabel, withProductLabel } from "lib";
+import { Tables, formatAmount, getProductLabel, withProductLabel } from "lib";
 
 // hooks
 import { useProductsCommon } from "../../../../hooks/queries/useProductsCommon";
@@ -27,7 +27,6 @@ import {
   findProductByNameOrAlias,
   getProductLastPricePrefill,
   getTransactionProductErrorKeys,
-  formatTransactionAmount,
   getTransactionProductsTotal,
   newProductOption,
 } from "../../utils";
@@ -257,7 +256,7 @@ export function TransactionProductsDialog(
           </Button>
           <span className="transaction-products-dialog-total">
             {t("_entities:transaction.products.total", {
-              total: formatTransactionAmount(total, i18n.language),
+              total: formatAmount(total, i18n.language),
             })}
           </span>
         </div>

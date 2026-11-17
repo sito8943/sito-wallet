@@ -6,6 +6,9 @@ import { Dialog, Empty, Loading, classNames } from "@sito/dashboard-app";
 // components
 import { QueryError } from "components";
 
+// lib
+import { formatAmount } from "lib";
+
 // hooks
 import { useSavingsProjectionDaily } from "../../../../../../hooks/queries/useSavingsProjectionDaily";
 
@@ -17,12 +20,7 @@ import { DAILY_BREAKDOWN_DIALOG_CLASS_NAME } from "./constants";
 import { ACCRUED_MAX_DECIMALS } from "../constants";
 
 // utils
-import {
-  formatAmount,
-  formatDayLabel,
-  formatMonthLabel,
-  hasDailyDeposits,
-} from "../utils";
+import { formatDayLabel, formatMonthLabel, hasDailyDeposits } from "../utils";
 
 import "./styles.css";
 
@@ -125,7 +123,9 @@ export const DailyBreakdownDialog = (props: DailyBreakdownDialogPropsType) => {
                     )}
                     <td>{formatAmount(day.earningBalance, locale)}</td>
                     <td>
-                      {formatAmount(day.accrued, locale, ACCRUED_MAX_DECIMALS)}
+                      {formatAmount(day.accrued, locale, {
+                        maximumFractionDigits: ACCRUED_MAX_DECIMALS,
+                      })}
                     </td>
                     <td>{formatAmount(day.credited, locale)}</td>
                     <td>{formatAmount(day.closingBalance, locale)}</td>

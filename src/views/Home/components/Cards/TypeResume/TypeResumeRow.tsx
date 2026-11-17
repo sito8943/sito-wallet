@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { TransactionType } from "lib";
 
-import { Currency } from "../../../../Currencies";
+import { Money } from "components";
 import { Type } from "views/TransactionCategories/components/Type";
 
 import type { TypeResumeRowPropsType } from "./types";
@@ -61,8 +61,11 @@ export const TypeResumeRow = (props: TypeResumeRowPropsType) => {
             previousAmountColorClass,
           )}
         >
-          {isLoading ? "…" : previousAmount}{" "}
-          <Currency name={currencyName} symbol={currencySymbol} />
+          <Money
+            amount={previousAmount}
+            currency={{ name: currencyName, symbol: currencySymbol }}
+            loading={isLoading}
+          />
         </p>
         <p
           className={classNames(
@@ -70,8 +73,11 @@ export const TypeResumeRow = (props: TypeResumeRowPropsType) => {
             amountColorClass,
           )}
         >
-          {isLoading ? "…" : amount}{" "}
-          <Currency name={currencyName} symbol={currencySymbol} />
+          <Money
+            amount={amount}
+            currency={{ name: currencyName, symbol: currencySymbol }}
+            loading={isLoading}
+          />
         </p>
         {indicator}
       </div>
@@ -95,8 +101,11 @@ export const TypeResumeRow = (props: TypeResumeRowPropsType) => {
           amountColorClass,
         )}
       >
-        {isLoading ? "…" : amount}{" "}
-        <Currency name={currencyName} symbol={currencySymbol} />
+        <Money
+          amount={amount}
+          currency={{ name: currencyName, symbol: currencySymbol }}
+          loading={isLoading}
+        />
       </p>
     </div>
   );

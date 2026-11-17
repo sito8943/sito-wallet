@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { t } from "i18next";
+import i18next, { t } from "i18next";
 
 // @sito/dashboard-app
 import type { BaseEntityDto, ColumnType } from "@sito/dashboard-app";
@@ -7,6 +7,8 @@ import { FilterTypes } from "@sito/dashboard-app";
 
 // lib
 import type { EntityName } from "lib";
+
+import { formatDate } from "./date";
 
 export const baseColumns = [
   "id",
@@ -22,6 +24,13 @@ export const baseColumns = [
  * @returns true is the column is a base column
  */
 export const isBaseColumn = (column: string) => baseColumns.includes(column);
+
+/** Base date columns: date only, in the app language. */
+const renderBaseDate = (value: unknown): string =>
+  formatDate(
+    value instanceof Date || typeof value === "string" ? value : null,
+    i18next.language,
+  );
 
 const toColumnKey = <TDto extends BaseEntityDto>(
   key: string,
@@ -58,23 +67,13 @@ export const prefabBaseColumns = <
     key: toColumnKey<TDto>("updatedAt"),
     className: "w-56",
     filterOptions: { type: FilterTypes.date, defaultValue: "" },
-    renderBody: (value: unknown) => {
-      const dateValue = value instanceof Date ? value : new Date(String(value));
-      return Number.isNaN(dateValue.getTime())
-        ? ""
-        : dateValue.toLocaleDateString(navigator.language || "es-ES");
-    },
+    renderBody: renderBaseDate,
     pos: -1,
   },
   {
     key: toColumnKey<TDto>("createdAt"),
     filterOptions: { type: FilterTypes.date, defaultValue: "" },
-    renderBody: (value: unknown) => {
-      const dateValue = value instanceof Date ? value : new Date(String(value));
-      return Number.isNaN(dateValue.getTime())
-        ? ""
-        : dateValue.toLocaleDateString(navigator.language || "es-ES");
-    },
+    renderBody: renderBaseDate,
     pos: -2,
   },
   {
@@ -98,12 +97,7 @@ export const prefabBaseColumns = <
       label: t("_entities:base.deleted.range"),
     },
     display: "none",
-    renderBody: (value: unknown) => {
-      const dateValue = value instanceof Date ? value : new Date(String(value));
-      return Number.isNaN(dateValue.getTime())
-        ? ""
-        : dateValue.toLocaleDateString(navigator.language || "es-ES");
-    },
+    renderBody: renderBaseDate,
     pos: -4,
   },
 ];

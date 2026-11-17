@@ -6,7 +6,6 @@ import { SavingsProjectionHorizon } from "lib/entities/account/SavingsProjection
 import { SavingsProjectionViewState } from "../types";
 import {
   formToDto,
-  formatAmount,
   formatDepositAmount,
   formatDeviation,
   formatMonthLabel,
@@ -259,12 +258,6 @@ describe("shouldWarnAer", () => {
 });
 
 describe("formatting", () => {
-  it("formats amounts with 2 decimals by default and more on demand", () => {
-    expect(formatAmount(1029.4, "en")).toBe("1,029.40");
-    expect(formatAmount(0.0784, "en", 6)).toBe("0.0784");
-    expect(formatAmount(1029.4, "es")).toBe("1029,40");
-  });
-
   it("formats rates and deviations", () => {
     expect(formatRate(2.9009, "en")).toBe("2.9009 %");
     expect(formatRate(2.9, "en")).toBe("2.90 %");

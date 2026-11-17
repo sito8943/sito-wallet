@@ -5,7 +5,7 @@ import type {
   SavingsProjectionHorizon,
   UpdateDashboardCardConfigDto,
 } from "lib";
-import { resolveDepositDay, resolveMonthlyDeposit } from "lib";
+import { formatAmount, resolveDepositDay, resolveMonthlyDeposit } from "lib";
 
 // types
 import type { AdjustBalanceAccountType } from "../../../../Accounts/types";
@@ -17,7 +17,6 @@ import {
 
 // constants
 import {
-  AMOUNT_DECIMALS,
   DEFAULT_SAVINGS_PROJECTION_HORIZON,
   NOT_CONFIGURED_STATUS,
   RATE_MAX_DECIMALS,
@@ -107,16 +106,6 @@ export const resolveViewState = ({
 /** Warn only when an AER was declared and the configuration misses it. */
 export const shouldWarnAer = (data: SavingsProjectionDto): boolean =>
   data.aer !== null && data.aer !== undefined && !data.aerMatches;
-
-export const formatAmount = (
-  value: number,
-  locale: string,
-  maxDecimals = AMOUNT_DECIMALS,
-): string =>
-  new Intl.NumberFormat(locale, {
-    minimumFractionDigits: AMOUNT_DECIMALS,
-    maximumFractionDigits: Math.max(maxDecimals, AMOUNT_DECIMALS),
-  }).format(value);
 
 /** Signed deposit amount with its currency, e.g. "+50.00 €". */
 export const formatDepositAmount = (

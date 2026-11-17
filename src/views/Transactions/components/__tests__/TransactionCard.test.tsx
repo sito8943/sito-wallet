@@ -46,10 +46,6 @@ vi.mock("@sito/dashboard-app", () => ({
   }),
 }));
 
-vi.mock("views/Currencies/components/Currency", () => ({
-  Currency: ({ symbol }: { symbol?: string }) => <span>{symbol ?? ""}</span>,
-}));
-
 vi.mock("views/TransactionCategories/components/Type", () => ({
   Type: () => <span data-testid="transaction-type" />,
 }));
@@ -65,6 +61,17 @@ vi.mock("components", async () => {
 
   return {
     SwipeToDelete: actual.SwipeToDelete,
+    Money: ({
+      amount,
+      currency,
+    }: {
+      amount: number;
+      currency?: { symbol?: string | null } | null;
+    }) => (
+      <>
+        {amount} <span>{currency?.symbol ?? ""}</span>
+      </>
+    ),
     ProviderPhoto: ({
       photo,
       alt,

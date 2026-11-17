@@ -8,7 +8,7 @@ import { Chip } from "@sito/dashboard-app";
 
 // components
 import TypeResume from "./TypeResume";
-import { ItemCard } from "components";
+import { ItemCard, Money } from "components";
 import { LastTransactions } from "./LastTransactions";
 import { AccountRewardsChip } from "./AccountRewardsChip";
 
@@ -19,7 +19,6 @@ import type { AccountCardPropsType } from "../types";
 import { AccountType, hasRewardsConfigured, supportsBankName } from "lib";
 
 // views
-import { Currency } from "views/Currencies/components/Currency";
 
 // utils
 import { icons, getAccountCardTheme } from "./utils";
@@ -153,8 +152,7 @@ export function AccountCard(props: AccountCardPropsType) {
           text={
             <>
               <span className="account-card-balance-label">{`${t("_entities:account.balance.label")}: `}</span>
-              <span>{balance} </span>
-              <Currency name={currency?.name} symbol={currency?.symbol} />
+              <Money amount={balance} currency={currency} />
             </>
           }
         />

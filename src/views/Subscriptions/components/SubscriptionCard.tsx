@@ -2,9 +2,9 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { classNames } from "@sito/dashboard-app";
 
-import { ItemCard, ItemCardTitle } from "components";
+import { ItemCard, ItemCardTitle, Money } from "components";
 
-import { Currency } from "views/Currencies/components/Currency";
+import { formatDate } from "lib";
 
 import { SUBSCRIPTION_STATUS_BADGE_CLASSNAME } from "../constants";
 import type { SubscriptionCardPropsType } from "../types";
@@ -13,7 +13,7 @@ import { toSubscriptionStatus } from "../utils";
 import "./styles.css";
 
 export function SubscriptionCard(props: SubscriptionCardPropsType) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const {
     id,
@@ -44,11 +44,8 @@ export function SubscriptionCard(props: SubscriptionCardPropsType) {
   const renewalLabel = useMemo(() => {
     if (!nextRenewalAt) return t("_pages:subscriptions.labels.noRenewal");
 
-    const date = new Date(nextRenewalAt);
-    if (Number.isNaN(date.getTime())) return nextRenewalAt;
-
-    return date.toLocaleDateString();
-  }, [nextRenewalAt, t]);
+    return formatDate(nextRenewalAt, i18n.language);
+  }, [i18n.language, nextRenewalAt, t]);
 
   return (
     <ItemCard
@@ -56,8 +53,7 @@ export function SubscriptionCard(props: SubscriptionCardPropsType) {
         <div className="subscription-card-title-row">
           <ItemCardTitle>{name}</ItemCardTitle>
           <span className="subscription-card-amount">
-            {amount}{" "}
-            <Currency name={currency?.name} symbol={currency?.symbol} />
+            <Money amount={amount} currency={currency} />
           </span>
         </div>
       }

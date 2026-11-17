@@ -10,7 +10,7 @@ import {
   formatForDatetimeLocal,
 } from "@sito/dashboard-app";
 
-import { Currency } from "views/Currencies";
+import { Money } from "components";
 import { useFeatureFlags } from "providers";
 
 import type { CommonAccountDto } from "lib";
@@ -46,10 +46,9 @@ export function TransferDialog(props: TransferDialogPropsType) {
           </span>
           <strong>{sourceAccount.name}</strong>
           <span className="transfer-dialog-source-balance">
-            {sourceAccount.balance}{" "}
-            <Currency
-              name={sourceAccount.currency?.name}
-              symbol={sourceAccount.currency?.symbol}
+            <Money
+              amount={sourceAccount.balance}
+              currency={sourceAccount.currency}
             />
           </span>
         </div>

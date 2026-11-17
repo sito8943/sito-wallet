@@ -1,5 +1,5 @@
 import type { AccountRewardsDto, UpdateDashboardCardConfigDto } from "lib";
-import { parseNullableNumber } from "lib";
+import { formatAmount, parseNullableNumber } from "lib";
 
 // types
 import type { AdjustRewardsAccountType } from "../../../../Accounts/types";
@@ -11,11 +11,7 @@ import {
 } from "./types";
 
 // constants
-import {
-  AMOUNT_DECIMALS,
-  NOT_CONFIGURED_STATUS,
-  defaultConfig,
-} from "./constants";
+import { NOT_CONFIGURED_STATUS, defaultConfig } from "./constants";
 
 export const formToDto = (
   data: CardRewardsFormType,
@@ -86,12 +82,6 @@ export const resolveViewState = ({
 /** The chart is pointless when no month had eligible spend or points. */
 export const hasRewardsActivity = (data: AccountRewardsDto): boolean =>
   data.history.some((month) => month.spent > 0 || month.earned > 0);
-
-export const formatAmount = (value: number, locale: string): string =>
-  new Intl.NumberFormat(locale, {
-    minimumFractionDigits: AMOUNT_DECIMALS,
-    maximumFractionDigits: AMOUNT_DECIMALS,
-  }).format(value);
 
 /** Amount with its currency, e.g. "12.50 €" (no trailing space without one). */
 export const formatCurrencyAmount = (

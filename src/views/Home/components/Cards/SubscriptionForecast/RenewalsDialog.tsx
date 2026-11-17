@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
@@ -9,8 +8,11 @@ import { faFileInvoice } from "@fortawesome/free-solid-svg-icons";
 // hooks
 import { useCurrenciesCommon } from "hooks/queries/useCurrenciesCommon";
 
+// lib
+import { formatDate } from "lib";
+
 // components
-import { Currency } from "../../../../Currencies";
+import { Money } from "components";
 
 // types
 import type { RenewalsDialogPropsType } from "./types";
@@ -27,16 +29,6 @@ export const RenewalsDialog = (props: RenewalsDialogPropsType) => {
   } = props;
   const { t, i18n } = useTranslation();
   const { data: currencies } = useCurrenciesCommon();
-
-  const dateFormatter = useMemo(
-    () =>
-      new Intl.DateTimeFormat(i18n.language, {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-      }),
-    [i18n.language],
-  );
 
   const resolveCurrency = (currencyName: string | null) => {
     if (!currencyName) return { name: "", symbol: "" };
@@ -60,10 +52,7 @@ export const RenewalsDialog = (props: RenewalsDialogPropsType) => {
         <ul className="renewals-dialog-list">
           {renewals.map((renewal, index) => {
             const currency = resolveCurrency(renewal.currency);
-            const renewalDate = new Date(renewal.nextRenewalAt);
-            const dateLabel = Number.isNaN(renewalDate.getTime())
-              ? renewal.nextRenewalAt
-              : dateFormatter.format(renewalDate);
+            const dateLabel = formatDate(renewal.nextRenewalAt, i18n.language);
 
             return (
               <li
@@ -83,8 +72,7 @@ export const RenewalsDialog = (props: RenewalsDialogPropsType) => {
                 </div>
                 <div className="renewals-dialog-item-side">
                   <p className="renewals-dialog-item-amount poppins">
-                    {renewal.amount}{" "}
-                    <Currency name={currency.name} symbol={currency.symbol} />
+                    <Money amount={renewal.amount} currency={currency} />
                   </p>
                   <IconButton
                     icon={faFileInvoice}

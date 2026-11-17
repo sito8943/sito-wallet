@@ -20,7 +20,9 @@ import type { ProjectionChartPropsType } from "./types";
 
 // utils
 import { cssVar } from "../../BalanceHistory/BalanceChart/utils";
-import { formatAmount, formatMonthLabel } from "../utils";
+import { formatAmount } from "lib";
+
+import { formatMonthLabel } from "../utils";
 import { getPointRadius } from "./utils";
 
 import "./styles.css";
@@ -102,7 +104,7 @@ export const ProjectionChart = (props: ProjectionChartPropsType) => {
                       `${depositedLabel}: +${formatAmount(point.deposited, locale)} ${currencySymbol}`,
                     ]
                   : []),
-                `${accruedLabel}: ${formatAmount(point.accrued, locale, 4)} ${currencySymbol}`,
+                `${accruedLabel}: ${formatAmount(point.accrued, locale, { maximumFractionDigits: 4 })} ${currencySymbol}`,
                 `${creditedLabel}: ${formatAmount(point.credited, locale)} ${currencySymbol}`,
               ];
             },
