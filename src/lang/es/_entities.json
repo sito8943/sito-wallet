@@ -99,6 +99,18 @@
     },
     "restore": {
       "nameInUse": "Ya existe uno activo con ese nombre. Renómbralo antes de restaurar."
+    },
+    "data": {
+      "conflict": "Ya existe un elemento con esos datos."
+    },
+    "error": {
+      "unexpected": "Ha ocurrido un error inesperado. Inténtalo de nuevo."
+    },
+    "query": {
+      "invalidSort": "No se puede ordenar por ese campo."
+    },
+    "request": {
+      "invalid": "La petición no es válida."
     }
   },
   "user": {

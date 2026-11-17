@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { isHttpError, useNotification } from "@sito/dashboard-app";
 
 import type { MutationErrorConfig, MutationErrorHandler } from "./types";
+import { DATA_CONFLICT_CODE } from "./constants";
 import { getBackendErrorCodeKey } from "./utils";
 
 /**
@@ -25,13 +26,20 @@ export function useMutationErrorHandler(): MutationErrorHandler {
       if (isHttpError(error)) {
         if (error.status === 409) {
           const codeKey = getBackendErrorCodeKey(error.message);
-          if (codeKey && i18n.exists(codeKey)) {
+          // The generic "data.conflict" yields to the entity's own message.
+          const isGenericConflict = error.message === DATA_CONFLICT_CODE;
+          if (codeKey && i18n.exists(codeKey) && !isGenericConflict) {
             showErrorNotification({ message: t(codeKey) });
             return;
           }
 
           if (config.uniqueKey) {
             showErrorNotification({ message: t(config.uniqueKey) });
+            return;
+          }
+
+          if (codeKey && i18n.exists(codeKey)) {
+            showErrorNotification({ message: t(codeKey) });
             return;
           }
         }

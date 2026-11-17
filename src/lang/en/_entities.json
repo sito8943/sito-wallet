@@ -99,6 +99,18 @@
     },
     "restore": {
       "nameInUse": "An active one already uses that name. Rename it before restoring."
+    },
+    "data": {
+      "conflict": "An item with that data already exists."
+    },
+    "error": {
+      "unexpected": "Something went wrong. Please try again."
+    },
+    "query": {
+      "invalidSort": "You can't sort by that field."
+    },
+    "request": {
+      "invalid": "The request isn't valid."
     }
   },
   "user": {
