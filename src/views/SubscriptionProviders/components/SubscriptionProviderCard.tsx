@@ -41,8 +41,6 @@ export function SubscriptionProviderCard(
   } = props;
 
   const deleted = !!deletedAt;
-  const parsedDescription =
-    description || t("_entities:base.description.empty");
   const parsedWebsite = website?.trim() ?? "";
   const hasPhoto = !!photo?.trim();
 
@@ -80,15 +78,16 @@ export function SubscriptionProviderCard(
       className="subscription-provider-card-content"
       containerClassName="subscription-provider-card-container"
     >
-      <p
-        className={classNames(
-          "subscription-provider-card-description",
-          !description && "subscription-provider-card-description--empty",
-          deleted && "subscription-provider-card-description--deleted",
-        )}
-      >
-        {parsedDescription}
-      </p>
+      {description ? (
+        <p
+          className={classNames(
+            "subscription-provider-card-description",
+            deleted && "subscription-provider-card-description--deleted",
+          )}
+        >
+          {description}
+        </p>
+      ) : null}
 
       {hasPhoto ? (
         <p className="subscription-provider-card-photo">

@@ -20,10 +20,6 @@
   @apply text-start;
 }
 
-.debt-card-description--empty {
-  @apply text-text-muted;
-}
-
 .debt-card-meta {
   @apply text-sm text-text-muted text-start;
 }

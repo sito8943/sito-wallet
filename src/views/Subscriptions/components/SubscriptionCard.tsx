@@ -36,9 +36,6 @@ export function SubscriptionCard(props: SubscriptionCardPropsType) {
     onSwipeDelete,
   } = props;
 
-  const parsedDescription =
-    description || t("_entities:base.description.empty");
-
   const parsedStatus = toSubscriptionStatus(status);
 
   const renewalLabel = useMemo(() => {
@@ -70,14 +67,9 @@ export function SubscriptionCard(props: SubscriptionCardPropsType) {
       onSwipeDelete={onSwipeDelete}
       className="subscription-card-content"
     >
-      <p
-        className={classNames(
-          "subscription-card-description",
-          !description && "subscription-card-description--empty",
-        )}
-      >
-        {parsedDescription}
-      </p>
+      {description ? (
+        <p className="subscription-card-description">{description}</p>
+      ) : null}
       <p className="subscription-card-meta">
         {t("_entities:subscription.provider.label")}: {provider?.name ?? "-"}
       </p>
