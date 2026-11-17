@@ -45,7 +45,7 @@
 }
 
 .item-card-content--clickable {
-  @apply cursor-pointer;
+  @apply cursor-pointer rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base;
 }
 
 .item-card-selection-indicator {

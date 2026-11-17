@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
-import type { MouseEvent } from "react";
+import type { KeyboardEvent, MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 import { faCircle, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
@@ -13,6 +13,7 @@ import { SwipeToDelete } from "./SwipeToDelete";
 import type { ItemCardPropsType } from "./types.ts";
 import {
   getDeleteAction,
+  isActivationKey,
   shouldPreventMobileContextMenu,
   supportsHoverTooltips,
 } from "./utils";
@@ -93,8 +94,23 @@ export function ItemCard<TRow extends BaseEntityDto>(
     [onLongPressSelection],
   );
 
-  const hasInteractions =
-    !!onClick || !!onToggleSelection || !!onLongPressSelection;
+  // Clickable area stays a div (role="button"): cards may nest their own
+  // buttons (e.g. GoalCard), and a <button> inside a <button> is invalid.
+  const isInteractive = selectionMode
+    ? !!onToggleSelection
+    : !deleted && !!onClick;
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      // Ignore keys coming from nested controls (they handle their own).
+      if (event.target !== event.currentTarget) return;
+      if (!isActivationKey(event.key)) return;
+
+      event.preventDefault();
+      handleClick();
+    },
+    [handleClick],
+  );
 
   return (
     <SwipeToDelete
@@ -122,9 +138,7 @@ export function ItemCard<TRow extends BaseEntityDto>(
         <div
           className={classNames(
             "item-card-content",
-            (selectionMode || !deleted) &&
-              hasInteractions &&
-              "item-card-content--clickable",
+            isInteractive && "item-card-content--clickable",
             className,
           )}
           onClick={handleClick}
@@ -134,10 +148,15 @@ export function ItemCard<TRow extends BaseEntityDto>(
           onTouchMove={clearTouchTimeout}
           onContextMenu={handleContextMenu}
           {...rest}
+          role={isInteractive ? "button" : undefined}
+          tabIndex={isInteractive ? 0 : undefined}
+          onKeyDown={isInteractive ? handleKeyDown : undefined}
           aria-label={
-            selectionMode
-              ? t("_accessibility:components.table.selectRow")
-              : (ariaLabel ?? name)
+            !isInteractive
+              ? undefined
+              : selectionMode
+                ? t("_accessibility:components.table.selectRow")
+                : (ariaLabel ?? name)
           }
           aria-pressed={selectionMode ? selected : undefined}
         >

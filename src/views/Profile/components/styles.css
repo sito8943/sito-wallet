@@ -109,7 +109,7 @@
 }
 
 .profile-photo-preview--clickable {
-  @apply cursor-pointer;
+  @apply cursor-pointer p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base disabled:cursor-wait;
 }
 
 .profile-photo-image {

@@ -3,6 +3,12 @@ import type { ActionType, BaseEntityDto } from "@sito/dashboard-app";
 const MOBILE_CONTEXT_MENU_MEDIA_QUERY = "(pointer: coarse)";
 const MOBILE_VIEWPORT_MEDIA_QUERY = "(max-width: 640px)";
 const HOVER_MEDIA_QUERY = "(hover: hover)";
+const ACTIVATION_KEYS = new Set(["Enter", " "]);
+
+/** Keys that activate a `role="button"` element, like a native button. */
+export function isActivationKey(key: string) {
+  return ACTIVATION_KEYS.has(key);
+}
 
 export function getDeleteAction<TRow extends BaseEntityDto>(
   actions: ActionType<TRow>[],

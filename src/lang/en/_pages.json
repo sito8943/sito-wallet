@@ -391,6 +391,7 @@
     },
     "photo": {
       "upload": "Upload photo",
+      "change": "Change photo",
       "delete": "Delete photo",
       "uploadSuccess": "Photo updated successfully",
       "uploadError": "Failed to upload photo",

@@ -391,6 +391,7 @@
     },
     "photo": {
       "upload": "Subir foto",
+      "change": "Cambiar foto",
       "delete": "Eliminar foto",
       "uploadSuccess": "Foto actualizada correctamente",
       "uploadError": "Error al subir la foto",

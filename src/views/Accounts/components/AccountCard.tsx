@@ -73,25 +73,14 @@ export function AccountCard(props: AccountCardPropsType) {
       deleted={deleted}
       name={t("_pages:accounts.forms.edit")}
       aria-label={t("_pages:accounts.forms.editAria")}
-      onClick={() => {
-        if (!id) return;
-        onClick?.(id);
-      }}
+      // Only wire handlers that exist: inside AccountSlider the card is
+      // display-only and must not look clickable.
+      onClick={id && onClick ? () => onClick(id) : undefined}
       selectionMode={selectionMode}
       selected={selected}
-      onToggleSelection={
-        id
-          ? () => {
-              onSelect?.(id);
-            }
-          : undefined
-      }
+      onToggleSelection={id && onSelect ? () => onSelect(id) : undefined}
       onLongPressSelection={
-        id
-          ? () => {
-              onLongPress?.(id);
-            }
-          : undefined
+        id && onLongPress ? () => onLongPress(id) : undefined
       }
       actions={actions}
       swipeDeleteOpen={swipeDeleteOpen}
