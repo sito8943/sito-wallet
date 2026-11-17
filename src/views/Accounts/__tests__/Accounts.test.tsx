@@ -74,6 +74,8 @@ vi.mock("hooks", () => ({
     isSelected: () => false,
   }),
   useSwipeDeleteState: () => ({}),
+  useMutationErrorHandler: () => vi.fn(),
+  RESTORE_NAME_IN_USE_KEY: "_entities:base.restore.nameInUse",
 }));
 
 vi.mock("../hooks", () => ({
