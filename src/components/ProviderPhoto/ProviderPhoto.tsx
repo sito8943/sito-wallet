@@ -12,12 +12,27 @@ import type { ProviderPhotoPropsType } from "./types";
  * uploaded files go through the API with the session token.
  */
 export function ProviderPhoto(props: ProviderPhotoPropsType) {
-  const { photo, className, alt = "" } = props;
+  const { photo, className, alt = "", onError } = props;
 
   if (!photo) return null;
 
   if (isExternalPhoto(photo))
-    return <img className={className} src={photo} alt={alt} />;
+    return (
+      <img
+        className={className}
+        src={photo}
+        alt={alt}
+        onError={() => onError?.()}
+      />
+    );
 
-  return <Image className={className} endpoint={photo} alt={alt} />;
+  return (
+    <Image
+      className={className}
+      endpoint={photo}
+      alt={alt}
+      onError={() => onError?.()}
+      onLoadError={onError}
+    />
+  );
 }

@@ -1,0 +1,23 @@
+@reference "../../../../styles/variables.css";
+
+/* Same 44px footprint as the plain type icon so the card height is stable. */
+.transaction-card-avatar {
+  @apply relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-base-dark;
+}
+
+.transaction-card-avatar-image {
+  @apply h-full w-full rounded-full object-cover;
+}
+
+/* Ring + background use the card surface so the badge reads in light/dark. */
+.transaction-card-avatar-badge {
+  @apply absolute -right-1 -bottom-1 flex h-5 w-5 items-center justify-center rounded-full bg-base ring-2 ring-base text-[10px] transition;
+}
+
+.weekly-transactions-dialog-mobile-list .transaction-card-avatar-badge {
+  @apply bg-base-light ring-base-light;
+}
+
+.transaction-card--idle:hover .transaction-card-avatar-badge {
+  @apply ring-hover-primary;
+}

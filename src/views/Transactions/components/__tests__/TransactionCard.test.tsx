@@ -65,6 +65,24 @@ vi.mock("components", async () => {
 
   return {
     SwipeToDelete: actual.SwipeToDelete,
+    ProviderPhoto: ({
+      photo,
+      alt,
+      className,
+      onError,
+    }: {
+      photo?: string | null;
+      alt?: string;
+      className?: string;
+      onError?: () => void;
+    }) => (
+      <img
+        src={photo ?? ""}
+        alt={alt}
+        className={className}
+        onError={() => onError?.()}
+      />
+    ),
   };
 });
 
@@ -347,5 +365,99 @@ describe("TransactionCard", () => {
     expect(
       screen.queryByText(/_entities:transaction\.rewardsPoints/),
     ).not.toBeInTheDocument();
+  });
+
+  describe("seller photo", () => {
+    const purchaseProvider = {
+      id: 7,
+      name: "Mercadona",
+      photo: "/purchase-providers/7/photo",
+      updatedAt: new Date("2025-01-01T10:00:00.000Z"),
+    };
+
+    it("shows the seller photo with the type icon as a badge", () => {
+      const { container } = render(
+        <TransactionCard
+          {...baseTransaction}
+          purchaseProvider={purchaseProvider}
+          actions={[]}
+        />,
+      );
+
+      const photo = screen.getByRole("img", { name: "Mercadona" });
+      expect(photo).toHaveAttribute("src", purchaseProvider.photo);
+      expect(photo).toHaveClass("transaction-card-avatar-image");
+
+      const badge = container.querySelector(".transaction-card-avatar-badge");
+      expect(badge).not.toBeNull();
+      expect(
+        badge?.querySelector('[data-testid="transaction-type"]'),
+      ).not.toBeNull();
+      expect(screen.getAllByTestId("transaction-type")).toHaveLength(1);
+    });
+
+    it("shows only the type icon without seller or photo", () => {
+      const { container, rerender } = render(
+        <TransactionCard {...baseTransaction} actions={[]} />,
+      );
+
+      expect(screen.queryByRole("img")).not.toBeInTheDocument();
+      expect(container.querySelector(".transaction-card-avatar")).toBeNull();
+      expect(screen.getByTestId("transaction-type")).toBeInTheDocument();
+
+      for (const photo of [null, "", "   "]) {
+        rerender(
+          <TransactionCard
+            {...baseTransaction}
+            purchaseProvider={{ ...purchaseProvider, photo }}
+            actions={[]}
+          />,
+        );
+
+        expect(screen.queryByRole("img")).not.toBeInTheDocument();
+        expect(container.querySelector(".transaction-card-avatar")).toBeNull();
+        expect(screen.getByTestId("transaction-type")).toBeInTheDocument();
+      }
+    });
+
+    it("falls back to the type icon when the photo fails to load", () => {
+      const { container } = render(
+        <TransactionCard
+          {...baseTransaction}
+          purchaseProvider={purchaseProvider}
+          actions={[]}
+        />,
+      );
+
+      fireEvent.error(screen.getByRole("img", { name: "Mercadona" }));
+
+      expect(screen.queryByRole("img")).not.toBeInTheDocument();
+      expect(container.querySelector(".transaction-card-avatar")).toBeNull();
+      expect(screen.getByTestId("transaction-type")).toBeInTheDocument();
+    });
+
+    it("keeps the deleted and selection styles with a photo", () => {
+      render(
+        <TransactionCard
+          {...baseTransaction}
+          purchaseProvider={purchaseProvider}
+          deletedAt={new Date("2025-01-02T10:00:00.000Z")}
+          selectionMode
+          selected
+          actions={[]}
+        />,
+      );
+
+      const card = screen.getByRole("button", {
+        name: "_accessibility:components.table.selectRow",
+      });
+      expect(card).toHaveClass(
+        "transaction-card--deleted",
+        "transaction-card--selected",
+      );
+      expect(
+        screen.getByRole("img", { name: "Mercadona" }),
+      ).toBeInTheDocument();
+    });
   });
 });
