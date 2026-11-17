@@ -9,7 +9,6 @@ import { TransactionCardAvatar } from "../TransactionCardAvatar";
 
 import {
   getWeeklyTransactionAmountClassName,
-  getWeeklyTransactionAmountPrefix,
   getWeeklyTransactionCategoryLabel,
   getWeeklyTransactionDateLabel,
   getWeeklyTransactionDescriptionLabel,
@@ -62,7 +61,6 @@ export const getWeeklyTransactionsTableColumns = (
     sortable: true,
     renderBody: (_value: unknown, transaction: TransactionTableRowType) => (
       <p className={getWeeklyTransactionAmountClassName(transaction)}>
-        {getWeeklyTransactionAmountPrefix(transaction)}
         <Money
           amount={transaction.amount}
           currency={transaction.account?.currency}

@@ -103,12 +103,10 @@ export const getTransactionColumns = (
       filterOptions: { type: FilterTypes.number },
       renderBody: (value: unknown, entity: TransactionTableRowType) => {
         const amount = typeof value === "number" ? value : Number(value) || 0;
-        const primaryCategory = getPrimaryTransactionCategory(entity);
 
         return (
           <div className="transaction-table-amount-cell">
             <p>
-              {primaryCategory?.type === TransactionType.Out ? "- " : ""}
               <Money amount={amount} currency={entity.account?.currency} />
             </p>
             <TransactionRewardsPoints
