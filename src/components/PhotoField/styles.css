@@ -29,7 +29,7 @@
 }
 
 .photo-field-warning {
-  @apply text-xs text-warning;
+  @apply text-xs text-text-warning;
 }
 
 .photo-field-url {

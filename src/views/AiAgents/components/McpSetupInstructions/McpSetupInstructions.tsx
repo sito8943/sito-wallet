@@ -6,12 +6,7 @@ import { TabsLayout } from "@sito/dashboard-app";
 import type { TabsType } from "@sito/dashboard-app";
 
 // lib
-import {
-  MCP_CLIENTS,
-  MCP_CLIENT_CONFIG_FILES,
-  McpClient,
-  buildMcpSnippet,
-} from "lib";
+import { MCP_CLIENTS, MCP_CLIENT_CONFIG_FILES, buildMcpSnippet } from "lib";
 
 // constants
 import { MCP_CONNECTOR_TAB, RAW_INTERPOLATION } from "../../constants";
@@ -25,7 +20,8 @@ import type { McpSetupInstructionsPropsType, McpSetupTabId } from "../../types";
 
 /**
  * One tab per AI client with its ready-to-paste snippet, plus the
- * ChatGPT / claude.ai connector tab (OAuth, no API key).
+ * ChatGPT / claude.ai connector tab (OAuth, no API key), shown first and
+ * selected by default because it is the most common entry point.
  */
 export function McpSetupInstructions(props: McpSetupInstructionsPropsType) {
   const { mcpUrl, apiKey, withConnector = true } = props;
@@ -56,19 +52,19 @@ export function McpSetupInstructions(props: McpSetupInstructionsPropsType) {
     if (!withConnector) return snippetTabs;
 
     return [
-      ...snippetTabs,
       {
         id: MCP_CONNECTOR_TAB,
         label: t("_pages:aiAgents.setup.clients.connector"),
         content: <McpConnectorSteps mcpUrl={mcpUrl} />,
       },
+      ...snippetTabs,
     ];
   }, [apiKey, mcpUrl, t, withConnector]);
 
   return (
     <TabsLayout<McpSetupTabId>
       tabs={tabs}
-      defaultTab={McpClient.ClaudeCode}
+      defaultTab={withConnector ? MCP_CONNECTOR_TAB : MCP_CLIENTS[0]}
       useLinks={false}
       className="ai-agents-setup-tabs"
     />

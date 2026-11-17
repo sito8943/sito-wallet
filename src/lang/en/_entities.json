@@ -320,7 +320,8 @@
     },
     "date": {
       "label": "Date",
-      "required": "Date is required"
+      "required": "Date is required",
+      "placeholder": "Select the date"
     },
     "typeResume": {
       "time": {

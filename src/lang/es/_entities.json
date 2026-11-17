@@ -320,7 +320,8 @@
     },
     "date": {
       "label": "Fecha",
-      "required": "La fecha es requerida"
+      "required": "La fecha es requerida",
+      "placeholder": "Selecciona la fecha"
     },
     "typeResume": {
       "time": {

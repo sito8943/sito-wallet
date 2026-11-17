@@ -12,11 +12,11 @@ input {
 }
 
 .input {
-  @apply text-white bg-base border-border border-2 px-4 py-1 rounded-sm;
+  @apply text-text bg-base border-border border-2 px-4 py-1 rounded-sm;
 }
 
 .input.error {
-  @apply border-red-500;
+  @apply border-text-error;
 }
 
 svg.primary,

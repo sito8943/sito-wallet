@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
-import { FileInput, IconButton, classNames } from "@sito/dashboard-app";
+import { FileInput, IconButton } from "@sito/dashboard-app";
 
 // types
 import type { ProfilePhotoPropsType } from "../types";
@@ -51,36 +51,46 @@ export function ProfilePhoto({
 
   const hasPhoto = !!profile.photo;
 
+  const preview = (
+    <>
+      {hasPhoto ? (
+        <Image
+          endpoint={profile.photo!}
+          fallback={profilePhotoFallback}
+          className="profile-photo-image"
+          alt={profile.name}
+        />
+      ) : (
+        profilePhotoFallback
+      )}
+      {isUploading && (
+        <div className="profile-photo-overlay">
+          <FontAwesomeIcon
+            icon={faSpinner}
+            className="profile-photo-spinner rotate"
+          />
+        </div>
+      )}
+    </>
+  );
+
   return (
     <div className="profile-photo">
       <div className="profile-photo-frame">
-        <div
-          className={classNames(
-            "profile-photo-preview",
-            hasPhoto && "profile-photo-preview--clickable",
-          )}
-          onClick={hasPhoto ? handleFileSelect : undefined}
-          title={hasPhoto ? t("_pages:profile.photo.upload") : undefined}
-        >
-          {hasPhoto ? (
-            <Image
-              endpoint={profile.photo!}
-              fallback={profilePhotoFallback}
-              className="profile-photo-image"
-              alt={profile.name}
-            />
-          ) : (
-            profilePhotoFallback
-          )}
-          {isUploading && (
-            <div className="profile-photo-overlay">
-              <FontAwesomeIcon
-                icon={faSpinner}
-                className="profile-photo-spinner rotate"
-              />
-            </div>
-          )}
-        </div>
+        {hasPhoto ? (
+          <button
+            type="button"
+            className="profile-photo-preview profile-photo-preview--clickable"
+            onClick={handleFileSelect}
+            disabled={isUploading}
+            aria-label={t("_pages:profile.photo.change")}
+            title={t("_pages:profile.photo.change")}
+          >
+            {preview}
+          </button>
+        ) : (
+          <div className="profile-photo-preview">{preview}</div>
+        )}
         {!hasPhoto && (
           <IconButton
             icon={faCamera}

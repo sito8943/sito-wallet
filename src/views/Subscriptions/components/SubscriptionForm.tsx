@@ -182,7 +182,9 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
                   ? {
                       onCreate: onCreateProvider,
                       renderLabel: (inputValue) =>
-                        `${t("_accessibility:create")} "${inputValue}"`,
+                        t("_accessibility:labels.createOption", {
+                          name: inputValue,
+                        }),
                     }
                   : undefined
               }
@@ -389,7 +391,9 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
                   ? {
                       onCreate: onCreateCurrency,
                       renderLabel: (inputValue) =>
-                        `${t("_accessibility:create")} "${inputValue}"`,
+                        t("_accessibility:labels.createOption", {
+                          name: inputValue,
+                        }),
                     }
                   : undefined
               }

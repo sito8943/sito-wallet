@@ -21,5 +21,5 @@
 }
 
 .card-rewards-field-error {
-  @apply text-sm text-error;
+  @apply text-sm text-text-error;
 }

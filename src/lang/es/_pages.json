@@ -356,7 +356,7 @@
       "theme": "Se guarda en este dispositivo. \"Sistema\" sigue la configuración de tu dispositivo.",
       "publicCatalogs": "Tus monedas, categorías, productos, vendedores y proveedores de suscripción aparecerán a otros usuarios para que los usen. Al usarlos se crea una copia en su cuenta; los tuyos siguen siendo solo tuyos.",
       "analytics": "Cuenta qué pantallas se usan, sin datos tuyos ni de tu dispositivo. Puedes cambiarlo cuando quieras.",
-      "aiAgents": "Permite que agentes de IA como Claude Code o Codex consulten tus finanzas y registren transacciones con una clave de API personal."
+      "aiAgents": "Permite que agentes de IA como ChatGPT, Claude, Claude Code o Codex consulten tus finanzas y registren transacciones por ti."
     },
     "messages": {
       "updated": "Perfil actualizado correctamente",
@@ -391,6 +391,7 @@
     },
     "photo": {
       "upload": "Subir foto",
+      "change": "Cambiar foto",
       "delete": "Eliminar foto",
       "uploadSuccess": "Foto actualizada correctamente",
       "uploadError": "Error al subir la foto",
@@ -402,7 +403,7 @@
     "title": "Agentes de IA (MCP)",
     "intro": {
       "title": "Conecta tus agentes de IA",
-      "description": "MCP (Model Context Protocol) permite que agentes de IA como Claude Code, Codex o Claude Desktop trabajen con tu billetera. Pregúntales por tus cuentas y gastos, o pídeles que registren transacciones por ti.",
+      "description": "MCP (Model Context Protocol) permite que agentes de IA como ChatGPT, claude.ai, Claude Desktop, Claude Code o Codex trabajen con tu billetera. Pregúntales por tus cuentas y gastos, o pídeles que registren transacciones por ti.",
       "capabilitiesTitle": "Qué puede hacer un agente",
       "capabilities": {
         "read": "Consultar tus cuentas, saldos, transacciones, categorías, monedas, deudas, metas, suscripciones y próximas renovaciones, resúmenes e historial de saldo",
@@ -1437,7 +1438,7 @@
         "description": "Actualiza tu perfil, idioma y preferencias personales dentro de Sito Wallet."
       },
       "aiAgents": {
-        "description": "Crea claves de API personales y conecta agentes de IA como Claude Code, Codex o Claude Desktop a Sito Wallet."
+        "description": "Conecta agentes de IA como ChatGPT, claude.ai, Claude Code o Codex a Sito Wallet y gestiona sus claves de API."
       },
       "feedback": {
         "description": "Revisa lo que los usuarios contaron a su agente de IA o a la app que falla, falta o podría mejorar."
@@ -1530,6 +1531,7 @@
       },
       "deletePayment": {
         "text": "Eliminar pago",
+        "confirmTitle": "¿Eliminar este pago?",
         "successMessage": "Pago eliminado correctamente"
       },
       "editPayment": {

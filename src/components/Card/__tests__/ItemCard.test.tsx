@@ -187,4 +187,62 @@ describe("ItemCard", () => {
       "false",
     );
   });
+  it("activates with Enter and Space from the keyboard", () => {
+    const onClick = vi.fn();
+
+    render(
+      <ItemCard
+        title="Title"
+        name="Edit item"
+        deleted={false}
+        onClick={onClick}
+        actions={[]}
+      >
+        <span>Content</span>
+      </ItemCard>,
+    );
+
+    const card = screen.getByRole("button", { name: "Edit item" });
+    expect(card).toHaveAttribute("tabindex", "0");
+
+    fireEvent.keyDown(card, { key: "Enter" });
+    fireEvent.keyDown(card, { key: " " });
+    fireEvent.keyDown(card, { key: "a" });
+
+    expect(onClick).toHaveBeenCalledTimes(2);
+  });
+
+  it("ignores activation keys coming from nested controls", () => {
+    const onClick = vi.fn();
+
+    render(
+      <ItemCard
+        title="Title"
+        name="Edit item"
+        deleted={false}
+        onClick={onClick}
+        actions={[]}
+      >
+        <button type="button">Nested</button>
+      </ItemCard>,
+    );
+
+    fireEvent.keyDown(screen.getByText("Nested"), { key: "Enter" });
+
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it("is not focusable or labelled as a button without onClick", () => {
+    render(
+      <ItemCard title="Title" name="Edit item" deleted={false} actions={[]}>
+        <span>Content</span>
+      </ItemCard>,
+    );
+
+    expect(screen.queryByRole("button")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Edit item")).not.toBeInTheDocument();
+    expect(screen.getByText("Content").parentElement).not.toHaveAttribute(
+      "tabindex",
+    );
+  });
 });
