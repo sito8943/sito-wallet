@@ -42,6 +42,8 @@ import {
   useMobileNavbar,
   useMobileMultiSelection,
   useSwipeDeleteState,
+  RESTORE_NAME_IN_USE_KEY,
+  useMutationErrorHandler,
 } from "hooks";
 import {
   useAddCurrency,
@@ -101,8 +103,11 @@ export function Currencies() {
   });
   const currencySwipeDelete = useSwipeDeleteState(deleteCurrency.handleClose);
 
+  const handleMutationError = useMutationErrorHandler();
   const restoreCurrency = useRestoreDialog({
     mutationFn: (dto) => manager.Currencies.restore(dto),
+    onError: (restoreError) =>
+      handleMutationError(restoreError, { uniqueKey: RESTORE_NAME_IN_USE_KEY }),
     ...CurrenciesQueryKeys.all(),
   });
 

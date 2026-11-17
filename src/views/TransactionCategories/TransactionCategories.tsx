@@ -42,6 +42,8 @@ import {
   useMobileNavbar,
   useMobileMultiSelection,
   useSwipeDeleteState,
+  RESTORE_NAME_IN_USE_KEY,
+  useMutationErrorHandler,
 } from "hooks";
 import {
   useAddPrefabCategoriesDialog,
@@ -104,8 +106,11 @@ export function TransactionCategories() {
     deleteTransactionCategory.handleClose,
   );
 
+  const handleMutationError = useMutationErrorHandler();
   const restoreTransactionCategory = useRestoreDialog({
     mutationFn: (dto) => manager.TransactionCategories.restore(dto),
+    onError: (restoreError) =>
+      handleMutationError(restoreError, { uniqueKey: RESTORE_NAME_IN_USE_KEY }),
     ...TransactionCategoriesQueryKeys.all(),
   });
 
