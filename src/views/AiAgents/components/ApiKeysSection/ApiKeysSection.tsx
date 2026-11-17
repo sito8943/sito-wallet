@@ -84,7 +84,7 @@ export function ApiKeysSection(props: ApiKeysSectionPropsType) {
           <Loading />
         </div>
       ) : apiKeys.length === 0 ? (
-        <p className="ai-agents-empty">{t("_pages:aiAgents.keys.empty")}</p>
+        <p className="card-empty">{t("_pages:aiAgents.keys.empty")}</p>
       ) : (
         <ul className="ai-agents-keys">
           {apiKeys.map((apiKey) => (

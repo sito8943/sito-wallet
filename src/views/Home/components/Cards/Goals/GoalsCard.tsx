@@ -57,9 +57,7 @@ export const GoalsCard = (props: GoalsCardPropsType) => {
     if (isLoading) return null;
     if (error)
       return (
-        <p className="goals-card-empty">
-          {t("_pages:home.dashboard.goals.error")}
-        </p>
+        <p className="card-empty">{t("_pages:home.dashboard.goals.error")}</p>
       );
 
     return (
@@ -71,9 +69,7 @@ export const GoalsCard = (props: GoalsCardPropsType) => {
             ))}
           </ul>
         ) : (
-          <p className="goals-card-empty">
-            {t("_pages:home.dashboard.goals.empty")}
-          </p>
+          <p className="card-empty">{t("_pages:home.dashboard.goals.empty")}</p>
         )}
         <Link to={AppRoutes.goals} className="goals-card-link">
           {t("_pages:home.dashboard.goals.viewAll")}

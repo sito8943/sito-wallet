@@ -39,7 +39,7 @@ export function ConnectedAppsSection(props: ConnectedAppsSectionPropsType) {
           <Loading />
         </div>
       ) : grants.length === 0 ? (
-        <p className="ai-agents-empty">{t("_pages:aiAgents.apps.empty")}</p>
+        <p className="card-empty">{t("_pages:aiAgents.apps.empty")}</p>
       ) : (
         <ul className="ai-agents-keys">
           {grants.map((grant) => (

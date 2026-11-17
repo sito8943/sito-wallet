@@ -98,7 +98,7 @@ export const SavingsProjectionCard = (props: SavingsProjectionPropsType) => {
     switch (viewState) {
       case SavingsProjectionViewState.NoAccount:
         return (
-          <p className="savings-projection-empty">
+          <p className="card-empty">
             {t("_pages:home.dashboard.savingsProjection.noAccount")}
           </p>
         );
@@ -106,7 +106,7 @@ export const SavingsProjectionCard = (props: SavingsProjectionPropsType) => {
         return null;
       case SavingsProjectionViewState.NotConfigured:
         return (
-          <div className="savings-projection-empty">
+          <div className="card-empty">
             <p>{t("_pages:home.dashboard.savingsProjection.notConfigured")}</p>
             <Button
               type="button"
@@ -120,13 +120,13 @@ export const SavingsProjectionCard = (props: SavingsProjectionPropsType) => {
         );
       case SavingsProjectionViewState.Error:
         return (
-          <p className="savings-projection-empty">
+          <p className="card-empty">
             {t("_pages:home.dashboard.savingsProjection.error")}
           </p>
         );
       case SavingsProjectionViewState.Empty:
         return (
-          <p className="savings-projection-empty">
+          <p className="card-empty">
             {t("_pages:home.dashboard.savingsProjection.empty")}
           </p>
         );

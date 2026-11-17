@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { Empty, classNames } from "@sito/dashboard-app";
+import { classNames } from "@sito/dashboard-app";
 
 // views
 import { TransactionCard } from "views/Transactions";
@@ -18,7 +18,9 @@ export const LastTransactionsList = (props: LastTransactionsListPropsType) => {
   return (
     <div className="last-transactions-content">
       {!isLoading && transactions.length === 0 ? (
-        <Empty message={t("_pages:home.dashboard.lastTransactions.empty")} />
+        <p className="card-empty">
+          {t("_pages:home.dashboard.lastTransactions.empty")}
+        </p>
       ) : (
         <ul className="last-transactions-list">
           {transactions.map((transaction, index) => (

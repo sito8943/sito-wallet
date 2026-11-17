@@ -24,10 +24,6 @@
   @apply flex justify-center py-6;
 }
 
-.feedback-empty {
-  @apply rounded-2xl border border-dashed border-border bg-base-light px-4 py-8 text-center text-sm text-text-muted;
-}
-
 .feedback-list {
   @apply flex flex-col gap-3;
 }

@@ -57,11 +57,11 @@ export function FeedbackSection(props: FeedbackSectionPropsType) {
           <Loading />
         </div>
       ) : entries.length === 0 ? (
-        <p className="feedback-empty">{t("_pages:feedback.empty")}</p>
+        <p className="card-empty">{t("_pages:feedback.empty")}</p>
       ) : (
         <>
           {open.length === 0 && (
-            <p className="feedback-empty">{t("_pages:feedback.allResolved")}</p>
+            <p className="card-empty">{t("_pages:feedback.allResolved")}</p>
           )}
           {visible.length > 0 && (
             <ul className="feedback-list">

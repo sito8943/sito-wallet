@@ -1,5 +1,8 @@
 import { useTranslation } from "react-i18next";
 
+// @sito/dashboard-app
+import { Empty } from "@sito/dashboard-app";
+
 import { TypeResumeCategoryItem } from "./TypeResumeCategoryItem";
 
 // types
@@ -28,9 +31,9 @@ export const TypeResumeCategoriesList = (
 
   if (categories.length === 0)
     return (
-      <p className="type-resume-dialog-empty poppins">
-        {t("_pages:home.dashboard.transactionTypeResume.details.empty")}
-      </p>
+      <Empty
+        message={t("_pages:home.dashboard.transactionTypeResume.details.empty")}
+      />
     );
 
   return (

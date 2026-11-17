@@ -1,6 +1,9 @@
 import { useTranslation } from "react-i18next";
 
-import { Button, Dialog, Loading } from "@sito/dashboard-app";
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { Dialog, Empty, GlobalActions, Loading } from "@sito/dashboard-app";
 
 import { Money } from "components";
 
@@ -36,14 +39,15 @@ export const SelectSubscriptionDialog = (
       ) : errorMessage ? (
         <p className="select-subscription-dialog-empty">{errorMessage}</p>
       ) : subscriptions.length === 0 ? (
-        <div className="select-subscription-dialog-empty-state">
-          <p className="select-subscription-dialog-empty">
-            {t("_pages:subscriptions.empty")}
-          </p>
-          <Button type="button" color="primary" onClick={onAddSubscription}>
-            {t("_pages:subscriptions.add")}
-          </Button>
-        </div>
+        <Empty
+          message={t("_pages:subscriptions.empty")}
+          action={{
+            icon: <FontAwesomeIcon icon={faAdd} />,
+            id: GlobalActions.Add,
+            onClick: onAddSubscription,
+            tooltip: t("_pages:subscriptions.add"),
+          }}
+        />
       ) : (
         <ul className="select-subscription-dialog-list">
           {subscriptions.map((subscription) => (

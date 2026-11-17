@@ -177,3 +177,9 @@ a.primary {
 .user-form-admin-helper {
   @apply text-sm text-text-muted;
 }
+
+/* Empty/placeholder copy inside a card (dashboard cards, settings sections).
+   Dialogs and full pages use the lib's <Empty> instead. */
+.card-empty {
+  @apply flex flex-col items-center gap-3 py-6 text-center text-sm text-text-muted;
+}

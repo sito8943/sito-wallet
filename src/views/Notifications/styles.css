@@ -12,10 +12,6 @@
   @apply inline-flex items-center gap-2 rounded-full border border-border bg-base p-1;
 }
 
-.notifications-empty {
-  @apply rounded-2xl border border-dashed border-border bg-base-light px-4 py-8 text-center text-text-muted;
-}
-
 .notifications-list {
   @apply flex flex-col gap-3;
 }

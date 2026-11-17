@@ -8,10 +8,6 @@
   @apply flex flex-col gap-3 w-full;
 }
 
-.card-rewards-empty {
-  @apply flex flex-col items-center gap-3 text-text-muted text-sm text-center py-6;
-}
-
 .card-rewards-hint,
 .card-rewards-config-hint {
   @apply text-xs text-text-muted;

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button, Page, useNotification } from "@sito/dashboard-app";
+import { Button, Empty, Page, useNotification } from "@sito/dashboard-app";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import { QueryError } from "components";
@@ -151,9 +152,10 @@ export function Notifications() {
               ))}
             </ul>
           ) : (
-            <div className="notifications-empty">
-              {t("_pages:notifications.empty")}
-            </div>
+            <Empty
+              message={t("_pages:notifications.empty")}
+              iconProps={{ icon: faBell }}
+            />
           )}
         </div>
       )}
