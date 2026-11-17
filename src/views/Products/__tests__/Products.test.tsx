@@ -1,12 +1,31 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ReactNode } from "react";
 
-const { mockUseProductsCommon, mockIsOnline, mockOpenAdd } = vi.hoisted(() => ({
-  mockUseProductsCommon: vi.fn(),
+const {
+  mockUseProductsList,
+  mockIsOnline,
+  mockOpenAdd,
+  mockRestore,
+  mockHandleMutationError,
+  mockUseRestoreDialog,
+} = vi.hoisted(() => ({
+  mockUseProductsList: vi.fn(),
   mockIsOnline: vi.fn(() => true),
   mockOpenAdd: vi.fn(),
+  mockRestore: vi.fn(),
+  mockHandleMutationError: vi.fn(),
+  mockUseRestoreDialog: vi.fn(),
 }));
+
+const listResult = (items: object[]) => ({
+  data: { pages: [{ items }] },
+  isLoading: false,
+  error: null,
+  hasNextPage: false,
+  isFetchingNextPage: false,
+  fetchNextPage: vi.fn(),
+});
 
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({ t: (key: string) => key }),
@@ -14,7 +33,9 @@ vi.mock("react-i18next", () => ({
 
 vi.mock("hooks", () => ({
   ProductsQueryKeys: { all: () => ({ queryKey: ["products"] }) },
-  useProductsCommon: () => mockUseProductsCommon(),
+  RESTORE_NAME_IN_USE_KEY: "_entities:base.restore.nameInUse",
+  useInfiniteProductsList: () => mockUseProductsList(),
+  useMutationErrorHandler: () => mockHandleMutationError,
   useMobileNavbar: vi.fn(),
   useOnlineStatus: () => mockIsOnline(),
   useSwipeDeleteState: () => ({
@@ -24,8 +45,16 @@ vi.mock("hooks", () => ({
   }),
 }));
 
+// utils.ts pulls form helpers from lib; the page only needs the row mapper.
+vi.mock("lib", () => ({
+  photoToFormValues: vi.fn(),
+  resolvePhotoPayload: vi.fn(),
+}));
+
 vi.mock("providers", () => ({
-  useManager: () => ({ Products: { softDelete: vi.fn() } }),
+  useManager: () => ({
+    Products: { softDelete: vi.fn(), restore: mockRestore },
+  }),
   useRegisterBottomNavAction: vi.fn(),
 }));
 
@@ -41,8 +70,29 @@ vi.mock("components", async () => ({
   ...(await vi.importActual<typeof import("../../../components/QueryError")>(
     "../../../components/QueryError",
   )),
-  CatalogCard: ({ name }: { name: string }) => <article>{name}</article>,
-  toCatalogRow: (item: object) => ({ ...item, deletedAt: null }),
+  CatalogCard: ({
+    name,
+    subtitle,
+    deletedAt,
+    actions,
+  }: {
+    name: string;
+    subtitle?: string | null;
+    deletedAt?: Date | null;
+    actions: { id: string; hidden?: boolean }[];
+  }) => (
+    <article data-deleted={String(!!deletedAt)}>
+      <h3>{name}</h3>
+      {subtitle && <p>{subtitle}</p>}
+      <ul>
+        {actions
+          .filter((action) => !action.hidden)
+          .map((action) => (
+            <li key={action.id}>{action.id}</li>
+          ))}
+      </ul>
+    </article>
+  ),
 }));
 
 vi.mock("../components", () => ({
@@ -97,9 +147,21 @@ vi.mock("@sito/dashboard-app", () => ({
       emptyComponent
     ),
   useDeleteDialog: () => ({
-    action: () => ({ id: "delete" }),
+    action: (record: { deletedAt?: Date | null }) => ({
+      id: "delete",
+      hidden: !!record.deletedAt,
+    }),
     handleClose: vi.fn(),
   }),
+  useRestoreDialog: (props: object) => {
+    mockUseRestoreDialog(props);
+    return {
+      action: (record: { deletedAt?: Date | null }) => ({
+        id: "restore",
+        hidden: !record.deletedAt,
+      }),
+    };
+  },
 }));
 
 import { Products } from "../Products";
@@ -111,11 +173,7 @@ describe("Products", () => {
   });
 
   it("offers an add action from the empty state", () => {
-    mockUseProductsCommon.mockReturnValue({
-      data: [],
-      isLoading: false,
-      error: null,
-    });
+    mockUseProductsList.mockReturnValue(listResult([]));
 
     render(<Products />);
 
@@ -127,7 +185,7 @@ describe("Products", () => {
   });
 
   it("shows the offline copy instead of a raw fetch failure", () => {
-    mockUseProductsCommon.mockReturnValue({
+    mockUseProductsList.mockReturnValue({
       data: undefined,
       isLoading: false,
       error: new TypeError("Failed to fetch"),
@@ -142,7 +200,7 @@ describe("Products", () => {
   });
 
   it("keeps a server error message as is", () => {
-    mockUseProductsCommon.mockReturnValue({
+    mockUseProductsList.mockReturnValue({
       data: undefined,
       isLoading: false,
       error: new Error("Product not found"),
@@ -151,5 +209,67 @@ describe("Products", () => {
     render(<Products />);
 
     expect(screen.getByRole("alert")).toHaveTextContent("Product not found");
+  });
+
+  it("shows deleted products with restore instead of delete", () => {
+    mockUseProductsList.mockReturnValue(
+      listResult([
+        {
+          id: 1,
+          name: "LECHE ENT. 1L",
+          alias: "Leche",
+          deletedAt: null,
+        },
+        {
+          id: 2,
+          name: "PAN",
+          alias: null,
+          deletedAt: new Date("2026-11-01T10:00:00Z"),
+        },
+      ]),
+    );
+
+    render(<Products />);
+
+    const active = screen.getByText("Leche").closest("article");
+    const deleted = screen.getByText("PAN").closest("article");
+
+    expect(active).toHaveAttribute("data-deleted", "false");
+    expect(screen.getByText("LECHE ENT. 1L")).toBeInTheDocument();
+    expect(within(active as HTMLElement).getByText("delete")).toBeVisible();
+    expect(
+      within(active as HTMLElement).queryByText("restore"),
+    ).not.toBeInTheDocument();
+
+    expect(deleted).toHaveAttribute("data-deleted", "true");
+    expect(within(deleted as HTMLElement).getByText("restore")).toBeVisible();
+    expect(
+      within(deleted as HTMLElement).queryByText("delete"),
+    ).not.toBeInTheDocument();
+  });
+
+  it("restores through the products client and refreshes every products query", async () => {
+    mockUseProductsList.mockReturnValue(listResult([]));
+    mockRestore.mockResolvedValue(1);
+
+    render(<Products />);
+
+    const restoreProps = mockUseRestoreDialog.mock.calls[0][0] as {
+      mutationFn: (ids: number[]) => Promise<number>;
+      onError: (error: unknown) => void;
+      queryKey: string[];
+    };
+
+    // "products" is the prefix of both the paged list and the /common picker.
+    expect(restoreProps.queryKey).toEqual(["products"]);
+
+    await restoreProps.mutationFn([2, 5]);
+    expect(mockRestore).toHaveBeenCalledWith([2, 5]);
+
+    const conflict = { status: 409, message: "restore.nameInUse" };
+    restoreProps.onError(conflict);
+    expect(mockHandleMutationError).toHaveBeenCalledWith(conflict, {
+      uniqueKey: "_entities:base.restore.nameInUse",
+    });
   });
 });

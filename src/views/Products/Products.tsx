@@ -11,13 +11,16 @@ import {
   Page,
   PrettyGrid,
   useDeleteDialog,
+  useRestoreDialog,
 } from "@sito/dashboard-app";
 
 // hooks
 import {
   ProductsQueryKeys,
-  useProductsCommon,
+  RESTORE_NAME_IN_USE_KEY,
+  useInfiniteProductsList,
   useMobileNavbar,
+  useMutationErrorHandler,
   useSwipeDeleteState,
 } from "hooks";
 
@@ -32,29 +35,32 @@ import { useManager, useRegisterBottomNavAction } from "providers";
 
 // components
 import type { CatalogRowDto } from "components";
-import { CatalogCard, QueryError, toCatalogRow } from "components";
+import { CatalogCard, QueryError } from "components";
 import { getDeleteAction } from "../../components/Card/utils";
 import { AddProductDialog, EditProductDialog } from "./components";
 
 // hooks
 import { useAddProductDialog, useEditProductDialog } from "./hooks";
+import { productToCatalogRow } from "./utils";
 
 export function Products() {
   const { t } = useTranslation();
   const manager = useManager();
 
-  const { data, isLoading, error } = useProductsCommon();
-  // The alias is how the user knows the product; the receipt name goes below.
+  const handleMutationError = useMutationErrorHandler();
+
+  const {
+    data,
+    isLoading,
+    error,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useInfiniteProductsList({});
   const items = useMemo(
     () =>
-      (data ?? []).map((product) =>
-        toCatalogRow({
-          ...product,
-          name: product.alias || product.name,
-          subtitle: product.alias ? product.name : null,
-        }),
-      ),
-    [data],
+      data?.pages?.flatMap((page) => page.items.map(productToCatalogRow)) ?? [],
+    [data?.pages],
   );
 
   const addProduct = useAddProductDialog();
@@ -64,6 +70,12 @@ export function Products() {
     ...ProductsQueryKeys.all(),
   });
   const swipeDelete = useSwipeDeleteState(deleteProduct.handleClose);
+  const restoreProduct = useRestoreDialog({
+    mutationFn: (ids) => manager.Products.restore(ids),
+    onError: (restoreError) =>
+      handleMutationError(restoreError, { uniqueKey: RESTORE_NAME_IN_USE_KEY }),
+    ...ProductsQueryKeys.all(),
+  });
 
   const productTransactions = useCatalogTransactionsDialog({
     filterKey: "productId",
@@ -74,8 +86,9 @@ export function Products() {
     (record: CatalogRowDto) => [
       productTransactions.action(record),
       deleteProduct.action(record),
+      restoreProduct.action(record),
     ],
-    [deleteProduct, productTransactions],
+    [deleteProduct, restoreProduct, productTransactions],
   );
 
   useMobileNavbar(t("_pages:products.title"));
@@ -105,6 +118,12 @@ export function Products() {
           <PrettyGrid
             data={items}
             className="full-grid"
+            hasMore={!!hasNextPage}
+            loadingMore={isFetchingNextPage}
+            onLoadMore={() => {
+              if (!hasNextPage || isFetchingNextPage) return;
+              void fetchNextPage();
+            }}
             emptyComponent={
               <Empty
                 message={t("_pages:products.empty")}
@@ -150,6 +169,7 @@ export function Products() {
             {...deleteProduct}
             handleClose={swipeDelete.handleDialogClose}
           />
+          <ConfirmationDialog {...restoreProduct} />
         </>
       )}
     </Page>
