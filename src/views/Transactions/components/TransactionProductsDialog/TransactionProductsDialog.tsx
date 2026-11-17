@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Controller, useWatch } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,6 +15,7 @@ import {
 } from "@sito/dashboard-app";
 
 // lib
+import type { CommonProductDto } from "lib";
 import { Tables, getProductLabel, withProductLabel } from "lib";
 
 // hooks
@@ -24,6 +25,7 @@ import { useProductsCommon } from "../../../../hooks/queries/useProductsCommon";
 import {
   emptyTransactionProduct,
   findProductByNameOrAlias,
+  getProductLastPricePrefill,
   getTransactionProductErrorKeys,
   formatTransactionAmount,
   getTransactionProductsTotal,
@@ -38,7 +40,16 @@ import "./styles.css";
 export function TransactionProductsDialog(
   props: TransactionProductsDialogPropsType,
 ) {
-  const { open, onClose, control, isLoading, fields, append, remove } = props;
+  const {
+    open,
+    onClose,
+    control,
+    setValue,
+    isLoading,
+    fields,
+    append,
+    remove,
+  } = props;
   const { t, i18n } = useTranslation();
 
   const products = useProductsCommon({ includeShared: true });
@@ -54,6 +65,31 @@ export function TransactionProductsDialog(
 
   const watchedProducts = useWatch({ control, name: "products" });
   const total = getTransactionProductsTotal(watchedProducts);
+  const account = useWatch({ control, name: "account" });
+
+  // Price each line (by field id) got prefilled with, so picking another
+  // product replaces it but never a price the user typed.
+  const prefilledPrices = useRef<Record<string, number>>({});
+
+  // Only for the user's pick in the picker: receipt scans and loading a
+  // transaction to edit set the products elsewhere and keep their prices.
+  const prefillLastPrice = (
+    index: number,
+    fieldId: string,
+    product: CommonProductDto | null | undefined,
+  ) => {
+    const price = getProductLastPricePrefill(product, {
+      currentPrice: watchedProducts?.[index]?.unitPrice ?? "",
+      prefilledPrice: prefilledPrices.current[fieldId],
+      accountCurrency: account?.currency,
+    });
+    if (price === undefined || !setValue) return;
+    prefilledPrices.current[fieldId] = price;
+    setValue(`products.${index}.unitPrice`, price, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+  };
 
   // Row errors only show after trying to add or finish with incomplete rows.
   const [showErrors, setShowErrors] = useState(false);
@@ -96,16 +132,14 @@ export function TransactionProductsDialog(
                     required
                     options={productOptions}
                     value={value && withProductLabel(value)}
-                    onChange={(next) =>
-                      onChange(
-                        (next &&
-                          !Array.isArray(next) &&
-                          products.data?.find(
-                            (product) => product.id === next.id,
-                          )) ||
-                          next,
-                      )
-                    }
+                    onChange={(next) => {
+                      const product =
+                        next && !Array.isArray(next)
+                          ? products.data?.find((item) => item.id === next.id)
+                          : undefined;
+                      onChange(product || next);
+                      prefillLastPrice(index, field.id, product);
+                    }}
                     label={t("_entities:transaction.products.product.label")}
                     autoComplete={`${Tables.Transactions}-${t(
                       "_entities:transaction.products.product.label",
@@ -114,11 +148,13 @@ export function TransactionProductsDialog(
                     createOption={{
                       // Typing an exact alias or name offers the existing
                       // product instead of creating a duplicate.
-                      onCreate: (name) =>
-                        onChange(
+                      onCreate: (name) => {
+                        const product =
                           findProductByNameOrAlias(products.data ?? [], name) ??
-                            newProductOption(name),
-                        ),
+                          newProductOption(name);
+                        onChange(product);
+                        prefillLastPrice(index, field.id, product);
+                      },
                       renderLabel: (name) => {
                         const existing = findProductByNameOrAlias(
                           products.data ?? [],
