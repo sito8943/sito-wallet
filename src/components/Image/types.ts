@@ -8,4 +8,6 @@ export type ImagePropsType = Omit<
   fallback?: ReactNode;
   token?: string;
   baseUrl?: string;
+  /** Called when the authenticated fetch fails (not on abort). */
+  onLoadError?: () => void;
 };

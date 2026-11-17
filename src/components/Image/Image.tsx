@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 // @sito/dashboard-app
 import { useAuth } from "@sito/dashboard-app";
@@ -13,10 +13,23 @@ const resolveUrl = (endpoint: string, baseUrl: string) => {
 };
 
 export const Image = (props: ImagePropsType) => {
-  const { endpoint, fallback = null, token, baseUrl, ...rest } = props;
+  const {
+    endpoint,
+    fallback = null,
+    token,
+    baseUrl,
+    onLoadError,
+    ...rest
+  } = props;
   const { account } = useAuth();
 
   const [src, setSrc] = useState<string | null>(null);
+
+  // Kept in a ref so a new callback identity doesn't refetch the image.
+  const onLoadErrorRef = useRef(onLoadError);
+  useEffect(() => {
+    onLoadErrorRef.current = onLoadError;
+  }, [onLoadError]);
 
   const parsedUrl = useMemo(
     () => resolveUrl(endpoint, baseUrl ?? config.apiUrl),
@@ -67,7 +80,9 @@ export const Image = (props: ImagePropsType) => {
           return currentUrl;
         });
       } catch {
+        if (controller.signal.aborted) return;
         clearSource();
+        onLoadErrorRef.current?.();
       }
     })();
 
