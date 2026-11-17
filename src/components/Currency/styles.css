@@ -1,0 +1,5 @@
+@reference "../../styles/variables.css";
+
+.currency-symbol {
+  @apply text-xs;
+}
