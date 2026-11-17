@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { faAdd } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Dialog, Empty, GlobalActions, Loading } from "@sito/dashboard-app";
@@ -42,7 +42,7 @@ export const SelectSubscriptionDialog = (
         <Empty
           message={t("_pages:subscriptions.empty")}
           action={{
-            icon: <FontAwesomeIcon icon={faAdd} />,
+            icon: <FontAwesomeIcon icon={faPlus} />,
             id: GlobalActions.Add,
             onClick: onAddSubscription,
             tooltip: t("_pages:subscriptions.add"),

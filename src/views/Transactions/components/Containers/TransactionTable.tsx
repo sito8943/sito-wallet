@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Empty, GlobalActions, useTableOptions } from "@sito/dashboard-app";
 
 // icons
-import { faAdd, faReceipt } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faReceipt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
@@ -114,7 +114,7 @@ export const TransactionTable = (props: TransactionContainerPropsType) => {
         action={
           onAddTransaction
             ? {
-                icon: <FontAwesomeIcon icon={faAdd} />,
+                icon: <FontAwesomeIcon icon={faPlus} />,
                 id: GlobalActions.Add,
                 onClick: onAddTransaction,
                 tooltip: t("_pages:transactions.add"),

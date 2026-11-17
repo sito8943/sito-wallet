@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { faAdd, faCubes } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faCubes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @sito/dashboard-app
@@ -110,7 +110,7 @@ export function Products() {
                 message={t("_pages:products.empty")}
                 iconProps={{ icon: faCubes }}
                 action={{
-                  icon: <FontAwesomeIcon icon={faAdd} />,
+                  icon: <FontAwesomeIcon icon={faPlus} />,
                   id: GlobalActions.Add,
                   disabled: isLoading,
                   onClick: () => addProduct.openDialog(),
