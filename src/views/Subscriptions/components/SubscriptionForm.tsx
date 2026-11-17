@@ -13,7 +13,10 @@ import {
 } from "@sito/dashboard-app";
 
 // hooks
-import { useSubscriptionProvidersCommon } from "hooks";
+import {
+  usePurchaseProvidersCommon,
+  useSubscriptionProvidersCommon,
+} from "hooks";
 import { useAccountsCommon } from "../../../hooks/queries/useAccountsCommon";
 import { useCurrenciesCommon } from "../../../hooks/queries/useCurrenciesCommon";
 import { useTransactionCategoriesCommon } from "../../../hooks/queries/useTransactionCategoriesCommon";
@@ -40,11 +43,15 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
     mode = FormMode.Add,
     onCreateCurrency,
     onCreateProvider,
+    onCreatePurchaseProvider,
   } = props;
   const { t } = useTranslation();
 
   const providersQuery = useSubscriptionProvidersCommon({
     onlyEnabled: true,
+    includeShared: true,
+  });
+  const purchaseProvidersQuery = usePurchaseProvidersCommon({
     includeShared: true,
   });
   const currenciesQuery = useCurrenciesCommon({ includeShared: true });
@@ -56,6 +63,11 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
   const providerOptions = useMemo(
     () => [...(providersQuery.data ?? [])] as Option[],
     [providersQuery.data],
+  );
+
+  const purchaseProviderOptions = useMemo(
+    () => [...(purchaseProvidersQuery.data ?? [])] as Option[],
+    [purchaseProvidersQuery.data],
   );
 
   const currencyOptions = useMemo(
@@ -105,6 +117,7 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
   const formDisabled =
     isLoading ||
     providersQuery.isLoading ||
+    purchaseProvidersQuery.isLoading ||
     currenciesQuery.isLoading ||
     accountsQuery.isLoading ||
     categoriesQuery.isLoading;
@@ -170,6 +183,37 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
                       onCreate: onCreateProvider,
                       renderLabel: (inputValue) =>
                         `${t("_accessibility:create")} "${inputValue}"`,
+                    }
+                  : undefined
+              }
+              {...rest}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="purchaseProvider"
+          disabled={formDisabled}
+          render={({ field: { value, onChange, ...rest } }) => (
+            <AutocompleteInput
+              options={purchaseProviderOptions}
+              value={value ?? null}
+              onChange={(nextValue) => onChange(nextValue ?? null)}
+              label={t("_entities:subscription.purchaseProvider.label")}
+              placeholder={t(
+                "_entities:subscription.purchaseProvider.placeholder",
+              )}
+              autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.purchaseProvider.label")}`}
+              multiple={false}
+              createOption={
+                onCreatePurchaseProvider
+                  ? {
+                      onCreate: onCreatePurchaseProvider,
+                      renderLabel: (name) =>
+                        t("_entities:transaction.purchaseProvider.create", {
+                          name,
+                        }),
                     }
                   : undefined
               }

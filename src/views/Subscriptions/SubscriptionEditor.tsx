@@ -22,6 +22,7 @@ import { useManager } from "providers";
 
 import type {
   CommonCurrencyDto,
+  CommonPurchaseProviderDto,
   CommonSubscriptionProviderDto,
   SubscriptionDto,
 } from "lib";
@@ -30,6 +31,9 @@ import { AppRoutes, FormMode, parseErrorMessage } from "lib";
 import { AddCurrencyDialog } from "../Currencies/components";
 import { useAddCurrency } from "../Currencies/hooks";
 import { addEmptyCurrency } from "../Currencies/utils";
+import { AddPurchaseProviderDialog } from "../PurchaseProviders/components";
+import { useAddPurchaseProviderDialog } from "../PurchaseProviders/hooks";
+import { emptyPurchaseProviderForm } from "../PurchaseProviders/utils";
 import { AddSubscriptionProviderDialog } from "../SubscriptionProviders/components";
 import { useAddSubscriptionProviderDialog } from "../SubscriptionProviders/hooks";
 import { emptyAddSubscriptionProviderForm } from "../SubscriptionProviders/utils";
@@ -199,11 +203,27 @@ export function SubscriptionEditor() {
     [setValue],
   );
 
+  const handlePurchaseProviderCreated = useCallback(
+    (purchaseProvider: CommonPurchaseProviderDto) => {
+      if (!setValue) return;
+
+      setValue("purchaseProvider", purchaseProvider, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+    },
+    [setValue],
+  );
+
   const addCurrency = useAddCurrency({ onCreated: handleCurrencyCreated });
   const addSubscriptionProvider = useAddSubscriptionProviderDialog({
     onCreated: handleSubscriptionProviderCreated,
   });
+  const addPurchaseProvider = useAddPurchaseProviderDialog({
+    onCreated: handlePurchaseProviderCreated,
+  });
   const openAddCurrencyDialog = addCurrency.openDialog;
+  const openAddPurchaseProviderDialog = addPurchaseProvider.openDialog;
   const openAddSubscriptionProviderDialog = addSubscriptionProvider.openDialog;
 
   const handleCreateCurrency = useCallback(
@@ -228,6 +248,18 @@ export function SubscriptionEditor() {
       });
     },
     [openAddSubscriptionProviderDialog],
+  );
+
+  const handleCreatePurchaseProvider = useCallback(
+    (inputValue: string) => {
+      openAddPurchaseProviderDialog({
+        values: {
+          ...emptyPurchaseProviderForm,
+          name: inputValue,
+        },
+      });
+    },
+    [openAddPurchaseProviderDialog],
   );
 
   useEffect(() => {
@@ -316,6 +348,7 @@ export function SubscriptionEditor() {
                   mode={isEditMode ? FormMode.Edit : FormMode.Add}
                   onCreateCurrency={handleCreateCurrency}
                   onCreateProvider={handleCreateSubscriptionProvider}
+                  onCreatePurchaseProvider={handleCreatePurchaseProvider}
                 />
               </div>
             </FormContainer>
@@ -333,6 +366,7 @@ export function SubscriptionEditor() {
           <AddSubscriptionBillingLogDialog {...addBillingLog} />
           <AddCurrencyDialog {...addCurrency} />
           <AddSubscriptionProviderDialog {...addSubscriptionProvider} />
+          <AddPurchaseProviderDialog {...addPurchaseProvider} />
         </div>
       )}
     </Page>
