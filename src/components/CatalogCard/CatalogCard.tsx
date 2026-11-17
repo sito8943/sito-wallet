@@ -1,9 +1,8 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import { ItemCard, ItemCardTitle } from "../Card";
-import { ProviderPhoto } from "../ProviderPhoto";
+import { EntityAvatar } from "../EntityAvatar";
 
 // types
 import type { CatalogCardPropsType, CatalogRowDto } from "./types";
@@ -29,18 +28,7 @@ export function CatalogCard(props: CatalogCardPropsType) {
     <ItemCard<CatalogRowDto>
       title={
         <div className="catalog-card-title-row">
-          {showPhoto && (
-            <div className="catalog-card-photo">
-              {photo ? (
-                <ProviderPhoto
-                  className="catalog-card-photo-image"
-                  photo={photo}
-                />
-              ) : (
-                <FontAwesomeIcon icon={faImage} />
-              )}
-            </div>
-          )}
+          {showPhoto && <EntityAvatar photo={photo} fallbackIcon={faImage} />}
           <div className="catalog-card-text">
             <ItemCardTitle>{name}</ItemCardTitle>
             {subtitle && (

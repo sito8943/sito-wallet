@@ -44,9 +44,6 @@ export function DebtCard(props: DebtCardPropsType) {
     onSwipeDelete,
   } = props;
 
-  const parsedDescription =
-    description || t("_entities:base.description.empty");
-
   const dueLabel = useMemo(() => {
     if (!dueAt) return t("_pages:debts.labels.noDueDate");
 
@@ -87,14 +84,9 @@ export function DebtCard(props: DebtCardPropsType) {
           "debt-card-content--paid",
       )}
     >
-      <p
-        className={classNames(
-          "debt-card-description",
-          !description && "debt-card-description--empty",
-        )}
-      >
-        {parsedDescription}
-      </p>
+      {description ? (
+        <p className="debt-card-description">{description}</p>
+      ) : null}
       <p className="debt-card-meta">
         {t("_entities:debt.counterpartyName.label")}: {counterpartyName ?? "-"}
       </p>

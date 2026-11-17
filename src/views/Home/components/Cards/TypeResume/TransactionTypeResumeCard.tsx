@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { faAdd, faClock, faList } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faListUl, faList } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 
 import { IconButton, useDialog } from "@sito/dashboard-app";
@@ -431,7 +431,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
                 )}
                 <IconButton
                   onClick={() => addTransaction.openDialog()}
-                  icon={faAdd}
+                  icon={faPlus}
                   data-tooltip-id="tooltip"
                   data-tooltip-content={t("_pages:transactions.add")}
                   aria-label={t("_pages:transactions.add")}
@@ -439,7 +439,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
                 <IconButton
                   disabled={isLoading || !hasRecentTransactionsRange}
                   onClick={recentTransactionsDialog.handleOpen}
-                  icon={faClock}
+                  icon={faListUl}
                   data-tooltip-id="tooltip"
                   data-tooltip-content={t(
                     "_pages:home.dashboard.recentTransactions.action",

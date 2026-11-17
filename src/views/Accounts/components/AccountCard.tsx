@@ -106,17 +106,16 @@ export function AccountCard(props: AccountCardPropsType) {
           {bankName}
         </span>
       )}
-      {!hideDescription && (
+      {!hideDescription && description ? (
         <p
           className={classNames(
             "account-description",
-            !description && "account-description--empty",
             deleted && "account-description--deleted",
           )}
         >
-          {description ? description : t("_entities:base.description.empty")}
+          {description}
         </p>
-      )}
+      ) : null}
       <div className="chip-container">
         <Chip
           className="account-card-type-chip"
@@ -164,7 +163,7 @@ export function AccountCard(props: AccountCardPropsType) {
         )}
       </div>
       {showLastTransactions && id && currency && (
-        <LastTransactions accountId={id} currency={currency} />
+        <LastTransactions accountId={id} />
       )}
       {showTypeResume && id && currency && (
         <TypeResume accountId={id} currency={currency} />

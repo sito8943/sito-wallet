@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import {
   ConfirmationDialog,
   Empty,
-  Error as ErrorView,
   GlobalActions,
   ImportDialog,
   Page,
@@ -19,7 +18,7 @@ import {
 } from "@sito/dashboard-app";
 
 // icons
-import { faAdd, faRepeat } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faRepeat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // hooks
@@ -33,7 +32,7 @@ import {
 import { useAddSubscriptionBillingLogDialog } from "./hooks";
 
 // components
-import { MobileSelectionBar } from "components";
+import { MobileSelectionBar, QueryError } from "components";
 import {
   AddSubscriptionBillingLogDialog,
   SubscriptionCard,
@@ -221,7 +220,7 @@ export function Subscriptions() {
                   className: "subscriptions-empty-icon",
                 }}
                 action={{
-                  icon: <FontAwesomeIcon icon={faAdd} />,
+                  icon: <FontAwesomeIcon icon={faPlus} />,
                   id: GlobalActions.Add,
                   disabled: isLoading || !subscriptionsClient,
                   onClick: () => navigate(AppRoutes.subscriptionNew),
@@ -270,7 +269,7 @@ export function Subscriptions() {
           <ImportDialog {...importSubscriptions} />
         </>
       ) : (
-        <ErrorView error={error} />
+        <QueryError error={error} />
       )}
     </Page>
   );

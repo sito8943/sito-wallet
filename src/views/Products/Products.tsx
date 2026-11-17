@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { faCubes } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faCubes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @sito/dashboard-app
 import {
   ConfirmationDialog,
   Empty,
-  Error as ErrorView,
+  GlobalActions,
   Page,
   PrettyGrid,
   useDeleteDialog,
@@ -31,7 +32,7 @@ import { useManager, useRegisterBottomNavAction } from "providers";
 
 // components
 import type { CatalogRowDto } from "components";
-import { CatalogCard, toCatalogRow } from "components";
+import { CatalogCard, QueryError, toCatalogRow } from "components";
 import { getDeleteAction } from "../../components/Card/utils";
 import { AddProductDialog, EditProductDialog } from "./components";
 
@@ -98,7 +99,7 @@ export function Products() {
       queryKey={ProductsQueryKeys.all().queryKey}
     >
       {error ? (
-        <ErrorView error={error} />
+        <QueryError error={error} />
       ) : (
         <>
           <PrettyGrid
@@ -108,6 +109,13 @@ export function Products() {
               <Empty
                 message={t("_pages:products.empty")}
                 iconProps={{ icon: faCubes }}
+                action={{
+                  icon: <FontAwesomeIcon icon={faPlus} />,
+                  id: GlobalActions.Add,
+                  disabled: isLoading,
+                  onClick: () => addProduct.openDialog(),
+                  tooltip: t("_pages:products.add"),
+                }}
               />
             }
             renderComponent={(item) => {

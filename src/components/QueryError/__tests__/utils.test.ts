@@ -25,9 +25,13 @@ describe("toError", () => {
     expect(toError("boom")?.message).toBe("boom");
   });
 
+  it("reads the message of a plain API error object", () => {
+    expect(toError({ status: 500, message: "nope" })?.message).toBe("nope");
+  });
+
   it("gives up on anything else", () => {
     expect(toError(undefined)).toBeNull();
-    expect(toError({ message: "nope" })).toBeNull();
+    expect(toError({ status: 500 })).toBeNull();
   });
 });
 

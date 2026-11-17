@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Button, classNames } from "@sito/dashboard-app";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faWarning } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faCircle } from "@fortawesome/free-solid-svg-icons";
 import { useCalendarTimeAge } from "hooks";
 
 import {
@@ -40,7 +40,14 @@ export function NotificationListItem(props: NotificationListItemPropsType) {
       )}
     >
       <div className="notifications-item-icon">
-        <FontAwesomeIcon icon={unread ? faWarning : faCheckCircle} />
+        {unread ? (
+          <FontAwesomeIcon
+            icon={faCircle}
+            className="notifications-item-unread-dot"
+          />
+        ) : (
+          <FontAwesomeIcon icon={faCheckCircle} />
+        )}
       </div>
 
       <div className="notifications-item-content">

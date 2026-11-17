@@ -6,7 +6,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   ConfirmationDialog,
   Empty,
-  Error as ErrorView,
   GlobalActions,
   Page,
   PrettyGrid,
@@ -19,7 +18,7 @@ import {
 } from "@sito/dashboard-app";
 
 // icons
-import { faAdd, faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // hooks
@@ -40,7 +39,7 @@ import {
 } from "./hooks";
 
 // components
-import { MobileSelectionBar } from "components";
+import { MobileSelectionBar, QueryError } from "components";
 import {
   AddDebtPaymentDialog,
   DebtCard,
@@ -221,7 +220,7 @@ export function Debts() {
                   className: "debts-empty-icon",
                 }}
                 action={{
-                  icon: <FontAwesomeIcon icon={faAdd} />,
+                  icon: <FontAwesomeIcon icon={faPlus} />,
                   id: GlobalActions.Add,
                   disabled: isLoading || !debtsClient,
                   onClick: () => navigate(AppRoutes.debtNew),
@@ -271,7 +270,7 @@ export function Debts() {
           />
         </>
       ) : (
-        <ErrorView error={error} />
+        <QueryError error={error} />
       )}
     </Page>
   );

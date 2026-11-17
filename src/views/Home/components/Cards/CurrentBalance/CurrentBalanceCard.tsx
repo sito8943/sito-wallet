@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 
 // icons
 import {
-  faAdd,
-  faClock,
+  faPlus,
+  faListUl,
   faMoneyBillTransfer,
   faScaleBalanced,
 } from "@fortawesome/free-solid-svg-icons";
@@ -163,7 +163,7 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
                 <div className="current-balance-actions">
                   <IconButton
                     onClick={() => addTransaction.openDialog()}
-                    icon={faAdd}
+                    icon={faPlus}
                     data-tooltip-id="tooltip"
                     data-tooltip-content={t("_pages:transactions.add")}
                     aria-label={t("_pages:transactions.add")}
@@ -182,7 +182,7 @@ export const CurrentBalanceCard = (props: CurrentBalancePropsType) => {
                   />
                   <IconButton
                     onClick={recentTransactionsDialog.handleOpen}
-                    icon={faClock}
+                    icon={faListUl}
                     data-tooltip-id="tooltip"
                     data-tooltip-content={t(
                       "_pages:home.dashboard.recentTransactions.action",

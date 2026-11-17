@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { faReceipt } from "@fortawesome/free-solid-svg-icons";
+import { faListUl } from "@fortawesome/free-solid-svg-icons";
 
 // providers
 import { useFeatureFlags } from "providers";
@@ -52,7 +52,7 @@ export function useCatalogTransactionsDialog(
       id: CATALOG_TRANSACTIONS_ACTION_ID,
       hidden: !transactionsEnabled,
       disabled: !transactionsEnabled,
-      icon: <CountBadgeIcon icon={faReceipt} count={record.transactionCount} />,
+      icon: <CountBadgeIcon icon={faListUl} count={record.transactionCount} />,
       tooltip: t(
         formatBadgeCount(record.transactionCount)
           ? "_pages:transactions.catalogHistory.actionWithCount"

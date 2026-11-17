@@ -1,7 +1,8 @@
-import { useState } from "react";
+// @sito/dashboard-app
+import { classNames } from "@sito/dashboard-app";
 
 // components
-import { ProviderPhoto } from "components";
+import { EntityAvatar } from "components";
 
 // views
 import { Type } from "views/TransactionCategories/components/Type";
@@ -20,33 +21,35 @@ import "./styles.css";
  * plain type icon when there is no photo or it fails to load.
  */
 export function TransactionCardAvatar(props: TransactionCardAvatarPropsType) {
-  const { type, purchaseProvider } = props;
-
-  const photo = getProviderPhoto(purchaseProvider);
-  // Keyed by photo so a new photo gets a fresh attempt.
-  const [failedPhoto, setFailedPhoto] = useState<string | null>(null);
-
-  if (!photo || failedPhoto === photo)
-    return (
-      <Type
-        className="transaction-card-type"
-        type={type}
-        filled={false}
-        noText
-      />
-    );
+  const { type, purchaseProvider, compact = false } = props;
 
   return (
-    <span className="transaction-card-avatar">
-      <ProviderPhoto
-        className="transaction-card-avatar-image"
-        photo={photo}
-        alt={purchaseProvider?.name ?? ""}
-        onError={() => setFailedPhoto(photo)}
-      />
-      <span className="transaction-card-avatar-badge">
-        <Type type={type} filled={false} noText />
-      </span>
-    </span>
+    <EntityAvatar
+      photo={getProviderPhoto(purchaseProvider)}
+      alt={purchaseProvider?.name ?? ""}
+      size={compact ? "sm" : "lg"}
+      shape="circle"
+      className={classNames(
+        "transaction-card-avatar",
+        compact && "transaction-card-avatar--compact",
+      )}
+      imageClassName="transaction-card-avatar-image"
+      fallback={
+        <Type
+          className={classNames(
+            "transaction-card-type",
+            compact && "transaction-card-type--compact",
+          )}
+          type={type}
+          filled={false}
+          noText
+        />
+      }
+      badge={
+        <span className="transaction-card-avatar-badge">
+          <Type type={type} filled={false} noText />
+        </span>
+      }
+    />
   );
 }

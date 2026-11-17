@@ -23,6 +23,7 @@ import {
   SAVINGS_PROJECTION_HORIZONS,
   defaultConfig,
 } from "./constants";
+import { parseCardConfig } from "../utils";
 
 export const formToDto = (
   data: SavingsProjectionFormType,
@@ -48,21 +49,20 @@ export const resolveHorizon = (value: unknown): SavingsProjectionHorizon =>
 
 export const parseFormConfig = (
   cfg?: string | null,
-): SavingsProjectionFormType => {
-  try {
-    const parsed = (cfg ? JSON.parse(cfg) : {}) as SavingsProjectionFormType;
-    return {
-      ...defaultConfig,
-      ...parsed,
-      horizon: resolveHorizon(parsed.horizon),
-      monthlyDeposit: resolveMonthlyDeposit(parsed.monthlyDeposit),
-      depositDay: resolveDepositDay(parsed.depositDay),
-    };
-  } catch (err) {
-    console.error(err);
-    return defaultConfig;
-  }
-};
+): SavingsProjectionFormType =>
+  parseCardConfig<SavingsProjectionFormType, SavingsProjectionFormType>(
+    cfg,
+    defaultConfig,
+    (parsed) => {
+      return {
+        ...defaultConfig,
+        ...parsed,
+        horizon: resolveHorizon(parsed.horizon),
+        monthlyDeposit: resolveMonthlyDeposit(parsed.monthlyDeposit),
+        depositDay: resolveDepositDay(parsed.depositDay),
+      };
+    },
+  );
 
 export const getActiveFiltersCount = (
   formConfig: SavingsProjectionFormType,

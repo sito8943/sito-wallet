@@ -3,7 +3,10 @@ import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 // @sito/dashboard-app
-import { Error as ErrorView, Loading, useAuth } from "@sito/dashboard-app";
+import { Loading, useAuth } from "@sito/dashboard-app";
+
+// components
+import { QueryError } from "components";
 
 // hooks
 import { useOAuthRequest } from "hooks";
@@ -64,7 +67,8 @@ export function OAuthConsent() {
   if (status === ConsentStatus.Error)
     return (
       <ConsentCard>
-        <ErrorView
+        <QueryError
+          error={requestQuery.error}
           message={t("_pages:oauthConsent.errors.load")}
           onRetry={() => void requestQuery.refetch()}
         />

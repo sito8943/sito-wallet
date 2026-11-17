@@ -95,14 +95,14 @@ export const BalanceHistoryCard = (props: BalanceHistoryPropsType) => {
       {() => {
         if (!accountIds.length)
           return (
-            <p className="balance-history-empty">
+            <p className="card-empty">
               {t("_pages:home.dashboard.balanceHistory.noAccount")}
             </p>
           );
 
         if (!isLoading && points.length === 0)
           return (
-            <p className="balance-history-empty">
+            <p className="card-empty">
               {t("_pages:home.dashboard.balanceHistory.empty")}
             </p>
           );

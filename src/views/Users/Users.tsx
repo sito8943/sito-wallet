@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import {
   ConfirmationDialog,
   Empty,
-  Error as ErrorView,
   GlobalActions,
   Page,
   PrettyGrid,
@@ -14,7 +13,7 @@ import {
   useRestoreDialog,
 } from "@sito/dashboard-app";
 
-import { faAdd, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // providers
@@ -25,7 +24,7 @@ import type { UserDto } from "lib";
 import { isFeatureDisabledBusinessError } from "lib";
 
 // components
-import { MobileSelectionBar } from "components";
+import { MobileSelectionBar, QueryError } from "components";
 import {
   AddUserDialog,
   EditUserDialog,
@@ -160,7 +159,7 @@ export function Users() {
                   className: "users-empty-icon",
                 }}
                 action={{
-                  icon: <FontAwesomeIcon icon={faAdd} />,
+                  icon: <FontAwesomeIcon icon={faPlus} />,
                   id: GlobalActions.Add,
                   disabled: isLoading || !usersClient,
                   onClick: () => addUser.openDialog(),
@@ -188,7 +187,7 @@ export function Users() {
           <ConfirmationDialog {...restoreUser} />
         </>
       ) : (
-        <ErrorView error={error} />
+        <QueryError error={error} />
       )}
     </Page>
   );

@@ -107,7 +107,7 @@ export const CategoryAverageCard = (props: CategoryAveragePropsType) => {
       {() => {
         if (!isLoading && !data?.transactionCount)
           return (
-            <p className="category-average-empty">
+            <p className="card-empty">
               {t("_pages:home.dashboard.categoryAverage.empty")}
             </p>
           );

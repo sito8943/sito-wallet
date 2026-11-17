@@ -10,7 +10,7 @@ import { classNames, Loading } from "@sito/dashboard-app";
 
 import { Money } from "components";
 import { useTypeResumeCategoryTransactions } from "./useTypeResumeCategoryTransactions";
-import { TypeResumeTransactionItem } from "./TypeResumeTransactionItem";
+import { TransactionCard } from "views/Transactions/components/TransactionCard";
 
 import type { TypeResumeCategoryItemPropsType } from "./types";
 
@@ -105,13 +105,14 @@ export const TypeResumeCategoryItem = (
         ) : (
           <ul className="type-resume-transaction-list">
             {transactions.map((transaction) => (
-              <TypeResumeTransactionItem
-                key={transaction.id}
-                transaction={transaction}
-                currencyName={currencyName}
-                currencySymbol={currencySymbol}
-                onClick={onTransactionClick}
-              />
+              <li key={transaction.id}>
+                <TransactionCard
+                  {...transaction}
+                  actions={[]}
+                  onClick={onTransactionClick}
+                  compact
+                />
+              </li>
             ))}
           </ul>
         )}

@@ -6,12 +6,14 @@ import { useTranslation } from "react-i18next";
 import {
   Button,
   ConfirmationDialog,
-  Error as ErrorView,
   FormContainer,
   Page,
   useMutationForm,
   useNotification,
 } from "@sito/dashboard-app";
+
+// components
+import { QueryError } from "components";
 
 import {
   AccountsQueryKeys,
@@ -21,6 +23,9 @@ import {
   useMutationErrorHandler,
 } from "hooks";
 import { useManager } from "providers";
+
+import { EditTransactionDialog } from "../Transactions/components";
+import { useEditTransaction } from "../Transactions/hooks";
 
 import type { DebtDto } from "lib";
 import { AppRoutes, DebtStatus, FormMode, parseErrorMessage } from "lib";
@@ -166,6 +171,10 @@ export function DebtEditor() {
   }, [isEditMode, reset]);
 
   const deletePayment = useDeleteDebtPaymentDialog(debtId);
+  // Editing a payment's transaction can change the debt's payments/balance.
+  const editTransaction = useEditTransaction({
+    onSuccess: () => queryClient.invalidateQueries({ ...DebtsQueryKeys.all() }),
+  });
 
   const editorActions = useMemo(() => {
     if (!isEditMode || !debtQuery.data) return [];
@@ -185,9 +194,9 @@ export function DebtEditor() {
       queryKey={DebtsQueryKeys.all().queryKey}
     >
       {invalidEditRoute ? (
-        <ErrorView error={new Error(t("_accessibility:errors.404"))} />
+        <QueryError error={new Error(t("_accessibility:errors.404"))} />
       ) : debtQuery.error ? (
-        <ErrorView
+        <QueryError
           error={
             new Error(
               parseErrorMessage(
@@ -263,11 +272,13 @@ export function DebtEditor() {
               onDeletePayment={(payment) => {
                 void deletePayment.onClick(payment.id);
               }}
+              onPaymentClick={editTransaction.openDialog}
             />
           ) : null}
           <AddDebtPaymentDialog {...addPayment} />
           <EditDebtPaymentDialog {...editPayment} />
           <ConfirmationDialog {...deletePayment} />
+          <EditTransactionDialog {...editTransaction} />
         </div>
       )}
     </Page>

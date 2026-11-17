@@ -32,10 +32,6 @@
   @apply text-text-error;
 }
 
-.goals-card-empty {
-  @apply text-sm text-text-muted;
-}
-
 .goals-card-link {
   @apply self-end text-sm text-text-primary underline-offset-2 hover:underline;
 }

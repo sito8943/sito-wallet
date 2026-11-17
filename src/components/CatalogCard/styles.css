@@ -8,14 +8,6 @@
   @apply flex min-w-0 items-center gap-3;
 }
 
-.catalog-card-photo {
-  @apply flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-base-light text-text-muted;
-}
-
-.catalog-card-photo-image {
-  @apply h-full w-full object-cover;
-}
-
 .catalog-card-text {
   @apply flex min-w-0 flex-col;
 }

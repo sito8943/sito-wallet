@@ -17,9 +17,9 @@ import {
 } from "lib";
 import type { TransactionTableRowType } from "../../types";
 
-// views
-import { Type } from "views/TransactionCategories/components/Type";
+// components
 import { ColorVignette, Money } from "components";
+import { TransactionCardAvatar } from "../TransactionCardAvatar";
 import { TransactionRewardsPoints } from "../TransactionRewardsPoints";
 
 import "./styles.css";
@@ -103,12 +103,10 @@ export const getTransactionColumns = (
       filterOptions: { type: FilterTypes.number },
       renderBody: (value: unknown, entity: TransactionTableRowType) => {
         const amount = typeof value === "number" ? value : Number(value) || 0;
-        const primaryCategory = getPrimaryTransactionCategory(entity);
 
         return (
           <div className="transaction-table-amount-cell">
             <p>
-              {primaryCategory?.type === TransactionType.Out ? "- " : ""}
               <Money amount={amount} currency={entity.account?.currency} />
             </p>
             <TransactionRewardsPoints
@@ -130,10 +128,12 @@ export const getTransactionColumns = (
       },
       renderBody: (_: unknown, entity: TransactionTableRowType) => (
         <div className="transaction-table-type-cell">
-          <Type
+          <TransactionCardAvatar
             type={
               getPrimaryTransactionCategory(entity)?.type ?? TransactionType.In
             }
+            purchaseProvider={entity.purchaseProvider}
+            compact
           />
         </div>
       ),

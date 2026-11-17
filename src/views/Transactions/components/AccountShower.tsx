@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { Error, Loading } from "@sito/dashboard-app";
+import { Loading } from "@sito/dashboard-app";
 import type { ActionType } from "@sito/dashboard-app";
 
 // icons
@@ -25,6 +25,7 @@ import type { AccountDto } from "lib";
 import type { AccountCarouselPropsType } from "./types";
 
 // components
+import { QueryError } from "components";
 import {
   AddAccountDialog,
   AdjustBalanceDialog,
@@ -100,7 +101,7 @@ const AccountShower = (props: AccountCarouselPropsType) => {
             />
           </div>
         )}
-        {error && <Error />}
+        {error && <QueryError error={error} />}
         <AccountSlider
           accounts={accounts ?? []}
           selectedAccount={selectedAccount}

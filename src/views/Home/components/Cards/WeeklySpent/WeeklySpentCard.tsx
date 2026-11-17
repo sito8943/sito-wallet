@@ -14,15 +14,15 @@ import { resolveCardConfig } from "../utils";
 import "../styles.css";
 
 // types
-import type { WeeklySpentPropsType, FilterWeeklyConfigType } from "./types";
+import type { WeeklySpentPropsType } from "./types";
 import type { CardConfigOverrideType } from "../types";
 
 // utils
 import {
-  defaultConfig,
   formToDto,
   getActiveFiltersCount,
   getCurrentWeekRange,
+  parseFilterConfig,
   parseFormConfig,
 } from "./utils";
 
@@ -32,17 +32,10 @@ export const WeeklySpentCard = (props: WeeklySpentPropsType) => {
     useState<CardConfigOverrideType | null>(null);
   const effectiveConfig = resolveCardConfig(config, configOverride);
 
-  const filterConfig = useMemo(() => {
-    try {
-      const parsed = parseFormConfig(effectiveConfig);
-      const transformed: FilterWeeklyConfigType = { type: parsed.type };
-      transformed.accounts = parsed.accounts?.map((a) => a.id) ?? [];
-      return transformed;
-    } catch (err) {
-      console.error(err);
-      return { type: defaultConfig.type };
-    }
-  }, [effectiveConfig]);
+  const filterConfig = useMemo(
+    () => parseFilterConfig(effectiveConfig),
+    [effectiveConfig],
+  );
 
   const range = useMemo(() => getCurrentWeekRange(), []);
 

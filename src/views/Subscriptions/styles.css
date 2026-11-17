@@ -44,26 +44,10 @@
   @apply bg-base border-border flex flex-col rounded-xl border p-3;
 }
 
-.subscription-activity-item.clickable {
-  @apply hover:bg-hover-primary/5 hover:border-primary focus-visible:ring-primary focus-visible:ring-offset-base w-full cursor-pointer text-start transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none;
-}
-
-.subscription-activity-amount {
-  @apply text-text text-sm font-semibold;
-}
-
 .subscription-activity-meta {
   @apply text-text-muted text-xs;
 }
 
-.subscription-activity-note {
-  @apply text-text mt-1 text-sm;
-}
-
 .subscription-activity-empty {
   @apply text-text-muted text-sm;
-}
-
-.subscription-activity-error {
-  @apply text-error bg-bg-error rounded-md px-2 py-1 text-sm;
 }

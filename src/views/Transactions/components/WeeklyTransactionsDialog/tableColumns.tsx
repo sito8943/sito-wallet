@@ -5,11 +5,10 @@ import type { ColumnType } from "@sito/dashboard-app";
 import type { TransactionTableRowType } from "../../types";
 
 import { Money } from "components";
-import { Type } from "views/TransactionCategories/components/Type";
+import { TransactionCardAvatar } from "../TransactionCardAvatar";
 
 import {
   getWeeklyTransactionAmountClassName,
-  getWeeklyTransactionAmountPrefix,
   getWeeklyTransactionCategoryLabel,
   getWeeklyTransactionDateLabel,
   getWeeklyTransactionDescriptionLabel,
@@ -34,7 +33,11 @@ export const getWeeklyTransactionsTableColumns = (
     sortable: true,
     renderBody: (_value: unknown, transaction: TransactionTableRowType) => (
       <div className="weekly-transactions-type-cell">
-        <Type type={getWeeklyTransactionType(transaction)} />
+        <TransactionCardAvatar
+          type={getWeeklyTransactionType(transaction)}
+          purchaseProvider={transaction.purchaseProvider}
+          compact
+        />
       </div>
     ),
   },
@@ -58,7 +61,6 @@ export const getWeeklyTransactionsTableColumns = (
     sortable: true,
     renderBody: (_value: unknown, transaction: TransactionTableRowType) => (
       <p className={getWeeklyTransactionAmountClassName(transaction)}>
-        {getWeeklyTransactionAmountPrefix(transaction)}
         <Money
           amount={transaction.amount}
           currency={transaction.account?.currency}

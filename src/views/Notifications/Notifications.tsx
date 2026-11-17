@@ -1,12 +1,10 @@
 import { useMemo, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  Button,
-  Error as ErrorView,
-  Loading,
-  Page,
-  useNotification,
-} from "@sito/dashboard-app";
+import { Button, Empty, Page, useNotification } from "@sito/dashboard-app";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
+
+// components
+import { QueryError } from "components";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -100,16 +98,12 @@ export function Notifications() {
       queryKey={NotificationsQueryKeys.all().queryKey}
     >
       {notificationsQuery.error ? (
-        <ErrorView
+        <QueryError
           error={toRenderableNotificationError(
             notificationsQuery.error,
             t("_accessibility:errors.500"),
           )}
         />
-      ) : notificationsQuery.isLoading && !notifications.length ? (
-        <div className="notifications-empty">
-          <Loading />
-        </div>
       ) : (
         <div className="notifications-view">
           <div className="notifications-toolbar">
@@ -158,9 +152,10 @@ export function Notifications() {
               ))}
             </ul>
           ) : (
-            <div className="notifications-empty">
-              {t("_pages:notifications.empty")}
-            </div>
+            <Empty
+              message={t("_pages:notifications.empty")}
+              iconProps={{ icon: faBell }}
+            />
           )}
         </div>
       )}

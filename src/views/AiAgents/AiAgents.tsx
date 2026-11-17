@@ -78,6 +78,7 @@ export function AiAgents() {
           apiKeys={apiKeysQuery.data ?? []}
           isLoading={apiKeysQuery.isLoading}
           hasError={!!apiKeysQuery.error}
+          error={apiKeysQuery.error}
           onRetry={() => void apiKeysQuery.refetch()}
           onCreate={() => createApiKey.openDialog()}
           onEdit={editApiKey.openForKey}
@@ -87,6 +88,7 @@ export function AiAgents() {
           grants={walletGrants}
           isLoading={grantsQuery.isLoading}
           hasError={!!grantsQuery.error}
+          error={grantsQuery.error}
           onRetry={() => void grantsQuery.refetch()}
           onEdit={editApp.openForGrant}
           onDisconnect={disconnectApp.openForGrant}

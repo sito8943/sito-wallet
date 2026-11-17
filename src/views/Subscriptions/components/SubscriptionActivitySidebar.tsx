@@ -1,6 +1,8 @@
 import { Loading } from "@sito/dashboard-app";
 import { useTranslation } from "react-i18next";
 
+import { QueryError } from "components";
+
 import { formatDate, formatDateTime } from "lib";
 
 import type { SubscriptionActivitySidebarPropsType } from "../types";
@@ -20,21 +22,12 @@ export function SubscriptionActivitySidebar(
     billingLogsLoading,
     billingLogsError,
     onBillingLogClick,
+    onDeleteBillingLog,
   } = props;
 
   const startsAtLabel = formatDate(startsAt, i18n.language);
   const lastPaidAtLabel = formatDateTime(lastPaidAt, i18n.language);
   const nextRenewalAtLabel = formatDate(nextRenewalAt, i18n.language);
-
-  const billingLogsErrorMessage =
-    billingLogsError instanceof Error
-      ? billingLogsError.message
-      : typeof billingLogsError === "object" &&
-          billingLogsError !== null &&
-          "message" in billingLogsError &&
-          typeof billingLogsError.message === "string"
-        ? billingLogsError.message
-        : t("_accessibility:errors.500");
 
   return (
     <aside className="subscription-editor-sidebar">
@@ -63,9 +56,7 @@ export function SubscriptionActivitySidebar(
         {billingLogsLoading ? (
           <Loading className="subscription-activity-loading" />
         ) : billingLogsError ? (
-          <p className="subscription-activity-error">
-            {billingLogsErrorMessage}
-          </p>
+          <QueryError compact error={billingLogsError} />
         ) : billingLogs.length ? (
           <ul className="subscription-activity-list">
             {billingLogs.map((log) => (
@@ -73,6 +64,7 @@ export function SubscriptionActivitySidebar(
                 key={log.id}
                 log={log}
                 onClick={onBillingLogClick}
+                onDelete={onDeleteBillingLog}
               />
             ))}
           </ul>

@@ -3,6 +3,7 @@ import { GoalStatus } from "lib";
 
 import { defaultConfig } from "./constants";
 import type { GoalsCardFormType, GoalsCardGoalOption } from "./types";
+import { parseCardConfig } from "../utils";
 
 const toGoalOption = (value: unknown): GoalsCardGoalOption | null => {
   if (typeof value !== "object" || value === null) return null;
@@ -25,20 +26,19 @@ export const formToDto = (
   }),
 });
 
-export const parseFormConfig = (cfg?: string | null): GoalsCardFormType => {
-  try {
-    const parsed = (cfg ? JSON.parse(cfg) : {}) as { goals?: unknown };
-    const goals = Array.isArray(parsed.goals)
-      ? parsed.goals
-          .map(toGoalOption)
-          .filter((goal): goal is GoalsCardGoalOption => goal !== null)
-      : [];
-    return { ...defaultConfig, goals };
-  } catch (err) {
-    console.error(err);
-    return defaultConfig;
-  }
-};
+export const parseFormConfig = (cfg?: string | null): GoalsCardFormType =>
+  parseCardConfig<{ goals?: unknown }, GoalsCardFormType>(
+    cfg,
+    defaultConfig,
+    (parsed) => {
+      const goals = Array.isArray(parsed.goals)
+        ? parsed.goals
+            .map(toGoalOption)
+            .filter((goal): goal is GoalsCardGoalOption => goal !== null)
+        : [];
+      return { ...defaultConfig, goals };
+    },
+  );
 
 export const getActiveFiltersCount = (formConfig: GoalsCardFormType): number =>
   formConfig.goals.length ? 1 : 0;

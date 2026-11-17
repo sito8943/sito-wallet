@@ -56,11 +56,6 @@ export const getWeeklyTransactionType = (
 ): TransactionType =>
   getPrimaryTransactionCategory(transaction)?.type ?? TransactionType.In;
 
-export const getWeeklyTransactionAmountPrefix = (
-  transaction: TransactionDto,
-): string =>
-  getWeeklyTransactionType(transaction) === TransactionType.Out ? "- " : "";
-
 export const getWeeklyTransactionAmountClassName = (
   transaction: TransactionDto,
 ): string =>

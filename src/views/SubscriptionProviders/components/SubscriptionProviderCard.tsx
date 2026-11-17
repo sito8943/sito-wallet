@@ -2,11 +2,14 @@ import { useTranslation } from "react-i18next";
 import { classNames } from "@sito/dashboard-app";
 
 // icons
-import { faExternalLink, faImage } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowUpRightFromSquare,
+  faImage,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
-import { ItemCard, ItemCardTitle } from "components";
+import { EntityAvatar, ItemCard, ItemCardTitle } from "components";
 
 // types
 import type { SubscriptionProviderCardPropsType } from "../types";
@@ -41,29 +44,29 @@ export function SubscriptionProviderCard(
   } = props;
 
   const deleted = !!deletedAt;
-  const parsedDescription =
-    description || t("_entities:base.description.empty");
   const parsedWebsite = website?.trim() ?? "";
-  const hasPhoto = !!photo?.trim();
 
   return (
     <ItemCard
       title={
         <div className="subscription-provider-card-title-row">
-          <ItemCardTitle>
-            {name}{" "}
-            {parsedWebsite ? (
-              <a
-                href={ensureAbsoluteUrl(parsedWebsite)}
-                target="_blank"
-                rel="noreferrer"
-                onClick={(event) => event.stopPropagation()}
-                className="subscription-provider-card-link"
-              >
-                <FontAwesomeIcon icon={faExternalLink} />
-              </a>
-            ) : null}
-          </ItemCardTitle>
+          <div className="subscription-provider-card-heading">
+            <EntityAvatar photo={photo} fallbackIcon={faImage} />
+            <ItemCardTitle>
+              {name}{" "}
+              {parsedWebsite ? (
+                <a
+                  href={ensureAbsoluteUrl(parsedWebsite)}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(event) => event.stopPropagation()}
+                  className="subscription-provider-card-link"
+                >
+                  <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                </a>
+              ) : null}
+            </ItemCardTitle>
+          </div>
         </div>
       }
       deleted={deleted}
@@ -80,20 +83,14 @@ export function SubscriptionProviderCard(
       className="subscription-provider-card-content"
       containerClassName="subscription-provider-card-container"
     >
-      <p
-        className={classNames(
-          "subscription-provider-card-description",
-          !description && "subscription-provider-card-description--empty",
-          deleted && "subscription-provider-card-description--deleted",
-        )}
-      >
-        {parsedDescription}
-      </p>
-
-      {hasPhoto ? (
-        <p className="subscription-provider-card-photo">
-          <FontAwesomeIcon icon={faImage} />
-          {t("_entities:subscriptionProvider.photo.label")}
+      {description ? (
+        <p
+          className={classNames(
+            "subscription-provider-card-description",
+            deleted && "subscription-provider-card-description--deleted",
+          )}
+        >
+          {description}
         </p>
       ) : null}
     </ItemCard>

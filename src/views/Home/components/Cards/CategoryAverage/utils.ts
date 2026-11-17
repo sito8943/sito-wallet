@@ -11,6 +11,7 @@ import {
   DEFAULT_CATEGORY_AVERAGE_PRESET,
   defaultConfig,
 } from "./constants";
+import { parseCardConfig } from "../utils";
 
 export const formToDto = (
   data: CategoryAverageFormType,
@@ -31,24 +32,21 @@ export const formToDto = (
   };
 };
 
-export const parseFormConfig = (
-  cfg?: string | null,
-): CategoryAverageFormType => {
-  try {
-    const parsed = (cfg ? JSON.parse(cfg) : {}) as CategoryAverageFormType;
-    const merged = { ...defaultConfig, ...parsed };
-    const categories = merged.categories ?? [];
-    return {
-      ...merged,
-      categories,
-      categoryIds: categories.map((category) => category.id),
-      preset: resolvePreset(merged.preset),
-    };
-  } catch (err) {
-    console.error(err);
-    return defaultConfig;
-  }
-};
+export const parseFormConfig = (cfg?: string | null): CategoryAverageFormType =>
+  parseCardConfig<CategoryAverageFormType, CategoryAverageFormType>(
+    cfg,
+    defaultConfig,
+    (parsed) => {
+      const merged = { ...defaultConfig, ...parsed };
+      const categories = merged.categories ?? [];
+      return {
+        ...merged,
+        categories,
+        categoryIds: categories.map((category) => category.id),
+        preset: resolvePreset(merged.preset),
+      };
+    },
+  );
 
 export const getActiveFiltersCount = (
   formConfig: CategoryAverageFormType,

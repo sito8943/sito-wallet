@@ -8,7 +8,7 @@ import { useFeatureFlags } from "providers";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock } from "@fortawesome/free-solid-svg-icons";
+import { faListUl } from "@fortawesome/free-solid-svg-icons";
 
 // types
 import type { UseSingleActionPropTypes } from "@sito/dashboard-app";
@@ -33,7 +33,7 @@ export const useViewTransactionsAction = (
       id: AccountActions.ViewTransactions,
       hidden: !!record.deletedAt || hidden || !transactionsEnabled,
       disabled: !!record.deletedAt || !transactionsEnabled,
-      icon: <FontAwesomeIcon className="account-action-icon" icon={faClock} />,
+      icon: <FontAwesomeIcon className="account-action-icon" icon={faListUl} />,
       tooltip: t("_pages:accounts.actions.viewTransactions.text"),
       onClick: () => {
         navigate(getTransactionsRouteWithAccountId(record.id));

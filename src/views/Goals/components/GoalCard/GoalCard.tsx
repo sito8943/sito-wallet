@@ -12,12 +12,7 @@ import {
 import { Button, classNames } from "@sito/dashboard-app";
 
 // components
-import {
-  ItemCard,
-  ItemCardTitle,
-  ProgressBar,
-  ProviderPhoto,
-} from "components";
+import { EntityAvatar, ItemCard, ItemCardTitle, ProgressBar } from "components";
 
 // lib
 import type { GoalDto } from "lib";
@@ -77,15 +72,9 @@ export function GoalCard(props: GoalCardPropsType) {
     <ItemCard<GoalDto>
       title={
         <div className="goal-card-title-row">
-          <div className="goal-card-photo">
-            {photo ? (
-              <ProviderPhoto className="goal-card-photo-image" photo={photo} />
-            ) : (
-              <FontAwesomeIcon icon={faBullseye} />
-            )}
-          </div>
+          <EntityAvatar photo={photo} fallbackIcon={faBullseye} />
           <div className="goal-card-heading">
-            <ItemCardTitle deleted={!!deletedAt}>{name}</ItemCardTitle>
+            <ItemCardTitle>{name}</ItemCardTitle>
             {description && (
               <span className="goal-card-description">{description}</span>
             )}

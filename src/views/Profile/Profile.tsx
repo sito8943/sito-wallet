@@ -1,12 +1,10 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import {
-  Error as ErrorView,
-  Loading,
-  Page,
-  useAuth,
-} from "@sito/dashboard-app";
+import { Page, useAuth } from "@sito/dashboard-app";
+
+// components
+import { QueryError } from "components";
 
 // hooks
 import { ProfileQueryKeys, useMyProfile, useMobileNavbar } from "hooks";
@@ -41,21 +39,18 @@ export function Profile() {
   return (
     <Page
       title={t("_pages:profile.title")}
-      isLoading={profileQuery.isLoading}
+      // Page's own loader also covers the gap before the profile arrives.
+      isLoading={profileQuery.isLoading || (!profileQuery.error && !profile)}
       queryKey={ProfileQueryKeys.all().queryKey}
     >
       {profileQuery.error ? (
-        <ErrorView
+        <QueryError
           error={toRenderableError(
             profileQuery.error,
             t("_accessibility:errors.500"),
           )}
         />
-      ) : !profile ? (
-        <div className="profile-loading">
-          <Loading />
-        </div>
-      ) : (
+      ) : !profile ? null : (
         <div className="profile-forms">
           <ProfileForm profile={profile} />
           <ChangePasswordForm />

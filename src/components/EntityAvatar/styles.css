@@ -1,0 +1,44 @@
+@reference "../../styles/variables.css";
+
+.entity-avatar {
+  @apply relative flex shrink-0 items-center justify-center;
+}
+
+.entity-avatar--fallback {
+  @apply overflow-hidden border border-border bg-base-light text-text-muted;
+}
+
+.entity-avatar--xs {
+  @apply h-6 w-6 text-[10px];
+}
+
+.entity-avatar--sm {
+  @apply h-8 w-8 text-xs;
+}
+
+.entity-avatar--md {
+  @apply h-10 w-10;
+}
+
+.entity-avatar--lg {
+  @apply h-11 w-11;
+}
+
+.entity-avatar--rounded,
+.entity-avatar--rounded .entity-avatar-image {
+  @apply rounded-lg;
+}
+
+.entity-avatar--xs.entity-avatar--rounded,
+.entity-avatar--xs.entity-avatar--rounded .entity-avatar-image {
+  @apply rounded-md;
+}
+
+.entity-avatar--circle,
+.entity-avatar--circle .entity-avatar-image {
+  @apply rounded-full;
+}
+
+.entity-avatar-image {
+  @apply h-full w-full object-cover;
+}

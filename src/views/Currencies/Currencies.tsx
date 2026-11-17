@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faAdd,
+  faPlus,
   faCoins,
   faWandMagicSparkles,
 } from "@fortawesome/free-solid-svg-icons";
@@ -151,7 +151,7 @@ export function Currencies() {
 
   const addCurrencyAction = useMemo(
     () => ({
-      icon: <FontAwesomeIcon icon={faAdd} />,
+      icon: <FontAwesomeIcon icon={faPlus} />,
       id: GlobalActions.Add,
       disabled: isLoading,
       onClick: () => addCurrency.openDialog(),

@@ -57,6 +57,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
     footer,
     rewardsPoints,
     purchaseProvider,
+    compact = false,
   } = props;
   const deleted = !!deletedAt;
   const touchTimeoutRef = useRef<number | null>(null);
@@ -194,6 +195,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
         className={classNames(
           "transition",
           "transaction-card",
+          compact && "transaction-card--compact",
           deleted
             ? selectionMode && selected
               ? "transaction-card--deleted transaction-card--selected"
@@ -209,6 +211,7 @@ export function TransactionCard(props: TransactionCardPropsType) {
         <TransactionCardAvatar
           type={primaryCategory?.type ?? TransactionType.In}
           purchaseProvider={purchaseProvider}
+          compact={compact}
         />
         <div className="transaction-card-body">
           <p

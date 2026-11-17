@@ -129,11 +129,6 @@ a.primary {
   @apply flex w-full items-start justify-between gap-2;
 }
 
-.account-description--empty,
-.transaction-category-card-description--empty,
-.subscription-provider-card-description--empty,
-.currency-card-description--empty,
-.subscription-card-description--empty,
 .transaction-card-description--empty {
   @apply !text-xs italic;
 }
@@ -176,4 +171,10 @@ a.primary {
 .reset-user-dialog-toggle-hint,
 .user-form-admin-helper {
   @apply text-sm text-text-muted;
+}
+
+/* Empty/placeholder copy inside a card (dashboard cards, settings sections).
+   Dialogs and full pages use the lib's <Empty> instead. */
+.card-empty {
+  @apply flex flex-col items-center gap-3 py-6 text-center text-sm text-text-muted;
 }

@@ -14,6 +14,7 @@ import {
   DEFAULT_BALANCE_HISTORY_PRESET,
 } from "./constants";
 import { defaultConfig } from "./constants";
+import { parseCardConfig } from "../utils";
 
 export const formToDto = (
   data: BalanceHistoryFormType,
@@ -30,20 +31,15 @@ export const formToDto = (
   };
 };
 
-export const parseFormConfig = (
-  cfg?: string | null,
-): BalanceHistoryFormType => {
-  try {
-    const { account, ...parsed } = (
-      cfg ? JSON.parse(cfg) : {}
-    ) as StoredBalanceHistoryConfigType;
-    const accounts = parsed.accounts ?? (account ? [account] : []);
-    return { ...defaultConfig, ...parsed, accounts };
-  } catch (err) {
-    console.error(err);
-    return defaultConfig;
-  }
-};
+export const parseFormConfig = (cfg?: string | null): BalanceHistoryFormType =>
+  parseCardConfig<StoredBalanceHistoryConfigType, BalanceHistoryFormType>(
+    cfg,
+    defaultConfig,
+    ({ account, ...parsed }) => {
+      const accounts = parsed.accounts ?? (account ? [account] : []);
+      return { ...defaultConfig, ...parsed, accounts };
+    },
+  );
 
 export const getActiveFiltersCount = (
   formConfig: BalanceHistoryFormType,

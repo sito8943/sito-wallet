@@ -12,6 +12,7 @@ import {
 
 // constants
 import { NOT_CONFIGURED_STATUS, defaultConfig } from "./constants";
+import { parseCardConfig } from "../utils";
 
 export const formToDto = (
   data: CardRewardsFormType,
@@ -37,20 +38,19 @@ export const resolveConfigAccountId = (
 ): number | null =>
   parseNullableNumber(stored.accountId) ?? stored.account?.id ?? null;
 
-export const parseFormConfig = (cfg?: string | null): CardRewardsFormType => {
-  try {
-    const parsed = (cfg ? JSON.parse(cfg) : {}) as CardRewardsStoredConfig;
-    return {
-      ...defaultConfig,
-      accountId: resolveConfigAccountId(parsed),
-      account: parsed.account ?? null,
-      showFiltersAsBadge: !!parsed.showFiltersAsBadge,
-    };
-  } catch (err) {
-    console.error(err);
-    return defaultConfig;
-  }
-};
+export const parseFormConfig = (cfg?: string | null): CardRewardsFormType =>
+  parseCardConfig<CardRewardsStoredConfig, CardRewardsFormType>(
+    cfg,
+    defaultConfig,
+    (parsed) => {
+      return {
+        ...defaultConfig,
+        accountId: resolveConfigAccountId(parsed),
+        account: parsed.account ?? null,
+        showFiltersAsBadge: !!parsed.showFiltersAsBadge,
+      };
+    },
+  );
 
 export const getActiveFiltersCount = (
   formConfig: CardRewardsFormType,

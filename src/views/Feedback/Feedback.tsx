@@ -35,6 +35,7 @@ export function Feedback() {
           entries={feedbackQuery.data ?? []}
           isLoading={feedbackQuery.isLoading}
           hasError={!!feedbackQuery.error}
+          error={feedbackQuery.error}
           onRetry={() => void feedbackQuery.refetch()}
           onToggleResolved={toggleResolved}
           pendingId={pendingId}

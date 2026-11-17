@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { faStore } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faStore } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @sito/dashboard-app
 import {
   ConfirmationDialog,
   Empty,
-  Error as ErrorView,
+  GlobalActions,
   Page,
   PrettyGrid,
   useDeleteDialog,
@@ -31,7 +32,7 @@ import { useManager, useRegisterBottomNavAction } from "providers";
 
 // components
 import type { CatalogRowDto } from "components";
-import { CatalogCard, toCatalogRow } from "components";
+import { CatalogCard, QueryError, toCatalogRow } from "components";
 import { getDeleteAction } from "../../components/Card/utils";
 import {
   AddPurchaseProviderDialog,
@@ -93,7 +94,7 @@ export function PurchaseProviders() {
       queryKey={PurchaseProvidersQueryKeys.all().queryKey}
     >
       {error ? (
-        <ErrorView error={error} />
+        <QueryError error={error} />
       ) : (
         <>
           <PrettyGrid
@@ -103,6 +104,13 @@ export function PurchaseProviders() {
               <Empty
                 message={t("_pages:purchaseProviders.empty")}
                 iconProps={{ icon: faStore }}
+                action={{
+                  icon: <FontAwesomeIcon icon={faPlus} />,
+                  id: GlobalActions.Add,
+                  disabled: isLoading,
+                  onClick: () => addPurchaseProvider.openDialog(),
+                  tooltip: t("_pages:purchaseProviders.add"),
+                }}
               />
             }
             renderComponent={(item) => {

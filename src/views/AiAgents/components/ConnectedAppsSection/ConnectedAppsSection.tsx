@@ -1,7 +1,10 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { Error as ErrorView, Loading } from "@sito/dashboard-app";
+import { Loading } from "@sito/dashboard-app";
+
+// components
+import { QueryError } from "components";
 
 // components
 import { ConnectedAppListItem } from "../ConnectedAppListItem";
@@ -11,7 +14,8 @@ import type { ConnectedAppsSectionPropsType } from "../../types";
 
 /** Apps connected over OAuth (ChatGPT, claude.ai…) with a disconnect action. */
 export function ConnectedAppsSection(props: ConnectedAppsSectionPropsType) {
-  const { grants, isLoading, hasError, onRetry, onEdit, onDisconnect } = props;
+  const { grants, isLoading, hasError, error, onRetry, onEdit, onDisconnect } =
+    props;
   const { t } = useTranslation();
 
   return (
@@ -25,13 +29,17 @@ export function ConnectedAppsSection(props: ConnectedAppsSectionPropsType) {
         </p>
       </div>
       {hasError ? (
-        <ErrorView message={t("_accessibility:errors.500")} onRetry={onRetry} />
+        <QueryError
+          error={error}
+          message={t("_accessibility:errors.500")}
+          onRetry={onRetry}
+        />
       ) : isLoading ? (
         <div className="ai-agents-loading">
           <Loading />
         </div>
       ) : grants.length === 0 ? (
-        <p className="ai-agents-empty">{t("_pages:aiAgents.apps.empty")}</p>
+        <p className="card-empty">{t("_pages:aiAgents.apps.empty")}</p>
       ) : (
         <ul className="ai-agents-keys">
           {grants.map((grant) => (

@@ -5,17 +5,20 @@ import { useTranslation } from "react-i18next";
 import {
   ConfirmationDialog,
   Empty,
-  Error as ErrorView,
   GlobalActions,
   Page,
   PrettyGrid,
   TabsLayout,
   useDeleteDialog,
+  useNotification,
   useRestoreDialog,
 } from "@sito/dashboard-app";
 
+// components
+import { QueryError } from "components";
+
 // icons
-import { faAdd, faBullseye } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faBullseye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // hooks
@@ -41,6 +44,7 @@ import { AddGoalDialog, EditGoalDialog, GoalCard } from "./components";
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 // lib
+import { isFeatureDisabledBusinessError } from "lib";
 import type { FilterGoalDto, GoalDto, GoalStatus } from "lib";
 
 // constants
@@ -55,12 +59,21 @@ import "./styles.css";
 
 export function Goals() {
   const { t } = useTranslation();
+  const { showErrorNotification } = useNotification();
   const manager = useManager();
 
   const [status, setStatus] = useState<GoalStatus>(DEFAULT_GOAL_STATUS_TAB);
   const filters = useMemo<FilterGoalDto>(() => ({ status }), [status]);
   const { data, isLoading, error } = useGoalsList({ filters });
   const items = useMemo(() => data?.items ?? [], [data?.items]);
+
+  useEffect(() => {
+    if (!isFeatureDisabledBusinessError(error)) return;
+
+    showErrorNotification({
+      message: t("_pages:featureFlags.moduleUnavailable"),
+    });
+  }, [error, showErrorNotification, t]);
 
   const addGoal = useAddGoalDialog({ goals: items });
   const editGoal = useEditGoalDialog({ goals: items });
@@ -100,7 +113,7 @@ export function Goals() {
   );
 
   const goalsGrid = error ? (
-    <ErrorView error={error} />
+    <QueryError error={error} />
   ) : (
     <PrettyGrid
       data={items}
@@ -110,7 +123,7 @@ export function Goals() {
           message={t(`_pages:goals.empty.${GOAL_STATUS_TAB_KEYS[status]}`)}
           iconProps={{ icon: faBullseye }}
           action={{
-            icon: <FontAwesomeIcon icon={faAdd} />,
+            icon: <FontAwesomeIcon icon={faPlus} />,
             id: GlobalActions.Add,
             disabled: isLoading,
             onClick: () => addGoal.openDialog(),

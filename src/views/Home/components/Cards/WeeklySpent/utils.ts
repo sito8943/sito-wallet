@@ -1,6 +1,7 @@
 import type { UpdateDashboardCardConfigDto } from "lib";
 import { TransactionType } from "lib";
-import type { WeeklySpentFormType } from "./types";
+import type { FilterWeeklyConfigType, WeeklySpentFormType } from "./types";
+import { parseCardConfig } from "../utils";
 
 export const defaultConfig: WeeklySpentFormType = {
   type: TransactionType.In,
@@ -24,17 +25,15 @@ export const formToDto = (
   };
 };
 
-export const parseFormConfig = (cfg?: string | null): WeeklySpentFormType => {
-  try {
-    return {
+export const parseFormConfig = (cfg?: string | null): WeeklySpentFormType =>
+  parseCardConfig<Partial<WeeklySpentFormType>, WeeklySpentFormType>(
+    cfg,
+    defaultConfig,
+    (parsed) => ({
       ...defaultConfig,
-      ...(cfg ? (JSON.parse(cfg) as Partial<WeeklySpentFormType>) : {}),
-    };
-  } catch (err) {
-    console.error(err);
-    return defaultConfig;
-  }
-};
+      ...parsed,
+    }),
+  );
 
 export const getActiveFiltersCount = (
   formConfig: WeeklySpentFormType,
@@ -58,3 +57,19 @@ export const getCurrentWeekRange = (): {
 
   return { start: toYMD(start), end: toYMD(end) };
 };
+
+/** Query filters for the card, read straight from its stored config. */
+export const parseFilterConfig = (
+  cfg?: string | null,
+): FilterWeeklyConfigType =>
+  parseCardConfig<Partial<WeeklySpentFormType>, FilterWeeklyConfigType>(
+    cfg,
+    { type: defaultConfig.type, accounts: [] },
+    (parsed) => {
+      const form = { ...defaultConfig, ...parsed };
+      return {
+        type: form.type,
+        accounts: form.accounts?.map((account) => account.id) ?? [],
+      };
+    },
+  );

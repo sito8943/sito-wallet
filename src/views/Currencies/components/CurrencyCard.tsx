@@ -28,8 +28,6 @@ export function CurrencyCard(props: CurrencyCardPropsType) {
     onSwipeDelete,
   } = props;
   const deleted = !!deletedAt;
-  const parsedDescription =
-    description || t("_entities:base.description.empty");
   const hasSymbol = !!symbol?.length;
 
   return (
@@ -61,15 +59,16 @@ export function CurrencyCard(props: CurrencyCardPropsType) {
       className="currency-card-content"
       containerClassName="currency-card-container"
     >
-      <p
-        className={classNames(
-          "currency-card-description",
-          !description && "currency-card-description--empty",
-          deleted && "currency-card-description--deleted",
-        )}
-      >
-        {parsedDescription}
-      </p>
+      {description ? (
+        <p
+          className={classNames(
+            "currency-card-description",
+            deleted && "currency-card-description--deleted",
+          )}
+        >
+          {description}
+        </p>
+      ) : null}
     </ItemCard>
   );
 }

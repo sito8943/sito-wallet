@@ -1,9 +1,5 @@
 @reference "../../../styles/variables.css";
 
-.profile-loading {
-  @apply w-full flex justify-center items-center py-10;
-}
-
 .profile-forms {
   @apply mr-auto grid w-full max-w-[86rem] gap-6 sm:grid-cols-2;
 }

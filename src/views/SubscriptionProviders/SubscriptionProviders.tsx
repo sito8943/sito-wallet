@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faAdd,
+  faPlus,
   faBuilding,
   faWandMagicSparkles,
 } from "@fortawesome/free-solid-svg-icons";
@@ -11,7 +11,6 @@ import {
 import {
   ConfirmationDialog,
   Empty,
-  Error as ErrorView,
   GlobalActions,
   ImportDialog,
   Page,
@@ -31,7 +30,7 @@ import {
   useMobileNavbar,
   useSwipeDeleteState,
 } from "hooks";
-import { MobileSelectionBar } from "components";
+import { MobileSelectionBar, QueryError } from "components";
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 import type {
@@ -174,7 +173,7 @@ export function SubscriptionProviders() {
 
   const addSubscriptionProviderAction = useMemo(
     () => ({
-      icon: <FontAwesomeIcon icon={faAdd} />,
+      icon: <FontAwesomeIcon icon={faPlus} />,
       id: GlobalActions.Add,
       disabled: isLoading || !subscriptionProvidersClient,
       onClick: () => addSubscriptionProvider.openDialog(),
@@ -345,7 +344,7 @@ export function SubscriptionProviders() {
           />
         </>
       ) : (
-        <ErrorView error={error} />
+        <QueryError error={error} />
       )}
     </Page>
   );

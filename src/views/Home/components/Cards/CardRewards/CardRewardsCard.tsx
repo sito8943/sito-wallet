@@ -79,7 +79,7 @@ export const CardRewardsCard = (props: CardRewardsPropsType) => {
     switch (viewState) {
       case CardRewardsViewState.NoAccount:
         return (
-          <p className="card-rewards-empty">
+          <p className="card-empty">
             {t("_pages:home.dashboard.cardRewards.noAccount")}
           </p>
         );
@@ -87,7 +87,7 @@ export const CardRewardsCard = (props: CardRewardsPropsType) => {
         return null;
       case CardRewardsViewState.NotConfigured:
         return (
-          <div className="card-rewards-empty">
+          <div className="card-empty">
             <p>{t("_pages:home.dashboard.cardRewards.notConfigured")}</p>
             <Button
               type="button"
@@ -101,7 +101,7 @@ export const CardRewardsCard = (props: CardRewardsPropsType) => {
         );
       case CardRewardsViewState.Error:
         return (
-          <p className="card-rewards-empty">
+          <p className="card-empty">
             {t("_pages:home.dashboard.cardRewards.error")}
           </p>
         );
