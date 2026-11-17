@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button, Loading, Page, useNotification } from "@sito/dashboard-app";
+import { Button, Page, useNotification } from "@sito/dashboard-app";
 
 // components
 import { QueryError } from "components";
@@ -103,10 +103,6 @@ export function Notifications() {
             t("_accessibility:errors.500"),
           )}
         />
-      ) : notificationsQuery.isLoading && !notifications.length ? (
-        <div className="notifications-empty">
-          <Loading />
-        </div>
       ) : (
         <div className="notifications-view">
           <div className="notifications-toolbar">
