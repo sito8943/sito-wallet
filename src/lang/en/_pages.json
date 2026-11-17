@@ -1088,6 +1088,11 @@
         "successMessage": "Payment registered successfully",
         "openTransaction": "Edit the transaction for the {{amount}} payment on {{paidAt}}"
       },
+      "deleteBillingLog": {
+        "text": "Delete payment",
+        "confirmTitle": "Delete this payment? Its transaction is deleted too.",
+        "successMessage": "Payment deleted successfully"
+      },
       "renewal": {
         "text": "Register renewal",
         "disabled": "You cannot register renewals for canceled subscriptions",
@@ -1521,7 +1526,8 @@
         "disabled": "You cannot register payments for paid or canceled debts",
         "title": "Register payment",
         "for": "Debt",
-        "successMessage": "Payment registered successfully"
+        "successMessage": "Payment registered successfully",
+        "openTransaction": "Edit the transaction for the {{amount}} payment on {{paidAt}}"
       },
       "cancel": {
         "text": "Cancel debt",

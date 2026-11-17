@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import {
   Button,
+  ConfirmationDialog,
   Error as ErrorView,
   FormContainer,
   Page,
@@ -45,7 +46,10 @@ import {
   SubscriptionActivitySidebar,
   SubscriptionForm,
 } from "./components";
-import { useAddSubscriptionBillingLogDialog } from "./hooks";
+import {
+  useAddSubscriptionBillingLogDialog,
+  useDeleteSubscriptionBillingLogDialog,
+} from "./hooks";
 import type { SubscriptionFormType } from "./types";
 import {
   emptySubscriptionForm,
@@ -88,6 +92,8 @@ export function SubscriptionEditor() {
     ? t("_pages:subscriptions.forms.edit")
     : t("_pages:subscriptions.forms.add");
   const addBillingLog = useAddSubscriptionBillingLogDialog();
+  const deleteBillingLog =
+    useDeleteSubscriptionBillingLogDialog(subscriptionId);
   const queryClient = useQueryClient();
   // Editing a payment's transaction can change the billing log amount.
   const editTransaction = useEditTransaction({
@@ -370,10 +376,14 @@ export function SubscriptionEditor() {
               billingLogsLoading={subscriptionBillingLogsQuery.isLoading}
               billingLogsError={subscriptionBillingLogsQuery.error}
               onBillingLogClick={editTransaction.openDialog}
+              onDeleteBillingLog={(log) => {
+                void deleteBillingLog.onClick(log.id);
+              }}
             />
           ) : null}
           <AddSubscriptionBillingLogDialog {...addBillingLog} />
           <EditTransactionDialog {...editTransaction} />
+          <ConfirmationDialog {...deleteBillingLog} />
           <AddCurrencyDialog {...addCurrency} />
           <AddSubscriptionProviderDialog {...addSubscriptionProvider} />
           <AddPurchaseProviderDialog {...addPurchaseProvider} />

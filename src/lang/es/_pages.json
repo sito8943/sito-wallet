@@ -1088,6 +1088,11 @@
         "successMessage": "Pago registrado correctamente",
         "openTransaction": "Editar la transacción del pago de {{amount}} del {{paidAt}}"
       },
+      "deleteBillingLog": {
+        "text": "Eliminar pago",
+        "confirmTitle": "¿Eliminar este pago? También se elimina su transacción.",
+        "successMessage": "Pago eliminado correctamente"
+      },
       "renewal": {
         "text": "Registrar renovación",
         "disabled": "No puedes registrar renovaciones en suscripciones canceladas",
@@ -1521,7 +1526,8 @@
         "disabled": "No puedes registrar pagos en deudas pagadas o canceladas",
         "title": "Registrar pago",
         "for": "Deuda",
-        "successMessage": "Pago registrado correctamente"
+        "successMessage": "Pago registrado correctamente",
+        "openTransaction": "Editar la transacción del pago de {{amount}} del {{paidAt}}"
       },
       "cancel": {
         "text": "Cancelar deuda",

@@ -65,11 +65,13 @@ export interface SubscriptionActivitySidebarPropsType {
   billingLogsLoading?: boolean;
   billingLogsError?: unknown;
   onBillingLogClick?: (transactionId: number) => void;
+  onDeleteBillingLog?: (log: SubscriptionBillingLogDto) => void;
 }
 
 export interface SubscriptionBillingLogItemPropsType {
   log: SubscriptionBillingLogDto;
   onClick?: (transactionId: number) => void;
+  onDelete?: (log: SubscriptionBillingLogDto) => void;
 }
 
 export enum SubscriptionAction {

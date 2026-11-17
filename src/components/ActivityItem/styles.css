@@ -1,0 +1,33 @@
+@reference "../../styles/variables.css";
+
+.activity-item {
+  @apply flex items-start rounded-xl border border-border bg-base transition;
+}
+
+.activity-item--clickable:has(.activity-item-main:hover) {
+  @apply border-primary bg-hover-primary/5;
+}
+
+.activity-item-main {
+  @apply flex min-w-0 flex-1 flex-col items-start rounded-xl p-3 text-start;
+}
+
+.activity-item--clickable .activity-item-main {
+  @apply cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base;
+}
+
+.activity-item-actions {
+  @apply flex shrink-0 items-center gap-1 p-2;
+}
+
+.activity-item-amount {
+  @apply text-sm font-semibold text-text;
+}
+
+.activity-item-meta {
+  @apply text-xs text-text-muted;
+}
+
+.activity-item-note {
+  @apply mt-1 text-sm text-text;
+}

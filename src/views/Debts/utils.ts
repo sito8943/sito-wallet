@@ -2,6 +2,7 @@ import { SortOrder } from "@sito/dashboard-app";
 
 import type {
   AddDebtDto,
+  CommonCurrencyDto,
   AddDebtPaymentDto,
   DebtDirection,
   DebtDto,
@@ -11,6 +12,7 @@ import type {
 } from "lib";
 import {
   DEBT_DIRECTIONS,
+  formatAmount,
   nowDateTimeLocal,
   parseFiniteNumber,
   parseOptionalDateTimeLocal,
@@ -154,3 +156,13 @@ export const debtPaymentFormToUpdateDto = (
   paidAt: form.paidAt,
   note: form.note?.trim() || null,
 });
+
+/** Plain-text amount with its currency symbol (for aria labels). */
+export const getDebtPaymentAmountLabel = (
+  amount: number,
+  currency: Pick<CommonCurrencyDto, "symbol"> | null | undefined,
+  locale: string,
+): string => {
+  const formatted = formatAmount(amount, locale);
+  return currency?.symbol ? `${formatted} ${currency.symbol}` : formatted;
+};

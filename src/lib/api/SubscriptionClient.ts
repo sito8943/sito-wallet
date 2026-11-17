@@ -122,6 +122,18 @@ export default class SubscriptionClient extends BaseClient<
     );
   }
 
+  async deleteBillingLog(
+    subscriptionId: number,
+    billingLogId: number,
+  ): Promise<number> {
+    return await this.api.doQuery<number>(
+      `${this.table}/${subscriptionId}/billing-logs/${billingLogId}`,
+      Methods.DELETE,
+      undefined,
+      this.api.defaultTokenAcquirer(),
+    );
+  }
+
   async processImport(
     file: File,
     override?: boolean,
