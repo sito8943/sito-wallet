@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -34,6 +34,8 @@ import { addEmptyCurrency } from "../Currencies/utils";
 import { AddPurchaseProviderDialog } from "../PurchaseProviders/components";
 import { useAddPurchaseProviderDialog } from "../PurchaseProviders/hooks";
 import { emptyPurchaseProviderForm } from "../PurchaseProviders/utils";
+import { EditTransactionDialog } from "../Transactions/components";
+import { useEditTransaction } from "../Transactions/hooks";
 import { AddSubscriptionProviderDialog } from "../SubscriptionProviders/components";
 import { useAddSubscriptionProviderDialog } from "../SubscriptionProviders/hooks";
 import { emptyAddSubscriptionProviderForm } from "../SubscriptionProviders/utils";
@@ -86,6 +88,12 @@ export function SubscriptionEditor() {
     ? t("_pages:subscriptions.forms.edit")
     : t("_pages:subscriptions.forms.add");
   const addBillingLog = useAddSubscriptionBillingLogDialog();
+  const queryClient = useQueryClient();
+  // Editing a payment's transaction can change the billing log amount.
+  const editTransaction = useEditTransaction({
+    onSuccess: () =>
+      queryClient.invalidateQueries({ ...SubscriptionsQueryKeys.all() }),
+  });
 
   const {
     control,
@@ -361,9 +369,11 @@ export function SubscriptionEditor() {
               billingLogs={subscriptionBillingLogsQuery.data?.items ?? []}
               billingLogsLoading={subscriptionBillingLogsQuery.isLoading}
               billingLogsError={subscriptionBillingLogsQuery.error}
+              onBillingLogClick={editTransaction.openDialog}
             />
           ) : null}
           <AddSubscriptionBillingLogDialog {...addBillingLog} />
+          <EditTransactionDialog {...editTransaction} />
           <AddCurrencyDialog {...addCurrency} />
           <AddSubscriptionProviderDialog {...addSubscriptionProvider} />
           <AddPurchaseProviderDialog {...addPurchaseProvider} />

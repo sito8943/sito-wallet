@@ -1084,7 +1084,8 @@
         "disabled": "No puedes registrar pagos en suscripciones canceladas",
         "title": "Registrar pago",
         "for": "Suscripción",
-        "successMessage": "Pago registrado correctamente"
+        "successMessage": "Pago registrado correctamente",
+        "openTransaction": "Editar la transacción del pago de {{amount}} del {{paidAt}}"
       },
       "renewal": {
         "text": "Registrar renovación",

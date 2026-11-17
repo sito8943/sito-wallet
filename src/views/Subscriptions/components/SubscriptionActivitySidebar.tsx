@@ -5,6 +5,8 @@ import { formatDateTime } from "lib";
 
 import type { SubscriptionActivitySidebarPropsType } from "../types";
 
+import { SubscriptionBillingLogItem } from "./SubscriptionBillingLogItem";
+
 export function SubscriptionActivitySidebar(
   props: SubscriptionActivitySidebarPropsType,
 ) {
@@ -17,6 +19,7 @@ export function SubscriptionActivitySidebar(
     billingLogs,
     billingLogsLoading,
     billingLogsError,
+    onBillingLogClick,
   } = props;
 
   const startsAtLabel = formatDateTime(startsAt);
@@ -65,30 +68,13 @@ export function SubscriptionActivitySidebar(
           </p>
         ) : billingLogs.length ? (
           <ul className="subscription-activity-list">
-            {billingLogs.map((log) => {
-              const paidAtDate = new Date(log.paidAt);
-              const paidAt = Number.isNaN(paidAtDate.getTime())
-                ? log.paidAt
-                : paidAtDate.toLocaleString();
-              const currencyLabel =
-                log.currency?.symbol ?? log.currency?.name ?? "";
-
-              return (
-                <li key={log.id} className="subscription-activity-item">
-                  <p className="subscription-activity-amount">
-                    {log.amount}
-                    {currencyLabel ? ` ${currencyLabel}` : ""}
-                  </p>
-                  <p className="subscription-activity-meta">
-                    {t("_entities:subscriptionBillingLog.paidAt.label")}:{" "}
-                    {paidAt}
-                  </p>
-                  {log.note ? (
-                    <p className="subscription-activity-note">{log.note}</p>
-                  ) : null}
-                </li>
-              );
-            })}
+            {billingLogs.map((log) => (
+              <SubscriptionBillingLogItem
+                key={log.id}
+                log={log}
+                onClick={onBillingLogClick}
+              />
+            ))}
           </ul>
         ) : (
           <p className="subscription-activity-empty">
