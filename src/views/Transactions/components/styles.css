@@ -61,6 +61,10 @@
   @apply relative flex justify-between items-center gap-2 w-full min-w-0 overflow-hidden p-2 pr-3 rounded-lg;
 }
 
+.transaction-card--compact {
+  @apply py-1.5 text-sm;
+}
+
 .transaction-card--deleted {
   @apply !border-bg-error border-2 opacity-60;
 }

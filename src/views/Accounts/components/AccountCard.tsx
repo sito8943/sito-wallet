@@ -163,7 +163,7 @@ export function AccountCard(props: AccountCardPropsType) {
         )}
       </div>
       {showLastTransactions && id && currency && (
-        <LastTransactions accountId={id} currency={currency} />
+        <LastTransactions accountId={id} />
       )}
       {showTypeResume && id && currency && (
         <TypeResume accountId={id} currency={currency} />

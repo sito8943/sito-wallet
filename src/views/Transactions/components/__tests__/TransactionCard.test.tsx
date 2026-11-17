@@ -381,6 +381,28 @@ describe("TransactionCard", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("renders a denser row with a smaller avatar when compact", () => {
+    const { container } = render(
+      <TransactionCard
+        {...baseTransaction}
+        purchaseProvider={{
+          id: 7,
+          name: "Mercadona",
+          photo: "/purchase-providers/7/photo",
+          updatedAt: new Date("2025-01-01T10:00:00.000Z"),
+        }}
+        actions={[]}
+        compact
+      />,
+    );
+
+    expect(screen.getByRole("button")).toHaveClass("transaction-card--compact");
+    expect(container.querySelector(".transaction-card-avatar")).toHaveClass(
+      "entity-avatar--sm",
+      "transaction-card-avatar--compact",
+    );
+  });
+
   describe("seller photo", () => {
     const purchaseProvider = {
       id: 7,
