@@ -64,6 +64,11 @@ export interface TransactionFormType
   products: TransactionProductFormItem[];
 }
 
+export type UseEditTransactionPropsType = {
+  /** Extra work after a successful edit (e.g. refresh a parent view). */
+  onSuccess?: () => void | Promise<void>;
+};
+
 export type UseQuickAddTransactionPropsType = {
   /** Account preselected in the form (and in scanned drafts). */
   account: CommonAccountDto | null;
