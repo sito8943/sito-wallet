@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { faCubes } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faCubes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @sito/dashboard-app
 import {
   ConfirmationDialog,
   Empty,
+  GlobalActions,
   Page,
   PrettyGrid,
   useDeleteDialog,
@@ -107,6 +109,13 @@ export function Products() {
               <Empty
                 message={t("_pages:products.empty")}
                 iconProps={{ icon: faCubes }}
+                action={{
+                  icon: <FontAwesomeIcon icon={faAdd} />,
+                  id: GlobalActions.Add,
+                  disabled: isLoading,
+                  onClick: () => addProduct.openDialog(),
+                  tooltip: t("_pages:products.add"),
+                }}
               />
             }
             renderComponent={(item) => {

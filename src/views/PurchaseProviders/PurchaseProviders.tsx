@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { faStore } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faStore } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @sito/dashboard-app
 import {
   ConfirmationDialog,
   Empty,
+  GlobalActions,
   Page,
   PrettyGrid,
   useDeleteDialog,
@@ -102,6 +104,13 @@ export function PurchaseProviders() {
               <Empty
                 message={t("_pages:purchaseProviders.empty")}
                 iconProps={{ icon: faStore }}
+                action={{
+                  icon: <FontAwesomeIcon icon={faAdd} />,
+                  id: GlobalActions.Add,
+                  disabled: isLoading,
+                  onClick: () => addPurchaseProvider.openDialog(),
+                  tooltip: t("_pages:purchaseProviders.add"),
+                }}
               />
             }
             renderComponent={(item) => {
