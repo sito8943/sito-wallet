@@ -2,7 +2,9 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { classNames } from "@sito/dashboard-app";
 
-import { ItemCard, ItemCardTitle, Money } from "components";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
+
+import { EntityAvatar, ItemCard, ItemCardTitle, Money } from "components";
 
 import { formatDate } from "lib";
 
@@ -70,8 +72,17 @@ export function SubscriptionCard(props: SubscriptionCardPropsType) {
       {description ? (
         <p className="subscription-card-description">{description}</p>
       ) : null}
-      <p className="subscription-card-meta">
-        {t("_entities:subscription.provider.label")}: {provider?.name ?? "-"}
+      <p className="subscription-card-meta subscription-card-provider">
+        {provider ? (
+          <EntityAvatar
+            photo={provider.photo}
+            size="xs"
+            fallbackIcon={faImage}
+          />
+        ) : null}
+        <span>
+          {t("_entities:subscription.provider.label")}: {provider?.name ?? "-"}
+        </span>
       </p>
       {purchaseProvider ? (
         <p className="subscription-card-meta">

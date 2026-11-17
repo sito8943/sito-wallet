@@ -163,7 +163,11 @@
 }
 
 .renewals-dialog-item-meta {
-  @apply truncate text-xs text-text-muted;
+  @apply flex min-w-0 items-center gap-2 text-xs text-text-muted;
+}
+
+.renewals-dialog-item-meta-text {
+  @apply truncate;
 }
 
 .renewals-dialog-item-date {
