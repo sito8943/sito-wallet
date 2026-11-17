@@ -52,7 +52,7 @@ describe("subscription purchase provider mapping", () => {
     expect(subscriptionFormToCreateDto(form).purchaseProviderId).toBe(7);
   });
 
-  it("sends null on update when the purchase provider is cleared", () => {
+  it("sends 0 on update when the purchase provider is cleared", () => {
     const form = {
       ...subscriptionDtoToForm(subscription),
       purchaseProvider: null,
@@ -60,7 +60,7 @@ describe("subscription purchase provider mapping", () => {
 
     expect(subscriptionFormToUpdateDto(form)).toMatchObject({
       id: 3,
-      purchaseProviderId: null,
+      purchaseProviderId: 0,
     });
   });
 });

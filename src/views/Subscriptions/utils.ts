@@ -171,6 +171,8 @@ export const subscriptionFormToUpdateDto = (
     ...payload,
     status: toSubscriptionStatus(form.status),
     accountId: form.account?.id ?? 0,
+    // Backend: null keeps the current provider, 0 clears it.
+    purchaseProviderId: form.purchaseProvider?.id ?? 0,
     nextRenewalAt,
   };
 };
