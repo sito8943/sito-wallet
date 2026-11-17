@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { ProgressBar } from "components";
 
 // lib
-import { formatGoalAmount, formatGoalPercent, getGoalDeadlineInfo } from "lib";
+import { formatAmount, formatGoalPercent, getGoalDeadlineInfo } from "lib";
 
 // types
 import type { GoalsCardRowPropsType } from "./types";
@@ -35,8 +35,8 @@ export const GoalsCardRow = (props: GoalsCardRowPropsType) => {
       <div className="goals-card-row-meta">
         <span>
           {t("_pages:goals.labels.progress", {
-            saved: formatGoalAmount(goal.saved, locale),
-            target: formatGoalAmount(goal.targetAmount, locale),
+            saved: formatAmount(goal.saved, locale),
+            target: formatAmount(goal.targetAmount, locale),
             currency,
           })}
         </span>

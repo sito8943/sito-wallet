@@ -38,6 +38,5 @@ export const SAVINGS_DEPOSIT_DAYS: number[] = Array.from(
 export const NOT_CONFIGURED_STATUS = 400;
 
 /** Decimals shown for amounts; daily accruals keep more precision. */
-export const AMOUNT_DECIMALS = 2;
 export const ACCRUED_MAX_DECIMALS = 6;
 export const RATE_MAX_DECIMALS = 4;

@@ -24,7 +24,7 @@ import type { GoalDto } from "lib";
 import {
   GOAL_STATUS_NAME,
   GoalStatus,
-  formatGoalAmount,
+  formatAmount,
   formatGoalDeadline,
   formatGoalPercent,
   getGoalDeadlineInfo,
@@ -106,8 +106,8 @@ export function GoalCard(props: GoalCardPropsType) {
         <div className="goal-card-progress-row">
           <span className="goal-card-amounts">
             {t("_pages:goals.labels.progress", {
-              saved: formatGoalAmount(saved, locale),
-              target: formatGoalAmount(targetAmount, locale),
+              saved: formatAmount(saved, locale),
+              target: formatAmount(targetAmount, locale),
               currency: currencySymbol,
             })}
           </span>
@@ -146,7 +146,7 @@ export function GoalCard(props: GoalCardPropsType) {
       {active && monthlyNeeded !== null && (
         <p className="goal-card-meta">
           {t("_pages:goals.labels.monthlyNeeded", {
-            amount: formatGoalAmount(monthlyNeeded, locale),
+            amount: formatAmount(monthlyNeeded, locale),
             currency: currencySymbol,
           })}
         </p>
