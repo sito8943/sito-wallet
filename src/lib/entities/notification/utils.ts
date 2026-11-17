@@ -1,5 +1,7 @@
 import type { TFunction } from "i18next";
 
+import { formatAmount } from "../../utils/money";
+
 import type { NotificationDto } from "./NotificationDto";
 import type { NotificationPayload } from "./NotificationPayload";
 
@@ -49,10 +51,7 @@ const formatNotificationAmount = (
 ): string | undefined => {
   if (typeof value !== "number" || !Number.isFinite(value)) return undefined;
 
-  return new Intl.NumberFormat(language, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
+  return formatAmount(value, language);
 };
 
 export const getNotificationTranslationValues = (

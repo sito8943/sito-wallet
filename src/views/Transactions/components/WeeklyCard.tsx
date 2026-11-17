@@ -9,7 +9,9 @@ import { TransactionType } from "lib";
 import { useWeekly } from "../../../hooks/queries/useWeekly";
 
 // components
-import { Currency } from "../../Currencies";
+import { Money } from "components";
+
+import { formatAmount } from "lib";
 import { BaseCard } from "../../Home/components/Cards/BaseCard";
 
 // types
@@ -26,7 +28,7 @@ export const WeeklyCard = (props: WeeklyCardProps) => {
     type,
     onOpenTransactions,
   } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const { data, isLoading } = useWeekly({
     type,
@@ -80,8 +82,11 @@ export const WeeklyCard = (props: WeeklyCardProps) => {
                 currentValueClassName,
               )}
             >
-              {isLoading ? "…" : data?.currentWeek}{" "}
-              <Currency name={name} symbol={symbol} />
+              <Money
+                amount={data?.currentWeek}
+                currency={{ name, symbol }}
+                loading={isLoading}
+              />
             </p>
             {!!difference && !!data?.previousWeek && (
               <p
@@ -92,10 +97,15 @@ export const WeeklyCard = (props: WeeklyCardProps) => {
               >
                 <span
                   data-tooltip-id="tooltip"
-                  data-tooltip-content={String(data?.previousWeek)}
+                  data-tooltip-content={formatAmount(
+                    data?.previousWeek,
+                    i18n.language,
+                  )}
                 >
                   {difference > 0 ? "+" : ""}
-                  {isLoading ? "…" : difference}{" "}
+                  {isLoading
+                    ? "…"
+                    : formatAmount(difference, i18n.language)}{" "}
                 </span>
                 <span>{t("_pages:transactions.cards.lastWeek")}</span>
               </p>

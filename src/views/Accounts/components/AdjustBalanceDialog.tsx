@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faScaleBalanced } from "@fortawesome/free-solid-svg-icons";
 
 // components
-import { Currency } from "views/Currencies/components/Currency";
+import { Money } from "components";
 
 // types
 import type {
@@ -46,10 +46,9 @@ export function AdjustBalanceDialog(props: AdjustBalanceDialogPropsType) {
               {t("_pages:accounts.actions.adjustBalance.dialog.currentBalance")}
               :{" "}
               <strong>
-                {selectedAccount.balance}{" "}
-                <Currency
-                  name={selectedAccount.currency?.name}
-                  symbol={selectedAccount.currency?.symbol}
+                <Money
+                  amount={selectedAccount.balance}
+                  currency={selectedAccount.currency}
                 />
               </strong>
             </span>

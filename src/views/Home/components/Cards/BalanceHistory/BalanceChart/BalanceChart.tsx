@@ -15,6 +15,9 @@ import type { ChartData, ChartOptions, TooltipItem } from "chart.js";
 // @sito/dashboard-app
 import { useTheme } from "@sito/dashboard-app";
 
+// lib
+import { formatAmount } from "lib";
+
 // types
 import type { BalanceChartPropsType } from "./types";
 
@@ -89,10 +92,10 @@ export const BalanceChart = (props: BalanceChartPropsType) => {
             afterBody: (items: TooltipItem<"line">[]) => {
               const point = points[items[0].dataIndex];
               if (!point) return "";
-              return `${netLabel}: ${point.netTotal} ${currencySymbol}`;
+              return `${netLabel}: ${formatAmount(point.netTotal, locale)} ${currencySymbol}`;
             },
             label: (item: TooltipItem<"line">) =>
-              `${balanceLabel}: ${item.formattedValue} ${currencySymbol}`,
+              `${balanceLabel}: ${formatAmount(Number(item.raw), locale)} ${currencySymbol}`,
           },
         },
       },
@@ -107,7 +110,15 @@ export const BalanceChart = (props: BalanceChartPropsType) => {
         },
       },
     }),
-    [points, currencySymbol, balanceLabel, netLabel, textColor, gridColor],
+    [
+      points,
+      currencySymbol,
+      balanceLabel,
+      netLabel,
+      textColor,
+      gridColor,
+      locale,
+    ],
   );
 
   return (

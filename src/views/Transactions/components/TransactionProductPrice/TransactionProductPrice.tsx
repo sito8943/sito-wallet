@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { formatTransactionAmount } from "../../utils";
+import { formatAmount } from "lib";
 
 import type { TransactionProductPricePropsType } from "./types";
 import { formatQuantity, getProductPriceLines } from "./utils";
@@ -30,10 +30,10 @@ export function TransactionProductPrice(
         <li key={line.id}>
           {t("_pages:transactions.catalogHistory.productPrice", {
             unitPrice:
-              `${formatTransactionAmount(line.unitPrice, i18n.language)} ${symbol}`.trim(),
+              `${formatAmount(line.unitPrice, i18n.language)} ${symbol}`.trim(),
             quantity: formatQuantity(line.quantity, i18n.language),
             total:
-              `${formatTransactionAmount(line.total, i18n.language)} ${symbol}`.trim(),
+              `${formatAmount(line.total, i18n.language)} ${symbol}`.trim(),
           })}
         </li>
       ))}

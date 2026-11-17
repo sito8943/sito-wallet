@@ -4,7 +4,7 @@ import type { ColumnType } from "@sito/dashboard-app";
 
 import type { TransactionTableRowType } from "../../types";
 
-import { Currency } from "views/Currencies/components/Currency";
+import { Money } from "components";
 import { Type } from "views/TransactionCategories/components/Type";
 
 import {
@@ -59,10 +59,9 @@ export const getWeeklyTransactionsTableColumns = (
     renderBody: (_value: unknown, transaction: TransactionTableRowType) => (
       <p className={getWeeklyTransactionAmountClassName(transaction)}>
         {getWeeklyTransactionAmountPrefix(transaction)}
-        {transaction.amount}{" "}
-        <Currency
-          name={transaction.account?.currency?.name}
-          symbol={transaction.account?.currency?.symbol}
+        <Money
+          amount={transaction.amount}
+          currency={transaction.account?.currency}
         />
       </p>
     ),

@@ -6,7 +6,7 @@ import { useTransactionsGroupedByType } from "hooks";
 
 // component
 import { Type } from "views/TransactionCategories";
-import { Currency } from "views/Currencies/components/Currency";
+import { Money } from "components";
 
 // types
 import type { TypeResumePropsType } from "./types";
@@ -30,8 +30,11 @@ const TypeResume = (props: TypeResumePropsType) => {
           <div className="type-group-value-row">
             <Type type={TransactionType.In} noText filled={false} />
             <p className="type-group-value--income">
-              {isLoading ? "..." : incomeTotal}{" "}
-              <Currency name={currency?.name} symbol={currency?.symbol} />
+              <Money
+                amount={incomeTotal}
+                currency={currency}
+                loading={isLoading}
+              />
             </p>
           </div>
         </div>
@@ -39,8 +42,11 @@ const TypeResume = (props: TypeResumePropsType) => {
           <div className="type-group-value-row">
             <Type type={TransactionType.Out} noText filled={false} />
             <p className="type-group-value--expense">
-              {isLoading ? "..." : expenseTotal}{" "}
-              <Currency name={currency?.name} symbol={currency?.symbol} />
+              <Money
+                amount={expenseTotal}
+                currency={currency}
+                loading={isLoading}
+              />
             </p>
           </div>
         </div>

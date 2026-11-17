@@ -8,7 +8,7 @@ import { Accordion } from "components";
 
 import { classNames, Loading } from "@sito/dashboard-app";
 
-import { Currency } from "../../../../Currencies";
+import { Money } from "components";
 import { useTypeResumeCategoryTransactions } from "./useTypeResumeCategoryTransactions";
 import { TypeResumeTransactionItem } from "./TypeResumeTransactionItem";
 
@@ -79,8 +79,10 @@ export const TypeResumeCategoryItem = (
         </div>
         <div className="type-resume-dialog-item-side">
           <p className="type-resume-dialog-item-amount poppins">
-            {category.total}{" "}
-            <Currency name={currencyName} symbol={currencySymbol} />
+            <Money
+              amount={category.total}
+              currency={{ name: currencyName, symbol: currencySymbol }}
+            />
           </p>
           <FontAwesomeIcon
             icon={faChevronDown}

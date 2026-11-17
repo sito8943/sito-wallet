@@ -1,5 +1,5 @@
 // components
-import { Currency } from "../../../../Currencies";
+import { Money } from "components";
 
 // types
 import type { CategoryAverageBreakdownPropsType } from "./types";
@@ -28,8 +28,10 @@ export const CategoryAverageBreakdown = (
             {category.name}
           </span>
           <span className="category-average-breakdown-value">
-            {category.averagePerPeriod}{" "}
-            <Currency name={currencyName} symbol={currencySymbol} />
+            <Money
+              amount={category.averagePerPeriod}
+              currency={{ name: currencyName, symbol: currencySymbol }}
+            />
             <small className="category-average-breakdown-period">
               /{periodLabel}
             </small>

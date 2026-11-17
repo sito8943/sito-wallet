@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useTransactionCategoryAverage } from "../../../../../hooks/queries/useTransactionCategoryAverage";
 
 // components
-import { Currency } from "../../../../Currencies";
+import { Money } from "components";
 import { ConfigFormDialog } from "./ConfigFormDialog";
 import { ActiveFilters } from "./ActiveFilters";
 import { CategoryAverageBreakdown } from "./CategoryAverageBreakdown";
@@ -115,8 +115,11 @@ export const CategoryAverageCard = (props: CategoryAveragePropsType) => {
         return (
           <div className="category-average-content">
             <p className="category-average-amount poppins">
-              {isLoading ? "…" : (data?.averagePerPeriod ?? 0)}{" "}
-              <Currency name={currency.name} symbol={currency.symbol} />
+              <Money
+                amount={data?.averagePerPeriod}
+                currency={currency}
+                loading={isLoading}
+              />
               <span className="category-average-period">/{periodLabel}</span>
             </p>
             <div className="category-average-stats">

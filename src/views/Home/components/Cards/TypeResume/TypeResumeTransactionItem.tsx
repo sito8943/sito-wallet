@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { useCalendarTimeAge } from "hooks";
 
-import { Currency } from "../../../../Currencies";
+import { Money } from "components";
 
 import type { TypeResumeTransactionItemPropsType } from "./types";
 
@@ -49,8 +49,10 @@ export const TypeResumeTransactionItem = (
           ) : null}
         </div>
         <p className="type-resume-transaction-amount poppins">
-          {transaction.amount}{" "}
-          <Currency name={currencyName} symbol={currencySymbol} />
+          <Money
+            amount={transaction.amount}
+            currency={{ name: currencyName, symbol: currencySymbol }}
+          />
         </p>
       </button>
     </li>

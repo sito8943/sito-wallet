@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 
 import { Button, Dialog, Loading } from "@sito/dashboard-app";
 
-import { Currency } from "../../../../Currencies";
+import { Money } from "components";
 
 import type { SelectSubscriptionDialogPropsType } from "./types";
 
@@ -64,10 +64,9 @@ export const SelectSubscriptionDialog = (
                   ) : null}
                 </div>
                 <p className="select-subscription-dialog-item-amount poppins">
-                  {subscription.amount}{" "}
-                  <Currency
-                    name={subscription.currency?.name}
-                    symbol={subscription.currency?.symbol}
+                  <Money
+                    amount={subscription.amount}
+                    currency={subscription.currency}
                   />
                 </p>
               </button>
