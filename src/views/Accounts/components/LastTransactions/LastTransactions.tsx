@@ -1,11 +1,5 @@
-// @sito/dashboard-app
-import { Loading, SortOrder } from "@sito/dashboard-app";
-
 // types
 import type { LastTransactionsPropsType } from "./types";
-
-//hooks
-import { useTransactionsList } from "../../../../hooks/queries/useTransactionsList";
 
 // views
 import { EditTransactionDialog } from "views/Transactions/components/EditTransactionDialog";
@@ -18,21 +12,12 @@ import { stopPropagation } from "./utils";
 import "./styles.css";
 
 export const LastTransactions = (props: LastTransactionsPropsType) => {
-  const { accountId } = props;
+  const { transactions } = props;
 
   const editTransaction = useEditTransaction();
 
-  const { isLoading, data } = useTransactionsList({
-    filters: {
-      accountId,
-      softDeleteScope: "ACTIVE",
-    },
-    query: {
-      pageSize: 2,
-      sortingBy: "date",
-      sortingOrder: SortOrder.DESC,
-    },
-  });
+  // Keep account cards compact: no list (and no empty text) without data.
+  if (!transactions.length) return null;
 
   return (
     // Lives inside a clickable account card: keep clicks/long-presses on a
@@ -42,24 +27,18 @@ export const LastTransactions = (props: LastTransactionsPropsType) => {
       onClick={stopPropagation}
       onTouchStart={stopPropagation}
     >
-      {isLoading ? (
-        <div className="account-last-transactions-loading">
-          <Loading />
-        </div>
-      ) : (
-        <ul className="account-last-transactions-list">
-          {data?.items?.map((transaction) => (
-            <li key={transaction.id}>
-              <TransactionCard
-                {...transaction}
-                actions={[]}
-                onClick={editTransaction.openDialog}
-                compact
-              />
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul className="account-last-transactions-list">
+        {transactions.map((transaction) => (
+          <li key={transaction.id}>
+            <TransactionCard
+              {...transaction}
+              actions={[]}
+              onClick={editTransaction.openDialog}
+              compact
+            />
+          </li>
+        ))}
+      </ul>
       <EditTransactionDialog {...editTransaction} />
     </div>
   );

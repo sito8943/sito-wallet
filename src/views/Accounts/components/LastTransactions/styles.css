@@ -4,10 +4,6 @@
   @apply flex w-full pt-5;
 }
 
-.account-last-transactions-loading {
-  @apply flex items-center justify-center w-full;
-}
-
 .account-last-transactions-list {
   @apply w-full gap-2 flex flex-col;
 }

@@ -1,23 +1,15 @@
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 
-const openDialog = vi.fn();
+import type { TransactionDto } from "lib";
 
-vi.mock("@sito/dashboard-app", () => ({
-  Loading: () => <span data-testid="loading" />,
-  SortOrder: { DESC: "DESC" },
+const { openDialog, useTransactionsList } = vi.hoisted(() => ({
+  openDialog: vi.fn(),
+  useTransactionsList: vi.fn(),
 }));
 
 vi.mock("../../../../hooks/queries/useTransactionsList", () => ({
-  useTransactionsList: () => ({
-    isLoading: false,
-    data: {
-      items: [
-        { id: 1, description: "Coffee" },
-        { id: 2, description: "Rent" },
-      ],
-    },
-  }),
+  useTransactionsList,
 }));
 
 vi.mock("views/Transactions/hooks", () => ({
@@ -53,14 +45,26 @@ vi.mock("views/Transactions/components/TransactionCard", () => ({
 
 import { LastTransactions } from "../LastTransactions";
 
+const transactions = [
+  { id: 1, description: "Coffee" },
+  { id: 2, description: "Rent" },
+] as TransactionDto[];
+
 describe("LastTransactions", () => {
-  it("renders each transaction as a compact TransactionCard", () => {
-    render(<LastTransactions accountId={4} />);
+  it("renders the given transactions as compact cards without fetching", () => {
+    render(<LastTransactions transactions={transactions} />);
 
     const cards = screen.getAllByTestId("transaction-card");
     expect(cards).toHaveLength(2);
     expect(cards[0]).toHaveAttribute("data-compact", "true");
     expect(screen.getByTestId("edit-transaction-dialog")).toBeInTheDocument();
+    expect(useTransactionsList).not.toHaveBeenCalled();
+  });
+
+  it("renders nothing when the account has no transactions", () => {
+    const { container } = render(<LastTransactions transactions={[]} />);
+
+    expect(container).toBeEmptyDOMElement();
   });
 
   it("opens the edit dialog without reaching the account card", () => {
@@ -68,7 +72,7 @@ describe("LastTransactions", () => {
 
     render(
       <div onClick={onAccountClick}>
-        <LastTransactions accountId={4} />
+        <LastTransactions transactions={transactions} />
       </div>,
     );
 
