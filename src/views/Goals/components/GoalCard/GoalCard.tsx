@@ -85,7 +85,7 @@ export function GoalCard(props: GoalCardPropsType) {
             )}
           </div>
           <div className="goal-card-heading">
-            <ItemCardTitle deleted={!!deletedAt}>{name}</ItemCardTitle>
+            <ItemCardTitle>{name}</ItemCardTitle>
             {description && (
               <span className="goal-card-description">{description}</span>
             )}

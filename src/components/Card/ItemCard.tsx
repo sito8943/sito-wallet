@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { BaseEntityDto } from "@sito/dashboard-app";
 import { Actions, classNames } from "@sito/dashboard-app";
 
+import { ItemCardDeletedContext } from "./ItemCardContext";
 import { ItemCardTitle } from "./ItemCardTitle";
 import { SwipeToDelete } from "./SwipeToDelete";
 import type { ItemCardPropsType } from "./types.ts";
@@ -113,77 +114,81 @@ export function ItemCard<TRow extends BaseEntityDto>(
   );
 
   return (
-    <SwipeToDelete
-      enabled={!!deleteAction && !!onSwipeDelete && !deleted && !selectionMode}
-      deleteOpen={swipeDeleteOpen}
-      onDeleteTrigger={() => onSwipeDelete?.()}
-      onSwipeStart={clearTouchTimeout}
-    >
-      <div
-        className={classNames(
-          "item-card group animated",
-          deleted
-            ? selectionMode && selected
-              ? "item-card--deleted item-card--selected base-border"
-              : "item-card--deleted"
-            : selectionMode
-              ? selected
-                ? "item-card--selected base-border"
-                : "item-card--selectable"
-              : "item-card--idle base-border",
-          containerClassName,
-        )}
-        style={containerStyle}
+    <ItemCardDeletedContext.Provider value={!!deleted}>
+      <SwipeToDelete
+        enabled={
+          !!deleteAction && !!onSwipeDelete && !deleted && !selectionMode
+        }
+        deleteOpen={swipeDeleteOpen}
+        onDeleteTrigger={() => onSwipeDelete?.()}
+        onSwipeStart={clearTouchTimeout}
       >
         <div
           className={classNames(
-            "item-card-content",
-            isInteractive && "item-card-content--clickable",
-            className,
-          )}
-          onClick={handleClick}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={clearTouchTimeout}
-          onTouchCancel={clearTouchTimeout}
-          onTouchMove={clearTouchTimeout}
-          onContextMenu={handleContextMenu}
-          {...rest}
-          role={isInteractive ? "button" : undefined}
-          tabIndex={isInteractive ? 0 : undefined}
-          onKeyDown={isInteractive ? handleKeyDown : undefined}
-          aria-label={
-            !isInteractive
-              ? undefined
+            "item-card group animated",
+            deleted
+              ? selectionMode && selected
+                ? "item-card--deleted item-card--selected base-border"
+                : "item-card--deleted"
               : selectionMode
-                ? t("_accessibility:components.table.selectRow")
-                : (ariaLabel ?? name)
-          }
-          aria-pressed={selectionMode ? selected : undefined}
-        >
-          {selectionMode ? (
-            <span
-              className={classNames(
-                "item-card-selection-indicator",
-                selected
-                  ? "item-card-selection-indicator--selected"
-                  : "item-card-selection-indicator--idle",
-              )}
-            >
-              <FontAwesomeIcon icon={selected ? faCircleCheck : faCircle} />
-            </span>
-          ) : null}
-          {typeof title === "string" || typeof title === "number" ? (
-            <ItemCardTitle>{title}</ItemCardTitle>
-          ) : (
-            title
+                ? selected
+                  ? "item-card--selected base-border"
+                  : "item-card--selectable"
+                : "item-card--idle base-border",
+            containerClassName,
           )}
-          {children}
+          style={containerStyle}
+        >
+          <div
+            className={classNames(
+              "item-card-content",
+              isInteractive && "item-card-content--clickable",
+              className,
+            )}
+            onClick={handleClick}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={clearTouchTimeout}
+            onTouchCancel={clearTouchTimeout}
+            onTouchMove={clearTouchTimeout}
+            onContextMenu={handleContextMenu}
+            {...rest}
+            role={isInteractive ? "button" : undefined}
+            tabIndex={isInteractive ? 0 : undefined}
+            onKeyDown={isInteractive ? handleKeyDown : undefined}
+            aria-label={
+              !isInteractive
+                ? undefined
+                : selectionMode
+                  ? t("_accessibility:components.table.selectRow")
+                  : (ariaLabel ?? name)
+            }
+            aria-pressed={selectionMode ? selected : undefined}
+          >
+            {selectionMode ? (
+              <span
+                className={classNames(
+                  "item-card-selection-indicator",
+                  selected
+                    ? "item-card-selection-indicator--selected"
+                    : "item-card-selection-indicator--idle",
+                )}
+              >
+                <FontAwesomeIcon icon={selected ? faCircleCheck : faCircle} />
+              </span>
+            ) : null}
+            {typeof title === "string" || typeof title === "number" ? (
+              <ItemCardTitle>{title}</ItemCardTitle>
+            ) : (
+              title
+            )}
+            {children}
+          </div>
+          <Actions
+            actions={selectionMode ? [] : actions}
+            showTooltips={showActionTooltips}
+          />
         </div>
-        <Actions
-          actions={selectionMode ? [] : actions}
-          showTooltips={showActionTooltips}
-        />
-      </div>
-    </SwipeToDelete>
+      </SwipeToDelete>
+    </ItemCardDeletedContext.Provider>
   );
 }
