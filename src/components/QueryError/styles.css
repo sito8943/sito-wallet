@@ -1,0 +1,10 @@
+@reference "../../styles/variables.css";
+
+/* Inline variant for sidebars and cards: no icon, no top padding. */
+.query-error-compact {
+  @apply items-start gap-2 pt-0;
+}
+
+.query-error-compact .error-message {
+  @apply text-text-error text-left text-sm;
+}

@@ -12,6 +12,9 @@ import type { QueryErrorPropsType } from "./types";
 // utils
 import { getErrorMessageKey, toError } from "./utils";
 
+// styles
+import "./styles.css";
+
 /**
  * Error panel for failed queries and for the route error boundaries. Replaces
  * the raw engine-specific message ("Failed to fetch", "Failed to fetch
@@ -19,7 +22,14 @@ import { getErrorMessageKey, toError } from "./utils";
  * wrong, so a dropped connection reads as one.
  */
 export const QueryError = (props: QueryErrorPropsType) => {
-  const { error, resetErrorBoundary, ...rest } = props;
+  const {
+    error,
+    message,
+    compact = false,
+    className,
+    resetErrorBoundary,
+    ...rest
+  } = props;
   const { t } = useTranslation();
   const isOnline = useOnlineStatus();
 
@@ -30,7 +40,11 @@ export const QueryError = (props: QueryErrorPropsType) => {
     <Error
       {...rest}
       error={normalizedError}
-      message={messageKey ? t(messageKey) : undefined}
+      message={messageKey ? t(messageKey) : message}
+      iconProps={compact ? null : undefined}
+      className={
+        compact ? ["query-error-compact", className].join(" ") : className
+      }
       resetErrorBoundary={
         resetErrorBoundary ? () => resetErrorBoundary() : undefined
       }

@@ -11,6 +11,15 @@ import {
 export const toError = (value: unknown): Error | null => {
   if (value instanceof Error) return value;
   if (typeof value === "string" && value.length > 0) return new Error(value);
+  // API clients reject with plain `{ status, message }` objects.
+  if (
+    typeof value === "object" &&
+    value !== null &&
+    "message" in value &&
+    typeof value.message === "string" &&
+    value.message.length > 0
+  )
+    return new Error(value.message);
 
   return null;
 };
