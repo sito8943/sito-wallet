@@ -24,6 +24,7 @@ import {
 import type {
   AssignTransactionAccountFormType,
   AssignTransactionCategoryFormType,
+  ProductLastPricePrefillContext,
   ReceiptFormValues,
   TransactionFormType,
   TransactionProductFormItem,
@@ -60,6 +61,41 @@ export const newProductOption = (name: string): CommonProductDto => ({
   name,
   updatedAt: new Date(),
 });
+
+/**
+ * Unit price to prefill when the user picks `product` in a line: the product's
+ * last registered price. Only when the line price is empty/0 or still the one
+ * prefilled before (never a price the user typed), and when the price currency
+ * matches the account's (or either is unknown). `undefined` = leave as is.
+ */
+export const getProductLastPricePrefill = (
+  product: CommonProductDto | null | undefined,
+  {
+    currentPrice,
+    prefilledPrice,
+    accountCurrency,
+  }: ProductLastPricePrefillContext,
+): number | undefined => {
+  const lastPrice = product?.lastUnitPrice;
+  if (lastPrice === null || lastPrice === undefined) return undefined;
+
+  const priceCurrencyId = product?.lastUnitPriceCurrency?.id;
+  const accountCurrencyId = accountCurrency?.id;
+  if (
+    priceCurrencyId !== undefined &&
+    accountCurrencyId !== undefined &&
+    priceCurrencyId !== accountCurrencyId
+  )
+    return undefined;
+
+  const price = toOptionalNumber(currentPrice);
+  const overwritable =
+    price === undefined ||
+    price === 0 ||
+    (prefilledPrice !== undefined && price === prefilledPrice);
+
+  return overwritable ? lastPrice : undefined;
+};
 
 /** Option for a provider typed in the form that doesn't exist yet (id 0). */
 export const newPurchaseProviderOption = (

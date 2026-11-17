@@ -17,6 +17,7 @@ import type {
 // types
 import type {
   CommonAccountDto,
+  CommonCurrencyDto,
   CommonProductDto,
   CommonPurchaseProviderDto,
   CommonTransactionCategoryDto,
@@ -83,6 +84,16 @@ export type TransactionProductFormItem = {
   product: CommonProductDto | null;
   quantity: number | string;
   unitPrice: number | string;
+};
+
+/** State of a product line when the user picks a product in it. */
+export type ProductLastPricePrefillContext = {
+  /** Unit price currently in the line. */
+  currentPrice: number | string;
+  /** Price this line got prefilled with before, if any. */
+  prefilledPrice?: number;
+  /** Currency of the transaction's account. */
+  accountCurrency?: CommonCurrencyDto | null;
 };
 
 export type TransactionFormPropsType =
