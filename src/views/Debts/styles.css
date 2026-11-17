@@ -63,7 +63,3 @@
 .debt-activity-empty {
   @apply text-text-muted text-sm;
 }
-
-.debt-activity-error {
-  @apply text-error bg-bg-error rounded-md px-2 py-1 text-sm;
-}

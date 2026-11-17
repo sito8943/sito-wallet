@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { IconButton, Loading } from "@sito/dashboard-app";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-import { Money } from "components";
+import { Money, QueryError } from "components";
 
 import { formatDate, formatDateTime } from "lib";
 
@@ -24,16 +24,6 @@ export function DebtActivitySidebar(props: DebtActivitySidebarPropsType) {
     onEditPayment,
     onDeletePayment,
   } = props;
-
-  const paymentsErrorMessage =
-    paymentsError instanceof Error
-      ? paymentsError.message
-      : typeof paymentsError === "object" &&
-          paymentsError !== null &&
-          "message" in paymentsError &&
-          typeof paymentsError.message === "string"
-        ? paymentsError.message
-        : t("_accessibility:errors.500");
 
   return (
     <aside className="debt-editor-sidebar">
@@ -68,7 +58,7 @@ export function DebtActivitySidebar(props: DebtActivitySidebarPropsType) {
         {paymentsLoading ? (
           <Loading className="debt-activity-loading" />
         ) : paymentsError ? (
-          <p className="debt-activity-error">{paymentsErrorMessage}</p>
+          <QueryError compact error={paymentsError} />
         ) : payments.length ? (
           <ul className="debt-activity-list">
             {payments.map((payment) => {
