@@ -77,10 +77,6 @@
   @apply bg-base hover:!bg-hover-primary hover:!text-on-brand;
 }
 
-.transaction-card-type {
-  @apply bg-base-dark px-3 py-3.5 rounded-full;
-}
-
 .transaction-card-body {
   @apply flex-1 min-w-0 max-w-full flex flex-col justify-center items-start;
 }

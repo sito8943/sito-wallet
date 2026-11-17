@@ -48,9 +48,8 @@ vi.mock("components", () => ({
   ProgressBar: ({ value, variant }: { value: number; variant?: string }) => (
     <div role="progressbar" aria-valuenow={value} data-variant={variant} />
   ),
-  ProviderPhoto: ({ photo }: { photo?: string | null }) => (
-    <img alt="" data-testid="goal-photo" src={photo ?? ""} />
-  ),
+  EntityAvatar: ({ photo }: { photo?: string | null }) =>
+    photo ? <img alt="" data-testid="goal-photo" src={photo} /> : null,
 }));
 
 import { GoalStatus } from "lib";

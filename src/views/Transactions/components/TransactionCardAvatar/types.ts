@@ -5,4 +5,6 @@ export type TransactionCardAvatarPropsType = {
   type: TransactionType;
   /** Seller of the transaction; its photo replaces the type icon when set. */
   purchaseProvider?: CommonPurchaseProviderDto | null;
+  /** 32px instead of 44px, for dense lists and table cells. */
+  compact?: boolean;
 };

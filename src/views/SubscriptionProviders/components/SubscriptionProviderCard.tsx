@@ -6,7 +6,7 @@ import { faExternalLink, faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
-import { ItemCard, ItemCardTitle } from "components";
+import { EntityAvatar, ItemCard, ItemCardTitle } from "components";
 
 // types
 import type { SubscriptionProviderCardPropsType } from "../types";
@@ -42,26 +42,28 @@ export function SubscriptionProviderCard(
 
   const deleted = !!deletedAt;
   const parsedWebsite = website?.trim() ?? "";
-  const hasPhoto = !!photo?.trim();
 
   return (
     <ItemCard
       title={
         <div className="subscription-provider-card-title-row">
-          <ItemCardTitle>
-            {name}{" "}
-            {parsedWebsite ? (
-              <a
-                href={ensureAbsoluteUrl(parsedWebsite)}
-                target="_blank"
-                rel="noreferrer"
-                onClick={(event) => event.stopPropagation()}
-                className="subscription-provider-card-link"
-              >
-                <FontAwesomeIcon icon={faExternalLink} />
-              </a>
-            ) : null}
-          </ItemCardTitle>
+          <div className="subscription-provider-card-heading">
+            <EntityAvatar photo={photo} fallbackIcon={faImage} />
+            <ItemCardTitle>
+              {name}{" "}
+              {parsedWebsite ? (
+                <a
+                  href={ensureAbsoluteUrl(parsedWebsite)}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(event) => event.stopPropagation()}
+                  className="subscription-provider-card-link"
+                >
+                  <FontAwesomeIcon icon={faExternalLink} />
+                </a>
+              ) : null}
+            </ItemCardTitle>
+          </div>
         </div>
       }
       deleted={deleted}
@@ -86,13 +88,6 @@ export function SubscriptionProviderCard(
           )}
         >
           {description}
-        </p>
-      ) : null}
-
-      {hasPhoto ? (
-        <p className="subscription-provider-card-photo">
-          <FontAwesomeIcon icon={faImage} />
-          {t("_entities:subscriptionProvider.photo.label")}
         </p>
       ) : null}
     </ItemCard>
