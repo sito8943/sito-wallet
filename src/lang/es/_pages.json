@@ -407,7 +407,7 @@
       "capabilitiesTitle": "Qué puede hacer un agente",
       "capabilities": {
         "read": "Consultar tus cuentas, saldos, transacciones, categorías, monedas, deudas, metas, suscripciones y próximas renovaciones, resúmenes e historial de saldo",
-        "transactions": "Crear, editar, borrar y restaurar transacciones de ingresos y gastos, con tienda y productos de un ticket",
+        "transactions": "Crear, editar, borrar y restaurar transacciones de ingresos y gastos, con vendedor y productos de un ticket",
         "transfers": "Crear transferencias entre tus cuentas",
         "debts": "Crear, editar, pagar y cancelar deudas",
         "goals": "Crear, editar, completar y cancelar metas de ahorro",
@@ -1023,7 +1023,7 @@
       "scan": "Escanear ticket",
       "scanning": "Leyendo ticket…",
       "success": "Ticket leído. Revisa los datos antes de guardar.",
-      "totalOnly": "Tienda no reconocida: solo se leyeron la fecha y el total.",
+      "totalOnly": "Vendedor no reconocido: solo se leyeron la fecha y el total.",
       "mismatch": "Los productos leídos no suman el total del ticket. Revísalos antes de guardar.",
       "errors": {
         "generic": "No se pudo leer el ticket",
@@ -1059,7 +1059,7 @@
     "forms": {
       "add": "Nueva moneda",
       "edit": "Editar moneda",
-      "editAria": "Click para editar moneda"
+      "editAria": "Haz clic para editar la moneda"
     }
   },
   "subscriptions": {
@@ -1108,22 +1108,22 @@
   "products": {
     "title": "Productos",
     "empty": "Aún no tienes productos guardados. Agrega uno para empezar.",
-    "add": "Agregar producto",
+    "add": "Agregar un producto",
     "forms": {
       "add": "Nuevo producto",
       "edit": "Editar producto",
-      "editAria": "Click para editar producto"
+      "editAria": "Haz clic para editar el producto"
     },
     "transactionsEmpty": "No hay transacciones con este producto"
   },
   "purchaseProviders": {
-    "title": "Proveedores",
-    "empty": "Aún no tienes proveedores guardados. Agrega uno para empezar.",
-    "add": "Agregar proveedor",
+    "title": "Vendedores",
+    "empty": "Aún no tienes vendedores guardados. Agrega uno para empezar.",
+    "add": "Agregar un vendedor",
     "forms": {
-      "add": "Nuevo proveedor",
-      "edit": "Editar proveedor",
-      "editAria": "Click para editar proveedor"
+      "add": "Nuevo vendedor",
+      "edit": "Editar vendedor",
+      "editAria": "Haz clic para editar el vendedor"
     },
     "transactionsEmpty": "No hay transacciones de este vendedor"
   },

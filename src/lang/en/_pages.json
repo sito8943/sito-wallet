@@ -407,7 +407,7 @@
       "capabilitiesTitle": "What an agent can do",
       "capabilities": {
         "read": "Read your accounts, balances, transactions, categories, currencies, debts, goals, subscriptions and upcoming renewals, summaries and balance history",
-        "transactions": "Create, edit, delete and restore income and expense transactions, with store and items from a receipt",
+        "transactions": "Create, edit, delete and restore income and expense transactions, with seller and items from a receipt",
         "transfers": "Create transfers between your accounts",
         "debts": "Create, edit, pay and cancel debts",
         "goals": "Create, edit, complete and cancel savings goals",
@@ -1023,7 +1023,7 @@
       "scan": "Scan receipt",
       "scanning": "Reading receipt…",
       "success": "Receipt read. Review the details before saving.",
-      "totalOnly": "Store not recognized: only the date and total were read.",
+      "totalOnly": "Seller not recognized: only the date and total were read.",
       "mismatch": "The products read don't add up to the receipt total. Review them before saving.",
       "errors": {
         "generic": "Couldn't read the receipt",
@@ -1108,7 +1108,7 @@
   "products": {
     "title": "Products",
     "empty": "You don't have any products yet. Add one to get started.",
-    "add": "Add product",
+    "add": "Add a product",
     "forms": {
       "add": "New product",
       "edit": "Edit product",
@@ -1117,13 +1117,13 @@
     "transactionsEmpty": "No transactions with this product"
   },
   "purchaseProviders": {
-    "title": "Providers",
-    "empty": "You don't have any providers yet. Add one to get started.",
-    "add": "Add provider",
+    "title": "Sellers",
+    "empty": "You don't have any sellers yet. Add one to get started.",
+    "add": "Add a seller",
     "forms": {
-      "add": "New provider",
-      "edit": "Edit provider",
-      "editAria": "Click to edit provider"
+      "add": "New seller",
+      "edit": "Edit seller",
+      "editAria": "Click to edit seller"
     },
     "transactionsEmpty": "No transactions from this seller"
   },
