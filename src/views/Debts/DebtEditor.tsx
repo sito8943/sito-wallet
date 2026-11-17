@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import {
   Button,
+  ConfirmationDialog,
   Error as ErrorView,
   FormContainer,
   Page,
@@ -21,7 +22,7 @@ import {
 } from "hooks";
 import { useManager } from "providers";
 
-import type { DebtDto, DebtPaymentDto } from "lib";
+import type { DebtDto } from "lib";
 import { AppRoutes, DebtStatus, FormMode, parseErrorMessage } from "lib";
 
 import {
@@ -30,7 +31,11 @@ import {
   DebtForm,
   EditDebtPaymentDialog,
 } from "./components";
-import { useAddDebtPaymentDialog, useEditDebtPaymentDialog } from "./hooks";
+import {
+  useAddDebtPaymentDialog,
+  useDeleteDebtPaymentDialog,
+  useEditDebtPaymentDialog,
+} from "./hooks";
 import type { DebtFormType } from "./types";
 import {
   debtDtoToForm,
@@ -53,7 +58,7 @@ export function DebtEditor() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { showErrorNotification, showSuccessNotification } = useNotification();
+  const { showSuccessNotification } = useNotification();
   const handleMutationError = useMutationErrorHandler();
   const invalidateCatalogs = useInvalidateCatalogs();
 
@@ -160,32 +165,7 @@ export function DebtEditor() {
     reset?.(emptyDebtForm);
   }, [isEditMode, reset]);
 
-  const handleDeletePayment = useCallback(
-    async (payment: DebtPaymentDto) => {
-      if (!debtsClient || !debtId) return;
-
-      try {
-        await debtsClient.deletePayment(debtId, payment.id);
-        showSuccessNotification({
-          message: t("_pages:debts.actions.deletePayment.successMessage"),
-        });
-        await queryClient.invalidateQueries({ ...DebtsQueryKeys.all() });
-        await queryClient.invalidateQueries({ ...AccountsQueryKeys.all() });
-      } catch (error) {
-        showErrorNotification({
-          message: parseErrorMessage(error, t("_accessibility:errors.500")),
-        });
-      }
-    },
-    [
-      debtsClient,
-      debtId,
-      queryClient,
-      showErrorNotification,
-      showSuccessNotification,
-      t,
-    ],
-  );
+  const deletePayment = useDeleteDebtPaymentDialog(debtId);
 
   const editorActions = useMemo(() => {
     if (!isEditMode || !debtQuery.data) return [];
@@ -281,12 +261,13 @@ export function DebtEditor() {
                   : (payment) => editPayment.openDialog(payment.id)
               }
               onDeletePayment={(payment) => {
-                void handleDeletePayment(payment);
+                void deletePayment.onClick(payment.id);
               }}
             />
           ) : null}
           <AddDebtPaymentDialog {...addPayment} />
           <EditDebtPaymentDialog {...editPayment} />
+          <ConfirmationDialog {...deletePayment} />
         </div>
       )}
     </Page>

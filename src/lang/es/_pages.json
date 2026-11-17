@@ -1530,6 +1530,7 @@
       },
       "deletePayment": {
         "text": "Eliminar pago",
+        "confirmTitle": "¿Eliminar este pago?",
         "successMessage": "Pago eliminado correctamente"
       },
       "editPayment": {
