@@ -4,6 +4,7 @@ import type { FormDialogPropsType } from "@sito/dashboard-app";
 
 import type {
   AddPurchaseProviderDto,
+  CommonPurchaseProviderDto,
   PhotoFormValues,
   UpdatePurchaseProviderDto,
 } from "lib";
@@ -30,4 +31,9 @@ export interface CreatePurchaseProviderMutationDto {
 export interface UpdatePurchaseProviderMutationDto {
   payload: UpdatePurchaseProviderDto;
   file: File | null;
+}
+
+export interface UseAddPurchaseProviderDialogOptions {
+  /** Called with the created provider, e.g. to select it in a picker. */
+  onCreated?: (provider: CommonPurchaseProviderDto) => void | Promise<void>;
 }
