@@ -102,8 +102,8 @@ export function TransactionCategoryCard(
         </div>
       }
       deleted={deleted}
-      name={t("_pages:transactionCategory.forms.edit")}
-      aria-label={t("_pages:transactionCategory.forms.editAria")}
+      name={t("_pages:transactionCategories.forms.edit")}
+      aria-label={t("_pages:transactionCategories.forms.editAria")}
       onClick={() => onClick(id)}
       selectionMode={selectionMode}
       selected={selected}
