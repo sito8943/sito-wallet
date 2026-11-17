@@ -356,7 +356,7 @@
       "theme": "Saved on this device. \"System\" follows your device settings.",
       "publicCatalogs": "Your currencies, categories, products, sellers and subscription providers are offered to other users. Using one creates a copy in their account; yours stay yours.",
       "analytics": "Counts which screens are used, with no data about you or your device. You can change it at any time.",
-      "aiAgents": "Let AI agents such as Claude Code or Codex read your finances and record transactions with a personal API key."
+      "aiAgents": "Let AI agents such as ChatGPT, Claude, Claude Code or Codex read your finances and record transactions for you."
     },
     "messages": {
       "updated": "Profile updated successfully",
@@ -403,7 +403,7 @@
     "title": "AI agents (MCP)",
     "intro": {
       "title": "Connect your AI agents",
-      "description": "MCP (Model Context Protocol) lets AI agents such as Claude Code, Codex or Claude Desktop work with your wallet. Ask them about your accounts and spending, or have them record transactions for you.",
+      "description": "MCP (Model Context Protocol) lets AI agents such as ChatGPT, claude.ai, Claude Desktop, Claude Code or Codex work with your wallet. Ask them about your accounts and spending, or have them record transactions for you.",
       "capabilitiesTitle": "What an agent can do",
       "capabilities": {
         "read": "Read your accounts, balances, transactions, categories, currencies, debts, goals, subscriptions and upcoming renewals, summaries and balance history",
@@ -1438,7 +1438,7 @@
         "description": "Update your profile, language, and personal preferences in Sito Wallet."
       },
       "aiAgents": {
-        "description": "Create personal API keys and connect AI agents such as Claude Code, Codex or Claude Desktop to Sito Wallet."
+        "description": "Connect AI agents such as ChatGPT, claude.ai, Claude Code or Codex to Sito Wallet and manage their API keys."
       },
       "feedback": {
         "description": "Review what users told their AI agent or the app that fails, is missing or could be better."
