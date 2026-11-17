@@ -439,7 +439,7 @@
     "areas": {
       "label": "Areas",
       "tab": "Areas ({{count}}/{{total}})",
-      "helper": "What this connection can use. Lists of accounts, categories and currencies stay available so the agent can pick ids.",
+      "helper": "What this connection can use. Lists of accounts, categories and currencies stay available so the agent can pick ids; without \"Accounts\" it only sees each account's name, not its balance.",
       "selectAll": "Select all",
       "invert": "Invert selection",
       "required": "Pick at least one area.",

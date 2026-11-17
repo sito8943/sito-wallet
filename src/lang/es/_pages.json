@@ -439,7 +439,7 @@
     "areas": {
       "label": "Áreas",
       "tab": "Áreas ({{count}}/{{total}})",
-      "helper": "Qué puede usar esta conexión. Las listas de cuentas, categorías y monedas siguen disponibles para que el agente elija ids.",
+      "helper": "Qué puede usar esta conexión. Las listas de cuentas, categorías y monedas siguen disponibles para que el agente elija ids; sin «Cuentas», solo ve el nombre de cada cuenta, no su saldo.",
       "selectAll": "Marcar todas",
       "invert": "Invertir selección",
       "required": "Elige al menos un área.",
