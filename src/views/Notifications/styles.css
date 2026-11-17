@@ -28,6 +28,11 @@
   @apply mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bg-primary text-on-brand;
 }
 
+/* Unread = small dot (not a warning glyph). */
+.notifications-item-unread-dot {
+  @apply text-[0.5rem];
+}
+
 .notifications-item-content {
   @apply flex min-w-0 flex-1 flex-col gap-2;
 }

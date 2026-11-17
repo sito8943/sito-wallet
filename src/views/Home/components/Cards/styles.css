@@ -159,7 +159,11 @@
 }
 
 .renewals-dialog-item-meta {
-  @apply truncate text-xs text-text-muted;
+  @apply flex min-w-0 items-center gap-2 text-xs text-text-muted;
+}
+
+.renewals-dialog-item-meta-text {
+  @apply truncate;
 }
 
 .renewals-dialog-item-date {
@@ -286,24 +290,9 @@
   @apply flex flex-col gap-2;
 }
 
-.type-resume-transaction-item {
-  @apply flex w-full cursor-pointer items-center justify-between gap-3 rounded-2xl bg-base-light px-3 py-2 text-left transition hover:bg-base;
-}
-
-.type-resume-transaction-copy {
-  @apply flex min-w-0 flex-1 flex-col;
-}
-
-.type-resume-transaction-description {
-  @apply truncate text-sm;
-}
-
-.type-resume-transaction-date {
-  @apply text-xs text-text-muted;
-}
-
-.type-resume-transaction-amount {
-  @apply shrink-0 font-bold;
+/* Distinct surface against the dialog, like the recent-transactions list. */
+.type-resume-transaction-list .transaction-card--idle {
+  @apply bg-base-light;
 }
 
 .weekly-spent-amount {

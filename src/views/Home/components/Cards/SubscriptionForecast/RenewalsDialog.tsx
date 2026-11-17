@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 // @sito/dashboard-app
 import { Dialog, Empty, IconButton } from "@sito/dashboard-app";
 
-import { faFileInvoice } from "@fortawesome/free-solid-svg-icons";
+import { faFileInvoice, faImage } from "@fortawesome/free-solid-svg-icons";
 
 // hooks
 import { useCurrenciesCommon } from "hooks/queries/useCurrenciesCommon";
@@ -12,7 +12,7 @@ import { useCurrenciesCommon } from "hooks/queries/useCurrenciesCommon";
 import { formatDate } from "lib";
 
 // components
-import { Money } from "components";
+import { EntityAvatar, Money } from "components";
 
 // types
 import type { RenewalsDialogPropsType } from "./types";
@@ -67,7 +67,14 @@ export const RenewalsDialog = (props: RenewalsDialogPropsType) => {
                   </p>
                   {renewal.providerName ? (
                     <p className="renewals-dialog-item-meta">
-                      {renewal.providerName}
+                      <EntityAvatar
+                        photo={renewal.providerPhoto}
+                        size="xs"
+                        fallbackIcon={faImage}
+                      />
+                      <span className="renewals-dialog-item-meta-text">
+                        {renewal.providerName}
+                      </span>
                     </p>
                   ) : null}
                   <p className="renewals-dialog-item-date">{dateLabel}</p>

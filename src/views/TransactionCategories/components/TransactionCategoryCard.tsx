@@ -50,7 +50,7 @@ export function TransactionCategoryCard(
   const typeValue = type ?? TransactionType.Out;
 
   const parsedDescription = useMemo(() => {
-    if (!description?.length) return t("_entities:base.description.empty");
+    if (!description?.length) return null;
     if (auto) return t("_entities:transactionCategory.description.init");
     return description;
   }, [description, auto, t]);
@@ -115,15 +115,16 @@ export function TransactionCategoryCard(
       className="transaction-category-card-content"
       containerClassName="transaction-category-card-container"
     >
-      <p
-        className={classNames(
-          "transaction-category-card-description",
-          !description && "transaction-category-card-description--empty",
-          deleted && "transaction-category-card-description--deleted",
-        )}
-      >
-        {parsedDescription}
-      </p>
+      {parsedDescription ? (
+        <p
+          className={classNames(
+            "transaction-category-card-description",
+            deleted && "transaction-category-card-description--deleted",
+          )}
+        >
+          {parsedDescription}
+        </p>
+      ) : null}
       <div className="chip-container transaction-category-card-desktop-type">
         <Chip
           className={

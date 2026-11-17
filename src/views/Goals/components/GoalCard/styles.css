@@ -12,14 +12,6 @@
   @apply flex w-full min-w-0 items-center gap-3;
 }
 
-.goal-card-photo {
-  @apply flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-base-light text-text-muted;
-}
-
-.goal-card-photo-image {
-  @apply h-full w-full object-cover;
-}
-
 .goal-card-heading {
   @apply flex min-w-0 flex-col text-start;
 }

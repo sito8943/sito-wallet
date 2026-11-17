@@ -44,20 +44,8 @@
   @apply bg-base border-border rounded-xl border p-3;
 }
 
-.debt-activity-item-row {
-  @apply flex items-center justify-between gap-2;
-}
-
-.debt-activity-amount {
-  @apply text-text text-sm font-semibold;
-}
-
 .debt-activity-meta {
   @apply text-text-muted text-xs;
-}
-
-.debt-activity-note {
-  @apply text-text mt-1 text-sm;
 }
 
 .debt-activity-empty {

@@ -12,3 +12,6 @@ export const DEBT_STATUS_BADGE_CLASSNAME: Record<DebtStatus, string> = {
   [DebtStatus.Paid]: "success",
   [DebtStatus.Cancelled]: "error",
 };
+
+/** i18n values that are already formatted text (no HTML escaping). */
+export const RAW_INTERPOLATION = { escapeValue: false } as const;

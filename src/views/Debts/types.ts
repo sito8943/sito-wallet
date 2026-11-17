@@ -95,6 +95,8 @@ export interface DebtActivitySidebarPropsType {
   paymentsError?: unknown;
   onEditPayment?: (payment: DebtPaymentDto) => void;
   onDeletePayment?: (payment: DebtPaymentDto) => void;
+  /** Opens the payment's transaction (only payments with a transactionId). */
+  onPaymentClick?: (transactionId: number) => void;
 }
 
 export enum DebtAction {

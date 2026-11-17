@@ -137,13 +137,6 @@ export type UseTypeResumeCategoryTransactionsPropsType = {
 
 export type TypeResumeCategoryTransactionsResultType = CommonTransactionDto[];
 
-export type TypeResumeTransactionItemPropsType = {
-  transaction: CommonTransactionDto;
-  currencyName?: string;
-  currencySymbol?: string;
-  onClick: (id: number) => void;
-};
-
 export type TypeResumeRowPropsType = {
   type: TransactionType;
   amount: number;

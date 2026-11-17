@@ -18,7 +18,7 @@ import {
 } from "@sito/dashboard-app";
 
 // icons
-import { faAdd, faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // hooks
@@ -220,7 +220,7 @@ export function Debts() {
                   className: "debts-empty-icon",
                 }}
                 action={{
-                  icon: <FontAwesomeIcon icon={faAdd} />,
+                  icon: <FontAwesomeIcon icon={faPlus} />,
                   id: GlobalActions.Add,
                   disabled: isLoading || !debtsClient,
                   onClick: () => navigate(AppRoutes.debtNew),

@@ -25,3 +25,5 @@ export * from "./McpPermissionTabs";
 export * from "./ProgressBar";
 export * from "./Currency";
 export * from "./Money";
+export * from "./EntityAvatar";
+export * from "./ActivityItem";

@@ -42,6 +42,8 @@ export interface TransactionCardPropsType extends TransactionDto {
   onSwipeDelete?: () => void;
   /** Extra details shown under the date (e.g. a product's price). */
   footer?: ReactNode;
+  /** Denser row (32px avatar, smaller text) for nested/short lists. */
+  compact?: boolean;
 }
 
 export interface TransactionFormType

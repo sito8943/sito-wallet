@@ -3,11 +3,13 @@ import { useTranslation } from "react-i18next";
 import { IconButton, Loading } from "@sito/dashboard-app";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-import { Money, QueryError } from "components";
+import { ActivityItem, Money, QueryError } from "components";
 
 import { formatDate, formatDateTime } from "lib";
 
+import { RAW_INTERPOLATION } from "../constants";
 import type { DebtActivitySidebarPropsType } from "../types";
+import { getDebtPaymentAmountLabel } from "../utils";
 
 export function DebtActivitySidebar(props: DebtActivitySidebarPropsType) {
   const { t, i18n } = useTranslation();
@@ -23,6 +25,7 @@ export function DebtActivitySidebar(props: DebtActivitySidebarPropsType) {
     paymentsError,
     onEditPayment,
     onDeletePayment,
+    onPaymentClick,
   } = props;
 
   return (
@@ -63,43 +66,58 @@ export function DebtActivitySidebar(props: DebtActivitySidebarPropsType) {
           <ul className="debt-activity-list">
             {payments.map((payment) => {
               const paidAt = formatDateTime(payment.paidAt, i18n.language);
+              const transactionId = payment.transactionId ?? null;
+              const clickable = transactionId !== null && !!onPaymentClick;
 
               return (
-                <li key={payment.id} className="debt-activity-item">
-                  <div className="debt-activity-item-row">
-                    <p className="debt-activity-amount">
-                      <Money amount={payment.amount} currency={currency} />
-                    </p>
-                    <div className="flex items-center gap-1">
-                      {onEditPayment ? (
-                        <IconButton
-                          icon={faPencil}
-                          color="primary"
-                          onClick={() => onEditPayment(payment)}
-                          aria-label={t(
-                            "_pages:debts.actions.editPayment.text",
-                          )}
-                        />
-                      ) : null}
-                      {onDeletePayment ? (
-                        <IconButton
-                          icon={faTrash}
-                          color="error"
-                          onClick={() => onDeletePayment(payment)}
-                          aria-label={t(
-                            "_pages:debts.actions.deletePayment.text",
-                          )}
-                        />
-                      ) : null}
-                    </div>
-                  </div>
-                  <p className="debt-activity-meta">
-                    {t("_entities:debtPayment.paidAt.label")}: {paidAt}
-                  </p>
-                  {payment.note ? (
-                    <p className="debt-activity-note">{payment.note}</p>
-                  ) : null}
-                </li>
+                <ActivityItem
+                  key={payment.id}
+                  amount={<Money amount={payment.amount} currency={currency} />}
+                  meta={`${t("_entities:debtPayment.paidAt.label")}: ${paidAt}`}
+                  note={payment.note}
+                  onClick={
+                    clickable ? () => onPaymentClick(transactionId) : undefined
+                  }
+                  aria-label={
+                    clickable
+                      ? t("_pages:debts.actions.payment.openTransaction", {
+                          amount: getDebtPaymentAmountLabel(
+                            payment.amount,
+                            currency,
+                            i18n.language,
+                          ),
+                          paidAt,
+                          interpolation: RAW_INTERPOLATION,
+                        })
+                      : undefined
+                  }
+                  actions={
+                    onEditPayment || onDeletePayment ? (
+                      <>
+                        {onEditPayment ? (
+                          <IconButton
+                            icon={faPencil}
+                            color="primary"
+                            onClick={() => onEditPayment(payment)}
+                            aria-label={t(
+                              "_pages:debts.actions.editPayment.text",
+                            )}
+                          />
+                        ) : null}
+                        {onDeletePayment ? (
+                          <IconButton
+                            icon={faTrash}
+                            color="error"
+                            onClick={() => onDeletePayment(payment)}
+                            aria-label={t(
+                              "_pages:debts.actions.deletePayment.text",
+                            )}
+                          />
+                        ) : null}
+                      </>
+                    ) : null
+                  }
+                />
               );
             })}
           </ul>

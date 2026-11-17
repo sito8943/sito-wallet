@@ -13,7 +13,7 @@ import {
   useRestoreDialog,
 } from "@sito/dashboard-app";
 
-import { faAdd, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // providers
@@ -159,7 +159,7 @@ export function Users() {
                   className: "users-empty-icon",
                 }}
                 action={{
-                  icon: <FontAwesomeIcon icon={faAdd} />,
+                  icon: <FontAwesomeIcon icon={faPlus} />,
                   id: GlobalActions.Add,
                   disabled: isLoading || !usersClient,
                   onClick: () => addUser.openDialog(),

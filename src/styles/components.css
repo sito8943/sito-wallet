@@ -129,11 +129,6 @@ a.primary {
   @apply flex w-full items-start justify-between gap-2;
 }
 
-.account-description--empty,
-.transaction-category-card-description--empty,
-.subscription-provider-card-description--empty,
-.currency-card-description--empty,
-.subscription-card-description--empty,
 .transaction-card-description--empty {
   @apply !text-xs italic;
 }

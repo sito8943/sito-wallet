@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // icons
-import { faAdd, faClock } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faListUl } from "@fortawesome/free-solid-svg-icons";
 
 // react-query
 import { useQuery } from "@tanstack/react-query";
@@ -125,14 +125,14 @@ export const LastTransactionsCard = (props: LastTransactionsPropsType) => {
           <>
             <IconButton
               onClick={() => addTransaction.openDialog()}
-              icon={faAdd}
+              icon={faPlus}
               data-tooltip-id="tooltip"
               data-tooltip-content={t("_pages:transactions.add")}
               aria-label={t("_pages:transactions.add")}
             />
             <IconButton
               onClick={recentTransactionsDialog.handleOpen}
-              icon={faClock}
+              icon={faListUl}
               data-tooltip-id="tooltip"
               data-tooltip-content={t(
                 "_pages:home.dashboard.recentTransactions.action",

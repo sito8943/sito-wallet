@@ -17,9 +17,9 @@ import {
 } from "lib";
 import type { TransactionTableRowType } from "../../types";
 
-// views
-import { Type } from "views/TransactionCategories/components/Type";
+// components
 import { ColorVignette, Money } from "components";
+import { TransactionCardAvatar } from "../TransactionCardAvatar";
 import { TransactionRewardsPoints } from "../TransactionRewardsPoints";
 
 import "./styles.css";
@@ -130,10 +130,12 @@ export const getTransactionColumns = (
       },
       renderBody: (_: unknown, entity: TransactionTableRowType) => (
         <div className="transaction-table-type-cell">
-          <Type
+          <TransactionCardAvatar
             type={
               getPrimaryTransactionCategory(entity)?.type ?? TransactionType.In
             }
+            purchaseProvider={entity.purchaseProvider}
+            compact
           />
         </div>
       ),

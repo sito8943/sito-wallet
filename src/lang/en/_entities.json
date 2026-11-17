@@ -347,7 +347,7 @@
       }
     },
     "purchaseProvider": {
-      "label": "Provider",
+      "label": "Seller",
       "placeholder": "Who did you pay?",
       "create": "Create “{{name}}”"
     },
@@ -719,7 +719,7 @@
   "purchaseProvider": {
     "name": {
       "placeholder": "E.g. Supermarket",
-      "unique": "A provider with that name already exists"
+      "unique": "A seller with that name already exists"
     }
   },
   "catalog": {

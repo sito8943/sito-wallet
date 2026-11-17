@@ -16,6 +16,10 @@
   @apply text-sm text-text-muted text-start;
 }
 
+.subscription-card-provider {
+  @apply flex items-center gap-2;
+}
+
 .subscription-card-status {
   @apply inline-flex w-fit rounded-full px-2 py-0.5 text-xs;
 }

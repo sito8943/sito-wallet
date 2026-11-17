@@ -24,6 +24,9 @@ import {
 } from "hooks";
 import { useManager } from "providers";
 
+import { EditTransactionDialog } from "../Transactions/components";
+import { useEditTransaction } from "../Transactions/hooks";
+
 import type { DebtDto } from "lib";
 import { AppRoutes, DebtStatus, FormMode, parseErrorMessage } from "lib";
 
@@ -168,6 +171,10 @@ export function DebtEditor() {
   }, [isEditMode, reset]);
 
   const deletePayment = useDeleteDebtPaymentDialog(debtId);
+  // Editing a payment's transaction can change the debt's payments/balance.
+  const editTransaction = useEditTransaction({
+    onSuccess: () => queryClient.invalidateQueries({ ...DebtsQueryKeys.all() }),
+  });
 
   const editorActions = useMemo(() => {
     if (!isEditMode || !debtQuery.data) return [];
@@ -265,11 +272,13 @@ export function DebtEditor() {
               onDeletePayment={(payment) => {
                 void deletePayment.onClick(payment.id);
               }}
+              onPaymentClick={editTransaction.openDialog}
             />
           ) : null}
           <AddDebtPaymentDialog {...addPayment} />
           <EditDebtPaymentDialog {...editPayment} />
           <ConfirmationDialog {...deletePayment} />
+          <EditTransactionDialog {...editTransaction} />
         </div>
       )}
     </Page>

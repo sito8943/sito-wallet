@@ -22,6 +22,7 @@ export function SubscriptionActivitySidebar(
     billingLogsLoading,
     billingLogsError,
     onBillingLogClick,
+    onDeleteBillingLog,
   } = props;
 
   const startsAtLabel = formatDate(startsAt, i18n.language);
@@ -63,6 +64,7 @@ export function SubscriptionActivitySidebar(
                 key={log.id}
                 log={log}
                 onClick={onBillingLogClick}
+                onDelete={onDeleteBillingLog}
               />
             ))}
           </ul>

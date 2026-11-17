@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 
 // icons
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @sito/dashboard-app
@@ -30,7 +30,10 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputPropsType>(
         onChange={(e) => setSearching(e.target.value)}
         inputClassName="search-input-control"
       >
-        <FontAwesomeIcon icon={faSearch} className="search-input-icon" />
+        <FontAwesomeIcon
+          icon={faMagnifyingGlass}
+          className="search-input-icon"
+        />
       </TextInput>
     );
   },

@@ -37,6 +37,7 @@ vi.mock("@sito/dashboard-app", () => ({
 }));
 
 import { ItemCard } from "../ItemCard";
+import { ItemCardTitle } from "../ItemCardTitle";
 
 const defaultAction = {
   id: "edit",
@@ -244,5 +245,39 @@ describe("ItemCard", () => {
     expect(screen.getByText("Content").parentElement).not.toHaveAttribute(
       "tabindex",
     );
+  });
+
+  it("gives nested titles the deleted colour of a deleted card", () => {
+    const { rerender } = render(
+      <ItemCard
+        title={<ItemCardTitle>Custom</ItemCardTitle>}
+        name="Edit item"
+        deleted
+        actions={[]}
+      >
+        {null}
+      </ItemCard>,
+    );
+
+    expect(screen.getByText("Custom")).toHaveClass("item-card-title--deleted");
+
+    rerender(
+      <ItemCard title="Plain" name="Edit item" deleted actions={[]}>
+        {null}
+      </ItemCard>,
+    );
+    expect(screen.getByText("Plain")).toHaveClass("item-card-title--deleted");
+
+    rerender(
+      <ItemCard
+        title={<ItemCardTitle>Custom</ItemCardTitle>}
+        name="Edit item"
+        deleted={false}
+        actions={[]}
+      >
+        {null}
+      </ItemCard>,
+    );
+    expect(screen.getByText("Custom")).toHaveClass("item-card-title--active");
   });
 });

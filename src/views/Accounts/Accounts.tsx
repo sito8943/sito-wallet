@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAdd, faWallet } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faWallet } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
 import {
@@ -159,7 +159,7 @@ export function Accounts() {
         id: AccountActions.AddTransaction,
         hidden: !!record.deletedAt || !transactionsEnabled,
         disabled: !!record.deletedAt || !transactionsEnabled,
-        icon: <FontAwesomeIcon className="account-action-icon" icon={faAdd} />,
+        icon: <FontAwesomeIcon className="account-action-icon" icon={faPlus} />,
         tooltip: t("_pages:accounts.actions.addTransaction.text"),
         onClick: () => {
           setSelectedTransactionAccount(record);
@@ -247,7 +247,7 @@ export function Accounts() {
                 }}
                 action={[
                   {
-                    icon: <FontAwesomeIcon icon={faAdd} />,
+                    icon: <FontAwesomeIcon icon={faPlus} />,
                     id: GlobalActions.Add,
                     disabled: isLoading,
                     onClick: () => addAccount.openDialog(),
