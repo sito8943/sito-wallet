@@ -2,11 +2,17 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { classNames } from "@sito/dashboard-app";
 
-import { ItemCard, ItemCardTitle } from "components";
+import { ItemCard, ItemCardTitle, Money } from "components";
 
 import { Currency } from "views/Currencies/components/Currency";
 
-import { DEBT_DIRECTION_NAME, DEBT_STATUS_NAME, DebtStatus } from "lib";
+import {
+  DEBT_DIRECTION_NAME,
+  DEBT_STATUS_NAME,
+  DebtStatus,
+  formatAmount,
+  formatDate,
+} from "lib";
 
 import { DEBT_STATUS_BADGE_CLASSNAME } from "../constants";
 import type { DebtCardPropsType } from "../types";
@@ -14,7 +20,7 @@ import type { DebtCardPropsType } from "../types";
 import "./styles.css";
 
 export function DebtCard(props: DebtCardPropsType) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const {
     id,
@@ -44,11 +50,8 @@ export function DebtCard(props: DebtCardPropsType) {
   const dueLabel = useMemo(() => {
     if (!dueAt) return t("_pages:debts.labels.noDueDate");
 
-    const date = new Date(dueAt);
-    if (Number.isNaN(date.getTime())) return dueAt;
-
-    return date.toLocaleDateString();
-  }, [dueAt, t]);
+    return formatDate(dueAt, i18n.language);
+  }, [dueAt, i18n.language, t]);
 
   return (
     <ItemCard
@@ -57,9 +60,11 @@ export function DebtCard(props: DebtCardPropsType) {
           <ItemCardTitle>{title}</ItemCardTitle>
           <span className="debt-card-amount">
             {status === DebtStatus.Paid ? (
-              <s className="debt-card-amount--paid">{originalAmount}</s>
+              <s className="debt-card-amount--paid">
+                {formatAmount(originalAmount, i18n.language)}
+              </s>
             ) : (
-              pendingAmount
+              formatAmount(pendingAmount, i18n.language)
             )}{" "}
             <Currency name={currency?.name} symbol={currency?.symbol} />
           </span>
@@ -98,8 +103,8 @@ export function DebtCard(props: DebtCardPropsType) {
         {t(`_entities:debt.direction.values.${DEBT_DIRECTION_NAME[direction]}`)}
       </p>
       <p className="debt-card-meta">
-        {t("_entities:debt.originalAmount.label")}: {originalAmount}{" "}
-        <Currency name={currency?.name} symbol={currency?.symbol} />
+        {t("_entities:debt.originalAmount.label")}:{" "}
+        <Money amount={originalAmount} currency={currency} />
       </p>
       <p className="debt-card-meta">
         {t("_entities:debt.dueAt.label")}: {dueLabel}

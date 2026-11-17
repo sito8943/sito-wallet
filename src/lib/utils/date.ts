@@ -1,14 +1,57 @@
+import { DATE_ONLY_PATTERN, EMPTY_DATE_LABEL } from "./constants";
+
 /**
- * Formats an ISO date string for display using the user's locale.
- * Returns "-" for empty values and the raw value when it is not a valid date.
+ * Parses a user-facing date value. "YYYY-MM-DD" is read as a local date
+ * (`new Date()` would read it as UTC midnight and show the previous day west
+ * of UTC). Returns `null` for empty or invalid values.
  */
-export const formatDateTime = (value?: string | null): string => {
-  if (!value) return "-";
+export const parseDisplayDate = (
+  value: Date | string | null | undefined,
+): Date | null => {
+  if (value === null || value === undefined || value === "") return null;
 
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
+  if (typeof value === "string") {
+    const match = DATE_ONLY_PATTERN.exec(value.trim());
+    if (match) {
+      const [, year, month, day] = match;
+      return new Date(Number(year), Number(month) - 1, Number(day));
+    }
+  }
 
-  return date.toLocaleString();
+  const date = value instanceof Date ? value : new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+};
+
+/**
+ * Date only ("Nov 17, 2026" / "17 nov 2026") in the app language. Use it for
+ * due, renewal and deadline dates. Returns "-" for empty/invalid values.
+ */
+export const formatDate = (
+  value: Date | string | null | undefined,
+  locale: string,
+): string => {
+  const date = parseDisplayDate(value);
+  if (!date) return EMPTY_DATE_LABEL;
+
+  return new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(date);
+};
+
+/**
+ * Date and time ("Nov 17, 2026, 3:05 PM" / "17 nov 2026, 15:05") in the app
+ * language. Use it for payment, paid-at and other event timestamps. Returns
+ * "-" for empty/invalid values.
+ */
+export const formatDateTime = (
+  value: Date | string | null | undefined,
+  locale: string,
+): string => {
+  const date = parseDisplayDate(value);
+  if (!date) return EMPTY_DATE_LABEL;
+
+  return new Intl.DateTimeFormat(locale, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(date);
 };
 
 /**

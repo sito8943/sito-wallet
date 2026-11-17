@@ -1,7 +1,7 @@
 import { Loading } from "@sito/dashboard-app";
 import { useTranslation } from "react-i18next";
 
-import { formatDateTime } from "lib";
+import { formatDate, formatDateTime } from "lib";
 
 import type { SubscriptionActivitySidebarPropsType } from "../types";
 
@@ -10,7 +10,7 @@ import { SubscriptionBillingLogItem } from "./SubscriptionBillingLogItem";
 export function SubscriptionActivitySidebar(
   props: SubscriptionActivitySidebarPropsType,
 ) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const {
     startsAt,
@@ -22,9 +22,9 @@ export function SubscriptionActivitySidebar(
     onBillingLogClick,
   } = props;
 
-  const startsAtLabel = formatDateTime(startsAt);
-  const lastPaidAtLabel = formatDateTime(lastPaidAt);
-  const nextRenewalAtLabel = formatDateTime(nextRenewalAt);
+  const startsAtLabel = formatDate(startsAt, i18n.language);
+  const lastPaidAtLabel = formatDateTime(lastPaidAt, i18n.language);
+  const nextRenewalAtLabel = formatDate(nextRenewalAt, i18n.language);
 
   const billingLogsErrorMessage =
     billingLogsError instanceof Error

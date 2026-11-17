@@ -31,15 +31,6 @@ export const normalizeProfileLanguage = (
   value?: string | null,
 ): ProfileLanguage => (value === "en" ? "en" : "es");
 
-export const toDateLabel = (
-  value: Date | string | null | undefined,
-): string => {
-  if (!value) return "-";
-  const date = value instanceof Date ? value : new Date(value);
-  if (Number.isNaN(date.getTime())) return "-";
-  return date.toLocaleString();
-};
-
 export const getInitials = (name: string) => {
   const parts = name.trim().split(/\s+/).filter(Boolean).slice(0, 2);
 

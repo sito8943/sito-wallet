@@ -26,7 +26,7 @@ import type { FeedbackListItemPropsType } from "../../types";
 /** One feedback entry: kind, text, who sent it, how and when. */
 export function FeedbackListItem(props: FeedbackListItemPropsType) {
   const { entry, onToggleResolved, disabled } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const resolved = isFeedbackResolved(entry);
   const actionLabel = t(
@@ -62,11 +62,11 @@ export function FeedbackListItem(props: FeedbackListItemPropsType) {
             </span>
           )}
           <span>{t(getFeedbackSourceLabelKey(entry.source))}</span>
-          <span>{formatDateTime(entry.createdAt)}</span>
+          <span>{formatDateTime(entry.createdAt, i18n.language)}</span>
           {entry.resolvedAt && (
             <span>
               {t("_pages:feedback.entry.resolvedAt", {
-                date: formatDateTime(entry.resolvedAt),
+                date: formatDateTime(entry.resolvedAt, i18n.language),
                 interpolation: RAW_INTERPOLATION,
               })}
             </span>

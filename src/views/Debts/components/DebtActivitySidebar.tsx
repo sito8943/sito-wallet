@@ -3,14 +3,14 @@ import { useTranslation } from "react-i18next";
 import { IconButton, Loading } from "@sito/dashboard-app";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-import { Currency } from "views/Currencies/components/Currency";
+import { Money } from "components";
 
-import { formatDateTime } from "lib";
+import { formatDate, formatDateTime } from "lib";
 
 import type { DebtActivitySidebarPropsType } from "../types";
 
 export function DebtActivitySidebar(props: DebtActivitySidebarPropsType) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const {
     issuedAt,
@@ -41,18 +41,20 @@ export function DebtActivitySidebar(props: DebtActivitySidebarPropsType) {
         <ul className="debt-activity-list">
           <li className="debt-activity-item">
             <p className="debt-activity-meta">
-              {t("_entities:debt.issuedAt.label")}: {formatDateTime(issuedAt)}
+              {t("_entities:debt.issuedAt.label")}:{" "}
+              {formatDateTime(issuedAt, i18n.language)}
             </p>
             <p className="debt-activity-meta">
-              {t("_entities:debt.dueAt.label")}: {formatDateTime(dueAt)}
+              {t("_entities:debt.dueAt.label")}:{" "}
+              {formatDate(dueAt, i18n.language)}
             </p>
             <p className="debt-activity-meta">
-              {t("_entities:debt.originalAmount.label")}: {originalAmount ?? 0}{" "}
-              <Currency name={currency?.name} symbol={currency?.symbol} />
+              {t("_entities:debt.originalAmount.label")}:{" "}
+              <Money amount={originalAmount} currency={currency} />
             </p>
             <p className="debt-activity-meta">
-              {t("_entities:debt.pendingAmount.label")}: {pendingAmount ?? 0}{" "}
-              <Currency name={currency?.name} symbol={currency?.symbol} />
+              {t("_entities:debt.pendingAmount.label")}:{" "}
+              <Money amount={pendingAmount} currency={currency} />
             </p>
           </li>
         </ul>
@@ -70,20 +72,13 @@ export function DebtActivitySidebar(props: DebtActivitySidebarPropsType) {
         ) : payments.length ? (
           <ul className="debt-activity-list">
             {payments.map((payment) => {
-              const paidAtDate = new Date(payment.paidAt);
-              const paidAt = Number.isNaN(paidAtDate.getTime())
-                ? payment.paidAt
-                : paidAtDate.toLocaleString();
+              const paidAt = formatDateTime(payment.paidAt, i18n.language);
 
               return (
                 <li key={payment.id} className="debt-activity-item">
                   <div className="debt-activity-item-row">
                     <p className="debt-activity-amount">
-                      {payment.amount}{" "}
-                      <Currency
-                        name={currency?.name}
-                        symbol={currency?.symbol}
-                      />
+                      <Money amount={payment.amount} currency={currency} />
                     </p>
                     <div className="flex items-center gap-1">
                       {onEditPayment ? (
