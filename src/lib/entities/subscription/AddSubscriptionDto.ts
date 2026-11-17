@@ -7,6 +7,8 @@ export interface AddSubscriptionDto {
   description?: string | null;
   providerId: number;
   accountId?: number | null;
+  /** Who gets paid (seller); copied onto auto-created transactions. */
+  purchaseProviderId?: number | null;
   currencyId?: number | null;
   billingFrequency: number;
   billingUnit: SubscriptionBillingUnit;

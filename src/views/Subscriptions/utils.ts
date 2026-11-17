@@ -120,6 +120,7 @@ export const subscriptionDtoToForm = (
     description: dto.description ?? "",
     provider: dto.provider,
     account: dto.account ?? null,
+    purchaseProvider: dto.purchaseProvider ?? null,
     currency: dto.currency,
     amount: dto.amount ?? 0,
     billingFrequency: dto.billingFrequency ?? 1,
@@ -148,6 +149,7 @@ export const subscriptionFormToCreateDto = (
     description: form.description?.trim() || null,
     providerId: form.provider?.id ?? 0,
     accountId: form.account?.id ?? null,
+    purchaseProviderId: form.purchaseProvider?.id ?? null,
     currencyId: form.currency?.id ?? null,
     amount: parseFiniteNumber(form.amount),
     billingFrequency: parseFiniteNumber(form.billingFrequency, 1),
@@ -169,6 +171,8 @@ export const subscriptionFormToUpdateDto = (
     ...payload,
     status: toSubscriptionStatus(form.status),
     accountId: form.account?.id ?? 0,
+    // Backend: null keeps the current provider, 0 clears it.
+    purchaseProviderId: form.purchaseProvider?.id ?? 0,
     nextRenewalAt,
   };
 };
@@ -182,6 +186,7 @@ const createEmptySubscriptionFormValues = (): Omit<
     description: "",
     provider: null,
     account: null,
+    purchaseProvider: null,
     currency: null,
     amount: 0,
     billingFrequency: 1,

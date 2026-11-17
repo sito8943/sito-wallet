@@ -28,3 +28,6 @@ test-results
 *.env
 *.cache
 .gstack/
+
+# Claude Code local state (agent worktrees)
+.claude/

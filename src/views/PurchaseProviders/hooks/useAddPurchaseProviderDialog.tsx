@@ -10,6 +10,7 @@ import { PurchaseProvidersQueryKeys, useMutationErrorHandler } from "hooks";
 import { useManager } from "providers";
 
 // lib
+import type { CommonPurchaseProviderDto } from "lib";
 
 // utils
 import {
@@ -21,25 +22,34 @@ import {
 import type {
   CreatePurchaseProviderMutationDto,
   PurchaseProviderFormType,
+  UseAddPurchaseProviderDialogOptions,
 } from "../types";
 
-export function useAddPurchaseProviderDialog() {
+export function useAddPurchaseProviderDialog(
+  options: UseAddPurchaseProviderDialogOptions = {},
+) {
   const { t } = useTranslation();
   const handleMutationError = useMutationErrorHandler();
   const manager = useManager();
 
   return usePostDialog<
     CreatePurchaseProviderMutationDto,
-    number,
+    CommonPurchaseProviderDto,
     PurchaseProviderFormType
   >({
     formToDto: purchaseProviderFormToAddDto,
     defaultValues: emptyPurchaseProviderForm,
     mutationFn: async ({ payload, file }) => {
       const id = await manager.PurchaseProviders.insert(payload);
-      if (file) await manager.PurchaseProviders.updatePhoto(id, file);
-      return id;
+      if (file) return await manager.PurchaseProviders.updatePhoto(id, file);
+      return {
+        id,
+        name: payload.name,
+        photo: payload.photo ?? null,
+        updatedAt: new Date(),
+      };
     },
+    onSuccess: options.onCreated,
     onSuccessMessage: t("_pages:common.actions.add.successMessage"),
     title: t("_pages:purchaseProviders.forms.add"),
     onError: (error) =>

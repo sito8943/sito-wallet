@@ -426,6 +426,10 @@
       "placeholder": "Selecciona una cuenta",
       "requiredWhenAuto": "La cuenta es requerida cuando se crean transacciones automáticas"
     },
+    "purchaseProvider": {
+      "label": "Se paga a",
+      "placeholder": "¿A quién se paga?"
+    },
     "category": {
       "label": "Categorías",
       "placeholder": "Selecciona categorías",

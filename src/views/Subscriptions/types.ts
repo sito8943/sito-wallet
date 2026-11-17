@@ -41,6 +41,7 @@ export interface SubscriptionFormPropsType {
   mode?: FormMode;
   onCreateProvider?: (inputValue: string) => void;
   onCreateCurrency?: (inputValue: string) => void;
+  onCreatePurchaseProvider?: (inputValue: string) => void;
 }
 
 export interface SubscriptionBillingLogFormType extends FieldValues {

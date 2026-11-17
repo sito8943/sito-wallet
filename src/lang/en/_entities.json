@@ -426,6 +426,10 @@
       "placeholder": "Select an account",
       "requiredWhenAuto": "Account is required when auto-create transaction is enabled"
     },
+    "purchaseProvider": {
+      "label": "Paid to",
+      "placeholder": "Who do you pay?"
+    },
     "category": {
       "label": "Categories",
       "placeholder": "Select categories",
