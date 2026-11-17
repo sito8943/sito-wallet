@@ -102,6 +102,7 @@ export function TransactionProductsField(
         open={open}
         onClose={() => setOpen(false)}
         control={control}
+        setValue={setValue}
         isLoading={isLoading}
         fields={fields}
         append={append}
