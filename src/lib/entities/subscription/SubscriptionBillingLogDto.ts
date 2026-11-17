@@ -7,4 +7,6 @@ export interface SubscriptionBillingLogDto extends BaseEntityDto {
   paidAt: string;
   currency: CommonCurrencyDto | null;
   note?: string | null;
+  /** Transaction created by this payment, if any. */
+  transactionId?: number | null;
 }
