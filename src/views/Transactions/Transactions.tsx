@@ -22,7 +22,7 @@ import {
 } from "@sito/dashboard-app";
 
 // icons
-import { faAdd, faReceipt, faWallet } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faReceipt, faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // hooks
@@ -572,7 +572,7 @@ export function Transactions() {
             className: "transactions-empty-icon",
           }}
           action={{
-            icon: <FontAwesomeIcon icon={faAdd} />,
+            icon: <FontAwesomeIcon icon={faPlus} />,
             id: GlobalActions.Add,
             disabled: isAccountLoading,
             onClick: () => addAccount.openDialog(),

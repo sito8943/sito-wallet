@@ -102,18 +102,31 @@ import { faWarning } from "@fortawesome/free-solid-svg-icons";
 
 Common icon/situation mapping:
 
-| Situation         | Icon                  |
-| ----------------- | --------------------- |
-| Warning / offline | `faWarning`           |
-| Success / check   | `faCheckCircle`       |
-| Error             | `faCircleExclamation` |
-| Delete            | `faTrash`             |
-| Edit              | `faPencil`            |
-| Sync / restore    | `faRotateLeft`        |
-| Download / export | `faCloudArrowDown`    |
-| Upload / import   | `faCloudUpload`       |
-| Filter            | `faFilter`            |
-| Search            | `faMagnifyingGlass`   |
+| Situation                    | Icon                       |
+| ---------------------------- | -------------------------- |
+| Add                          | `faPlus`                   |
+| Warning / offline            | `faWarning`                |
+| Success / check              | `faCheckCircle`            |
+| Error                        | `faCircleExclamation`      |
+| Unread (small dot)           | `faCircle`                 |
+| Delete                       | `faTrash`                  |
+| Edit                         | `faPencil`                 |
+| Sync / refresh               | `faArrowsRotate`           |
+| Restore / reopen / reset     | `faRotateLeft`             |
+| Transfer between accounts    | `faMoneyBillTransfer`      |
+| Assign account               | `faArrowRightArrowLeft`    |
+| View transactions            | `faListUl`                 |
+| Details list (breakdown)     | `faList`                   |
+| Scan receipt                 | `faReceipt`                |
+| Download / export            | `faCloudArrowDown`         |
+| Upload / import              | `faCloudUpload`            |
+| Filter                       | `faFilter`                 |
+| Search                       | `faMagnifyingGlass`        |
+| External link                | `faArrowUpRightFromSquare` |
+| Auto-generated / suggestions | `faWandMagicSparkles`      |
+
+Use one name per glyph: no aliases (`faAdd`, `faTriangleExclamation`,
+`faSearch`, `faExternalLink`, `faMagicWandSparkles`).
 
 For `IconButton` specifically, use `@sito/dashboard-app`'s `IconButton` which expects `icon: IconDefinition`.
 

@@ -15,7 +15,7 @@ import {
 } from "@sito/dashboard-app";
 
 // icons
-import { faAdd, faBullseye } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faBullseye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // hooks
@@ -110,7 +110,7 @@ export function Goals() {
           message={t(`_pages:goals.empty.${GOAL_STATUS_TAB_KEYS[status]}`)}
           iconProps={{ icon: faBullseye }}
           action={{
-            icon: <FontAwesomeIcon icon={faAdd} />,
+            icon: <FontAwesomeIcon icon={faPlus} />,
             id: GlobalActions.Add,
             disabled: isLoading,
             onClick: () => addGoal.openDialog(),

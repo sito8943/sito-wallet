@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-import { faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faMoneyBillTransfer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ActionType } from "@sito/dashboard-app";
 
@@ -29,7 +29,7 @@ export function useTransferAction(props: UseTransferActionProps) {
         icon: (
           <FontAwesomeIcon
             className="account-action-icon"
-            icon={faArrowRightArrowLeft}
+            icon={faMoneyBillTransfer}
           />
         ),
         tooltip: hasDestination

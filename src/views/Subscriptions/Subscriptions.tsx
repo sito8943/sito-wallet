@@ -19,7 +19,7 @@ import {
 } from "@sito/dashboard-app";
 
 // icons
-import { faAdd, faRepeat } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faRepeat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // hooks
@@ -221,7 +221,7 @@ export function Subscriptions() {
                   className: "subscriptions-empty-icon",
                 }}
                 action={{
-                  icon: <FontAwesomeIcon icon={faAdd} />,
+                  icon: <FontAwesomeIcon icon={faPlus} />,
                   id: GlobalActions.Add,
                   disabled: isLoading || !subscriptionsClient,
                   onClick: () => navigate(AppRoutes.subscriptionNew),

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faAdd,
+  faPlus,
   faBuilding,
   faWandMagicSparkles,
 } from "@fortawesome/free-solid-svg-icons";
@@ -174,7 +174,7 @@ export function SubscriptionProviders() {
 
   const addSubscriptionProviderAction = useMemo(
     () => ({
-      icon: <FontAwesomeIcon icon={faAdd} />,
+      icon: <FontAwesomeIcon icon={faPlus} />,
       id: GlobalActions.Add,
       disabled: isLoading || !subscriptionProvidersClient,
       onClick: () => addSubscriptionProvider.openDialog(),

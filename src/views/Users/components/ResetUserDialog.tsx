@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 
 import { CheckInput, ConfirmationDialog, TextInput } from "@sito/dashboard-app";
 
-import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import type { ResetUserDialogPropsType } from "../types";
@@ -76,7 +76,7 @@ export function ResetUserDialog(props: ResetUserDialogPropsType) {
             <div className="reset-user-dialog-hard-summary">
               <FontAwesomeIcon
                 className="reset-user-dialog-hard-icon"
-                icon={faTriangleExclamation}
+                icon={faWarning}
               />
               <span className="reset-user-dialog-hard-text">
                 {t("_pages:users.reset.dialog.hardHint")}

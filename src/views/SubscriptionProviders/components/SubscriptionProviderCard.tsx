@@ -2,7 +2,10 @@ import { useTranslation } from "react-i18next";
 import { classNames } from "@sito/dashboard-app";
 
 // icons
-import { faExternalLink, faImage } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowUpRightFromSquare,
+  faImage,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
@@ -59,7 +62,7 @@ export function SubscriptionProviderCard(
                   onClick={(event) => event.stopPropagation()}
                   className="subscription-provider-card-link"
                 >
-                  <FontAwesomeIcon icon={faExternalLink} />
+                  <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
                 </a>
               ) : null}
             </ItemCardTitle>

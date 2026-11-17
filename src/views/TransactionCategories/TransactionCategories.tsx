@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faAdd,
+  faPlus,
   faTags,
   faWandMagicSparkles,
 } from "@fortawesome/free-solid-svg-icons";
@@ -154,7 +154,7 @@ export function TransactionCategories() {
 
   const addTransactionCategoryAction = useMemo(
     () => ({
-      icon: <FontAwesomeIcon icon={faAdd} />,
+      icon: <FontAwesomeIcon icon={faPlus} />,
       id: GlobalActions.Add,
       disabled: isLoading,
       onClick: () => addTransactionCategory.openDialog(),
