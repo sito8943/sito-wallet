@@ -6,6 +6,7 @@ import {
   MAX_LAST_TRANSACTIONS_LIMIT,
   MIN_LAST_TRANSACTIONS_LIMIT,
 } from "./constants";
+import { parseCardConfig } from "../utils";
 
 export const clampLimit = (value: unknown): number => {
   const parsed = Number(value);
@@ -36,22 +37,21 @@ export const formToDto = (
 
 export const parseFormConfig = (
   cfg?: string | null,
-): LastTransactionsFormType => {
-  try {
-    const parsed = (cfg ? JSON.parse(cfg) : {}) as LastTransactionsFormType;
-    const merged = { ...defaultConfig, ...parsed };
-    const categories = merged.categories ?? [];
-    return {
-      ...merged,
-      categories,
-      categoryIds: categories.map((category) => category.id),
-      limit: clampLimit(merged.limit),
-    };
-  } catch (err) {
-    console.error(err);
-    return defaultConfig;
-  }
-};
+): LastTransactionsFormType =>
+  parseCardConfig<LastTransactionsFormType, LastTransactionsFormType>(
+    cfg,
+    defaultConfig,
+    (parsed) => {
+      const merged = { ...defaultConfig, ...parsed };
+      const categories = merged.categories ?? [];
+      return {
+        ...merged,
+        categories,
+        categoryIds: categories.map((category) => category.id),
+        limit: clampLimit(merged.limit),
+      };
+    },
+  );
 
 export const getActiveFiltersCount = (
   formConfig: LastTransactionsFormType,

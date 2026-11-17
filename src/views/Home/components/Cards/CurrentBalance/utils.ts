@@ -1,5 +1,6 @@
 import type { UpdateDashboardCardConfigDto } from "lib";
 import type { CurrentBalanceFormType } from "./types";
+import { parseCardConfig } from "../utils";
 
 export const defaultConfig: CurrentBalanceFormType = {
   account: null,
@@ -24,19 +25,15 @@ export const formToDto = (
   };
 };
 
-export const parseFormConfig = (
-  cfg?: string | null,
-): CurrentBalanceFormType => {
-  try {
-    return {
+export const parseFormConfig = (cfg?: string | null): CurrentBalanceFormType =>
+  parseCardConfig<Partial<CurrentBalanceFormType>, CurrentBalanceFormType>(
+    cfg,
+    defaultConfig,
+    (parsed) => ({
       ...defaultConfig,
-      ...(cfg ? (JSON.parse(cfg) as Partial<CurrentBalanceFormType>) : {}),
-    };
-  } catch (err) {
-    console.error(err);
-    return defaultConfig;
-  }
-};
+      ...parsed,
+    }),
+  );
 
 export const roundCurrency = (value: number): number =>
   Math.round(value * 100) / 100;

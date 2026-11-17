@@ -28,6 +28,7 @@ import {
   PREVIOUS_TIMES,
   TIME_KEY_BY_VALUE,
 } from "./constants";
+import { parseCardConfig } from "../utils";
 
 /** Empty input means "no minimum balance" */
 export const parseMinBalance = (value: unknown): number | undefined => {
@@ -44,49 +45,46 @@ export const normalizeExcludedCategoryIds = (value: unknown): number[] => {
   );
 };
 
-export const parseFormConfig = (
-  cfg?: string | null,
-): TypeResumeTypeFormType => {
-  try {
-    const parsed = cfg ? (JSON.parse(cfg) as Record<string, unknown>) : {};
-    const legacyAccounts = Array.isArray(parsed.accounts)
-      ? (parsed.accounts as NonNullable<TypeResumeTypeFormType["account"]>[])
-      : [];
+export const parseFormConfig = (cfg?: string | null): TypeResumeTypeFormType =>
+  parseCardConfig<Record<string, unknown>, TypeResumeTypeFormType>(
+    cfg,
+    DEFAULT_TYPE_RESUME_CONFIG,
+    (parsed) => {
+      const legacyAccounts = Array.isArray(parsed.accounts)
+        ? (parsed.accounts as NonNullable<TypeResumeTypeFormType["account"]>[])
+        : [];
 
-    return {
-      account:
-        (parsed.account as TypeResumeTypeFormType["account"]) ??
-        legacyAccounts[0],
-      type: Number(parsed.type ?? DEFAULT_TYPE_RESUME_CONFIG.type),
-      time:
-        (parsed.time as TypeResumeTypeFormType["time"]) ??
-        DEFAULT_TYPE_RESUME_CONFIG.time,
-      excludedCategories: [],
-      excludedCategoryIds: normalizeExcludedCategoryIds(
-        parsed.excludedCategoryIds,
-      ),
-      oppositeExcludedCategories: [],
-      oppositeExcludedCategoryIds: normalizeExcludedCategoryIds(
-        parsed.oppositeExcludedCategoryIds,
-      ),
-      showFiltersAsBadge:
-        (parsed.showFiltersAsBadge as boolean | undefined) ??
-        DEFAULT_TYPE_RESUME_CONFIG.showFiltersAsBadge,
-      showOppositeType:
-        (parsed.showOppositeType as boolean | undefined) ??
-        DEFAULT_TYPE_RESUME_CONFIG.showOppositeType,
-      showDifference:
-        parsed.showOppositeType === true && parsed.showDifference === true,
-      compare:
-        (parsed.compare as boolean | undefined) ??
-        DEFAULT_TYPE_RESUME_CONFIG.compare,
-      minBalance: parseMinBalance(parsed.minBalance),
-    };
-  } catch (err) {
-    console.error(err);
-    return DEFAULT_TYPE_RESUME_CONFIG;
-  }
-};
+      return {
+        account:
+          (parsed.account as TypeResumeTypeFormType["account"]) ??
+          legacyAccounts[0],
+        type: Number(parsed.type ?? DEFAULT_TYPE_RESUME_CONFIG.type),
+        time:
+          (parsed.time as TypeResumeTypeFormType["time"]) ??
+          DEFAULT_TYPE_RESUME_CONFIG.time,
+        excludedCategories: [],
+        excludedCategoryIds: normalizeExcludedCategoryIds(
+          parsed.excludedCategoryIds,
+        ),
+        oppositeExcludedCategories: [],
+        oppositeExcludedCategoryIds: normalizeExcludedCategoryIds(
+          parsed.oppositeExcludedCategoryIds,
+        ),
+        showFiltersAsBadge:
+          (parsed.showFiltersAsBadge as boolean | undefined) ??
+          DEFAULT_TYPE_RESUME_CONFIG.showFiltersAsBadge,
+        showOppositeType:
+          (parsed.showOppositeType as boolean | undefined) ??
+          DEFAULT_TYPE_RESUME_CONFIG.showOppositeType,
+        showDifference:
+          parsed.showOppositeType === true && parsed.showDifference === true,
+        compare:
+          (parsed.compare as boolean | undefined) ??
+          DEFAULT_TYPE_RESUME_CONFIG.compare,
+        minBalance: parseMinBalance(parsed.minBalance),
+      };
+    },
+  );
 
 export const getActiveFiltersCount = (
   formConfig: TypeResumeTypeFormType,

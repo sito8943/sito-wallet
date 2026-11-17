@@ -1,6 +1,7 @@
 import type { CommonCurrencyDto, UpdateDashboardCardConfigDto } from "lib";
 import { RenewalRangePreset } from "lib";
 import type { SubscriptionForecastFormType } from "./types";
+import { parseCardConfig } from "../utils";
 
 export const defaultConfig: SubscriptionForecastFormType = {
   range: RenewalRangePreset.CurrentMonth,
@@ -23,21 +24,17 @@ export const formToDto = (
 
 export const parseFormConfig = (
   cfg?: string | null,
-): SubscriptionForecastFormType => {
-  try {
-    const parsed = (
-      cfg ? JSON.parse(cfg) : {}
-    ) as Partial<SubscriptionForecastFormType>;
+): SubscriptionForecastFormType =>
+  parseCardConfig<
+    Partial<SubscriptionForecastFormType>,
+    SubscriptionForecastFormType
+  >(cfg, defaultConfig, (parsed) => {
     return {
       range: parsed.range ?? defaultConfig.range,
       showFiltersAsBadge:
         parsed.showFiltersAsBadge ?? defaultConfig.showFiltersAsBadge,
     };
-  } catch (err) {
-    console.error(err);
-    return defaultConfig;
-  }
-};
+  });
 
 export const getActiveFiltersCount = (): number => 1;
 
