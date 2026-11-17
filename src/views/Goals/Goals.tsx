@@ -10,6 +10,7 @@ import {
   PrettyGrid,
   TabsLayout,
   useDeleteDialog,
+  useNotification,
   useRestoreDialog,
 } from "@sito/dashboard-app";
 
@@ -43,6 +44,7 @@ import { AddGoalDialog, EditGoalDialog, GoalCard } from "./components";
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 // lib
+import { isFeatureDisabledBusinessError } from "lib";
 import type { FilterGoalDto, GoalDto, GoalStatus } from "lib";
 
 // constants
@@ -57,12 +59,21 @@ import "./styles.css";
 
 export function Goals() {
   const { t } = useTranslation();
+  const { showErrorNotification } = useNotification();
   const manager = useManager();
 
   const [status, setStatus] = useState<GoalStatus>(DEFAULT_GOAL_STATUS_TAB);
   const filters = useMemo<FilterGoalDto>(() => ({ status }), [status]);
   const { data, isLoading, error } = useGoalsList({ filters });
   const items = useMemo(() => data?.items ?? [], [data?.items]);
+
+  useEffect(() => {
+    if (!isFeatureDisabledBusinessError(error)) return;
+
+    showErrorNotification({
+      message: t("_pages:featureFlags.moduleUnavailable"),
+    });
+  }, [error, showErrorNotification, t]);
 
   const addGoal = useAddGoalDialog({ goals: items });
   const editGoal = useEditGoalDialog({ goals: items });
