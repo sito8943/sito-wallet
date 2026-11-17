@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import {
   ConfirmationDialog,
   Empty,
-  Error as ErrorView,
   GlobalActions,
   ImportDialog,
   Page,
@@ -33,7 +32,7 @@ import {
 import { useAddSubscriptionBillingLogDialog } from "./hooks";
 
 // components
-import { MobileSelectionBar } from "components";
+import { MobileSelectionBar, QueryError } from "components";
 import {
   AddSubscriptionBillingLogDialog,
   SubscriptionCard,
@@ -270,7 +269,7 @@ export function Subscriptions() {
           <ImportDialog {...importSubscriptions} />
         </>
       ) : (
-        <ErrorView error={error} />
+        <QueryError error={error} />
       )}
     </Page>
   );

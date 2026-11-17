@@ -14,6 +14,17 @@ vi.mock("lib", async () => ({
 
 vi.mock("components", async () => ({
   ...(await import("../../../components/McpAccessBadge")),
+  QueryError: ({
+    message,
+    onRetry,
+  }: {
+    message: string;
+    onRetry: () => void;
+  }) => (
+    <button type="button" onClick={onRetry}>
+      {message}
+    </button>
+  ),
 }));
 
 vi.mock("react-i18next", () => ({
@@ -58,11 +69,6 @@ vi.mock("@sito/dashboard-app", () => ({
       disabled={disabled}
       aria-label={ariaLabel}
     />
-  ),
-  Error: ({ message, onRetry }: { message: string; onRetry: () => void }) => (
-    <button type="button" onClick={onRetry}>
-      {message}
-    </button>
   ),
   Loading: () => <span>loading</span>,
 }));

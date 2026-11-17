@@ -77,6 +77,8 @@ export interface ApiKeysSectionPropsType {
   apiKeys: ApiKeyDto[];
   isLoading: boolean;
   hasError: boolean;
+  /** The query's error, so a dropped connection reads as one. */
+  error?: unknown;
   onRetry: () => void;
   onCreate: () => void;
   onEdit: (apiKey: ApiKeyDto) => void;
@@ -103,6 +105,8 @@ export interface ConnectedAppsSectionPropsType {
   grants: OAuthGrantDto[];
   isLoading: boolean;
   hasError: boolean;
+  /** The query's error, so a dropped connection reads as one. */
+  error?: unknown;
   onRetry: () => void;
   onEdit: (grant: OAuthGrantDto) => void;
   onDisconnect: (grant: OAuthGrantDto) => void;

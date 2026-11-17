@@ -6,12 +6,14 @@ import { useTranslation } from "react-i18next";
 import {
   Button,
   ConfirmationDialog,
-  Error as ErrorView,
   FormContainer,
   Page,
   useMutationForm,
   useNotification,
 } from "@sito/dashboard-app";
+
+// components
+import { QueryError } from "components";
 
 import {
   AccountsQueryKeys,
@@ -185,9 +187,9 @@ export function DebtEditor() {
       queryKey={DebtsQueryKeys.all().queryKey}
     >
       {invalidEditRoute ? (
-        <ErrorView error={new Error(t("_accessibility:errors.404"))} />
+        <QueryError error={new Error(t("_accessibility:errors.404"))} />
       ) : debtQuery.error ? (
-        <ErrorView
+        <QueryError
           error={
             new Error(
               parseErrorMessage(

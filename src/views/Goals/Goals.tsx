@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import {
   ConfirmationDialog,
   Empty,
-  Error as ErrorView,
   GlobalActions,
   Page,
   PrettyGrid,
@@ -13,6 +12,9 @@ import {
   useDeleteDialog,
   useRestoreDialog,
 } from "@sito/dashboard-app";
+
+// components
+import { QueryError } from "components";
 
 // icons
 import { faAdd, faBullseye } from "@fortawesome/free-solid-svg-icons";
@@ -100,7 +102,7 @@ export function Goals() {
   );
 
   const goalsGrid = error ? (
-    <ErrorView error={error} />
+    <QueryError error={error} />
   ) : (
     <PrettyGrid
       data={items}

@@ -6,7 +6,6 @@ import { faCubes } from "@fortawesome/free-solid-svg-icons";
 import {
   ConfirmationDialog,
   Empty,
-  Error as ErrorView,
   Page,
   PrettyGrid,
   useDeleteDialog,
@@ -31,7 +30,7 @@ import { useManager, useRegisterBottomNavAction } from "providers";
 
 // components
 import type { CatalogRowDto } from "components";
-import { CatalogCard, toCatalogRow } from "components";
+import { CatalogCard, QueryError, toCatalogRow } from "components";
 import { getDeleteAction } from "../../components/Card/utils";
 import { AddProductDialog, EditProductDialog } from "./components";
 
@@ -98,7 +97,7 @@ export function Products() {
       queryKey={ProductsQueryKeys.all().queryKey}
     >
       {error ? (
-        <ErrorView error={error} />
+        <QueryError error={error} />
       ) : (
         <>
           <PrettyGrid

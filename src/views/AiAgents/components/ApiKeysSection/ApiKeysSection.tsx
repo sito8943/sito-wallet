@@ -5,7 +5,10 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @sito/dashboard-app
-import { Button, Error as ErrorView, Loading } from "@sito/dashboard-app";
+import { Button, Loading } from "@sito/dashboard-app";
+
+// components
+import { QueryError } from "components";
 
 // lib
 import { API_KEYS_MAX_ACTIVE } from "lib";
@@ -21,8 +24,16 @@ import type { ApiKeysSectionPropsType } from "../../types";
 
 /** Active keys with create/revoke actions, or the empty state. */
 export function ApiKeysSection(props: ApiKeysSectionPropsType) {
-  const { apiKeys, isLoading, hasError, onRetry, onCreate, onEdit, onRevoke } =
-    props;
+  const {
+    apiKeys,
+    isLoading,
+    hasError,
+    error,
+    onRetry,
+    onCreate,
+    onEdit,
+    onRevoke,
+  } = props;
   const { t } = useTranslation();
 
   const limitReached = isApiKeyLimitReached(
@@ -63,7 +74,11 @@ export function ApiKeysSection(props: ApiKeysSectionPropsType) {
         </p>
       )}
       {hasError ? (
-        <ErrorView message={t("_accessibility:errors.500")} onRetry={onRetry} />
+        <QueryError
+          error={error}
+          message={t("_accessibility:errors.500")}
+          onRetry={onRetry}
+        />
       ) : isLoading ? (
         <div className="ai-agents-loading">
           <Loading />

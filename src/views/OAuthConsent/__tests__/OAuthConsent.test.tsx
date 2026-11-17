@@ -51,11 +51,6 @@ vi.mock("@sito/dashboard-app", () => ({
       </button>
     );
   },
-  Error: ({ message, onRetry }: { message: string; onRetry: () => void }) => (
-    <button type="button" onClick={onRetry}>
-      {message}
-    </button>
-  ),
   Loading: () => <span>loading</span>,
   TabsLayout: ({
     tabs,
@@ -78,6 +73,17 @@ vi.mock("@sito/dashboard-app", () => ({
 
 vi.mock("components", async () => ({
   ...(await import("../../../components/McpPermissionTabs")),
+  QueryError: ({
+    message,
+    onRetry,
+  }: {
+    message: string;
+    onRetry: () => void;
+  }) => (
+    <button type="button" onClick={onRetry}>
+      {message}
+    </button>
+  ),
   TextLogo: () => <span>logo</span>,
   McpCapabilityList: () => <ul aria-label="capabilities" />,
 }));

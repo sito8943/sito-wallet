@@ -6,7 +6,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   ConfirmationDialog,
   Empty,
-  Error as ErrorView,
   GlobalActions,
   Page,
   PrettyGrid,
@@ -40,7 +39,7 @@ import {
 } from "./hooks";
 
 // components
-import { MobileSelectionBar } from "components";
+import { MobileSelectionBar, QueryError } from "components";
 import {
   AddDebtPaymentDialog,
   DebtCard,
@@ -271,7 +270,7 @@ export function Debts() {
           />
         </>
       ) : (
-        <ErrorView error={error} />
+        <QueryError error={error} />
       )}
     </Page>
   );

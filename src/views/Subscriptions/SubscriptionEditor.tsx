@@ -5,12 +5,14 @@ import { useTranslation } from "react-i18next";
 
 import {
   Button,
-  Error as ErrorView,
   FormContainer,
   Page,
   useMutationForm,
   useNotification,
 } from "@sito/dashboard-app";
+
+// components
+import { QueryError } from "components";
 
 import {
   SubscriptionsQueryKeys,
@@ -298,9 +300,9 @@ export function SubscriptionEditor() {
       queryKey={SubscriptionsQueryKeys.all().queryKey}
     >
       {invalidEditRoute ? (
-        <ErrorView error={new Error(t("_accessibility:errors.404"))} />
+        <QueryError error={new Error(t("_accessibility:errors.404"))} />
       ) : subscriptionQuery.error ? (
-        <ErrorView
+        <QueryError
           error={
             new Error(
               parseErrorMessage(

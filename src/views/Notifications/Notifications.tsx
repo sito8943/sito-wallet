@@ -1,12 +1,9 @@
 import { useMemo, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  Button,
-  Error as ErrorView,
-  Loading,
-  Page,
-  useNotification,
-} from "@sito/dashboard-app";
+import { Button, Loading, Page, useNotification } from "@sito/dashboard-app";
+
+// components
+import { QueryError } from "components";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -100,7 +97,7 @@ export function Notifications() {
       queryKey={NotificationsQueryKeys.all().queryKey}
     >
       {notificationsQuery.error ? (
-        <ErrorView
+        <QueryError
           error={toRenderableNotificationError(
             notificationsQuery.error,
             t("_accessibility:errors.500"),

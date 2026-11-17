@@ -11,6 +11,8 @@ export interface FeedbackSectionPropsType {
   entries: FeedbackDto[];
   isLoading: boolean;
   hasError: boolean;
+  /** The query's error, so a dropped connection reads as one. */
+  error?: unknown;
   onRetry: () => void;
   onToggleResolved: (entry: FeedbackDto) => void;
   /** Id of the entry being updated, null when none. */

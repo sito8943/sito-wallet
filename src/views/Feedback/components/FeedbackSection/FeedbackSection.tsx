@@ -2,7 +2,10 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import { Button, Error as ErrorView, Loading } from "@sito/dashboard-app";
+import { Button, Loading } from "@sito/dashboard-app";
+
+// components
+import { QueryError } from "components";
 
 // components
 import { FeedbackListItem } from "../FeedbackListItem";
@@ -15,8 +18,15 @@ import type { FeedbackSectionPropsType } from "../../types";
 
 /** Open entries first; resolved ones behind a toggle. */
 export function FeedbackSection(props: FeedbackSectionPropsType) {
-  const { entries, isLoading, hasError, onRetry, onToggleResolved, pendingId } =
-    props;
+  const {
+    entries,
+    isLoading,
+    hasError,
+    error,
+    onRetry,
+    onToggleResolved,
+    pendingId,
+  } = props;
   const { t } = useTranslation();
   const [showResolved, setShowResolved] = useState(false);
 
@@ -37,7 +47,11 @@ export function FeedbackSection(props: FeedbackSectionPropsType) {
         )}
       </div>
       {hasError ? (
-        <ErrorView message={t("_accessibility:errors.500")} onRetry={onRetry} />
+        <QueryError
+          error={error}
+          message={t("_accessibility:errors.500")}
+          onRetry={onRetry}
+        />
       ) : isLoading ? (
         <div className="feedback-loading">
           <Loading />

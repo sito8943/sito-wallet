@@ -6,7 +6,6 @@ import { faStore } from "@fortawesome/free-solid-svg-icons";
 import {
   ConfirmationDialog,
   Empty,
-  Error as ErrorView,
   Page,
   PrettyGrid,
   useDeleteDialog,
@@ -31,7 +30,7 @@ import { useManager, useRegisterBottomNavAction } from "providers";
 
 // components
 import type { CatalogRowDto } from "components";
-import { CatalogCard, toCatalogRow } from "components";
+import { CatalogCard, QueryError, toCatalogRow } from "components";
 import { getDeleteAction } from "../../components/Card/utils";
 import {
   AddPurchaseProviderDialog,
@@ -93,7 +92,7 @@ export function PurchaseProviders() {
       queryKey={PurchaseProvidersQueryKeys.all().queryKey}
     >
       {error ? (
-        <ErrorView error={error} />
+        <QueryError error={error} />
       ) : (
         <>
           <PrettyGrid

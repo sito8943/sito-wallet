@@ -1,12 +1,10 @@
 import { useTranslation } from "react-i18next";
 
 // @sito/dashboard-app
-import {
-  Error as ErrorView,
-  Loading,
-  Page,
-  useAuth,
-} from "@sito/dashboard-app";
+import { Loading, Page, useAuth } from "@sito/dashboard-app";
+
+// components
+import { QueryError } from "components";
 
 // hooks
 import { ProfileQueryKeys, useMyProfile, useMobileNavbar } from "hooks";
@@ -45,7 +43,7 @@ export function Profile() {
       queryKey={ProfileQueryKeys.all().queryKey}
     >
       {profileQuery.error ? (
-        <ErrorView
+        <QueryError
           error={toRenderableError(
             profileQuery.error,
             t("_accessibility:errors.500"),

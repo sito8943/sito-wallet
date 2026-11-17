@@ -11,7 +11,6 @@ import {
 import {
   ConfirmationDialog,
   Empty,
-  Error as ErrorView,
   GlobalActions,
   ImportDialog,
   Page,
@@ -31,7 +30,7 @@ import {
   useMobileNavbar,
   useSwipeDeleteState,
 } from "hooks";
-import { MobileSelectionBar } from "components";
+import { MobileSelectionBar, QueryError } from "components";
 import { useManager, useRegisterBottomNavAction } from "providers";
 
 import type {
@@ -345,7 +344,7 @@ export function SubscriptionProviders() {
           />
         </>
       ) : (
-        <ErrorView error={error} />
+        <QueryError error={error} />
       )}
     </Page>
   );

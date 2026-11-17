@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import {
   ConfirmationDialog,
   Empty,
-  Error as ErrorView,
   GlobalActions,
   Page,
   PrettyGrid,
@@ -25,7 +24,7 @@ import type { UserDto } from "lib";
 import { isFeatureDisabledBusinessError } from "lib";
 
 // components
-import { MobileSelectionBar } from "components";
+import { MobileSelectionBar, QueryError } from "components";
 import {
   AddUserDialog,
   EditUserDialog,
@@ -188,7 +187,7 @@ export function Users() {
           <ConfirmationDialog {...restoreUser} />
         </>
       ) : (
-        <ErrorView error={error} />
+        <QueryError error={error} />
       )}
     </Page>
   );

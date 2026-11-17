@@ -16,6 +16,20 @@ vi.mock("react-i18next", () => ({
   }),
 }));
 
+vi.mock("components", () => ({
+  QueryError: ({
+    message,
+    onRetry,
+  }: {
+    message: string;
+    onRetry: () => void;
+  }) => (
+    <button type="button" onClick={onRetry}>
+      {message}
+    </button>
+  ),
+}));
+
 vi.mock("@sito/dashboard-app", () => ({
   Button: ({
     children,
@@ -50,11 +64,6 @@ vi.mock("@sito/dashboard-app", () => ({
       disabled={disabled}
       aria-label={ariaLabel}
     />
-  ),
-  Error: ({ message, onRetry }: { message: string; onRetry: () => void }) => (
-    <button type="button" onClick={onRetry}>
-      {message}
-    </button>
   ),
   Loading: () => <span>loading</span>,
 }));
