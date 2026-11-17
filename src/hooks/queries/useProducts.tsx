@@ -2,3 +2,4 @@
 
 export { ProductsQueryKeys } from "./queryKeys/productsQueryKeys";
 export { useProductsCommon } from "./useProductsCommon";
+export { useInfiniteProductsList } from "./useInfiniteProductsList";

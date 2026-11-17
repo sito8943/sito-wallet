@@ -2,3 +2,4 @@
 
 export { PurchaseProvidersQueryKeys } from "./queryKeys/purchaseProvidersQueryKeys";
 export { usePurchaseProvidersCommon } from "./usePurchaseProvidersCommon";
+export { useInfinitePurchaseProvidersList } from "./useInfinitePurchaseProvidersList";
