@@ -117,6 +117,7 @@ Common icon/situation mapping:
 | Assign account               | `faArrowRightArrowLeft`    |
 | View transactions            | `faListUl`                 |
 | Details list (breakdown)     | `faList`                   |
+| Category breakdown           | `faChartPie`               |
 | Scan receipt                 | `faReceipt`                |
 | Download / export            | `faCloudArrowDown`         |
 | Upload / import              | `faCloudUpload`            |
