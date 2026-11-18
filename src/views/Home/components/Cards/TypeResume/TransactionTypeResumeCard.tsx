@@ -1,5 +1,9 @@
 import { useMemo, useState } from "react";
-import { faPlus, faListUl, faList } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faListUl,
+  faChartPie,
+} from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 
 import { IconButton, useDialog } from "@sito/dashboard-app";
@@ -455,7 +459,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
                       (previousPeriod?.categories.length ?? 0) === 0)
                   }
                   onClick={() => typeResumeDialog.openDialog()}
-                  icon={faList}
+                  icon={faChartPie}
                   data-tooltip-id="tooltip"
                   data-tooltip-content={t(
                     "_pages:home.dashboard.transactionTypeResume.details.title",
