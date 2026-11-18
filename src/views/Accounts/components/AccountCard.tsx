@@ -9,7 +9,6 @@ import { Chip } from "@sito/dashboard-app";
 // components
 import TypeResume from "./TypeResume";
 import { ItemCard, Money } from "components";
-import { LastTransactions } from "./LastTransactions";
 import { AccountRewardsChip } from "./AccountRewardsChip";
 
 // types
@@ -44,8 +43,6 @@ export function AccountCard(props: AccountCardPropsType) {
     deletedAt,
     balance,
     containerClassName,
-    showLastTransactions,
-    lastTransactions,
     showTypeResume,
     showCurrency = true,
     hideDescription = false,
@@ -163,9 +160,6 @@ export function AccountCard(props: AccountCardPropsType) {
           />
         )}
       </div>
-      {showLastTransactions && !deleted && lastTransactions?.length ? (
-        <LastTransactions transactions={lastTransactions} />
-      ) : null}
       {showTypeResume && id && currency && (
         <TypeResume accountId={id} currency={currency} />
       )}

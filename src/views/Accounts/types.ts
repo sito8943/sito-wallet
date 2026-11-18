@@ -32,7 +32,6 @@ export interface AccountCardPropsType extends Omit<
   swipeDeleteOpen?: boolean;
   onSwipeDelete?: () => void;
   containerClassName?: string;
-  showLastTransactions?: boolean;
   showTypeResume?: boolean;
   showCurrency?: boolean;
   name: string | ReactNode;

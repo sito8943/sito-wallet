@@ -64,7 +64,6 @@ import type {
   ImportPreviewAccountDto,
 } from "lib";
 import { AccountActions } from "./types";
-import { ACCOUNT_CARD_LAST_TRANSACTIONS_LIMIT } from "./constants";
 import { getDeleteAction } from "../../components/Card/utils";
 import {
   Tables,
@@ -94,9 +93,7 @@ export function Accounts() {
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
-  } = useInfiniteAccountsList({
-    lastTransactionsLimit: ACCOUNT_CARD_LAST_TRANSACTIONS_LIMIT,
-  });
+  } = useInfiniteAccountsList({});
 
   const items = useMemo(
     () => data?.pages?.flatMap((page) => page.items) ?? [],
@@ -271,7 +268,6 @@ export function Accounts() {
               return (
                 <AccountCard
                   actions={actions}
-                  showLastTransactions
                   onClick={(id: number) => editAccount.openDialog(id)}
                   selectionMode={mobileSelection.selectionMode}
                   selected={mobileSelection.isSelected(account.id)}
