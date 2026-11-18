@@ -1545,6 +1545,11 @@
         "title": "Edit payment",
         "successMessage": "Payment updated successfully"
       }
+    },
+    "loanTransaction": {
+      "title": "Record the transaction?",
+      "body": "You lent money, so it left one of your accounts. Do you want to create the outgoing transaction now? You can pick the account and category.",
+      "description": "Loan to {{counterparty}}: {{title}}"
     }
   },
   "goals": {
