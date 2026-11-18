@@ -2,8 +2,6 @@ import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 
-import type { TransactionDto } from "lib";
-
 vi.mock("@use-gesture/react", () => ({
   useDrag: () => () => ({}),
 }));
@@ -26,11 +24,6 @@ vi.mock("components", async () => ({
 }));
 
 vi.mock("../TypeResume", () => ({ default: () => null }));
-vi.mock("../LastTransactions", () => ({
-  LastTransactions: ({ transactions }: { transactions: unknown[] }) => (
-    <span data-testid="last-transactions">{transactions.length}</span>
-  ),
-}));
 vi.mock("../AccountRewardsChip", () => ({ AccountRewardsChip: () => null }));
 
 import { AccountCard } from "../AccountCard";
@@ -63,43 +56,5 @@ describe("AccountCard", () => {
     expect(
       screen.queryByLabelText("_pages:accounts.forms.editAria"),
     ).not.toBeInTheDocument();
-  });
-
-  describe("last transactions", () => {
-    const lastTransactions = [
-      { id: 1 },
-      { id: 2 },
-    ] as unknown as TransactionDto[];
-
-    it("shows the account's transactions when enabled", () => {
-      render(
-        <AccountCard
-          {...account}
-          showLastTransactions
-          lastTransactions={lastTransactions}
-        />,
-      );
-
-      expect(screen.getByTestId("last-transactions")).toHaveTextContent("2");
-    });
-
-    it("stays hidden unless the view enables it (AccountSlider)", () => {
-      render(<AccountCard {...account} lastTransactions={lastTransactions} />);
-
-      expect(screen.queryByTestId("last-transactions")).not.toBeInTheDocument();
-    });
-
-    it("stays hidden for deleted accounts", () => {
-      render(
-        <AccountCard
-          {...account}
-          showLastTransactions
-          deletedAt={new Date()}
-          lastTransactions={lastTransactions}
-        />,
-      );
-
-      expect(screen.queryByTestId("last-transactions")).not.toBeInTheDocument();
-    });
   });
 });

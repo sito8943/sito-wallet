@@ -105,24 +105,16 @@ vi.mock("lib", () => ({
 import { Accounts } from "../Accounts";
 
 describe("Accounts page", () => {
-  it("loads each account's 2 latest transactions with the list", () => {
-    const lastTransactions = [{ id: 10 }, { id: 11 }];
+  it("lists the accounts without their latest transactions", () => {
     useInfiniteAccountsList.mockReturnValue({
-      data: {
-        pages: [{ items: [{ id: 1, name: "Wallet", lastTransactions }] }],
-      },
+      data: { pages: [{ items: [{ id: 1, name: "Wallet" }] }] },
       isLoading: false,
       error: null,
     });
 
     render(<Accounts />);
 
-    expect(useInfiniteAccountsList).toHaveBeenCalledWith({
-      lastTransactionsLimit: 2,
-    });
+    expect(useInfiniteAccountsList).toHaveBeenCalledWith({});
     expect(screen.getByTestId("account-card")).toBeInTheDocument();
-    expect(AccountCard).toHaveBeenCalledWith(
-      expect.objectContaining({ showLastTransactions: true, lastTransactions }),
-    );
   });
 });
