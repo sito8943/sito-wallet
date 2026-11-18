@@ -1,10 +1,11 @@
+import type { DefaultValues } from "react-hook-form";
+
 import { SortOrder } from "@sito/dashboard-app";
 
 import type {
   AddDebtDto,
   CommonCurrencyDto,
   AddDebtPaymentDto,
-  DebtDirection,
   DebtDto,
   DebtPaymentDto,
   UpdateDebtPaymentDto,
@@ -12,12 +13,16 @@ import type {
 } from "lib";
 import {
   DEBT_DIRECTIONS,
+  DebtDirection,
   formatAmount,
   nowDateTimeLocal,
   parseFiniteNumber,
   parseOptionalDateTimeLocal,
   toDateTimeLocal,
 } from "lib";
+
+import type { TransactionFormType } from "../Transactions/types";
+import { addEmptyTransaction } from "../Transactions/utils";
 
 import { DEFAULT_DEBT_DIRECTION } from "./constants";
 import type { DebtFormType, DebtPaymentFormType } from "./types";
@@ -166,3 +171,19 @@ export const getDebtPaymentAmountLabel = (
   const formatted = formatAmount(amount, locale);
   return currency?.symbol ? `${formatted} ${currency.symbol}` : formatted;
 };
+
+/**
+ * A loan the user gives out (receivable) takes money out of an account.
+ */
+export const isOutgoingLoan = (form: DebtFormType): boolean =>
+  toDebtDirection(form.direction) === DebtDirection.Receivable;
+
+export const debtFormToLoanTransactionValues = (
+  form: DebtFormType,
+  description: string,
+): DefaultValues<TransactionFormType> => ({
+  ...addEmptyTransaction(),
+  amount: parseFiniteNumber(form.originalAmount),
+  date: form.issuedAt || nowDateTimeLocal(),
+  description,
+});

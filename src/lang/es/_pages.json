@@ -1545,6 +1545,11 @@
         "title": "Editar pago",
         "successMessage": "Pago actualizado correctamente"
       }
+    },
+    "loanTransaction": {
+      "title": "¿Registrar la transacción?",
+      "body": "Prestaste dinero, así que salió de una de tus cuentas. ¿Quieres crear la transacción de salida ahora? Podrás elegir la cuenta y la categoría.",
+      "description": "Préstamo a {{counterparty}}: {{title}}"
     }
   },
   "goals": {

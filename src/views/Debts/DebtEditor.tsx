@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -24,7 +24,10 @@ import {
 } from "hooks";
 import { useManager } from "providers";
 
-import { EditTransactionDialog } from "../Transactions/components";
+import {
+  AddTransactionDialog,
+  EditTransactionDialog,
+} from "../Transactions/components";
 import { useEditTransaction } from "../Transactions/hooks";
 
 import type { DebtDto } from "lib";
@@ -38,6 +41,7 @@ import {
 } from "./components";
 import {
   useAddDebtPaymentDialog,
+  useDebtLoanTransaction,
   useDeleteDebtPaymentDialog,
   useEditDebtPaymentDialog,
 } from "./hooks";
@@ -82,6 +86,11 @@ export function DebtEditor() {
 
   const addPayment = useAddDebtPaymentDialog();
 
+  const goToDebts = useCallback(() => navigate(AppRoutes.debts), [navigate]);
+  const loanTransaction = useDebtLoanTransaction(goToDebts);
+  // Values of the debt being created, to prefill the loan transaction.
+  const createdDebtForm = useRef<DebtFormType | null>(null);
+
   const {
     control,
     handleSubmit,
@@ -105,6 +114,7 @@ export function DebtEditor() {
         return await debtsClient.update(debtFormToUpdateDto(values));
       }
 
+      createdDebtForm.current = values;
       return await debtsClient.insert(debtFormToCreateDto(values));
     },
     onSuccess: async () => {
@@ -118,7 +128,13 @@ export function DebtEditor() {
 
       await queryClient.invalidateQueries({ ...AccountsQueryKeys.all() });
 
-      navigate(AppRoutes.debts);
+      const createdForm = createdDebtForm.current;
+      createdDebtForm.current = null;
+      if (!isEditMode && createdForm && loanTransaction.offer(createdForm)) {
+        return;
+      }
+
+      goToDebts();
     },
     onError: (error) =>
       handleMutationError(error, {
@@ -279,6 +295,8 @@ export function DebtEditor() {
           <EditDebtPaymentDialog {...editPayment} />
           <ConfirmationDialog {...deletePayment} />
           <EditTransactionDialog {...editTransaction} />
+          <ConfirmationDialog {...loanTransaction.confirmDialog} />
+          <AddTransactionDialog {...loanTransaction.addTransaction} />
         </div>
       )}
     </Page>

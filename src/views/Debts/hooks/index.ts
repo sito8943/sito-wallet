@@ -6,3 +6,4 @@ export * from "./useCancelDebtDialog";
 export * from "./useDeleteDebtPaymentDialog";
 export * from "./useDebtsFiltersDialog";
 export type * from "./types";
+export * from "./useDebtLoanTransaction";
