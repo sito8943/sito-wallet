@@ -34,6 +34,7 @@ export const MCP_CAPABILITY_KEYS = [
   "transfers",
   "debts",
   "goals",
+  "dashboard",
   "subscriptions",
   "setup",
   "rewards",
@@ -71,6 +72,7 @@ export const MCP_AREAS: McpArea[] = [
   McpArea.Accounts,
   McpArea.Categories,
   McpArea.Currencies,
+  McpArea.Dashboard,
 ];
 
 /** Translation key of each area (`_pages:aiAgents.areas.items.*`). */
@@ -82,6 +84,7 @@ export const MCP_AREA_KEYS: Record<McpArea, string> = {
   [McpArea.Accounts]: "accounts",
   [McpArea.Categories]: "categories",
   [McpArea.Currencies]: "currencies",
+  [McpArea.Dashboard]: "dashboard",
 };
 
 /** OAuth scope prefix sito-auth adds per allowed area: `mcp:area:transactions`. */

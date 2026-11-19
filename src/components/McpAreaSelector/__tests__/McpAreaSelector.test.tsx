@@ -43,7 +43,7 @@ describe("McpAreaSelector", () => {
       />,
     );
 
-    expect(screen.getAllByRole("checkbox")).toHaveLength(7);
+    expect(screen.getAllByRole("checkbox")).toHaveLength(8);
     expect(checkbox("transactions")).toBeChecked();
     expect(checkbox("debts")).toBeChecked();
     expect(checkbox("goals")).not.toBeChecked();
@@ -88,6 +88,7 @@ describe("McpAreaSelector", () => {
       McpArea.Accounts,
       McpArea.Categories,
       McpArea.Currencies,
+      McpArea.Dashboard,
     ]);
   });
 
@@ -110,6 +111,7 @@ describe("McpAreaSelector", () => {
       McpArea.Accounts,
       McpArea.Categories,
       McpArea.Currencies,
+      McpArea.Dashboard,
     ]);
   });
 
