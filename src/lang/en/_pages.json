@@ -411,6 +411,7 @@
         "transfers": "Create transfers between your accounts",
         "debts": "Create, edit, pay and cancel debts",
         "goals": "Create, edit, complete and cancel savings goals",
+        "dashboard": "Add, rename, move and remove cards on the home dashboard",
         "subscriptions": "Create, edit, pause and cancel subscriptions and add their providers",
         "setup": "Create and edit accounts, categories and currencies, and set or recalculate an account balance",
         "rewards": "Adjust the reward points of your cards"
@@ -471,6 +472,10 @@
         "currencies": {
           "label": "Currencies",
           "description": "Create and edit currencies and exchange rates."
+        },
+        "dashboard": {
+          "label": "Dashboard",
+          "description": "List, add, rename, move and remove cards on the home dashboard."
         }
       }
     },

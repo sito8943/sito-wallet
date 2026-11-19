@@ -411,6 +411,7 @@
         "transfers": "Crear transferencias entre tus cuentas",
         "debts": "Crear, editar, pagar y cancelar deudas",
         "goals": "Crear, editar, completar y cancelar metas de ahorro",
+        "dashboard": "Añadir, renombrar, mover y quitar tarjetas del dashboard de inicio",
         "subscriptions": "Crear, editar, pausar y cancelar suscripciones y añadir sus proveedores",
         "setup": "Crear y editar cuentas, categorías y monedas, y ajustar o recalcular el saldo de una cuenta",
         "rewards": "Ajustar los puntos de recompensa de tus tarjetas"
@@ -471,6 +472,10 @@
         "currencies": {
           "label": "Monedas",
           "description": "Crear y editar monedas y tasas de cambio."
+        },
+        "dashboard": {
+          "label": "Dashboard",
+          "description": "Ver, añadir, renombrar, mover y quitar tarjetas del dashboard de inicio."
         }
       }
     },

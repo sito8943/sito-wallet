@@ -37,4 +37,5 @@ export enum McpArea {
   Accounts = "ACCOUNTS",
   Categories = "CATEGORIES",
   Currencies = "CURRENCIES",
+  Dashboard = "DASHBOARD",
 }
