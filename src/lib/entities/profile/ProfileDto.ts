@@ -12,4 +12,6 @@ export interface ProfileDto extends BaseEntityDto {
   hideDeletedEntities?: boolean;
   /** Offers the user's catalogs to other users (cloned when they use them). */
   publicCatalogs?: boolean;
+  /** Hides other users' public catalogs from the user's pickers and lists. */
+  hideSharedCatalogs?: boolean;
 }

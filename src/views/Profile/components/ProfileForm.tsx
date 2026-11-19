@@ -18,7 +18,7 @@ import {
 import { useManager } from "providers";
 
 // hooks
-import { ProfileQueryKeys } from "hooks";
+import { ProfileQueryKeys, useInvalidateCatalogs } from "hooks";
 import { useProfilePhoto } from "../hooks";
 
 // components
@@ -42,6 +42,7 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
   const { showErrorNotification, showSuccessNotification } = useNotification();
 
   const queryClient = useQueryClient();
+  const invalidateCatalogs = useInvalidateCatalogs();
 
   const handlePhotoUpdate = useCallback(() => {
     void queryClient.invalidateQueries({ ...ProfileQueryKeys.all() });
@@ -58,6 +59,7 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
       language: "es",
       hideDeletedEntities: false,
       publicCatalogs: false,
+      hideSharedCatalogs: false,
     },
   });
 
@@ -75,6 +77,7 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
       ),
       hideDeletedEntities: !!profile.hideDeletedEntities,
       publicCatalogs: !!profile.publicCatalogs,
+      hideSharedCatalogs: !!profile.hideSharedCatalogs,
     });
   }, [i18n.language, i18n.resolvedLanguage, profile, reset]);
 
@@ -102,6 +105,10 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
     control,
     name: "publicCatalogs",
   });
+  const currentHideSharedCatalogs = !!useWatch({
+    control,
+    name: "hideSharedCatalogs",
+  });
   const normalizedName = currentName.trim();
   const formDisabled = updateProfile.isPending;
   const saveDisabled =
@@ -117,11 +124,15 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
       language: normalizeProfileLanguage(values.language),
       hideDeletedEntities: values.hideDeletedEntities,
       publicCatalogs: values.publicCatalogs,
+      hideSharedCatalogs: values.hideSharedCatalogs,
     };
 
     try {
       await updateProfile.mutateAsync(payload);
       await queryClient.invalidateQueries({ ...ProfileQueryKeys.all() });
+      if (values.hideSharedCatalogs !== !!profile.hideSharedCatalogs) {
+        await invalidateCatalogs();
+      }
       const currentLanguage = normalizeProfileLanguage(
         i18n.resolvedLanguage ?? i18n.language,
       );
@@ -133,6 +144,7 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
         language: payload.language ?? "es",
         hideDeletedEntities: !!payload.hideDeletedEntities,
         publicCatalogs: !!payload.publicCatalogs,
+        hideSharedCatalogs: !!payload.hideSharedCatalogs,
       });
       showSuccessNotification({
         message: t("_pages:profile.messages.updated"),
@@ -319,6 +331,45 @@ export function ProfileForm({ profile }: ProfileFormPropsType) {
                   containerClassName="shrink-0"
                   inputClassName="profile-toggle-input"
                   aria-labelledby="public-catalogs-label"
+                  checked={!!field.value}
+                  disabled={formDisabled}
+                  onBlur={field.onBlur}
+                  onChange={(event) =>
+                    field.onChange(event.currentTarget.checked)
+                  }
+                />
+              )}
+            />
+          </div>
+
+          <div className="profile-toggle">
+            <div className="profile-toggle-copy">
+              <span id="hide-shared-catalogs-label">
+                {t("_pages:profile.labels.hideSharedCatalogs")}
+              </span>
+              <span className="profile-toggle-hint">
+                {t("_pages:profile.helper.hideSharedCatalogs")}
+              </span>
+              <span className="profile-toggle-hint">
+                {currentHideSharedCatalogs
+                  ? t("_pages:profile.values.enabled")
+                  : t("_pages:profile.values.disabled")}
+              </span>
+            </div>
+
+            <Controller
+              control={control}
+              name="hideSharedCatalogs"
+              disabled={formDisabled}
+              render={({ field }) => (
+                <CheckInput
+                  id="hide-shared-catalogs"
+                  name={field.name}
+                  label=""
+                  labelClassName="hidden"
+                  containerClassName="shrink-0"
+                  inputClassName="profile-toggle-input"
+                  aria-labelledby="hide-shared-catalogs-label"
                   checked={!!field.value}
                   disabled={formDisabled}
                   onBlur={field.onBlur}

@@ -5,6 +5,7 @@ export type ProfileFormType = {
   language: ProfileLanguage;
   hideDeletedEntities: boolean;
   publicCatalogs: boolean;
+  hideSharedCatalogs: boolean;
 };
 
 export type ChangePasswordFormType = {
