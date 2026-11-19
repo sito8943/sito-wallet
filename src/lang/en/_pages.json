@@ -345,6 +345,7 @@
       "currentPassword": "Current password",
       "theme": "Theme",
       "publicCatalogs": "Public catalogs",
+      "hideSharedCatalogs": "Hide other users' public catalogs",
       "analytics": "Anonymous usage analytics"
     },
     "helper": {
@@ -355,6 +356,7 @@
       "changePassword": "For security, changing your password will sign you out of the current session.",
       "theme": "Saved on this device. \"System\" follows your device settings.",
       "publicCatalogs": "Your currencies, categories, products, sellers and subscription providers are offered to other users. Using one creates a copy in their account; yours stay yours.",
+      "hideSharedCatalogs": "When on, you won't see the currencies, categories, products, sellers or providers other users share. Only yours are shown.",
       "analytics": "Counts which screens are used, with no data about you or your device. You can change it at any time.",
       "aiAgents": "Let AI agents such as ChatGPT, Claude, Claude Code or Codex read your finances and record transactions for you."
     },

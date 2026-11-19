@@ -345,6 +345,7 @@
       "currentPassword": "Contraseña actual",
       "theme": "Tema",
       "publicCatalogs": "Catálogos públicos",
+      "hideSharedCatalogs": "Ocultar catálogos públicos de otros",
       "analytics": "Analítica anónima de uso"
     },
     "helper": {
@@ -355,6 +356,7 @@
       "changePassword": "Por seguridad, al cambiar la contraseña se cerrará tu sesión actual.",
       "theme": "Se guarda en este dispositivo. \"Sistema\" sigue la configuración de tu dispositivo.",
       "publicCatalogs": "Tus monedas, categorías, productos, vendedores y proveedores de suscripción aparecerán a otros usuarios para que los usen. Al usarlos se crea una copia en su cuenta; los tuyos siguen siendo solo tuyos.",
+      "hideSharedCatalogs": "Si está activado, no verás las monedas, categorías, productos, vendedores ni proveedores que otros usuarios comparten. Solo verás los tuyos.",
       "analytics": "Cuenta qué pantallas se usan, sin datos tuyos ni de tu dispositivo. Puedes cambiarlo cuando quieras.",
       "aiAgents": "Permite que agentes de IA como ChatGPT, Claude, Claude Code o Codex consulten tus finanzas y registren transacciones por ti."
     },
