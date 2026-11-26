@@ -66,8 +66,6 @@ export type GoalProductPrefillValues = Pick<
 export interface GoalCardPropsType extends GoalDto {
   actions: ActionType<GoalDto>[];
   onClick: (id: number) => void;
-  onComplete: (goal: GoalDto) => void;
-  completing?: boolean;
   swipeDeleteOpen?: boolean;
   onSwipeDelete?: () => void;
 }
