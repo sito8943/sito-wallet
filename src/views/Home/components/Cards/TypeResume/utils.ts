@@ -17,6 +17,8 @@ import type {
   TypeResumePredictionTotalsType,
   TypeResumePredictionType,
   TypeResumePredictionValuesType,
+  TypeResumeCompareConfigType,
+  TypeResumeComparisonTotalsType,
   TypeResumeTypeFormType,
 } from "./types";
 import {
@@ -81,6 +83,7 @@ export const parseFormConfig = (cfg?: string | null): TypeResumeTypeFormType =>
         compare:
           (parsed.compare as boolean | undefined) ??
           DEFAULT_TYPE_RESUME_CONFIG.compare,
+        compareToDate: parsed.compareToDate === true,
         minBalance: parseMinBalance(parsed.minBalance),
       };
     },
@@ -154,12 +157,15 @@ export const getCurrentPeriodLabelKey = (
 
 export const getPreviousPeriodLabelKey = (
   time?: TransactionTypeResumeTime,
+  toDate = false,
 ): string =>
-  isPreviousTime(time)
-    ? `_pages:home.dashboard.transactionTypeResume.compareColumns.beforePrevious.${getTimeKey(
-        time,
-      )}`
-    : "_pages:home.dashboard.transactionTypeResume.compareColumns.previous";
+  toDate
+    ? "_pages:home.dashboard.transactionTypeResume.compareColumns.previousToDate"
+    : isPreviousTime(time)
+      ? `_pages:home.dashboard.transactionTypeResume.compareColumns.beforePrevious.${getTimeKey(
+          time,
+        )}`
+      : "_pages:home.dashboard.transactionTypeResume.compareColumns.previous";
 
 export const haveSameIds = (
   left: Array<number | string>,
@@ -238,6 +244,7 @@ export const formToDto = (
     showOppositeType: !!data.showOppositeType,
     showDifference: !!data.showOppositeType && !!data.showDifference,
     compare: !!data.compare,
+    ...(isCompareToDate(data) ? { compareToDate: true } : {}),
     ...(data.showOppositeType && minBalance !== undefined
       ? { minBalance }
       : {}),
@@ -255,6 +262,26 @@ export const formToDto = (
 
 export const isPredictableTime = (time?: TransactionTypeResumeTime): boolean =>
   time !== undefined && PREDICTABLE_TIMES.includes(time);
+
+/** Same-day comparison only applies to ongoing periods (week/month/year) */
+export const isCompareToDate = (config: TypeResumeCompareConfigType): boolean =>
+  !!config.compare && !!config.compareToDate && isPredictableTime(config.time);
+
+/**
+ * Previous period total, optionally cut at the same elapsed day as today
+ * (e.g. on the 26th: the 1st–26th of last month instead of the whole month).
+ * Falls back to the whole period when the backend sent no remainingTotal.
+ */
+export const getComparisonTotal = (
+  comparison: TypeResumeComparisonTotalsType | undefined,
+  toDate: boolean,
+): number => {
+  if (!comparison) return 0;
+  if (toDate && comparison.remainingTotal !== undefined) {
+    return comparison.total - comparison.remainingTotal;
+  }
+  return comparison.total;
+};
 
 const parseLocalDate = (value: string): Date | null => {
   const [year, month, day] = value.slice(0, 10).split("-").map(Number);

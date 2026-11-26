@@ -20,9 +20,11 @@ import {
   getCurrentPeriodLabelKey,
   getOppositeTransactionType,
   getPreviousPeriodLabelKey,
+  getComparisonTotal,
   getTypeResumeDifference,
   getPeriodProgress,
   getTypeResumePrediction,
+  isCompareToDate,
   isPredictableTime,
   normalizeExcludedCategoryIds,
   parseFormConfig,
@@ -199,10 +201,15 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   });
   const oppositeTotal =
     batchResult?.opposite?.total ?? oppositeTypeResume.data?.total ?? 0;
-  const primaryPreviousTotal =
-    (batchResult?.primary ?? typeResume.data)?.comparison?.total ?? 0;
-  const oppositePreviousTotal =
-    (batchResult?.opposite ?? oppositeTypeResume.data)?.comparison?.total ?? 0;
+  const compareToDate = isCompareToDate(resolvedFormConfig);
+  const primaryPreviousTotal = getComparisonTotal(
+    (batchResult?.primary ?? typeResume.data)?.comparison,
+    compareToDate,
+  );
+  const oppositePreviousTotal = getComparisonTotal(
+    (batchResult?.opposite ?? oppositeTypeResume.data)?.comparison,
+    compareToDate,
+  );
   const isOppositeLoading =
     resolvedFormConfig.showOppositeType &&
     (batchResult?.isLoading ?? oppositeTypeResume.isLoading);
@@ -311,7 +318,12 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
               {formConfig.compare ? (
                 <div className="type-resume-compare">
                   <span className="type-resume-compare-header">
-                    {t(getPreviousPeriodLabelKey(formConfig.time))}
+                    {t(
+                      getPreviousPeriodLabelKey(
+                        formConfig.time,
+                        isCompareToDate(formConfig),
+                      ),
+                    )}
                   </span>
                   <span className="type-resume-compare-header">
                     {t(getCurrentPeriodLabelKey(formConfig.time))}

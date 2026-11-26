@@ -27,6 +27,7 @@ export const DEFAULT_TYPE_RESUME_CONFIG: TypeResumeTypeFormType = {
   showOppositeType: false,
   showDifference: false,
   compare: false,
+  compareToDate: false,
 };
 
 export const TYPE_RESUME_TRANSACTIONS_LIST_QUERY: QueryParam<CommonTransactionDto> =

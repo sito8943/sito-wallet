@@ -49,9 +49,21 @@ export interface TypeResumeTypeFormType
   showOppositeType: boolean;
   showDifference: boolean;
   compare: boolean;
+  /** Ongoing periods: compare against the previous period up to the same day */
+  compareToDate: boolean;
   /** Balance (income - expenses) to keep at the end of the period */
   minBalance?: number | string | null;
 }
+
+export type TypeResumeCompareConfigType = Pick<
+  TypeResumeTypeFormType,
+  "compare" | "compareToDate" | "time"
+>;
+
+export type TypeResumeComparisonTotalsType = Pick<
+  TransactionTypeResumeDto,
+  "total" | "remainingTotal"
+>;
 
 export type FilterTypeResumeConfigType = {
   accountId?: number;
