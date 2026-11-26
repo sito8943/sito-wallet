@@ -128,6 +128,46 @@
           "label": "Minimum balance",
           "placeholder": "E.g. 300",
           "helper": "Leave empty to compare with the previous period."
+        },
+        "calculator": {
+          "title": "Prediction calculator",
+          "startBalance": "Starting balance",
+          "startBalanceHelper": "Current account balance. You can change it.",
+          "noAccountHelper": "This card has no account: type your balance.",
+          "months": "Months to project",
+          "monthsValue_one": "{{count}} month",
+          "monthsValue_other": "{{count}} months",
+          "now": "Now",
+          "monthly": {
+            "title": "Every month",
+            "add": "Add monthly income or expense",
+            "placeholder": "E.g. Salary, food"
+          },
+          "oneOff": {
+            "title": "One-off",
+            "add": "Add one-off purchase or income",
+            "placeholder": "E.g. Laptop"
+          },
+          "line": {
+            "name": "Concept",
+            "amount": "Amount",
+            "month": "Month",
+            "remove": "Remove"
+          },
+          "prefill": {
+            "income": "Last month's income",
+            "expense": "Last month's expenses"
+          },
+          "columns": {
+            "month": "Month",
+            "income": "Income",
+            "expense": "Expenses",
+            "balance": "Balance"
+          },
+          "final": "Balance in {{month}}:",
+          "negative": "In {{month}} the balance goes negative",
+          "hint": "Estimate: it creates no transactions. Your changes are kept as a draft in this browser.",
+          "reset": "Reset"
         }
       },
       "currentBalance": {
