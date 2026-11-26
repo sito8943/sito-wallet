@@ -119,6 +119,7 @@ Common icon/situation mapping:
 | Details list (breakdown)     | `faList`                   |
 | Category breakdown           | `faChartPie`               |
 | Scan receipt                 | `faReceipt`                |
+| Prediction calculator        | `faCalculator`             |
 | Download / export            | `faCloudArrowDown`         |
 | Upload / import              | `faCloudUpload`            |
 | Filter                       | `faFilter`                 |

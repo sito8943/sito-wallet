@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import {
+  faCalculator,
   faPlus,
   faListUl,
   faChartPie,
@@ -9,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { IconButton, useDialog } from "@sito/dashboard-app";
 
 // hooks
-import { useTransactionTypeResume } from "hooks";
+import { useAccountById, useTransactionTypeResume } from "hooks";
 import { useTransactionCategoriesCommon } from "../../../../../hooks/queries/useTransactionCategoriesCommon";
 import { useAddTransaction } from "../../../../Transactions/hooks";
 
@@ -41,6 +42,7 @@ import { RecentTransactionsDialog } from "views/Transactions";
 import { TypeResumeRow } from "./TypeResumeRow";
 import { TypeResumeCategoriesDialog } from "./TypeResumeCategoriesDialog";
 import { TypeResumePredictionDialog } from "./TypeResumePredictionDialog";
+import { TypeResumeCalculatorDialog, getCalculatorPrefill } from "./Calculator";
 
 // constants
 import { PREDICTION_STATUS_COLOR, PREDICTION_STATUS_ICON } from "./constants";
@@ -72,6 +74,7 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
   const { t } = useTranslation();
   const typeResumeDialog = useTypeResumeDialog();
   const predictionDialog = useTypeResumeDialog();
+  const calculatorDialog = useTypeResumeDialog();
   const recentTransactionsDialog = useDialog();
   const [configOverride, setConfigOverride] =
     useState<CardConfigOverrideType | null>(null);
@@ -264,6 +267,36 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
     ],
   );
 
+  const calculatorAccountId = resolvedFormConfig.account?.id;
+  // Only fetched while the calculator is open (start balance)
+  const calculatorAccount = useAccountById({
+    id: calculatorDialog.open ? calculatorAccountId : undefined,
+  });
+  const calculatorPrefill = useMemo(
+    () =>
+      getCalculatorPrefill({
+        time: resolvedFormConfig.time,
+        primaryType: resolvedFormConfig.type,
+        primary: data,
+        opposite: oppositeResume,
+        balance: calculatorAccount.data?.balance,
+        incomeName: t(
+          "_pages:home.dashboard.transactionTypeResume.calculator.prefill.income",
+        ),
+        expenseName: t(
+          "_pages:home.dashboard.transactionTypeResume.calculator.prefill.expense",
+        ),
+      }),
+    [
+      calculatorAccount.data?.balance,
+      data,
+      oppositeResume,
+      resolvedFormConfig.time,
+      resolvedFormConfig.type,
+      t,
+    ],
+  );
+
   return (
     <>
       <DashboardCard
@@ -446,6 +479,18 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
                   />
                 )}
                 <IconButton
+                  disabled={isLoading || isOppositeLoading}
+                  onClick={calculatorDialog.openDialog}
+                  icon={faCalculator}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={t(
+                    "_pages:home.dashboard.transactionTypeResume.calculator.title",
+                  )}
+                  aria-label={t(
+                    "_pages:home.dashboard.transactionTypeResume.calculator.title",
+                  )}
+                />
+                <IconButton
                   onClick={() => addTransaction.openDialog()}
                   icon={faPlus}
                   data-tooltip-id="tooltip"
@@ -503,6 +548,20 @@ export const TransactionTypeResume = (props: TransactionTypePropsType) => {
         <TypeResumePredictionDialog
           {...predictionDialog}
           prediction={prediction}
+          currencyName={
+            currencyName ?? resolvedFormConfig.account?.currency?.name
+          }
+          currencySymbol={
+            currencySymbol ?? resolvedFormConfig.account?.currency?.symbol
+          }
+        />
+      )}
+      {calculatorDialog.open && (
+        <TypeResumeCalculatorDialog
+          {...calculatorDialog}
+          cardId={id}
+          prefill={calculatorPrefill}
+          hasAccount={!!calculatorAccountId}
           currencyName={
             currencyName ?? resolvedFormConfig.account?.currency?.name
           }

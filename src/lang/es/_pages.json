@@ -128,6 +128,46 @@
           "label": "Balance mínimo",
           "placeholder": "Ej: 300",
           "helper": "Deja vacío para comparar con el período anterior."
+        },
+        "calculator": {
+          "title": "Calculadora de predicción",
+          "startBalance": "Saldo inicial",
+          "startBalanceHelper": "Saldo actual de la cuenta. Puedes cambiarlo.",
+          "noAccountHelper": "La tarjeta no tiene cuenta: escribe tu saldo.",
+          "months": "Meses a proyectar",
+          "monthsValue_one": "{{count}} mes",
+          "monthsValue_other": "{{count}} meses",
+          "now": "Ahora",
+          "monthly": {
+            "title": "Cada mes",
+            "add": "Añadir ingreso o gasto mensual",
+            "placeholder": "Ej. Nómina, comida"
+          },
+          "oneOff": {
+            "title": "Puntuales",
+            "add": "Añadir compra o ingreso puntual",
+            "placeholder": "Ej. Portátil"
+          },
+          "line": {
+            "name": "Concepto",
+            "amount": "Importe",
+            "month": "Mes",
+            "remove": "Quitar"
+          },
+          "prefill": {
+            "income": "Entradas del mes anterior",
+            "expense": "Salidas del mes anterior"
+          },
+          "columns": {
+            "month": "Mes",
+            "income": "Entradas",
+            "expense": "Salidas",
+            "balance": "Saldo"
+          },
+          "final": "Saldo en {{month}}:",
+          "negative": "En {{month}} el saldo queda en negativo",
+          "hint": "Estimación: no crea transacciones. Tus cambios se guardan como borrador en este navegador.",
+          "reset": "Restablecer"
         }
       },
       "currentBalance": {
