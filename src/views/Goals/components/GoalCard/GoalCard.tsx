@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/dashboard-app
-import { Button, classNames } from "@sito/dashboard-app";
+import { classNames } from "@sito/dashboard-app";
 
 // components
 import { EntityAvatar, ItemCard, ItemCardTitle, ProgressBar } from "components";
@@ -35,15 +35,7 @@ export function GoalCard(props: GoalCardPropsType) {
   const { t, i18n } = useTranslation();
   const locale = i18n.language;
 
-  const {
-    actions,
-    onClick,
-    onComplete,
-    completing,
-    swipeDeleteOpen,
-    onSwipeDelete,
-    ...goal
-  } = props;
+  const { actions, onClick, swipeDeleteOpen, onSwipeDelete, ...goal } = props;
   const {
     id,
     name,
@@ -164,18 +156,6 @@ export function GoalCard(props: GoalCardPropsType) {
             <FontAwesomeIcon icon={faCheckCircle} />
             {t("_pages:goals.labels.reached")}
           </span>
-          <Button
-            type="button"
-            color="primary"
-            variant="submit"
-            disabled={completing}
-            onClick={(event) => {
-              event.stopPropagation();
-              onComplete(goal);
-            }}
-          >
-            {t("_pages:goals.actions.complete.text")}
-          </Button>
         </div>
       )}
     </ItemCard>

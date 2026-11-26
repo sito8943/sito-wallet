@@ -60,17 +60,10 @@ import type { GoalCardPropsType } from "../types";
 
 const renderCard = (overrides: Partial<GoalCardPropsType> = {}) => {
   const onClick = vi.fn();
-  const onComplete = vi.fn();
   render(
-    <GoalCard
-      {...buildGoal()}
-      actions={[]}
-      onClick={onClick}
-      onComplete={onComplete}
-      {...overrides}
-    />,
+    <GoalCard {...buildGoal()} actions={[]} onClick={onClick} {...overrides} />,
   );
-  return { onClick, onComplete };
+  return { onClick };
 };
 
 describe("GoalCard", () => {
@@ -125,14 +118,14 @@ describe("GoalCard", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("offers to complete a reached active goal without opening the editor", () => {
+  it("shows the reached badge without a complete button", () => {
     const goal = buildGoal({
       reached: true,
       saved: 500,
       progressPercent: 100,
       monthlyNeeded: null,
     });
-    const { onClick, onComplete } = renderCard(goal);
+    renderCard(goal);
 
     expect(screen.getByText("_pages:goals.labels.reached")).toBeInTheDocument();
     expect(screen.getByRole("progressbar")).toHaveAttribute(
@@ -140,12 +133,9 @@ describe("GoalCard", () => {
       "success",
     );
 
-    fireEvent.click(screen.getByText("_pages:goals.actions.complete.text"));
-
-    expect(onComplete).toHaveBeenCalledWith(
-      expect.objectContaining({ id: goal.id }),
-    );
-    expect(onClick).not.toHaveBeenCalled();
+    expect(
+      screen.queryByText("_pages:goals.actions.complete.text"),
+    ).not.toBeInTheDocument();
   });
 
   it("shows the status instead of the badge once completed", () => {

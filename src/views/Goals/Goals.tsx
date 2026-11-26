@@ -140,8 +140,6 @@ export function Goals() {
             {...goal}
             actions={actions}
             onClick={(id) => openEditGoal(id)}
-            onComplete={(record) => runStatus(record.id, "complete")}
-            completing={pendingId === goal.id}
             swipeDeleteOpen={swipeDelete.swipedId === goal.id}
             onSwipeDelete={
               deleteAction
