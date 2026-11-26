@@ -51,6 +51,7 @@
           "empty": "No categories in this range"
         },
         "compareToggle": "Compare with {{previousTime}}",
+        "compareToDateToggle": "Compare only up to the same day of the previous period",
         "previousTime": {
           "CurrentDay": "yesterday",
           "CurrentWeek": "last week",
@@ -62,6 +63,7 @@
           "PreviousYear": "the year before"
         },
         "compareColumns": {
+          "previousToDate": "Previous (to date)",
           "previous": "Previous",
           "current": "Current",
           "beforePrevious": {

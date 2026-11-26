@@ -51,6 +51,7 @@
           "empty": "Sin categorías en este rango"
         },
         "compareToggle": "Comparar con {{previousTime}}",
+        "compareToDateToggle": "Comparar solo hasta el mismo día del período anterior",
         "previousTime": {
           "CurrentDay": "ayer",
           "CurrentWeek": "la semana pasada",
@@ -62,6 +63,7 @@
           "PreviousYear": "el año previo a ese"
         },
         "compareColumns": {
+          "previousToDate": "Anterior (a la fecha)",
           "previous": "Anterior",
           "current": "Actual",
           "beforePrevious": {

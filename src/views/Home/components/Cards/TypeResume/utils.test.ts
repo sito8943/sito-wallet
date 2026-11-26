@@ -4,7 +4,9 @@ import { TransactionType, TransactionTypeResumeTime } from "lib";
 
 import {
   formToDto,
+  getComparisonTotal,
   getOppositeTransactionType,
+  isCompareToDate,
   getPeriodProgress,
   getPredictionStatus,
   getTypeResumePrediction,
@@ -157,6 +159,50 @@ describe("TypeResume utils", () => {
         compare: false,
       }),
     ).not.toHaveProperty("compare");
+  });
+});
+
+describe("TypeResume compare to date", () => {
+  const base = {
+    compare: true,
+    compareToDate: true,
+    time: TransactionTypeResumeTime.CurrentMonth,
+  };
+
+  it("applies only to ongoing periods with compare on", () => {
+    expect(isCompareToDate(base)).toBe(true);
+    expect(isCompareToDate({ ...base, compare: false })).toBe(false);
+    expect(isCompareToDate({ ...base, compareToDate: false })).toBe(false);
+    expect(
+      isCompareToDate({ ...base, time: TransactionTypeResumeTime.CurrentDay }),
+    ).toBe(false);
+    expect(
+      isCompareToDate({
+        ...base,
+        time: TransactionTypeResumeTime.PreviousMonth,
+      }),
+    ).toBe(false);
+  });
+
+  it("cuts the previous total at the same elapsed day", () => {
+    const comparison = { total: 1258.45, remainingTotal: 400.45 };
+    expect(getComparisonTotal(comparison, true)).toBeCloseTo(858);
+    expect(getComparisonTotal(comparison, false)).toBe(1258.45);
+  });
+
+  it("falls back to the whole period without remainingTotal", () => {
+    expect(getComparisonTotal({ total: 100 }, true)).toBe(100);
+    expect(getComparisonTotal(undefined, true)).toBe(0);
+  });
+
+  it("persists compareToDate only when it applies", () => {
+    const form = parseFormConfig(JSON.stringify(base));
+    expect(form.compareToDate).toBe(true);
+    expect(JSON.parse(formToDto(form).config ?? "{}").compareToDate).toBe(true);
+    const daily = { ...form, time: TransactionTypeResumeTime.CurrentDay };
+    expect(
+      JSON.parse(formToDto(daily).config ?? "{}").compareToDate,
+    ).toBeUndefined();
   });
 });
 

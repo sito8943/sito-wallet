@@ -37,6 +37,7 @@ import {
   getOppositeTransactionType,
   getPreviousTimeKey,
   haveSameIds,
+  isPredictableTime,
 } from "./utils";
 
 import "../styles.css";
@@ -67,6 +68,7 @@ export const ConfigFormDialog = (
 
   const type = useWatch({ control, name: "type" });
   const time = useWatch({ control, name: "time" });
+  const compare = useWatch({ control, name: "compare" });
   const showOppositeType = useWatch({
     control,
     name: "showOppositeType",
@@ -472,6 +474,24 @@ export const ConfigFormDialog = (
               id="type-resume-compare"
               checked={!!value}
               label={compareLabel}
+              inputClassName="dashboard-card-toggle-input"
+              containerClassName="dashboard-card-toggle"
+              onChange={(event) => onChange(event.currentTarget.checked)}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="compareToDate"
+          render={({ field: { value, onChange, ...rest } }) => (
+            <CheckInput
+              {...rest}
+              id="type-resume-compare-to-date"
+              disabled={isLoading || !compare || !isPredictableTime(time)}
+              checked={!!compare && isPredictableTime(time) && !!value}
+              label={t(
+                "_pages:home.dashboard.transactionTypeResume.compareToDateToggle",
+              )}
               inputClassName="dashboard-card-toggle-input"
               containerClassName="dashboard-card-toggle"
               onChange={(event) => onChange(event.currentTarget.checked)}
