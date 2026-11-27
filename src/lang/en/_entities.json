@@ -489,7 +489,8 @@
       "label": "Last paid at"
     },
     "nextRenewalAt": {
-      "label": "Next renewal"
+      "label": "Next renewal",
+      "future": "The next renewal must be a future date"
     },
     "status": {
       "label": "Status",
