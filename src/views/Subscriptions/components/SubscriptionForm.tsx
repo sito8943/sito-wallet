@@ -129,15 +129,6 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
         render={({ field }) => <input {...field} type="hidden" />}
         name="id"
       />
-      {mode !== FormMode.Add && (
-        <Controller
-          control={control}
-          render={({ field }) => (
-            <input {...field} value={field.value ?? ""} type="hidden" />
-          )}
-          name="nextRenewalAt"
-        />
-      )}
 
       <div className="subscription-form-grid">
         <Controller
@@ -305,6 +296,22 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
                 value={value}
                 onChange={(event) => onChange(event.target.value)}
                 label={t("_entities:subscription.status.label")}
+                {...rest}
+              />
+            )}
+          />
+        )}
+        {mode !== FormMode.Add && (
+          <Controller
+            control={control}
+            name="nextRenewalAt"
+            disabled={formDisabled}
+            render={({ field: { value, ...rest } }) => (
+              <TextInput
+                type="datetime-local"
+                value={value ?? ""}
+                label={t("_entities:subscription.nextRenewalAt.label")}
+                autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.nextRenewalAt.label")}`}
                 {...rest}
               />
             )}
