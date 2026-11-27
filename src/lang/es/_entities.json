@@ -489,7 +489,8 @@
       "label": "Último pago"
     },
     "nextRenewalAt": {
-      "label": "Próxima renovación"
+      "label": "Próxima renovación",
+      "future": "La próxima renovación debe ser una fecha futura"
     },
     "status": {
       "label": "Estado",

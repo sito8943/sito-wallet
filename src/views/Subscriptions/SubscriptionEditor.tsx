@@ -45,12 +45,14 @@ import { emptyAddSubscriptionProviderForm } from "../SubscriptionProviders/utils
 
 import {
   AddSubscriptionBillingLogDialog,
+  EditSubscriptionBillingLogDialog,
   SubscriptionActivitySidebar,
   SubscriptionForm,
 } from "./components";
 import {
   useAddSubscriptionBillingLogDialog,
   useDeleteSubscriptionBillingLogDialog,
+  useEditSubscriptionBillingLogDialog,
 } from "./hooks";
 import type { SubscriptionFormType } from "./types";
 import {
@@ -170,6 +172,9 @@ export function SubscriptionEditor() {
       return await subscriptionsClient.getById(subscriptionId);
     },
   });
+  const editBillingLog = useEditSubscriptionBillingLogDialog(
+    subscriptionQuery.data ?? null,
+  );
 
   const subscriptionBillingLogsQuery = useQuery({
     queryKey: [
@@ -378,6 +383,7 @@ export function SubscriptionEditor() {
               billingLogsLoading={subscriptionBillingLogsQuery.isLoading}
               billingLogsError={subscriptionBillingLogsQuery.error}
               onBillingLogClick={editTransaction.openDialog}
+              onEditBillingLog={(log) => editBillingLog.openDialog(log.id)}
               onDeleteBillingLog={(log) => {
                 void deleteBillingLog.onClick(log.id);
               }}
@@ -385,6 +391,7 @@ export function SubscriptionEditor() {
           ) : null}
           <AddSubscriptionBillingLogDialog {...addBillingLog} />
           <EditTransactionDialog {...editTransaction} />
+          <EditSubscriptionBillingLogDialog {...editBillingLog} />
           <ConfirmationDialog {...deleteBillingLog} />
           <AddCurrencyDialog {...addCurrency} />
           <AddSubscriptionProviderDialog {...addSubscriptionProvider} />

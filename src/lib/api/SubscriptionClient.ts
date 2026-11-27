@@ -16,6 +16,7 @@ import type {
   SubscriptionDto,
   SubscriptionRenewalDto,
   SubscriptionRenewalForecastDto,
+  UpdateSubscriptionBillingLogDto,
   UpdateSubscriptionDto,
 } from "lib";
 import { parseJSONFile } from "lib";
@@ -119,6 +120,32 @@ export default class SubscriptionClient extends BaseClient<
     return await this.api.post(
       `${this.table}/${subscriptionId}/billing-logs`,
       data,
+    );
+  }
+
+  async getBillingLogById(
+    subscriptionId: number,
+    billingLogId: number,
+  ): Promise<SubscriptionBillingLogDto> {
+    return await this.api.doQuery<SubscriptionBillingLogDto>(
+      `${this.table}/${subscriptionId}/billing-logs/${billingLogId}`,
+      Methods.GET,
+      undefined,
+      this.api.defaultTokenAcquirer(),
+    );
+  }
+
+  /** The API also moves the linked transaction and the renewal dates. */
+  async updateBillingLog(
+    data: UpdateSubscriptionBillingLogDto,
+  ): Promise<number> {
+    const { subscriptionId, id, ...payload } = data;
+
+    return await this.api.doQuery<number>(
+      `${this.table}/${subscriptionId}/billing-logs/${id}`,
+      Methods.PATCH,
+      payload,
+      this.api.defaultTokenAcquirer(),
     );
   }
 

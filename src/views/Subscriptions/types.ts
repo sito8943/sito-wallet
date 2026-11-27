@@ -55,7 +55,12 @@ export interface SubscriptionBillingLogFormType extends FieldValues {
 
 export interface AddSubscriptionBillingLogDialogPropsType extends TriggerFormDialogPropsType<SubscriptionBillingLogFormType> {
   selectedSubscription: SubscriptionDto | null;
+  /** Editing keeps the loaded values and hides create-only fields. */
+  editingBillingLog?: boolean;
 }
+
+export type EditSubscriptionBillingLogDialogPropsType =
+  AddSubscriptionBillingLogDialogPropsType;
 
 export interface SubscriptionActivitySidebarPropsType {
   startsAt?: string | null;
@@ -65,12 +70,14 @@ export interface SubscriptionActivitySidebarPropsType {
   billingLogsLoading?: boolean;
   billingLogsError?: unknown;
   onBillingLogClick?: (transactionId: number) => void;
+  onEditBillingLog?: (log: SubscriptionBillingLogDto) => void;
   onDeleteBillingLog?: (log: SubscriptionBillingLogDto) => void;
 }
 
 export interface SubscriptionBillingLogItemPropsType {
   log: SubscriptionBillingLogDto;
   onClick?: (transactionId: number) => void;
+  onEdit?: (log: SubscriptionBillingLogDto) => void;
   onDelete?: (log: SubscriptionBillingLogDto) => void;
 }
 

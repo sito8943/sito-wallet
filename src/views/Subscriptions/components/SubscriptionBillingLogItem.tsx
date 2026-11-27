@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import { IconButton } from "@sito/dashboard-app";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import { RAW_INTERPOLATION } from "../constants";
 import { ActivityItem, Money } from "components";
@@ -16,7 +16,7 @@ import type { SubscriptionBillingLogItemPropsType } from "../types";
 export function SubscriptionBillingLogItem(
   props: SubscriptionBillingLogItemPropsType,
 ) {
-  const { log, onClick, onDelete } = props;
+  const { log, onClick, onEdit, onDelete } = props;
   const { t, i18n } = useTranslation();
 
   const amount = getBillingLogAmountLabel(log, i18n.language);
@@ -42,13 +42,29 @@ export function SubscriptionBillingLogItem(
           : undefined
       }
       actions={
-        onDelete ? (
-          <IconButton
-            icon={faTrash}
-            color="error"
-            onClick={() => onDelete(log)}
-            aria-label={t("_pages:subscriptions.actions.deleteBillingLog.text")}
-          />
+        onEdit || onDelete ? (
+          <>
+            {onEdit ? (
+              <IconButton
+                icon={faPencil}
+                color="primary"
+                onClick={() => onEdit(log)}
+                aria-label={t(
+                  "_pages:subscriptions.actions.editBillingLog.text",
+                )}
+              />
+            ) : null}
+            {onDelete ? (
+              <IconButton
+                icon={faTrash}
+                color="error"
+                onClick={() => onDelete(log)}
+                aria-label={t(
+                  "_pages:subscriptions.actions.deleteBillingLog.text",
+                )}
+              />
+            ) : null}
+          </>
         ) : null
       }
     />

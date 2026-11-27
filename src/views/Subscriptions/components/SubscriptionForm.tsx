@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Controller, useWatch } from "react-hook-form";
+import { Controller, useFormState, useWatch } from "react-hook-form";
 
 // @sito/dashboard-app
 import type { Option } from "@sito/dashboard-app";
@@ -26,6 +26,7 @@ import type { CommonTransactionCategoryDto } from "lib";
 import {
   FormMode,
   normalizeSelectedTransactionCategories,
+  nowDateTimeLocal,
   SUBSCRIPTION_BILLING_UNITS,
   SUBSCRIPTION_STATUSES,
   Tables,
@@ -33,6 +34,7 @@ import {
 
 // types
 import type { SubscriptionFormPropsType } from "../types";
+import { isValidPickedRenewalDate } from "../utils";
 
 import "./styles.css";
 
@@ -113,6 +115,8 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
     control,
     name: "autoCreateTransaction",
   });
+  const { defaultValues } = useFormState({ control });
+  const loadedNextRenewalAt = defaultValues?.nextRenewalAt;
 
   const formDisabled =
     isLoading ||
@@ -129,15 +133,6 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
         render={({ field }) => <input {...field} type="hidden" />}
         name="id"
       />
-      {mode !== FormMode.Add && (
-        <Controller
-          control={control}
-          render={({ field }) => (
-            <input {...field} value={field.value ?? ""} type="hidden" />
-          )}
-          name="nextRenewalAt"
-        />
-      )}
 
       <div className="subscription-form-grid">
         <Controller
@@ -305,6 +300,28 @@ export function SubscriptionForm(props: SubscriptionFormPropsType) {
                 value={value}
                 onChange={(event) => onChange(event.target.value)}
                 label={t("_entities:subscription.status.label")}
+                {...rest}
+              />
+            )}
+          />
+        )}
+        {mode !== FormMode.Add && (
+          <Controller
+            control={control}
+            name="nextRenewalAt"
+            disabled={formDisabled}
+            rules={{
+              validate: (value) =>
+                isValidPickedRenewalDate(value, loadedNextRenewalAt) ||
+                t("_entities:subscription.nextRenewalAt.future"),
+            }}
+            render={({ field: { value, ...rest } }) => (
+              <TextInput
+                type="datetime-local"
+                min={nowDateTimeLocal()}
+                value={value ?? ""}
+                label={t("_entities:subscription.nextRenewalAt.label")}
+                autoComplete={`${Tables.Subscriptions}-${t("_entities:subscription.nextRenewalAt.label")}`}
                 {...rest}
               />
             )}

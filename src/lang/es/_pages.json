@@ -1137,6 +1137,11 @@
         "successMessage": "Pago registrado correctamente",
         "openTransaction": "Editar la transacción del pago de {{amount}} del {{paidAt}}"
       },
+      "editBillingLog": {
+        "text": "Editar pago",
+        "title": "Editar pago",
+        "successMessage": "Pago actualizado correctamente"
+      },
       "deleteBillingLog": {
         "text": "Eliminar pago",
         "confirmTitle": "¿Eliminar este pago? También se elimina su transacción.",
