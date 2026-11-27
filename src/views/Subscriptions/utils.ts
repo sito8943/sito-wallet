@@ -7,6 +7,7 @@ import type {
   SubscriptionBillingUnit,
   SubscriptionDto,
   SubscriptionStatus,
+  UpdateSubscriptionBillingLogDto,
   UpdateSubscriptionDto,
 } from "lib";
 import {
@@ -235,6 +236,34 @@ export const subscriptionBillingLogFormToDto = (
   };
 };
 
+export const subscriptionBillingLogDtoToForm = (
+  dto: SubscriptionBillingLogDto,
+): SubscriptionBillingLogFormType => ({
+  subscriptionId: 0,
+  amount: String(dto.amount ?? ""),
+  paidAt: toDateTimeLocal(dto.paidAt),
+  currency: dto.currency ?? null,
+  note: dto.note ?? "",
+  autoCreateTransaction: false,
+});
+
+export const subscriptionBillingLogFormToUpdateDto = (
+  form: SubscriptionBillingLogFormType,
+  dto?: SubscriptionBillingLogDto,
+): UpdateSubscriptionBillingLogDto => {
+  const amount = parseOptionalFiniteNumber(form.amount);
+  const currencyId = form.currency?.id ?? null;
+
+  return {
+    id: dto?.id ?? 0,
+    subscriptionId: form.subscriptionId,
+    paidAt: form.paidAt,
+    note: form.note?.trim() ?? "",
+    ...(amount !== null ? { amount } : {}),
+    ...(currencyId !== null ? { currencyId } : {}),
+  };
+};
+
 export const formatBillingLogPaidAt = (
   paidAt: string,
   locale: string,
@@ -257,4 +286,19 @@ export const getBillingLogAmountLabel = (
   const { symbol } = getBillingLogCurrency(log);
 
   return symbol ? `${amount} ${symbol}` : amount;
+};
+
+/**
+ * A changed renewal date must be in the future: the API bills a due one at
+ * once. The loaded date may stay as it is even when it is already past.
+ */
+export const isValidPickedRenewalDate = (
+  value: string | null | undefined,
+  loadedValue: string | null | undefined,
+  now: Date = new Date(),
+): boolean => {
+  if (!value || value === (loadedValue ?? "")) return true;
+
+  const picked = new Date(value);
+  return !Number.isNaN(picked.getTime()) && picked.getTime() > now.getTime();
 };

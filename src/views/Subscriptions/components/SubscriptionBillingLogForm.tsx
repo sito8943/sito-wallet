@@ -20,7 +20,14 @@ import "./styles.css";
 export function SubscriptionBillingLogForm(
   props: AddSubscriptionBillingLogDialogPropsType,
 ) {
-  const { control, isLoading, open, setValue, selectedSubscription } = props;
+  const {
+    control,
+    editingBillingLog = false,
+    isLoading,
+    open,
+    setValue,
+    selectedSubscription,
+  } = props;
   const { t } = useTranslation();
 
   const currenciesQuery = useCurrenciesCommon({ includeShared: true });
@@ -31,7 +38,8 @@ export function SubscriptionBillingLogForm(
   );
 
   useEffect(() => {
-    if (!open || !selectedSubscription || !setValue) return;
+    if (!open || !selectedSubscription || !setValue || editingBillingLog)
+      return;
 
     setValue("subscriptionId", selectedSubscription.id);
     setValue("amount", String(selectedSubscription.amount ?? ""));
@@ -42,7 +50,7 @@ export function SubscriptionBillingLogForm(
       "autoCreateTransaction",
       !!selectedSubscription.autoCreateTransaction,
     );
-  }, [open, selectedSubscription, setValue]);
+  }, [editingBillingLog, open, selectedSubscription, setValue]);
 
   const formDisabled = isLoading || currenciesQuery.isLoading;
 
@@ -154,24 +162,26 @@ export function SubscriptionBillingLogForm(
         )}
       />
 
-      <Controller
-        control={control}
-        name="autoCreateTransaction"
-        disabled={formDisabled}
-        render={({ field: { value, onChange, ...rest } }) => (
-          <CheckInput
-            {...rest}
-            id="subscription-billing-log-auto-create-transaction"
-            checked={!!value}
-            label={t(
-              "_entities:subscriptionBillingLog.autoCreateTransaction.label",
-            )}
-            inputClassName="subscription-billing-log-toggle-input"
-            containerClassName="subscription-billing-log-toggle"
-            onChange={(event) => onChange(event.currentTarget.checked)}
-          />
-        )}
-      />
+      {!editingBillingLog ? (
+        <Controller
+          control={control}
+          name="autoCreateTransaction"
+          disabled={formDisabled}
+          render={({ field: { value, onChange, ...rest } }) => (
+            <CheckInput
+              {...rest}
+              id="subscription-billing-log-auto-create-transaction"
+              checked={!!value}
+              label={t(
+                "_entities:subscriptionBillingLog.autoCreateTransaction.label",
+              )}
+              inputClassName="subscription-billing-log-toggle-input"
+              containerClassName="subscription-billing-log-toggle"
+              onChange={(event) => onChange(event.currentTarget.checked)}
+            />
+          )}
+        />
+      ) : null}
     </>
   );
 }

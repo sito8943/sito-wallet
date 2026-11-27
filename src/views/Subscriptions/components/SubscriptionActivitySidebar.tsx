@@ -22,6 +22,7 @@ export function SubscriptionActivitySidebar(
     billingLogsLoading,
     billingLogsError,
     onBillingLogClick,
+    onEditBillingLog,
     onDeleteBillingLog,
   } = props;
 
@@ -64,6 +65,7 @@ export function SubscriptionActivitySidebar(
                 key={log.id}
                 log={log}
                 onClick={onBillingLogClick}
+                onEdit={onEditBillingLog}
                 onDelete={onDeleteBillingLog}
               />
             ))}

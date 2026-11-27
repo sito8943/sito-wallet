@@ -1,9 +1,15 @@
 import { describe, expect, it } from "vitest";
 
-import type { CommonPurchaseProviderDto, SubscriptionDto } from "lib";
+import type {
+  CommonPurchaseProviderDto,
+  SubscriptionBillingLogDto,
+  SubscriptionDto,
+} from "lib";
 
 import {
   emptySubscriptionForm,
+  isValidPickedRenewalDate,
+  subscriptionBillingLogFormToUpdateDto,
   subscriptionDtoToForm,
   subscriptionFormToCreateDto,
   subscriptionFormToUpdateDto,
@@ -61,6 +67,51 @@ describe("subscription purchase provider mapping", () => {
     expect(subscriptionFormToUpdateDto(form)).toMatchObject({
       id: 3,
       purchaseProviderId: 0,
+    });
+  });
+});
+
+describe("isValidPickedRenewalDate", () => {
+  const now = new Date(2026, 10, 27, 10, 0);
+
+  it("accepts an empty or unchanged date, even when it is past", () => {
+    expect(isValidPickedRenewalDate("", "2026-11-17T10:00", now)).toBe(true);
+    expect(
+      isValidPickedRenewalDate("2026-11-17T10:00", "2026-11-17T10:00", now),
+    ).toBe(true);
+  });
+
+  it("accepts a changed future date and rejects a changed past one", () => {
+    expect(
+      isValidPickedRenewalDate("2026-11-28T09:00", "2026-11-17T10:00", now),
+    ).toBe(true);
+    expect(
+      isValidPickedRenewalDate("2026-11-27T09:00", "2026-11-17T10:00", now),
+    ).toBe(false);
+  });
+});
+
+describe("subscriptionBillingLogFormToUpdateDto", () => {
+  it("builds the PATCH payload with ids, amount and currency", () => {
+    expect(
+      subscriptionBillingLogFormToUpdateDto(
+        {
+          subscriptionId: 7,
+          amount: "21.5",
+          paidAt: "2026-11-27T09:00",
+          currency: { id: 3, name: "EUR", symbol: "€" },
+          note: " ",
+          autoCreateTransaction: false,
+        },
+        { id: 11 } as SubscriptionBillingLogDto,
+      ),
+    ).toEqual({
+      id: 11,
+      subscriptionId: 7,
+      amount: 21.5,
+      paidAt: "2026-11-27T09:00",
+      currencyId: 3,
+      note: "",
     });
   });
 });
